@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quotation Manager Pro</title>
+    <title>Terms & Conditions Generator</title>
     <style>
         * {
             margin: 0;
@@ -16,94 +16,61 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #2d3748;
-            padding-bottom: 100px;
+            line-height: 1.6;
         }
 
         .app-container {
-            max-width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            padding: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         .header h1 {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .header p {
             color: #718096;
-            font-size: 16px;
-        }
-
-        .stats-container {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .stat-number {
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            color: #718096;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .main-content {
-            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 24px;
         }
 
-        .add-quote-section {
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .control-panel {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 24px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            height: fit-content;
         }
 
         .section-title {
@@ -116,28 +83,12 @@
             gap: 12px;
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
-
-        @media (min-width: 640px) {
-            .form-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
         .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
+            margin-bottom: 16px;
         }
 
         .form-label {
+            display: block;
             font-weight: 600;
             margin-bottom: 8px;
             color: #4a5568;
@@ -147,7 +98,8 @@
         .form-input,
         .form-select,
         .form-textarea {
-            padding: 14px 16px;
+            width: 100%;
+            padding: 12px 16px;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             font-size: 16px;
@@ -161,7 +113,6 @@
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            transform: translateY(-2px);
         }
 
         .form-textarea {
@@ -170,7 +121,7 @@
         }
 
         .btn {
-            padding: 14px 24px;
+            padding: 12px 24px;
             border: none;
             border-radius: 12px;
             font-size: 16px;
@@ -181,7 +132,8 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            min-height: 50px;
+            text-decoration: none;
+            min-height: 48px;
         }
 
         .btn-primary {
@@ -211,343 +163,126 @@
             color: white;
         }
 
-        .btn-danger {
-            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
-            color: white;
-        }
-
         .btn-warning {
             background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
             color: white;
         }
 
-        .btn-small {
-            padding: 8px 12px;
-            font-size: 14px;
-            min-height: 36px;
-        }
-
-        .quotes-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .quotes-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 24px;
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .quote-card {
-            padding: 24px;
-            border-bottom: 1px solid #f7fafc;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .quote-card:hover {
-            background: #f8fafc;
-        }
-
-        .quote-card:last-child {
-            border-bottom: none;
-        }
-
-        .quote-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 16px;
-        }
-
-        .quote-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #2d3748;
-            flex: 1;
-        }
-
-        .quote-id {
-            font-size: 14px;
-            color: #718096;
-            margin-bottom: 4px;
-        }
-
-        .quote-actions {
-            display: flex;
-            gap: 8px;
-            margin-left: 16px;
-        }
-
-        .action-btn {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            font-size: 16px;
-        }
-
-        .edit-btn {
-            background: #bee3f8;
-            color: #2b6cb0;
-        }
-
-        .edit-btn:hover {
-            background: #90cdf4;
-            transform: scale(1.1);
-        }
-
-        .delete-btn {
-            background: #fed7d7;
-            color: #c53030;
-        }
-
-        .delete-btn:hover {
-            background: #feb2b2;
-            transform: scale(1.1);
-        }
-
-        .convert-btn {
-            background: #c6f6d5;
-            color: #25855a;
-        }
-
-        .convert-btn:hover {
-            background: #9ae6b4;
-            transform: scale(1.1);
-        }
-
-        .print-btn {
-            background: #e2e8f0;
-            color: #4a5568;
-        }
-
-        .print-btn:hover {
-            background: #cbd5e1;
-            transform: scale(1.1);
-        }
-
-        .status-badges {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-draft {
-            background: #e2e8f0;
-            color: #4a5568;
-        }
-
-        .status-sent {
-            background: #bee3f8;
-            color: #2b6cb0;
-        }
-
-        .status-accepted {
-            background: #c6f6d5;
-            color: #25855a;
-        }
-
-        .status-rejected {
-            background: #fed7d7;
-            color: #c53030;
-        }
-
-        .status-expired {
-            background: #ffeaa7;
-            color: #b7791f;
-        }
-
-        .priority-high {
-            background: #fed7d7;
-            color: #c53030;
-        }
-
-        .priority-medium {
-            background: #ffeaa7;
-            color: #b7791f;
-        }
-
-        .priority-low {
-            background: #c6f6d5;
-            color: #25855a;
-        }
-
-        .quote-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .detail-item {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 3px solid #667eea;
-        }
-
-        .detail-label {
-            font-size: 12px;
-            color: #718096;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-
-        .detail-value {
-            font-size: 16px;
-            font-weight: 700;
-            color: #2d3748;
-        }
-
-        .quote-items {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 16px;
-        }
-
-        .items-header {
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #2d3748;
-        }
-
-        .item-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 12px;
-            padding: 8px 0;
-            border-bottom: 1px solid #e2e8f0;
-            align-items: center;
-        }
-
-        .item-row:last-child {
-            border-bottom: none;
-        }
-
-        .quote-summary {
-            background: #edf2f7;
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 12px;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .summary-row:last-child {
-            font-weight: 700;
-            font-size: 18px;
-            padding-top: 8px;
-            border-top: 2px solid #cbd5e1;
-        }
-
-        .edit-mode {
-            background: #e6fffa !important;
-            border: 2px solid #4fd1c7;
-            border-radius: 16px;
-        }
-
-        .edit-form {
-            margin-top: 16px;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            border: 2px solid #4fd1c7;
-        }
-
-        .edit-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .quote-items-form {
-            margin-top: 16px;
-        }
-
-        .item-form-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr auto;
-            gap: 8px;
-            margin-bottom: 8px;
-            align-items: end;
-        }
-
-        .remove-item-btn {
-            background: #fed7d7;
-            color: #c53030;
-            border: none;
-            padding: 8px;
-            border-radius: 6px;
-            cursor: pointer;
-            min-height: 40px;
-        }
-
-        .search-container {
-            margin-bottom: 20px;
-        }
-
-        .search-input {
+        .btn-full {
             width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            font-size: 16px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
+            margin-bottom: 12px;
         }
 
-        .search-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .filters-container {
-            display: flex;
-            gap: 12px;
+        .template-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
-        .filter-select {
-            padding: 8px 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.9);
+        .document-container {
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            min-height: 800px;
+        }
+
+        .document-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .document-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .document-subtitle {
+            font-size: 18px;
+            color: #718096;
+        }
+
+        .terms-content {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #2d3748;
+        }
+
+        .terms-content h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 30px 0 15px 0;
+            color: #2d3748;
+            border-left: 4px solid #667eea;
+            padding-left: 16px;
+        }
+
+        .terms-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+            color: #4a5568;
+        }
+
+        .terms-content p {
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .terms-content ul, .terms-content ol {
+            margin: 16px 0 16px 24px;
+        }
+
+        .terms-content li {
+            margin-bottom: 8px;
+        }
+
+        .company-info {
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .editable {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 4px;
+            border: 1px dashed #856404;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .editable:hover {
+            background: #ffeaa7;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
         }
 
         .notification {
@@ -569,81 +304,76 @@
             transform: translateX(0);
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #718096;
-        }
-
-        .empty-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-
-        .totals-section {
-            grid-column: 1 / -1;
-            background: #f8fafc;
-            padding: 16px;
+        .warning-box {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
             border-radius: 12px;
-            margin-top: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
         }
 
-        .totals-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
+        .warning-box h4 {
+            color: #92400e;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
-        @media (max-width: 640px) {
-            .header {
+        .warning-box p {
+            color: #92400e;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
                 padding: 16px;
+            }
+
+            .header {
+                padding: 20px;
             }
 
             .header h1 {
                 font-size: 24px;
             }
 
-            .stats-container {
-                padding: 16px;
-                grid-template-columns: 1fr 1fr;
+            .document-container {
+                padding: 20px;
+            }
+
+            .document-title {
+                font-size: 24px;
             }
 
             .main-content {
-                padding: 0 16px;
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
             }
 
-            .quote-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
+            .control-panel,
+            .header {
+                display: none;
             }
 
-            .quote-actions {
-                margin-left: 0;
-            }
-
-            .quote-details {
+            .main-content {
                 grid-template-columns: 1fr;
             }
 
-            .item-row {
-                grid-template-columns: 1fr;
-                gap: 4px;
-                text-align: left;
+            .document-container {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 20px;
             }
 
-            .filters-container {
-                flex-direction: column;
-            }
-
-            .item-form-row {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-
-            .totals-grid {
-                grid-template-columns: 1fr;
+            .editable {
+                background: transparent;
+                border: none;
+                padding: 0;
             }
         }
     </style>
@@ -651,270 +381,306 @@
 <body>
     <div class="app-container">
         <header class="header">
-            <h1>💼 Quotation Manager Pro</h1>
-            <p>Create professional quotes, track status, and convert to orders</p>
+            <h1>📜 Terms & Conditions Generator</h1>
+            <p>Create professional, legally-sound terms and conditions for your business with customizable templates</p>
         </header>
 
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-number" id="totalQuotes">0</div>
-                <div class="stat-label">Total Quotes</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="draftQuotes">0</div>
-                <div class="stat-label">Draft</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="sentQuotes">0</div>
-                <div class="stat-label">Sent</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="acceptedQuotes">0</div>
-                <div class="stat-label">Accepted</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalValue">$0</div>
-                <div class="stat-label">Total Value</div>
-            </div>
-        </div>
+        <div class="main-content">
+            <div class="control-panel">
+                <h2 class="section-title">⚙️ Customize Your Terms</h2>
 
-        <main class="main-content">
-            <section class="add-quote-section">
-                <h2 class="section-title">
-                    📝 Create New Quotation
-                </h2>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label" for="customerName">Customer Name *</label>
-                        <input type="text" id="customerName" class="form-input" placeholder="John Doe" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="customerEmail">Customer Email</label>
-                        <input type="email" id="customerEmail" class="form-input" placeholder="john@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="customerPhone">Customer Phone</label>
-                        <input type="tel" id="customerPhone" class="form-input" placeholder="+1 (555) 123-4567">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="customerCompany">Company</label>
-                        <input type="text" id="customerCompany" class="form-input" placeholder="Company Name">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="quoteDate">Quote Date</label>
-                        <input type="date" id="quoteDate" class="form-input">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="validUntil">Valid Until</label>
-                        <input type="date" id="validUntil" class="form-input">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="quoteStatus">Status</label>
-                        <select id="quoteStatus" class="form-select">
-                            <option value="draft">📝 Draft</option>
-                            <option value="sent">📤 Sent</option>
-                            <option value="accepted">✅ Accepted</option>
-                            <option value="rejected">❌ Rejected</option>
-                            <option value="expired">⏰ Expired</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="priority">Priority</label>
-                        <select id="priority" class="form-select">
-                            <option value="low">🟢 Low</option>
-                            <option value="medium" selected>🟡 Medium</option>
-                            <option value="high">🔴 High</option>
-                        </select>
-                    </div>
-                    <div class="form-group full-width">
-                        <label class="form-label" for="projectDescription">Project Description</label>
-                        <textarea id="projectDescription" class="form-textarea" placeholder="Describe the project or service requirements..."></textarea>
-                    </div>
-                    <div class="form-group full-width">
-                        <label class="form-label" for="termsConditions">Terms & Conditions</label>
-                        <textarea id="termsConditions" class="form-textarea" placeholder="Payment terms, delivery conditions, warranty information..."></textarea>
+                <div class="warning-box">
+                    <h4>⚠️ Legal Disclaimer</h4>
+                    <p>This generator provides template terms. Always consult with a qualified attorney to ensure compliance with your local laws and specific business needs.</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Business Type Template</label>
+                    <div class="template-buttons">
+                        <button class="btn btn-secondary btn-full" onclick="loadTemplate('service')">🔧 Service Business</button>
+                        <button class="btn btn-secondary btn-full" onclick="loadTemplate('ecommerce')">🛒 E-commerce</button>
+                        <button class="btn btn-secondary btn-full" onclick="loadTemplate('saas')">💻 SaaS/Software</button>
+                        <button class="btn btn-secondary btn-full" onclick="loadTemplate('consulting')">💼 Consulting</button>
+                        <button class="btn btn-secondary btn-full" onclick="loadTemplate('marketplace')">🏪 Marketplace</button>
+                        <button class="btn btn-secondary btn-full" onclick="loadTemplate('subscription')">📅 Subscription</button>
                     </div>
                 </div>
 
-                <div class="quote-items-form">
-                    <h3 style="margin-bottom: 16px; color: #2d3748;">Quote Items</h3>
-                    <div id="quoteItems">
-                        <div class="item-form-row">
-                            <div>
-                                <input type="text" class="form-input item-description" placeholder="Item description">
-                            </div>
-                            <div>
-                                <input type="number" class="form-input item-quantity" placeholder="Qty" min="1" value="1">
-                            </div>
-                            <div>
-                                <input type="number" class="form-input item-unit-price" placeholder="Unit Price" min="0" step="0.01">
-                            </div>
-                            <div>
-                                <button type="button" class="remove-item-btn" onclick="removeQuoteItem(this)">🗑️</button>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-secondary btn-small" onclick="addQuoteItem()" style="margin-top: 12px;">
-                        ➕ Add Item
-                    </button>
+                <div class="form-group">
+                    <label class="form-label" for="companyName">Company/Business Name *</label>
+                    <input type="text" id="companyName" class="form-input" placeholder="Your Business Name" onchange="updateDocument()">
                 </div>
 
-                <div class="totals-section">
-                    <h3 style="margin-bottom: 16px; color: #2d3748;">Pricing & Totals</h3>
-                    <div class="totals-grid">
-                        <div class="form-group">
-                            <label class="form-label" for="discountPercent">Discount (%)</label>
-                            <input type="number" id="discountPercent" class="form-input" placeholder="0" min="0" max="100" step="0.1" oninput="calculateTotals()">
+                <div class="form-group">
+                    <label class="form-label" for="companyAddress">Business Address</label>
+                    <textarea id="companyAddress" class="form-textarea" placeholder="Street Address, City, State, ZIP" onchange="updateDocument()"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contactEmail">Contact Email</label>
+                    <input type="email" id="contactEmail" class="form-input" placeholder="contact@yourbusiness.com" onchange="updateDocument()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contactPhone">Contact Phone</label>
+                    <input type="tel" id="contactPhone" class="form-input" placeholder="+1 (555) 123-4567" onchange="updateDocument()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="website">Website URL</label>
+                    <input type="url" id="website" class="form-input" placeholder="https://yourbusiness.com" onchange="updateDocument()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="jurisdiction">Governing Law (State/Country)</label>
+                    <input type="text" id="jurisdiction" class="form-input" placeholder="e.g., California, USA" onchange="updateDocument()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Include Sections:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="includeRefund" checked onchange="updateDocument()">
+                            <label for="includeRefund">Refund/Cancellation Policy</label>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="taxPercent">Tax (%)</label>
-                            <input type="number" id="taxPercent" class="form-input" placeholder="0" min="0" max="100" step="0.1" oninput="calculateTotals()">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="includePrivacy" checked onchange="updateDocument()">
+                            <label for="includePrivacy">Privacy & Data Protection</label>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Total Amount</label>
-                            <input type="text" id="totalAmount" class="form-input" readonly style="background: #f7fafc; font-weight: bold;">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="includeIP" checked onchange="updateDocument()">
+                            <label for="includeIP">Intellectual Property</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="includeWarranty" checked onchange="updateDocument()">
+                            <label for="includeWarranty">Warranties & Disclaimers</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="includeDispute" checked onchange="updateDocument()">
+                            <label for="includeDispute">Dispute Resolution</label>
                         </div>
                     </div>
                 </div>
 
                 <div style="margin-top: 24px;">
-                    <button class="btn btn-primary" onclick="createQuote()">
-                        💼 Create Quote
+                    <button class="btn btn-primary btn-full" onclick="generateDocument()">
+                        📝 Generate Terms
                     </button>
-                    <button class="btn btn-secondary" onclick="clearQuoteForm()" style="margin-left: 12px;">
-                        🗑️ Clear Form
+                    <button class="btn btn-success btn-full" onclick="window.print()">
+                        🖨️ Print Document
+                    </button>
+                    <button class="btn btn-warning btn-full" onclick="downloadDocument()">
+                        💾 Download as Text
                     </button>
                 </div>
-            </section>
-
-            <div class="search-container">
-                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search quotes by customer, quote ID, or description..." onkeyup="filterQuotes()">
             </div>
 
-            <div class="filters-container">
-                <select id="statusFilter" class="filter-select" onchange="filterQuotes()">
-                    <option value="">All Statuses</option>
-                    <option value="draft">Draft</option>
-                    <option value="sent">Sent</option>
-                    <option value="accepted">Accepted</option>
-                    <option value="rejected">Rejected</option>
-                    <option value="expired">Expired</option>
-                </select>
-                <select id="priorityFilter" class="filter-select" onchange="filterQuotes()">
-                    <option value="">All Priorities</option>
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                </select>
-                <button class="btn btn-secondary btn-small" onclick="checkExpiredQuotes()">
-                    ⏰ Check Expired
-                </button>
-            </div>
-
-            <section class="quotes-container">
-                <div class="quotes-header">
-                    <span>💼 Quotations (<span id="quoteCount">0</span>)</span>
-                    <span id="filteredInfo"></span>
+            <div class="document-container">
+                <div class="document-header">
+                    <h1 class="document-title">Terms and Conditions</h1>
+                    <p class="document-subtitle">Effective Date: <span id="effectiveDate"></span></p>
                 </div>
-                <div id="quotesList">
-                    <div class="empty-state">
-                        <div class="empty-icon">💼</div>
-                        <h3>No quotations yet</h3>
-                        <p>Start by creating your first customer quotation above</p>
+
+                <div class="terms-content" id="termsContent">
+                    <div class="company-info">
+                        <p><strong>Company:</strong> <span class="editable" id="displayCompanyName">[Company Name]</span></p>
+                        <p><strong>Address:</strong> <span class="editable" id="displayCompanyAddress">[Business Address]</span></p>
+                        <p><strong>Email:</strong> <span class="editable" id="displayContactEmail">[Contact Email]</span></p>
+                        <p><strong>Phone:</strong> <span class="editable" id="displayContactPhone">[Contact Phone]</span></p>
+                        <p><strong>Website:</strong> <span class="editable" id="displayWebsite">[Website URL]</span></p>
+                    </div>
+
+                    <h2>1. Acceptance of Terms</h2>
+                    <p>By accessing and using the services provided by <span class="editable company-name">[Company Name]</span> ("Company," "we," "us," or "our"), you ("Customer," "you," or "your") agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, please do not use our services.</p>
+
+                    <h2>2. Description of Services</h2>
+                    <p><span class="editable company-name">[Company Name]</span> provides <span class="editable service-description">[description of services]</span>. We reserve the right to modify, suspend, or discontinue any aspect of our services at any time without prior notice.</p>
+
+                    <h2>3. User Responsibilities</h2>
+                    <p>You agree to:</p>
+                    <ul>
+                        <li>Provide accurate and complete information when using our services</li>
+                        <li>Maintain the confidentiality of any account credentials</li>
+                        <li>Use our services only for lawful purposes and in accordance with these Terms</li>
+                        <li>Not interfere with or disrupt our services or servers</li>
+                        <li>Comply with all applicable laws and regulations</li>
+                    </ul>
+
+                    <h2>4. Payment Terms</h2>
+                    <p>Payment terms are as follows:</p>
+                    <ul>
+                        <li>All fees are due and payable in advance unless otherwise agreed in writing</li>
+                        <li>Late payments may incur additional charges as permitted by law</li>
+                        <li>All prices are subject to change with reasonable notice</li>
+                        <li>Refunds, if applicable, will be processed according to our refund policy</li>
+                    </ul>
+
+                    <div id="refundSection">
+                        <h2>5. Refund and Cancellation Policy</h2>
+                        <p>Our refund policy is as follows:</p>
+                        <ul>
+                            <li>Refund requests must be submitted within 30 days of service delivery</li>
+                            <li>Refunds will be processed within 5-10 business days</li>
+                            <li>Certain services may be non-refundable as specified at time of purchase</li>
+                            <li>Cancellations must be requested in writing via email</li>
+                        </ul>
+                    </div>
+
+                    <div id="privacySection">
+                        <h2>6. Privacy and Data Protection</h2>
+                        <p>We are committed to protecting your privacy:</p>
+                        <ul>
+                            <li>We collect and use personal information as described in our Privacy Policy</li>
+                            <li>We implement appropriate security measures to protect your data</li>
+                            <li>We do not sell or rent personal information to third parties</li>
+                            <li>You have the right to access, correct, or delete your personal information</li>
+                        </ul>
+                    </div>
+
+                    <div id="ipSection">
+                        <h2>7. Intellectual Property Rights</h2>
+                        <p>Intellectual property provisions:</p>
+                        <ul>
+                            <li>All content and materials provided by <span class="editable company-name">[Company Name]</span> remain our property</li>
+                            <li>You may not reproduce, distribute, or create derivative works without written permission</li>
+                            <li>Any work product created specifically for you becomes your property upon full payment</li>
+                            <li>We reserve all rights not expressly granted herein</li>
+                        </ul>
+                    </div>
+
+                    <div id="warrantySection">
+                        <h2>8. Warranties and Disclaimers</h2>
+                        <p>Service warranties and limitations:</p>
+                        <ul>
+                            <li>We warrant that services will be performed in a professional manner</li>
+                            <li>We disclaim all other warranties, express or implied</li>
+                            <li>Services are provided "as is" without warranty of any kind</li>
+                            <li>We do not warrant that services will meet your specific requirements</li>
+                        </ul>
+                    </div>
+
+                    <h2>9. Limitation of Liability</h2>
+                    <p>To the maximum extent permitted by law:</p>
+                    <ul>
+                        <li>Our liability is limited to the amount paid for services in the 12 months preceding the claim</li>
+                        <li>We are not liable for indirect, incidental, special, or consequential damages</li>
+                        <li>We are not responsible for damages caused by third parties or circumstances beyond our control</li>
+                        <li>Some jurisdictions may not allow these limitations, so they may not apply to you</li>
+                    </ul>
+
+                    <h2>10. Indemnification</h2>
+                    <p>You agree to indemnify and hold <span class="editable company-name">[Company Name]</span> harmless from any claims, damages, or expenses arising from your use of our services or violation of these Terms.</p>
+
+                    <h2>11. Force Majeure</h2>
+                    <p>We are not liable for any delay or failure to perform due to circumstances beyond our reasonable control, including but not limited to acts of God, natural disasters, war, terrorism, labor disputes, or government regulations.</p>
+
+                    <div id="disputeSection">
+                        <h2>12. Dispute Resolution</h2>
+                        <p>Dispute resolution procedures:</p>
+                        <ul>
+                            <li>Any disputes will first be addressed through good faith negotiations</li>
+                            <li>If negotiations fail, disputes may be resolved through binding arbitration</li>
+                            <li>Arbitration will be conducted according to the rules of the American Arbitration Association</li>
+                            <li>The prevailing party may be entitled to attorney's fees and costs</li>
+                        </ul>
+                    </div>
+
+                    <h2>13. Governing Law</h2>
+                    <p>These Terms are governed by the laws of <span class="editable" id="displayJurisdiction">[Governing Jurisdiction]</span>, without regard to conflict of law principles.</p>
+
+                    <h2>14. Modifications</h2>
+                    <p>We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting. Your continued use of our services constitutes acceptance of any modifications.</p>
+
+                    <h2>15. Severability</h2>
+                    <p>If any provision of these Terms is found to be unenforceable, the remaining provisions will remain in full force and effect.</p>
+
+                    <h2>16. Entire Agreement</h2>
+                    <p>These Terms constitute the entire agreement between you and <span class="editable company-name">[Company Name]</span> regarding the use of our services and supersede all prior agreements.</p>
+
+                    <h2>17. Contact Information</h2>
+                    <p>For questions about these Terms, please contact us at:</p>
+                    <div class="company-info">
+                        <p><strong>Email:</strong> <span class="editable" id="displayContactEmail2">[Contact Email]</span></p>
+                        <p><strong>Phone:</strong> <span class="editable" id="displayContactPhone2">[Contact Phone]</span></p>
+                        <p><strong>Address:</strong> <span class="editable" id="displayCompanyAddress2">[Business Address]</span></p>
+                    </div>
+
+                    <div style="margin-top: 40px; text-align: center; border-top: 2px solid #e2e8f0; padding-top: 20px;">
+                        <p><strong>Last Updated:</strong> <span id="lastUpdated"></span></p>
+                        <p style="margin-top: 8px; color: #718096; font-size: 12px;">
+                            This document was generated using Terms & Conditions Generator
+                        </p>
                     </div>
                 </div>
-            </section>
-        </main>
+            </div>
+        </div>
     </div>
 
     <div id="notification" class="notification"></div>
 
     <script>
-        let quotes = [
-            {
-                id: 2001,
-                customerName: 'ABC Corporation',
-                customerEmail: 'procurement@abc-corp.com',
-                customerPhone: '+1 (555) 123-4567',
-                customerCompany: 'ABC Corporation',
-                quoteDate: '2025-06-15',
-                validUntil: '2025-07-15',
-                quoteStatus: 'sent',
-                priority: 'high',
-                projectDescription: 'Complete office renovation including furniture and IT setup',
-                termsConditions: 'Payment: 50% upfront, 50% on completion. Delivery: 4-6 weeks. Warranty: 2 years.',
-                discountPercent: 10,
-                taxPercent: 8.5,
-                items: [
-                    { description: 'Office Furniture Package', quantity: 15, unitPrice: 800.00 },
-                    { description: 'IT Equipment Setup', quantity: 1, unitPrice: 5000.00 },
-                    { description: 'Interior Design Consultation', quantity: 20, unitPrice: 150.00 }
-                ]
+        const templates = {
+            service: {
+                serviceDescription: "professional services including consultation, implementation, and ongoing support",
+                sections: {
+                    refund: true,
+                    privacy: true,
+                    ip: true,
+                    warranty: true,
+                    dispute: true
+                }
             },
-            {
-                id: 2002,
-                customerName: 'Sarah Johnson',
-                customerEmail: 'sarah@homeremodel.com',
-                customerPhone: '+1 (555) 987-6543',
-                customerCompany: 'Johnson Residence',
-                quoteDate: '2025-06-18',
-                validUntil: '2025-07-01',
-                quoteStatus: 'draft',
-                priority: 'medium',
-                projectDescription: 'Kitchen remodeling with custom cabinets and countertops',
-                termsConditions: 'Payment: 30% upfront, 40% mid-project, 30% completion. Timeline: 8-10 weeks.',
-                discountPercent: 5,
-                taxPercent: 7.25,
-                items: [
-                    { description: 'Custom Kitchen Cabinets', quantity: 1, unitPrice: 8500.00 },
-                    { description: 'Granite Countertops', quantity: 1, unitPrice: 3200.00 },
-                    { description: 'Installation & Labor', quantity: 1, unitPrice: 2800.00 }
-                ]
+            ecommerce: {
+                serviceDescription: "online retail services including product sales, shipping, and customer support",
+                sections: {
+                    refund: true,
+                    privacy: true,
+                    ip: true,
+                    warranty: true,
+                    dispute: true
+                }
             },
-            {
-                id: 2003,
-                customerName: 'Tech Startup Inc',
-                customerEmail: 'admin@techstartup.com',
-                customerPhone: '+1 (555) 456-7890',
-                customerCompany: 'Tech Startup Inc',
-                quoteDate: '2025-06-20',
-                validUntil: '2025-06-25',
-                quoteStatus: 'accepted',
-                priority: 'high',
-                projectDescription: 'Software development and consulting services',
-                termsConditions: 'Monthly billing, Net 30 payment terms. Support included for 6 months.',
-                discountPercent: 15,
-                taxPercent: 0,
-                items: [
-                    { description: 'Custom Software Development', quantity: 200, unitPrice: 125.00 },
-                    { description: 'Project Management', quantity: 40, unitPrice: 100.00 },
-                    { description: 'Testing & Quality Assurance', quantity: 60, unitPrice: 85.00 }
-                ]
+            saas: {
+                serviceDescription: "software-as-a-service platform including access to our web-based application and related services",
+                sections: {
+                    refund: true,
+                    privacy: true,
+                    ip: true,
+                    warranty: false,
+                    dispute: true
+                }
+            },
+            consulting: {
+                serviceDescription: "professional consulting services including analysis, recommendations, and strategic guidance",
+                sections: {
+                    refund: true,
+                    privacy: true,
+                    ip: true,
+                    warranty: true,
+                    dispute: true
+                }
+            },
+            marketplace: {
+                serviceDescription: "online marketplace platform connecting buyers and sellers, including transaction processing and dispute resolution",
+                sections: {
+                    refund: true,
+                    privacy: true,
+                    ip: true,
+                    warranty: false,
+                    dispute: true
+                }
+            },
+            subscription: {
+                serviceDescription: "subscription-based services including recurring access to products, content, or services",
+                sections: {
+                    refund: true,
+                    privacy: true,
+                    ip: true,
+                    warranty: false,
+                    dispute: true
+                }
             }
-        ];
-
-        let editingQuoteId = null;
-        let nextQuoteId = 2004;
-
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }).format(amount || 0);
-        }
-
-        function formatDate(dateString) {
-            if (!dateString) return 'No date set';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { 
-                weekday: 'short',
-                year: 'numeric',
-                month: 'short', 
-                day: 'numeric'
-            });
-        }
+        };
 
         function showNotification(message, type = 'success') {
             const notification = document.getElementById('notification');
@@ -927,650 +693,153 @@
             }, 3000);
         }
 
-        function calculateQuoteTotal(quote) {
-            const subtotal = quote.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-            const discountAmount = subtotal * (quote.discountPercent || 0) / 100;
-            const afterDiscount = subtotal - discountAmount;
-            const taxAmount = afterDiscount * (quote.taxPercent || 0) / 100;
-            return afterDiscount + taxAmount;
-        }
+        function loadTemplate(templateType) {
+            const template = templates[templateType];
+            if (!template) return;
 
-        function calculateTotals() {
-            const items = getQuoteItems();
-            const subtotal = items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-            const discountPercent = parseFloat(document.getElementById('discountPercent').value) || 0;
-            const taxPercent = parseFloat(document.getElementById('taxPercent').value) || 0;
-            
-            const discountAmount = subtotal * discountPercent / 100;
-            const afterDiscount = subtotal - discountAmount;
-            const taxAmount = afterDiscount * taxPercent / 100;
-            const total = afterDiscount + taxAmount;
-            
-            document.getElementById('totalAmount').value = formatCurrency(total);
-        }
-
-        function updateStats() {
-            const totalQuotes = quotes.length;
-            const draftQuotes = quotes.filter(quote => quote.quoteStatus === 'draft').length;
-            const sentQuotes = quotes.filter(quote => quote.quoteStatus === 'sent').length;
-            const acceptedQuotes = quotes.filter(quote => quote.quoteStatus === 'accepted').length;
-            const totalValue = quotes.reduce((sum, quote) => sum + calculateQuoteTotal(quote), 0);
-
-            document.getElementById('totalQuotes').textContent = totalQuotes;
-            document.getElementById('draftQuotes').textContent = draftQuotes;
-            document.getElementById('sentQuotes').textContent = sentQuotes;
-            document.getElementById('acceptedQuotes').textContent = acceptedQuotes;
-            document.getElementById('totalValue').textContent = formatCurrency(totalValue);
-        }
-
-        function addQuoteItem() {
-            const container = document.getElementById('quoteItems');
-            const newRow = document.createElement('div');
-            newRow.className = 'item-form-row';
-            newRow.innerHTML = `
-                <div>
-                    <input type="text" class="form-input item-description" placeholder="Item description">
-                </div>
-                <div>
-                    <input type="number" class="form-input item-quantity" placeholder="Qty" min="1" value="1" oninput="calculateTotals()">
-                </div>
-                <div>
-                    <input type="number" class="form-input item-unit-price" placeholder="Unit Price" min="0" step="0.01" oninput="calculateTotals()">
-                </div>
-                <div>
-                    <button type="button" class="remove-item-btn" onclick="removeQuoteItem(this)">🗑️</button>
-                </div>
-            `;
-            container.appendChild(newRow);
-        }
-
-        function removeQuoteItem(button) {
-            const row = button.closest('.item-form-row');
-            const container = document.getElementById('quoteItems');
-            if (container.children.length > 1) {
-                row.remove();
-                calculateTotals();
-            } else {
-                showNotification('At least one item is required', 'error');
-            }
-        }
-
-        function getQuoteItems() {
-            const rows = document.querySelectorAll('.item-form-row');
-            const items = [];
-            
-            rows.forEach(row => {
-                const description = row.querySelector('.item-description').value.trim();
-                const quantity = parseInt(row.querySelector('.item-quantity').value) || 1;
-                const unitPrice = parseFloat(row.querySelector('.item-unit-price').value) || 0;
-                
-                if (description) {
-                    items.push({ description, quantity, unitPrice });
-                }
+            // Update service description
+            const serviceElements = document.querySelectorAll('.service-description');
+            serviceElements.forEach(el => {
+                el.textContent = template.serviceDescription;
             });
+
+            // Update checkboxes
+            document.getElementById('includeRefund').checked = template.sections.refund;
+            document.getElementById('includePrivacy').checked = template.sections.privacy;
+            document.getElementById('includeIP').checked = template.sections.ip;
+            document.getElementById('includeWarranty').checked = template.sections.warranty;
+            document.getElementById('includeDispute').checked = template.sections.dispute;
+
+            updateDocument();
+            showNotification(`✅ ${templateType.charAt(0).toUpperCase() + templateType.slice(1)} template loaded`);
+        }
+
+        function updateDocument() {
+            const companyName = document.getElementById('companyName').value || '[Company Name]';
+            const companyAddress = document.getElementById('companyAddress').value || '[Business Address]';
+            const contactEmail = document.getElementById('contactEmail').value || '[Contact Email]';
+            const contactPhone = document.getElementById('contactPhone').value || '[Contact Phone]';
+            const website = document.getElementById('website').value || '[Website URL]';
+            const jurisdiction = document.getElementById('jurisdiction').value || '[Governing Jurisdiction]';
+
+            // Update all company name references
+            const companyNameElements = document.querySelectorAll('.company-name');
+            companyNameElements.forEach(el => {
+                el.textContent = companyName;
+            });
+
+            // Update display elements
+            document.getElementById('displayCompanyName').textContent = companyName;
+            document.getElementById('displayCompanyAddress').textContent = companyAddress;
+            document.getElementById('displayContactEmail').textContent = contactEmail;
+            document.getElementById('displayContactPhone').textContent = contactPhone;
+            document.getElementById('displayWebsite').textContent = website;
+            document.getElementById('displayJurisdiction').textContent = jurisdiction;
+
+            // Update contact info duplicates
+            document.getElementById('displayContactEmail2').textContent = contactEmail;
+            document.getElementById('displayContactPhone2').textContent = contactPhone;
+            document.getElementById('displayCompanyAddress2').textContent = companyAddress;
+
+            // Show/hide sections based on checkboxes
+            document.getElementById('refundSection').style.display = 
+                document.getElementById('includeRefund').checked ? 'block' : 'none';
+            document.getElementById('privacySection').style.display = 
+                document.getElementById('includePrivacy').checked ? 'block' : 'none';
+            document.getElementById('ipSection').style.display = 
+                document.getElementById('includeIP').checked ? 'block' : 'none';
+            document.getElementById('warrantySection').style.display = 
+                document.getElementById('includeWarranty').checked ? 'block' : 'none';
+            document.getElementById('disputeSection').style.display = 
+                document.getElementById('includeDispute').checked ? 'block' : 'none';
+        }
+
+        function generateDocument() {
+            updateDocument();
             
-            return items;
-        }
-
-        function clearQuoteItems() {
-            const container = document.getElementById('quoteItems');
-            container.innerHTML = `
-                <div class="item-form-row">
-                    <div>
-                        <input type="text" class="form-input item-description" placeholder="Item description">
-                    </div>
-                    <div>
-                        <input type="number" class="form-input item-quantity" placeholder="Qty" min="1" value="1" oninput="calculateTotals()">
-                    </div>
-                    <div>
-                        <input type="number" class="form-input item-unit-price" placeholder="Unit Price" min="0" step="0.01" oninput="calculateTotals()">
-                    </div>
-                    <div>
-                        <button type="button" class="remove-item-btn" onclick="removeQuoteItem(this)">🗑️</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function isQuoteExpired(quote) {
-            if (!quote.validUntil) return false;
+            // Update dates
             const today = new Date();
-            const validUntil = new Date(quote.validUntil);
-            return today > validUntil && quote.quoteStatus === 'sent';
-        }
-
-        function checkExpiredQuotes() {
-            let expiredCount = 0;
-            quotes.forEach(quote => {
-                if (isQuoteExpired(quote)) {
-                    quote.quoteStatus = 'expired';
-                    expiredCount++;
-                }
+            const formattedDate = today.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
             });
             
-            if (expiredCount > 0) {
-                renderQuotes();
-                updateStats();
-                saveToStorage();
-                showNotification(`${expiredCount} quote(s) marked as expired`);
-            } else {
-                showNotification('No expired quotes found');
-            }
+            document.getElementById('effectiveDate').textContent = formattedDate;
+            document.getElementById('lastUpdated').textContent = formattedDate;
+
+            showNotification('✅ Terms & Conditions generated successfully!');
         }
 
-        function renderQuotes(quotesToRender = quotes) {
-            const quotesList = document.getElementById('quotesList');
-            const quoteCount = document.getElementById('quoteCount');
-            
-            quoteCount.textContent = quotesToRender.length;
-            
-            if (quotesToRender.length === 0) {
-                quotesList.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">🔍</div>
-                        <h3>No quotes found</h3>
-                        <p>Try adjusting your search or filters</p>
-                    </div>
-                `;
-                return;
-            }
+        function downloadDocument() {
+            const companyName = document.getElementById('companyName').value || 'Company';
+            const content = document.getElementById('termsContent').innerText;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${companyName}_Terms_and_Conditions.txt`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            showNotification('📄 Terms & Conditions downloaded successfully!');
+        }
 
-            quotesList.innerHTML = quotesToRender.map(quote => {
-                const isEditing = editingQuoteId === quote.id;
-                const quoteTotal = calculateQuoteTotal(quote);
-                const subtotal = quote.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-                const discountAmount = subtotal * (quote.discountPercent || 0) / 100;
-                const afterDiscount = subtotal - discountAmount;
-                const taxAmount = afterDiscount * (quote.taxPercent || 0) / 100;
-                const expired = isQuoteExpired(quote);
+        // Make editable elements clickable
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('editable')) {
+                const currentText = e.target.textContent;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentText;
+                input.style.width = '100%';
+                input.style.padding = '4px';
+                input.style.border = '2px solid #667eea';
+                input.style.borderRadius = '4px';
                 
-                if (isEditing) {
-                    return `
-                        <div class="quote-card edit-mode">
-                            <div class="edit-form">
-                                <h3 style="margin-bottom: 16px;">Edit Quote #${quote.id}</h3>
-                                <div class="form-grid">
-                                    <div class="form-group">
-                                        <label class="form-label">Customer Name</label>
-                                        <input type="text" id="edit-name-${quote.id}" class="form-input" value="${quote.customerName}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Customer Email</label>
-                                        <input type="email" id="edit-email-${quote.id}" class="form-input" value="${quote.customerEmail || ''}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Customer Phone</label>
-                                        <input type="tel" id="edit-phone-${quote.id}" class="form-input" value="${quote.customerPhone || ''}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Company</label>
-                                        <input type="text" id="edit-company-${quote.id}" class="form-input" value="${quote.customerCompany || ''}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Quote Date</label>
-                                        <input type="date" id="edit-quote-date-${quote.id}" class="form-input" value="${quote.quoteDate || ''}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Valid Until</label>
-                                        <input type="date" id="edit-valid-until-${quote.id}" class="form-input" value="${quote.validUntil || ''}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Status</label>
-                                        <select id="edit-status-${quote.id}" class="form-select">
-                                            <option value="draft" ${quote.quoteStatus === 'draft' ? 'selected' : ''}>📝 Draft</option>
-                                            <option value="sent" ${quote.quoteStatus === 'sent' ? 'selected' : ''}>📤 Sent</option>
-                                            <option value="accepted" ${quote.quoteStatus === 'accepted' ? 'selected' : ''}>✅ Accepted</option>
-                                            <option value="rejected" ${quote.quoteStatus === 'rejected' ? 'selected' : ''}>❌ Rejected</option>
-                                            <option value="expired" ${quote.quoteStatus === 'expired' ? 'selected' : ''}>⏰ Expired</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Priority</label>
-                                        <select id="edit-priority-${quote.id}" class="form-select">
-                                            <option value="low" ${quote.priority === 'low' ? 'selected' : ''}>🟢 Low</option>
-                                            <option value="medium" ${quote.priority === 'medium' ? 'selected' : ''}>🟡 Medium</option>
-                                            <option value="high" ${quote.priority === 'high' ? 'selected' : ''}>🔴 High</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group full-width">
-                                        <label class="form-label">Project Description</label>
-                                        <textarea id="edit-description-${quote.id}" class="form-textarea">${quote.projectDescription || ''}</textarea>
-                                    </div>
-                                    <div class="form-group full-width">
-                                        <label class="form-label">Terms & Conditions</label>
-                                        <textarea id="edit-terms-${quote.id}" class="form-textarea">${quote.termsConditions || ''}</textarea>
-                                    </div>
-                                </div>
-                                <div class="edit-actions">
-                                    <button class="btn btn-success btn-small" onclick="saveEdit(${quote.id})">
-                                        ✅ Save Changes
-                                    </button>
-                                    <button class="btn btn-secondary btn-small" onclick="cancelEdit()">
-                                        ❌ Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                return `
-                    <div class="quote-card">
-                        <div class="quote-header">
-                            <div>
-                                <div class="quote-id">Quote #${quote.id}</div>
-                                <div class="quote-title">${quote.customerName}${quote.customerCompany ? ` - ${quote.customerCompany}` : ''}</div>
-                            </div>
-                            <div class="quote-actions">
-                                <button class="action-btn edit-btn" onclick="startEdit(${quote.id})" title="Edit Quote">
-                                    ✏️
-                                </button>
-                                <button class="action-btn convert-btn" onclick="convertToOrder(${quote.id})" title="Convert to Order">
-                                    🔄
-                                </button>
-                                <button class="action-btn print-btn" onclick="printQuote(${quote.id})" title="Print Quote">
-                                    🖨️
-                                </button>
-                                <button class="action-btn delete-btn" onclick="deleteQuote(${quote.id})" title="Delete Quote">
-                                    🗑️
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="status-badges">
-                            <span class="status-badge status-${quote.quoteStatus}">
-                                ${quote.quoteStatus.toUpperCase()}
-                            </span>
-                            <span class="status-badge priority-${quote.priority}">
-                                ${quote.priority.toUpperCase()} PRIORITY
-                            </span>
-                            ${expired ? '<span class="status-badge status-expired">EXPIRED</span>' : ''}
-                        </div>
-                        
-                        <div class="quote-details">
-                            <div class="detail-item">
-                                <div class="detail-label">Quote Date</div>
-                                <div class="detail-value">${formatDate(quote.quoteDate)}</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Valid Until</div>
-                                <div class="detail-value">${formatDate(quote.validUntil)}</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Total Amount</div>
-                                <div class="detail-value">${formatCurrency(quoteTotal)}</div>
-                            </div>
-                            ${quote.customerEmail ? `
-                            <div class="detail-item">
-                                <div class="detail-label">Email</div>
-                                <div class="detail-value">${quote.customerEmail}</div>
-                            </div>
-                            ` : ''}
-                            ${quote.customerPhone ? `
-                            <div class="detail-item">
-                                <div class="detail-label">Phone</div>
-                                <div class="detail-value">${quote.customerPhone}</div>
-                            </div>
-                            ` : ''}
-                        </div>
-                        
-                        ${quote.projectDescription ? `
-                        <div style="margin-top: 16px; padding: 12px; background: #f8fafc; border-radius: 8px;">
-                            <strong>📋 Project Description:</strong><br>
-                            ${quote.projectDescription}
-                        </div>
-                        ` : ''}
-                        
-                        ${quote.items.length > 0 ? `
-                        <div class="quote-items">
-                            <div class="items-header">📦 Quote Items</div>
-                            ${quote.items.map(item => `
-                                <div class="item-row">
-                                    <span>${item.description}</span>
-                                    <span>Qty: ${item.quantity}</span>
-                                    <span>${formatCurrency(item.unitPrice)}</span>
-                                    <span>${formatCurrency(item.quantity * item.unitPrice)}</span>
-                                </div>
-                            `).join('')}
-                            <div class="quote-summary">
-                                <div class="summary-row">
-                                    <span>Subtotal:</span>
-                                    <span>${formatCurrency(subtotal)}</span>
-                                </div>
-                                ${quote.discountPercent > 0 ? `
-                                <div class="summary-row">
-                                    <span>Discount (${quote.discountPercent}%):</span>
-                                    <span>-${formatCurrency(discountAmount)}</span>
-                                </div>
-                                ` : ''}
-                                ${quote.taxPercent > 0 ? `
-                                <div class="summary-row">
-                                    <span>Tax (${quote.taxPercent}%):</span>
-                                    <span>${formatCurrency(taxAmount)}</span>
-                                </div>
-                                ` : ''}
-                                <div class="summary-row">
-                                    <span><strong>Total:</strong></span>
-                                    <span><strong>${formatCurrency(quoteTotal)}</strong></span>
-                                </div>
-                            </div>
-                        </div>
-                        ` : ''}
-                        
-                        ${quote.termsConditions ? `
-                        <div style="margin-top: 16px; padding: 12px; background: #f8fafc; border-radius: 8px; font-style: italic;">
-                            📝 <strong>Terms & Conditions:</strong> ${quote.termsConditions}
-                        </div>
-                        ` : ''}
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function createQuote() {
-            const customerName = document.getElementById('customerName').value.trim();
-            if (!customerName) {
-                showNotification('Please enter a customer name', 'error');
-                return;
-            }
-
-            const items = getQuoteItems();
-            if (items.length === 0) {
-                showNotification('Please add at least one item', 'error');
-                return;
-            }
-
-            const newQuote = {
-                id: nextQuoteId++,
-                customerName: customerName,
-                customerEmail: document.getElementById('customerEmail').value.trim(),
-                customerPhone: document.getElementById('customerPhone').value.trim(),
-                customerCompany: document.getElementById('customerCompany').value.trim(),
-                quoteDate: document.getElementById('quoteDate').value || new Date().toISOString().split('T')[0],
-                validUntil: document.getElementById('validUntil').value,
-                quoteStatus: document.getElementById('quoteStatus').value,
-                priority: document.getElementById('priority').value,
-                projectDescription: document.getElementById('projectDescription').value.trim(),
-                termsConditions: document.getElementById('termsConditions').value.trim(),
-                discountPercent: parseFloat(document.getElementById('discountPercent').value) || 0,
-                taxPercent: parseFloat(document.getElementById('taxPercent').value) || 0,
-                items: items
-            };
-
-            quotes.push(newQuote);
-            clearQuoteForm();
-            renderQuotes();
-            updateStats();
-            saveToStorage();
-            showNotification('✅ Quote created successfully!');
-        }
-
-        function startEdit(id) {
-            editingQuoteId = id;
-            renderQuotes();
-        }
-
-        function cancelEdit() {
-            editingQuoteId = null;
-            renderQuotes();
-        }
-
-        function saveEdit(id) {
-            const quote = quotes.find(quote => quote.id === id);
-            if (!quote) return;
-
-            const customerName = document.getElementById(`edit-name-${id}`).value.trim();
-            if (!customerName) {
-                showNotification('Please enter a customer name', 'error');
-                return;
-            }
-
-            quote.customerName = customerName;
-            quote.customerEmail = document.getElementById(`edit-email-${id}`).value.trim();
-            quote.customerPhone = document.getElementById(`edit-phone-${id}`).value.trim();
-            quote.customerCompany = document.getElementById(`edit-company-${id}`).value.trim();
-            quote.quoteDate = document.getElementById(`edit-quote-date-${id}`).value;
-            quote.validUntil = document.getElementById(`edit-valid-until-${id}`).value;
-            quote.quoteStatus = document.getElementById(`edit-status-${id}`).value;
-            quote.priority = document.getElementById(`edit-priority-${id}`).value;
-            quote.projectDescription = document.getElementById(`edit-description-${id}`).value.trim();
-            quote.termsConditions = document.getElementById(`edit-terms-${id}`).value.trim();
-
-            editingQuoteId = null;
-            renderQuotes();
-            updateStats();
-            saveToStorage();
-            showNotification('✅ Quote updated successfully!');
-        }
-
-        function deleteQuote(id) {
-            if (confirm('Are you sure you want to delete this quote? This action cannot be undone.')) {
-                quotes = quotes.filter(quote => quote.id !== id);
-                renderQuotes();
-                updateStats();
-                saveToStorage();
-                showNotification('🗑️ Quote deleted successfully!');
-            }
-        }
-
-        function convertToOrder(id) {
-            const quote = quotes.find(quote => quote.id === id);
-            if (!quote) return;
-
-            if (confirm(`Convert Quote #${id} to an order? This will mark the quote as accepted.`)) {
-                quote.quoteStatus = 'accepted';
-                renderQuotes();
-                updateStats();
-                saveToStorage();
-                showNotification('✅ Quote converted to order successfully!');
-            }
-        }
-
-        function printQuote(id) {
-            const quote = quotes.find(quote => quote.id === id);
-            if (!quote) return;
-
-            // Create a printable version
-            const printWindow = window.open('', '_blank');
-            const quoteTotal = calculateQuoteTotal(quote);
-            const subtotal = quote.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-            const discountAmount = subtotal * (quote.discountPercent || 0) / 100;
-            const taxAmount = (subtotal - discountAmount) * (quote.taxPercent || 0) / 100;
-
-            printWindow.document.write(`
-                <html>
-                <head>
-                    <title>Quote #${quote.id}</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; padding: 20px; }
-                        .header { text-align: center; margin-bottom: 30px; }
-                        .quote-info { margin-bottom: 20px; }
-                        .items-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-                        .items-table th, .items-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-                        .items-table th { background-color: #f2f2f2; }
-                        .totals { text-align: right; margin-top: 20px; }
-                        .terms { margin-top: 30px; padding: 15px; background: #f9f9f9; }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <h1>QUOTATION</h1>
-                        <h2>Quote #${quote.id}</h2>
-                    </div>
-                    
-                    <div class="quote-info">
-                        <p><strong>Customer:</strong> ${quote.customerName}</p>
-                        ${quote.customerCompany ? `<p><strong>Company:</strong> ${quote.customerCompany}</p>` : ''}
-                        ${quote.customerEmail ? `<p><strong>Email:</strong> ${quote.customerEmail}</p>` : ''}
-                        ${quote.customerPhone ? `<p><strong>Phone:</strong> ${quote.customerPhone}</p>` : ''}
-                        <p><strong>Quote Date:</strong> ${formatDate(quote.quoteDate)}</p>
-                        <p><strong>Valid Until:</strong> ${formatDate(quote.validUntil)}</p>
-                    </div>
-
-                    ${quote.projectDescription ? `
-                    <div>
-                        <h3>Project Description</h3>
-                        <p>${quote.projectDescription}</p>
-                    </div>
-                    ` : ''}
-
-                    <table class="items-table">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Quantity</th>
-                                <th>Unit Price</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${quote.items.map(item => `
-                                <tr>
-                                    <td>${item.description}</td>
-                                    <td>${item.quantity}</td>
-                                    <td>${formatCurrency(item.unitPrice)}</td>
-                                    <td>${formatCurrency(item.quantity * item.unitPrice)}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-
-                    <div class="totals">
-                        <p>Subtotal: ${formatCurrency(subtotal)}</p>
-                        ${quote.discountPercent > 0 ? `<p>Discount (${quote.discountPercent}%): -${formatCurrency(discountAmount)}</p>` : ''}
-                        ${quote.taxPercent > 0 ? `<p>Tax (${quote.taxPercent}%): ${formatCurrency(taxAmount)}</p>` : ''}
-                        <h3>Total: ${formatCurrency(quoteTotal)}</h3>
-                    </div>
-
-                    ${quote.termsConditions ? `
-                    <div class="terms">
-                        <h3>Terms & Conditions</h3>
-                        <p>${quote.termsConditions}</p>
-                    </div>
-                    ` : ''}
-                </body>
-                </html>
-            `);
-
-            printWindow.document.close();
-            printWindow.print();
-        }
-
-        function clearQuoteForm() {
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerEmail').value = '';
-            document.getElementById('customerPhone').value = '';
-            document.getElementById('customerCompany').value = '';
-            document.getElementById('quoteDate').value = '';
-            document.getElementById('validUntil').value = '';
-            document.getElementById('quoteStatus').value = 'draft';
-            document.getElementById('priority').value = 'medium';
-            document.getElementById('projectDescription').value = '';
-            document.getElementById('termsConditions').value = '';
-            document.getElementById('discountPercent').value = '';
-            document.getElementById('taxPercent').value = '';
-            document.getElementById('totalAmount').value = '';
-            clearQuoteItems();
-        }
-
-        function filterQuotes() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const statusFilter = document.getElementById('statusFilter').value;
-            const priorityFilter = document.getElementById('priorityFilter').value;
-
-            let filteredQuotes = quotes.filter(quote => {
-                const matchesSearch = !searchTerm || 
-                    quote.customerName.toLowerCase().includes(searchTerm) ||
-                    quote.id.toString().includes(searchTerm) ||
-                    (quote.customerEmail && quote.customerEmail.toLowerCase().includes(searchTerm)) ||
-                    (quote.customerCompany && quote.customerCompany.toLowerCase().includes(searchTerm)) ||
-                    (quote.projectDescription && quote.projectDescription.toLowerCase().includes(searchTerm)) ||
-                    quote.items.some(item => item.description.toLowerCase().includes(searchTerm));
-
-                const matchesStatus = !statusFilter || quote.quoteStatus === statusFilter;
-                const matchesPriority = !priorityFilter || quote.priority === priorityFilter;
-
-                return matchesSearch && matchesStatus && matchesPriority;
-            });
-
-            renderQuotes(filteredQuotes);
-            
-            const filteredInfo = document.getElementById('filteredInfo');
-            if (filteredQuotes.length !== quotes.length) {
-                filteredInfo.textContent = `Showing ${filteredQuotes.length} of ${quotes.length}`;
-            } else {
-                filteredInfo.textContent = '';
-            }
-        }
-
-        function saveToStorage() {
-            localStorage.setItem('quotations', JSON.stringify(quotes));
-            localStorage.setItem('nextQuoteId', nextQuoteId.toString());
-        }
-
-        function loadFromStorage() {
-            const saved = localStorage.getItem('quotations');
-            if (saved) {
-                quotes = JSON.parse(saved);
-            }
-            
-            const savedNextId = localStorage.getItem('nextQuoteId');
-            if (savedNextId) {
-                nextQuoteId = parseInt(savedNextId);
-            }
-        }
-
-        // Event listeners for calculation
-        document.addEventListener('input', function(e) {
-            if (e.target.classList.contains('item-quantity') || 
-                e.target.classList.contains('item-unit-price') ||
-                e.target.id === 'discountPercent' ||
-                e.target.id === 'taxPercent') {
-                calculateTotals();
+                input.addEventListener('blur', function() {
+                    e.target.textContent = input.value || currentText;
+                    e.target.style.display = 'inline';
+                    input.remove();
+                });
+                
+                input.addEventListener('keypress', function(event) {
+                    if (event.key === 'Enter') {
+                        input.blur();
+                    }
+                });
+                
+                e.target.style.display = 'none';
+                e.target.parentNode.insertBefore(input, e.target.nextSibling);
+                input.focus();
+                input.select();
             }
         });
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey || e.metaKey) {
-                if (e.key === 'n') {
-                    e.preventDefault();
-                    document.getElementById('customerName').focus();
-                }
-                if (e.key === 'f') {
-                    e.preventDefault();
-                    document.getElementById('searchInput').focus();
-                }
-            }
-            if (e.key === 'Escape') {
-                if (editingQuoteId) {
-                    cancelEdit();
-                }
-            }
-        });
-
-        // Set default dates
-        const today = new Date().toISOString().split('T')[0];
-        const nextMonth = new Date();
-        nextMonth.setMonth(nextMonth.getMonth() + 1);
-        const nextMonthStr = nextMonth.toISOString().split('T')[0];
-
-        document.getElementById('quoteDate').value = today;
-        document.getElementById('validUntil').value = nextMonthStr;
-
-        // Initialize app
+        // Initialize document
         document.addEventListener('DOMContentLoaded', function() {
-            loadFromStorage();
-            renderQuotes();
-            updateStats();
-            calculateTotals();
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('effectiveDate').textContent = formattedDate;
+            document.getElementById('lastUpdated').textContent = formattedDate;
+            
+            // Set default jurisdiction to USA
+            document.getElementById('jurisdiction').value = 'United States of America';
+            updateDocument();
         });
 
-        // Auto-save
-        setInterval(saveToStorage, 10000); // Auto-save every 10 seconds
-
-        // Check for expired quotes on load
-        setTimeout(checkExpiredQuotes, 1000);
+        // Auto-update when typing
+        document.addEventListener('input', function(e) {
+            if (e.target.matches('#companyName, #companyAddress, #contactEmail, #contactPhone, #website, #jurisdiction')) {
+                updateDocument();
+            }
+        });
     </script>
 </body>
 </html>
