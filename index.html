@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Order Manager</title>
+    <title>Quotation Manager Pro</title>
     <style>
         * {
             margin: 0;
@@ -96,7 +96,7 @@
             padding: 0 20px;
         }
 
-        .add-order-section {
+        .add-quote-section {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
@@ -216,13 +216,18 @@
             color: white;
         }
 
+        .btn-warning {
+            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+            color: white;
+        }
+
         .btn-small {
             padding: 8px 12px;
             font-size: 14px;
             min-height: 36px;
         }
 
-        .orders-container {
+        .quotes-container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
@@ -231,7 +236,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
-        .orders-header {
+        .quotes-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 20px 24px;
@@ -242,42 +247,42 @@
             align-items: center;
         }
 
-        .order-card {
+        .quote-card {
             padding: 24px;
             border-bottom: 1px solid #f7fafc;
             position: relative;
             transition: all 0.3s ease;
         }
 
-        .order-card:hover {
+        .quote-card:hover {
             background: #f8fafc;
         }
 
-        .order-card:last-child {
+        .quote-card:last-child {
             border-bottom: none;
         }
 
-        .order-header {
+        .quote-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 16px;
         }
 
-        .order-title {
+        .quote-title {
             font-size: 18px;
             font-weight: 700;
             color: #2d3748;
             flex: 1;
         }
 
-        .order-id {
+        .quote-id {
             font-size: 14px;
             color: #718096;
             margin-bottom: 4px;
         }
 
-        .order-actions {
+        .quote-actions {
             display: flex;
             gap: 8px;
             margin-left: 16px;
@@ -316,13 +321,23 @@
             transform: scale(1.1);
         }
 
-        .view-btn {
-            background: #d69e2e;
-            color: white;
+        .convert-btn {
+            background: #c6f6d5;
+            color: #25855a;
         }
 
-        .view-btn:hover {
-            background: #b7791f;
+        .convert-btn:hover {
+            background: #9ae6b4;
+            transform: scale(1.1);
+        }
+
+        .print-btn {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .print-btn:hover {
+            background: #cbd5e1;
             transform: scale(1.1);
         }
 
@@ -343,52 +358,47 @@
             letter-spacing: 0.5px;
         }
 
-        .status-pending {
-            background: #fed7a1;
-            color: #b7791f;
-        }
-
-        .status-processing {
-            background: #bee3f8;
-            color: #2b6cb0;
-        }
-
-        .status-shipped {
-            background: #c6f6d5;
-            color: #25855a;
-        }
-
-        .status-delivered {
-            background: #9ae6b4;
-            color: #22543d;
-        }
-
-        .status-cancelled {
-            background: #fed7d7;
-            color: #c53030;
-        }
-
-        .payment-unpaid {
-            background: #fed7d7;
-            color: #c53030;
-        }
-
-        .payment-partial {
-            background: #ffeaa7;
-            color: #b7791f;
-        }
-
-        .payment-paid {
-            background: #c6f6d5;
-            color: #25855a;
-        }
-
-        .payment-refunded {
+        .status-draft {
             background: #e2e8f0;
             color: #4a5568;
         }
 
-        .order-details {
+        .status-sent {
+            background: #bee3f8;
+            color: #2b6cb0;
+        }
+
+        .status-accepted {
+            background: #c6f6d5;
+            color: #25855a;
+        }
+
+        .status-rejected {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .status-expired {
+            background: #ffeaa7;
+            color: #b7791f;
+        }
+
+        .priority-high {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .priority-medium {
+            background: #ffeaa7;
+            color: #b7791f;
+        }
+
+        .priority-low {
+            background: #c6f6d5;
+            color: #25855a;
+        }
+
+        .quote-details {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 16px;
@@ -417,7 +427,7 @@
             color: #2d3748;
         }
 
-        .order-items {
+        .quote-items {
             background: #f8fafc;
             border-radius: 12px;
             padding: 16px;
@@ -441,11 +451,26 @@
 
         .item-row:last-child {
             border-bottom: none;
-            font-weight: 700;
+        }
+
+        .quote-summary {
             background: #edf2f7;
-            padding: 12px;
+            padding: 16px;
             border-radius: 8px;
-            margin-top: 8px;
+            margin-top: 12px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .summary-row:last-child {
+            font-weight: 700;
+            font-size: 18px;
+            padding-top: 8px;
+            border-top: 2px solid #cbd5e1;
         }
 
         .edit-mode {
@@ -468,16 +493,26 @@
             margin-top: 20px;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #718096;
+        .quote-items-form {
+            margin-top: 16px;
         }
 
-        .empty-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.5;
+        .item-form-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 8px;
+            margin-bottom: 8px;
+            align-items: end;
+        }
+
+        .remove-item-btn {
+            background: #fed7d7;
+            color: #c53030;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            min-height: 40px;
         }
 
         .search-container {
@@ -500,6 +535,21 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
+        .filters-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
         .notification {
             position: fixed;
             top: 20px;
@@ -519,41 +569,30 @@
             transform: translateX(0);
         }
 
-        .filters-container {
-            display: flex;
-            gap: 12px;
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #718096;
+        }
+
+        .empty-icon {
+            font-size: 64px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
+            opacity: 0.5;
         }
 
-        .filter-select {
-            padding: 8px 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-        }
-
-        .order-items-form {
+        .totals-section {
+            grid-column: 1 / -1;
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 12px;
             margin-top: 16px;
         }
 
-        .item-form-row {
+        .totals-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr auto;
-            gap: 8px;
-            margin-bottom: 8px;
-            align-items: end;
-        }
-
-        .remove-item-btn {
-            background: #fed7d7;
-            color: #c53030;
-            border: none;
-            padding: 8px;
-            border-radius: 6px;
-            cursor: pointer;
-            min-height: 40px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
         }
 
         @media (max-width: 640px) {
@@ -574,17 +613,17 @@
                 padding: 0 16px;
             }
 
-            .order-header {
+            .quote-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 12px;
             }
 
-            .order-actions {
+            .quote-actions {
                 margin-left: 0;
             }
 
-            .order-details {
+            .quote-details {
                 grid-template-columns: 1fr;
             }
 
@@ -602,43 +641,47 @@
                 grid-template-columns: 1fr;
                 gap: 8px;
             }
+
+            .totals-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="app-container">
         <header class="header">
-            <h1>📦 Customer Order Manager</h1>
-            <p>Manage customer orders, track payments, and monitor deliveries</p>
+            <h1>💼 Quotation Manager Pro</h1>
+            <p>Create professional quotes, track status, and convert to orders</p>
         </header>
 
         <div class="stats-container">
             <div class="stat-card">
-                <div class="stat-number" id="totalOrders">0</div>
-                <div class="stat-label">Total Orders</div>
+                <div class="stat-number" id="totalQuotes">0</div>
+                <div class="stat-label">Total Quotes</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="pendingOrders">0</div>
-                <div class="stat-label">Pending</div>
+                <div class="stat-number" id="draftQuotes">0</div>
+                <div class="stat-label">Draft</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="deliveredOrders">0</div>
-                <div class="stat-label">Delivered</div>
+                <div class="stat-number" id="sentQuotes">0</div>
+                <div class="stat-label">Sent</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="totalRevenue">$0</div>
-                <div class="stat-label">Total Revenue</div>
+                <div class="stat-number" id="acceptedQuotes">0</div>
+                <div class="stat-label">Accepted</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="paidAmount">$0</div>
-                <div class="stat-label">Paid Amount</div>
+                <div class="stat-number" id="totalValue">$0</div>
+                <div class="stat-label">Total Value</div>
             </div>
         </div>
 
         <main class="main-content">
-            <section class="add-order-section">
+            <section class="add-quote-section">
                 <h2 class="section-title">
-                    🛒 Add New Order
+                    📝 Create New Quotation
                 </h2>
                 <div class="form-grid">
                     <div class="form-group">
@@ -654,30 +697,25 @@
                         <input type="tel" id="customerPhone" class="form-input" placeholder="+1 (555) 123-4567">
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="orderDate">Order Date</label>
-                        <input type="date" id="orderDate" class="form-input">
+                        <label class="form-label" for="customerCompany">Company</label>
+                        <input type="text" id="customerCompany" class="form-input" placeholder="Company Name">
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="dueDate">Due Date</label>
-                        <input type="date" id="dueDate" class="form-input">
+                        <label class="form-label" for="quoteDate">Quote Date</label>
+                        <input type="date" id="quoteDate" class="form-input">
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="orderStatus">Order Status</label>
-                        <select id="orderStatus" class="form-select">
-                            <option value="pending">📋 Pending</option>
-                            <option value="processing">⚙️ Processing</option>
-                            <option value="shipped">🚚 Shipped</option>
-                            <option value="delivered">✅ Delivered</option>
-                            <option value="cancelled">❌ Cancelled</option>
-                        </select>
+                        <label class="form-label" for="validUntil">Valid Until</label>
+                        <input type="date" id="validUntil" class="form-input">
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="paymentStatus">Payment Status</label>
-                        <select id="paymentStatus" class="form-select">
-                            <option value="unpaid">💳 Unpaid</option>
-                            <option value="partial">💰 Partial</option>
-                            <option value="paid">✅ Paid</option>
-                            <option value="refunded">↩️ Refunded</option>
+                        <label class="form-label" for="quoteStatus">Status</label>
+                        <select id="quoteStatus" class="form-select">
+                            <option value="draft">📝 Draft</option>
+                            <option value="sent">📤 Sent</option>
+                            <option value="accepted">✅ Accepted</option>
+                            <option value="rejected">❌ Rejected</option>
+                            <option value="expired">⏰ Expired</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -689,86 +727,100 @@
                         </select>
                     </div>
                     <div class="form-group full-width">
-                        <label class="form-label" for="shippingAddress">Shipping Address</label>
-                        <textarea id="shippingAddress" class="form-textarea" placeholder="123 Main St, City, State, ZIP"></textarea>
+                        <label class="form-label" for="projectDescription">Project Description</label>
+                        <textarea id="projectDescription" class="form-textarea" placeholder="Describe the project or service requirements..."></textarea>
                     </div>
                     <div class="form-group full-width">
-                        <label class="form-label" for="orderNotes">Order Notes</label>
-                        <textarea id="orderNotes" class="form-textarea" placeholder="Special instructions, notes, or requirements..."></textarea>
+                        <label class="form-label" for="termsConditions">Terms & Conditions</label>
+                        <textarea id="termsConditions" class="form-textarea" placeholder="Payment terms, delivery conditions, warranty information..."></textarea>
                     </div>
                 </div>
 
-                <div class="order-items-form">
-                    <h3 style="margin-bottom: 16px; color: #2d3748;">Order Items</h3>
-                    <div id="orderItems">
+                <div class="quote-items-form">
+                    <h3 style="margin-bottom: 16px; color: #2d3748;">Quote Items</h3>
+                    <div id="quoteItems">
                         <div class="item-form-row">
                             <div>
-                                <input type="text" class="form-input item-name" placeholder="Product/Service name">
+                                <input type="text" class="form-input item-description" placeholder="Item description">
                             </div>
                             <div>
                                 <input type="number" class="form-input item-quantity" placeholder="Qty" min="1" value="1">
                             </div>
                             <div>
-                                <input type="number" class="form-input item-price" placeholder="Price" min="0" step="0.01">
+                                <input type="number" class="form-input item-unit-price" placeholder="Unit Price" min="0" step="0.01">
                             </div>
                             <div>
-                                <button type="button" class="remove-item-btn" onclick="removeOrderItem(this)">🗑️</button>
+                                <button type="button" class="remove-item-btn" onclick="removeQuoteItem(this)">🗑️</button>
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-secondary btn-small" onclick="addOrderItem()" style="margin-top: 12px;">
+                    <button type="button" class="btn btn-secondary btn-small" onclick="addQuoteItem()" style="margin-top: 12px;">
                         ➕ Add Item
                     </button>
                 </div>
 
+                <div class="totals-section">
+                    <h3 style="margin-bottom: 16px; color: #2d3748;">Pricing & Totals</h3>
+                    <div class="totals-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="discountPercent">Discount (%)</label>
+                            <input type="number" id="discountPercent" class="form-input" placeholder="0" min="0" max="100" step="0.1" oninput="calculateTotals()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="taxPercent">Tax (%)</label>
+                            <input type="number" id="taxPercent" class="form-input" placeholder="0" min="0" max="100" step="0.1" oninput="calculateTotals()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Total Amount</label>
+                            <input type="text" id="totalAmount" class="form-input" readonly style="background: #f7fafc; font-weight: bold;">
+                        </div>
+                    </div>
+                </div>
+
                 <div style="margin-top: 24px;">
-                    <button class="btn btn-primary" onclick="addOrder()">
-                        📦 Create Order
+                    <button class="btn btn-primary" onclick="createQuote()">
+                        💼 Create Quote
                     </button>
-                    <button class="btn btn-secondary" onclick="clearOrderForm()" style="margin-left: 12px;">
+                    <button class="btn btn-secondary" onclick="clearQuoteForm()" style="margin-left: 12px;">
                         🗑️ Clear Form
                     </button>
                 </div>
             </section>
 
             <div class="search-container">
-                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search orders by customer, order ID, or notes..." onkeyup="filterOrders()">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search quotes by customer, quote ID, or description..." onkeyup="filterQuotes()">
             </div>
 
             <div class="filters-container">
-                <select id="statusFilter" class="filter-select" onchange="filterOrders()">
+                <select id="statusFilter" class="filter-select" onchange="filterQuotes()">
                     <option value="">All Statuses</option>
-                    <option value="pending">Pending</option>
-                    <option value="processing">Processing</option>
-                    <option value="shipped">Shipped</option>
-                    <option value="delivered">Delivered</option>
-                    <option value="cancelled">Cancelled</option>
+                    <option value="draft">Draft</option>
+                    <option value="sent">Sent</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="expired">Expired</option>
                 </select>
-                <select id="paymentFilter" class="filter-select" onchange="filterOrders()">
-                    <option value="">All Payments</option>
-                    <option value="unpaid">Unpaid</option>
-                    <option value="partial">Partial</option>
-                    <option value="paid">Paid</option>
-                    <option value="refunded">Refunded</option>
-                </select>
-                <select id="priorityFilter" class="filter-select" onchange="filterOrders()">
+                <select id="priorityFilter" class="filter-select" onchange="filterQuotes()">
                     <option value="">All Priorities</option>
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
                     <option value="low">Low</option>
                 </select>
+                <button class="btn btn-secondary btn-small" onclick="checkExpiredQuotes()">
+                    ⏰ Check Expired
+                </button>
             </div>
 
-            <section class="orders-container">
-                <div class="orders-header">
-                    <span>📋 Customer Orders (<span id="orderCount">0</span>)</span>
+            <section class="quotes-container">
+                <div class="quotes-header">
+                    <span>💼 Quotations (<span id="quoteCount">0</span>)</span>
                     <span id="filteredInfo"></span>
                 </div>
-                <div id="ordersList">
+                <div id="quotesList">
                     <div class="empty-state">
-                        <div class="empty-icon">📦</div>
-                        <h3>No orders yet</h3>
-                        <p>Start by creating your first customer order above</p>
+                        <div class="empty-icon">💼</div>
+                        <h3>No quotations yet</h3>
+                        <p>Start by creating your first customer quotation above</p>
                     </div>
                 </div>
             </section>
@@ -778,62 +830,71 @@
     <div id="notification" class="notification"></div>
 
     <script>
-        let orders = [
+        let quotes = [
             {
-                id: 1001,
-                customerName: 'John Smith',
-                customerEmail: 'john.smith@email.com',
+                id: 2001,
+                customerName: 'ABC Corporation',
+                customerEmail: 'procurement@abc-corp.com',
                 customerPhone: '+1 (555) 123-4567',
-                orderDate: '2025-06-15',
-                dueDate: '2025-06-25',
-                orderStatus: 'delivered',
-                paymentStatus: 'paid',
+                customerCompany: 'ABC Corporation',
+                quoteDate: '2025-06-15',
+                validUntil: '2025-07-15',
+                quoteStatus: 'sent',
                 priority: 'high',
-                shippingAddress: '123 Main St, New York, NY 10001',
-                orderNotes: 'Customer prefers morning delivery',
+                projectDescription: 'Complete office renovation including furniture and IT setup',
+                termsConditions: 'Payment: 50% upfront, 50% on completion. Delivery: 4-6 weeks. Warranty: 2 years.',
+                discountPercent: 10,
+                taxPercent: 8.5,
                 items: [
-                    { name: 'Premium Widget', quantity: 2, price: 150.00 },
-                    { name: 'Standard Service', quantity: 1, price: 75.00 }
+                    { description: 'Office Furniture Package', quantity: 15, unitPrice: 800.00 },
+                    { description: 'IT Equipment Setup', quantity: 1, unitPrice: 5000.00 },
+                    { description: 'Interior Design Consultation', quantity: 20, unitPrice: 150.00 }
                 ]
             },
             {
-                id: 1002,
-                customerName: 'Emily Johnson',
-                customerEmail: 'emily.j@example.com',
+                id: 2002,
+                customerName: 'Sarah Johnson',
+                customerEmail: 'sarah@homeremodel.com',
                 customerPhone: '+1 (555) 987-6543',
-                orderDate: '2025-06-18',
-                dueDate: '2025-06-30',
-                orderStatus: 'processing',
-                paymentStatus: 'partial',
+                customerCompany: 'Johnson Residence',
+                quoteDate: '2025-06-18',
+                validUntil: '2025-07-01',
+                quoteStatus: 'draft',
                 priority: 'medium',
-                shippingAddress: '456 Oak Ave, Los Angeles, CA 90210',
-                orderNotes: 'Rush order - customer needs by end of month',
+                projectDescription: 'Kitchen remodeling with custom cabinets and countertops',
+                termsConditions: 'Payment: 30% upfront, 40% mid-project, 30% completion. Timeline: 8-10 weeks.',
+                discountPercent: 5,
+                taxPercent: 7.25,
                 items: [
-                    { name: 'Custom Design', quantity: 1, price: 500.00 },
-                    { name: 'Installation Service', quantity: 1, price: 200.00 }
+                    { description: 'Custom Kitchen Cabinets', quantity: 1, unitPrice: 8500.00 },
+                    { description: 'Granite Countertops', quantity: 1, unitPrice: 3200.00 },
+                    { description: 'Installation & Labor', quantity: 1, unitPrice: 2800.00 }
                 ]
             },
             {
-                id: 1003,
-                customerName: 'Michael Brown',
-                customerEmail: 'mike.brown@company.com',
+                id: 2003,
+                customerName: 'Tech Startup Inc',
+                customerEmail: 'admin@techstartup.com',
                 customerPhone: '+1 (555) 456-7890',
-                orderDate: '2025-06-20',
-                dueDate: '2025-07-05',
-                orderStatus: 'pending',
-                paymentStatus: 'unpaid',
-                priority: 'low',
-                shippingAddress: '789 Pine Rd, Chicago, IL 60601',
-                orderNotes: 'Corporate order - requires invoice',
+                customerCompany: 'Tech Startup Inc',
+                quoteDate: '2025-06-20',
+                validUntil: '2025-06-25',
+                quoteStatus: 'accepted',
+                priority: 'high',
+                projectDescription: 'Software development and consulting services',
+                termsConditions: 'Monthly billing, Net 30 payment terms. Support included for 6 months.',
+                discountPercent: 15,
+                taxPercent: 0,
                 items: [
-                    { name: 'Business Package', quantity: 3, price: 100.00 },
-                    { name: 'Support Package', quantity: 1, price: 150.00 }
+                    { description: 'Custom Software Development', quantity: 200, unitPrice: 125.00 },
+                    { description: 'Project Management', quantity: 40, unitPrice: 100.00 },
+                    { description: 'Testing & Quality Assurance', quantity: 60, unitPrice: 85.00 }
                 ]
             }
         ];
 
-        let editingOrderId = null;
-        let nextOrderId = 1004;
+        let editingQuoteId = null;
+        let nextQuoteId = 2004;
 
         function formatCurrency(amount) {
             return new Intl.NumberFormat('en-US', {
@@ -866,179 +927,222 @@
             }, 3000);
         }
 
-        function calculateOrderTotal(items) {
-            return items.reduce((total, item) => total + (item.quantity * item.price), 0);
+        function calculateQuoteTotal(quote) {
+            const subtotal = quote.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+            const discountAmount = subtotal * (quote.discountPercent || 0) / 100;
+            const afterDiscount = subtotal - discountAmount;
+            const taxAmount = afterDiscount * (quote.taxPercent || 0) / 100;
+            return afterDiscount + taxAmount;
+        }
+
+        function calculateTotals() {
+            const items = getQuoteItems();
+            const subtotal = items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+            const discountPercent = parseFloat(document.getElementById('discountPercent').value) || 0;
+            const taxPercent = parseFloat(document.getElementById('taxPercent').value) || 0;
+            
+            const discountAmount = subtotal * discountPercent / 100;
+            const afterDiscount = subtotal - discountAmount;
+            const taxAmount = afterDiscount * taxPercent / 100;
+            const total = afterDiscount + taxAmount;
+            
+            document.getElementById('totalAmount').value = formatCurrency(total);
         }
 
         function updateStats() {
-            const totalOrders = orders.length;
-            const pendingOrders = orders.filter(order => order.orderStatus === 'pending').length;
-            const deliveredOrders = orders.filter(order => order.orderStatus === 'delivered').length;
-            const totalRevenue = orders.reduce((sum, order) => sum + calculateOrderTotal(order.items), 0);
-            const paidAmount = orders
-                .filter(order => order.paymentStatus === 'paid')
-                .reduce((sum, order) => sum + calculateOrderTotal(order.items), 0);
+            const totalQuotes = quotes.length;
+            const draftQuotes = quotes.filter(quote => quote.quoteStatus === 'draft').length;
+            const sentQuotes = quotes.filter(quote => quote.quoteStatus === 'sent').length;
+            const acceptedQuotes = quotes.filter(quote => quote.quoteStatus === 'accepted').length;
+            const totalValue = quotes.reduce((sum, quote) => sum + calculateQuoteTotal(quote), 0);
 
-            document.getElementById('totalOrders').textContent = totalOrders;
-            document.getElementById('pendingOrders').textContent = pendingOrders;
-            document.getElementById('deliveredOrders').textContent = deliveredOrders;
-            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
-            document.getElementById('paidAmount').textContent = formatCurrency(paidAmount);
+            document.getElementById('totalQuotes').textContent = totalQuotes;
+            document.getElementById('draftQuotes').textContent = draftQuotes;
+            document.getElementById('sentQuotes').textContent = sentQuotes;
+            document.getElementById('acceptedQuotes').textContent = acceptedQuotes;
+            document.getElementById('totalValue').textContent = formatCurrency(totalValue);
         }
 
-        function addOrderItem() {
-            const container = document.getElementById('orderItems');
+        function addQuoteItem() {
+            const container = document.getElementById('quoteItems');
             const newRow = document.createElement('div');
             newRow.className = 'item-form-row';
             newRow.innerHTML = `
                 <div>
-                    <input type="text" class="form-input item-name" placeholder="Product/Service name">
+                    <input type="text" class="form-input item-description" placeholder="Item description">
                 </div>
                 <div>
-                    <input type="number" class="form-input item-quantity" placeholder="Qty" min="1" value="1">
+                    <input type="number" class="form-input item-quantity" placeholder="Qty" min="1" value="1" oninput="calculateTotals()">
                 </div>
                 <div>
-                    <input type="number" class="form-input item-price" placeholder="Price" min="0" step="0.01">
+                    <input type="number" class="form-input item-unit-price" placeholder="Unit Price" min="0" step="0.01" oninput="calculateTotals()">
                 </div>
                 <div>
-                    <button type="button" class="remove-item-btn" onclick="removeOrderItem(this)">🗑️</button>
+                    <button type="button" class="remove-item-btn" onclick="removeQuoteItem(this)">🗑️</button>
                 </div>
             `;
             container.appendChild(newRow);
         }
 
-        function removeOrderItem(button) {
+        function removeQuoteItem(button) {
             const row = button.closest('.item-form-row');
-            const container = document.getElementById('orderItems');
+            const container = document.getElementById('quoteItems');
             if (container.children.length > 1) {
                 row.remove();
+                calculateTotals();
             } else {
                 showNotification('At least one item is required', 'error');
             }
         }
 
-        function getOrderItems() {
+        function getQuoteItems() {
             const rows = document.querySelectorAll('.item-form-row');
             const items = [];
             
             rows.forEach(row => {
-                const name = row.querySelector('.item-name').value.trim();
+                const description = row.querySelector('.item-description').value.trim();
                 const quantity = parseInt(row.querySelector('.item-quantity').value) || 1;
-                const price = parseFloat(row.querySelector('.item-price').value) || 0;
+                const unitPrice = parseFloat(row.querySelector('.item-unit-price').value) || 0;
                 
-                if (name) {
-                    items.push({ name, quantity, price });
+                if (description) {
+                    items.push({ description, quantity, unitPrice });
                 }
             });
             
             return items;
         }
 
-        function clearOrderItems() {
-            const container = document.getElementById('orderItems');
+        function clearQuoteItems() {
+            const container = document.getElementById('quoteItems');
             container.innerHTML = `
                 <div class="item-form-row">
                     <div>
-                        <input type="text" class="form-input item-name" placeholder="Product/Service name">
+                        <input type="text" class="form-input item-description" placeholder="Item description">
                     </div>
                     <div>
-                        <input type="number" class="form-input item-quantity" placeholder="Qty" min="1" value="1">
+                        <input type="number" class="form-input item-quantity" placeholder="Qty" min="1" value="1" oninput="calculateTotals()">
                     </div>
                     <div>
-                        <input type="number" class="form-input item-price" placeholder="Price" min="0" step="0.01">
+                        <input type="number" class="form-input item-unit-price" placeholder="Unit Price" min="0" step="0.01" oninput="calculateTotals()">
                     </div>
                     <div>
-                        <button type="button" class="remove-item-btn" onclick="removeOrderItem(this)">🗑️</button>
+                        <button type="button" class="remove-item-btn" onclick="removeQuoteItem(this)">🗑️</button>
                     </div>
                 </div>
             `;
         }
 
-        function renderOrders(ordersToRender = orders) {
-            const ordersList = document.getElementById('ordersList');
-            const orderCount = document.getElementById('orderCount');
+        function isQuoteExpired(quote) {
+            if (!quote.validUntil) return false;
+            const today = new Date();
+            const validUntil = new Date(quote.validUntil);
+            return today > validUntil && quote.quoteStatus === 'sent';
+        }
+
+        function checkExpiredQuotes() {
+            let expiredCount = 0;
+            quotes.forEach(quote => {
+                if (isQuoteExpired(quote)) {
+                    quote.quoteStatus = 'expired';
+                    expiredCount++;
+                }
+            });
             
-            orderCount.textContent = ordersToRender.length;
+            if (expiredCount > 0) {
+                renderQuotes();
+                updateStats();
+                saveToStorage();
+                showNotification(`${expiredCount} quote(s) marked as expired`);
+            } else {
+                showNotification('No expired quotes found');
+            }
+        }
+
+        function renderQuotes(quotesToRender = quotes) {
+            const quotesList = document.getElementById('quotesList');
+            const quoteCount = document.getElementById('quoteCount');
             
-            if (ordersToRender.length === 0) {
-                ordersList.innerHTML = `
+            quoteCount.textContent = quotesToRender.length;
+            
+            if (quotesToRender.length === 0) {
+                quotesList.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">🔍</div>
-                        <h3>No orders found</h3>
+                        <h3>No quotes found</h3>
                         <p>Try adjusting your search or filters</p>
                     </div>
                 `;
                 return;
             }
 
-            ordersList.innerHTML = ordersToRender.map(order => {
-                const isEditing = editingOrderId === order.id;
-                const orderTotal = calculateOrderTotal(order.items);
+            quotesList.innerHTML = quotesToRender.map(quote => {
+                const isEditing = editingQuoteId === quote.id;
+                const quoteTotal = calculateQuoteTotal(quote);
+                const subtotal = quote.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+                const discountAmount = subtotal * (quote.discountPercent || 0) / 100;
+                const afterDiscount = subtotal - discountAmount;
+                const taxAmount = afterDiscount * (quote.taxPercent || 0) / 100;
+                const expired = isQuoteExpired(quote);
                 
                 if (isEditing) {
                     return `
-                        <div class="order-card edit-mode">
+                        <div class="quote-card edit-mode">
                             <div class="edit-form">
-                                <h3 style="margin-bottom: 16px;">Edit Order #${order.id}</h3>
+                                <h3 style="margin-bottom: 16px;">Edit Quote #${quote.id}</h3>
                                 <div class="form-grid">
                                     <div class="form-group">
                                         <label class="form-label">Customer Name</label>
-                                        <input type="text" id="edit-name-${order.id}" class="form-input" value="${order.customerName}">
+                                        <input type="text" id="edit-name-${quote.id}" class="form-input" value="${quote.customerName}">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Customer Email</label>
-                                        <input type="email" id="edit-email-${order.id}" class="form-input" value="${order.customerEmail || ''}">
+                                        <input type="email" id="edit-email-${quote.id}" class="form-input" value="${quote.customerEmail || ''}">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Customer Phone</label>
-                                        <input type="tel" id="edit-phone-${order.id}" class="form-input" value="${order.customerPhone || ''}">
+                                        <input type="tel" id="edit-phone-${quote.id}" class="form-input" value="${quote.customerPhone || ''}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Order Date</label>
-                                        <input type="date" id="edit-order-date-${order.id}" class="form-input" value="${order.orderDate || ''}">
+                                        <label class="form-label">Company</label>
+                                        <input type="text" id="edit-company-${quote.id}" class="form-input" value="${quote.customerCompany || ''}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Due Date</label>
-                                        <input type="date" id="edit-due-date-${order.id}" class="form-input" value="${order.dueDate || ''}">
+                                        <label class="form-label">Quote Date</label>
+                                        <input type="date" id="edit-quote-date-${quote.id}" class="form-input" value="${quote.quoteDate || ''}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Order Status</label>
-                                        <select id="edit-status-${order.id}" class="form-select">
-                                            <option value="pending" ${order.orderStatus === 'pending' ? 'selected' : ''}>📋 Pending</option>
-                                            <option value="processing" ${order.orderStatus === 'processing' ? 'selected' : ''}>⚙️ Processing</option>
-                                            <option value="shipped" ${order.orderStatus === 'shipped' ? 'selected' : ''}>🚚 Shipped</option>
-                                            <option value="delivered" ${order.orderStatus === 'delivered' ? 'selected' : ''}>✅ Delivered</option>
-                                            <option value="cancelled" ${order.orderStatus === 'cancelled' ? 'selected' : ''}>❌ Cancelled</option>
-                                        </select>
+                                        <label class="form-label">Valid Until</label>
+                                        <input type="date" id="edit-valid-until-${quote.id}" class="form-input" value="${quote.validUntil || ''}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Payment Status</label>
-                                        <select id="edit-payment-${order.id}" class="form-select">
-                                            <option value="unpaid" ${order.paymentStatus === 'unpaid' ? 'selected' : ''}>💳 Unpaid</option>
-                                            <option value="partial" ${order.paymentStatus === 'partial' ? 'selected' : ''}>💰 Partial</option>
-                                            <option value="paid" ${order.paymentStatus === 'paid' ? 'selected' : ''}>✅ Paid</option>
-                                            <option value="refunded" ${order.paymentStatus === 'refunded' ? 'selected' : ''}>↩️ Refunded</option>
+                                        <label class="form-label">Status</label>
+                                        <select id="edit-status-${quote.id}" class="form-select">
+                                            <option value="draft" ${quote.quoteStatus === 'draft' ? 'selected' : ''}>📝 Draft</option>
+                                            <option value="sent" ${quote.quoteStatus === 'sent' ? 'selected' : ''}>📤 Sent</option>
+                                            <option value="accepted" ${quote.quoteStatus === 'accepted' ? 'selected' : ''}>✅ Accepted</option>
+                                            <option value="rejected" ${quote.quoteStatus === 'rejected' ? 'selected' : ''}>❌ Rejected</option>
+                                            <option value="expired" ${quote.quoteStatus === 'expired' ? 'selected' : ''}>⏰ Expired</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Priority</label>
-                                        <select id="edit-priority-${order.id}" class="form-select">
-                                            <option value="low" ${order.priority === 'low' ? 'selected' : ''}>🟢 Low</option>
-                                            <option value="medium" ${order.priority === 'medium' ? 'selected' : ''}>🟡 Medium</option>
-                                            <option value="high" ${order.priority === 'high' ? 'selected' : ''}>🔴 High</option>
+                                        <select id="edit-priority-${quote.id}" class="form-select">
+                                            <option value="low" ${quote.priority === 'low' ? 'selected' : ''}>🟢 Low</option>
+                                            <option value="medium" ${quote.priority === 'medium' ? 'selected' : ''}>🟡 Medium</option>
+                                            <option value="high" ${quote.priority === 'high' ? 'selected' : ''}>🔴 High</option>
                                         </select>
                                     </div>
                                     <div class="form-group full-width">
-                                        <label class="form-label">Shipping Address</label>
-                                        <textarea id="edit-address-${order.id}" class="form-textarea">${order.shippingAddress || ''}</textarea>
+                                        <label class="form-label">Project Description</label>
+                                        <textarea id="edit-description-${quote.id}" class="form-textarea">${quote.projectDescription || ''}</textarea>
                                     </div>
                                     <div class="form-group full-width">
-                                        <label class="form-label">Order Notes</label>
-                                        <textarea id="edit-notes-${order.id}" class="form-textarea">${order.orderNotes || ''}</textarea>
+                                        <label class="form-label">Terms & Conditions</label>
+                                        <textarea id="edit-terms-${quote.id}" class="form-textarea">${quote.termsConditions || ''}</textarea>
                                     </div>
                                 </div>
                                 <div class="edit-actions">
-                                    <button class="btn btn-success btn-small" onclick="saveEdit(${order.id})">
+                                    <button class="btn btn-success btn-small" onclick="saveEdit(${quote.id})">
                                         ✅ Save Changes
                                     </button>
                                     <button class="btn btn-secondary btn-small" onclick="cancelEdit()">
@@ -1051,92 +1155,111 @@
                 }
 
                 return `
-                    <div class="order-card">
-                        <div class="order-header">
+                    <div class="quote-card">
+                        <div class="quote-header">
                             <div>
-                                <div class="order-id">Order #${order.id}</div>
-                                <div class="order-title">${order.customerName}</div>
+                                <div class="quote-id">Quote #${quote.id}</div>
+                                <div class="quote-title">${quote.customerName}${quote.customerCompany ? ` - ${quote.customerCompany}` : ''}</div>
                             </div>
-                            <div class="order-actions">
-                                <button class="action-btn edit-btn" onclick="startEdit(${order.id})" title="Edit Order">
+                            <div class="quote-actions">
+                                <button class="action-btn edit-btn" onclick="startEdit(${quote.id})" title="Edit Quote">
                                     ✏️
                                 </button>
-                                <button class="action-btn delete-btn" onclick="deleteOrder(${order.id})" title="Delete Order">
+                                <button class="action-btn convert-btn" onclick="convertToOrder(${quote.id})" title="Convert to Order">
+                                    🔄
+                                </button>
+                                <button class="action-btn print-btn" onclick="printQuote(${quote.id})" title="Print Quote">
+                                    🖨️
+                                </button>
+                                <button class="action-btn delete-btn" onclick="deleteQuote(${quote.id})" title="Delete Quote">
                                     🗑️
                                 </button>
                             </div>
                         </div>
                         
                         <div class="status-badges">
-                            <span class="status-badge status-${order.orderStatus}">
-                                ${order.orderStatus.toUpperCase()}
+                            <span class="status-badge status-${quote.quoteStatus}">
+                                ${quote.quoteStatus.toUpperCase()}
                             </span>
-                            <span class="status-badge payment-${order.paymentStatus}">
-                                ${order.paymentStatus.toUpperCase()}
+                            <span class="status-badge priority-${quote.priority}">
+                                ${quote.priority.toUpperCase()} PRIORITY
                             </span>
+                            ${expired ? '<span class="status-badge status-expired">EXPIRED</span>' : ''}
                         </div>
                         
-                        <div class="order-details">
+                        <div class="quote-details">
                             <div class="detail-item">
-                                <div class="detail-label">Order Date</div>
-                                <div class="detail-value">${formatDate(order.orderDate)}</div>
+                                <div class="detail-label">Quote Date</div>
+                                <div class="detail-value">${formatDate(quote.quoteDate)}</div>
                             </div>
                             <div class="detail-item">
-                                <div class="detail-label">Due Date</div>
-                                <div class="detail-value">${formatDate(order.dueDate)}</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Priority</div>
-                                <div class="detail-value">${order.priority.charAt(0).toUpperCase() + order.priority.slice(1)}</div>
+                                <div class="detail-label">Valid Until</div>
+                                <div class="detail-value">${formatDate(quote.validUntil)}</div>
                             </div>
                             <div class="detail-item">
                                 <div class="detail-label">Total Amount</div>
-                                <div class="detail-value">${formatCurrency(orderTotal)}</div>
+                                <div class="detail-value">${formatCurrency(quoteTotal)}</div>
                             </div>
-                            ${order.customerEmail ? `
+                            ${quote.customerEmail ? `
                             <div class="detail-item">
                                 <div class="detail-label">Email</div>
-                                <div class="detail-value">${order.customerEmail}</div>
+                                <div class="detail-value">${quote.customerEmail}</div>
                             </div>
                             ` : ''}
-                            ${order.customerPhone ? `
+                            ${quote.customerPhone ? `
                             <div class="detail-item">
                                 <div class="detail-label">Phone</div>
-                                <div class="detail-value">${order.customerPhone}</div>
+                                <div class="detail-value">${quote.customerPhone}</div>
                             </div>
                             ` : ''}
                         </div>
                         
-                        ${order.items.length > 0 ? `
-                        <div class="order-items">
-                            <div class="items-header">📦 Order Items</div>
-                            ${order.items.map(item => `
+                        ${quote.projectDescription ? `
+                        <div style="margin-top: 16px; padding: 12px; background: #f8fafc; border-radius: 8px;">
+                            <strong>📋 Project Description:</strong><br>
+                            ${quote.projectDescription}
+                        </div>
+                        ` : ''}
+                        
+                        ${quote.items.length > 0 ? `
+                        <div class="quote-items">
+                            <div class="items-header">📦 Quote Items</div>
+                            ${quote.items.map(item => `
                                 <div class="item-row">
-                                    <span>${item.name}</span>
+                                    <span>${item.description}</span>
                                     <span>Qty: ${item.quantity}</span>
-                                    <span>${formatCurrency(item.price)}</span>
-                                    <span>${formatCurrency(item.quantity * item.price)}</span>
+                                    <span>${formatCurrency(item.unitPrice)}</span>
+                                    <span>${formatCurrency(item.quantity * item.unitPrice)}</span>
                                 </div>
                             `).join('')}
-                            <div class="item-row">
-                                <span><strong>Total:</strong></span>
-                                <span></span>
-                                <span></span>
-                                <span><strong>${formatCurrency(orderTotal)}</strong></span>
+                            <div class="quote-summary">
+                                <div class="summary-row">
+                                    <span>Subtotal:</span>
+                                    <span>${formatCurrency(subtotal)}</span>
+                                </div>
+                                ${quote.discountPercent > 0 ? `
+                                <div class="summary-row">
+                                    <span>Discount (${quote.discountPercent}%):</span>
+                                    <span>-${formatCurrency(discountAmount)}</span>
+                                </div>
+                                ` : ''}
+                                ${quote.taxPercent > 0 ? `
+                                <div class="summary-row">
+                                    <span>Tax (${quote.taxPercent}%):</span>
+                                    <span>${formatCurrency(taxAmount)}</span>
+                                </div>
+                                ` : ''}
+                                <div class="summary-row">
+                                    <span><strong>Total:</strong></span>
+                                    <span><strong>${formatCurrency(quoteTotal)}</strong></span>
+                                </div>
                             </div>
                         </div>
                         ` : ''}
                         
-                        ${order.shippingAddress ? `
-                        <div style="margin-top: 16px; padding: 12px; background: #f8fafc; border-radius: 8px;">
-                            <strong>📍 Shipping Address:</strong><br>
-                            ${order.shippingAddress}
-                        </div>
-                        ` : ''}
-                        
-                        ${order.orderNotes ? `
+                        ${quote.termsConditions ? `
                         <div style="margin-top: 16px; padding: 12px; background: #f8fafc; border-radius: 8px; font-style: italic;">
-                            📝 <strong>Notes:</strong> ${order.orderNotes}
+                            📝 <strong>Terms & Conditions:</strong> ${quote.termsConditions}
                         </div>
                         ` : ''}
                     </div>
@@ -1144,55 +1267,57 @@
             }).join('');
         }
 
-        function addOrder() {
+        function createQuote() {
             const customerName = document.getElementById('customerName').value.trim();
             if (!customerName) {
                 showNotification('Please enter a customer name', 'error');
                 return;
             }
 
-            const items = getOrderItems();
+            const items = getQuoteItems();
             if (items.length === 0) {
                 showNotification('Please add at least one item', 'error');
                 return;
             }
 
-            const newOrder = {
-                id: nextOrderId++,
+            const newQuote = {
+                id: nextQuoteId++,
                 customerName: customerName,
                 customerEmail: document.getElementById('customerEmail').value.trim(),
                 customerPhone: document.getElementById('customerPhone').value.trim(),
-                orderDate: document.getElementById('orderDate').value || new Date().toISOString().split('T')[0],
-                dueDate: document.getElementById('dueDate').value,
-                orderStatus: document.getElementById('orderStatus').value,
-                paymentStatus: document.getElementById('paymentStatus').value,
+                customerCompany: document.getElementById('customerCompany').value.trim(),
+                quoteDate: document.getElementById('quoteDate').value || new Date().toISOString().split('T')[0],
+                validUntil: document.getElementById('validUntil').value,
+                quoteStatus: document.getElementById('quoteStatus').value,
                 priority: document.getElementById('priority').value,
-                shippingAddress: document.getElementById('shippingAddress').value.trim(),
-                orderNotes: document.getElementById('orderNotes').value.trim(),
+                projectDescription: document.getElementById('projectDescription').value.trim(),
+                termsConditions: document.getElementById('termsConditions').value.trim(),
+                discountPercent: parseFloat(document.getElementById('discountPercent').value) || 0,
+                taxPercent: parseFloat(document.getElementById('taxPercent').value) || 0,
                 items: items
             };
 
-            orders.push(newOrder);
-            clearOrderForm();
-            renderOrders();
+            quotes.push(newQuote);
+            clearQuoteForm();
+            renderQuotes();
             updateStats();
             saveToStorage();
-            showNotification('✅ Order created successfully!');
+            showNotification('✅ Quote created successfully!');
         }
 
         function startEdit(id) {
-            editingOrderId = id;
-            renderOrders();
+            editingQuoteId = id;
+            renderQuotes();
         }
 
         function cancelEdit() {
-            editingOrderId = null;
-            renderOrders();
+            editingQuoteId = null;
+            renderQuotes();
         }
 
         function saveEdit(id) {
-            const order = orders.find(order => order.id === id);
-            if (!order) return;
+            const quote = quotes.find(quote => quote.id === id);
+            if (!quote) return;
 
             const customerName = document.getElementById(`edit-name-${id}`).value.trim();
             if (!customerName) {
@@ -1200,95 +1325,210 @@
                 return;
             }
 
-            order.customerName = customerName;
-            order.customerEmail = document.getElementById(`edit-email-${id}`).value.trim();
-            order.customerPhone = document.getElementById(`edit-phone-${id}`).value.trim();
-            order.orderDate = document.getElementById(`edit-order-date-${id}`).value;
-            order.dueDate = document.getElementById(`edit-due-date-${id}`).value;
-            order.orderStatus = document.getElementById(`edit-status-${id}`).value;
-            order.paymentStatus = document.getElementById(`edit-payment-${id}`).value;
-            order.priority = document.getElementById(`edit-priority-${id}`).value;
-            order.shippingAddress = document.getElementById(`edit-address-${id}`).value.trim();
-            order.orderNotes = document.getElementById(`edit-notes-${id}`).value.trim();
+            quote.customerName = customerName;
+            quote.customerEmail = document.getElementById(`edit-email-${id}`).value.trim();
+            quote.customerPhone = document.getElementById(`edit-phone-${id}`).value.trim();
+            quote.customerCompany = document.getElementById(`edit-company-${id}`).value.trim();
+            quote.quoteDate = document.getElementById(`edit-quote-date-${id}`).value;
+            quote.validUntil = document.getElementById(`edit-valid-until-${id}`).value;
+            quote.quoteStatus = document.getElementById(`edit-status-${id}`).value;
+            quote.priority = document.getElementById(`edit-priority-${id}`).value;
+            quote.projectDescription = document.getElementById(`edit-description-${id}`).value.trim();
+            quote.termsConditions = document.getElementById(`edit-terms-${id}`).value.trim();
 
-            editingOrderId = null;
-            renderOrders();
+            editingQuoteId = null;
+            renderQuotes();
             updateStats();
             saveToStorage();
-            showNotification('✅ Order updated successfully!');
+            showNotification('✅ Quote updated successfully!');
         }
 
-        function deleteOrder(id) {
-            if (confirm('Are you sure you want to delete this order? This action cannot be undone.')) {
-                orders = orders.filter(order => order.id !== id);
-                renderOrders();
+        function deleteQuote(id) {
+            if (confirm('Are you sure you want to delete this quote? This action cannot be undone.')) {
+                quotes = quotes.filter(quote => quote.id !== id);
+                renderQuotes();
                 updateStats();
                 saveToStorage();
-                showNotification('🗑️ Order deleted successfully!');
+                showNotification('🗑️ Quote deleted successfully!');
             }
         }
 
-        function clearOrderForm() {
+        function convertToOrder(id) {
+            const quote = quotes.find(quote => quote.id === id);
+            if (!quote) return;
+
+            if (confirm(`Convert Quote #${id} to an order? This will mark the quote as accepted.`)) {
+                quote.quoteStatus = 'accepted';
+                renderQuotes();
+                updateStats();
+                saveToStorage();
+                showNotification('✅ Quote converted to order successfully!');
+            }
+        }
+
+        function printQuote(id) {
+            const quote = quotes.find(quote => quote.id === id);
+            if (!quote) return;
+
+            // Create a printable version
+            const printWindow = window.open('', '_blank');
+            const quoteTotal = calculateQuoteTotal(quote);
+            const subtotal = quote.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+            const discountAmount = subtotal * (quote.discountPercent || 0) / 100;
+            const taxAmount = (subtotal - discountAmount) * (quote.taxPercent || 0) / 100;
+
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Quote #${quote.id}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        .header { text-align: center; margin-bottom: 30px; }
+                        .quote-info { margin-bottom: 20px; }
+                        .items-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        .items-table th, .items-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                        .items-table th { background-color: #f2f2f2; }
+                        .totals { text-align: right; margin-top: 20px; }
+                        .terms { margin-top: 30px; padding: 15px; background: #f9f9f9; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>QUOTATION</h1>
+                        <h2>Quote #${quote.id}</h2>
+                    </div>
+                    
+                    <div class="quote-info">
+                        <p><strong>Customer:</strong> ${quote.customerName}</p>
+                        ${quote.customerCompany ? `<p><strong>Company:</strong> ${quote.customerCompany}</p>` : ''}
+                        ${quote.customerEmail ? `<p><strong>Email:</strong> ${quote.customerEmail}</p>` : ''}
+                        ${quote.customerPhone ? `<p><strong>Phone:</strong> ${quote.customerPhone}</p>` : ''}
+                        <p><strong>Quote Date:</strong> ${formatDate(quote.quoteDate)}</p>
+                        <p><strong>Valid Until:</strong> ${formatDate(quote.validUntil)}</p>
+                    </div>
+
+                    ${quote.projectDescription ? `
+                    <div>
+                        <h3>Project Description</h3>
+                        <p>${quote.projectDescription}</p>
+                    </div>
+                    ` : ''}
+
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${quote.items.map(item => `
+                                <tr>
+                                    <td>${item.description}</td>
+                                    <td>${item.quantity}</td>
+                                    <td>${formatCurrency(item.unitPrice)}</td>
+                                    <td>${formatCurrency(item.quantity * item.unitPrice)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+
+                    <div class="totals">
+                        <p>Subtotal: ${formatCurrency(subtotal)}</p>
+                        ${quote.discountPercent > 0 ? `<p>Discount (${quote.discountPercent}%): -${formatCurrency(discountAmount)}</p>` : ''}
+                        ${quote.taxPercent > 0 ? `<p>Tax (${quote.taxPercent}%): ${formatCurrency(taxAmount)}</p>` : ''}
+                        <h3>Total: ${formatCurrency(quoteTotal)}</h3>
+                    </div>
+
+                    ${quote.termsConditions ? `
+                    <div class="terms">
+                        <h3>Terms & Conditions</h3>
+                        <p>${quote.termsConditions}</p>
+                    </div>
+                    ` : ''}
+                </body>
+                </html>
+            `);
+
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function clearQuoteForm() {
             document.getElementById('customerName').value = '';
             document.getElementById('customerEmail').value = '';
             document.getElementById('customerPhone').value = '';
-            document.getElementById('orderDate').value = '';
-            document.getElementById('dueDate').value = '';
-            document.getElementById('orderStatus').value = 'pending';
-            document.getElementById('paymentStatus').value = 'unpaid';
+            document.getElementById('customerCompany').value = '';
+            document.getElementById('quoteDate').value = '';
+            document.getElementById('validUntil').value = '';
+            document.getElementById('quoteStatus').value = 'draft';
             document.getElementById('priority').value = 'medium';
-            document.getElementById('shippingAddress').value = '';
-            document.getElementById('orderNotes').value = '';
-            clearOrderItems();
+            document.getElementById('projectDescription').value = '';
+            document.getElementById('termsConditions').value = '';
+            document.getElementById('discountPercent').value = '';
+            document.getElementById('taxPercent').value = '';
+            document.getElementById('totalAmount').value = '';
+            clearQuoteItems();
         }
 
-        function filterOrders() {
+        function filterQuotes() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const statusFilter = document.getElementById('statusFilter').value;
-            const paymentFilter = document.getElementById('paymentFilter').value;
             const priorityFilter = document.getElementById('priorityFilter').value;
 
-            let filteredOrders = orders.filter(order => {
+            let filteredQuotes = quotes.filter(quote => {
                 const matchesSearch = !searchTerm || 
-                    order.customerName.toLowerCase().includes(searchTerm) ||
-                    order.id.toString().includes(searchTerm) ||
-                    (order.customerEmail && order.customerEmail.toLowerCase().includes(searchTerm)) ||
-                    (order.orderNotes && order.orderNotes.toLowerCase().includes(searchTerm)) ||
-                    order.items.some(item => item.name.toLowerCase().includes(searchTerm));
+                    quote.customerName.toLowerCase().includes(searchTerm) ||
+                    quote.id.toString().includes(searchTerm) ||
+                    (quote.customerEmail && quote.customerEmail.toLowerCase().includes(searchTerm)) ||
+                    (quote.customerCompany && quote.customerCompany.toLowerCase().includes(searchTerm)) ||
+                    (quote.projectDescription && quote.projectDescription.toLowerCase().includes(searchTerm)) ||
+                    quote.items.some(item => item.description.toLowerCase().includes(searchTerm));
 
-                const matchesStatus = !statusFilter || order.orderStatus === statusFilter;
-                const matchesPayment = !paymentFilter || order.paymentStatus === paymentFilter;
-                const matchesPriority = !priorityFilter || order.priority === priorityFilter;
+                const matchesStatus = !statusFilter || quote.quoteStatus === statusFilter;
+                const matchesPriority = !priorityFilter || quote.priority === priorityFilter;
 
-                return matchesSearch && matchesStatus && matchesPayment && matchesPriority;
+                return matchesSearch && matchesStatus && matchesPriority;
             });
 
-            renderOrders(filteredOrders);
+            renderQuotes(filteredQuotes);
             
             const filteredInfo = document.getElementById('filteredInfo');
-            if (filteredOrders.length !== orders.length) {
-                filteredInfo.textContent = `Showing ${filteredOrders.length} of ${orders.length}`;
+            if (filteredQuotes.length !== quotes.length) {
+                filteredInfo.textContent = `Showing ${filteredQuotes.length} of ${quotes.length}`;
             } else {
                 filteredInfo.textContent = '';
             }
         }
 
         function saveToStorage() {
-            localStorage.setItem('customerOrders', JSON.stringify(orders));
-            localStorage.setItem('nextOrderId', nextOrderId.toString());
+            localStorage.setItem('quotations', JSON.stringify(quotes));
+            localStorage.setItem('nextQuoteId', nextQuoteId.toString());
         }
 
         function loadFromStorage() {
-            const saved = localStorage.getItem('customerOrders');
+            const saved = localStorage.getItem('quotations');
             if (saved) {
-                orders = JSON.parse(saved);
+                quotes = JSON.parse(saved);
             }
             
-            const savedNextId = localStorage.getItem('nextOrderId');
+            const savedNextId = localStorage.getItem('nextQuoteId');
             if (savedNextId) {
-                nextOrderId = parseInt(savedNextId);
+                nextQuoteId = parseInt(savedNextId);
             }
         }
+
+        // Event listeners for calculation
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('item-quantity') || 
+                e.target.classList.contains('item-unit-price') ||
+                e.target.id === 'discountPercent' ||
+                e.target.id === 'taxPercent') {
+                calculateTotals();
+            }
+        });
 
         // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
@@ -1303,24 +1543,34 @@
                 }
             }
             if (e.key === 'Escape') {
-                if (editingOrderId) {
+                if (editingQuoteId) {
                     cancelEdit();
                 }
             }
         });
 
-        // Auto-set order date to today
-        document.getElementById('orderDate').value = new Date().toISOString().split('T')[0];
+        // Set default dates
+        const today = new Date().toISOString().split('T')[0];
+        const nextMonth = new Date();
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        const nextMonthStr = nextMonth.toISOString().split('T')[0];
+
+        document.getElementById('quoteDate').value = today;
+        document.getElementById('validUntil').value = nextMonthStr;
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             loadFromStorage();
-            renderOrders();
+            renderQuotes();
             updateStats();
+            calculateTotals();
         });
 
         // Auto-save
         setInterval(saveToStorage, 10000); // Auto-save every 10 seconds
+
+        // Check for expired quotes on load
+        setTimeout(checkExpiredQuotes, 1000);
     </script>
 </body>
 </html>
