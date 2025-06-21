@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renovation Quotation Pro</title>
+    <title>Renovation Pro - Persistent Data</title>
     <style>
         * {
             margin: 0;
@@ -50,6 +50,18 @@
             font-size: 14px;
         }
 
+        .data-status {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(72, 187, 120, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
         .tab-navigation {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
@@ -59,6 +71,7 @@
             top: 80px;
             z-index: 99;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
         }
 
         .tab-btn {
@@ -73,6 +86,8 @@
             transition: all 0.3s ease;
             color: #718096;
             text-align: center;
+            white-space: nowrap;
+            min-width: 80px;
         }
 
         .tab-btn.active {
@@ -212,6 +227,11 @@
 
         .btn-warning {
             background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
             color: white;
         }
 
@@ -498,6 +518,10 @@
             background: #f56565;
         }
 
+        .notification.warning {
+            background: #ed8936;
+        }
+
         .saved-quotes {
             display: grid;
             gap: 12px;
@@ -557,6 +581,64 @@
             transition: all 0.3s ease;
         }
 
+        .settings-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .setting-item {
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .setting-title {
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .setting-description {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .data-manager {
+            display: grid;
+            gap: 12px;
+        }
+
+        .data-info {
+            background: #e6fffa;
+            border: 2px solid #4fd1c7;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .data-info h4 {
+            color: #2d3748;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .data-info p {
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        .storage-stats {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #4a5568;
+            margin-top: 8px;
+        }
+
         @media (max-width: 640px) {
             .header {
                 padding: 16px;
@@ -587,6 +669,14 @@
 
             .renovation-categories {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .data-status {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-top: 8px;
+                display: inline-block;
             }
         }
 
@@ -626,8 +716,9 @@
 <body>
     <div class="app-container">
         <header class="header">
-            <h1>🏗️ Renovation Quotation Pro</h1>
-            <p>Professional quotations for renovation projects</p>
+            <h1>🏗️ Renovation Pro</h1>
+            <p>Professional quotations with persistent data storage</p>
+            <div class="data-status" id="dataStatus">💾 Data Saved</div>
         </header>
 
         <nav class="tab-navigation">
@@ -635,6 +726,7 @@
             <button class="tab-btn" onclick="switchTab('project')">🏠 Project</button>
             <button class="tab-btn" onclick="switchTab('quote')">📋 Quote</button>
             <button class="tab-btn" onclick="switchTab('saved')">💾 Saved</button>
+            <button class="tab-btn" onclick="switchTab('settings')">⚙️ Settings</button>
         </nav>
 
         <div class="content-container">
@@ -645,53 +737,27 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label class="form-label" for="customerName">Customer Name *</label>
-                            <input type="text" id="customerName" class="form-input" placeholder="John & Jane Smith" oninput="updateQuote()">
+                            <input type="text" id="customerName" class="form-input" placeholder="John & Jane Smith">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="customerPhone">Phone Number</label>
-                            <input type="tel" id="customerPhone" class="form-input" placeholder="+1 (555) 123-4567" oninput="updateQuote()">
+                            <input type="tel" id="customerPhone" class="form-input" placeholder="+1 (555) 123-4567">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="customerEmail">Email Address</label>
-                            <input type="email" id="customerEmail" class="form-input" placeholder="john.smith@email.com" oninput="updateQuote()">
+                            <input type="email" id="customerEmail" class="form-input" placeholder="john.smith@email.com">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="projectDate">Project Start Date</label>
-                            <input type="date" id="projectDate" class="form-input" oninput="updateQuote()">
+                            <input type="date" id="projectDate" class="form-input">
                         </div>
                         <div class="form-group full-width">
                             <label class="form-label" for="propertyAddress">Property Address</label>
-                            <textarea id="propertyAddress" class="form-textarea" placeholder="123 Main Street, City, State, ZIP Code" oninput="updateQuote()"></textarea>
+                            <textarea id="propertyAddress" class="form-textarea" placeholder="123 Main Street, City, State, ZIP Code"></textarea>
                         </div>
                         <div class="form-group full-width">
                             <label class="form-label" for="projectDescription">Project Description</label>
-                            <textarea id="projectDescription" class="form-textarea" placeholder="Brief description of the renovation project..." oninput="updateQuote()"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2 class="section-title">🏢 Company Information</h2>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label" for="companyName">Company Name</label>
-                            <input type="text" id="companyName" class="form-input" placeholder="Smith Renovation Co." value="Elite Renovation Solutions" oninput="updateQuote()">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="companyPhone">Company Phone</label>
-                            <input type="tel" id="companyPhone" class="form-input" placeholder="+1 (555) 987-6543" value="+1 (555) 987-6543" oninput="updateQuote()">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="companyEmail">Company Email</label>
-                            <input type="email" id="companyEmail" class="form-input" placeholder="info@renovation.com" value="info@eliterenovation.com" oninput="updateQuote()">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="licenseNumber">License Number</label>
-                            <input type="text" id="licenseNumber" class="form-input" placeholder="LIC-123456" value="LIC-789456" oninput="updateQuote()">
-                        </div>
-                        <div class="form-group full-width">
-                            <label class="form-label" for="companyAddress">Company Address</label>
-                            <textarea id="companyAddress" class="form-textarea" placeholder="456 Business Ave, City, State, ZIP" oninput="updateQuote()">456 Business Avenue, Suite 200, Springfield, IL 62701</textarea>
+                            <textarea id="projectDescription" class="form-textarea" placeholder="Brief description of the renovation project..."></textarea>
                         </div>
                     </div>
                 </div>
@@ -752,11 +818,11 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label class="form-label" for="discountPercent">Discount (%)</label>
-                            <input type="number" id="discountPercent" class="form-input" placeholder="0" min="0" max="100" step="0.1" oninput="calculateTotals()">
+                            <input type="number" id="discountPercent" class="form-input" placeholder="0" min="0" max="100" step="0.1">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="taxPercent">Tax (%)</label>
-                            <input type="number" id="taxPercent" class="form-input" placeholder="8.5" min="0" max="100" step="0.1" value="8.5" oninput="calculateTotals()">
+                            <input type="number" id="taxPercent" class="form-input" placeholder="8.5" min="0" max="100" step="0.1">
                         </div>
                     </div>
                     <div class="totals-section" id="totalsSection">
@@ -855,14 +921,16 @@
 
                     <div style="margin-top: 30px; padding: 20px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #667eea;">
                         <h3 style="margin-bottom: 12px; color: #2d3748;">Terms & Conditions</h3>
-                        <ul style="color: #4a5568; font-size: 14px; line-height: 1.6;">
-                            <li>Quote valid for 30 days from date issued</li>
-                            <li>50% deposit required to begin work</li>
-                            <li>Final payment due upon completion</li>
-                            <li>All materials and labor included unless specified</li>
-                            <li>Changes to scope may affect final price</li>
-                            <li>Work guaranteed for 1 year from completion</li>
-                        </ul>
+                        <div id="quoteTerms">
+                            <ul style="color: #4a5568; font-size: 14px; line-height: 1.6;">
+                                <li>Quote valid for 30 days from date issued</li>
+                                <li>50% deposit required to begin work</li>
+                                <li>Final payment due upon completion</li>
+                                <li>All materials and labor included unless specified</li>
+                                <li>Changes to scope may affect final price</li>
+                                <li>Work guaranteed for 1 year from completion</li>
+                            </ul>
+                        </div>
                     </div>
 
                     <div style="margin-top: 30px; text-align: center; border-top: 2px solid #e2e8f0; padding-top: 20px;">
@@ -880,6 +948,107 @@
                     <h2 class="section-title">💾 Saved Quotations</h2>
                     <div class="saved-quotes" id="savedQuotes">
                         <!-- Saved quotes will be displayed here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings" class="tab-content">
+                <div class="card">
+                    <h2 class="section-title">🏢 Company Settings</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="settingsCompanyName">Company Name</label>
+                            <input type="text" id="settingsCompanyName" class="form-input" placeholder="Your Company Name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="settingsCompanyPhone">Company Phone</label>
+                            <input type="tel" id="settingsCompanyPhone" class="form-input" placeholder="+1 (555) 987-6543">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="settingsCompanyEmail">Company Email</label>
+                            <input type="email" id="settingsCompanyEmail" class="form-input" placeholder="info@company.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="settingsLicenseNumber">License Number</label>
+                            <input type="text" id="settingsLicenseNumber" class="form-input" placeholder="LIC-123456">
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label" for="settingsCompanyAddress">Company Address</label>
+                            <textarea id="settingsCompanyAddress" class="form-textarea" placeholder="Company address..."></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-full" onclick="saveCompanySettings()">
+                        💾 Save Company Settings
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">📋 Default Settings</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="defaultTaxRate">Default Tax Rate (%)</label>
+                            <input type="number" id="defaultTaxRate" class="form-input" placeholder="8.5" min="0" max="100" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="defaultDiscount">Default Discount (%)</label>
+                            <input type="number" id="defaultDiscount" class="form-input" placeholder="0" min="0" max="100" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="quoteValidDays">Quote Valid Days</label>
+                            <input type="number" id="quoteValidDays" class="form-input" placeholder="30" min="1" max="365">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="depositPercent">Deposit Percentage (%)</label>
+                            <input type="number" id="depositPercent" class="form-input" placeholder="50" min="0" max="100">
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label" for="customTerms">Custom Terms & Conditions</label>
+                            <textarea id="customTerms" class="form-textarea" rows="6" placeholder="Enter your custom terms and conditions..."></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-success btn-full" onclick="saveDefaultSettings()">
+                        ⚙️ Save Default Settings
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">💾 Data Management</h2>
+                    
+                    <div class="data-info">
+                        <h4>📊 Storage Information</h4>
+                        <p>Your data is automatically saved to your device's local storage. This ensures your company information, quotes, and settings persist even after browser refreshes.</p>
+                        <div class="storage-stats" id="storageStats">
+                            Loading storage statistics...
+                        </div>
+                    </div>
+
+                    <div class="data-manager">
+                        <button class="btn btn-primary btn-full" onclick="exportData()">
+                            📤 Export All Data
+                        </button>
+                        <button class="btn btn-warning btn-full" onclick="importData()">
+                            📥 Import Data
+                        </button>
+                        <button class="btn btn-secondary btn-full" onclick="clearCurrentQuote()">
+                            🗑️ Clear Current Quote
+                        </button>
+                        <button class="btn btn-danger btn-full" onclick="resetAllData()">
+                            ⚠️ Reset All Data
+                        </button>
+                    </div>
+                    
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImportFile(event)">
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">ℹ️ About</h2>
+                    <div class="setting-item">
+                        <div class="setting-title">Renovation Pro v2.0</div>
+                        <div class="setting-description">
+                            Professional renovation quotation app with persistent local storage. 
+                            All your data is saved locally and will persist across browser sessions.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -903,85 +1072,138 @@
     <div id="notification" class="notification"></div>
 
     <script>
+        // Global variables
         let currentTab = 'customer';
         let projectItems = [];
         let currentCategory = '';
-        let savedQuotes = JSON.parse(localStorage.getItem('renovationQuotes') || '[]');
+        let autoSaveInterval;
 
-        const renovationItems = {
-            kitchen: [
-                { name: 'Cabinet Installation', unit: 'linear ft', price: 150 },
-                { name: 'Countertop Installation', unit: 'sq ft', price: 45 },
-                { name: 'Backsplash Tiling', unit: 'sq ft', price: 25 },
-                { name: 'Sink Installation', unit: 'each', price: 350 },
-                { name: 'Faucet Installation', unit: 'each', price: 200 },
-                { name: 'Kitchen Island', unit: 'each', price: 2500 },
-                { name: 'Appliance Installation', unit: 'each', price: 150 },
-                { name: 'Electrical Outlets', unit: 'each', price: 120 },
-                { name: 'Under-Cabinet Lighting', unit: 'linear ft', price: 35 }
-            ],
-            bathroom: [
-                { name: 'Tile Installation', unit: 'sq ft', price: 12 },
-                { name: 'Vanity Installation', unit: 'each', price: 450 },
-                { name: 'Toilet Installation', unit: 'each', price: 250 },
-                { name: 'Shower Installation', unit: 'each', price: 1200 },
-                { name: 'Bathtub Installation', unit: 'each', price: 800 },
-                { name: 'Mirror Installation', unit: 'each', price: 150 },
-                { name: 'Exhaust Fan', unit: 'each', price: 180 },
-                { name: 'Towel Bars/Accessories', unit: 'set', price: 85 }
-            ],
-            living: [
-                { name: 'Drywall Installation', unit: 'sq ft', price: 2.5 },
-                { name: 'Paint (walls)', unit: 'sq ft', price: 1.8 },
-                { name: 'Crown Molding', unit: 'linear ft', price: 8 },
-                { name: 'Baseboards', unit: 'linear ft', price: 6 },
-                { name: 'Built-in Shelving', unit: 'linear ft', price: 125 },
-                { name: 'Fireplace Surround', unit: 'each', price: 850 },
-                { name: 'Window Installation', unit: 'each', price: 450 }
-            ],
-            bedroom: [
-                { name: 'Closet Organization', unit: 'linear ft', price: 85 },
-                { name: 'Built-in Wardrobe', unit: 'linear ft', price: 200 },
-                { name: 'Bedroom Paint', unit: 'sq ft', price: 1.8 },
-                { name: 'Ceiling Fan Installation', unit: 'each', price: 180 },
-                { name: 'Window Treatments', unit: 'each', price: 120 }
-            ],
-            flooring: [
-                { name: 'Hardwood Installation', unit: 'sq ft', price: 8 },
-                { name: 'Laminate Installation', unit: 'sq ft', price: 4.5 },
-                { name: 'Tile Installation', unit: 'sq ft', price: 12 },
-                { name: 'Carpet Installation', unit: 'sq ft', price: 3.5 },
-                { name: 'Vinyl Plank Installation', unit: 'sq ft', price: 5.5 },
-                { name: 'Floor Removal', unit: 'sq ft', price: 2 },
-                { name: 'Subfloor Repair', unit: 'sq ft', price: 3.5 }
-            ],
-            exterior: [
-                { name: 'Siding Installation', unit: 'sq ft', price: 8.5 },
-                { name: 'Roof Repair', unit: 'sq ft', price: 15 },
-                { name: 'Gutter Installation', unit: 'linear ft', price: 12 },
-                { name: 'Deck Construction', unit: 'sq ft', price: 25 },
-                { name: 'Patio Installation', unit: 'sq ft', price: 18 },
-                { name: 'Exterior Paint', unit: 'sq ft', price: 2.2 },
-                { name: 'Window Replacement', unit: 'each', price: 550 }
-            ],
-            electrical: [
-                { name: 'Outlet Installation', unit: 'each', price: 120 },
-                { name: 'Light Fixture Installation', unit: 'each', price: 85 },
-                { name: 'Ceiling Fan Installation', unit: 'each', price: 180 },
-                { name: 'Panel Upgrade', unit: 'each', price: 1200 },
-                { name: 'GFCI Outlet', unit: 'each', price: 150 },
-                { name: 'Recessed Lighting', unit: 'each', price: 95 }
-            ],
-            plumbing: [
-                { name: 'Pipe Installation', unit: 'linear ft', price: 25 },
-                { name: 'Fixture Installation', unit: 'each', price: 200 },
-                { name: 'Water Heater Installation', unit: 'each', price: 800 },
-                { name: 'Drain Cleaning', unit: 'each', price: 150 },
-                { name: 'Leak Repair', unit: 'each', price: 180 },
-                { name: 'Faucet Replacement', unit: 'each', price: 200 }
-            ]
+        // Storage keys
+        const STORAGE_KEYS = {
+            COMPANY_SETTINGS: 'renovationPro_companySettings',
+            DEFAULT_SETTINGS: 'renovationPro_defaultSettings',
+            CURRENT_QUOTE: 'renovationPro_currentQuote',
+            SAVED_QUOTES: 'renovationPro_savedQuotes',
+            USER_PREFERENCES: 'renovationPro_userPreferences'
         };
 
+        // Default company settings
+        const DEFAULT_COMPANY = {
+            name: 'Elite Renovation Solutions',
+            phone: '+1 (555) 987-6543',
+            email: 'info@eliterenovation.com',
+            address: '456 Business Avenue, Suite 200\nSpringfield, IL 62701',
+            license: 'LIC-789456'
+        };
+
+        // Default app settings
+        const DEFAULT_SETTINGS = {
+            taxRate: 8.5,
+            discount: 0,
+            quoteValidDays: 30,
+            depositPercent: 50,
+            terms: `• Quote valid for 30 days from date issued
+• 50% deposit required to begin work
+• Final payment due upon completion
+• All materials and labor included unless specified
+• Changes to scope may affect final price
+• Work guaranteed for 1 year from completion`
+        };
+
+        // Data persistence manager
+        class DataManager {
+            static save(key, data) {
+                try {
+                    localStorage.setItem(key, JSON.stringify(data));
+                    this.updateDataStatus('saved');
+                    return true;
+                } catch (error) {
+                    console.error('Failed to save data:', error);
+                    this.updateDataStatus('error');
+                    return false;
+                }
+            }
+
+            static load(key, defaultValue = null) {
+                try {
+                    const item = localStorage.getItem(key);
+                    return item ? JSON.parse(item) : defaultValue;
+                } catch (error) {
+                    console.error('Failed to load data:', error);
+                    return defaultValue;
+                }
+            }
+
+            static remove(key) {
+                try {
+                    localStorage.removeItem(key);
+                    return true;
+                } catch (error) {
+                    console.error('Failed to remove data:', error);
+                    return false;
+                }
+            }
+
+            static clear() {
+                try {
+                    Object.values(STORAGE_KEYS).forEach(key => {
+                        localStorage.removeItem(key);
+                    });
+                    return true;
+                } catch (error) {
+                    console.error('Failed to clear data:', error);
+                    return false;
+                }
+            }
+
+            static getStorageStats() {
+                let totalSize = 0;
+                const stats = {};
+                
+                Object.entries(STORAGE_KEYS).forEach(([name, key]) => {
+                    const item = localStorage.getItem(key);
+                    const size = item ? new Blob([item]).size : 0;
+                    stats[name] = {
+                        size: size,
+                        sizeKB: (size / 1024).toFixed(2),
+                        exists: !!item
+                    };
+                    totalSize += size;
+                });
+
+                return {
+                    individual: stats,
+                    total: totalSize,
+                    totalKB: (totalSize / 1024).toFixed(2),
+                    totalMB: (totalSize / 1024 / 1024).toFixed(2)
+                };
+            }
+
+            static updateDataStatus(status) {
+                const statusElement = document.getElementById('dataStatus');
+                if (!statusElement) return;
+
+                switch (status) {
+                    case 'saved':
+                        statusElement.textContent = '💾 Data Saved';
+                        statusElement.style.background = 'rgba(72, 187, 120, 0.9)';
+                        break;
+                    case 'loading':
+                        statusElement.textContent = '📁 Loading...';
+                        statusElement.style.background = 'rgba(237, 137, 54, 0.9)';
+                        break;
+                    case 'error':
+                        statusElement.textContent = '⚠️ Save Error';
+                        statusElement.style.background = 'rgba(245, 101, 101, 0.9)';
+                        break;
+                    default:
+                        statusElement.textContent = '💾 Data Saved';
+                        statusElement.style.background = 'rgba(72, 187, 120, 0.9)';
+                }
+            }
+        }
+
+        // Notification system
         function showNotification(message, type = 'success') {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -992,6 +1214,7 @@
             }, 3000);
         }
 
+        // Tab management
         function switchTab(tabName) {
             // Update tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -1003,14 +1226,172 @@
 
             currentTab = tabName;
 
+            // Load specific tab data
             if (tabName === 'quote') {
                 updateQuote();
-            }
-            if (tabName === 'saved') {
+            } else if (tabName === 'saved') {
                 displaySavedQuotes();
+            } else if (tabName === 'settings') {
+                loadSettingsTab();
             }
         }
 
+        // Auto-save functionality
+        function startAutoSave() {
+            if (autoSaveInterval) {
+                clearInterval(autoSaveInterval);
+            }
+            
+            autoSaveInterval = setInterval(() => {
+                saveCurrentQuote();
+            }, 10000); // Auto-save every 10 seconds
+        }
+
+        function saveCurrentQuote() {
+            const currentQuoteData = {
+                customerName: document.getElementById('customerName').value,
+                customerPhone: document.getElementById('customerPhone').value,
+                customerEmail: document.getElementById('customerEmail').value,
+                propertyAddress: document.getElementById('propertyAddress').value,
+                projectDescription: document.getElementById('projectDescription').value,
+                projectDate: document.getElementById('projectDate').value,
+                discountPercent: document.getElementById('discountPercent').value,
+                taxPercent: document.getElementById('taxPercent').value,
+                items: [...projectItems],
+                lastSaved: new Date().toISOString()
+            };
+
+            DataManager.save(STORAGE_KEYS.CURRENT_QUOTE, currentQuoteData);
+        }
+
+        function loadCurrentQuote() {
+            DataManager.updateDataStatus('loading');
+            
+            const savedQuote = DataManager.load(STORAGE_KEYS.CURRENT_QUOTE);
+            if (savedQuote) {
+                // Load customer data
+                document.getElementById('customerName').value = savedQuote.customerName || '';
+                document.getElementById('customerPhone').value = savedQuote.customerPhone || '';
+                document.getElementById('customerEmail').value = savedQuote.customerEmail || '';
+                document.getElementById('propertyAddress').value = savedQuote.propertyAddress || '';
+                document.getElementById('projectDescription').value = savedQuote.projectDescription || '';
+                document.getElementById('projectDate').value = savedQuote.projectDate || '';
+                document.getElementById('discountPercent').value = savedQuote.discountPercent || '';
+                document.getElementById('taxPercent').value = savedQuote.taxPercent || '';
+
+                // Load items
+                if (savedQuote.items && savedQuote.items.length > 0) {
+                    projectItems = [...savedQuote.items];
+                    refreshItemsContainer();
+                }
+
+                showNotification('📁 Previous work loaded successfully!');
+            }
+            
+            DataManager.updateDataStatus('saved');
+        }
+
+        // Company settings management
+        function saveCompanySettings() {
+            const companySettings = {
+                name: document.getElementById('settingsCompanyName').value,
+                phone: document.getElementById('settingsCompanyPhone').value,
+                email: document.getElementById('settingsCompanyEmail').value,
+                address: document.getElementById('settingsCompanyAddress').value,
+                license: document.getElementById('settingsLicenseNumber').value,
+                lastUpdated: new Date().toISOString()
+            };
+
+            if (DataManager.save(STORAGE_KEYS.COMPANY_SETTINGS, companySettings)) {
+                showNotification('🏢 Company settings saved successfully!');
+                updateQuote(); // Refresh quote with new company info
+            } else {
+                showNotification('Failed to save company settings', 'error');
+            }
+        }
+
+        function loadCompanySettings() {
+            const settings = DataManager.load(STORAGE_KEYS.COMPANY_SETTINGS, DEFAULT_COMPANY);
+            
+            document.getElementById('settingsCompanyName').value = settings.name || '';
+            document.getElementById('settingsCompanyPhone').value = settings.phone || '';
+            document.getElementById('settingsCompanyEmail').value = settings.email || '';
+            document.getElementById('settingsCompanyAddress').value = settings.address || '';
+            document.getElementById('settingsLicenseNumber').value = settings.license || '';
+
+            return settings;
+        }
+
+        // Default settings management
+        function saveDefaultSettings() {
+            const defaultSettings = {
+                taxRate: parseFloat(document.getElementById('defaultTaxRate').value) || 0,
+                discount: parseFloat(document.getElementById('defaultDiscount').value) || 0,
+                quoteValidDays: parseInt(document.getElementById('quoteValidDays').value) || 30,
+                depositPercent: parseInt(document.getElementById('depositPercent').value) || 50,
+                terms: document.getElementById('customTerms').value || DEFAULT_SETTINGS.terms,
+                lastUpdated: new Date().toISOString()
+            };
+
+            if (DataManager.save(STORAGE_KEYS.DEFAULT_SETTINGS, defaultSettings)) {
+                showNotification('⚙️ Default settings saved successfully!');
+                
+                // Apply to current quote
+                document.getElementById('taxPercent').value = defaultSettings.taxRate;
+                document.getElementById('discountPercent').value = defaultSettings.discount;
+                calculateTotals();
+            } else {
+                showNotification('Failed to save default settings', 'error');
+            }
+        }
+
+        function loadDefaultSettings() {
+            const settings = DataManager.load(STORAGE_KEYS.DEFAULT_SETTINGS, DEFAULT_SETTINGS);
+            
+            document.getElementById('defaultTaxRate').value = settings.taxRate || '';
+            document.getElementById('defaultDiscount').value = settings.discount || '';
+            document.getElementById('quoteValidDays').value = settings.quoteValidDays || '';
+            document.getElementById('depositPercent').value = settings.depositPercent || '';
+            document.getElementById('customTerms').value = settings.terms || '';
+
+            // Apply to current form if empty
+            if (!document.getElementById('taxPercent').value) {
+                document.getElementById('taxPercent').value = settings.taxRate || 8.5;
+            }
+            if (!document.getElementById('discountPercent').value) {
+                document.getElementById('discountPercent').value = settings.discount || 0;
+            }
+
+            return settings;
+        }
+
+        function loadSettingsTab() {
+            loadCompanySettings();
+            loadDefaultSettings();
+            updateStorageStats();
+        }
+
+        function updateStorageStats() {
+            const stats = DataManager.getStorageStats();
+            const statsElement = document.getElementById('storageStats');
+            
+            if (statsElement) {
+                statsElement.innerHTML = `
+Total Storage Used: ${stats.totalKB} KB (${stats.totalMB} MB)
+
+Breakdown:
+- Company Settings: ${stats.individual.COMPANY_SETTINGS.sizeKB} KB
+- Default Settings: ${stats.individual.DEFAULT_SETTINGS.sizeKB} KB  
+- Current Quote: ${stats.individual.CURRENT_QUOTE.sizeKB} KB
+- Saved Quotes: ${stats.individual.SAVED_QUOTES.sizeKB} KB
+- User Preferences: ${stats.individual.USER_PREFERENCES.sizeKB} KB
+
+Last Updated: ${new Date().toLocaleString()}
+                `;
+            }
+        }
+
+        // Category and item management
         function selectCategory(category) {
             currentCategory = category;
             
@@ -1056,6 +1437,7 @@
 
             container.appendChild(itemRow);
             calculateTotals();
+            saveCurrentQuote(); // Auto-save when items change
         }
 
         function updateItem(index, field, value) {
@@ -1066,12 +1448,14 @@
                 projectItems[index][field] = isNaN(value) ? value : parseFloat(value) || value;
             }
             calculateTotals();
+            saveCurrentQuote(); // Auto-save on changes
         }
 
         function removeItem(index) {
             projectItems.splice(index, 1);
             refreshItemsContainer();
             calculateTotals();
+            saveCurrentQuote(); // Auto-save when items change
         }
 
         function refreshItemsContainer() {
@@ -1082,6 +1466,7 @@
             tempItems.forEach(item => addItem(item));
         }
 
+        // Calculations
         function calculateTotals() {
             const subtotal = projectItems.reduce((sum, item) => {
                 return sum + ((item.materialCost + item.laborCost) * item.quantity);
@@ -1111,18 +1496,17 @@
             }).format(amount || 0);
         }
 
+        // Quote management
         function updateQuote() {
+            // Load company settings
+            const companySettings = DataManager.load(STORAGE_KEYS.COMPANY_SETTINGS, DEFAULT_COMPANY);
+            
             // Update company info
-            document.getElementById('quoteCompanyName').textContent = 
-                document.getElementById('companyName').value || 'Elite Renovation Solutions';
-            document.getElementById('quoteCompanyAddress').innerHTML = 
-                (document.getElementById('companyAddress').value || '456 Business Avenue, Suite 200<br>Springfield, IL 62701').replace(/\n/g, '<br>');
-            document.getElementById('quoteCompanyPhone').textContent = 
-                document.getElementById('companyPhone').value || '+1 (555) 987-6543';
-            document.getElementById('quoteCompanyEmail').textContent = 
-                document.getElementById('companyEmail').value || 'info@eliterenovation.com';
-            document.getElementById('quoteLicenseNumber').textContent = 
-                document.getElementById('licenseNumber').value || 'LIC-789456';
+            document.getElementById('quoteCompanyName').textContent = companySettings.name;
+            document.getElementById('quoteCompanyAddress').innerHTML = companySettings.address.replace(/\n/g, '<br>');
+            document.getElementById('quoteCompanyPhone').textContent = companySettings.phone;
+            document.getElementById('quoteCompanyEmail').textContent = companySettings.email;
+            document.getElementById('quoteLicenseNumber').textContent = companySettings.license;
 
             // Update customer info
             document.getElementById('quoteCustomerName').textContent = 
@@ -1175,7 +1559,7 @@
                 });
             });
 
-            // Update totals
+            // Update totals in quote
             const subtotal = projectItems.reduce((sum, item) => {
                 return sum + ((item.materialCost + item.laborCost) * item.quantity);
             }, 0);
@@ -1194,6 +1578,17 @@
             document.getElementById('quoteTaxPercent').textContent = taxPercent;
             document.getElementById('quoteTax').textContent = formatCurrency(taxAmount);
             document.getElementById('quoteGrandTotal').textContent = formatCurrency(grandTotal);
+
+            // Update terms
+            const defaultSettings = DataManager.load(STORAGE_KEYS.DEFAULT_SETTINGS, DEFAULT_SETTINGS);
+            if (defaultSettings.terms) {
+                const termsContainer = document.getElementById('quoteTerms');
+                termsContainer.innerHTML = `<ul style="color: #4a5568; font-size: 14px; line-height: 1.6;">
+                    ${defaultSettings.terms.split('\n').map(term => 
+                        term.trim() ? `<li>${term.replace('•', '').trim()}</li>` : ''
+                    ).join('')}
+                </ul>`;
+            }
 
             // Update quote date
             document.getElementById('quoteDate').textContent = new Date().toLocaleDateString();
@@ -1230,17 +1625,13 @@
                 propertyAddress: document.getElementById('propertyAddress').value,
                 projectDescription: document.getElementById('projectDescription').value,
                 projectDate: document.getElementById('projectDate').value,
-                companyName: document.getElementById('companyName').value,
-                companyPhone: document.getElementById('companyPhone').value,
-                companyEmail: document.getElementById('companyEmail').value,
-                companyAddress: document.getElementById('companyAddress').value,
-                licenseNumber: document.getElementById('licenseNumber').value,
                 items: [...projectItems],
                 discountPercent: parseFloat(document.getElementById('discountPercent').value) || 0,
                 taxPercent: parseFloat(document.getElementById('taxPercent').value) || 0,
                 createdDate: new Date().toISOString()
             };
 
+            // Calculate total
             const subtotal = projectItems.reduce((sum, item) => {
                 return sum + ((item.materialCost + item.laborCost) * item.quantity);
             }, 0);
@@ -1248,13 +1639,20 @@
             const taxAmount = (subtotal - discountAmount) * (quote.taxPercent / 100);
             quote.total = subtotal - discountAmount + taxAmount;
 
+            // Load existing quotes
+            const savedQuotes = DataManager.load(STORAGE_KEYS.SAVED_QUOTES, []);
             savedQuotes.unshift(quote);
-            localStorage.setItem('renovationQuotes', JSON.stringify(savedQuotes));
-            showNotification('💾 Quote saved successfully!');
+
+            if (DataManager.save(STORAGE_KEYS.SAVED_QUOTES, savedQuotes)) {
+                showNotification('💾 Quote saved successfully!');
+            } else {
+                showNotification('Failed to save quote', 'error');
+            }
         }
 
         function displaySavedQuotes() {
             const container = document.getElementById('savedQuotes');
+            const savedQuotes = DataManager.load(STORAGE_KEYS.SAVED_QUOTES, []);
             
             if (savedQuotes.length === 0) {
                 container.innerHTML = `
@@ -1287,6 +1685,7 @@
         }
 
         function loadQuote(id) {
+            const savedQuotes = DataManager.load(STORAGE_KEYS.SAVED_QUOTES, []);
             const quote = savedQuotes.find(q => q.id === id);
             if (!quote) return;
 
@@ -1297,17 +1696,8 @@
             document.getElementById('propertyAddress').value = quote.propertyAddress || '';
             document.getElementById('projectDescription').value = quote.projectDescription || '';
             document.getElementById('projectDate').value = quote.projectDate || '';
-
-            // Load company data
-            document.getElementById('companyName').value = quote.companyName || '';
-            document.getElementById('companyPhone').value = quote.companyPhone || '';
-            document.getElementById('companyEmail').value = quote.companyEmail || '';
-            document.getElementById('companyAddress').value = quote.companyAddress || '';
-            document.getElementById('licenseNumber').value = quote.licenseNumber || '';
-
-            // Load project data
             document.getElementById('discountPercent').value = quote.discountPercent || '';
-            document.getElementById('taxPercent').value = quote.taxPercent || 8.5;
+            document.getElementById('taxPercent').value = quote.taxPercent || '';
 
             // Load items
             projectItems = [...quote.items];
@@ -1320,10 +1710,15 @@
 
         function deleteQuote(id) {
             if (confirm('Are you sure you want to delete this quote?')) {
-                savedQuotes = savedQuotes.filter(q => q.id !== id);
-                localStorage.setItem('renovationQuotes', JSON.stringify(savedQuotes));
-                displaySavedQuotes();
-                showNotification('🗑️ Quote deleted');
+                const savedQuotes = DataManager.load(STORAGE_KEYS.SAVED_QUOTES, []);
+                const filteredQuotes = savedQuotes.filter(q => q.id !== id);
+                
+                if (DataManager.save(STORAGE_KEYS.SAVED_QUOTES, filteredQuotes)) {
+                    displaySavedQuotes();
+                    showNotification('🗑️ Quote deleted');
+                } else {
+                    showNotification('Failed to delete quote', 'error');
+                }
             }
         }
 
@@ -1341,90 +1736,165 @@
             }, 500);
         }
 
-        // Add sample items when a category is selected
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.category-btn')) {
-                const category = e.target.closest('.category-btn').dataset.category;
-                if (category && renovationItems[category]) {
-                    const items = renovationItems[category].slice(0, 3); // Show first 3 items
-                    showNotification(`💡 Tip: Common ${category} items available to add`);
-                }
-            }
-        });
+        // Data management functions
+        function exportData() {
+            const allData = {
+                companySettings: DataManager.load(STORAGE_KEYS.COMPANY_SETTINGS),
+                defaultSettings: DataManager.load(STORAGE_KEYS.DEFAULT_SETTINGS),
+                currentQuote: DataManager.load(STORAGE_KEYS.CURRENT_QUOTE),
+                savedQuotes: DataManager.load(STORAGE_KEYS.SAVED_QUOTES),
+                userPreferences: DataManager.load(STORAGE_KEYS.USER_PREFERENCES),
+                exportDate: new Date().toISOString(),
+                version: '2.0'
+            };
 
-        // Quick add preset items
-        function addPresetItem(category, itemName) {
-            const presetItems = renovationItems[category];
-            const preset = presetItems.find(item => item.name === itemName);
-            if (preset) {
-                addItem({
-                    description: preset.name,
-                    category: category,
-                    quantity: 1,
-                    unit: preset.unit,
-                    materialCost: preset.price * 0.6,
-                    laborCost: preset.price * 0.4
-                });
+            const dataStr = JSON.stringify(allData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `renovation-pro-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            showNotification('📤 Data exported successfully!');
+        }
+
+        function importData() {
+            document.getElementById('importFile').click();
+        }
+
+        function handleImportFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (confirm('This will replace all your current data. Are you sure you want to continue?')) {
+                        // Import all data
+                        if (importedData.companySettings) {
+                            DataManager.save(STORAGE_KEYS.COMPANY_SETTINGS, importedData.companySettings);
+                        }
+                        if (importedData.defaultSettings) {
+                            DataManager.save(STORAGE_KEYS.DEFAULT_SETTINGS, importedData.defaultSettings);
+                        }
+                        if (importedData.currentQuote) {
+                            DataManager.save(STORAGE_KEYS.CURRENT_QUOTE, importedData.currentQuote);
+                        }
+                        if (importedData.savedQuotes) {
+                            DataManager.save(STORAGE_KEYS.SAVED_QUOTES, importedData.savedQuotes);
+                        }
+                        if (importedData.userPreferences) {
+                            DataManager.save(STORAGE_KEYS.USER_PREFERENCES, importedData.userPreferences);
+                        }
+
+                        showNotification('📥 Data imported successfully! Reloading...');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    }
+                } catch (error) {
+                    showNotification('Invalid file format', 'error');
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset file input
+            event.target.value = '';
+        }
+
+        function clearCurrentQuote() {
+            if (confirm('Are you sure you want to clear the current quote?')) {
+                DataManager.remove(STORAGE_KEYS.CURRENT_QUOTE);
+                
+                // Clear form
+                document.getElementById('customerName').value = '';
+                document.getElementById('customerPhone').value = '';
+                document.getElementById('customerEmail').value = '';
+                document.getElementById('propertyAddress').value = '';
+                document.getElementById('projectDescription').value = '';
+                document.getElementById('projectDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('discountPercent').value = '';
+                document.getElementById('taxPercent').value = '';
+                
+                // Clear items
+                projectItems = [];
+                refreshItemsContainer();
+                addItem(); // Add one empty item
+                
+                showNotification('🗑️ Current quote cleared');
+            }
+        }
+
+        function resetAllData() {
+            if (confirm('⚠️ This will delete ALL your data including company settings, quotes, and preferences. This action cannot be undone. Are you sure?')) {
+                if (confirm('🚨 FINAL WARNING: This will permanently delete everything. Continue?')) {
+                    DataManager.clear();
+                    showNotification('⚠️ All data deleted. Reloading app...', 'warning');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                }
             }
         }
 
         // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set today's date as default project date
+        function initializeApp() {
+            console.log('🏗️ Initializing Renovation Pro...');
+            
+            // Set today's date as default
             document.getElementById('projectDate').value = new Date().toISOString().split('T')[0];
             
-            // Add initial item
-            addItem();
+            // Load persistent data
+            loadCompanySettings();
+            loadDefaultSettings();
+            loadCurrentQuote();
             
-            // Load saved quotes
-            displaySavedQuotes();
+            // Add initial item if none exist
+            if (projectItems.length === 0) {
+                addItem();
+            }
             
-            showNotification('🏗️ Renovation Quotation App Ready!');
+            // Start auto-save
+            startAutoSave();
+            
+            // Update calculations
+            calculateTotals();
+            
+            // Set up event listeners for auto-save
+            const formInputs = document.querySelectorAll('input, textarea, select');
+            formInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    setTimeout(saveCurrentQuote, 1000); // Debounced auto-save
+                });
+            });
+            
+            showNotification('🏗️ Renovation Pro Ready with Persistent Storage!');
+            DataManager.updateDataStatus('saved');
+            
+            console.log('✅ App initialized successfully');
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeApp);
+
+        // Handle page unload
+        window.addEventListener('beforeunload', function(e) {
+            saveCurrentQuote();
         });
 
-        // Auto-save form data
-        function autoSave() {
-            const formData = {
-                customerName: document.getElementById('customerName').value,
-                customerPhone: document.getElementById('customerPhone').value,
-                customerEmail: document.getElementById('customerEmail').value,
-                propertyAddress: document.getElementById('propertyAddress').value,
-                projectDescription: document.getElementById('projectDescription').value,
-                projectDate: document.getElementById('projectDate').value,
-                companyName: document.getElementById('companyName').value,
-                companyPhone: document.getElementById('companyPhone').value,
-                companyEmail: document.getElementById('companyEmail').value,
-                companyAddress: document.getElementById('companyAddress').value,
-                licenseNumber: document.getElementById('licenseNumber').value,
-                discountPercent: document.getElementById('discountPercent').value,
-                taxPercent: document.getElementById('taxPercent').value,
-                items: projectItems
-            };
-            localStorage.setItem('currentQuote', JSON.stringify(formData));
-        }
-
-        function loadAutoSave() {
-            const saved = localStorage.getItem('currentQuote');
-            if (saved) {
-                const formData = JSON.parse(saved);
-                Object.keys(formData).forEach(key => {
-                    const element = document.getElementById(key);
-                    if (element && key !== 'items') {
-                        element.value = formData[key];
-                    }
-                });
-                if (formData.items && formData.items.length > 0) {
-                    projectItems = formData.items;
-                    refreshItemsContainer();
-                }
+        // Handle visibility change (mobile tab switching)
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                saveCurrentQuote();
             }
-        }
-
-        // Auto-save every 30 seconds
-        setInterval(autoSave, 30000);
-
-        // Load auto-save on page load
-        window.addEventListener('load', loadAutoSave);
+        });
     </script>
 </body>
 </html>
