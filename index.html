@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#1e40af">
     <meta name="msapplication-navbutton-color" content="#1e40af">
     
-    <title>REFIT MAINTENANCE SERVICES - Enhanced Complete Work Management System</title>
+    <title>REFIT MAINTENANCE SERVICES - Complete Work Management System</title>
     
     <!-- Enhanced PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -251,98 +251,6 @@
             line-height: 1;
         }
         
-        /* Service Type Buttons */
-        .service-types-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin: 20px 0;
-        }
-        
-        .service-type-btn {
-            padding: 16px 12px;
-            border-radius: 16px;
-            border: none;
-            background: rgba(255,255,255,0.15);
-            color: white;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            min-height: 80px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .service-type-btn:active {
-            transform: scale(0.96);
-        }
-        
-        .service-type-btn.selected {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            border: 2px solid rgba(255,255,255,0.4);
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
-            transform: scale(1.05);
-        }
-        
-        .service-type-btn .icon {
-            font-size: 20px;
-        }
-        
-        .service-type-btn .name {
-            font-size: 11px;
-            line-height: 1.2;
-            opacity: 0.9;
-        }
-        
-        /* Enhanced Service Types Section */
-        .service-types-section {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .service-types-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        
-        .service-types-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .clear-selection-btn {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-            border-radius: 8px;
-            padding: 4px 8px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .clear-selection-btn:active {
-            transform: scale(0.95);
-            background: rgba(239, 68, 68, 0.3);
-        }
-        
         /* Buttons */
         .btn {
             display: inline-flex;
@@ -407,7 +315,6 @@
         .action-btn.pink { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); }
         .action-btn.cyan { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
         .action-btn.indigo { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); }
-        .action-btn.emerald { background: linear-gradient(135deg, #10b981 0%, #047857 100%); }
         
         .action-btn .icon {
             font-size: 28px;
@@ -611,6 +518,119 @@
             margin-top: 4px;
             display: inline-block;
             margin-right: 4px;
+        }
+        
+        /* Service Type Management */
+        .service-type-item {
+            background: rgba(255,255,255,0.18);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .service-type-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .service-type-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .service-type-description {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.4;
+        }
+        
+        .service-type-actions {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .service-type-meta {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .custom-badge {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a855f7;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .default-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Select with Add-on Button */
+        .select-with-addon {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .select-with-addon select {
+            flex: 1;
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: none;
+            background: rgba(255,255,255,0.25);
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .select-with-addon select:focus {
+            outline: none;
+            background: rgba(255,255,255,0.35);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+        }
+        
+        .addon-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            border: none;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        
+        .addon-btn:active {
+            transform: scale(0.9);
         }
         
         /* Bottom Navigation */
@@ -1258,24 +1278,6 @@
                 gap: 12px;
             }
             
-            .service-types-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-            }
-            
-            .service-type-btn {
-                min-height: 70px;
-                padding: 12px 8px;
-            }
-            
-            .service-type-btn .icon {
-                font-size: 18px;
-            }
-            
-            .service-type-btn .name {
-                font-size: 10px;
-            }
-            
             .form-actions {
                 grid-template-columns: 1fr;
             }
@@ -1388,26 +1390,6 @@
                     </div>
                 </div>
 
-                <!-- Service Types Quick Selection -->
-                <div class="card">
-                    <div class="service-types-header">
-                        <h3 class="service-types-title">
-                            ⚡ Quick Service Selection
-                        </h3>
-                        <button class="clear-selection-btn" onclick="clearServiceSelection()" id="clear-service-btn" style="display: none;">
-                            Clear
-                        </button>
-                    </div>
-                    <div class="service-types-grid" id="service-types-grid">
-                        <!-- Service types populated by JavaScript -->
-                    </div>
-                    <div id="selected-service-info" style="margin-top: 16px; padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; display: none;">
-                        <div style="font-weight: 700; color: #1e40af; margin-bottom: 4px;">Selected Service:</div>
-                        <div id="selected-service-name" style="color: #1e40af; font-weight: 600;"></div>
-                        <div id="selected-service-desc" style="color: #64748b; font-size: 14px; margin-top: 4px;"></div>
-                    </div>
-                </div>
-
                 <!-- Performance Card -->
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
@@ -1450,13 +1432,9 @@
                             <span class="icon">📊</span>
                             <span style="font-weight: 700;">Generate Report</span>
                         </button>
-                        <button class="action-btn indigo" onclick="openServiceTypesManager()">
-                            <span class="icon">⚙️</span>
+                        <button class="action-btn indigo" onclick="showView('services')">
+                            <span class="icon">🛠️</span>
                             <span style="font-weight: 700;">Service Types</span>
-                        </button>
-                        <button class="action-btn emerald" onclick="quickCreateJobWithPresetService()">
-                            <span class="icon">⚡</span>
-                            <span style="font-weight: 700;">Quick Service Job</span>
                         </button>
                     </div>
                 </div>
@@ -1527,24 +1505,38 @@
                 <div id="technicians-list"></div>
             </div>
 
-            <!-- Service Types Manager View -->
-            <div id="service-types-view" class="view hidden">
+            <!-- Service Types View -->
+            <div id="services-view" class="view hidden">
                 <div class="section-header">
-                    <h2 class="section-title">Service Types Manager</h2>
-                    <button class="add-btn" onclick="openCustomServiceForm()">
+                    <h2 class="section-title">Service Types</h2>
+                    <button class="add-btn" onclick="openServiceTypeForm()">
                         <span>➕</span>
                     </button>
                 </div>
 
-                <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px;">🛠️ Available Service Types</h3>
-                    <div id="service-types-manager-list"></div>
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="input" placeholder="Search service types..." id="service-search">
                 </div>
 
-                <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px;">📊 Service Statistics</h3>
-                    <div id="service-stats"></div>
+                <div style="background: rgba(255,255,255,0.18); backdrop-filter: blur(20px); border-radius: 16px; padding: 16px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.2);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h3 style="font-weight: 700; color: white;">📊 Service Type Statistics</h3>
+                        <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600;" id="service-types-count">0 types</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-size: 14px;">
+                        <div style="text-align: center;">
+                            <div style="color: rgba(255,255,255,0.8);">Default Types</div>
+                            <div style="font-weight: 700; color: #10b981;" id="default-types-count">0</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: rgba(255,255,255,0.8);">Custom Types</div>
+                            <div style="font-weight: 700; color: #8b5cf6;" id="custom-types-count">0</div>
+                        </div>
+                    </div>
                 </div>
+
+                <div id="service-types-list"></div>
             </div>
 
             <!-- Settings View -->
@@ -1582,6 +1574,7 @@
                     <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
                         <p style="font-size: 14px; margin-bottom: 8px;">Total Jobs: <span id="total-jobs-count" style="font-weight: 700;">0</span></p>
                         <p style="font-size: 14px; margin-bottom: 8px;">Total Work Items: <span id="total-work-items-count" style="font-weight: 700;">0</span></p>
+                        <p style="font-size: 14px; margin-bottom: 8px;">Service Types: <span id="settings-service-types-count" style="font-weight: 700;">0</span></p>
                         <p style="font-size: 14px;">Total Revenue: <span id="settings-total-revenue" style="font-weight: 700;">RM 0.00</span></p>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
@@ -1615,6 +1608,10 @@
                     <span class="icon">👷</span>
                     <span>Staff</span>
                 </div>
+                <div class="nav-item" onclick="showView('services')">
+                    <span class="icon">🛠️</span>
+                    <span>Services</span>
+                </div>
                 <div class="nav-item" onclick="showView('settings')">
                     <span class="icon">⚙️</span>
                     <span>Settings</span>
@@ -1632,24 +1629,6 @@
                 <button class="close-btn" onclick="closeEnhancedJobForm()">✕</button>
             </div>
             <div class="modal-body">
-                <!-- Service Type Selection -->
-                <div class="service-types-section">
-                    <div class="service-types-header">
-                        <h4 class="service-types-title">
-                            🛠️ Select Service Type
-                        </h4>
-                        <button class="clear-selection-btn" onclick="clearJobServiceSelection()" id="clear-job-service-btn" style="display: none;">
-                            Clear
-                        </button>
-                    </div>
-                    <div class="service-types-grid" id="job-service-types-grid">
-                        <!-- Service types populated by JavaScript -->
-                    </div>
-                    <div id="job-selected-service-info" style="margin-top: 12px; padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; display: none;">
-                        <div style="font-weight: 700; color: #1e40af; font-size: 14px;">Selected: <span id="job-selected-service-name"></span></div>
-                    </div>
-                </div>
-
                 <!-- Job Information -->
                 <div style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 2px solid #3b82f6;">
                     <h4 style="color: #1e40af; margin-bottom: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
@@ -1662,7 +1641,15 @@
                         
                         <input type="text" class="form-input" placeholder="Job Title/Description *" id="enhanced-job-title" required>
                         
-                        <input type="hidden" id="enhanced-job-service" value="">
+                        <!-- Service Type with Add-on Button -->
+                        <div class="select-with-addon">
+                            <select class="form-input" id="enhanced-job-service" style="color: #1f2937; font-weight: 600; margin-bottom: 0;">
+                                <option value="">Service Type</option>
+                            </select>
+                            <button type="button" class="addon-btn" onclick="openServiceTypeForm()" title="Add Service Type">
+                                ➕
+                            </button>
+                        </div>
                         
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
                             <select class="form-input" id="enhanced-job-priority" style="color: #1f2937; font-weight: 600;">
@@ -1749,6 +1736,29 @@
         </div>
     </div>
 
+    <!-- Service Type Form Modal -->
+    <div id="service-type-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="service-type-modal-title">🛠️ Add Service Type</h3>
+                <button class="close-btn" onclick="closeServiceTypeForm()">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="service-type-form">
+                    <input type="text" class="form-input" placeholder="Service Type Name *" id="service-type-name" required>
+                    <textarea class="form-input" placeholder="Service Description" id="service-type-description" rows="3" style="resize: none; min-height: 80px;"></textarea>
+                    <input type="text" class="form-input" placeholder="Service Category (Optional)" id="service-type-category">
+                    <input type="number" class="form-input" placeholder="Default Price (RM) - Optional" id="service-type-price" step="0.01" min="0">
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="form-btn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">💾 Save Service Type</button>
+                        <button type="button" class="form-btn" style="background: linear-gradient(135deg, #6b7280, #4b5563);" onclick="closeServiceTypeForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Client Form Modal -->
     <div id="client-modal" class="modal">
         <div class="modal-content">
@@ -1796,16 +1806,6 @@
                     
                     <select class="form-input" id="technician-specialization" style="color: #1f2937; font-weight: 600;">
                         <option value="">Specialization</option>
-                        <option value="air-conditioning">Air Conditioning</option>
-                        <option value="electrical">Electrical</option>
-                        <option value="plumbing">Plumbing</option>
-                        <option value="hvac">HVAC</option>
-                        <option value="cleaning">Cleaning</option>
-                        <option value="painting">Painting</option>
-                        <option value="carpentry">Carpentry</option>
-                        <option value="security">Security Systems</option>
-                        <option value="landscaping">Landscaping</option>
-                        <option value="general">General Maintenance</option>
                     </select>
                     
                     <select class="form-input" id="technician-level" style="color: #1f2937; font-weight: 600;">
@@ -1820,36 +1820,6 @@
                     <div class="form-actions">
                         <button type="submit" class="form-btn" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">Save</button>
                         <button type="button" class="form-btn" style="background: linear-gradient(135deg, #6b7280, #4b5563);" onclick="closeTechnicianForm()">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Custom Service Type Modal -->
-    <div id="custom-service-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="custom-service-modal-title">➕ Add Custom Service Type</h3>
-                <button class="close-btn" onclick="closeCustomServiceForm()">✕</button>
-            </div>
-            <div class="modal-body">
-                <form id="custom-service-form">
-                    <input type="text" class="form-input" placeholder="Service Name *" id="custom-service-name" required>
-                    <input type="text" class="form-input" placeholder="Service Icon (emoji)" id="custom-service-icon" placeholder="🔧">
-                    <textarea class="form-input" placeholder="Service Description" id="custom-service-description" rows="3" style="resize: none; min-height: 80px;"></textarea>
-                    <select class="form-input" id="custom-service-category" style="color: #1f2937; font-weight: 600;">
-                        <option value="maintenance">Maintenance</option>
-                        <option value="repair">Repair</option>
-                        <option value="installation">Installation</option>
-                        <option value="cleaning">Cleaning</option>
-                        <option value="inspection">Inspection</option>
-                        <option value="other">Other</option>
-                    </select>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="form-btn" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">Add Service Type</button>
-                        <button type="button" class="form-btn" style="background: linear-gradient(135deg, #6b7280, #4b5563);" onclick="closeCustomServiceForm()">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -1936,9 +1906,9 @@
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - ENHANCED COMPLETE SYSTEM
+        // REFIT MAINTENANCE SERVICES - COMPLETE SYSTEM WITH SERVICE TYPE MANAGEMENT
         // Registration No: 201803348973 (002894203-V)
-        // Enhanced Complete Work Management System with Service Type Buttons
+        // Complete Work Management System with Full Functionality + Enhanced Service Types
         // ========================================
         
         // App State Variables
@@ -1947,18 +1917,17 @@
         var jobs = [];
         var technicians = [];
         var workItems = {}; // Object to store work items by job ID
+        var customServiceTypes = []; // Custom service types array
         var tempWorkItems = []; // Temporary work items for job creation
         var selectedDate = new Date().toISOString().split('T')[0];
         var jobFilter = 'all';
         var editingClient = null;
         var editingJob = null;
         var editingTechnician = null;
+        var editingServiceType = null;
         var editingWorkItem = null;
         var selectedJobDetails = null;
         var selectedJobForWorks = null;
-        var selectedServiceType = null;
-        var jobSelectedServiceType = null;
-        var customServiceTypes = [];
 
         // Company Settings
         var companySettings = {
@@ -1981,92 +1950,18 @@
             CUSTOM_SERVICE_TYPES: 'refit_maintenance_custom_service_types'
         };
 
-        // Enhanced Service Types with Icons
-        var serviceTypes = [
-            { 
-                id: 'air-conditioning', 
-                name: 'Air Conditioning', 
-                icon: '❄️', 
-                description: 'AC installation, repair, cleaning and maintenance',
-                category: 'maintenance'
-            },
-            { 
-                id: 'electrical', 
-                name: 'Electrical', 
-                icon: '⚡', 
-                description: 'Wiring, lighting, and electrical system repairs',
-                category: 'repair'
-            },
-            { 
-                id: 'plumbing', 
-                name: 'Plumbing', 
-                icon: '🚰', 
-                description: 'Pipe repair, water system maintenance',
-                category: 'repair'
-            },
-            { 
-                id: 'hvac', 
-                name: 'HVAC System', 
-                icon: '🌬️', 
-                description: 'Heating, ventilation, and air conditioning',
-                category: 'maintenance'
-            },
-            { 
-                id: 'cleaning', 
-                name: 'Cleaning', 
-                icon: '🧽', 
-                description: 'Commercial and residential cleaning',
-                category: 'cleaning'
-            },
-            { 
-                id: 'painting', 
-                name: 'Painting', 
-                icon: '🎨', 
-                description: 'Interior and exterior painting services',
-                category: 'maintenance'
-            },
-            { 
-                id: 'carpentry', 
-                name: 'Carpentry', 
-                icon: '🔨', 
-                description: 'Wood work, furniture repair, installations',
-                category: 'repair'
-            },
-            { 
-                id: 'security', 
-                name: 'Security System', 
-                icon: '🔒', 
-                description: 'CCTV, alarm systems, access control',
-                category: 'installation'
-            },
-            { 
-                id: 'landscaping', 
-                name: 'Landscaping', 
-                icon: '🌿', 
-                description: 'Garden maintenance, lawn care',
-                category: 'maintenance'
-            },
-            { 
-                id: 'general', 
-                name: 'General', 
-                icon: '🔧', 
-                description: 'General repair and maintenance services',
-                category: 'maintenance'
-            },
-            { 
-                id: 'inspection', 
-                name: 'Inspection', 
-                icon: '🔍', 
-                description: 'Safety and quality inspections',
-                category: 'inspection'
-            },
-            { 
-                id: 'emergency', 
-                name: 'Emergency', 
-                icon: '🚨', 
-                description: '24/7 emergency maintenance services',
-                category: 'repair'
-            }
+        // Default Service Types
+        var defaultServiceTypes = [
+            { id: 'air-conditioning', name: 'Air Conditioning Service', description: 'AC installation, repair, and maintenance', category: 'HVAC', defaultPrice: 80.00, isDefault: true },
+            { id: 'electrical', name: 'Electrical Maintenance', description: 'Wiring, lighting, and electrical system repairs', category: 'Electrical', defaultPrice: 75.00, isDefault: true },
+            { id: 'plumbing', name: 'Plumbing Service', description: 'Pipe repair, water system maintenance', category: 'Plumbing', defaultPrice: 65.00, isDefault: true },
+            { id: 'hvac', name: 'HVAC System', description: 'Heating, ventilation, and air conditioning', category: 'HVAC', defaultPrice: 120.00, isDefault: true },
+            { id: 'cleaning', name: 'Professional Cleaning', description: 'Commercial and residential cleaning', category: 'Cleaning', defaultPrice: 25.00, isDefault: true },
+            { id: 'painting', name: 'Painting & Renovation', description: 'Interior and exterior painting services', category: 'Renovation', defaultPrice: 45.00, isDefault: true },
+            { id: 'carpentry', name: 'Carpentry Work', description: 'Wood work, furniture repair, installations', category: 'Carpentry', defaultPrice: 55.00, isDefault: true },
+            { id: 'security', name: 'Security System', description: 'CCTV, alarm systems, access control', category: 'Security', defaultPrice: 150.00, isDefault: true },
+            { id: 'landscaping', name: 'Landscaping', description: 'Garden maintenance, lawn care', category: 'Landscaping', defaultPrice: 35.00, isDefault: true },
+            { id: 'general', name: 'General Maintenance', description: 'General repair and maintenance services', category: 'General', defaultPrice: 40.00, isDefault: true }
         ];
 
         // Initialize App
@@ -2081,7 +1976,6 @@
             updateStatusBar();
             updateCurrentDate();
             updateStats();
-            renderServiceTypes();
             renderViews();
             
             // Auto-populate sample data if empty
@@ -2089,328 +1983,11 @@
                 loadSampleData();
             }
             
-            showSuccessMessage('🔧 REFIT MAINTENANCE SERVICES - Enhanced Complete System Ready!');
-            console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Complete Work Management System');
+            showSuccessMessage('🔧 REFIT MAINTENANCE SERVICES - Enhanced System with Service Type Management Ready!');
+            console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Work Management System');
             console.log('📋 Registration: 201803348973 (002894203-V)');
-            console.log('💼 All features functional and enhanced with service type buttons');
-        }
-
-        // Enhanced Service Type Functions
-        function renderServiceTypes() {
-            var allServiceTypes = serviceTypes.concat(customServiceTypes);
-            var dashboardGrid = document.getElementById('service-types-grid');
-            var jobGrid = document.getElementById('job-service-types-grid');
-            
-            if (dashboardGrid) {
-                var html = '';
-                for (var i = 0; i < allServiceTypes.length; i++) {
-                    var service = allServiceTypes[i];
-                    var isSelected = selectedServiceType === service.id;
-                    html += '<button class="service-type-btn' + (isSelected ? ' selected' : '') + '" onclick="selectServiceType(\'' + service.id + '\')">' +
-                        '<div class="icon">' + service.icon + '</div>' +
-                        '<div class="name">' + service.name + '</div>' +
-                        '</button>';
-                }
-                dashboardGrid.innerHTML = html;
-            }
-            
-            if (jobGrid) {
-                var html = '';
-                for (var i = 0; i < allServiceTypes.length; i++) {
-                    var service = allServiceTypes[i];
-                    var isSelected = jobSelectedServiceType === service.id;
-                    html += '<button class="service-type-btn' + (isSelected ? ' selected' : '') + '" onclick="selectJobServiceType(\'' + service.id + '\')">' +
-                        '<div class="icon">' + service.icon + '</div>' +
-                        '<div class="name">' + service.name + '</div>' +
-                        '</button>';
-                }
-                jobGrid.innerHTML = html;
-            }
-        }
-
-        function selectServiceType(serviceId) {
-            selectedServiceType = serviceId;
-            renderServiceTypes();
-            
-            var service = getAllServiceTypes().find(function(s) { return s.id === serviceId; });
-            if (service) {
-                var infoDiv = document.getElementById('selected-service-info');
-                var nameSpan = document.getElementById('selected-service-name');
-                var descSpan = document.getElementById('selected-service-desc');
-                var clearBtn = document.getElementById('clear-service-btn');
-                
-                if (infoDiv) infoDiv.style.display = 'block';
-                if (nameSpan) nameSpan.textContent = service.icon + ' ' + service.name;
-                if (descSpan) descSpan.textContent = service.description;
-                if (clearBtn) clearBtn.style.display = 'inline-block';
-                
-                showSuccessMessage('✅ Selected: ' + service.name + ' service type');
-            }
-        }
-
-        function clearServiceSelection() {
-            selectedServiceType = null;
-            renderServiceTypes();
-            
-            var infoDiv = document.getElementById('selected-service-info');
-            var clearBtn = document.getElementById('clear-service-btn');
-            
-            if (infoDiv) infoDiv.style.display = 'none';
-            if (clearBtn) clearBtn.style.display = 'none';
-            
-            showSuccessMessage('🔄 Service selection cleared');
-        }
-
-        function selectJobServiceType(serviceId) {
-            jobSelectedServiceType = serviceId;
-            renderServiceTypes();
-            
-            var service = getAllServiceTypes().find(function(s) { return s.id === serviceId; });
-            if (service) {
-                var infoDiv = document.getElementById('job-selected-service-info');
-                var nameSpan = document.getElementById('job-selected-service-name');
-                var clearBtn = document.getElementById('clear-job-service-btn');
-                var hiddenInput = document.getElementById('enhanced-job-service');
-                
-                if (infoDiv) infoDiv.style.display = 'block';
-                if (nameSpan) nameSpan.textContent = service.icon + ' ' + service.name;
-                if (clearBtn) clearBtn.style.display = 'inline-block';
-                if (hiddenInput) hiddenInput.value = serviceId;
-                
-                showSuccessMessage('✅ Job service type: ' + service.name);
-            }
-        }
-
-        function clearJobServiceSelection() {
-            jobSelectedServiceType = null;
-            renderServiceTypes();
-            
-            var infoDiv = document.getElementById('job-selected-service-info');
-            var clearBtn = document.getElementById('clear-job-service-btn');
-            var hiddenInput = document.getElementById('enhanced-job-service');
-            
-            if (infoDiv) infoDiv.style.display = 'none';
-            if (clearBtn) clearBtn.style.display = 'none';
-            if (hiddenInput) hiddenInput.value = '';
-            
-            showSuccessMessage('🔄 Job service selection cleared');
-        }
-
-        function getAllServiceTypes() {
-            return serviceTypes.concat(customServiceTypes);
-        }
-
-        function getServiceTypeName(serviceId) {
-            var allTypes = getAllServiceTypes();
-            for (var i = 0; i < allTypes.length; i++) {
-                if (allTypes[i].id === serviceId) {
-                    return allTypes[i].name;
-                }
-            }
-            return 'General Maintenance';
-        }
-
-        function getServiceTypeIcon(serviceId) {
-            var allTypes = getAllServiceTypes();
-            for (var i = 0; i < allTypes.length; i++) {
-                if (allTypes[i].id === serviceId) {
-                    return allTypes[i].icon;
-                }
-            }
-            return '🔧';
-        }
-
-        function quickCreateJobWithPresetService() {
-            if (!selectedServiceType) {
-                showSuccessMessage('⚠️ Please select a service type first!');
-                return;
-            }
-            
-            openEnhancedJobForm();
-            setTimeout(function() {
-                selectJobServiceType(selectedServiceType);
-                var service = getAllServiceTypes().find(function(s) { return s.id === selectedServiceType; });
-                if (service) {
-                    var titleInput = document.getElementById('enhanced-job-title');
-                    if (titleInput && !titleInput.value) {
-                        titleInput.value = service.name + ' Service';
-                    }
-                }
-            }, 100);
-        }
-
-        // Custom Service Types Management
-        function openServiceTypesManager() {
-            showView('service-types');
-            renderServiceTypesManager();
-        }
-
-        function renderServiceTypesManager() {
-            var container = document.getElementById('service-types-manager-list');
-            if (!container) return;
-            
-            var allTypes = getAllServiceTypes();
-            var html = '';
-            
-            for (var i = 0; i < allTypes.length; i++) {
-                var service = allTypes[i];
-                var isCustom = customServiceTypes.find(function(s) { return s.id === service.id; });
-                var jobCount = jobs.filter(function(job) { return job.serviceType === service.id; }).length;
-                
-                html += '<div style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">' +
-                    '<div style="display: flex; align-items: center; gap: 12px;">' +
-                    '<div style="font-size: 24px;">' + service.icon + '</div>' +
-                    '<div>' +
-                    '<div style="font-weight: 700; color: white;">' + service.name + '</div>' +
-                    '<div style="font-size: 14px; color: rgba(255,255,255,0.8);">' + service.description + '</div>' +
-                    '<div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px;">' + jobCount + ' jobs • ' + service.category + '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div style="display: flex; gap: 8px;">' +
-                    (isCustom ? '<button onclick="editCustomService(\'' + service.id + '\')" style="background: rgba(59, 130, 246, 0.8); border: none; color: white; padding: 8px 12px; border-radius: 8px; cursor: pointer;">Edit</button>' : '') +
-                    (isCustom ? '<button onclick="deleteCustomService(\'' + service.id + '\')" style="background: rgba(239, 68, 68, 0.8); border: none; color: white; padding: 8px 12px; border-radius: 8px; cursor: pointer;">Delete</button>' : '<span style="color: rgba(255,255,255,0.6); font-size: 12px;">Default</span>') +
-                    '</div>' +
-                    '</div>';
-            }
-            
-            container.innerHTML = html;
-            
-            // Render service statistics
-            renderServiceStats();
-        }
-
-        function renderServiceStats() {
-            var container = document.getElementById('service-stats');
-            if (!container) return;
-            
-            var allTypes = getAllServiceTypes();
-            var stats = {};
-            
-            for (var i = 0; i < allTypes.length; i++) {
-                var serviceId = allTypes[i].id;
-                var serviceJobs = jobs.filter(function(job) { return job.serviceType === serviceId; });
-                var revenue = serviceJobs.reduce(function(sum, job) { return sum + (parseFloat(job.cost) || 0); }, 0);
-                
-                if (serviceJobs.length > 0) {
-                    stats[serviceId] = {
-                        name: allTypes[i].name,
-                        icon: allTypes[i].icon,
-                        jobs: serviceJobs.length,
-                        revenue: revenue
-                    };
-                }
-            }
-            
-            var html = '';
-            var sortedStats = Object.keys(stats).sort(function(a, b) {
-                return stats[b].jobs - stats[a].jobs;
-            });
-            
-            for (var i = 0; i < sortedStats.length; i++) {
-                var serviceId = sortedStats[i];
-                var stat = stats[serviceId];
-                
-                html += '<div style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">' +
-                    '<div style="display: flex; align-items: center; gap: 8px;">' +
-                    '<span style="font-size: 18px;">' + stat.icon + '</span>' +
-                    '<span style="font-weight: 600; color: white;">' + stat.name + '</span>' +
-                    '</div>' +
-                    '<div style="text-align: right; color: rgba(255,255,255,0.9);">' +
-                    '<div style="font-weight: 700;">' + stat.jobs + ' jobs</div>' +
-                    '<div style="font-size: 14px;">RM ' + stat.revenue.toFixed(2) + '</div>' +
-                    '</div>' +
-                    '</div>';
-            }
-            
-            if (html === '') {
-                html = '<div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">No service data available</div>';
-            }
-            
-            container.innerHTML = html;
-        }
-
-        function openCustomServiceForm() {
-            document.getElementById('custom-service-modal-title').textContent = '➕ Add Custom Service Type';
-            document.getElementById('custom-service-form').reset();
-            document.getElementById('custom-service-modal').classList.add('show');
-        }
-
-        function closeCustomServiceForm() {
-            document.getElementById('custom-service-modal').classList.remove('show');
-        }
-
-        function handleCustomServiceSubmit(e) {
-            e.preventDefault();
-            
-            var name = document.getElementById('custom-service-name').value.trim();
-            var icon = document.getElementById('custom-service-icon').value.trim() || '🔧';
-            var description = document.getElementById('custom-service-description').value.trim();
-            var category = document.getElementById('custom-service-category').value;
-            
-            if (!name) {
-                showSuccessMessage('⚠️ Please enter service name!');
-                return;
-            }
-            
-            var serviceId = name.toLowerCase().replace(/[^a-z0-9]/g, '-');
-            
-            // Check if ID already exists
-            var allTypes = getAllServiceTypes();
-            var existingService = allTypes.find(function(s) { return s.id === serviceId; });
-            if (existingService) {
-                showSuccessMessage('⚠️ Service type already exists!');
-                return;
-            }
-            
-            var customService = {
-                id: serviceId,
-                name: name,
-                icon: icon,
-                description: description || 'Custom service type',
-                category: category || 'other'
-            };
-            
-            customServiceTypes.push(customService);
-            closeCustomServiceForm();
-            saveDataToStorage();
-            renderServiceTypes();
-            renderServiceTypesManager();
-            
-            showSuccessMessage('✅ Custom service type "' + name + '" added successfully!');
-        }
-
-        function editCustomService(serviceId) {
-            var service = customServiceTypes.find(function(s) { return s.id === serviceId; });
-            if (!service) return;
-            
-            document.getElementById('custom-service-modal-title').textContent = '✏️ Edit Custom Service Type';
-            document.getElementById('custom-service-name').value = service.name;
-            document.getElementById('custom-service-icon').value = service.icon;
-            document.getElementById('custom-service-description').value = service.description;
-            document.getElementById('custom-service-category').value = service.category;
-            
-            // Add hidden field to track editing
-            var form = document.getElementById('custom-service-form');
-            var hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.id = 'editing-service-id';
-            hiddenInput.value = serviceId;
-            form.appendChild(hiddenInput);
-            
-            document.getElementById('custom-service-modal').classList.add('show');
-        }
-
-        function deleteCustomService(serviceId) {
-            var service = customServiceTypes.find(function(s) { return s.id === serviceId; });
-            if (!service) return;
-            
-            if (confirm('Delete custom service type "' + service.name + '"?\nThis will not affect existing jobs.')) {
-                customServiceTypes = customServiceTypes.filter(function(s) { return s.id !== serviceId; });
-                saveDataToStorage();
-                renderServiceTypes();
-                renderServiceTypesManager();
-                showSuccessMessage('🗑️ Custom service type deleted');
-            }
+            console.log('🛠️ Enhanced with Service Type Management');
+            console.log('💼 All features functional and ready for use');
         }
 
         // Data Management Functions
@@ -2455,9 +2032,9 @@
                     workItems = JSON.parse(savedWorkItems);
                 }
 
-                var savedCustomServices = localStorage.getItem(STORAGE_KEYS.CUSTOM_SERVICE_TYPES);
-                if (savedCustomServices) {
-                    customServiceTypes = JSON.parse(savedCustomServices);
+                var savedCustomServiceTypes = localStorage.getItem(STORAGE_KEYS.CUSTOM_SERVICE_TYPES);
+                if (savedCustomServiceTypes) {
+                    customServiceTypes = JSON.parse(savedCustomServiceTypes);
                 }
             } catch (e) {
                 console.warn('Load error:', e);
@@ -2483,9 +2060,218 @@
                 { id: 5, name: 'Chen Li Hua', phone: '016-123-9999', email: 'lihua@refitmaintenance.my', employeeId: 'REF005', specialization: 'general', level: 'junior', rate: 25.00 }
             ];
 
+            // Sample custom service types
+            customServiceTypes = [
+                { id: 'advanced-hvac', name: 'Advanced HVAC Systems', description: 'High-end HVAC installation and maintenance for large commercial buildings', category: 'HVAC', defaultPrice: 200.00, isDefault: false, createdAt: new Date().toISOString() },
+                { id: 'smart-security', name: 'Smart Security Integration', description: 'IoT-based security systems with mobile monitoring', category: 'Security', defaultPrice: 300.00, isDefault: false, createdAt: new Date().toISOString() }
+            ];
+
             jobs = [];
             workItems = {};
             saveDataToStorage();
+        }
+
+        // Service Type Management Functions
+        function getAllServiceTypes() {
+            return defaultServiceTypes.concat(customServiceTypes);
+        }
+
+        function getServiceTypeById(id) {
+            var allTypes = getAllServiceTypes();
+            return allTypes.find(function(type) { return type.id === id; });
+        }
+
+        function getServiceTypeName(serviceId) {
+            var serviceType = getServiceTypeById(serviceId);
+            return serviceType ? serviceType.name : 'General Maintenance';
+        }
+
+        function populateServiceTypeSelects() {
+            var allTypes = getAllServiceTypes();
+            
+            // Enhanced job form
+            var enhancedSelect = document.getElementById('enhanced-job-service');
+            if (enhancedSelect) {
+                var optionsHTML = '<option value="">Service Type</option>';
+                for (var i = 0; i < allTypes.length; i++) {
+                    var type = allTypes[i];
+                    optionsHTML += '<option value="' + type.id + '">' + type.name + (type.isDefault ? '' : ' (Custom)') + '</option>';
+                }
+                enhancedSelect.innerHTML = optionsHTML;
+            }
+            
+            // Technician specialization
+            var techSpecSelect = document.getElementById('technician-specialization');
+            if (techSpecSelect) {
+                var techOptionsHTML = '<option value="">Specialization</option>';
+                for (var i = 0; i < allTypes.length; i++) {
+                    var type = allTypes[i];
+                    techOptionsHTML += '<option value="' + type.id + '">' + type.name + '</option>';
+                }
+                techSpecSelect.innerHTML = techOptionsHTML;
+            }
+        }
+
+        function openServiceTypeForm() {
+            editingServiceType = null;
+            document.getElementById('service-type-modal-title').textContent = '🛠️ Add Service Type';
+            document.getElementById('service-type-form').reset();
+            document.getElementById('service-type-modal').classList.add('show');
+        }
+
+        function closeServiceTypeForm() {
+            document.getElementById('service-type-modal').classList.remove('show');
+            editingServiceType = null;
+        }
+
+        function editServiceType(id) {
+            var serviceType = customServiceTypes.find(function(type) { return type.id === id; });
+            if (!serviceType) return;
+
+            editingServiceType = serviceType;
+            document.getElementById('service-type-modal-title').textContent = '✏️ Edit Service Type';
+            document.getElementById('service-type-name').value = serviceType.name;
+            document.getElementById('service-type-description').value = serviceType.description || '';
+            document.getElementById('service-type-category').value = serviceType.category || '';
+            document.getElementById('service-type-price').value = serviceType.defaultPrice || '';
+            document.getElementById('service-type-modal').classList.add('show');
+        }
+
+        function deleteServiceType(id) {
+            var serviceType = customServiceTypes.find(function(type) { return type.id === id; });
+            if (!serviceType) return;
+
+            // Check if service type is used in any jobs
+            var usedInJobs = jobs.filter(function(job) { return job.serviceType === id; });
+            
+            if (usedInJobs.length > 0) {
+                showSuccessMessage('⚠️ Cannot delete service type used in ' + usedInJobs.length + ' job(s)!');
+                return;
+            }
+
+            if (confirm('Delete service type: "' + serviceType.name + '"?\nThis action cannot be undone.')) {
+                customServiceTypes = customServiceTypes.filter(function(type) { return type.id !== id; });
+                
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                populateServiceTypeSelects();
+                showSuccessMessage('🗑️ Service type deleted successfully');
+            }
+        }
+
+        function handleServiceTypeSubmit(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('service-type-name').value.trim();
+            if (!name) {
+                showSuccessMessage('⚠️ Please enter service type name!');
+                return;
+            }
+
+            var serviceTypeData = {
+                name: name,
+                description: document.getElementById('service-type-description').value.trim(),
+                category: document.getElementById('service-type-category').value.trim() || 'Custom',
+                defaultPrice: parseFloat(document.getElementById('service-type-price').value) || 0,
+                isDefault: false,
+                updatedAt: new Date().toISOString()
+            };
+
+            if (editingServiceType) {
+                var index = customServiceTypes.findIndex(function(type) { return type.id === editingServiceType.id; });
+                if (index !== -1) {
+                    customServiceTypes[index] = Object.assign({ 
+                        id: editingServiceType.id, 
+                        createdAt: editingServiceType.createdAt 
+                    }, serviceTypeData);
+                }
+                showSuccessMessage('✏️ Service type updated successfully');
+            } else {
+                serviceTypeData.id = name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+                serviceTypeData.createdAt = new Date().toISOString();
+                
+                // Check for duplicate IDs
+                var existingType = getAllServiceTypes().find(function(type) { return type.id === serviceTypeData.id; });
+                if (existingType) {
+                    serviceTypeData.id += '-' + Date.now();
+                }
+                
+                customServiceTypes.push(serviceTypeData);
+                showSuccessMessage('✅ Service type added successfully');
+            }
+
+            closeServiceTypeForm();
+            saveDataToStorage();
+            updateStats();
+            renderViews();
+            populateServiceTypeSelects();
+        }
+
+        function renderServiceTypes(searchTerm) {
+            searchTerm = searchTerm || '';
+            
+            var allTypes = getAllServiceTypes();
+            var filteredTypes = allTypes.filter(function(type) {
+                return type.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+                       (type.description && type.description.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) ||
+                       (type.category && type.category.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+            });
+
+            var container = document.getElementById('service-types-list');
+            if (!container) return;
+            
+            // Update statistics
+            var totalCount = document.getElementById('service-types-count');
+            var defaultCount = document.getElementById('default-types-count');
+            var customCount = document.getElementById('custom-types-count');
+            var settingsCount = document.getElementById('settings-service-types-count');
+            
+            if (totalCount) totalCount.textContent = allTypes.length + ' types';
+            if (defaultCount) defaultCount.textContent = defaultServiceTypes.length;
+            if (customCount) customCount.textContent = customServiceTypes.length;
+            if (settingsCount) settingsCount.textContent = allTypes.length;
+            
+            if (filteredTypes.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">🛠️</div>' +
+                    '<p style="font-weight: 600;">No service types found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(255,255,255,0.7);">Add custom service types for your business</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var typesHTML = '';
+            
+            for (var i = 0; i < filteredTypes.length; i++) {
+                var serviceType = filteredTypes[i];
+                var usageCount = jobs.filter(function(job) { return job.serviceType === serviceType.id; }).length;
+                
+                typesHTML += '<div class="service-type-item">' +
+                    '<div class="service-type-header">' +
+                    '<div>' +
+                    '<div class="service-type-title">' + serviceType.name + '</div>' +
+                    '<div class="service-type-description">' + (serviceType.description || 'No description provided') + '</div>' +
+                    '</div>' +
+                    '<div class="service-type-actions">' +
+                    (serviceType.isDefault ? '' : '<button class="icon-btn edit-btn" onclick="editServiceType(\'' + serviceType.id + '\')" title="Edit">✏️</button>') +
+                    (serviceType.isDefault ? '' : '<button class="icon-btn delete-btn" onclick="deleteServiceType(\'' + serviceType.id + '\')" title="Delete">🗑️</button>') +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="service-type-meta">' +
+                    '<div style="display: flex; gap: 8px; align-items: center;">' +
+                    '<span class="' + (serviceType.isDefault ? 'default-badge' : 'custom-badge') + '">' + (serviceType.isDefault ? 'Default' : 'Custom') + '</span>' +
+                    (serviceType.category ? '<span style="font-size: 12px; color: rgba(255,255,255,0.7);">📂 ' + serviceType.category + '</span>' : '') +
+                    '</div>' +
+                    '<div style="display: flex; gap: 12px; align-items: center; font-size: 12px;">' +
+                    (serviceType.defaultPrice ? '<span style="color: #10b981; font-weight: 600;">RM ' + parseFloat(serviceType.defaultPrice).toFixed(2) + '</span>' : '') +
+                    '<span style="color: rgba(255,255,255,0.6);">' + usageCount + ' jobs</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = typesHTML;
         }
 
         function setupEventListeners() {
@@ -2501,6 +2287,13 @@
             if (technicianSearch) {
                 technicianSearch.addEventListener('input', function(e) {
                     renderTechnicians(e.target.value);
+                });
+            }
+
+            var serviceSearch = document.getElementById('service-search');
+            if (serviceSearch) {
+                serviceSearch.addEventListener('input', function(e) {
+                    renderServiceTypes(e.target.value);
                 });
             }
 
@@ -2545,14 +2338,14 @@
                 companyForm.addEventListener('submit', handleCompanySubmit);
             }
 
+            var serviceTypeForm = document.getElementById('service-type-form');
+            if (serviceTypeForm) {
+                serviceTypeForm.addEventListener('submit', handleServiceTypeSubmit);
+            }
+
             var addWorkItemForm = document.getElementById('add-work-item-form');
             if (addWorkItemForm) {
                 addWorkItemForm.addEventListener('submit', handleAddWorkItemSubmit);
-            }
-
-            var customServiceForm = document.getElementById('custom-service-form');
-            if (customServiceForm) {
-                customServiceForm.addEventListener('submit', handleCustomServiceSubmit);
             }
 
             // Work item calculations
@@ -2618,13 +2411,9 @@
                                 openWorkItemsModal(selectedJobDetails.id);
                             }
                             break;
-                        case 'q':
+                        case 'v':
                             e.preventDefault();
-                            quickCreateJobWithPresetService();
-                            break;
-                        case 'e':
-                            e.preventDefault();
-                            exportAllData();
+                            openServiceTypeForm();
                             break;
                     }
                 }
@@ -2640,10 +2429,10 @@
                 'enhanced-job-modal',
                 'client-modal', 
                 'technician-modal',
+                'service-type-modal',
                 'job-details-modal',
                 'work-items-modal',
-                'add-work-item-modal',
-                'custom-service-modal'
+                'add-work-item-modal'
             ];
             
             for (var i = 0; i < modals.length; i++) {
@@ -2658,35 +2447,28 @@
         function openEnhancedJobForm() {
             tempWorkItems = [];
             editingJob = null;
-            jobSelectedServiceType = null;
-            
             document.getElementById('enhanced-job-modal-title').textContent = '🔧 Create Service Job + Work Items';
             document.getElementById('enhanced-job-form').reset();
             
             populateEnhancedJobClients();
             populateEnhancedJobTechnicians();
+            populateServiceTypeSelects();
             
             // Set defaults
             document.getElementById('enhanced-job-scheduled-date').value = selectedDate;
             document.getElementById('enhanced-job-priority').value = 'medium';
             
-            // Clear service type selection
-            clearJobServiceSelection();
-            renderServiceTypes();
-            
             updateWorkItemsDisplay();
             updateOverallTotal();
             
             document.getElementById('enhanced-job-modal').classList.add('show');
-            showSuccessMessage('🔧 Enhanced Job Creation with Service Type Buttons opened!');
+            showSuccessMessage('🔧 Enhanced Job Creation with Work Items opened!');
         }
 
         function closeEnhancedJobForm() {
             document.getElementById('enhanced-job-modal').classList.remove('show');
             tempWorkItems = [];
-            jobSelectedServiceType = null;
             document.getElementById('enhanced-job-form').reset();
-            clearJobServiceSelection();
             updateWorkItemsDisplay();
             updateOverallTotal();
         }
@@ -2710,7 +2492,8 @@
             var optionsHTML = '<option value="">Assign Technician</option>';
             for (var i = 0; i < technicians.length; i++) {
                 var technician = technicians[i];
-                optionsHTML += '<option value="' + technician.id + '">' + technician.name + ' (' + technician.specialization.replace('-', ' ') + ')</option>';
+                var specialization = getServiceTypeName(technician.specialization) || technician.specialization;
+                optionsHTML += '<option value="' + technician.id + '">' + technician.name + ' (' + specialization + ')</option>';
             }
             select.innerHTML = optionsHTML;
         }
@@ -2875,7 +2658,6 @@
         function saveEnhancedJob() {
             var clientId = parseInt(document.getElementById('enhanced-job-client').value);
             var title = document.getElementById('enhanced-job-title').value.trim();
-            var serviceType = document.getElementById('enhanced-job-service').value;
             
             if (!clientId) {
                 showSuccessMessage('⚠️ Please select a client!');
@@ -2891,7 +2673,7 @@
                 id: Date.now(),
                 clientId: clientId,
                 title: title,
-                serviceType: serviceType || 'general',
+                serviceType: document.getElementById('enhanced-job-service').value,
                 priority: document.getElementById('enhanced-job-priority').value || 'medium',
                 technicianId: parseInt(document.getElementById('enhanced-job-technician').value) || null,
                 scheduledDate: document.getElementById('enhanced-job-scheduled-date').value || selectedDate,
@@ -2913,10 +2695,7 @@
             updateStats();
             renderViews();
             
-            var serviceName = getServiceTypeName(jobData.serviceType);
-            var serviceIcon = getServiceTypeIcon(jobData.serviceType);
-            
-            showSuccessMessage('✅ ' + serviceIcon + ' ' + serviceName + ' Job #' + jobData.id + ' created with ' + tempWorkItems.length + ' work items! Total: RM ' + jobData.cost);
+            showSuccessMessage('✅ Job #' + jobData.id + ' created with ' + tempWorkItems.length + ' work items! Total: RM ' + jobData.cost);
         }
 
         function calculateTotalFromWorkItems(items) {
@@ -2966,10 +2745,9 @@
             updateStats();
             renderViews();
             
-            showSuccessMessage('🎯 ❄️ AC Demo Job #' + demoJobId + ' created with 6 work items! Total: RM 1,285.00');
+            showSuccessMessage('🎯 Demo Job #' + demoJobId + ' created with 6 work items! Total: RM 1,285.00');
         }
 
-        // Utility Functions
         function updateStatusBar() {
             var now = new Date();
             var timeStr = now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
@@ -2987,3 +2765,1544 @@
                 month: 'short' 
             });
             var dateElement = document.getElementById('current-date');
+            if (dateElement) {
+                dateElement.textContent = dateStr;
+            }
+        }
+
+        function updateStats() {
+            var todayJobs = jobs.filter(function(job) {
+                return job.scheduledDate === selectedDate;
+            });
+            
+            var totalRevenue = 0;
+            var activeJobs = 0;
+            var totalWorkItems = 0;
+            
+            for (var i = 0; i < jobs.length; i++) {
+                var job = jobs[i];
+                if (job.cost) totalRevenue += parseFloat(job.cost);
+                
+                if (job.status === 'pending' || job.status === 'progress') {
+                    activeJobs++;
+                }
+                
+                var jobWorkItems = workItems[job.id] || [];
+                totalWorkItems += jobWorkItems.length;
+            }
+
+            var activeJobsElement = document.getElementById('active-jobs-count');
+            var clientsElement = document.getElementById('clients-count');
+            var techniciansElement = document.getElementById('technicians-count');
+            var revenueElement = document.getElementById('total-revenue');
+            var todayJobsElement = document.getElementById('today-jobs');
+            var dailyRevenueElement = document.getElementById('daily-revenue');
+            var pendingElement = document.getElementById('pending-jobs');
+            var progressElement = document.getElementById('progress-jobs');
+            var completedElement = document.getElementById('completed-jobs');
+            
+            if (activeJobsElement) activeJobsElement.textContent = activeJobs;
+            if (clientsElement) clientsElement.textContent = clients.length;
+            if (techniciansElement) techniciansElement.textContent = technicians.length;
+            if (revenueElement) revenueElement.textContent = 'RM ' + totalRevenue.toFixed(0);
+            if (todayJobsElement) todayJobsElement.textContent = todayJobs.length + ' Jobs';
+            
+            var dailyRevenue = todayJobs.reduce(function(sum, job) { 
+                return sum + (parseFloat(job.cost) || 0); 
+            }, 0);
+            if (dailyRevenueElement) dailyRevenueElement.textContent = 'RM ' + dailyRevenue.toFixed(0);
+            
+            if (pendingElement) pendingElement.textContent = todayJobs.filter(function(job) { return job.status === 'pending'; }).length;
+            if (progressElement) progressElement.textContent = todayJobs.filter(function(job) { return job.status === 'progress'; }).length;
+            if (completedElement) completedElement.textContent = todayJobs.filter(function(job) { return job.status === 'completed'; }).length;
+            
+            // Update settings stats
+            var totalJobsElement = document.getElementById('total-jobs-count');
+            var totalWorkItemsElement = document.getElementById('total-work-items-count');
+            var settingsRevenueElement = document.getElementById('settings-total-revenue');
+            
+            if (totalJobsElement) totalJobsElement.textContent = jobs.length;
+            if (totalWorkItemsElement) totalWorkItemsElement.textContent = totalWorkItems;
+            if (settingsRevenueElement) settingsRevenueElement.textContent = 'RM ' + totalRevenue.toFixed(2);
+        }
+
+        // View Management
+        function showView(viewName) {
+            var views = document.querySelectorAll('.view');
+            for (var i = 0; i < views.length; i++) {
+                views[i].classList.add('hidden');
+            }
+            
+            var targetView = document.getElementById(viewName + '-view');
+            if (targetView) {
+                targetView.classList.remove('hidden');
+            }
+            
+            var navItems = document.querySelectorAll('.nav-item');
+            for (var i = 0; i < navItems.length; i++) {
+                navItems[i].classList.remove('active');
+            }
+            
+            for (var i = 0; i < navItems.length; i++) {
+                var onclick = navItems[i].getAttribute('onclick');
+                if (onclick && onclick.indexOf(viewName) !== -1) {
+                    navItems[i].classList.add('active');
+                    break;
+                }
+            }
+            
+            currentView = viewName;
+            renderViews();
+        }
+
+        function renderViews() {
+            switch(currentView) {
+                case 'dashboard':
+                    renderRecentJobs();
+                    break;
+                case 'clients':
+                    renderClients();
+                    break;
+                case 'jobs':
+                    renderJobs();
+                    break;
+                case 'technicians':
+                    renderTechnicians();
+                    break;
+                case 'services':
+                    renderServiceTypes();
+                    break;
+            }
+        }
+
+        function renderRecentJobs() {
+            var todayJobs = jobs.filter(function(job) {
+                return job.scheduledDate === selectedDate;
+            });
+            
+            var container = document.getElementById('recent-jobs');
+            if (!container) return;
+            
+            if (todayJobs.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">⏰</div>' +
+                    '<p style="font-weight: 600;">No jobs scheduled today</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(255,255,255,0.7);">Create a new service job to get started</p>' +
+                    '</div>';
+                return;
+            }
+
+            var jobsHTML = '';
+            var displayCount = Math.min(todayJobs.length, 3);
+            
+            for (var i = 0; i < displayCount; i++) {
+                var job = todayJobs[i];
+                var client = clients.find(function(c) { return c.id === job.clientId; });
+                var technician = technicians.find(function(t) { return t.id === job.technicianId; });
+                var jobWorkItems = workItems[job.id] || [];
+                
+                jobsHTML += '<div class="item-card" style="padding-right: 140px;">' +
+                    '<div class="item-actions">' +
+                    '<button class="icon-btn works-btn" onclick="openWorkItemsModal(' + job.id + ')" title="Work Items (' + jobWorkItems.length + ')">🔧</button>' +
+                    '<button class="icon-btn pdf-btn" onclick="generateJobPDF(' + job.id + ')" title="Generate PDF">📄</button>' +
+                    '<button class="icon-btn edit-btn" onclick="editJobQuick(' + job.id + ')" title="Edit">✏️</button>' +
+                    '</div>' +
+                    '<div onclick="showJobDetails(' + job.id + ')" style="cursor: pointer;">' +
+                    '<h3 style="font-weight: 700; margin-bottom: 8px;">' + job.title + '</h3>' +
+                    '<p style="font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 4px;">🏢 ' + (client ? client.name : 'Unknown Client') + '</p>' +
+                    '<p style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 8px;">👷 ' + (technician ? technician.name : 'Unassigned') + '</p>' +
+                    '<div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">' +
+                    '<span class="service-type-badge">' + (getServiceTypeName(job.serviceType) || 'General') + '</span>' +
+                    (jobWorkItems.length > 0 ? '<span class="service-type-badge" style="background: rgba(139, 92, 246, 0.2);">🔧 ' + jobWorkItems.length + ' items</span>' : '') +
+                    '<span class="priority-badge priority-' + job.priority + '">' + job.priority + '</span>' +
+                    '</div>' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 12px;">' +
+                    '<span class="status-badge status-' + job.status + '">' + job.status.replace('progress', 'In Progress') + '</span>' +
+                    (job.cost ? '<span style="font-weight: 700; color: #60a5fa; font-size: 16px;">RM ' + parseFloat(job.cost).toFixed(2) + '</span>' : '<span style="color: rgba(255,255,255,0.6);">No cost</span>') +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = jobsHTML;
+        }
+
+        function renderClients(searchTerm) {
+            searchTerm = searchTerm || '';
+            
+            var filteredClients = clients.filter(function(client) {
+                return client.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+                       (client.contact && client.contact.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) ||
+                       (client.phone && client.phone.indexOf(searchTerm) !== -1);
+            });
+
+            var container = document.getElementById('clients-list');
+            if (!container) return;
+            
+            if (filteredClients.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">👥</div>' +
+                    '<p style="font-weight: 600;">No clients found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(255,255,255,0.7);">Add clients to manage service jobs</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var clientsHTML = '';
+            
+            for (var i = 0; i < filteredClients.length; i++) {
+                var client = filteredClients[i];
+                var clientJobs = jobs.filter(function(job) { return job.clientId === client.id; });
+                var clientRevenue = clientJobs.reduce(function(sum, job) { 
+                    return sum + (parseFloat(job.cost) || 0); 
+                }, 0);
+                
+                clientsHTML += '<div class="item-card" style="padding-right: 100px;">' +
+                    '<div class="item-actions">' +
+                    '<button class="icon-btn edit-btn" onclick="editClient(' + client.id + ')" title="Edit">✏️</button>' +
+                    '<button class="icon-btn delete-btn" onclick="deleteClient(' + client.id + ')" title="Delete">🗑️</button>' +
+                    '</div>' +
+                    '<div>' +
+                    '<h3>' + client.name + '</h3>' +
+                    (client.contact ? '<div class="contact-info"><span class="icon">👤</span><span>' + client.contact + '</span></div>' : '') +
+                    (client.phone ? '<div class="contact-info"><span class="icon">📞</span><span>' + client.phone + '</span></div>' : '') +
+                    (client.email ? '<div class="contact-info"><span class="icon">📧</span><span>' + client.email + '</span></div>' : '') +
+                    (client.address ? '<div class="contact-info"><span class="icon">📍</span><span>' + client.address + '</span></div>' : '') +
+                    (client.type ? '<span class="service-type-badge" style="text-transform: capitalize;">' + client.type + '</span>' : '') +
+                    '<div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 12px; margin-top: 12px; display: flex; justify-content: space-between; font-size: 14px;">' +
+                    '<span style="color: rgba(255,255,255,0.8);">' + clientJobs.length + ' jobs</span>' +
+                    '<span style="font-weight: 700; color: #60a5fa;">RM ' + clientRevenue.toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = clientsHTML;
+        }
+
+        function renderJobs() {
+            var todayJobs = jobs.filter(function(job) {
+                return job.scheduledDate === selectedDate;
+            });
+            
+            var filteredJobs = todayJobs.filter(function(job) {
+                return jobFilter === 'all' || job.status === jobFilter;
+            });
+
+            var container = document.getElementById('jobs-list');
+            if (!container) return;
+            
+            if (filteredJobs.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">🔧</div>' +
+                    '<p style="font-weight: 600;">No jobs found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(255,255,255,0.7);">Create service jobs with work items</p>' +
+                    '</div>';
+                return;
+            }
+
+            var jobsHTML = '';
+            
+            for (var i = 0; i < filteredJobs.length; i++) {
+                var job = filteredJobs[i];
+                var client = clients.find(function(c) { return c.id === job.clientId; });
+                var technician = technicians.find(function(t) { return t.id === job.technicianId; });
+                var jobWorkItems = workItems[job.id] || [];
+                
+                jobsHTML += '<div class="item-card" style="padding-right: 180px;">' +
+                    '<div class="item-actions">' +
+                    '<span class="priority-badge priority-' + job.priority + '">' + job.priority + '</span>' +
+                    '<button class="icon-btn works-btn" onclick="openWorkItemsModal(' + job.id + ')" title="Work Items (' + jobWorkItems.length + ')">🔧</button>' +
+                    '<button class="icon-btn pdf-btn" onclick="generateJobPDF(' + job.id + ')" title="PDF">📄</button>' +
+                    '<button class="icon-btn edit-btn" onclick="editJobQuick(' + job.id + ')" title="Edit">✏️</button>' +
+                    '<button class="icon-btn delete-btn" onclick="deleteJob(' + job.id + ')" title="Delete">🗑️</button>' +
+                    '</div>' +
+                    '<div onclick="showJobDetails(' + job.id + ')" style="cursor: pointer;">' +
+                    '<h3 style="font-weight: 700; margin-bottom: 8px;">' + job.title + '</h3>' +
+                    '<p style="font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 4px;">🏢 ' + (client ? client.name : 'Unknown Client') + '</p>' +
+                    '<p style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 8px;">👷 ' + (technician ? technician.name : 'Unassigned') + '</p>' +
+                    '<div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">' +
+                    '<span class="service-type-badge">' + (getServiceTypeName(job.serviceType) || 'General') + '</span>' +
+                    (jobWorkItems.length > 0 ? '<span class="service-type-badge" style="background: rgba(139, 92, 246, 0.2);">🔧 ' + jobWorkItems.length + ' items</span>' : '') +
+                    '</div>' +
+                    (job.notes ? '<div style="margin-bottom: 12px; font-size: 14px; color: rgba(255,255,255,0.8); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">📝 ' + job.notes.substring(0, 80) + (job.notes.length > 80 ? '...' : '') + '</div>' : '') +
+                    '<div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 12px;">' +
+                    '<div style="display: flex; gap: 12px; align-items: center;">' +
+                    '<span class="status-badge status-' + job.status + '">' + job.status.replace('progress', 'In Progress') + '</span>' +
+                    '<span style="font-size: 12px; color: rgba(255,255,255,0.7);">🕒 ' + (job.scheduledTime || 'No time set') + '</span>' +
+                    '</div>' +
+                    (job.cost ? '<span style="font-weight: 700; color: #60a5fa; font-size: 18px;">RM ' + parseFloat(job.cost).toFixed(2) + '</span>' : '<span style="color: rgba(255,255,255,0.6);">No cost</span>') +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+
+            container.innerHTML = jobsHTML;
+        }
+
+        function renderTechnicians(searchTerm) {
+            searchTerm = searchTerm || '';
+            
+            var filteredTechnicians = technicians.filter(function(technician) {
+                return technician.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+                       technician.specialization.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+                       (technician.phone && technician.phone.indexOf(searchTerm) !== -1);
+            });
+
+            var container = document.getElementById('technicians-list');
+            if (!container) return;
+            
+            if (filteredTechnicians.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">👷</div>' +
+                    '<p style="font-weight: 600;">No technicians found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(255,255,255,0.7);">Add technicians to assign to jobs</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var techniciansHTML = '';
+            
+            for (var i = 0; i < filteredTechnicians.length; i++) {
+                var technician = filteredTechnicians[i];
+                var technicianJobs = jobs.filter(function(job) { return job.technicianId === technician.id; });
+                var activeJobs = technicianJobs.filter(function(job) { 
+                    return job.status === 'pending' || job.status === 'progress'; 
+                }).length;
+                
+                var specializationName = getServiceTypeName(technician.specialization) || technician.specialization;
+                
+                techniciansHTML += '<div class="item-card" style="padding-right: 100px;">' +
+                    '<div class="item-actions">' +
+                    '<button class="icon-btn edit-btn" onclick="editTechnician(' + technician.id + ')" title="Edit">✏️</button>' +
+                    '<button class="icon-btn delete-btn" onclick="deleteTechnician(' + technician.id + ')" title="Delete">🗑️</button>' +
+                    '</div>' +
+                    '<div>' +
+                    '<h3>' + technician.name + '</h3>' +
+                    (technician.employeeId ? '<div class="contact-info"><span class="icon">🆔</span><span>' + technician.employeeId + '</span></div>' : '') +
+                    (technician.phone ? '<div class="contact-info"><span class="icon">📞</span><span>' + technician.phone + '</span></div>' : '') +
+                    (technician.email ? '<div class="contact-info"><span class="icon">📧</span><span>' + technician.email + '</span></div>' : '') +
+                    '<div style="margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap;">' +
+                    (technician.specialization ? '<span class="service-type-badge" style="text-transform: capitalize;">' + specializationName + '</span>' : '') +
+                    (technician.level ? '<span class="service-type-badge" style="background: rgba(139, 92, 246, 0.2); text-transform: capitalize;">' + technician.level + '</span>' : '') +
+                    '</div>' +
+                    '<div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 12px; margin-top: 12px; display: flex; justify-content: space-between; font-size: 14px;">' +
+                    '<span style="color: rgba(255,255,255,0.8);">' + activeJobs + ' active jobs</span>' +
+                    (technician.rate ? '<span style="font-weight: 700; color: #60a5fa;">RM ' + parseFloat(technician.rate).toFixed(2) + '/hr</span>' : '') +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = techniciansHTML;
+        }
+
+        // Work Items Management
+        function openWorkItemsModal(jobId) {
+            selectedJobForWorks = jobId;
+            
+            var job = jobs.find(function(j) { return j.id === jobId; });
+            if (!job) return;
+            
+            var jobInfoElement = document.getElementById('work-items-job-info');
+            var modalTitleElement = document.getElementById('work-items-modal-title');
+            
+            if (jobInfoElement) {
+                jobInfoElement.textContent = 'Job #' + job.id + ': ' + job.title;
+            }
+            if (modalTitleElement) {
+                modalTitleElement.textContent = '🔧 Work Items - Job #' + job.id;
+            }
+            
+            renderWorkItems(jobId);
+            document.getElementById('work-items-modal').classList.add('show');
+        }
+
+        function closeWorkItemsModal() {
+            document.getElementById('work-items-modal').classList.remove('show');
+            selectedJobForWorks = null;
+        }
+
+        function renderWorkItems(jobId) {
+            var jobWorkItems = workItems[jobId] || [];
+            var container = document.getElementById('work-items-container');
+            if (!container) return;
+            
+            if (jobWorkItems.length === 0) {
+                container.innerHTML = '<div class="empty-work-items">' +
+                    '<div class="empty-work-items-icon">📋</div>' +
+                    '<p style="font-weight: 600; color: #475569;">No work items added yet</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px;">Add work items to create detailed breakdown</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var totalAmount = 0;
+            var workItemsHTML = '<div class="work-items-container">' +
+                '<div class="work-items-header">' +
+                '<div class="work-items-title">🔧 Work Items (' + jobWorkItems.length + ')</div>' +
+                '</div>';
+            
+            for (var i = 0; i < jobWorkItems.length; i++) {
+                var item = jobWorkItems[i];
+                var itemTotal = parseFloat(item.quantity) * parseFloat(item.price);
+                totalAmount += itemTotal;
+                
+                workItemsHTML += '<div class="work-item">' +
+                    '<div class="work-item-header">' +
+                    '<div class="work-item-title">' + item.description + '</div>' +
+                    '<div class="work-item-actions">' +
+                    '<button class="work-item-btn work-item-edit" onclick="editWorkItem(' + jobId + ', ' + i + ')" title="Edit">✏️</button>' +
+                    '<button class="work-item-btn work-item-delete" onclick="deleteWorkItem(' + jobId + ', ' + i + ')" title="Delete">🗑️</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="work-item-details">' +
+                    '<div class="work-item-detail">' +
+                    '<div class="work-item-detail-label">Quantity</div>' +
+                    '<div class="work-item-detail-value">' + item.quantity + ' ' + item.unit + '</div>' +
+                    '</div>' +
+                    '<div class="work-item-detail">' +
+                    '<div class="work-item-detail-label">Unit Price</div>' +
+                    '<div class="work-item-detail-value">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                    '</div>' +
+                    '<div class="work-item-detail">' +
+                    '<div class="work-item-detail-label">Total</div>' +
+                    '<div class="work-item-detail-value">RM ' + itemTotal.toFixed(2) + '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            workItemsHTML += '<div class="work-items-total">' +
+                '<div class="work-items-total-label">Total Amount</div>' +
+                '<div class="work-items-total-value">RM ' + totalAmount.toFixed(2) + '</div>' +
+                '</div>' +
+                '</div>';
+            
+            container.innerHTML = workItemsHTML;
+        }
+
+        function openAddWorkItemForm() {
+            editingWorkItem = null;
+            var titleElement = document.getElementById('add-work-item-title');
+            var formElement = document.getElementById('add-work-item-form');
+            var totalElement = document.getElementById('work-item-total');
+            
+            if (titleElement) titleElement.textContent = '➕ Add Work Item';
+            if (formElement) formElement.reset();
+            if (totalElement) totalElement.textContent = 'RM 0.00';
+            
+            document.getElementById('add-work-item-modal').classList.add('show');
+        }
+
+        function closeAddWorkItemForm() {
+            document.getElementById('add-work-item-modal').classList.remove('show');
+            editingWorkItem = null;
+        }
+
+        function updateWorkItemTotal() {
+            var quantity = parseFloat(document.getElementById('work-item-quantity').value) || 0;
+            var price = parseFloat(document.getElementById('work-item-price').value) || 0;
+            var total = quantity * price;
+            
+            var totalElement = document.getElementById('work-item-total');
+            if (totalElement) {
+                totalElement.textContent = 'RM ' + total.toFixed(2);
+            }
+        }
+
+        function handleAddWorkItemSubmit(e) {
+            e.preventDefault();
+            
+            var description = document.getElementById('work-item-description').value.trim();
+            var quantity = parseFloat(document.getElementById('work-item-quantity').value);
+            var price = parseFloat(document.getElementById('work-item-price').value);
+            var unit = document.getElementById('work-item-unit').value;
+            
+            if (!description || !quantity || !price) {
+                showSuccessMessage('⚠️ Please fill in all required fields!');
+                return;
+            }
+            
+            var workItem = {
+                description: description,
+                quantity: quantity,
+                price: price,
+                unit: unit,
+                total: quantity * price,
+                createdAt: new Date().toISOString()
+            };
+            
+            if (!workItems[selectedJobForWorks]) {
+                workItems[selectedJobForWorks] = [];
+            }
+            
+            if (editingWorkItem !== null) {
+                workItems[selectedJobForWorks][editingWorkItem] = workItem;
+                showSuccessMessage('✏️ Work item updated successfully!');
+            } else {
+                workItems[selectedJobForWorks].push(workItem);
+                showSuccessMessage('✅ Work item added successfully!');
+            }
+            
+            updateJobCostFromWorkItems(selectedJobForWorks);
+            closeAddWorkItemForm();
+            renderWorkItems(selectedJobForWorks);
+            saveDataToStorage();
+            updateStats();
+        }
+
+        function editWorkItem(jobId, itemIndex) {
+            var jobWorkItems = workItems[jobId] || [];
+            var item = jobWorkItems[itemIndex];
+            
+            if (!item) return;
+            
+            editingWorkItem = itemIndex;
+            document.getElementById('add-work-item-title').textContent = '✏️ Edit Work Item';
+            document.getElementById('work-item-description').value = item.description;
+            document.getElementById('work-item-quantity').value = item.quantity;
+            document.getElementById('work-item-price').value = item.price;
+            document.getElementById('work-item-unit').value = item.unit;
+            
+            updateWorkItemTotal();
+            document.getElementById('add-work-item-modal').classList.add('show');
+        }
+
+        function deleteWorkItem(jobId, itemIndex) {
+            var jobWorkItems = workItems[jobId] || [];
+            var item = jobWorkItems[itemIndex];
+            
+            if (!item) return;
+            
+            if (confirm('Delete work item: "' + item.description + '"?\nQuantity: ' + item.quantity + ' ' + item.unit + '\nPrice: RM ' + parseFloat(item.price).toFixed(2))) {
+                workItems[jobId].splice(itemIndex, 1);
+                
+                updateJobCostFromWorkItems(jobId);
+                renderWorkItems(jobId);
+                saveDataToStorage();
+                updateStats();
+                showSuccessMessage('🗑️ Work item deleted successfully');
+            }
+        }
+
+        function updateJobCostFromWorkItems(jobId) {
+            var jobWorkItems = workItems[jobId] || [];
+            var totalCost = 0;
+            
+            for (var i = 0; i < jobWorkItems.length; i++) {
+                totalCost += parseFloat(jobWorkItems[i].quantity) * parseFloat(jobWorkItems[i].price);
+            }
+            
+            // Update job cost
+            for (var i = 0; i < jobs.length; i++) {
+                if (jobs[i].id === parseInt(jobId)) {
+                    jobs[i].cost = totalCost.toFixed(2);
+                    break;
+                }
+            }
+        }
+
+        function getJobWorkItemsTotal(jobId) {
+            var jobWorkItems = workItems[jobId] || [];
+            var total = 0;
+            
+            for (var i = 0; i < jobWorkItems.length; i++) {
+                total += parseFloat(jobWorkItems[i].quantity) * parseFloat(jobWorkItems[i].price);
+            }
+            
+            return total;
+        }
+
+        // Client Management Functions
+        function openClientForm() {
+            editingClient = null;
+            document.getElementById('client-modal-title').textContent = 'Add Client';
+            document.getElementById('client-form').reset();
+            document.getElementById('client-modal').classList.add('show');
+        }
+
+        function closeClientForm() {
+            document.getElementById('client-modal').classList.remove('show');
+            editingClient = null;
+        }
+
+        function editClient(id) {
+            var client = clients.find(function(c) { return c.id === id; });
+            if (!client) return;
+
+            editingClient = client;
+            document.getElementById('client-modal-title').textContent = 'Edit Client';
+            document.getElementById('client-name').value = client.name;
+            document.getElementById('client-contact').value = client.contact || '';
+            document.getElementById('client-phone').value = client.phone || '';
+            document.getElementById('client-email').value = client.email || '';
+            document.getElementById('client-address').value = client.address || '';
+            document.getElementById('client-type').value = client.type || '';
+            document.getElementById('client-modal').classList.add('show');
+        }
+
+        function deleteClient(id) {
+            if (confirm('Delete this client?\nThis will also delete all their jobs and work items.')) {
+                clients = clients.filter(function(client) { return client.id !== id; });
+                jobs = jobs.filter(function(job) { return job.clientId !== id; });
+                
+                // Remove work items for deleted jobs
+                for (var jobId in workItems) {
+                    var job = jobs.find(function(j) { return j.id === parseInt(jobId); });
+                    if (!job) {
+                        delete workItems[jobId];
+                    }
+                }
+                
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                showSuccessMessage('🗑️ Client deleted successfully');
+            }
+        }
+
+        function handleClientSubmit(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('client-name').value.trim();
+            if (!name) {
+                showSuccessMessage('⚠️ Please enter client name!');
+                return;
+            }
+
+            var clientData = {
+                name: name,
+                contact: document.getElementById('client-contact').value.trim(),
+                phone: document.getElementById('client-phone').value.trim(),
+                email: document.getElementById('client-email').value.trim(),
+                address: document.getElementById('client-address').value.trim(),
+                type: document.getElementById('client-type').value
+            };
+
+            if (editingClient) {
+                var index = clients.findIndex(function(c) { return c.id === editingClient.id; });
+                if (index !== -1) {
+                    clients[index] = Object.assign({ id: editingClient.id }, clientData);
+                }
+                showSuccessMessage('✏️ Client updated successfully');
+            } else {
+                clientData.id = Date.now();
+                clients.push(clientData);
+                showSuccessMessage('✅ Client added successfully');
+            }
+
+            closeClientForm();
+            saveDataToStorage();
+            updateStats();
+            renderViews();
+            populateEnhancedJobClients();
+        }
+
+        // Technician Management Functions
+        function openTechnicianForm() {
+            editingTechnician = null;
+            document.getElementById('technician-modal-title').textContent = 'Add Technician';
+            document.getElementById('technician-form').reset();
+            populateServiceTypeSelects();
+            document.getElementById('technician-modal').classList.add('show');
+        }
+
+        function closeTechnicianForm() {
+            document.getElementById('technician-modal').classList.remove('show');
+            editingTechnician = null;
+        }
+
+        function editTechnician(id) {
+            var technician = technicians.find(function(t) { return t.id === id; });
+            if (!technician) return;
+
+            editingTechnician = technician;
+            document.getElementById('technician-modal-title').textContent = 'Edit Technician';
+            document.getElementById('technician-name').value = technician.name;
+            document.getElementById('technician-phone').value = technician.phone || '';
+            document.getElementById('technician-email').value = technician.email || '';
+            document.getElementById('technician-employee-id').value = technician.employeeId || '';
+            document.getElementById('technician-specialization').value = technician.specialization || '';
+            document.getElementById('technician-level').value = technician.level || 'senior';
+            document.getElementById('technician-rate').value = technician.rate || '';
+            populateServiceTypeSelects();
+            document.getElementById('technician-modal').classList.add('show');
+        }
+
+        function deleteTechnician(id) {
+            if (confirm('Delete this technician?\nThey will be unassigned from all jobs.')) {
+                technicians = technicians.filter(function(technician) { return technician.id !== id; });
+                
+                // Unassign technician from jobs
+                for (var i = 0; i < jobs.length; i++) {
+                    if (jobs[i].technicianId === id) {
+                        jobs[i].technicianId = null;
+                    }
+                }
+                
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                showSuccessMessage('🗑️ Technician deleted successfully');
+            }
+        }
+
+        function handleTechnicianSubmit(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('technician-name').value.trim();
+            if (!name) {
+                showSuccessMessage('⚠️ Please enter technician name!');
+                return;
+            }
+
+            var technicianData = {
+                name: name,
+                phone: document.getElementById('technician-phone').value.trim(),
+                email: document.getElementById('technician-email').value.trim(),
+                employeeId: document.getElementById('technician-employee-id').value.trim(),
+                specialization: document.getElementById('technician-specialization').value,
+                level: document.getElementById('technician-level').value || 'senior',
+                rate: document.getElementById('technician-rate').value
+            };
+
+            if (editingTechnician) {
+                var index = technicians.findIndex(function(t) { return t.id === editingTechnician.id; });
+                if (index !== -1) {
+                    technicians[index] = Object.assign({ id: editingTechnician.id }, technicianData);
+                }
+                showSuccessMessage('✏️ Technician updated successfully');
+            } else {
+                technicianData.id = Date.now();
+                technicians.push(technicianData);
+                showSuccessMessage('✅ Technician added successfully');
+            }
+
+            closeTechnicianForm();
+            saveDataToStorage();
+            updateStats();
+            renderViews();
+            populateEnhancedJobTechnicians();
+        }
+
+        // Settings Functions
+        function openSettings() {
+            populateSettingsForms();
+            showView('settings');
+        }
+
+        function populateSettingsForms() {
+            document.getElementById('company-name').value = companySettings.name || '';
+            document.getElementById('company-reg').value = companySettings.registration || '';
+            document.getElementById('company-tagline').value = companySettings.tagline || '';
+            document.getElementById('company-phone').value = companySettings.phone || '';
+            document.getElementById('company-email').value = companySettings.email || '';
+            document.getElementById('company-website').value = companySettings.website || '';
+            document.getElementById('company-address').value = companySettings.address || '';
+        }
+
+        function handleCompanySubmit(e) {
+            e.preventDefault();
+            
+            companySettings.name = document.getElementById('company-name').value.trim();
+            companySettings.tagline = document.getElementById('company-tagline').value.trim();
+            companySettings.phone = document.getElementById('company-phone').value.trim();
+            companySettings.email = document.getElementById('company-email').value.trim();
+            companySettings.website = document.getElementById('company-website').value.trim();
+            companySettings.address = document.getElementById('company-address').value.trim();
+
+            // Update display name
+            var displayElement = document.getElementById('company-display-name');
+            if (displayElement) {
+                displayElement.textContent = companySettings.name;
+            }
+
+            saveDataToStorage();
+            showSuccessMessage('🏢 Company information saved successfully!');
+        }
+
+        // Job Details Functions
+        function showJobDetails(jobId) {
+            var job = jobs.find(function(j) { return j.id === jobId; });
+            if (!job) return;
+
+            selectedJobDetails = job;
+            var client = clients.find(function(c) { return c.id === job.clientId; });
+            var technician = technicians.find(function(t) { return t.id === job.technicianId; });
+            var jobWorkItems = workItems[job.id] || [];
+            var workItemsTotal = getJobWorkItemsTotal(job.id);
+            
+            var statusActions = '';
+            if (job.status === 'pending') {
+                statusActions = '<button onclick="updateJobStatus(' + job.id + ', \'progress\')" class="form-btn" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); font-weight: 700;">🚀 Start Job</button>';
+            } else if (job.status === 'progress') {
+                statusActions = '<button onclick="updateJobStatus(' + job.id + ', \'completed\')" class="form-btn" style="background: linear-gradient(135deg, #10b981, #059669); font-weight: 700;">✅ Complete Job</button>';
+            } else if (job.status === 'completed') {
+                statusActions = '<button onclick="updateJobStatus(' + job.id + ', \'progress\')" class="form-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706); font-weight: 700;">🔄 Reopen Job</button>';
+            }
+            
+            // Job Details Content
+            var content = '<div style="background: linear-gradient(135deg, #f9fafb, #f3f4f6); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #e5e7eb;">' +
+                '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">' +
+                '<div>' +
+                '<h4 style="font-weight: 700; font-size: 20px; margin-bottom: 4px; color: #1f2937;">' + job.title + '</h4>' +
+                '<p style="color: #6b7280; font-weight: 600;">Job #' + job.id + ' • ' + companySettings.name + '</p>' +
+                '</div>' +
+                '<div style="display: flex; gap: 8px; flex-wrap: wrap;">' +
+                '<button onclick="openWorkItemsModal(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); font-weight: 700; padding: 8px 16px; font-size: 14px; min-height: 40px;">🔧 Work Items (' + jobWorkItems.length + ')</button>' +
+                '<button onclick="generateJobPDF(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #06b6d4, #0891b2); font-weight: 700; padding: 8px 16px; font-size: 14px; min-height: 40px;">📄 PDF</button>' +
+                '<button onclick="editJobQuick(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); font-weight: 700; padding: 8px 16px; font-size: 14px; min-height: 40px;">✏️ Edit</button>' +
+                '</div>' +
+                '</div>' +
+                '<p style="color: #6b7280; font-size: 14px;">Created: ' + new Date(job.createdAt).toLocaleString() + '</p>' +
+                '</div>';
+
+            // Client Information
+            content += '<div style="background: linear-gradient(135deg, #f9fafb, #f3f4f6); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #e5e7eb;">' +
+                '<h4 style="font-weight: 700; margin-bottom: 16px; color: #1f2937; font-size: 18px;">🏢 Client Information</h4>' +
+                '<p style="font-weight: 700; color: #1f2937; font-size: 16px;">' + (client ? client.name : 'Unknown Client') + '</p>';
+            
+            if (client) {
+                if (client.contact) content += '<p style="color: #6b7280; margin-top: 4px;">👤 Contact: ' + client.contact + '</p>';
+                if (client.phone) content += '<p style="color: #6b7280; margin-top: 4px;">📞 ' + client.phone + '</p>';
+                if (client.email) content += '<p style="color: #6b7280; margin-top: 4px;">📧 ' + client.email + '</p>';
+                if (client.address) content += '<p style="color: #6b7280; margin-top: 8px;">📍 ' + client.address + '</p>';
+            }
+            content += '</div>';
+
+            // Service Details
+            content += '<div style="background: linear-gradient(135deg, #f9fafb, #f3f4f6); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #e5e7eb;">' +
+                '<h4 style="font-weight: 700; margin-bottom: 16px; color: #1f2937; font-size: 18px;">🔧 Service Details</h4>' +
+                '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px;">' +
+                '<div><strong>Service Type:</strong><br><span style="color: #3b82f6; font-weight: 600;">' + (getServiceTypeName(job.serviceType) || 'General Maintenance') + '</span></div>' +
+                '<div><strong>Priority:</strong><br><span style="text-transform: capitalize; color: ' + (job.priority === 'high' ? '#ef4444' : job.priority === 'medium' ? '#f59e0b' : '#10b981') + '; font-weight: 600;">' + job.priority + ' Priority</span></div>' +
+                '<div><strong>Scheduled:</strong><br><span style="color: #059669; font-weight: 600;">' + (job.scheduledDate ? new Date(job.scheduledDate).toLocaleDateString() : 'Not set') + (job.scheduledTime ? ' at ' + job.scheduledTime : '') + '</span></div>' +
+                '<div><strong>Status:</strong><br><span style="text-transform: capitalize; color: ' + (job.status === 'completed' ? '#10b981' : job.status === 'progress' ? '#3b82f6' : '#f59e0b') + '; font-weight: 600;">' + job.status.replace('progress', 'In Progress') + '</span></div>' +
+                '</div>';
+
+            // Technician info
+            content += '<div style="margin-bottom: 16px;"><strong>👷 Assigned Technician:</strong><br>';
+            if (technician) {
+                var techSpecialization = getServiceTypeName(technician.specialization) || technician.specialization;
+                content += '<div style="background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 12px; margin-top: 8px;">' +
+                    '<div style="font-weight: 700; color: #1f2937;">' + technician.name + '</div>' +
+                    '<div style="color: #6b7280; font-size: 14px;">Specialization: ' + techSpecialization + '</div>' +
+                    '<div style="color: #6b7280; font-size: 14px;">Level: ' + technician.level.replace(/\b\w/g, function(l){ return l.toUpperCase() }) + '</div>';
+                if (technician.phone) content += '<div style="color: #6b7280; font-size: 14px;">📞 ' + technician.phone + '</div>';
+                content += '</div>';
+            } else {
+                content += '<span style="color: #ef4444; font-weight: 600;">⚠️ Unassigned</span>';
+            }
+            content += '</div>';
+
+            if (job.notes) {
+                content += '<div><strong>📝 Job Notes:</strong><br><div style="background: rgba(59, 130, 246, 0.05); padding: 12px; border-radius: 12px; margin-top: 8px; font-style: italic; color: #374151;">' + job.notes + '</div></div>';
+            }
+            content += '</div>';
+
+            // Work Items Section
+            if (jobWorkItems.length > 0) {
+                content += '<div style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 2px solid #0ea5e9;">' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">' +
+                    '<h4 style="font-weight: 700; color: #0c4a6e; font-size: 18px;">🔧 Work Items (' + jobWorkItems.length + ')</h4>' +
+                    '<button onclick="openWorkItemsModal(' + job.id + ')" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); color: white; border: none; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer;">Manage Items</button>' +
+                    '</div>';
+
+                // Show work items preview
+                var previewCount = Math.min(jobWorkItems.length, 5);
+                for (var i = 0; i < previewCount; i++) {
+                    var item = jobWorkItems[i];
+                    var itemTotal = parseFloat(item.quantity) * parseFloat(item.price);
+                    content += '<div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 8px; border: 1px solid #e2e8f0;">' +
+                        '<div style="font-weight: 600; color: #1e293b; margin-bottom: 4px;">' + item.description + '</div>' +
+                        '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 12px; color: #64748b;">' +
+                        '<div>Qty: ' + item.quantity + ' ' + item.unit + '</div>' +
+                        '<div>Unit: RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                        '<div style="font-weight: 700; color: #1e293b;">Total: RM ' + itemTotal.toFixed(2) + '</div>' +
+                        '</div>' +
+                        '</div>';
+                }
+
+                if (jobWorkItems.length > previewCount) {
+                    content += '<div style="text-align: center; color: #64748b; font-size: 14px; margin: 8px 0;">+ ' + (jobWorkItems.length - previewCount) + ' more items</div>';
+                }
+
+                content += '<div style="background: linear-gradient(135deg, #dcfce7, #bbf7d0); border-radius: 12px; padding: 16px; margin-top: 16px; border: 2px solid #22c55e; text-align: center;">' +
+                    '<div style="font-size: 14px; font-weight: 600; color: #15803d; margin-bottom: 4px;">Work Items Total</div>' +
+                    '<div style="font-size: 24px; font-weight: 800; color: #14532d;">RM ' + workItemsTotal.toFixed(2) + '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+
+            // Total Cost and Actions
+            content += '<div style="background: linear-gradient(135deg, #ecfeff, #cffafe); border-radius: 20px; padding: 20px; border: 2px solid #67e8f9; margin-bottom: 20px;">' +
+                '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">' +
+                '<span style="font-weight: 700; font-size: 20px; color: #1f2937;">💰 Total Cost:</span>' +
+                '<span style="font-size: 28px; font-weight: 800; color: #0d9488;">' + (workItemsTotal > 0 ? 'RM ' + workItemsTotal.toFixed(2) : (job.cost ? 'RM ' + parseFloat(job.cost).toFixed(2) : 'Not set')) + '</span>' +
+                '</div>' +
+                '<div style="background: rgba(255, 255, 255, 0.7); padding: 12px; border-radius: 12px; margin-bottom: 20px;">' +
+                '<div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">' + companySettings.name + '</div>' +
+                '<div style="font-size: 12px; color: #6b7280;">Registration No: ' + companySettings.registration + '</div>' +
+                '</div>' +
+                '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 12px;">' +
+                '<button onclick="openWorkItemsModal(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); font-weight: 700;">🔧 Work Items</button>' +
+                '<button onclick="generateJobPDF(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #06b6d4, #0891b2); font-weight: 700;">📄 Generate PDF</button>' +
+                '</div>' +
+                '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 12px;">' +
+                statusActions +
+                '<button onclick="duplicateJob(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); font-weight: 700;">📋 Duplicate</button>' +
+                '</div>' +
+                '<div style="display: grid; grid-template-columns: 1fr; gap: 12px;">' +
+                '<button onclick="deleteJob(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #ef4444, #dc2626); font-weight: 700;">🗑️ Delete Job</button>' +
+                '</div>' +
+                '</div>';
+
+            var contentElement = document.getElementById('job-details-content');
+            if (contentElement) {
+                contentElement.innerHTML = content;
+            }
+            
+            document.getElementById('job-details-modal').classList.add('show');
+        }
+
+        function closeJobDetails() {
+            document.getElementById('job-details-modal').classList.remove('show');
+            selectedJobDetails = null;
+        }
+
+        function editJobQuick(jobId) {
+            showSuccessMessage('✏️ Quick edit: Use enhanced job creation for full editing capability');
+            setTimeout(function() {
+                openEnhancedJobForm();
+            }, 1000);
+        }
+
+        function deleteJob(id) {
+            var job = jobs.find(function(j) { return j.id === id; });
+            
+            if (confirm('⚠️ Delete this service job permanently?\n\nJob: ' + (job ? job.title : 'Unknown') + '\nThis action cannot be undone.')) {
+                jobs = jobs.filter(function(job) { return job.id !== id; });
+                delete workItems[id];
+                
+                closeJobDetails();
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                showSuccessMessage('🗑️ Job #' + id + ' deleted successfully');
+            }
+        }
+
+        function duplicateJob(jobId) {
+            var job = jobs.find(function(j) { return j.id === jobId; });
+            if (!job) return;
+
+            var duplicatedJob = {
+                id: Date.now(),
+                clientId: job.clientId,
+                title: job.title + ' (Copy)',
+                serviceType: job.serviceType,
+                priority: job.priority,
+                technicianId: job.technicianId,
+                scheduledDate: selectedDate,
+                scheduledTime: job.scheduledTime,
+                cost: job.cost,
+                notes: job.notes ? job.notes + '\n\n[Duplicated from Job #' + job.id + ']' : '[Duplicated from Job #' + job.id + ']',
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+
+            jobs.unshift(duplicatedJob);
+            
+            // Duplicate work items
+            var originalWorkItems = workItems[job.id];
+            if (originalWorkItems && originalWorkItems.length > 0) {
+                workItems[duplicatedJob.id] = JSON.parse(JSON.stringify(originalWorkItems));
+                updateJobCostFromWorkItems(duplicatedJob.id);
+            }
+            
+            saveDataToStorage();
+            updateStats();
+            renderViews();
+            closeJobDetails();
+            showSuccessMessage('📋 Job duplicated successfully! Job #' + duplicatedJob.id + ' created');
+        }
+
+        function updateJobStatus(jobId, newStatus) {
+            var job = jobs.find(function(j) { return j.id === jobId; });
+            if (job) {
+                job.status = newStatus;
+                job.updatedAt = new Date().toISOString();
+                
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                closeJobDetails();
+                showSuccessMessage('🔄 Job status updated to ' + newStatus);
+            }
+        }
+
+        // PDF Generation Function
+        function generateJobPDF(jobId) {
+            var job = jobs.find(function(j) { return j.id === jobId; });
+            if (!job) {
+                showSuccessMessage('⚠️ Job not found!');
+                return;
+            }
+
+            var client = clients.find(function(c) { return c.id === job.clientId; });
+            var technician = technicians.find(function(t) { return t.id === job.technicianId; });
+            var jobWorkItems = workItems[job.id] || [];
+            var workItemsTotal = getJobWorkItemsTotal(job.id);
+            
+            document.getElementById('pdf-loading').classList.add('show');
+            
+            setTimeout(function() {
+                try {
+                    var { jsPDF } = window.jspdf;
+                    var doc = new jsPDF('p', 'mm', 'a4');
+                    var yPos = 30;
+                    
+                    // Header
+                    doc.setFontSize(20);
+                    doc.setTextColor(30, 64, 175);
+                    doc.text(companySettings.name, 20, yPos);
+                    
+                    doc.setFontSize(12);
+                    doc.setTextColor(107, 114, 128);
+                    doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
+                    doc.text(companySettings.tagline || 'Professional Maintenance Solutions', 20, yPos + 16);
+                    
+                    // Document title
+                    yPos += 30;
+                    doc.setFontSize(16);
+                    doc.setTextColor(0, 0, 0);
+                    doc.text('SERVICE JOB REPORT', 20, yPos);
+                    doc.text('Job #' + job.id + ': ' + job.title, 20, yPos + 10);
+                    
+                    yPos += 25;
+                    
+                    // Job Details
+                    doc.setFontSize(12);
+                    doc.text('Service Type: ' + (getServiceTypeName(job.serviceType) || 'General'), 20, yPos);
+                    doc.text('Priority: ' + job.priority.toUpperCase(), 20, yPos + 8);
+                    doc.text('Status: ' + job.status.toUpperCase(), 20, yPos + 16);
+                    doc.text('Scheduled: ' + (job.scheduledDate ? new Date(job.scheduledDate).toLocaleDateString() : 'Not set') + (job.scheduledTime ? ' at ' + job.scheduledTime : ''), 20, yPos + 24);
+                    
+                    yPos += 40;
+                    
+                    // Client Information
+                    if (client) {
+                        doc.setFontSize(14);
+                        doc.setTextColor(30, 64, 175);
+                        doc.text('CLIENT INFORMATION', 20, yPos);
+                        
+                        yPos += 10;
+                        doc.setFontSize(12);
+                        doc.setTextColor(0, 0, 0);
+                        doc.text('Company: ' + client.name, 20, yPos);
+                        if (client.contact) doc.text('Contact: ' + client.contact, 20, yPos + 8);
+                        if (client.phone) doc.text('Phone: ' + client.phone, 20, yPos + 16);
+                        if (client.email) doc.text('Email: ' + client.email, 20, yPos + 24);
+                        if (client.address) {
+                            var addressLines = doc.splitTextToSize('Address: ' + client.address, 170);
+                            doc.text(addressLines, 20, yPos + 32);
+                            yPos += addressLines.length * 8;
+                        }
+                        
+                        yPos += 32;
+                    }
+                    
+                    // Technician Information
+                    if (technician) {
+                        doc.setFontSize(14);
+                        doc.setTextColor(30, 64, 175);
+                        doc.text('ASSIGNED TECHNICIAN', 20, yPos);
+                        
+                        yPos += 10;
+                        doc.setFontSize(12);
+                        doc.setTextColor(0, 0, 0);
+                        doc.text('Name: ' + technician.name, 20, yPos);
+                        if (technician.employeeId) doc.text('Employee ID: ' + technician.employeeId, 20, yPos + 8);
+                        var techSpecialization = getServiceTypeName(technician.specialization) || technician.specialization;
+                        doc.text('Specialization: ' + techSpecialization, 20, yPos + 16);
+                        doc.text('Level: ' + technician.level.replace(/\b\w/g, function(l){ return l.toUpperCase() }), 20, yPos + 24);
+                        if (technician.phone) doc.text('Phone: ' + technician.phone, 20, yPos + 32);
+                        
+                        yPos += 45;
+                    }
+                    
+                    // Work Items
+                    if (jobWorkItems.length > 0) {
+                        if (yPos > 200) {
+                            doc.addPage();
+                            yPos = 30;
+                        }
+                        
+                        doc.setFontSize(14);
+                        doc.setTextColor(30, 64, 175);
+                        doc.text('WORK ITEMS BREAKDOWN (' + jobWorkItems.length + ' items)', 20, yPos);
+                        
+                        yPos += 15;
+                        
+                        // Table header
+                        doc.setFontSize(10);
+                        doc.setTextColor(255, 255, 255);
+                        doc.setFillColor(30, 64, 175);
+                        doc.rect(20, yPos - 5, 170, 10, 'F');
+                        doc.text('Description', 22, yPos + 2);
+                        doc.text('Qty', 120, yPos + 2);
+                        doc.text('Unit Price', 140, yPos + 2);
+                        doc.text('Total', 165, yPos + 2);
+                        
+                        yPos += 10;
+                        
+                        // Work items
+                        doc.setTextColor(0, 0, 0);
+                        for (var i = 0; i < jobWorkItems.length; i++) {
+                            if (yPos > 270) {
+                                doc.addPage();
+                                yPos = 30;
+                            }
+                            
+                            var item = jobWorkItems[i];
+                            var itemTotal = parseFloat(item.quantity) * parseFloat(item.price);
+                            
+                            // Alternating row colors
+                            if (i % 2 === 1) {
+                                doc.setFillColor(248, 250, 252);
+                                doc.rect(20, yPos - 3, 170, 8, 'F');
+                            }
+                            
+                            var descriptionLines = doc.splitTextToSize(item.description, 90);
+                            doc.text(descriptionLines[0], 22, yPos + 2);
+                            doc.text(item.quantity + ' ' + item.unit, 120, yPos + 2);
+                            doc.text('RM ' + parseFloat(item.price).toFixed(2), 140, yPos + 2);
+                            doc.text('RM ' + itemTotal.toFixed(2), 165, yPos + 2);
+                            
+                            yPos += 8;
+                        }
+                        
+                        // Total
+                        yPos += 5;
+                        doc.setFillColor(220, 252, 231);
+                        doc.rect(20, yPos - 5, 170, 12, 'F');
+                        doc.setFontSize(12);
+                        doc.setTextColor(21, 128, 61);
+                        doc.text('WORK ITEMS TOTAL:', 120, yPos + 2);
+                        doc.setFontSize(14);
+                        doc.text('RM ' + workItemsTotal.toFixed(2), 165, yPos + 2);
+                        
+                        yPos += 20;
+                    }
+                    
+                    // Job notes
+                    if (job.notes) {
+                        if (yPos > 250) {
+                            doc.addPage();
+                            yPos = 30;
+                        }
+                        
+                        doc.setFontSize(14);
+                        doc.setTextColor(30, 64, 175);
+                        doc.text('JOB NOTES', 20, yPos);
+                        
+                        yPos += 10;
+                        doc.setFontSize(10);
+                        doc.setTextColor(0, 0, 0);
+                        var notesLines = doc.splitTextToSize(job.notes, 170);
+                        doc.text(notesLines, 20, yPos);
+                        yPos += notesLines.length * 5 + 15;
+                    }
+                    
+                    // Footer
+                    var pageCount = doc.internal.getNumberOfPages();
+                    for (var i = 1; i <= pageCount; i++) {
+                        doc.setPage(i);
+                        doc.setFontSize(8);
+                        doc.setTextColor(156, 163, 175);
+                        doc.text('Generated: ' + new Date().toLocaleString(), 20, 285);
+                        doc.text('Page ' + i + ' of ' + pageCount, 170, 285);
+                        
+                        if (companySettings.phone || companySettings.email) {
+                            var contactInfo = '';
+                            if (companySettings.phone) contactInfo += 'Phone: ' + companySettings.phone;
+                            if (companySettings.email) {
+                                if (contactInfo) contactInfo += ' | ';
+                                contactInfo += 'Email: ' + companySettings.email;
+                            }
+                            doc.text(contactInfo, 20, 290);
+                        }
+                    }
+                    
+                    var filename = 'ServiceJob_' + job.id + '_' + (client ? client.name.replace(/[^a-zA-Z0-9]/g, '') : 'Client') + '_' + new Date().toISOString().split('T')[0] + '.pdf';
+                    doc.save(filename);
+                    
+                    document.getElementById('pdf-loading').classList.remove('show');
+                    showSuccessMessage('📄 Professional PDF generated for Job #' + job.id + ' with ' + jobWorkItems.length + ' work items!');
+                    
+                } catch (error) {
+                    console.error('PDF error:', error);
+                    document.getElementById('pdf-loading').classList.remove('show');
+                    showSuccessMessage('❌ PDF generation failed. Please try again.');
+                }
+            }, 1500);
+        }
+
+        // Report Generation
+        function generateAllJobsReport() {
+            if (jobs.length === 0) {
+                showSuccessMessage('⚠️ No jobs to generate report!');
+                return;
+            }
+
+            document.getElementById('pdf-loading').classList.add('show');
+            
+            setTimeout(function() {
+                try {
+                    var { jsPDF } = window.jspdf;
+                    var doc = new jsPDF('p', 'mm', 'a4');
+                    var yPos = 30;
+                    
+                    // Header
+                    doc.setFontSize(20);
+                    doc.setTextColor(30, 64, 175);
+                    doc.text(companySettings.name, 20, yPos);
+                    
+                    doc.setFontSize(12);
+                    doc.setTextColor(107, 114, 128);
+                    doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
+                    
+                    yPos += 25;
+                    doc.setFontSize(16);
+                    doc.setTextColor(0, 0, 0);
+                    doc.text('COMPREHENSIVE JOBS REPORT', 20, yPos);
+                    doc.setFontSize(12);
+                    doc.text('Generated: ' + new Date().toLocaleString(), 20, yPos + 10);
+                    
+                    yPos += 25;
+                    
+                    // Summary statistics
+                    var totalRevenue = jobs.reduce(function(sum, job) { return sum + (parseFloat(job.cost) || 0); }, 0);
+                    var totalWorkItems = Object.values(workItems).reduce(function(sum, items) { return sum + items.length; }, 0);
+                    var pendingJobs = jobs.filter(function(job) { return job.status === 'pending'; }).length;
+                    var progressJobs = jobs.filter(function(job) { return job.status === 'progress'; }).length;
+                    var completedJobs = jobs.filter(function(job) { return job.status === 'completed'; }).length;
+                    var allServiceTypes = getAllServiceTypes();
+                    
+                    doc.setFontSize(14);
+                    doc.setTextColor(30, 64, 175);
+                    doc.text('SUMMARY STATISTICS', 20, yPos);
+                    
+                    yPos += 10;
+                    doc.setFontSize(12);
+                    doc.setTextColor(0, 0, 0);
+                    doc.text('Total Jobs: ' + jobs.length, 20, yPos);
+                    doc.text('Total Work Items: ' + totalWorkItems, 20, yPos + 8);
+                    doc.text('Total Revenue: RM ' + totalRevenue.toFixed(2), 20, yPos + 16);
+                    doc.text('Pending: ' + pendingJobs + ' | In Progress: ' + progressJobs + ' | Completed: ' + completedJobs, 20, yPos + 24);
+                    doc.text('Total Clients: ' + clients.length, 20, yPos + 32);
+                    doc.text('Total Technicians: ' + technicians.length, 20, yPos + 40);
+                    doc.text('Service Types: ' + allServiceTypes.length + ' (' + defaultServiceTypes.length + ' default, ' + customServiceTypes.length + ' custom)', 20, yPos + 48);
+                    
+                    yPos += 65;
+                    
+                    // Service Types Usage
+                    doc.setFontSize(14);
+                    doc.setTextColor(30, 64, 175);
+                    doc.text('SERVICE TYPES USAGE', 20, yPos);
+                    
+                    yPos += 15;
+                    
+                    var serviceUsage = {};
+                    for (var i = 0; i < jobs.length; i++) {
+                        var serviceType = jobs[i].serviceType || 'general';
+                        serviceUsage[serviceType] = (serviceUsage[serviceType] || 0) + 1;
+                    }
+                    
+                    doc.setFontSize(10);
+                    for (var serviceId in serviceUsage) {
+                        var serviceName = getServiceTypeName(serviceId);
+                        var usageCount = serviceUsage[serviceId];
+                        doc.text(serviceName + ': ' + usageCount + ' jobs', 20, yPos);
+                        yPos += 6;
+                        
+                        if (yPos > 260) {
+                            doc.addPage();
+                            yPos = 30;
+                        }
+                    }
+                    
+                    yPos += 10;
+                    
+                    // Jobs list
+                    if (yPos > 240) {
+                        doc.addPage();
+                        yPos = 30;
+                    }
+                    
+                    doc.setFontSize(14);
+                    doc.setTextColor(30, 64, 175);
+                    doc.text('ALL JOBS', 20, yPos);
+                    
+                    yPos += 15;
+                    
+                    for (var i = 0; i < jobs.length; i++) {
+                        if (yPos > 250) {
+                            doc.addPage();
+                            yPos = 30;
+                        }
+                        
+                        var job = jobs[i];
+                        var client = clients.find(function(c) { return c.id === job.clientId; });
+                        var jobWorkItems = workItems[job.id] || [];
+                        
+                        doc.setFontSize(12);
+                        doc.setTextColor(0, 0, 0);
+                        doc.text('Job #' + job.id + ': ' + job.title, 20, yPos);
+                        doc.setFontSize(10);
+                        doc.text('Client: ' + (client ? client.name : 'Unknown'), 20, yPos + 6);
+                        doc.text('Status: ' + job.status.toUpperCase() + ' | Priority: ' + job.priority.toUpperCase(), 20, yPos + 12);
+                        doc.text('Work Items: ' + jobWorkItems.length + ' | Cost: RM ' + (job.cost || '0.00'), 20, yPos + 18);
+                        doc.text('Service: ' + (getServiceTypeName(job.serviceType) || 'General'), 20, yPos + 24);
+                        
+                        yPos += 35;
+                    }
+                    
+                    var filename = 'JobsReport_' + companySettings.name.replace(/[^a-zA-Z0-9]/g, '') + '_' + new Date().toISOString().split('T')[0] + '.pdf';
+                    doc.save(filename);
+                    
+                    document.getElementById('pdf-loading').classList.remove('show');
+                    showSuccessMessage('📊 Enhanced jobs report generated with ' + jobs.length + ' jobs and service type analytics!');
+                    
+                } catch (error) {
+                    console.error('Report error:', error);
+                    document.getElementById('pdf-loading').classList.remove('show');
+                    showSuccessMessage('❌ Report generation failed. Please try again.');
+                }
+            }, 1500);
+        }
+
+        // Data Management
+        function exportAllData() {
+            var allData = {
+                companySettings: companySettings,
+                clients: clients,
+                jobs: jobs,
+                technicians: technicians,
+                workItems: workItems,
+                customServiceTypes: customServiceTypes,
+                exportDate: new Date().toISOString(),
+                version: '2.0'
+            };
+            
+            var dataStr = JSON.stringify(allData, null, 2);
+            var dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'REFIT_Maintenance_Data_Enhanced_' + new Date().toISOString().split('T')[0] + '.json';
+            link.click();
+            
+            showSuccessMessage('📤 All data including custom service types exported successfully!');
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ DANGER: Clear all application data?\n\nThis will permanently delete:\n• All jobs and work items\n• All clients\n• All technicians\n• Custom service types\n• Company settings\n\nThis action cannot be undone!')) {
+                if (confirm('Are you absolutely sure? This will delete everything!')) {
+                    clients = [];
+                    jobs = [];
+                    technicians = [];
+                    workItems = {};
+                    customServiceTypes = [];
+                    companySettings = {
+                        name: 'REFIT MAINTENANCE SERVICES',
+                        registration: '201803348973 (002894203-V)',
+                        tagline: 'Professional Maintenance Solutions',
+                        phone: '',
+                        email: '',
+                        website: '',
+                        address: ''
+                    };
+                    
+                    // Clear localStorage
+                    for (var key in STORAGE_KEYS) {
+                        localStorage.removeItem(STORAGE_KEYS[key]);
+                    }
+                    
+                    saveDataToStorage();
+                    updateStats();
+                    renderViews();
+                    populateServiceTypeSelects();
+                    showSuccessMessage('🗑️ All data cleared successfully!');
+                }
+            }
+        }
+
+        // Mobile Optimizations
+        function setupMobileOptimizations() {
+            // Prevent zoom on input focus
+            var inputs = document.querySelectorAll('input, select, textarea');
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].addEventListener('focus', function() {
+                    this.style.fontSize = '16px';
+                });
+            }
+            
+            // Double tap prevention
+            var lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                var now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+
+            // Touch feedback
+            document.addEventListener('touchstart', function(e) {
+                var target = e.target;
+                if (target.matches('button, .nav-item, .item-card, .action-btn, .icon-btn')) {
+                    target.style.transform = 'scale(0.96)';
+                    target.style.transition = 'transform 0.1s ease';
+                }
+            }, {passive: true});
+
+            document.addEventListener('touchend', function(e) {
+                var target = e.target;
+                if (target.matches('button, .nav-item, .item-card, .action-btn, .icon-btn')) {
+                    setTimeout(function() {
+                        target.style.transform = '';
+                    }, 100);
+                }
+            }, {passive: true});
+
+            // Pull to refresh
+            var mainContent = document.getElementById('main-content');
+            var startY = 0;
+            var isPulling = false;
+
+            mainContent.addEventListener('touchstart', function(e) {
+                if (mainContent.scrollTop === 0) {
+                    startY = e.touches[0].clientY;
+                    isPulling = true;
+                }
+            }, {passive: true});
+
+            mainContent.addEventListener('touchmove', function(e) {
+                if (isPulling && mainContent.scrollTop === 0) {
+                    var currentY = e.touches[0].clientY;
+                    var pullDistance = currentY - startY;
+                    
+                    if (pullDistance > 80) {
+                        e.preventDefault();
+                    }
+                }
+            }, {passive: false});
+
+            mainContent.addEventListener('touchend', function(e) {
+                if (isPulling) {
+                    var currentY = e.changedTouches[0].clientY;
+                    var pullDistance = currentY - startY;
+                    
+                    if (pullDistance > 80) {
+                        updateStats();
+                        renderViews();
+                        showSuccessMessage('🔄 Data refreshed successfully!');
+                    }
+                    isPulling = false;
+                }
+            }, {passive: true});
+        }
+
+        // Utility Functions
+        function showSuccessMessage(message) {
+            var successMsg = document.getElementById('success-message');
+            if (message && successMsg) {
+                successMsg.textContent = message;
+                successMsg.classList.add('show');
+                setTimeout(function() {
+                    successMsg.classList.remove('show');
+                }, 4000);
+            }
+        }
+
+        function showKeyboardShortcuts() {
+            var shortcuts = '⌨️ REFIT MAINTENANCE SERVICES - Enhanced System Shortcuts:\n\n' +
+                '🔧 SERVICE MANAGEMENT:\n' +
+                'Ctrl+J or Cmd+J - Enhanced Job Creation with Work Items\n' +
+                'Ctrl+C or Cmd+C - New Client\n' +
+                'Ctrl+T or Cmd+T - New Technician\n' +
+                'Ctrl+V or Cmd+V - New Service Type\n' +
+                'Ctrl+S or Cmd+S - Open Settings\n\n' +
+                '🔧 WORK ITEMS:\n' +
+                'Ctrl+W or Cmd+W - Manage Work Items (when job selected)\n' +
+                'Ctrl+A or Cmd+A - Add Work Item to Current Job\n\n' +
+                '📄 PDF & REPORTING:\n' +
+                'Ctrl+P or Cmd+P - Generate Professional PDF with Work Items\n' +
+                'Ctrl+R or Cmd+R - Generate Comprehensive Report\n\n' +
+                '🛠️ SERVICE TYPES:\n' +
+                '+ Button next to Service Type dropdown - Quick Add Service Type\n' +
+                'Service Types View - Full Management Interface\n\n' +
+                '🎯 DEMO & TESTING:\n' +
+                'Ctrl+D or Cmd+D - Create Demo Job with Work Items\n\n' +
+                '⚙️ SYSTEM:\n' +
+                'ESC - Close any open modal\n' +
+                'Ctrl+E or Cmd+E - Export All Data\n\n' +
+                '💡 ENHANCED FEATURES:\n' +
+                '• Custom service type management\n' +
+                '• Default + custom service types\n' +
+                '• Service type usage analytics\n' +
+                '• Enhanced technician specializations\n' +
+                '• Service type integration in reports\n' +
+                '• Real-time service type statistics\n\n' +
+                '🏢 Professional service management system\n' +
+                '📋 Registration: 201803348973 (002894203-V)\n' +
+                '🛠️ Enhanced with complete service type management\n' +
+                '✅ All features fully functional and ready for production use!';
+            
+            alert(shortcuts);
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            var modals = [
+                'enhanced-job-modal',
+                'client-modal', 
+                'technician-modal',
+                'service-type-modal',
+                'job-details-modal',
+                'work-items-modal',
+                'add-work-item-modal'
+            ];
+            
+            for (var i = 0; i < modals.length; i++) {
+                var modal = document.getElementById(modals[i]);
+                if (modal && e.target === modal) {
+                    modal.classList.remove('show');
+                }
+            }
+        });
+
+        // Auto-save data every 30 seconds
+        setInterval(function() {
+            saveDataToStorage();
+        }, 30000);
+
+        // Update status bar time every minute
+        setInterval(updateStatusBar, 60000);
+
+        // Final initialization message
+        setTimeout(function() {
+            console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Work Management System');
+            console.log('📋 Registration: 201803348973 (002894203-V)');
+            console.log('🛠️ Enhanced with complete service type management');
+            console.log('💼 All features functional: Jobs, Work Items, Clients, Technicians, Service Types, PDF Generation');
+            console.log('📱 Mobile-optimized with touch feedback and pull-to-refresh');
+            console.log('⌨️ Full keyboard shortcuts support including service type management');
+            console.log('📊 Advanced reporting with service type analytics');
+            console.log('✅ Ready for production use with enhanced capabilities!');
+        }, 2000);
+    </script>
+</body>
+</html>
