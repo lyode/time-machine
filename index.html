@@ -1,406 +1,761 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Edit3, DollarSign, Calendar, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renovation Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-const RenovationTracker = () => {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: 'Kitchen Cabinets',
-      category: 'Kitchen',
-      estimatedCost: 3500,
-      actualCost: 0,
-      status: 'not-started',
-      priority: 'high',
-      notes: 'Custom maple cabinets with soft-close hinges',
-      dueDate: '2025-07-15'
-    },
-    {
-      id: 2,
-      name: 'Bathroom Tiles',
-      category: 'Bathroom',
-      estimatedCost: 800,
-      actualCost: 750,
-      status: 'completed',
-      priority: 'medium',
-      notes: 'Subway tiles for shower area',
-      dueDate: '2025-06-30'
-    }
-  ]);
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
 
-  const [showForm, setShowForm] = useState(false);
-  const [editingItem, setEditingItem] = useState(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    category: 'Kitchen',
-    estimatedCost: '',
-    actualCost: '',
-    status: 'not-started',
-    priority: 'medium',
-    notes: '',
-    dueDate: ''
-  });
+        .container {
+            max-width: 100%;
+            padding: 16px;
+        }
 
-  const categories = ['Kitchen', 'Bathroom', 'Living Room', 'Bedroom', 'Flooring', 'Electrical', 'Plumbing', 'Exterior', 'Other'];
-  const statuses = [
-    { value: 'not-started', label: 'Not Started', color: 'bg-gray-100 text-gray-700' },
-    { value: 'in-progress', label: 'In Progress', color: 'bg-blue-100 text-blue-700' },
-    { value: 'completed', label: 'Completed', color: 'bg-green-100 text-green-700' },
-    { value: 'on-hold', label: 'On Hold', color: 'bg-yellow-100 text-yellow-700' }
-  ];
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 20px 16px;
+            margin: -16px -16px 20px -16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-  const priorities = [
-    { value: 'low', label: 'Low', color: 'border-l-green-400' },
-    { value: 'medium', label: 'Medium', color: 'border-l-yellow-400' },
-    { value: 'high', label: 'High', color: 'border-l-red-400' }
-  ];
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
 
-  const handleSubmit = () => {
-    if (!formData.name.trim()) return;
-    
-    if (editingItem) {
-      setItems(items.map(item => 
-        item.id === editingItem.id 
-          ? { ...formData, id: editingItem.id, estimatedCost: Number(formData.estimatedCost), actualCost: Number(formData.actualCost) }
-          : item
-      ));
-      setEditingItem(null);
-    } else {
-      const newItem = {
-        ...formData,
-        id: Date.now(),
-        estimatedCost: Number(formData.estimatedCost),
-        actualCost: Number(formData.actualCost)
-      };
-      setItems([...items, newItem]);
-    }
-    setFormData({
-      name: '',
-      category: 'Kitchen',
-      estimatedCost: '',
-      actualCost: '',
-      status: 'not-started',
-      priority: 'medium',
-      notes: '',
-      dueDate: ''
-    });
-    setShowForm(false);
-  };
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
 
-  const handleEdit = (item) => {
-    setFormData({
-      ...item,
-      estimatedCost: item.estimatedCost.toString(),
-      actualCost: item.actualCost.toString()
-    });
-    setEditingItem(item);
-    setShowForm(true);
-  };
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
 
-  const handleDelete = (id) => {
-    setItems(items.filter(item => item.id !== id));
-  };
+        .stat-card {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
 
-  const getStatusIcon = (status) => {
-    switch(status) {
-      case 'completed': return <CheckCircle className="w-4 h-4 text-green-600" />;
-      case 'in-progress': return <Clock className="w-4 h-4 text-blue-600" />;
-      case 'on-hold': return <AlertCircle className="w-4 h-4 text-yellow-600" />;
-      default: return <div className="w-4 h-4 rounded-full bg-gray-300" />;
-    }
-  };
+        .stat-card .number {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
 
-  const totalEstimated = items.reduce((sum, item) => sum + item.estimatedCost, 0);
-  const totalActual = items.reduce((sum, item) => sum + (item.actualCost || 0), 0);
-  const completedItems = items.filter(item => item.status === 'completed').length;
+        .stat-card .label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-  const groupedItems = items.reduce((groups, item) => {
-    const category = item.category;
-    if (!groups[category]) {
-      groups[category] = [];
-    }
-    groups[category].push(item);
-    return groups;
-  }, {});
+        .stat-card.total .number { color: #3b82f6; }
+        .stat-card.completed .number { color: #10b981; }
+        .stat-card.budget .number { color: #8b5cf6; }
+        .stat-card.spent .number { color: #f59e0b; }
 
-  return (
-    <div className="max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen">
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Renovation Tracker</h1>
-        <p className="text-gray-600 mb-6">Keep track of your renovation projects, costs, and progress</p>
-        
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-blue-600 font-medium">Total Items</p>
-                <p className="text-2xl font-bold text-blue-900">{items.length}</p>
-              </div>
-              <div className="bg-blue-100 p-2 rounded-lg">
-                <Calendar className="w-5 h-5 text-blue-600" />
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-green-50 p-4 rounded-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-green-600 font-medium">Completed</p>
-                <p className="text-2xl font-bold text-green-900">{completedItems}</p>
-              </div>
-              <div className="bg-green-100 p-2 rounded-lg">
-                <CheckCircle className="w-5 h-5 text-green-600" />
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-purple-50 p-4 rounded-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-purple-600 font-medium">Estimated Budget</p>
-                <p className="text-2xl font-bold text-purple-900">${totalEstimated.toLocaleString()}</p>
-              </div>
-              <div className="bg-purple-100 p-2 rounded-lg">
-                <DollarSign className="w-5 h-5 text-purple-600" />
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-orange-50 p-4 rounded-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-orange-600 font-medium">Actual Spent</p>
-                <p className="text-2xl font-bold text-orange-900">${totalActual.toLocaleString()}</p>
-              </div>
-              <div className="bg-orange-100 p-2 rounded-lg">
-                <DollarSign className="w-5 h-5 text-orange-600" />
-              </div>
-            </div>
-          </div>
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #3b82f6;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            background: #2563eb;
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+            align-items: flex-end;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-height: 90vh;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #64748b;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .category-section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .category-header {
+            background: #f8fafc;
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .category-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .item-card {
+            padding: 16px;
+            border-bottom: 1px solid #f1f5f9;
+            position: relative;
+        }
+
+        .item-card:last-child {
+            border-bottom: none;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: #1e293b;
+            flex: 1;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+            margin-left: 12px;
+        }
+
+        .item-actions button {
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .item-actions button:hover {
+            background: #f1f5f9;
+            color: #3b82f6;
+        }
+
+        .item-actions .delete-btn:hover {
+            color: #ef4444;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .status-not-started {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .status-in-progress {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .status-completed {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .status-on-hold {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .priority-indicator {
+            width: 4px;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .priority-low { background: #10b981; }
+        .priority-medium { background: #f59e0b; }
+        .priority-high { background: #ef4444; }
+
+        .item-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .item-notes {
+            font-size: 14px;
+            color: #6b7280;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .empty-state p {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .item-details {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Touch improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .btn, .fab, .item-actions button, .close-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Renovation Tracker</h1>
+            <p>Track your renovation progress on the go</p>
         </div>
 
-        <button
-          onClick={() => setShowForm(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          Add New Item
-        </button>
-      </div>
-
-      {/* Add/Edit Form */}
-      {showForm && (
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4">
-            {editingItem ? 'Edit Item' : 'Add New Renovation Item'}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Item Name</label>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
+        <div class="stats-grid">
+            <div class="stat-card total">
+                <div class="number" id="totalItems">0</div>
+                <div class="label">Total Items</div>
             </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-              <select
-                value={formData.category}
-                onChange={(e) => setFormData({...formData, category: e.target.value})}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                {categories.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </select>
+            <div class="stat-card completed">
+                <div class="number" id="completedItems">0</div>
+                <div class="label">Completed</div>
             </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Estimated Cost</label>
-              <input
-                type="number"
-                value={formData.estimatedCost}
-                onChange={(e) => setFormData({...formData, estimatedCost: e.target.value})}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                min="0"
-                step="0.01"
-              />
+            <div class="stat-card budget">
+                <div class="number" id="totalBudget">$0</div>
+                <div class="label">Est. Budget</div>
             </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Actual Cost</label>
-              <input
-                type="number"
-                value={formData.actualCost}
-                onChange={(e) => setFormData({...formData, actualCost: e.target.value})}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                min="0"
-                step="0.01"
-              />
+            <div class="stat-card spent">
+                <div class="number" id="totalSpent">$0</div>
+                <div class="label">Actual Spent</div>
             </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-              <select
-                value={formData.status}
-                onChange={(e) => setFormData({...formData, status: e.target.value})}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                {statuses.map(status => (
-                  <option key={status.value} value={status.value}>{status.label}</option>
-                ))}
-              </select>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
-              <select
-                value={formData.priority}
-                onChange={(e) => setFormData({...formData, priority: e.target.value})}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                {priorities.map(priority => (
-                  <option key={priority.value} value={priority.value}>{priority.label}</option>
-                ))}
-              </select>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
-              <input
-                type="date"
-                value={formData.dueDate}
-                onChange={(e) => setFormData({...formData, dueDate: e.target.value})}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-            
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-              <textarea
-                value={formData.notes}
-                onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                rows="3"
-              />
-            </div>
-            
-            <div className="md:col-span-2 flex gap-2">
-              <button
-                onClick={handleSubmit}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                {editingItem ? 'Update Item' : 'Add Item'}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowForm(false);
-                  setEditingItem(null);
-                  setFormData({
-                    name: '',
-                    category: 'Kitchen',
-                    estimatedCost: '',
-                    actualCost: '',
-                    status: 'not-started',
-                    priority: 'medium',
-                    notes: '',
-                    dueDate: ''
-                  });
-                }}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
         </div>
-      )}
 
-      {/* Items by Category */}
-      <div className="space-y-6">
-        {Object.entries(groupedItems).map(([category, categoryItems]) => (
-          <div key={category} className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">{category}</h2>
-            <div className="space-y-3">
-              {categoryItems.map(item => {
-                const status = statuses.find(s => s.value === item.status);
-                const priority = priorities.find(p => p.value === item.priority);
-                
-                return (
-                  <div key={item.id} className={`border-l-4 ${priority.color} bg-gray-50 p-4 rounded-r-lg`}>
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          {getStatusIcon(item.status)}
-                          <h3 className="font-medium text-gray-900">{item.name}</h3>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${status.color}`}>
-                            {status.label}
-                          </span>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600 mb-2">
-                          <div>
-                            <span className="font-medium">Estimated:</span> ${item.estimatedCost.toLocaleString()}
-                          </div>
-                          <div>
-                            <span className="font-medium">Actual:</span> ${item.actualCost ? item.actualCost.toLocaleString() : 'Not set'}
-                          </div>
-                          <div>
-                            <span className="font-medium">Due:</span> {item.dueDate || 'No date set'}
-                          </div>
-                        </div>
-                        
-                        {item.notes && (
-                          <p className="text-sm text-gray-600 italic">{item.notes}</p>
-                        )}
-                      </div>
-                      
-                      <div className="flex gap-2 ml-4">
-                        <button
-                          onClick={() => handleEdit(item)}
-                          className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
-                        >
-                          <Edit3 className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(item.id)}
-                          className="p-2 text-gray-400 hover:text-red-600 transition-colors"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
+        <div id="itemsList"></div>
 
-      {items.length === 0 && (
-        <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-          <div className="text-gray-400 mb-4">
-            <Calendar className="w-16 h-16 mx-auto" />
-          </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No renovation items yet</h3>
-          <p className="text-gray-500 mb-4">Get started by adding your first renovation item</p>
-          <button
-            onClick={() => setShowForm(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Add Your First Item
-          </button>
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+            </svg>
+            <h3>No renovation items yet</h3>
+            <p>Start tracking your renovation projects by adding your first item</p>
+            <button class="btn btn-primary" onclick="openModal()">Add Your First Item</button>
         </div>
-      )}
     </div>
-  );
-};
 
-export default RenovationTracker;
+    <button class="fab" onclick="openModal()">+</button>
+
+    <!-- Add/Edit Modal -->
+    <div class="modal" id="itemModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Item</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+
+            <div class="form-group">
+                <label for="itemName">Item Name *</label>
+                <input type="text" id="itemName" placeholder="e.g., Kitchen Cabinets">
+            </div>
+
+            <div class="form-group">
+                <label for="itemCategory">Category</label>
+                <select id="itemCategory">
+                    <option value="Kitchen">Kitchen</option>
+                    <option value="Bathroom">Bathroom</option>
+                    <option value="Living Room">Living Room</option>
+                    <option value="Bedroom">Bedroom</option>
+                    <option value="Flooring">Flooring</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Plumbing">Plumbing</option>
+                    <option value="Exterior">Exterior</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="estimatedCost">Estimated Cost</label>
+                <input type="number" id="estimatedCost" placeholder="0" min="0" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label for="actualCost">Actual Cost</label>
+                <input type="number" id="actualCost" placeholder="0" min="0" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label for="itemStatus">Status</label>
+                <select id="itemStatus">
+                    <option value="not-started">Not Started</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                    <option value="on-hold">On Hold</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="itemPriority">Priority</label>
+                <select id="itemPriority">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dueDate">Due Date</label>
+                <input type="date" id="dueDate">
+            </div>
+
+            <div class="form-group">
+                <label for="itemNotes">Notes</label>
+                <textarea id="itemNotes" placeholder="Additional details..."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveItem()">Save Item</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let items = [
+            {
+                id: 1,
+                name: 'Kitchen Cabinets',
+                category: 'Kitchen',
+                estimatedCost: 3500,
+                actualCost: 0,
+                status: 'not-started',
+                priority: 'high',
+                notes: 'Custom maple cabinets with soft-close hinges',
+                dueDate: '2025-07-15'
+            },
+            {
+                id: 2,
+                name: 'Bathroom Tiles',
+                category: 'Bathroom',
+                estimatedCost: 800,
+                actualCost: 750,
+                status: 'completed',
+                priority: 'medium',
+                notes: 'Subway tiles for shower area',
+                dueDate: '2025-06-30'
+            }
+        ];
+
+        let editingItemId = null;
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'No date set';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+        }
+
+        function updateStats() {
+            const totalItems = items.length;
+            const completedItems = items.filter(item => item.status === 'completed').length;
+            const totalBudget = items.reduce((sum, item) => sum + (item.estimatedCost || 0), 0);
+            const totalSpent = items.reduce((sum, item) => sum + (item.actualCost || 0), 0);
+
+            document.getElementById('totalItems').textContent = totalItems;
+            document.getElementById('completedItems').textContent = completedItems;
+            document.getElementById('totalBudget').textContent = formatCurrency(totalBudget);
+            document.getElementById('totalSpent').textContent = formatCurrency(totalSpent);
+        }
+
+        function groupItemsByCategory() {
+            const grouped = {};
+            items.forEach(item => {
+                if (!grouped[item.category]) {
+                    grouped[item.category] = [];
+                }
+                grouped[item.category].push(item);
+            });
+            return grouped;
+        }
+
+        function renderItems() {
+            const itemsList = document.getElementById('itemsList');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (items.length === 0) {
+                itemsList.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            const groupedItems = groupItemsByCategory();
+            
+            itemsList.innerHTML = Object.entries(groupedItems).map(([category, categoryItems]) => `
+                <div class="category-section">
+                    <div class="category-header">
+                        <h3>${category}</h3>
+                    </div>
+                    ${categoryItems.map(item => `
+                        <div class="item-card">
+                            <div class="priority-indicator priority-${item.priority}"></div>
+                            <div class="item-header">
+                                <div class="item-title">${item.name}</div>
+                                <div class="item-actions">
+                                    <button onclick="editItem(${item.id})" title="Edit">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                        </svg>
+                                    </button>
+                                    <button onclick="deleteItem(${item.id})" class="delete-btn" title="Delete">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="status-badge status-${item.status}">
+                                ${item.status.replace('-', ' ')}
+                            </div>
+                            <div class="item-details">
+                                <div><strong>Estimated:</strong> ${formatCurrency(item.estimatedCost || 0)}</div>
+                                <div><strong>Actual:</strong> ${item.actualCost ? formatCurrency(item.actualCost) : 'Not set'}</div>
+                                <div><strong>Priority:</strong> ${item.priority.charAt(0).toUpperCase() + item.priority.slice(1)}</div>
+                                <div><strong>Due:</strong> ${formatDate(item.dueDate)}</div>
+                            </div>
+                            ${item.notes ? `<div class="item-notes">${item.notes}</div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+        }
+
+        function openModal(itemId = null) {
+            const modal = document.getElementById('itemModal');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            editingItemId = itemId;
+            
+            if (itemId) {
+                const item = items.find(i => i.id === itemId);
+                modalTitle.textContent = 'Edit Item';
+                
+                document.getElementById('itemName').value = item.name;
+                document.getElementById('itemCategory').value = item.category;
+                document.getElementById('estimatedCost').value = item.estimatedCost || '';
+                document.getElementById('actualCost').value = item.actualCost || '';
+                document.getElementById('itemStatus').value = item.status;
+                document.getElementById('itemPriority').value = item.priority;
+                document.getElementById('dueDate').value = item.dueDate || '';
+                document.getElementById('itemNotes').value = item.notes || '';
+            } else {
+                modalTitle.textContent = 'Add New Item';
+                clearForm();
+            }
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('itemModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+            editingItemId = null;
+            clearForm();
+        }
+
+        function clearForm() {
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemCategory').value = 'Kitchen';
+            document.getElementById('estimatedCost').value = '';
+            document.getElementById('actualCost').value = '';
+            document.getElementById('itemStatus').value = 'not-started';
+            document.getElementById('itemPriority').value = 'medium';
+            document.getElementById('dueDate').value = '';
+            document.getElementById('itemNotes').value = '';
+        }
+
+        function saveItem() {
+            const name = document.getElementById('itemName').value.trim();
+            if (!name) {
+                alert('Please enter an item name');
+                return;
+            }
+
+            const itemData = {
+                name: name,
+                category: document.getElementById('itemCategory').value,
+                estimatedCost: parseFloat(document.getElementById('estimatedCost').value) || 0,
+                actualCost: parseFloat(document.getElementById('actualCost').value) || 0,
+                status: document.getElementById('itemStatus').value,
+                priority: document.getElementById('itemPriority').value,
+                dueDate: document.getElementById('dueDate').value,
+                notes: document.getElementById('itemNotes').value.trim()
+            };
+
+            if (editingItemId) {
+                const index = items.findIndex(item => item.id === editingItemId);
+                items[index] = { ...itemData, id: editingItemId };
+            } else {
+                items.push({ ...itemData, id: Date.now() });
+            }
+
+            renderItems();
+            updateStats();
+            closeModal();
+        }
+
+        function editItem(id) {
+            openModal(id);
+        }
+
+        function deleteItem(id) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                items = items.filter(item => item.id !== id);
+                renderItems();
+                updateStats();
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('itemModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Handle Enter key in form
+        document.getElementById('itemName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveItem();
+            }
+        });
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            renderItems();
+            updateStats();
+        });
+
+        // Handle back button
+        window.addEventListener('popstate', function() {
+            closeModal();
+        });
+
+        // Prevent zoom on input focus (iOS)
+        document.addEventListener('touchstart', function() {}, true);
+    </script>
+</body>
+</html>
