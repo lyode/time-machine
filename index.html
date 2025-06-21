@@ -1,0 +1,406 @@
+import React, { useState, useEffect } from 'react';
+import { Plus, Trash2, Edit3, DollarSign, Calendar, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+
+const RenovationTracker = () => {
+  const [items, setItems] = useState([
+    {
+      id: 1,
+      name: 'Kitchen Cabinets',
+      category: 'Kitchen',
+      estimatedCost: 3500,
+      actualCost: 0,
+      status: 'not-started',
+      priority: 'high',
+      notes: 'Custom maple cabinets with soft-close hinges',
+      dueDate: '2025-07-15'
+    },
+    {
+      id: 2,
+      name: 'Bathroom Tiles',
+      category: 'Bathroom',
+      estimatedCost: 800,
+      actualCost: 750,
+      status: 'completed',
+      priority: 'medium',
+      notes: 'Subway tiles for shower area',
+      dueDate: '2025-06-30'
+    }
+  ]);
+
+  const [showForm, setShowForm] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    category: 'Kitchen',
+    estimatedCost: '',
+    actualCost: '',
+    status: 'not-started',
+    priority: 'medium',
+    notes: '',
+    dueDate: ''
+  });
+
+  const categories = ['Kitchen', 'Bathroom', 'Living Room', 'Bedroom', 'Flooring', 'Electrical', 'Plumbing', 'Exterior', 'Other'];
+  const statuses = [
+    { value: 'not-started', label: 'Not Started', color: 'bg-gray-100 text-gray-700' },
+    { value: 'in-progress', label: 'In Progress', color: 'bg-blue-100 text-blue-700' },
+    { value: 'completed', label: 'Completed', color: 'bg-green-100 text-green-700' },
+    { value: 'on-hold', label: 'On Hold', color: 'bg-yellow-100 text-yellow-700' }
+  ];
+
+  const priorities = [
+    { value: 'low', label: 'Low', color: 'border-l-green-400' },
+    { value: 'medium', label: 'Medium', color: 'border-l-yellow-400' },
+    { value: 'high', label: 'High', color: 'border-l-red-400' }
+  ];
+
+  const handleSubmit = () => {
+    if (!formData.name.trim()) return;
+    
+    if (editingItem) {
+      setItems(items.map(item => 
+        item.id === editingItem.id 
+          ? { ...formData, id: editingItem.id, estimatedCost: Number(formData.estimatedCost), actualCost: Number(formData.actualCost) }
+          : item
+      ));
+      setEditingItem(null);
+    } else {
+      const newItem = {
+        ...formData,
+        id: Date.now(),
+        estimatedCost: Number(formData.estimatedCost),
+        actualCost: Number(formData.actualCost)
+      };
+      setItems([...items, newItem]);
+    }
+    setFormData({
+      name: '',
+      category: 'Kitchen',
+      estimatedCost: '',
+      actualCost: '',
+      status: 'not-started',
+      priority: 'medium',
+      notes: '',
+      dueDate: ''
+    });
+    setShowForm(false);
+  };
+
+  const handleEdit = (item) => {
+    setFormData({
+      ...item,
+      estimatedCost: item.estimatedCost.toString(),
+      actualCost: item.actualCost.toString()
+    });
+    setEditingItem(item);
+    setShowForm(true);
+  };
+
+  const handleDelete = (id) => {
+    setItems(items.filter(item => item.id !== id));
+  };
+
+  const getStatusIcon = (status) => {
+    switch(status) {
+      case 'completed': return <CheckCircle className="w-4 h-4 text-green-600" />;
+      case 'in-progress': return <Clock className="w-4 h-4 text-blue-600" />;
+      case 'on-hold': return <AlertCircle className="w-4 h-4 text-yellow-600" />;
+      default: return <div className="w-4 h-4 rounded-full bg-gray-300" />;
+    }
+  };
+
+  const totalEstimated = items.reduce((sum, item) => sum + item.estimatedCost, 0);
+  const totalActual = items.reduce((sum, item) => sum + (item.actualCost || 0), 0);
+  const completedItems = items.filter(item => item.status === 'completed').length;
+
+  const groupedItems = items.reduce((groups, item) => {
+    const category = item.category;
+    if (!groups[category]) {
+      groups[category] = [];
+    }
+    groups[category].push(item);
+    return groups;
+  }, {});
+
+  return (
+    <div className="max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen">
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Renovation Tracker</h1>
+        <p className="text-gray-600 mb-6">Keep track of your renovation projects, costs, and progress</p>
+        
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-blue-600 font-medium">Total Items</p>
+                <p className="text-2xl font-bold text-blue-900">{items.length}</p>
+              </div>
+              <div className="bg-blue-100 p-2 rounded-lg">
+                <Calendar className="w-5 h-5 text-blue-600" />
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-green-50 p-4 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-green-600 font-medium">Completed</p>
+                <p className="text-2xl font-bold text-green-900">{completedItems}</p>
+              </div>
+              <div className="bg-green-100 p-2 rounded-lg">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-purple-50 p-4 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-purple-600 font-medium">Estimated Budget</p>
+                <p className="text-2xl font-bold text-purple-900">${totalEstimated.toLocaleString()}</p>
+              </div>
+              <div className="bg-purple-100 p-2 rounded-lg">
+                <DollarSign className="w-5 h-5 text-purple-600" />
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-orange-50 p-4 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-orange-600 font-medium">Actual Spent</p>
+                <p className="text-2xl font-bold text-orange-900">${totalActual.toLocaleString()}</p>
+              </div>
+              <div className="bg-orange-100 p-2 rounded-lg">
+                <DollarSign className="w-5 h-5 text-orange-600" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={() => setShowForm(true)}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+        >
+          <Plus className="w-4 h-4" />
+          Add New Item
+        </button>
+      </div>
+
+      {/* Add/Edit Form */}
+      {showForm && (
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-4">
+            {editingItem ? 'Edit Item' : 'Add New Renovation Item'}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Item Name</label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+              <select
+                value={formData.category}
+                onChange={(e) => setFormData({...formData, category: e.target.value})}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                {categories.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Estimated Cost</label>
+              <input
+                type="number"
+                value={formData.estimatedCost}
+                onChange={(e) => setFormData({...formData, estimatedCost: e.target.value})}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                min="0"
+                step="0.01"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Actual Cost</label>
+              <input
+                type="number"
+                value={formData.actualCost}
+                onChange={(e) => setFormData({...formData, actualCost: e.target.value})}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                min="0"
+                step="0.01"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+              <select
+                value={formData.status}
+                onChange={(e) => setFormData({...formData, status: e.target.value})}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                {statuses.map(status => (
+                  <option key={status.value} value={status.value}>{status.label}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+              <select
+                value={formData.priority}
+                onChange={(e) => setFormData({...formData, priority: e.target.value})}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                {priorities.map(priority => (
+                  <option key={priority.value} value={priority.value}>{priority.label}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
+              <input
+                type="date"
+                value={formData.dueDate}
+                onChange={(e) => setFormData({...formData, dueDate: e.target.value})}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+              <textarea
+                value={formData.notes}
+                onChange={(e) => setFormData({...formData, notes: e.target.value})}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                rows="3"
+              />
+            </div>
+            
+            <div className="md:col-span-2 flex gap-2">
+              <button
+                onClick={handleSubmit}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                {editingItem ? 'Update Item' : 'Add Item'}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowForm(false);
+                  setEditingItem(null);
+                  setFormData({
+                    name: '',
+                    category: 'Kitchen',
+                    estimatedCost: '',
+                    actualCost: '',
+                    status: 'not-started',
+                    priority: 'medium',
+                    notes: '',
+                    dueDate: ''
+                  });
+                }}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Items by Category */}
+      <div className="space-y-6">
+        {Object.entries(groupedItems).map(([category, categoryItems]) => (
+          <div key={category} className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">{category}</h2>
+            <div className="space-y-3">
+              {categoryItems.map(item => {
+                const status = statuses.find(s => s.value === item.status);
+                const priority = priorities.find(p => p.value === item.priority);
+                
+                return (
+                  <div key={item.id} className={`border-l-4 ${priority.color} bg-gray-50 p-4 rounded-r-lg`}>
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          {getStatusIcon(item.status)}
+                          <h3 className="font-medium text-gray-900">{item.name}</h3>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${status.color}`}>
+                            {status.label}
+                          </span>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600 mb-2">
+                          <div>
+                            <span className="font-medium">Estimated:</span> ${item.estimatedCost.toLocaleString()}
+                          </div>
+                          <div>
+                            <span className="font-medium">Actual:</span> ${item.actualCost ? item.actualCost.toLocaleString() : 'Not set'}
+                          </div>
+                          <div>
+                            <span className="font-medium">Due:</span> {item.dueDate || 'No date set'}
+                          </div>
+                        </div>
+                        
+                        {item.notes && (
+                          <p className="text-sm text-gray-600 italic">{item.notes}</p>
+                        )}
+                      </div>
+                      
+                      <div className="flex gap-2 ml-4">
+                        <button
+                          onClick={() => handleEdit(item)}
+                          className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+                        >
+                          <Edit3 className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(item.id)}
+                          className="p-2 text-gray-400 hover:text-red-600 transition-colors"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {items.length === 0 && (
+        <div className="bg-white rounded-lg shadow-sm p-12 text-center">
+          <div className="text-gray-400 mb-4">
+            <Calendar className="w-16 h-16 mx-auto" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No renovation items yet</h3>
+          <p className="text-gray-500 mb-4">Get started by adding your first renovation item</p>
+          <button
+            onClick={() => setShowForm(true)}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Add Your First Item
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default RenovationTracker;
