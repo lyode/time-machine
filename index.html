@@ -436,6 +436,7 @@
         .icon-btn.share-btn { background: rgba(6, 182, 212, 0.8); }
         .icon-btn.works-btn { background: rgba(139, 92, 246, 0.8); }
         .icon-btn.pdf-btn { background: rgba(16, 185, 129, 0.8); }
+        .icon-btn.quote-btn { background: rgba(251, 191, 36, 0.8); }
         
         .item-actions {
             display: flex;
@@ -1121,6 +1122,31 @@
             transform: scale(0.95);
         }
         
+        /* Quote-specific styles */
+        .quote-header {
+            background: linear-gradient(135deg, #fff7ed, #fed7aa);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #f97316;
+        }
+        
+        .quote-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ea580c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .quote-subtitle {
+            color: #c2410c;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
         /* Utility Classes */
         .hidden {
             display: none !important;
@@ -1361,8 +1387,8 @@
         <div id="pdf-loading" class="pdf-loading">
             <div class="pdf-loading-content">
                 <div class="pdf-loading-icon">📄</div>
-                <div class="pdf-loading-text">Generating Professional PDF</div>
-                <div class="pdf-loading-subtext">Creating detailed service report...</div>
+                <div class="pdf-loading-text">Generating Professional PDF Quote</div>
+                <div class="pdf-loading-subtext">Creating detailed job quote...</div>
             </div>
         </div>
 
@@ -1410,7 +1436,7 @@
                     <div class="actions-grid">
                         <button class="action-btn blue" onclick="openEnhancedJobForm()">
                             <span class="icon">➕</span>
-                            <span style="font-weight: 700;">Create Job + Works</span>
+                            <span style="font-weight: 700;">Create Job + Quote</span>
                         </button>
                         <button class="action-btn green" onclick="showView('jobs')">
                             <span class="icon">🔧</span>
@@ -1422,7 +1448,7 @@
                         </button>
                         <button class="action-btn cyan" onclick="createDemoJob()">
                             <span class="icon">🎯</span>
-                            <span style="font-weight: 700;">Demo Job + Works</span>
+                            <span style="font-weight: 700;">Demo Job + Quote</span>
                         </button>
                         <button class="action-btn orange" onclick="showView('clients')">
                             <span class="icon">👥</span>
@@ -1625,7 +1651,7 @@
     <div id="enhanced-job-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="enhanced-job-modal-title">🔧 Create Service Job + Work Items</h3>
+                <h3 id="enhanced-job-modal-title">🔧 Create Service Job + Job Quote</h3>
                 <button class="close-btn" onclick="closeEnhancedJobForm()">✕</button>
             </div>
             <div class="modal-body">
@@ -1672,11 +1698,11 @@
                     </form>
                 </div>
 
-                <!-- Work Items Section -->
+                <!-- Quote Items Section -->
                 <div class="quick-add-work-items">
                     <div class="quick-add-header">
                         <h4 class="quick-add-title">
-                            🔧 Work Items
+                            💰 Quote Items
                             <span id="work-items-count" style="background: rgba(139, 92, 246, 0.2); padding: 2px 8px; border-radius: 8px; font-size: 12px; margin-left: 8px;">0 items</span>
                         </h4>
                         <button type="button" onclick="clearAllWorkItems()" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: none; border-radius: 8px; padding: 4px 8px; font-size: 12px; cursor: pointer;">Clear All</button>
@@ -1685,7 +1711,7 @@
                     <!-- Quick Add Form -->
                     <div class="quick-add-form">
                         <div class="quick-add-row">
-                            <input type="text" class="quick-add-input" placeholder="Work Description *" id="quick-work-description">
+                            <input type="text" class="quick-add-input" placeholder="Item Description *" id="quick-work-description">
                             <input type="number" class="quick-add-input" placeholder="Qty" id="quick-work-quantity" min="1" step="1" value="1">
                             <input type="number" class="quick-add-input" placeholder="Price (RM)" id="quick-work-price" step="0.01">
                             <button type="button" class="quick-add-btn" onclick="addQuickWorkItem()">
@@ -1714,19 +1740,19 @@
                     </div>
                 </div>
 
-                <!-- Work Items List -->
+                <!-- Quote Items List -->
                 <div id="temp-work-items-list"></div>
 
                 <!-- Overall Total -->
                 <div id="overall-total-section" class="overall-total-section hidden">
-                    <div class="overall-total-label">Job Total Amount</div>
+                    <div class="overall-total-label">Quote Total Amount</div>
                     <div class="overall-total-value" id="overall-total-value">RM 0.00</div>
                 </div>
 
                 <!-- Form Actions -->
                 <div class="form-actions">
                     <button type="button" class="form-btn" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);" onclick="saveEnhancedJob()">
-                        ✅ Create Job + Work Items
+                        ✅ Create Job + Quote
                     </button>
                     <button type="button" class="form-btn" style="background: linear-gradient(135deg, #6b7280, #4b5563);" onclick="closeEnhancedJobForm()">
                         Cancel
@@ -1826,14 +1852,14 @@
         </div>
     </div>
 
-    <!-- Job Details Modal -->
-    <div id="job-details-modal" class="modal">
+    <!-- Job Quote Modal -->
+    <div id="job-quote-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>📋 Service Job Details</h3>
-                <button class="close-btn" onclick="closeJobDetails()">✕</button>
+                <h3>💰 Job Quote</h3>
+                <button class="close-btn" onclick="closeJobQuote()">✕</button>
             </div>
-            <div class="modal-body" id="job-details-content">
+            <div class="modal-body" id="job-quote-content">
                 <!-- Content populated by JavaScript -->
             </div>
         </div>
@@ -1843,7 +1869,7 @@
     <div id="work-items-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="work-items-modal-title">🔧 Work Items Management</h3>
+                <h3 id="work-items-modal-title">💰 Quote Items Management</h3>
                 <button class="close-btn" onclick="closeWorkItemsModal()">✕</button>
             </div>
             <div class="modal-body">
@@ -1853,11 +1879,11 @@
                 </div>
 
                 <div id="work-items-container">
-                    <!-- Work items list populated by JavaScript -->
+                    <!-- Quote items list populated by JavaScript -->
                 </div>
 
                 <button onclick="openAddWorkItemForm()" class="form-btn" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); width: 100%; margin-top: 20px;">
-                    ➕ Add Work Item
+                    ➕ Add Quote Item
                 </button>
             </div>
         </div>
@@ -1867,12 +1893,12 @@
     <div id="add-work-item-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="add-work-item-title">➕ Add Work Item</h3>
+                <h3 id="add-work-item-title">➕ Add Quote Item</h3>
                 <button class="close-btn" onclick="closeAddWorkItemForm()">✕</button>
             </div>
             <div class="modal-body">
                 <form id="add-work-item-form">
-                    <input type="text" class="form-input" placeholder="Work Description *" id="work-item-description" required>
+                    <input type="text" class="form-input" placeholder="Item Description *" id="work-item-description" required>
                     <input type="number" class="form-input" placeholder="Quantity *" id="work-item-quantity" min="1" step="1" required>
                     <input type="number" class="form-input" placeholder="Unit Price (RM) *" id="work-item-price" step="0.01" required>
                     <select class="form-input" id="work-item-unit" style="color: #1f2937; font-weight: 600;">
@@ -1906,9 +1932,9 @@
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - COMPLETE SYSTEM WITH SERVICE TYPE MANAGEMENT
+        // REFIT MAINTENANCE SERVICES - COMPLETE SYSTEM WITH JOB QUOTE MANAGEMENT
         // Registration No: 201803348973 (002894203-V)
-        // Complete Work Management System with Full Functionality + Enhanced Service Types
+        // Complete Work Management System with Job Quote Functionality
         // ========================================
         
         // App State Variables
@@ -1926,7 +1952,7 @@
         var editingTechnician = null;
         var editingServiceType = null;
         var editingWorkItem = null;
-        var selectedJobDetails = null;
+        var selectedJobQuote = null;
         var selectedJobForWorks = null;
 
         // Company Settings
@@ -1983,10 +2009,10 @@
                 loadSampleData();
             }
             
-            showSuccessMessage('🔧 REFIT MAINTENANCE SERVICES - Enhanced System with Service Type Management Ready!');
+            showSuccessMessage('🔧 REFIT MAINTENANCE SERVICES - Enhanced System with Job Quote Management Ready!');
             console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Work Management System');
             console.log('📋 Registration: 201803348973 (002894203-V)');
-            console.log('🛠️ Enhanced with Service Type Management');
+            console.log('💰 Enhanced with Job Quote Management');
             console.log('💼 All features functional and ready for use');
         }
 
@@ -2401,19 +2427,25 @@
                             break;
                         case 'p':
                             e.preventDefault();
-                            if (selectedJobDetails) {
-                                generateJobPDF(selectedJobDetails.id);
+                            if (selectedJobQuote) {
+                                generateJobPDF(selectedJobQuote.id);
                             }
                             break;
                         case 'w':
                             e.preventDefault();
-                            if (selectedJobDetails) {
-                                openWorkItemsModal(selectedJobDetails.id);
+                            if (selectedJobQuote) {
+                                openWorkItemsModal(selectedJobQuote.id);
                             }
                             break;
                         case 'v':
                             e.preventDefault();
                             openServiceTypeForm();
+                            break;
+                        case 'q':
+                            e.preventDefault();
+                            if (selectedJobQuote) {
+                                showJobQuote(selectedJobQuote.id);
+                            }
                             break;
                     }
                 }
@@ -2430,7 +2462,7 @@
                 'client-modal', 
                 'technician-modal',
                 'service-type-modal',
-                'job-details-modal',
+                'job-quote-modal',
                 'work-items-modal',
                 'add-work-item-modal'
             ];
@@ -2447,7 +2479,7 @@
         function openEnhancedJobForm() {
             tempWorkItems = [];
             editingJob = null;
-            document.getElementById('enhanced-job-modal-title').textContent = '🔧 Create Service Job + Work Items';
+            document.getElementById('enhanced-job-modal-title').textContent = '🔧 Create Service Job + Job Quote';
             document.getElementById('enhanced-job-form').reset();
             
             populateEnhancedJobClients();
@@ -2462,7 +2494,7 @@
             updateOverallTotal();
             
             document.getElementById('enhanced-job-modal').classList.add('show');
-            showSuccessMessage('🔧 Enhanced Job Creation with Work Items opened!');
+            showSuccessMessage('🔧 Enhanced Job Creation with Quote opened!');
         }
 
         function closeEnhancedJobForm() {
@@ -2540,7 +2572,7 @@
             updateWorkItemsDisplay();
             updateOverallTotal();
             
-            showSuccessMessage('✅ Work item added! Total: ' + tempWorkItems.length + ' items');
+            showSuccessMessage('✅ Quote item added! Total: ' + tempWorkItems.length + ' items');
         }
 
         function updateWorkItemsDisplay() {
@@ -2558,7 +2590,7 @@
             
             var html = '<div class="work-items-container">' +
                 '<div class="work-items-header">' +
-                '<div class="work-items-title">🔧 Added Work Items</div>' +
+                '<div class="work-items-title">💰 Added Quote Items</div>' +
                 '</div>';
             
             for (var i = 0; i < tempWorkItems.length; i++) {
@@ -2626,32 +2658,32 @@
             updateWorkItemsDisplay();
             updateOverallTotal();
             
-            showSuccessMessage('✏️ Work item ready for editing');
+            showSuccessMessage('✏️ Quote item ready for editing');
         }
 
         function deleteTempWorkItem(index) {
             var item = tempWorkItems[index];
             if (!item) return;
             
-            if (confirm('Delete work item: "' + item.description + '"?')) {
+            if (confirm('Delete quote item: "' + item.description + '"?')) {
                 tempWorkItems.splice(index, 1);
                 updateWorkItemsDisplay();
                 updateOverallTotal();
-                showSuccessMessage('🗑️ Work item deleted');
+                showSuccessMessage('🗑️ Quote item deleted');
             }
         }
 
         function clearAllWorkItems() {
             if (tempWorkItems.length === 0) {
-                showSuccessMessage('⚠️ No work items to clear');
+                showSuccessMessage('⚠️ No quote items to clear');
                 return;
             }
             
-            if (confirm('Clear all ' + tempWorkItems.length + ' work items?')) {
+            if (confirm('Clear all ' + tempWorkItems.length + ' quote items?')) {
                 tempWorkItems = [];
                 updateWorkItemsDisplay();
                 updateOverallTotal();
-                showSuccessMessage('🗑️ All work items cleared');
+                showSuccessMessage('🗑️ All quote items cleared');
             }
         }
 
@@ -2695,7 +2727,7 @@
             updateStats();
             renderViews();
             
-            showSuccessMessage('✅ Job #' + jobData.id + ' created with ' + tempWorkItems.length + ' work items! Total: RM ' + jobData.cost);
+            showSuccessMessage('✅ Job #' + jobData.id + ' created with ' + tempWorkItems.length + ' quote items! Total: RM ' + jobData.cost);
         }
 
         function calculateTotalFromWorkItems(items) {
@@ -2717,14 +2749,14 @@
             var demoJob = {
                 id: demoJobId,
                 clientId: clients[0].id,
-                title: 'AC Maintenance + Electrical Check - Demo Job',
+                title: 'AC Maintenance + Electrical Check - Demo Job Quote',
                 serviceType: 'air-conditioning',
                 priority: 'high',
                 technicianId: technicians.length > 0 ? technicians[0].id : null,
                 scheduledDate: selectedDate,
                 scheduledTime: '09:00',
                 cost: '1285.00',
-                notes: 'Comprehensive demo job showcasing AC maintenance with electrical safety checks. Includes detailed work items breakdown.',
+                notes: 'Comprehensive demo job showcasing AC maintenance with electrical safety checks. Includes detailed quote breakdown.',
                 status: 'pending',
                 createdAt: new Date().toISOString()
             };
@@ -2745,7 +2777,7 @@
             updateStats();
             renderViews();
             
-            showSuccessMessage('🎯 Demo Job #' + demoJobId + ' created with 6 work items! Total: RM 1,285.00');
+            showSuccessMessage('🎯 Demo Job #' + demoJobId + ' created with 6 quote items! Total: RM 1,285.00');
         }
 
         function updateStatusBar() {
@@ -2903,17 +2935,17 @@
                 
                 jobsHTML += '<div class="item-card" style="padding-right: 140px;">' +
                     '<div class="item-actions">' +
-                    '<button class="icon-btn works-btn" onclick="openWorkItemsModal(' + job.id + ')" title="Work Items (' + jobWorkItems.length + ')">🔧</button>' +
+                    '<button class="icon-btn works-btn" onclick="openWorkItemsModal(' + job.id + ')" title="Quote Items (' + jobWorkItems.length + ')">💰</button>' +
                     '<button class="icon-btn pdf-btn" onclick="generateJobPDF(' + job.id + ')" title="Generate PDF">📄</button>' +
-                    '<button class="icon-btn edit-btn" onclick="editJobQuick(' + job.id + ')" title="Edit">✏️</button>' +
+                    '<button class="icon-btn quote-btn" onclick="showJobQuote(' + job.id + ')" title="View Quote">💰</button>' +
                     '</div>' +
-                    '<div onclick="showJobDetails(' + job.id + ')" style="cursor: pointer;">' +
+                    '<div onclick="showJobQuote(' + job.id + ')" style="cursor: pointer;">' +
                     '<h3 style="font-weight: 700; margin-bottom: 8px;">' + job.title + '</h3>' +
                     '<p style="font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 4px;">🏢 ' + (client ? client.name : 'Unknown Client') + '</p>' +
                     '<p style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 8px;">👷 ' + (technician ? technician.name : 'Unassigned') + '</p>' +
                     '<div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">' +
                     '<span class="service-type-badge">' + (getServiceTypeName(job.serviceType) || 'General') + '</span>' +
-                    (jobWorkItems.length > 0 ? '<span class="service-type-badge" style="background: rgba(139, 92, 246, 0.2);">🔧 ' + jobWorkItems.length + ' items</span>' : '') +
+                    (jobWorkItems.length > 0 ? '<span class="service-type-badge" style="background: rgba(251, 191, 36, 0.2);">💰 ' + jobWorkItems.length + ' items</span>' : '') +
                     '<span class="priority-badge priority-' + job.priority + '">' + job.priority + '</span>' +
                     '</div>' +
                     '<div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 12px;">' +
@@ -2996,7 +3028,7 @@
                 container.innerHTML = '<div class="empty-state">' +
                     '<div class="empty-icon">🔧</div>' +
                     '<p style="font-weight: 600;">No jobs found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(255,255,255,0.7);">Create service jobs with work items</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(255,255,255,0.7);">Create service jobs with quotes</p>' +
                     '</div>';
                 return;
             }
@@ -3012,18 +3044,18 @@
                 jobsHTML += '<div class="item-card" style="padding-right: 180px;">' +
                     '<div class="item-actions">' +
                     '<span class="priority-badge priority-' + job.priority + '">' + job.priority + '</span>' +
-                    '<button class="icon-btn works-btn" onclick="openWorkItemsModal(' + job.id + ')" title="Work Items (' + jobWorkItems.length + ')">🔧</button>' +
+                    '<button class="icon-btn works-btn" onclick="openWorkItemsModal(' + job.id + ')" title="Quote Items (' + jobWorkItems.length + ')">💰</button>' +
                     '<button class="icon-btn pdf-btn" onclick="generateJobPDF(' + job.id + ')" title="PDF">📄</button>' +
-                    '<button class="icon-btn edit-btn" onclick="editJobQuick(' + job.id + ')" title="Edit">✏️</button>' +
+                    '<button class="icon-btn quote-btn" onclick="showJobQuote(' + job.id + ')" title="Quote">💰</button>' +
                     '<button class="icon-btn delete-btn" onclick="deleteJob(' + job.id + ')" title="Delete">🗑️</button>' +
                     '</div>' +
-                    '<div onclick="showJobDetails(' + job.id + ')" style="cursor: pointer;">' +
+                    '<div onclick="showJobQuote(' + job.id + ')" style="cursor: pointer;">' +
                     '<h3 style="font-weight: 700; margin-bottom: 8px;">' + job.title + '</h3>' +
                     '<p style="font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 4px;">🏢 ' + (client ? client.name : 'Unknown Client') + '</p>' +
                     '<p style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 8px;">👷 ' + (technician ? technician.name : 'Unassigned') + '</p>' +
                     '<div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">' +
                     '<span class="service-type-badge">' + (getServiceTypeName(job.serviceType) || 'General') + '</span>' +
-                    (jobWorkItems.length > 0 ? '<span class="service-type-badge" style="background: rgba(139, 92, 246, 0.2);">🔧 ' + jobWorkItems.length + ' items</span>' : '') +
+                    (jobWorkItems.length > 0 ? '<span class="service-type-badge" style="background: rgba(251, 191, 36, 0.2);">💰 ' + jobWorkItems.length + ' items</span>' : '') +
                     '</div>' +
                     (job.notes ? '<div style="margin-bottom: 12px; font-size: 14px; color: rgba(255,255,255,0.8); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">📝 ' + job.notes.substring(0, 80) + (job.notes.length > 80 ? '...' : '') + '</div>' : '') +
                     '<div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 12px;">' +
@@ -3109,7 +3141,7 @@
                 jobInfoElement.textContent = 'Job #' + job.id + ': ' + job.title;
             }
             if (modalTitleElement) {
-                modalTitleElement.textContent = '🔧 Work Items - Job #' + job.id;
+                modalTitleElement.textContent = '💰 Quote Items - Job #' + job.id;
             }
             
             renderWorkItems(jobId);
@@ -3128,9 +3160,9 @@
             
             if (jobWorkItems.length === 0) {
                 container.innerHTML = '<div class="empty-work-items">' +
-                    '<div class="empty-work-items-icon">📋</div>' +
-                    '<p style="font-weight: 600; color: #475569;">No work items added yet</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px;">Add work items to create detailed breakdown</p>' +
+                    '<div class="empty-work-items-icon">💰</div>' +
+                    '<p style="font-weight: 600; color: #475569;">No quote items added yet</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px;">Add quote items to create detailed breakdown</p>' +
                     '</div>';
                 return;
             }
@@ -3138,7 +3170,7 @@
             var totalAmount = 0;
             var workItemsHTML = '<div class="work-items-container">' +
                 '<div class="work-items-header">' +
-                '<div class="work-items-title">🔧 Work Items (' + jobWorkItems.length + ')</div>' +
+                '<div class="work-items-title">💰 Quote Items (' + jobWorkItems.length + ')</div>' +
                 '</div>';
             
             for (var i = 0; i < jobWorkItems.length; i++) {
@@ -3172,7 +3204,7 @@
             }
             
             workItemsHTML += '<div class="work-items-total">' +
-                '<div class="work-items-total-label">Total Amount</div>' +
+                '<div class="work-items-total-label">Quote Total Amount</div>' +
                 '<div class="work-items-total-value">RM ' + totalAmount.toFixed(2) + '</div>' +
                 '</div>' +
                 '</div>';
@@ -3186,7 +3218,7 @@
             var formElement = document.getElementById('add-work-item-form');
             var totalElement = document.getElementById('work-item-total');
             
-            if (titleElement) titleElement.textContent = '➕ Add Work Item';
+            if (titleElement) titleElement.textContent = '➕ Add Quote Item';
             if (formElement) formElement.reset();
             if (totalElement) totalElement.textContent = 'RM 0.00';
             
@@ -3237,10 +3269,10 @@
             
             if (editingWorkItem !== null) {
                 workItems[selectedJobForWorks][editingWorkItem] = workItem;
-                showSuccessMessage('✏️ Work item updated successfully!');
+                showSuccessMessage('✏️ Quote item updated successfully!');
             } else {
                 workItems[selectedJobForWorks].push(workItem);
-                showSuccessMessage('✅ Work item added successfully!');
+                showSuccessMessage('✅ Quote item added successfully!');
             }
             
             updateJobCostFromWorkItems(selectedJobForWorks);
@@ -3257,7 +3289,7 @@
             if (!item) return;
             
             editingWorkItem = itemIndex;
-            document.getElementById('add-work-item-title').textContent = '✏️ Edit Work Item';
+            document.getElementById('add-work-item-title').textContent = '✏️ Edit Quote Item';
             document.getElementById('work-item-description').value = item.description;
             document.getElementById('work-item-quantity').value = item.quantity;
             document.getElementById('work-item-price').value = item.price;
@@ -3273,14 +3305,14 @@
             
             if (!item) return;
             
-            if (confirm('Delete work item: "' + item.description + '"?\nQuantity: ' + item.quantity + ' ' + item.unit + '\nPrice: RM ' + parseFloat(item.price).toFixed(2))) {
+            if (confirm('Delete quote item: "' + item.description + '"?\nQuantity: ' + item.quantity + ' ' + item.unit + '\nPrice: RM ' + parseFloat(item.price).toFixed(2))) {
                 workItems[jobId].splice(itemIndex, 1);
                 
                 updateJobCostFromWorkItems(jobId);
                 renderWorkItems(jobId);
                 saveDataToStorage();
                 updateStats();
-                showSuccessMessage('🗑️ Work item deleted successfully');
+                showSuccessMessage('🗑️ Quote item deleted successfully');
             }
         }
 
@@ -3341,7 +3373,7 @@
         }
 
         function deleteClient(id) {
-            if (confirm('Delete this client?\nThis will also delete all their jobs and work items.')) {
+            if (confirm('Delete this client?\nThis will also delete all their jobs and quote items.')) {
                 clients = clients.filter(function(client) { return client.id !== id; });
                 jobs = jobs.filter(function(job) { return job.clientId !== id; });
                 
@@ -3520,12 +3552,12 @@
             showSuccessMessage('🏢 Company information saved successfully!');
         }
 
-        // Job Details Functions
-        function showJobDetails(jobId) {
+        // Job Quote Functions
+        function showJobQuote(jobId) {
             var job = jobs.find(function(j) { return j.id === jobId; });
             if (!job) return;
 
-            selectedJobDetails = job;
+            selectedJobQuote = job;
             var client = clients.find(function(c) { return c.id === job.clientId; });
             var technician = technicians.find(function(t) { return t.id === job.technicianId; });
             var jobWorkItems = workItems[job.id] || [];
@@ -3540,20 +3572,24 @@
                 statusActions = '<button onclick="updateJobStatus(' + job.id + ', \'progress\')" class="form-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706); font-weight: 700;">🔄 Reopen Job</button>';
             }
             
-            // Job Details Content
-            var content = '<div style="background: linear-gradient(135deg, #f9fafb, #f3f4f6); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #e5e7eb;">' +
+            // Job Quote Content
+            var content = '<div class="quote-header">' +
+                '<div class="quote-title">💰 Professional Job Quote</div>' +
+                '<div class="quote-subtitle">Job #' + job.id + ' • ' + companySettings.name + '</div>' +
+                '</div>';
+
+            content += '<div style="background: linear-gradient(135deg, #f9fafb, #f3f4f6); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #e5e7eb;">' +
                 '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">' +
                 '<div>' +
                 '<h4 style="font-weight: 700; font-size: 20px; margin-bottom: 4px; color: #1f2937;">' + job.title + '</h4>' +
-                '<p style="color: #6b7280; font-weight: 600;">Job #' + job.id + ' • ' + companySettings.name + '</p>' +
+                '<p style="color: #6b7280; font-weight: 600;">Quote Date: ' + new Date(job.createdAt).toLocaleDateString() + '</p>' +
                 '</div>' +
                 '<div style="display: flex; gap: 8px; flex-wrap: wrap;">' +
-                '<button onclick="openWorkItemsModal(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); font-weight: 700; padding: 8px 16px; font-size: 14px; min-height: 40px;">🔧 Work Items (' + jobWorkItems.length + ')</button>' +
+                '<button onclick="openWorkItemsModal(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); font-weight: 700; padding: 8px 16px; font-size: 14px; min-height: 40px;">💰 Quote Items (' + jobWorkItems.length + ')</button>' +
                 '<button onclick="generateJobPDF(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #06b6d4, #0891b2); font-weight: 700; padding: 8px 16px; font-size: 14px; min-height: 40px;">📄 PDF</button>' +
                 '<button onclick="editJobQuick(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); font-weight: 700; padding: 8px 16px; font-size: 14px; min-height: 40px;">✏️ Edit</button>' +
                 '</div>' +
                 '</div>' +
-                '<p style="color: #6b7280; font-size: 14px;">Created: ' + new Date(job.createdAt).toLocaleString() + '</p>' +
                 '</div>';
 
             // Client Information
@@ -3598,15 +3634,15 @@
             }
             content += '</div>';
 
-            // Work Items Section
+            // Quote Items Section
             if (jobWorkItems.length > 0) {
-                content += '<div style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 2px solid #0ea5e9;">' +
+                content += '<div style="background: linear-gradient(135deg, #fff7ed, #fed7aa); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 2px solid #f97316;">' +
                     '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">' +
-                    '<h4 style="font-weight: 700; color: #0c4a6e; font-size: 18px;">🔧 Work Items (' + jobWorkItems.length + ')</h4>' +
-                    '<button onclick="openWorkItemsModal(' + job.id + ')" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); color: white; border: none; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer;">Manage Items</button>' +
+                    '<h4 style="font-weight: 700; color: #ea580c; font-size: 18px;">💰 Quote Items (' + jobWorkItems.length + ')</h4>' +
+                    '<button onclick="openWorkItemsModal(' + job.id + ')" style="background: linear-gradient(135deg, #f97316, #ea580c); color: white; border: none; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer;">Manage Items</button>' +
                     '</div>';
 
-                // Show work items preview
+                // Show quote items preview
                 var previewCount = Math.min(jobWorkItems.length, 5);
                 for (var i = 0; i < previewCount; i++) {
                     var item = jobWorkItems[i];
@@ -3622,28 +3658,28 @@
                 }
 
                 if (jobWorkItems.length > previewCount) {
-                    content += '<div style="text-align: center; color: #64748b; font-size: 14px; margin: 8px 0;">+ ' + (jobWorkItems.length - previewCount) + ' more items</div>';
+                    content += '<div style="text-align: center; color: #c2410c; font-size: 14px; margin: 8px 0;">+ ' + (jobWorkItems.length - previewCount) + ' more items</div>';
                 }
 
                 content += '<div style="background: linear-gradient(135deg, #dcfce7, #bbf7d0); border-radius: 12px; padding: 16px; margin-top: 16px; border: 2px solid #22c55e; text-align: center;">' +
-                    '<div style="font-size: 14px; font-weight: 600; color: #15803d; margin-bottom: 4px;">Work Items Total</div>' +
+                    '<div style="font-size: 14px; font-weight: 600; color: #15803d; margin-bottom: 4px;">Quote Items Total</div>' +
                     '<div style="font-size: 24px; font-weight: 800; color: #14532d;">RM ' + workItemsTotal.toFixed(2) + '</div>' +
                     '</div>' +
                     '</div>';
             }
 
             // Total Cost and Actions
-            content += '<div style="background: linear-gradient(135deg, #ecfeff, #cffafe); border-radius: 20px; padding: 20px; border: 2px solid #67e8f9; margin-bottom: 20px;">' +
+            content += '<div style="background: linear-gradient(135deg, #fff7ed, #fed7aa); border-radius: 20px; padding: 20px; border: 2px solid #f97316; margin-bottom: 20px;">' +
                 '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">' +
-                '<span style="font-weight: 700; font-size: 20px; color: #1f2937;">💰 Total Cost:</span>' +
-                '<span style="font-size: 28px; font-weight: 800; color: #0d9488;">' + (workItemsTotal > 0 ? 'RM ' + workItemsTotal.toFixed(2) : (job.cost ? 'RM ' + parseFloat(job.cost).toFixed(2) : 'Not set')) + '</span>' +
+                '<span style="font-weight: 700; font-size: 20px; color: #1f2937;">💰 Quote Total:</span>' +
+                '<span style="font-size: 28px; font-weight: 800; color: #ea580c;">' + (workItemsTotal > 0 ? 'RM ' + workItemsTotal.toFixed(2) : (job.cost ? 'RM ' + parseFloat(job.cost).toFixed(2) : 'Not set')) + '</span>' +
                 '</div>' +
                 '<div style="background: rgba(255, 255, 255, 0.7); padding: 12px; border-radius: 12px; margin-bottom: 20px;">' +
                 '<div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">' + companySettings.name + '</div>' +
                 '<div style="font-size: 12px; color: #6b7280;">Registration No: ' + companySettings.registration + '</div>' +
                 '</div>' +
                 '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 12px;">' +
-                '<button onclick="openWorkItemsModal(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); font-weight: 700;">🔧 Work Items</button>' +
+                '<button onclick="openWorkItemsModal(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); font-weight: 700;">💰 Quote Items</button>' +
                 '<button onclick="generateJobPDF(' + job.id + ')" class="form-btn" style="background: linear-gradient(135deg, #06b6d4, #0891b2); font-weight: 700;">📄 Generate PDF</button>' +
                 '</div>' +
                 '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 12px;">' +
@@ -3655,17 +3691,17 @@
                 '</div>' +
                 '</div>';
 
-            var contentElement = document.getElementById('job-details-content');
+            var contentElement = document.getElementById('job-quote-content');
             if (contentElement) {
                 contentElement.innerHTML = content;
             }
             
-            document.getElementById('job-details-modal').classList.add('show');
+            document.getElementById('job-quote-modal').classList.add('show');
         }
 
-        function closeJobDetails() {
-            document.getElementById('job-details-modal').classList.remove('show');
-            selectedJobDetails = null;
+        function closeJobQuote() {
+            document.getElementById('job-quote-modal').classList.remove('show');
+            selectedJobQuote = null;
         }
 
         function editJobQuick(jobId) {
@@ -3682,7 +3718,7 @@
                 jobs = jobs.filter(function(job) { return job.id !== id; });
                 delete workItems[id];
                 
-                closeJobDetails();
+                closeJobQuote();
                 saveDataToStorage();
                 updateStats();
                 renderViews();
@@ -3721,7 +3757,7 @@
             saveDataToStorage();
             updateStats();
             renderViews();
-            closeJobDetails();
+            closeJobQuote();
             showSuccessMessage('📋 Job duplicated successfully! Job #' + duplicatedJob.id + ' created');
         }
 
@@ -3734,7 +3770,7 @@
                 saveDataToStorage();
                 updateStats();
                 renderViews();
-                closeJobDetails();
+                closeJobQuote();
                 showSuccessMessage('🔄 Job status updated to ' + newStatus);
             }
         }
@@ -3774,7 +3810,7 @@
                     yPos += 30;
                     doc.setFontSize(16);
                     doc.setTextColor(0, 0, 0);
-                    doc.text('SERVICE JOB REPORT', 20, yPos);
+                    doc.text('PROFESSIONAL JOB QUOTE', 20, yPos);
                     doc.text('Job #' + job.id + ': ' + job.title, 20, yPos + 10);
                     
                     yPos += 25;
@@ -3785,8 +3821,9 @@
                     doc.text('Priority: ' + job.priority.toUpperCase(), 20, yPos + 8);
                     doc.text('Status: ' + job.status.toUpperCase(), 20, yPos + 16);
                     doc.text('Scheduled: ' + (job.scheduledDate ? new Date(job.scheduledDate).toLocaleDateString() : 'Not set') + (job.scheduledTime ? ' at ' + job.scheduledTime : ''), 20, yPos + 24);
+                    doc.text('Quote Date: ' + new Date(job.createdAt).toLocaleDateString(), 20, yPos + 32);
                     
-                    yPos += 40;
+                    yPos += 50;
                     
                     // Client Information
                     if (client) {
@@ -3828,7 +3865,7 @@
                         yPos += 45;
                     }
                     
-                    // Work Items
+                    // Quote Items
                     if (jobWorkItems.length > 0) {
                         if (yPos > 200) {
                             doc.addPage();
@@ -3837,7 +3874,7 @@
                         
                         doc.setFontSize(14);
                         doc.setTextColor(30, 64, 175);
-                        doc.text('WORK ITEMS BREAKDOWN (' + jobWorkItems.length + ' items)', 20, yPos);
+                        doc.text('QUOTE BREAKDOWN (' + jobWorkItems.length + ' items)', 20, yPos);
                         
                         yPos += 15;
                         
@@ -3853,7 +3890,7 @@
                         
                         yPos += 10;
                         
-                        // Work items
+                        // Quote items
                         doc.setTextColor(0, 0, 0);
                         for (var i = 0; i < jobWorkItems.length; i++) {
                             if (yPos > 270) {
@@ -3881,11 +3918,11 @@
                         
                         // Total
                         yPos += 5;
-                        doc.setFillColor(220, 252, 231);
+                        doc.setFillColor(255, 247, 237);
                         doc.rect(20, yPos - 5, 170, 12, 'F');
                         doc.setFontSize(12);
-                        doc.setTextColor(21, 128, 61);
-                        doc.text('WORK ITEMS TOTAL:', 120, yPos + 2);
+                        doc.setTextColor(234, 88, 12);
+                        doc.text('QUOTE TOTAL:', 120, yPos + 2);
                         doc.setFontSize(14);
                         doc.text('RM ' + workItemsTotal.toFixed(2), 165, yPos + 2);
                         
@@ -3931,11 +3968,11 @@
                         }
                     }
                     
-                    var filename = 'ServiceJob_' + job.id + '_' + (client ? client.name.replace(/[^a-zA-Z0-9]/g, '') : 'Client') + '_' + new Date().toISOString().split('T')[0] + '.pdf';
+                    var filename = 'JobQuote_' + job.id + '_' + (client ? client.name.replace(/[^a-zA-Z0-9]/g, '') : 'Client') + '_' + new Date().toISOString().split('T')[0] + '.pdf';
                     doc.save(filename);
                     
                     document.getElementById('pdf-loading').classList.remove('show');
-                    showSuccessMessage('📄 Professional PDF generated for Job #' + job.id + ' with ' + jobWorkItems.length + ' work items!');
+                    showSuccessMessage('📄 Professional Quote PDF generated for Job #' + job.id + ' with ' + jobWorkItems.length + ' quote items!');
                     
                 } catch (error) {
                     console.error('PDF error:', error);
@@ -3972,7 +4009,7 @@
                     yPos += 25;
                     doc.setFontSize(16);
                     doc.setTextColor(0, 0, 0);
-                    doc.text('COMPREHENSIVE JOBS REPORT', 20, yPos);
+                    doc.text('COMPREHENSIVE JOBS & QUOTES REPORT', 20, yPos);
                     doc.setFontSize(12);
                     doc.text('Generated: ' + new Date().toLocaleString(), 20, yPos + 10);
                     
@@ -3994,7 +4031,7 @@
                     doc.setFontSize(12);
                     doc.setTextColor(0, 0, 0);
                     doc.text('Total Jobs: ' + jobs.length, 20, yPos);
-                    doc.text('Total Work Items: ' + totalWorkItems, 20, yPos + 8);
+                    doc.text('Total Quote Items: ' + totalWorkItems, 20, yPos + 8);
                     doc.text('Total Revenue: RM ' + totalRevenue.toFixed(2), 20, yPos + 16);
                     doc.text('Pending: ' + pendingJobs + ' | In Progress: ' + progressJobs + ' | Completed: ' + completedJobs, 20, yPos + 24);
                     doc.text('Total Clients: ' + clients.length, 20, yPos + 32);
@@ -4006,7 +4043,7 @@
                     // Jobs list
                     doc.setFontSize(14);
                     doc.setTextColor(30, 64, 175);
-                    doc.text('ALL JOBS', 20, yPos);
+                    doc.text('ALL JOBS & QUOTES', 20, yPos);
                     
                     yPos += 15;
                     
@@ -4026,17 +4063,17 @@
                         doc.setFontSize(10);
                         doc.text('Client: ' + (client ? client.name : 'Unknown'), 20, yPos + 6);
                         doc.text('Status: ' + job.status.toUpperCase() + ' | Priority: ' + job.priority.toUpperCase(), 20, yPos + 12);
-                        doc.text('Work Items: ' + jobWorkItems.length + ' | Cost: RM ' + (job.cost || '0.00'), 20, yPos + 18);
+                        doc.text('Quote Items: ' + jobWorkItems.length + ' | Total: RM ' + (job.cost || '0.00'), 20, yPos + 18);
                         doc.text('Service: ' + (getServiceTypeName(job.serviceType) || 'General'), 20, yPos + 24);
                         
                         yPos += 35;
                     }
                     
-                    var filename = 'JobsReport_' + companySettings.name.replace(/[^a-zA-Z0-9]/g, '') + '_' + new Date().toISOString().split('T')[0] + '.pdf';
+                    var filename = 'JobsQuotesReport_' + companySettings.name.replace(/[^a-zA-Z0-9]/g, '') + '_' + new Date().toISOString().split('T')[0] + '.pdf';
                     doc.save(filename);
                     
                     document.getElementById('pdf-loading').classList.remove('show');
-                    showSuccessMessage('📊 Enhanced jobs report generated with ' + jobs.length + ' jobs and ' + allServiceTypes.length + ' service types!');
+                    showSuccessMessage('📊 Enhanced jobs & quotes report generated with ' + jobs.length + ' jobs and ' + allServiceTypes.length + ' service types!');
                     
                 } catch (error) {
                     console.error('Report error:', error);
@@ -4067,11 +4104,11 @@
             link.download = 'REFIT_Maintenance_Data_Enhanced_' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             
-            showSuccessMessage('📤 All data exported successfully with enhanced service types!');
+            showSuccessMessage('📤 All data exported successfully with enhanced quote system!');
         }
 
         function clearAllData() {
-            if (confirm('⚠️ DANGER: Clear all application data?\n\nThis will permanently delete:\n• All jobs and work items\n• All clients\n• All technicians\n• Custom service types\n• Company settings\n\nThis action cannot be undone!')) {
+            if (confirm('⚠️ DANGER: Clear all application data?\n\nThis will permanently delete:\n• All jobs and quote items\n• All clients\n• All technicians\n• Custom service types\n• Company settings\n\nThis action cannot be undone!')) {
                 if (confirm('Are you absolutely sure? This will delete everything!')) {
                     clients = [];
                     jobs = [];
@@ -4191,9 +4228,9 @@
         }
 
         function showKeyboardShortcuts() {
-            var shortcuts = '⌨️ REFIT MAINTENANCE SERVICES - Enhanced System Shortcuts:\n\n' +
+            var shortcuts = '⌨️ REFIT MAINTENANCE SERVICES - Enhanced Job Quote System Shortcuts:\n\n' +
                 '🔧 SERVICE MANAGEMENT:\n' +
-                'Ctrl+J or Cmd+J - Enhanced Job Creation with Work Items\n' +
+                'Ctrl+J or Cmd+J - Enhanced Job Creation with Quote Items\n' +
                 'Ctrl+C or Cmd+C - New Client\n' +
                 'Ctrl+T or Cmd+T - New Technician\n' +
                 'Ctrl+V or Cmd+V - New Service Type\n' +
@@ -4202,28 +4239,29 @@
                 '➕ Button in job form - Add Service Type\n' +
                 'Service Types tab - Manage all service types\n' +
                 'Edit/Delete custom service types\n\n' +
-                '🔧 WORK ITEMS:\n' +
-                'Ctrl+W or Cmd+W - Manage Work Items (when job selected)\n' +
-                'Ctrl+A or Cmd+A - Add Work Item to Current Job\n\n' +
+                '💰 JOB QUOTES:\n' +
+                'Ctrl+Q or Cmd+Q - View Job Quote (when job selected)\n' +
+                'Ctrl+W or Cmd+W - Manage Quote Items (when job selected)\n' +
+                'Ctrl+A or Cmd+A - Add Quote Item to Current Job\n\n' +
                 '📄 PDF & REPORTING:\n' +
-                'Ctrl+P or Cmd+P - Generate Professional PDF with Work Items\n' +
+                'Ctrl+P or Cmd+P - Generate Professional Quote PDF\n' +
                 'Ctrl+R or Cmd+R - Generate Enhanced Comprehensive Report\n\n' +
                 '🎯 DEMO & TESTING:\n' +
-                'Ctrl+D or Cmd+D - Create Demo Job with Work Items\n\n' +
+                'Ctrl+D or Cmd+D - Create Demo Job with Quote Items\n\n' +
                 '⚙️ SYSTEM:\n' +
                 'ESC - Close any open modal\n' +
                 'Ctrl+E or Cmd+E - Export All Data\n\n' +
                 '💡 ENHANCED FEATURES:\n' +
-                '• Create and manage custom service types\n' +
-                '• Service type with add-on button in job forms\n' +
-                '• Default + custom service type management\n' +
-                '• Enhanced technician specialization options\n' +
-                '• Improved service type statistics\n' +
-                '• Professional PDF with service type details\n' +
-                '• Advanced service type search and filtering\n\n' +
+                '• Professional job quote system\n' +
+                '• Quote items management with real-time totals\n' +
+                '• Enhanced PDF generation with quote details\n' +
+                '• Service type integration for quotes\n' +
+                '• Client quote history tracking\n' +
+                '• Professional quote formatting\n' +
+                '• Advanced quote search and filtering\n\n' +
                 '🏢 Professional service management system\n' +
                 '📋 Registration: 201803348973 (002894203-V)\n' +
-                '🛠️ Enhanced with Service Type Management\n' +
+                '💰 Enhanced with Job Quote Management\n' +
                 '✅ All features fully functional and ready for production use!';
             
             alert(shortcuts);
@@ -4236,7 +4274,7 @@
                 'client-modal', 
                 'technician-modal',
                 'service-type-modal',
-                'job-details-modal',
+                'job-quote-modal',
                 'work-items-modal',
                 'add-work-item-modal'
             ];
@@ -4266,13 +4304,13 @@
         setTimeout(function() {
             console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Work Management System');
             console.log('📋 Registration: 201803348973 (002894203-V)');
-            console.log('🛠️ Enhanced with Service Type Management');
-            console.log('💼 All features functional: Jobs, Work Items, Clients, Technicians, Service Types, PDF Generation');
+            console.log('💰 Enhanced with Job Quote Management');
+            console.log('💼 All features functional: Jobs, Quote Items, Clients, Technicians, Service Types, PDF Generation');
             console.log('📱 Mobile-optimized with touch feedback and pull-to-refresh');
-            console.log('⌨️ Full keyboard shortcuts support with service type shortcuts');
+            console.log('⌨️ Full keyboard shortcuts support with quote shortcuts');
             console.log('📊 Advanced reporting and data export capabilities');
-            console.log('🎨 Service type add-on button in job creation forms');
-            console.log('✅ Ready for production use with enhanced service management!');
+            console.log('🎨 Professional quote system with enhanced PDF generation');
+            console.log('✅ Ready for production use with enhanced quote management!');
         }, 2000);
     </script>
 </body>
