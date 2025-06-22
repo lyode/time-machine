@@ -3437,7 +3437,7 @@
             if (jobWorkItems.length === 0) {
                 container.innerHTML = '<div class="empty-work-items">' +
                     '<div class="empty-work-items-icon">💰</div>' +
-                    '<p style="font-weight: 600; color: #c4b5fd;">No quote items added yet</p>' +
+                    '<p style="font-weight: 600; color: #94a3b8;">No quote items added yet</p>' +
                     '<p style="font-size: 14px; margin-top: 8px;">Add quote items to create detailed breakdown</p>' +
                     '</div>';
                 return;
@@ -3854,7 +3854,7 @@
                 '<div class="quote-subtitle">Job #' + job.id + ' • ' + companySettings.name + '</div>' +
                 '</div>';
 
-            content += '<div style="background: linear-gradient(135deg, #4c1d95, #5b21b6); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(139, 92, 246, 0.3);">' +
+            content += '<div style="background: linear-gradient(135deg, #581c87, #6b21a8); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(139, 92, 246, 0.3);">' +
                 '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">' +
                 '<div>' +
                 '<h4 style="font-weight: 700; font-size: 20px; margin-bottom: 4px; color: #e2e8f0;">' + job.title + '</h4>' +
@@ -3869,7 +3869,7 @@
                 '</div>';
 
             // Client Information
-            content += '<div style="background: linear-gradient(135deg, #4c1d95, #5b21b6); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(139, 92, 246, 0.3);">' +
+            content += '<div style="background: linear-gradient(135deg, #581c87, #6b21a8); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(139, 92, 246, 0.3);">' +
                 '<h4 style="font-weight: 700; margin-bottom: 16px; color: #e2e8f0; font-size: 18px;">🏢 Client Information</h4>' +
                 '<p style="font-weight: 700; color: #e2e8f0; font-size: 16px;">' + (client ? client.name : 'Unknown Client') + '</p>';
             
@@ -3882,19 +3882,19 @@
             content += '</div>';
 
             // Service Details
-            content += '<div style="background: linear-gradient(135deg, #4c1d95, #5b21b6); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(139, 92, 246, 0.3);">' +
+            content += '<div style="background: linear-gradient(135deg, #581c87, #6b21a8); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(139, 92, 246, 0.3);">' +
                 '<h4 style="font-weight: 700; margin-bottom: 16px; color: #e2e8f0; font-size: 18px;">🔧 Service Details</h4>' +
                 '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px;">' +
-                '<div><strong>Service Type:</strong><br><span style="color: #a855f7; font-weight: 600;">' + (getServiceTypeName(job.serviceType) || 'General Maintenance') + '</span></div>' +
-                '<div><strong>Priority:</strong><br><span style="text-transform: capitalize; color: ' + (job.priority === 'high' ? '#f87171' : job.priority === 'medium' ? '#fbbf24' : '#34d399') + '; font-weight: 600;">' + job.priority + ' Priority</span></div>' +
-                '<div><strong>Scheduled:</strong><br><span style="color: #34d399; font-weight: 600;">' + (job.scheduledDate ? new Date(job.scheduledDate).toLocaleDateString() : 'Not set') + (job.scheduledTime ? ' at ' + job.scheduledTime : '') + '</span></div>' +
-                '<div><strong>Status:</strong><br><span style="text-transform: capitalize; color: ' + (job.status === 'completed' ? '#34d399' : job.status === 'progress' ? '#a855f7' : '#fbbf24') + '; font-weight: 600;">' + job.status.replace('progress', 'In Progress') + '</span></div>' +
+                '<div><strong style="color: #c4b5fd;">Service Type:</strong><br><span style="color: #a855f7; font-weight: 600;">' + (getServiceTypeName(job.serviceType) || 'General Maintenance') + '</span></div>' +
+                '<div><strong style="color: #c4b5fd;">Priority:</strong><br><span style="text-transform: capitalize; color: ' + (job.priority === 'high' ? '#f87171' : job.priority === 'medium' ? '#fbbf24' : '#34d399') + '; font-weight: 600;">' + job.priority + ' Priority</span></div>' +
+                '<div><strong style="color: #c4b5fd;">Scheduled:</strong><br><span style="color: #34d399; font-weight: 600;">' + (job.scheduledDate ? new Date(job.scheduledDate).toLocaleDateString() : 'Not set') + (job.scheduledTime ? ' at ' + job.scheduledTime : '') + '</span></div>' +
+                '<div><strong style="color: #c4b5fd;">Status:</strong><br><span style="text-transform: capitalize; color: ' + (job.status === 'completed' ? '#34d399' : job.status === 'progress' ? '#a855f7' : '#fbbf24') + '; font-weight: 600;">' + job.status.replace('progress', 'In Progress') + '</span></div>' +
                 '</div>';
 
             // Technician info
-            content += '<div style="margin-bottom: 16px;"><strong>👷 Assigned Technician:</strong><br>';
+            content += '<div style="margin-bottom: 16px;"><strong style="color: #c4b5fd;">👷 Assigned Technician:</strong><br>';
             if (technician) {
-                content += '<div style="background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 12px; margin-top: 8px;">' +
+                content += '<div style="background: rgba(16, 185, 129, 0.15); padding: 12px; border-radius: 12px; margin-top: 8px; border: 1px solid rgba(16, 185, 129, 0.3);">' +
                     '<div style="font-weight: 700; color: #e2e8f0;">' + technician.name + '</div>' +
                     '<div style="color: rgba(196, 181, 253, 0.8); font-size: 14px;">Specialization: ' + getServiceTypeName(technician.specialization) + '</div>' +
                     '<div style="color: rgba(196, 181, 253, 0.8); font-size: 14px;">Level: ' + technician.level.replace(/\b\w/g, function(l){ return l.toUpperCase() }) + '</div>';
@@ -3906,7 +3906,7 @@
             content += '</div>';
 
             if (job.notes) {
-                content += '<div><strong>📝 Job Notes:</strong><br><div style="background: rgba(139, 92, 246, 0.05); padding: 12px; border-radius: 12px; margin-top: 8px; font-style: italic; color: rgba(196, 181, 253, 0.9);">' + job.notes + '</div></div>';
+                content += '<div><strong style="color: #c4b5fd;">📝 Job Notes:</strong><br><div style="background: rgba(139, 92, 246, 0.1); padding: 12px; border-radius: 12px; margin-top: 8px; font-style: italic; color: rgba(196, 181, 253, 0.9); border: 1px solid rgba(139, 92, 246, 0.2);">' + job.notes + '</div></div>';
             }
             content += '</div>';
 
@@ -3934,7 +3934,7 @@
                 }
 
                 if (jobWorkItems.length > previewCount) {
-                    content += '<div style="text-align: center; color: #a855f7; font-size: 14px; margin: 8px 0;">+ ' + (jobWorkItems.length - previewCount) + ' more items</div>';
+                    content += '<div style="text-align: center; color: #a78bfa; font-size: 14px; margin: 8px 0;">+ ' + (jobWorkItems.length - previewCount) + ' more items</div>';
                 }
 
                 content += '<div style="background: linear-gradient(135deg, #065f46, #047857); border-radius: 12px; padding: 16px; margin-top: 16px; border: 2px solid #10b981; text-align: center;">' +
@@ -3950,7 +3950,7 @@
                 '<span style="font-weight: 700; font-size: 20px; color: #e2e8f0;">💰 Quote Total:</span>' +
                 '<span style="font-size: 28px; font-weight: 800; color: #c4b5fd;">' + (workItemsTotal > 0 ? 'RM ' + workItemsTotal.toFixed(2) : (job.cost ? 'RM ' + parseFloat(job.cost).toFixed(2) : 'Not set')) + '</span>' +
                 '</div>' +
-                '<div style="background: rgba(139, 92, 246, 0.1); padding: 12px; border-radius: 12px; margin-bottom: 20px;">' +
+                '<div style="background: rgba(139, 92, 246, 0.15); padding: 12px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(139, 92, 246, 0.3);">' +
                 '<div style="font-size: 12px; color: rgba(196, 181, 253, 0.8); margin-bottom: 4px;">' + companySettings.name + '</div>' +
                 '<div style="font-size: 12px; color: rgba(196, 181, 253, 0.8);">Registration No: ' + companySettings.registration + '</div>' +
                 '</div>' +
@@ -4262,127 +4262,12 @@
                     doc.save(filename);
                     
                     document.getElementById('pdf-loading').classList.remove('show');
-                    showSuccessMessage('📄 Beautiful Dark Pastel Purple themed PDF generated with company logo for Job #' + job.id + '!');
+                    showSuccessMessage('📄 Stunning Dark Purple themed PDF generated with company logo for Job #' + job.id + '!');
                     
                 } catch (error) {
                     console.error('PDF error:', error);
                     document.getElementById('pdf-loading').classList.remove('show');
                     showSuccessMessage('❌ PDF generation failed. Please try again.');
-                }
-            }, 1500);
-        }
-
-        // Report Generation
-        function generateAllJobsReport() {
-            if (jobs.length === 0) {
-                showSuccessMessage('⚠️ No jobs to generate report!');
-                return;
-            }
-
-            document.getElementById('pdf-loading').classList.add('show');
-            
-            setTimeout(function() {
-                try {
-                    var { jsPDF } = window.jspdf;
-                    var doc = new jsPDF('p', 'mm', 'a4');
-                    var yPos = 30;
-                    
-                    // Header with Logo Support
-                    if (companyLogo) {
-                        try {
-                            doc.addImage(companyLogo, 'JPEG', 20, yPos - 10, 20, 20);
-                            doc.setFontSize(20);
-                            doc.setTextColor(139, 92, 246);
-                            doc.text(companySettings.name, 45, yPos);
-                        } catch (logoError) {
-                            console.warn('Logo error in report:', logoError);
-                            doc.setFontSize(20);
-                            doc.setTextColor(139, 92, 246);
-                            doc.text(companySettings.name, 20, yPos);
-                        }
-                    } else {
-                        doc.setFontSize(20);
-                        doc.setTextColor(139, 92, 246);
-                        doc.text(companySettings.name, 20, yPos);
-                    }
-                    
-                    doc.setFontSize(12);
-                    doc.setTextColor(107, 114, 128);
-                    doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
-                    
-                    yPos += 25;
-                    doc.setFontSize(16);
-                    doc.setTextColor(0, 0, 0);
-                    doc.text('COMPREHENSIVE JOBS & QUOTES REPORT', 20, yPos);
-                    doc.setFontSize(12);
-                    doc.text('Generated: ' + new Date().toLocaleString(), 20, yPos + 10);
-                    
-                    yPos += 25;
-                    
-                    // Summary statistics
-                    var totalRevenue = jobs.reduce(function(sum, job) { return sum + (parseFloat(job.cost) || 0); }, 0);
-                    var totalWorkItems = Object.values(workItems).reduce(function(sum, items) { return sum + items.length; }, 0);
-                    var pendingJobs = jobs.filter(function(job) { return job.status === 'pending'; }).length;
-                    var progressJobs = jobs.filter(function(job) { return job.status === 'progress'; }).length;
-                    var completedJobs = jobs.filter(function(job) { return job.status === 'completed'; }).length;
-                    var allServiceTypes = getAllServiceTypes();
-                    
-                    doc.setFontSize(14);
-                    doc.setTextColor(139, 92, 246);
-                    doc.text('SUMMARY STATISTICS', 20, yPos);
-                    
-                    yPos += 10;
-                    doc.setFontSize(12);
-                    doc.setTextColor(0, 0, 0);
-                    doc.text('Total Jobs: ' + jobs.length, 20, yPos);
-                    doc.text('Total Quote Items: ' + totalWorkItems, 20, yPos + 8);
-                    doc.text('Total Revenue: RM ' + totalRevenue.toFixed(2), 20, yPos + 16);
-                    doc.text('Pending: ' + pendingJobs + ' | In Progress: ' + progressJobs + ' | Completed: ' + completedJobs, 20, yPos + 24);
-                    doc.text('Total Clients: ' + clients.length, 20, yPos + 32);
-                    doc.text('Total Technicians: ' + technicians.length, 20, yPos + 40);
-                    doc.text('Service Types: ' + allServiceTypes.length + ' (' + defaultServiceTypes.length + ' default + ' + customServiceTypes.length + ' custom)', 20, yPos + 48);
-                    
-                    yPos += 65;
-                    
-                    // Jobs list
-                    doc.setFontSize(14);
-                    doc.setTextColor(139, 92, 246);
-                    doc.text('ALL JOBS & QUOTES', 20, yPos);
-                    
-                    yPos += 15;
-                    
-                    for (var i = 0; i < jobs.length; i++) {
-                        if (yPos > 250) {
-                            doc.addPage();
-                            yPos = 30;
-                        }
-                        
-                        var job = jobs[i];
-                        var client = clients.find(function(c) { return c.id === job.clientId; });
-                        var jobWorkItems = workItems[job.id] || [];
-                        
-                        doc.setFontSize(12);
-                        doc.setTextColor(0, 0, 0);
-                        doc.text('Job #' + job.id + ': ' + job.title, 20, yPos);
-                        doc.setFontSize(10);
-                        doc.text('Client: ' + (client ? client.name : 'Unknown'), 20, yPos + 6);
-                        doc.text('Status: ' + job.status.toUpperCase() + ' | Priority: ' + job.priority.toUpperCase(), 20, yPos + 12);
-                        doc.text('Quote Items: ' + jobWorkItems.length + ' | Total: RM ' + (job.cost || '0.00'), 20, yPos + 18);
-                        doc.text('Service: ' + (getServiceTypeName(job.serviceType) || 'General'), 20, yPos + 24);
-                        
-                        yPos += 35;
-                    }
-                    
-                    var filename = 'JobsQuotesReport_' + companySettings.name.replace(/[^a-zA-Z0-9]/g, '') + '_' + new Date().toISOString().split('T')[0] + '.pdf';
-                    doc.save(filename);
-                    
-                    document.getElementById('pdf-loading').classList.remove('show');
-                    showSuccessMessage('📊 Beautiful Dark Pastel Purple themed report generated with company logo!');
-                    
-                } catch (error) {
-                    console.error('Report error:', error);
-                    document.getElementById('pdf-loading').classList.remove('show');
-                    showSuccessMessage('❌ Report generation failed. Please try again.');
                 }
             }, 1500);
         }
@@ -4398,7 +4283,7 @@
                 workItems: workItems,
                 customServiceTypes: customServiceTypes,
                 exportDate: new Date().toISOString(),
-                version: '2.1-dark-pastel-purple'
+                version: '3.0-dark-purple'
             };
             
             var dataStr = JSON.stringify(allData, null, 2);
@@ -4406,10 +4291,10 @@
             
             var link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Maintenance_DarkPastelPurple_Data_' + new Date().toISOString().split('T')[0] + '.json';
+            link.download = 'REFIT_Maintenance_DarkPurple_Data_' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             
-            showSuccessMessage('📤 All data exported with beautiful Dark Pastel Purple theme!');
+            showSuccessMessage('📤 All data exported with stunning Dark Purple theme!');
         }
 
         function clearAllData() {
@@ -4515,7 +4400,7 @@
                     if (pullDistance > 80) {
                         updateStats();
                         renderViews();
-                        showSuccessMessage('🔄 Data refreshed with beautiful Dark Pastel Purple theme!');
+                        showSuccessMessage('🔄 Data refreshed with stunning Dark Purple theme!');
                     }
                     isPulling = false;
                 }
@@ -4535,18 +4420,18 @@
         }
 
         function showKeyboardShortcuts() {
-            var shortcuts = '⌨️ REFIT MAINTENANCE SERVICES - Beautiful Dark Pastel Purple Themed Job Quote System:\n\n' +
+            var shortcuts = '⌨️ REFIT MAINTENANCE SERVICES - Stunning Dark Pastel Purple Themed Job Quote System:\n\n' +
                 '🔧 SERVICE MANAGEMENT:\n' +
                 'Ctrl+J or Cmd+J - Enhanced Job Creation with Quote Items\n' +
                 'Ctrl+C or Cmd+C - New Client\n' +
                 'Ctrl+T or Cmd+T - New Technician\n' +
                 'Ctrl+V or Cmd+V - New Service Type\n' +
                 'Ctrl+S or Cmd+S - Open Settings\n\n' +
-                '🌌 DARK PASTEL PURPLE BRANDING:\n' +
+                '🌌 DARK PURPLE BRANDING:\n' +
                 'Ctrl+L or Cmd+L - Open Logo Manager\n' +
                 'Click logo in header - Upload/Manage Logo\n' +
                 'Settings > Company Logo - Full Logo Management\n' +
-                'Beautiful dark pastel purple theme throughout\n\n' +
+                'Stunning dark pastel purple theme throughout\n\n' +
                 '🛠️ SERVICE TYPES:\n' +
                 '➕ Button in job form - Add Service Type\n' +
                 'Service Types tab - Manage all service types\n' +
@@ -4556,22 +4441,22 @@
                 'Ctrl+W or Cmd+W - Manage Quote Items (when job selected)\n' +
                 'Ctrl+A or Cmd+A - Add Quote Item to Current Job\n\n' +
                 '📄 PDF GENERATION:\n' +
-                'Ctrl+P or Cmd+P - Generate Beautiful Dark Pastel Purple PDF with Logo\n\n' +
+                'Ctrl+P or Cmd+P - Generate Stunning Dark Purple PDF with Logo\n\n' +
                 '⚙️ SYSTEM:\n' +
                 'ESC - Close any open modal\n' +
                 'Ctrl+E or Cmd+E - Export All Data (includes logo)\n\n' +
                 '💡 ENHANCED FEATURES:\n' +
-                '• Beautiful dark pastel purple color theme\n' +
+                '• Stunning dark pastel purple color theme\n' +
                 '• Professional job quote system with company logo\n' +
                 '• Logo upload and management functionality\n' +
-                '• Enhanced PDF generation with dark pastel purple theme & logo\n' +
+                '• Enhanced PDF generation with dark purple theme & logo\n' +
                 '• Company branding throughout the system\n' +
                 '• Logo appears in themed PDFs and reports\n' +
-                '• Professional quote formatting with dark pastel purple styling\n' +
+                '• Professional quote formatting with dark purple styling\n' +
                 '• Advanced themed search and filtering\n\n' +
                 '🏢 Professional service management system\n' +
                 '📋 Registration: 201803348973 (002894203-V)\n' +
-                '🌌 Beautiful Dark Pastel Purple Theme with Company Logo Management\n' +
+                '🌌 Stunning Dark Pastel Purple Theme with Company Logo Management\n' +
                 '✅ All features fully functional and ready for production use!';
             
             alert(shortcuts);
@@ -4614,13 +4499,13 @@
         setTimeout(function() {
             console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Work Management System');
             console.log('📋 Registration: 201803348973 (002894203-V)');
-            console.log('🌌 Beautiful Dark Pastel Purple Theme Active');
+            console.log('🌌 Stunning Dark Pastel Purple Theme Active');
             console.log('🖼️ Enhanced with Company Logo Management');
             console.log('💼 Core features: Jobs, Quote Items, Clients, Technicians, Service Types, PDF Generation, Logo Management');
             console.log('📱 Mobile-optimized with touch feedback and pull-to-refresh');
             console.log('⌨️ Keyboard shortcuts support with logo shortcuts');
             console.log('📊 Data export capabilities');
-            console.log('🎨 Professional company branding with dark pastel purple theme and logo integration');
+            console.log('🎨 Professional company branding with dark purple theme and logo integration');
             console.log('✅ Streamlined interface ready for production use!');
         }, 2000);
     </script>
