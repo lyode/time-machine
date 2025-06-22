@@ -7,10 +7,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="REFIT MAINTENANCE SERVICES">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#40160a">
-    <meta name="msapplication-navbutton-color" content="#40160a">
+    <meta name="theme-color" content="#2d3748">
+    <meta name="msapplication-navbutton-color" content="#2d3748">
     
-    <title>REFIT MAINTENANCE SERVICES - Simplified Job Quote System</title>
+    <title>REFIT MAINTENANCE SERVICES - Eye-Friendly Job Quote System</title>
     
     <!-- Enhanced PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -32,17 +32,66 @@
             user-select: text;
         }
         
+        :root {
+            /* Light Theme - Warm & Eye-Friendly */
+            --bg-primary: #f7f5f3;
+            --bg-secondary: #edeae6;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f9f7f5;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --accent-primary: #38a169;
+            --accent-secondary: #68d391;
+            --accent-warm: #d69e2e;
+            --accent-soft: #9f7aea;
+            --border-color: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+            --shadow-strong: rgba(0, 0, 0, 0.15);
+            --overlay: rgba(45, 55, 72, 0.8);
+            --success: #38a169;
+            --warning: #d69e2e;
+            --error: #e53e3e;
+            --info: #3182ce;
+        }
+        
+        [data-theme="dark"] {
+            /* Dark Theme - Reduced Blue Light */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-card: #3a3a3a;
+            --bg-card-hover: #454545;
+            --text-primary: #e8e8e8;
+            --text-secondary: #c7c7c7;
+            --text-muted: #9a9a9a;
+            --accent-primary: #4fd69c;
+            --accent-secondary: #68d391;
+            --accent-warm: #f6d55c;
+            --accent-soft: #b794f6;
+            --border-color: #4a4a4a;
+            --shadow-light: rgba(255, 255, 255, 0.05);
+            --shadow-medium: rgba(255, 255, 255, 0.1);
+            --shadow-strong: rgba(255, 255, 255, 0.15);
+            --overlay: rgba(0, 0, 0, 0.9);
+            --success: #4fd69c;
+            --warning: #f6d55c;
+            --error: #fc8181;
+            --info: #63b3ed;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #a8f0dc 0%, #7dd3c0 50%, #4db6ac 100%);
-            color: #004d40;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
             position: fixed;
             width: 100%;
             height: 100%;
             font-size: 16px;
-            line-height: 1.5;
+            line-height: 1.6;
+            transition: all 0.3s ease;
         }
         
         /* Mobile Layout Container */
@@ -53,13 +102,13 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            background: linear-gradient(135deg, #a8f0dc 0%, #7dd3c0 50%, #4db6ac 100%);
+            background: var(--bg-primary);
         }
         
         /* Status Bar */
         .status-bar {
             height: 44px;
-            background: linear-gradient(135deg, #004d40 0%, #00695c 100%);
+            background: var(--bg-secondary);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -72,25 +121,43 @@
             right: 0;
             z-index: 100;
             backdrop-filter: blur(20px);
-            box-shadow: 0 2px 10px rgba(0, 77, 64, 0.5);
+            box-shadow: 0 2px 10px var(--shadow-medium);
+            border-bottom: 1px solid var(--border-color);
         }
         
         .status-bar .time {
-            color: white;
+            color: var(--text-primary);
         }
         
         .status-bar .indicators {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 8px;
+            color: var(--text-secondary);
+        }
+        
+        .theme-toggle {
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 12px;
+            padding: 6px 12px;
+            font-size: 12px;
             color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--accent-secondary);
+            transform: scale(1.05);
         }
         
         /* Header */
         .header {
-            background: linear-gradient(135deg, #004d40 0%, #00695c 50%, #26a69a 100%);
+            background: var(--bg-secondary);
             backdrop-filter: blur(30px);
-            border-bottom: 1px solid rgba(0, 77, 64, 0.3);
+            border-bottom: 1px solid var(--border-color);
             padding: 16px 20px;
             display: flex;
             align-items: center;
@@ -100,7 +167,7 @@
             left: 0;
             right: 0;
             z-index: 90;
-            box-shadow: 0 4px 20px rgba(0, 77, 64, 0.6);
+            box-shadow: 0 4px 20px var(--shadow-medium);
         }
         
         .header-left {
@@ -119,25 +186,25 @@
         .app-logo {
             width: 54px;
             height: 54px;
-            background: linear-gradient(135deg, #7dd3c0, #4db6ac);
+            background: var(--accent-primary);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 26px;
-            box-shadow: 0 6px 16px rgba(125, 211, 192, 0.4);
-            color: #004d40;
+            box-shadow: 0 6px 16px var(--shadow-medium);
+            color: white;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             overflow: hidden;
             position: relative;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--accent-secondary);
         }
         
         .app-logo:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(125, 211, 192, 0.6);
+            box-shadow: 0 8px 20px var(--shadow-strong);
         }
         
         .app-logo:active {
@@ -148,7 +215,7 @@
         .logo-svg {
             width: 32px;
             height: 32px;
-            filter: drop-shadow(0 2px 4px rgba(0, 77, 64, 0.3));
+            filter: drop-shadow(0 2px 4px var(--shadow-light));
         }
         
         /* Logo Selection Modal Styles */
@@ -158,7 +225,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.8);
+            background: var(--overlay);
             display: none;
             align-items: center;
             justify-content: center;
@@ -171,19 +238,21 @@
         }
         
         .logo-selector-content {
-            background: linear-gradient(135deg, #a8f0dc, #7dd3c0);
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 30px;
             max-width: 400px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
+            box-shadow: 0 20px 60px var(--shadow-strong);
+            border: 1px solid var(--border-color);
         }
         
         .logo-selector-title {
             font-size: 20px;
             font-weight: 700;
-            color: #004d40;
+            color: var(--text-primary);
             margin-bottom: 20px;
             text-align: center;
         }
@@ -197,7 +266,7 @@
         
         .logo-option {
             aspect-ratio: 1;
-            background: linear-gradient(135deg, #7dd3c0, #4db6ac);
+            background: var(--bg-secondary);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -210,15 +279,17 @@
         
         .logo-option:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(0, 77, 64, 0.4);
+            box-shadow: 0 8px 25px var(--shadow-medium);
+            background: var(--accent-primary);
         }
         
         .logo-option.selected {
-            border-color: #004d40;
-            background: linear-gradient(135deg, #004d40, #00695c);
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
         }
         
-        .logo-option.selected .logo-svg {
+        .logo-option.selected .logo-svg,
+        .logo-option:hover .logo-svg {
             filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         }
         
@@ -228,12 +299,12 @@
             line-height: 1.1;
             letter-spacing: -0.5px;
             margin-bottom: 2px;
-            color: white;
+            color: var(--text-primary);
         }
         
         .app-title p {
             font-size: 11px;
-            color: rgba(255,255,255,0.9);
+            color: var(--text-secondary);
             font-weight: 500;
             line-height: 1.2;
         }
@@ -250,7 +321,7 @@
         
         .header-right p {
             font-size: 12px;
-            color: rgba(255,255,255,0.95);
+            color: var(--text-secondary);
             font-weight: 600;
         }
         
@@ -259,7 +330,7 @@
             height: 40px;
             border-radius: 12px;
             border: none;
-            background: rgba(255,255,255,0.25);
+            background: var(--accent-primary);
             color: white;
             display: flex;
             align-items: center;
@@ -267,12 +338,12 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 18px;
-            box-shadow: 0 2px 8px rgba(255,255,255,0.15);
+            box-shadow: 0 2px 8px var(--shadow-light);
         }
         
         .settings-btn:active {
             transform: scale(0.9);
-            background: rgba(255,255,255,0.35);
+            background: var(--accent-secondary);
         }
         
         /* Main Content */
@@ -287,62 +358,74 @@
         }
         
         .main-content::-webkit-scrollbar {
-            width: 3px;
+            width: 6px;
         }
         
         .main-content::-webkit-scrollbar-track {
-            background: rgba(0, 77, 64, 0.1);
-            border-radius: 2px;
+            background: var(--bg-secondary);
+            border-radius: 3px;
         }
         
         .main-content::-webkit-scrollbar-thumb {
-            background: rgba(0, 77, 64, 0.4);
-            border-radius: 2px;
+            background: var(--accent-primary);
+            border-radius: 3px;
         }
         
         /* Cards */
         .card {
-            background: rgba(168, 240, 220, 0.9);
+            background: var(--bg-card);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 20px;
-            margin: 16px 0;
-            border: 1px solid rgba(0, 77, 64, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 77, 64, 0.15);
+            padding: 24px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px var(--shadow-light);
+            transition: all 0.2s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 12px 40px var(--shadow-medium);
+            transform: translateY(-2px);
         }
         
         /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 16px;
             margin: 20px 0;
         }
         
         .stat-card {
-            background: rgba(168, 240, 220, 0.95);
+            background: var(--bg-card);
             backdrop-filter: blur(20px);
             border-radius: 18px;
-            padding: 16px 12px;
+            padding: 20px 16px;
             text-align: center;
-            border: 1px solid rgba(0, 77, 64, 0.2);
-            box-shadow: 0 4px 16px rgba(0, 77, 64, 0.2);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 16px var(--shadow-light);
+            transition: all 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow-medium);
         }
         
         .stat-label {
-            font-size: 11px;
-            color: rgba(0, 77, 64, 0.8);
-            margin-bottom: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
         .stat-value {
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 28px;
+            font-weight: 800;
             line-height: 1;
-            color: #004d40;
+            color: var(--accent-primary);
         }
         
         /* Buttons */
@@ -361,19 +444,26 @@
             transition: all 0.2s ease;
             min-height: 52px;
             text-decoration: none;
+            box-shadow: 0 4px 12px var(--shadow-light);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
         }
         
         .btn:active {
             transform: scale(0.96);
         }
         
-        .btn-primary { background: linear-gradient(135deg, #004d40, #00695c); }
-        .btn-success { background: linear-gradient(135deg, #26a69a, #4db6ac); }
-        .btn-danger { background: linear-gradient(135deg, #d73027, #a50f15); }
-        .btn-warning { background: linear-gradient(135deg, #fd8d3c, #e6550d); }
-        .btn-purple { background: linear-gradient(135deg, #7dd3c0, #4db6ac); color: #004d40; }
-        .btn-gray { background: linear-gradient(135deg, #607d8b, #546e7a); }
-        .btn-cyan { background: linear-gradient(135deg, #a8f0dc, #7dd3c0); color: #004d40; }
+        .btn-primary { background: var(--accent-primary); }
+        .btn-success { background: var(--success); }
+        .btn-danger { background: var(--error); }
+        .btn-warning { background: var(--warning); }
+        .btn-info { background: var(--info); }
+        .btn-soft { background: var(--accent-soft); }
+        .btn-warm { background: var(--accent-warm); }
+        .btn-secondary { background: var(--text-secondary); }
         
         /* Action Buttons */
         .actions-grid {
@@ -383,7 +473,7 @@
         }
         
         .action-btn {
-            padding: 20px;
+            padding: 24px 20px;
             border-radius: 20px;
             border: none;
             color: white;
@@ -395,23 +485,29 @@
             gap: 12px;
             transition: all 0.2s ease;
             cursor: pointer;
-            min-height: 100px;
+            min-height: 120px;
+            box-shadow: 0 6px 20px var(--shadow-light);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px var(--shadow-medium);
         }
         
         .action-btn:active {
             transform: scale(0.96);
         }
         
-        .action-btn.blue { background: linear-gradient(135deg, #004d40 0%, #00695c 100%); }
-        .action-btn.green { background: linear-gradient(135deg, #26a69a 0%, #4db6ac 100%); }
-        .action-btn.purple { background: linear-gradient(135deg, #7dd3c0 0%, #4db6ac 100%); color: #004d40; }
-        .action-btn.orange { background: linear-gradient(135deg, #fd8d3c 0%, #e6550d 100%); }
-        .action-btn.pink { background: linear-gradient(135deg, #7dd3c0 0%, #4db6ac 100%); color: #004d40; }
-        .action-btn.cyan { background: linear-gradient(135deg, #a8f0dc 0%, #7dd3c0 100%); color: #004d40; }
-        .action-btn.indigo { background: linear-gradient(135deg, #607d8b 0%, #546e7a 100%); }
+        .action-btn.primary { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); }
+        .action-btn.success { background: linear-gradient(135deg, var(--success), #48bb78); }
+        .action-btn.warm { background: linear-gradient(135deg, var(--accent-warm), #f6e05e); }
+        .action-btn.soft { background: linear-gradient(135deg, var(--accent-soft), #b794f6); }
+        .action-btn.info { background: linear-gradient(135deg, var(--info), #63b3ed); }
+        .action-btn.secondary { background: linear-gradient(135deg, var(--text-secondary), #718096); }
         
         .action-btn .icon {
-            font-size: 28px;
+            font-size: 32px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
         
         /* Form Elements */
@@ -419,9 +515,9 @@
             width: 100%;
             padding: 18px 20px;
             border-radius: 16px;
-            border: 2px solid rgba(0, 77, 64, 0.1);
-            background: rgba(168, 240, 220, 0.95);
-            color: #004d40;
+            border: 2px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
             font-size: 16px;
             font-weight: 500;
             margin-bottom: 16px;
@@ -429,14 +525,14 @@
         }
         
         .input::placeholder {
-            color: rgba(0, 77, 64, 0.6);
+            color: var(--text-muted);
         }
         
         .input:focus {
             outline: none;
-            background: rgba(168, 240, 220, 1);
-            border-color: #7dd3c0;
-            box-shadow: 0 0 0 3px rgba(125, 211, 192, 0.3);
+            background: var(--bg-card);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.1);
         }
         
         /* Search Input */
@@ -451,7 +547,7 @@
             top: 50%;
             transform: translateY(-50%);
             font-size: 18px;
-            color: rgba(0, 77, 64, 0.6);
+            color: var(--text-muted);
             pointer-events: none;
         }
         
@@ -461,20 +557,25 @@
         
         /* Item Cards */
         .item-card {
-            background: rgba(168, 240, 220, 0.9);
+            background: var(--bg-card);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 20px;
+            padding: 24px;
             margin-bottom: 16px;
-            border: 1px solid rgba(0, 77, 64, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 77, 64, 0.15);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px var(--shadow-light);
             transition: all 0.2s ease;
             position: relative;
         }
         
+        .item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px var(--shadow-medium);
+            background: var(--bg-card-hover);
+        }
+        
         .item-card:active {
             transform: scale(0.98);
-            background: rgba(168, 240, 220, 1);
         }
         
         .item-header {
@@ -489,7 +590,7 @@
             font-weight: 700;
             margin-bottom: 8px;
             line-height: 1.2;
-            color: #004d40;
+            color: var(--text-primary);
         }
         
         /* Icon Buttons */
@@ -498,42 +599,48 @@
             height: 44px;
             border-radius: 14px;
             border: none;
-            background: rgba(0, 77, 64, 0.1);
-            color: #004d40;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 16px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+        
+        .icon-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-medium);
         }
         
         .icon-btn:active {
             transform: scale(0.9);
-            background: rgba(0, 77, 64, 0.2);
         }
         
-        .icon-btn.edit-btn { background: rgba(0, 77, 64, 0.9); color: white; }
-        .icon-btn.delete-btn { background: rgba(215, 48, 39, 0.9); color: white; }
-        .icon-btn.pdf-btn { background: rgba(38, 166, 154, 0.9); color: white; }
-        .icon-btn.quote-btn { background: rgba(125, 211, 192, 0.9); color: #004d40; }
+        .icon-btn.edit-btn { background: var(--accent-primary); color: white; }
+        .icon-btn.delete-btn { background: var(--error); color: white; }
+        .icon-btn.pdf-btn { background: var(--info); color: white; }
+        .icon-btn.quote-btn { background: var(--accent-warm); color: white; }
         
         .item-actions {
             display: flex;
             gap: 8px;
             position: absolute;
-            top: 16px;
-            right: 16px;
+            top: 20px;
+            right: 20px;
             z-index: 10;
         }
         
         /* Preset Items Styles */
         .preset-items-section {
-            background: linear-gradient(135deg, #a8f0dc, #7dd3c0);
+            background: var(--bg-card);
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             margin: 20px 0;
-            border: 2px solid #004d40;
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 8px 32px var(--shadow-light);
         }
         
         .preset-items-header {
@@ -546,18 +653,18 @@
         .preset-items-title {
             font-size: 18px;
             font-weight: 700;
-            color: #004d40;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
         .preset-item {
-            background: rgba(168, 240, 220, 0.9);
+            background: var(--bg-secondary);
             border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 8px;
-            border: 1px solid rgba(0, 77, 64, 0.1);
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -566,8 +673,9 @@
         }
         
         .preset-item:hover {
-            background: rgba(168, 240, 220, 1);
+            background: var(--bg-card-hover);
             transform: scale(1.02);
+            box-shadow: 0 4px 12px var(--shadow-light);
         }
         
         .preset-item-info {
@@ -576,33 +684,39 @@
         
         .preset-item-name {
             font-weight: 700;
-            color: #004d40;
-            font-size: 14px;
-            margin-bottom: 2px;
+            color: var(--text-primary);
+            font-size: 15px;
+            margin-bottom: 4px;
         }
         
         .preset-item-details {
-            font-size: 12px;
-            color: rgba(0, 77, 64, 0.7);
+            font-size: 13px;
+            color: var(--text-muted);
         }
         
         .preset-item-price {
             font-weight: 700;
-            color: #26a69a;
-            font-size: 14px;
+            color: var(--accent-primary);
+            font-size: 15px;
         }
         
         .preset-item-add {
-            background: linear-gradient(135deg, #7dd3c0, #4db6ac);
-            color: #004d40;
+            background: var(--accent-primary);
+            color: white;
             border: none;
             border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 12px;
+            padding: 8px 16px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
-            margin-left: 8px;
+            margin-left: 12px;
+            box-shadow: 0 2px 6px var(--shadow-light);
+        }
+        
+        .preset-item-add:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px var(--shadow-medium);
         }
         
         .preset-item-add:active {
@@ -611,11 +725,12 @@
         
         /* Quote Items List */
         .quote-items-container {
-            background: linear-gradient(135deg, #004d40, #00695c);
+            background: var(--bg-secondary);
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             margin: 20px 0;
-            border: 2px solid #7dd3c0;
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 8px 32px var(--shadow-light);
         }
         
         .quote-items-header {
@@ -628,42 +743,42 @@
         .quote-items-title {
             font-size: 18px;
             font-weight: 700;
-            color: #a8f0dc;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
         .quote-item {
-            background: rgba(125, 211, 192, 0.1);
+            background: var(--bg-card);
             border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            border: 1px solid rgba(125, 211, 192, 0.2);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px var(--shadow-light);
         }
         
         .quote-item-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         
         .quote-item-title {
             font-weight: 700;
-            color: #a8f0dc;
+            color: var(--text-primary);
             font-size: 16px;
         }
         
         .quote-item-actions {
             display: flex;
-            gap: 6px;
+            gap: 8px;
         }
         
         .quote-item-btn {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 8px;
             border: none;
             display: flex;
@@ -679,21 +794,21 @@
         }
         
         .quote-item-edit {
-            background: rgba(125, 211, 192, 0.2);
-            color: #7dd3c0;
+            background: var(--accent-primary);
+            color: white;
         }
         
         .quote-item-delete {
-            background: rgba(215, 48, 39, 0.2);
-            color: #d73027;
+            background: var(--error);
+            color: white;
         }
         
         .quote-item-details {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 16px;
             font-size: 14px;
-            color: #7dd3c0;
+            color: var(--text-secondary);
         }
         
         .quote-item-detail {
@@ -703,33 +818,33 @@
         .quote-item-detail-label {
             font-size: 12px;
             font-weight: 600;
-            color: rgba(168, 240, 220, 0.7);
-            margin-bottom: 2px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
         }
         
         .quote-item-detail-value {
             font-weight: 700;
-            color: #a8f0dc;
+            color: var(--text-primary);
         }
         
         .quote-total-section {
-            background: linear-gradient(135deg, #26a69a, #4db6ac);
+            background: var(--accent-primary);
             border-radius: 12px;
-            padding: 16px;
-            margin-top: 16px;
-            border: 2px solid #26a69a;
+            padding: 20px;
+            margin-top: 20px;
             text-align: center;
+            box-shadow: 0 6px 20px var(--shadow-medium);
         }
         
         .quote-total-label {
             font-size: 14px;
             font-weight: 600;
-            color: #e0f2f1;
-            margin-bottom: 4px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 6px;
         }
         
         .quote-total-value {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
             color: #ffffff;
         }
@@ -737,7 +852,7 @@
         .empty-quote-items {
             text-align: center;
             padding: 40px 20px;
-            color: rgba(168, 240, 220, 0.7);
+            color: var(--text-muted);
         }
         
         .empty-quote-items-icon {
@@ -748,11 +863,12 @@
         
         /* Quick Add Section */
         .quick-add-section {
-            background: linear-gradient(135deg, #607d8b, #546e7a);
+            background: var(--bg-secondary);
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             margin: 20px 0;
-            border: 2px solid #7dd3c0;
+            border: 2px solid var(--accent-warm);
+            box-shadow: 0 8px 32px var(--shadow-light);
         }
         
         .quick-add-header {
@@ -765,7 +881,7 @@
         .quick-add-title {
             font-size: 16px;
             font-weight: 700;
-            color: #a8f0dc;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -779,37 +895,37 @@
         .quick-add-row {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 8px;
+            gap: 12px;
             align-items: end;
         }
         
         .quick-add-input {
-            padding: 12px 16px;
+            padding: 14px 16px;
             border-radius: 12px;
-            border: 2px solid rgba(125, 211, 192, 0.3);
-            background: rgba(168, 240, 220, 0.95);
-            color: #004d40;
+            border: 2px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
             font-size: 14px;
             font-weight: 500;
             transition: all 0.2s ease;
         }
         
         .quick-add-input::placeholder {
-            color: rgba(0, 77, 64, 0.6);
+            color: var(--text-muted);
         }
         
         .quick-add-input:focus {
             outline: none;
-            border-color: #7dd3c0;
-            box-shadow: 0 0 0 3px rgba(125, 211, 192, 0.2);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.1);
         }
         
         .quick-add-btn {
-            padding: 12px 16px;
+            padding: 14px 16px;
             border-radius: 12px;
             border: none;
-            background: linear-gradient(135deg, #7dd3c0, #4db6ac);
-            color: #004d40;
+            background: var(--accent-primary);
+            color: white;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -817,6 +933,12 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+        
+        .quick-add-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--shadow-medium);
         }
         
         .quick-add-btn:active {
@@ -824,24 +946,25 @@
         }
         
         .quick-add-total {
-            background: rgba(125, 211, 192, 0.2);
+            background: var(--bg-card);
             border-radius: 12px;
-            padding: 12px;
+            padding: 16px;
             text-align: center;
-            margin-top: 12px;
+            margin-top: 16px;
+            border: 1px solid var(--border-color);
         }
         
         .quick-add-total-label {
             font-size: 12px;
             font-weight: 600;
-            color: #a8f0dc;
-            margin-bottom: 2px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
         }
         
         .quick-add-total-value {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
-            color: #a8f0dc;
+            color: var(--accent-primary);
         }
         
         /* Bottom Navigation */
@@ -850,12 +973,12 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(135deg, #004d40 0%, #00695c 50%, #26a69a 100%);
+            background: var(--bg-secondary);
             backdrop-filter: blur(30px);
-            border-top: 1px solid rgba(0, 77, 64, 0.3);
+            border-top: 1px solid var(--border-color);
             padding: 12px 20px 32px;
             z-index: 100;
-            box-shadow: 0 -4px 20px rgba(0, 77, 64, 0.6);
+            box-shadow: 0 -4px 20px var(--shadow-medium);
         }
         
         .nav-items {
@@ -868,10 +991,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
             padding: 12px 16px;
             border-radius: 16px;
-            color: rgba(255,255,255,0.8);
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 12px;
             font-weight: 600;
@@ -881,10 +1004,15 @@
         }
         
         .nav-item.active {
-            color: white;
-            background: rgba(125, 211, 192, 0.2);
-            box-shadow: 0 2px 8px rgba(125, 211, 192, 0.3);
+            color: var(--accent-primary);
+            background: rgba(56, 161, 105, 0.1);
+            box-shadow: 0 2px 8px var(--shadow-light);
             transform: scale(1.05);
+        }
+        
+        .nav-item:hover {
+            color: var(--accent-primary);
+            transform: translateY(-2px);
         }
         
         .nav-item:active {
@@ -897,10 +1025,11 @@
         
         .home-indicator {
             height: 4px;
-            background: rgba(255,255,255,0.5);
+            background: var(--accent-primary);
             border-radius: 2px;
             width: 140px;
-            margin: 8px auto 0;
+            margin: 12px auto 0;
+            opacity: 0.6;
         }
         
         /* Modals */
@@ -910,11 +1039,12 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.8);
+            background: var(--overlay);
             display: none;
             align-items: flex-end;
             z-index: 200;
             animation: fadeIn 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         
         .modal.show {
@@ -932,25 +1062,27 @@
         }
         
         .modal-content {
-            background: linear-gradient(135deg, #a8f0dc 0%, #7dd3c0 100%);
+            background: var(--bg-card);
             backdrop-filter: blur(30px);
             border-radius: 24px 24px 0 0;
             width: 100%;
             max-height: 85vh;
             overflow-y: auto;
-            color: #004d40;
+            color: var(--text-primary);
             animation: slideUp 0.3s ease;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 -8px 40px var(--shadow-strong);
         }
         
         .modal-header {
             position: sticky;
             top: 0;
-            background: linear-gradient(135deg, #a8f0dc 0%, #7dd3c0 100%);
+            background: var(--bg-card);
             backdrop-filter: blur(30px);
-            border-bottom: 1px solid rgba(0, 77, 64, 0.1);
-            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -959,7 +1091,7 @@
         .modal-header h3 {
             font-size: 20px;
             font-weight: 700;
-            color: #004d40;
+            color: var(--text-primary);
         }
         
         .close-btn {
@@ -967,8 +1099,8 @@
             height: 40px;
             border-radius: 20px;
             border: none;
-            background: rgba(0, 77, 64, 0.1);
-            color: #004d40;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -977,9 +1109,14 @@
             font-size: 18px;
         }
         
+        .close-btn:hover {
+            background: var(--error);
+            color: white;
+            transform: scale(1.1);
+        }
+        
         .close-btn:active {
             transform: scale(0.9);
-            background: rgba(0, 77, 64, 0.2);
         }
         
         .modal-body {
@@ -991,9 +1128,9 @@
             width: 100%;
             padding: 18px 20px;
             border-radius: 16px;
-            border: 2px solid rgba(0, 77, 64, 0.1);
-            background: rgba(168, 240, 220, 0.95);
-            color: #004d40;
+            border: 2px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
             font-size: 16px;
             font-weight: 500;
             margin-bottom: 16px;
@@ -1001,14 +1138,14 @@
         }
         
         .form-input::placeholder {
-            color: rgba(0, 77, 64, 0.6);
+            color: var(--text-muted);
         }
         
         .form-input:focus {
             outline: none;
-            background: rgba(168, 240, 220, 1);
-            border-color: #7dd3c0;
-            box-shadow: 0 0 0 3px rgba(125, 211, 192, 0.3);
+            background: var(--bg-card);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.1);
         }
         
         .form-actions {
@@ -1028,6 +1165,12 @@
             cursor: pointer;
             transition: all 0.2s ease;
             min-height: 56px;
+            box-shadow: 0 4px 12px var(--shadow-light);
+        }
+        
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
         }
         
         .form-btn:active {
@@ -1047,21 +1190,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         
         .section-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #004d40;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
         }
         
         .add-btn {
-            width: 52px;
-            height: 52px;
-            border-radius: 26px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
             border: none;
-            background: linear-gradient(135deg, #004d40, #00695c);
+            background: var(--accent-primary);
             color: white;
             display: flex;
             align-items: center;
@@ -1069,7 +1212,12 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 24px;
-            box-shadow: 0 8px 24px rgba(0, 77, 64, 0.4);
+            box-shadow: 0 8px 24px var(--shadow-medium);
+        }
+        
+        .add-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px var(--shadow-strong);
         }
         
         .add-btn:active {
@@ -1079,7 +1227,7 @@
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: rgba(0, 77, 64, 0.6);
+            color: var(--text-muted);
         }
         
         .empty-icon {
@@ -1094,12 +1242,12 @@
             top: 120px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #26a69a, #4db6ac);
+            background: var(--success);
             color: white;
             padding: 16px 24px;
             border-radius: 16px;
             font-weight: 600;
-            box-shadow: 0 8px 32px rgba(38, 166, 154, 0.4);
+            box-shadow: 0 8px 32px var(--shadow-medium);
             z-index: 250;
             opacity: 0;
             transform: translateX(-50%) translateY(-20px);
@@ -1120,7 +1268,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.9);
+            background: var(--overlay);
             display: none;
             align-items: center;
             justify-content: center;
@@ -1133,21 +1281,21 @@
         }
         
         .pdf-loading-content {
-            background: linear-gradient(135deg, #a8f0dc, #7dd3c0);
+            background: var(--bg-card);
             padding: 40px;
             border-radius: 20px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 60px var(--shadow-strong);
             max-width: 300px;
             margin: 0 20px;
-            border: 1px solid rgba(0, 77, 64, 0.2);
+            border: 1px solid var(--border-color);
         }
         
         .pdf-loading-icon {
             font-size: 48px;
             margin-bottom: 20px;
             animation: pulse 1.5s infinite;
-            color: #7dd3c0;
+            color: var(--accent-primary);
         }
         
         @keyframes pulse {
@@ -1157,19 +1305,73 @@
         
         .pdf-loading-text {
             font-weight: 700;
-            color: #004d40;
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
         
         .pdf-loading-subtext {
             font-size: 14px;
-            color: rgba(0, 77, 64, 0.7);
+            color: var(--text-muted);
+        }
+        
+        /* Blue Light Filter */
+        .blue-light-filter {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 214, 102, 0.05);
+            pointer-events: none;
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        [data-theme="dark"] .blue-light-filter {
+            background: rgba(255, 214, 102, 0.02);
+        }
+        
+        /* Eye Comfort Enhancements */
+        .comfort-mode {
+            font-smooth: always;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* Focus indicators for accessibility */
+        button:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --shadow-light: rgba(0, 0, 0, 0.2);
+                --shadow-medium: rgba(0, 0, 0, 0.3);
+                --shadow-strong: rgba(0, 0, 0, 0.4);
+                --border-color: #666;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
         
         /* Mobile Optimizations */
         @media screen and (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
             }
             
             .actions-grid {
@@ -1199,6 +1401,10 @@
             .logo-options {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .section-title {
+                font-size: 24px;
+            }
         }
         
         /* Safe area adjustments */
@@ -1212,14 +1418,33 @@
                 padding-bottom: calc(32px + env(safe-area-inset-bottom));
             }
         }
+        
+        /* Print styles */
+        @media print {
+            .status-bar,
+            .bottom-nav,
+            .modal,
+            .logo-selector {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
+            }
+        }
     </style>
 </head>
-<body>
+<body class="comfort-mode" data-theme="light">
+    <!-- Blue Light Filter -->
+    <div class="blue-light-filter" id="blue-light-filter"></div>
+    
     <div class="mobile-container">
         <!-- Status Bar -->
         <div class="status-bar">
             <div class="time" id="status-time">9:41</div>
             <div class="indicators">
+                <button class="theme-toggle" onclick="toggleTheme()" id="theme-toggle">🌙 Dark</button>
                 <span>📶</span>
                 <span>📱</span>
                 <span>🔋</span>
@@ -1234,12 +1459,12 @@
                         <!-- Professional Maintenance Tool Icon (Default) -->
                         <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <!-- Wrench -->
-                            <path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="#004d40" stroke="#7dd3c0" stroke-width="2"/>
+                            <path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
                             <!-- Screwdriver -->
-                            <path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="#004d40" stroke="#7dd3c0" stroke-width="2"/>
+                            <path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
                             <!-- Center gear -->
-                            <circle cx="50" cy="50" r="8" fill="#26a69a" stroke="#004d40" stroke-width="2"/>
-                            <circle cx="50" cy="50" r="3" fill="#004d40"/>
+                            <circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.8)" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="3" fill="currentColor"/>
                         </svg>
                     </div>
                     <div class="app-title">
@@ -1267,74 +1492,74 @@
                     <!-- Option 1: Professional Tools -->
                     <div class="logo-option selected" onclick="selectLogo(0)" data-logo="0">
                         <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="#004d40" stroke="#7dd3c0" stroke-width="2"/>
-                            <path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="#004d40" stroke="#7dd3c0" stroke-width="2"/>
-                            <circle cx="50" cy="50" r="8" fill="#26a69a" stroke="#004d40" stroke-width="2"/>
-                            <circle cx="50" cy="50" r="3" fill="#004d40"/>
+                            <path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                            <path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.8)" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="3" fill="currentColor"/>
                         </svg>
                     </div>
                     
                     <!-- Option 2: Gear & Wrench -->
                     <div class="logo-option" onclick="selectLogo(1)" data-logo="1">
                         <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="50" cy="50" r="25" fill="none" stroke="#004d40" stroke-width="4"/>
-                            <path d="M50 25L55 35L45 35Z M75 50L65 45L65 55Z M50 75L45 65L55 65Z M25 50L35 55L35 45Z" fill="#26a69a"/>
-                            <circle cx="50" cy="50" r="8" fill="#004d40"/>
-                            <path d="M15 15L25 25M20 30L35 45C40 50 50 50 55 45L70 30" stroke="#7dd3c0" stroke-width="3" fill="none"/>
+                            <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="4"/>
+                            <path d="M50 25L55 35L45 35Z M75 50L65 45L65 55Z M50 75L45 65L55 65Z M25 50L35 55L35 45Z" fill="rgba(255,255,255,0.8)"/>
+                            <circle cx="50" cy="50" r="8" fill="currentColor"/>
+                            <path d="M15 15L25 25M20 30L35 45C40 50 50 50 55 45L70 30" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none"/>
                         </svg>
                     </div>
                     
                     <!-- Option 3: House Tools -->
                     <div class="logo-option" onclick="selectLogo(2)" data-logo="2">
                         <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M50 15L20 40L25 45L50 25L75 45L80 40Z" fill="#004d40"/>
-                            <rect x="30" y="40" width="40" height="45" fill="#26a69a" stroke="#004d40" stroke-width="2"/>
-                            <rect x="42" y="65" width="16" height="20" fill="#004d40"/>
-                            <rect x="35" y="50" width="8" height="8" fill="#7dd3c0"/>
-                            <rect x="57" y="50" width="8" height="8" fill="#7dd3c0"/>
-                            <path d="M15 70L25 60L30 65L20 75Z" fill="#fd8d3c"/>
-                            <path d="M75 70L85 60L90 65L80 75Z" fill="#fd8d3c"/>
+                            <path d="M50 15L20 40L25 45L50 25L75 45L80 40Z" fill="currentColor"/>
+                            <rect x="30" y="40" width="40" height="45" fill="rgba(255,255,255,0.8)" stroke="currentColor" stroke-width="2"/>
+                            <rect x="42" y="65" width="16" height="20" fill="currentColor"/>
+                            <rect x="35" y="50" width="8" height="8" fill="rgba(255,255,255,0.6)"/>
+                            <rect x="57" y="50" width="8" height="8" fill="rgba(255,255,255,0.6)"/>
+                            <path d="M15 70L25 60L30 65L20 75Z" fill="rgba(255,214,102,0.8)"/>
+                            <path d="M75 70L85 60L90 65L80 75Z" fill="rgba(255,214,102,0.8)"/>
                         </svg>
                     </div>
                     
                     <!-- Option 4: Modern Tech -->
                     <div class="logo-option" onclick="selectLogo(3)" data-logo="3">
                         <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="20" y="20" width="60" height="60" rx="15" fill="#004d40" stroke="#7dd3c0" stroke-width="2"/>
-                            <circle cx="35" cy="35" r="5" fill="#26a69a"/>
-                            <circle cx="65" cy="35" r="5" fill="#26a69a"/>
-                            <circle cx="35" cy="65" r="5" fill="#26a69a"/>
-                            <circle cx="65" cy="65" r="5" fill="#26a69a"/>
-                            <circle cx="50" cy="50" r="8" fill="#7dd3c0"/>
-                            <path d="M35 50L45 50M55 50L65 50M50 35L50 45M50 55L50 65" stroke="#a8f0dc" stroke-width="2"/>
+                            <rect x="20" y="20" width="60" height="60" rx="15" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                            <circle cx="35" cy="35" r="5" fill="rgba(255,255,255,0.8)"/>
+                            <circle cx="65" cy="35" r="5" fill="rgba(255,255,255,0.8)"/>
+                            <circle cx="35" cy="65" r="5" fill="rgba(255,255,255,0.8)"/>
+                            <circle cx="65" cy="65" r="5" fill="rgba(255,255,255,0.8)"/>
+                            <circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.9)"/>
+                            <path d="M35 50L45 50M55 50L65 50M50 35L50 45M50 55L50 65" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
                         </svg>
                     </div>
                     
                     <!-- Option 5: Service Badge -->
                     <div class="logo-option" onclick="selectLogo(4)" data-logo="4">
                         <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="50" cy="50" r="35" fill="#004d40" stroke="#7dd3c0" stroke-width="3"/>
-                            <circle cx="50" cy="50" r="25" fill="#26a69a"/>
-                            <text x="50" y="45" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#004d40">REFIT</text>
-                            <text x="50" y="60" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#004d40">SERVICE</text>
-                            <path d="M30 30L35 25L40 30M60 30L65 25L70 30M30 70L35 75L40 70M60 70L65 75L70 70" stroke="#7dd3c0" stroke-width="2" fill="none"/>
+                            <circle cx="50" cy="50" r="35" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="25" fill="rgba(255,255,255,0.9)"/>
+                            <text x="50" y="45" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="currentColor">REFIT</text>
+                            <text x="50" y="60" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="currentColor">SERVICE</text>
+                            <path d="M30 30L35 25L40 30M60 30L65 25L70 30M30 70L35 75L40 70M60 70L65 75L70 70" stroke="rgba(255,255,255,0.6)" stroke-width="2" fill="none"/>
                         </svg>
                     </div>
                     
                     <!-- Option 6: Lightning Bolt -->
                     <div class="logo-option" onclick="selectLogo(5)" data-logo="5">
                         <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M35 15L60 45L45 45L65 85L40 55L55 55L35 15Z" fill="#004d40" stroke="#7dd3c0" stroke-width="2"/>
-                            <circle cx="25" cy="25" r="8" fill="#26a69a"/>
-                            <circle cx="75" cy="25" r="8" fill="#26a69a"/>
-                            <circle cx="25" cy="75" r="8" fill="#26a69a"/>
-                            <circle cx="75" cy="75" r="8" fill="#26a69a"/>
+                            <path d="M35 15L60 45L45 45L65 85L40 55L55 55L35 15Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                            <circle cx="25" cy="25" r="8" fill="rgba(255,255,255,0.8)"/>
+                            <circle cx="75" cy="25" r="8" fill="rgba(255,255,255,0.8)"/>
+                            <circle cx="25" cy="75" r="8" fill="rgba(255,255,255,0.8)"/>
+                            <circle cx="75" cy="75" r="8" fill="rgba(255,255,255,0.8)"/>
                         </svg>
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <button onclick="closeLogoSelector()" style="background: linear-gradient(135deg, #607d8b, #546e7a); color: white; border: none; border-radius: 12px; padding: 12px; font-weight: 600; cursor: pointer;">Cancel</button>
-                    <button onclick="applySelectedLogo()" style="background: linear-gradient(135deg, #004d40, #00695c); color: white; border: none; border-radius: 12px; padding: 12px; font-weight: 600; cursor: pointer;">Apply Logo</button>
+                    <button onclick="closeLogoSelector()" class="btn btn-secondary">Cancel</button>
+                    <button onclick="applySelectedLogo()" class="btn btn-primary">Apply Logo</button>
                 </div>
             </div>
         </div>
@@ -1380,38 +1605,38 @@
                 <!-- Performance Card -->
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <h3 style="font-weight: 700; font-size: 18px; color: #004d40;">📊 Quick Overview</h3>
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">📊 Quick Overview</h3>
                         <span style="font-size: 24px;">📈</span>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; font-size: 14px;">
                         <div style="text-align: center;">
-                            <div style="font-size: 28px; font-weight: 800; color: #7dd3c0;" id="average-quote">RM 0</div>
-                            <div style="color: rgba(0, 77, 64, 0.8); font-weight: 600;">Average Quote</div>
+                            <div style="font-size: 28px; font-weight: 800; color: var(--accent-primary);" id="average-quote">RM 0</div>
+                            <div style="color: var(--text-muted); font-weight: 600;">Average Quote</div>
                         </div>
                         <div style="text-align: center;">
-                            <div style="font-size: 28px; font-weight: 800; color: #26a69a;" id="preset-usage">0%</div>
-                            <div style="color: rgba(0, 77, 64, 0.8); font-weight: 600;">Preset Usage</div>
+                            <div style="font-size: 28px; font-weight: 800; color: var(--accent-warm);" id="preset-usage">0%</div>
+                            <div style="color: var(--text-muted); font-weight: 600;">Preset Usage</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Quick Actions -->
                 <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: #004d40;">Quick Actions</h3>
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">Quick Actions</h3>
                     <div class="actions-grid">
-                        <button class="action-btn blue" onclick="openSimpleJobForm()">
+                        <button class="action-btn primary" onclick="openSimpleJobForm()">
                             <span class="icon">➕</span>
                             <span style="font-weight: 700;">Create Job Quote</span>
                         </button>
-                        <button class="action-btn green" onclick="showView('quotes')">
+                        <button class="action-btn success" onclick="showView('quotes')">
                             <span class="icon">💰</span>
                             <span style="font-weight: 700;">View All Quotes</span>
                         </button>
-                        <button class="action-btn purple" onclick="openPresetManager()">
+                        <button class="action-btn warm" onclick="openPresetManager()">
                             <span class="icon">📋</span>
                             <span style="font-weight: 700;">Manage Presets</span>
                         </button>
-                        <button class="action-btn indigo" onclick="exportData()">
+                        <button class="action-btn info" onclick="exportData()">
                             <span class="icon">📤</span>
                             <span style="font-weight: 700;">Export Data</span>
                         </button>
@@ -1421,8 +1646,8 @@
                 <!-- Recent Quotes -->
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <h3 style="font-weight: 700; font-size: 18px; color: #004d40;">Recent Job Quotes</h3>
-                        <button style="background: none; border: none; color: rgba(0, 77, 64, 0.7); font-size: 14px; cursor: pointer; font-weight: 600;" onclick="showView('quotes')">View All</button>
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">Recent Job Quotes</h3>
+                        <button style="background: none; border: none; color: var(--text-muted); font-size: 14px; cursor: pointer; font-weight: 600;" onclick="showView('quotes')">View All</button>
                     </div>
                     <div id="recent-quotes"></div>
                 </div>
@@ -1459,23 +1684,23 @@
                     <input type="text" class="input" placeholder="Search preset items..." id="preset-search">
                 </div>
 
-                <div style="background: rgba(168, 240, 220, 0.9); backdrop-filter: blur(20px); border-radius: 16px; padding: 16px; margin-bottom: 20px; border: 1px solid rgba(0, 77, 64, 0.1);">
+                <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <h3 style="font-weight: 700; color: #004d40;">📊 Preset Statistics</h3>
-                        <span style="background: rgba(125, 211, 192, 0.3); padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #004d40;" id="preset-count">0 items</span>
+                        <h3 style="font-weight: 700; color: var(--text-primary);">📊 Preset Statistics</h3>
+                        <span style="background: var(--bg-secondary); padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600; color: var(--text-primary);" id="preset-count">0 items</span>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 14px;">
                         <div style="text-align: center;">
-                            <div style="color: rgba(0, 77, 64, 0.7);">Categories</div>
-                            <div style="font-weight: 700; color: #26a69a;" id="category-count">0</div>
+                            <div style="color: var(--text-muted);">Categories</div>
+                            <div style="font-weight: 700; color: var(--accent-primary);" id="category-count">0</div>
                         </div>
                         <div style="text-align: center;">
-                            <div style="color: rgba(0, 77, 64, 0.7);">Avg Price</div>
-                            <div style="font-weight: 700; color: #7dd3c0;" id="avg-preset-price">RM 0</div>
+                            <div style="color: var(--text-muted);">Avg Price</div>
+                            <div style="font-weight: 700; color: var(--accent-warm);" id="avg-preset-price">RM 0</div>
                         </div>
                         <div style="text-align: center;">
-                            <div style="color: rgba(0, 77, 64, 0.7);">Usage</div>
-                            <div style="font-weight: 700; color: #004d40;" id="preset-usage-count">0</div>
+                            <div style="color: var(--text-muted);">Usage</div>
+                            <div style="font-weight: 700; color: var(--text-primary);" id="preset-usage-count">0</div>
                         </div>
                     </div>
                 </div>
@@ -1513,8 +1738,8 @@
             </div>
             <div class="modal-body">
                 <!-- Job Title Section -->
-                <div style="background: linear-gradient(135deg, #607d8b, #546e7a); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 2px solid #004d40;">
-                    <h4 style="color: #a8f0dc; margin-bottom: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                <div class="card" style="margin-bottom: 20px;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
                         📝 Job Details
                     </h4>
                     <input type="text" class="form-input" placeholder="Job Title/Description *" id="simple-job-title" required style="margin-bottom: 0;">
@@ -1526,7 +1751,7 @@
                         <h4 class="preset-items-title">
                             📋 Quick Add Items
                         </h4>
-                        <button type="button" onclick="openPresetItemForm()" style="background: linear-gradient(135deg, #7dd3c0, #4db6ac); color: #004d40; border: none; border-radius: 8px; padding: 6px 12px; font-size: 12px; cursor: pointer;">
+                        <button type="button" onclick="openPresetItemForm()" class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;">
                             ➕ New Preset
                         </button>
                     </div>
@@ -1551,7 +1776,7 @@
                             </button>
                         </div>
                         
-                        <select class="quick-add-input" id="manual-unit" style="color: #40160a; font-weight: 600;">
+                        <select class="quick-add-input" id="manual-unit">
                             <option value="pcs">Pieces (pcs)</option>
                             <option value="hours">Hours</option>
                             <option value="sqft">Square Feet</option>
@@ -1576,10 +1801,10 @@
 
                 <!-- Form Actions -->
                 <div class="form-actions">
-                    <button type="button" class="form-btn" style="background: linear-gradient(135deg, #004d40, #00695c);" onclick="saveSimpleJob()">
+                    <button type="button" class="form-btn btn-primary" onclick="saveSimpleJob()">
                         ✅ Save Job Quote
                     </button>
-                    <button type="button" class="form-btn" style="background: linear-gradient(135deg, #607d8b, #546e7a);" onclick="closeSimpleJobForm()">
+                    <button type="button" class="form-btn btn-secondary" onclick="closeSimpleJobForm()">
                         Cancel
                     </button>
                 </div>
@@ -1599,7 +1824,7 @@
                     <input type="text" class="form-input" placeholder="Item Name *" id="preset-item-name" required>
                     <textarea class="form-input" placeholder="Description" id="preset-item-description" rows="2" style="resize: none;"></textarea>
                     <input type="number" class="form-input" placeholder="Default Price (RM) *" id="preset-item-price" step="0.01" required>
-                    <select class="form-input" id="preset-item-unit" style="color: #40160a; font-weight: 600;">
+                    <select class="form-input" id="preset-item-unit">
                         <option value="pcs">Pieces (pcs)</option>
                         <option value="hours">Hours</option>
                         <option value="sqft">Square Feet</option>
@@ -1611,7 +1836,7 @@
                         <option value="lot">Lot</option>
                         <option value="service">Service</option>
                     </select>
-                    <select class="form-input" id="preset-item-category" style="color: #40160a; font-weight: 600;">
+                    <select class="form-input" id="preset-item-category">
                         <option value="common">Common Items</option>
                         <option value="electrical">Electrical</option>
                         <option value="plumbing">Plumbing</option>
@@ -1623,8 +1848,8 @@
                     </select>
                     
                     <div class="form-actions">
-                        <button type="submit" class="form-btn" style="background: linear-gradient(135deg, #7dd3c0, #4db6ac); color: #004d40;">Save Preset</button>
-                        <button type="button" class="form-btn" style="background: linear-gradient(135deg, #607d8b, #546e7a);" onclick="closePresetItemForm()">Cancel</button>
+                        <button type="submit" class="form-btn btn-primary">Save Preset</button>
+                        <button type="button" class="form-btn btn-secondary" onclick="closePresetItemForm()">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -1646,9 +1871,9 @@
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - SIMPLIFIED JOB QUOTE SYSTEM
+        // REFIT MAINTENANCE SERVICES - EYE-FRIENDLY JOB QUOTE SYSTEM
         // Registration No: 201803348973 (002894203-V)
-        // Enhanced with Professional Logo System
+        // Optimized for Extended Usage with Dark/Light Themes
         // ========================================
         
         // App State Variables
@@ -1659,63 +1884,64 @@
         var editingJob = null;
         var editingPreset = null;
         var selectedLogoIndex = 0;
+        var currentTheme = 'light';
 
-        // Logo SVG Templates
+        // Logo SVG Templates (Eye-friendly colors)
         var logoTemplates = [
             // Professional Tools
             `<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="#004d40" stroke="#7dd3c0" stroke-width="2"/>
-                <path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="#004d40" stroke="#7dd3c0" stroke-width="2"/>
-                <circle cx="50" cy="50" r="8" fill="#26a69a" stroke="#004d40" stroke-width="2"/>
-                <circle cx="50" cy="50" r="3" fill="#004d40"/>
+                <path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                <path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                <circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.8)" stroke="currentColor" stroke-width="2"/>
+                <circle cx="50" cy="50" r="3" fill="currentColor"/>
             </svg>`,
             
             // Gear & Wrench
             `<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="25" fill="none" stroke="#004d40" stroke-width="4"/>
-                <path d="M50 25L55 35L45 35Z M75 50L65 45L65 55Z M50 75L45 65L55 65Z M25 50L35 55L35 45Z" fill="#26a69a"/>
-                <circle cx="50" cy="50" r="8" fill="#004d40"/>
-                <path d="M15 15L25 25M20 30L35 45C40 50 50 50 55 45L70 30" stroke="#7dd3c0" stroke-width="3" fill="none"/>
+                <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="4"/>
+                <path d="M50 25L55 35L45 35Z M75 50L65 45L65 55Z M50 75L45 65L55 65Z M25 50L35 55L35 45Z" fill="rgba(255,255,255,0.8)"/>
+                <circle cx="50" cy="50" r="8" fill="currentColor"/>
+                <path d="M15 15L25 25M20 30L35 45C40 50 50 50 55 45L70 30" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none"/>
             </svg>`,
             
             // House Tools
             `<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 15L20 40L25 45L50 25L75 45L80 40Z" fill="#004d40"/>
-                <rect x="30" y="40" width="40" height="45" fill="#26a69a" stroke="#004d40" stroke-width="2"/>
-                <rect x="42" y="65" width="16" height="20" fill="#004d40"/>
-                <rect x="35" y="50" width="8" height="8" fill="#7dd3c0"/>
-                <rect x="57" y="50" width="8" height="8" fill="#7dd3c0"/>
-                <path d="M15 70L25 60L30 65L20 75Z" fill="#fd8d3c"/>
-                <path d="M75 70L85 60L90 65L80 75Z" fill="#fd8d3c"/>
+                <path d="M50 15L20 40L25 45L50 25L75 45L80 40Z" fill="currentColor"/>
+                <rect x="30" y="40" width="40" height="45" fill="rgba(255,255,255,0.8)" stroke="currentColor" stroke-width="2"/>
+                <rect x="42" y="65" width="16" height="20" fill="currentColor"/>
+                <rect x="35" y="50" width="8" height="8" fill="rgba(255,255,255,0.6)"/>
+                <rect x="57" y="50" width="8" height="8" fill="rgba(255,255,255,0.6)"/>
+                <path d="M15 70L25 60L30 65L20 75Z" fill="rgba(255,214,102,0.8)"/>
+                <path d="M75 70L85 60L90 65L80 75Z" fill="rgba(255,214,102,0.8)"/>
             </svg>`,
             
             // Modern Tech
             `<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <rect x="20" y="20" width="60" height="60" rx="15" fill="#004d40" stroke="#7dd3c0" stroke-width="2"/>
-                <circle cx="35" cy="35" r="5" fill="#26a69a"/>
-                <circle cx="65" cy="35" r="5" fill="#26a69a"/>
-                <circle cx="35" cy="65" r="5" fill="#26a69a"/>
-                <circle cx="65" cy="65" r="5" fill="#26a69a"/>
-                <circle cx="50" cy="50" r="8" fill="#7dd3c0"/>
-                <path d="M35 50L45 50M55 50L65 50M50 35L50 45M50 55L50 65" stroke="#a8f0dc" stroke-width="2"/>
+                <rect x="20" y="20" width="60" height="60" rx="15" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                <circle cx="35" cy="35" r="5" fill="rgba(255,255,255,0.8)"/>
+                <circle cx="65" cy="35" r="5" fill="rgba(255,255,255,0.8)"/>
+                <circle cx="35" cy="65" r="5" fill="rgba(255,255,255,0.8)"/>
+                <circle cx="65" cy="65" r="5" fill="rgba(255,255,255,0.8)"/>
+                <circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.9)"/>
+                <path d="M35 50L45 50M55 50L65 50M50 35L50 45M50 55L50 65" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
             </svg>`,
             
             // Service Badge
             `<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="35" fill="#004d40" stroke="#7dd3c0" stroke-width="3"/>
-                <circle cx="50" cy="50" r="25" fill="#26a69a"/>
-                <text x="50" y="45" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#004d40">REFIT</text>
-                <text x="50" y="60" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#004d40">SERVICE</text>
-                <path d="M30 30L35 25L40 30M60 30L65 25L70 30M30 70L35 75L40 70M60 70L65 75L70 70" stroke="#7dd3c0" stroke-width="2" fill="none"/>
+                <circle cx="50" cy="50" r="35" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="3"/>
+                <circle cx="50" cy="50" r="25" fill="rgba(255,255,255,0.9)"/>
+                <text x="50" y="45" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="currentColor">REFIT</text>
+                <text x="50" y="60" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="currentColor">SERVICE</text>
+                <path d="M30 30L35 25L40 30M60 30L65 25L70 30M30 70L35 75L40 70M60 70L65 75L70 70" stroke="rgba(255,255,255,0.6)" stroke-width="2" fill="none"/>
             </svg>`,
             
             // Lightning Bolt
             `<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M35 15L60 45L45 45L65 85L40 55L55 55L35 15Z" fill="#004d40" stroke="#7dd3c0" stroke-width="2"/>
-                <circle cx="25" cy="25" r="8" fill="#26a69a"/>
-                <circle cx="75" cy="25" r="8" fill="#26a69a"/>
-                <circle cx="25" cy="75" r="8" fill="#26a69a"/>
-                <circle cx="75" cy="75" r="8" fill="#26a69a"/>
+                <path d="M35 15L60 45L45 45L65 85L40 55L55 55L35 15Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                <circle cx="25" cy="25" r="8" fill="rgba(255,255,255,0.8)"/>
+                <circle cx="75" cy="25" r="8" fill="rgba(255,255,255,0.8)"/>
+                <circle cx="25" cy="75" r="8" fill="rgba(255,255,255,0.8)"/>
+                <circle cx="75" cy="75" r="8" fill="rgba(255,255,255,0.8)"/>
             </svg>`
         ];
 
@@ -1734,10 +1960,11 @@
         var STORAGE_KEYS = {
             JOB_QUOTES: 'refit_simple_job_quotes',
             PRESET_WORK_ITEMS: 'refit_simple_preset_items',
-            SELECTED_LOGO: 'refit_selected_logo'
+            SELECTED_LOGO: 'refit_selected_logo',
+            THEME_PREFERENCE: 'refit_theme_preference'
         };
 
-        // Default Preset Work Items (Simplified)
+        // Default Preset Work Items
         var defaultPresetWorkItems = [
             // Electrical Items
             { id: 'electrical-inspection', name: 'Electrical Safety Inspection', description: 'Complete electrical system check', price: 120.00, unit: 'service', category: 'electrical' },
@@ -1773,12 +2000,60 @@
             { id: 'door-lock', name: 'Door Lock', description: 'Security door lock', price: 65.00, unit: 'pcs', category: 'parts' }
         ];
 
+        // Theme Management Functions
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', currentTheme);
+            
+            var toggleBtn = document.getElementById('theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '☀️ Light';
+            }
+            
+            // Update meta theme color
+            var metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (metaTheme) {
+                metaTheme.content = currentTheme === 'light' ? '#2d3748' : '#1a1a1a';
+            }
+            
+            localStorage.setItem(STORAGE_KEYS.THEME_PREFERENCE, currentTheme);
+            showSuccessMessage(currentTheme === 'light' ? '☀️ Light mode activated' : '🌙 Dark mode activated - Easy on the eyes!');
+        }
+
+        function loadThemePreference() {
+            var savedTheme = localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE);
+            
+            // Auto-detect system preference if no saved theme
+            if (!savedTheme) {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    savedTheme = 'dark';
+                } else {
+                    savedTheme = 'light';
+                }
+            }
+            
+            currentTheme = savedTheme;
+            document.body.setAttribute('data-theme', currentTheme);
+            
+            var toggleBtn = document.getElementById('theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '☀️ Light';
+            }
+            
+            // Update meta theme color
+            var metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (metaTheme) {
+                metaTheme.content = currentTheme === 'light' ? '#2d3748' : '#1a1a1a';
+            }
+        }
+
         // Initialize App
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
         });
 
         function initializeApp() {
+            loadThemePreference();
             loadDataFromStorage();
             setupEventListeners();
             setupMobileOptimizations();
@@ -1788,10 +2063,10 @@
             renderViews();
             loadSelectedLogo();
             
-            showSuccessMessage('⚡ REFIT MAINTENANCE - Enhanced Logo System Ready! (Professional Design)');
-            console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Quote System');
-            console.log('📋 Registration: 201803348973 (002894203-V)');
-            console.log('🎨 Professional Logo System Activated');
+            showSuccessMessage('👁️ Eye-Friendly REFIT MAINTENANCE - Perfect for Extended Use!');
+            console.log('🔧 REFIT MAINTENANCE SERVICES - Eye-Friendly Quote System');
+            console.log('👁️ Optimized for Long-Hour Usage');
+            console.log('🌙 Dark/Light Theme Support');
         }
 
         // Logo Management Functions
@@ -1868,6 +2143,7 @@
                 localStorage.setItem(STORAGE_KEYS.JOB_QUOTES, JSON.stringify(jobQuotes));
                 localStorage.setItem(STORAGE_KEYS.PRESET_WORK_ITEMS, JSON.stringify(presetWorkItems));
                 localStorage.setItem(STORAGE_KEYS.SELECTED_LOGO, selectedLogoIndex.toString());
+                localStorage.setItem(STORAGE_KEYS.THEME_PREFERENCE, currentTheme);
             } catch (e) {
                 console.warn('Storage error:', e);
                 showSuccessMessage('⚠️ Storage full! Please export data.');
@@ -1923,7 +2199,7 @@
             if (!container) return;
             
             if (presetWorkItems.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(64, 22, 10, 0.6);">' +
+                container.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-muted);">' +
                     '<div style="font-size: 32px; margin-bottom: 8px;">📋</div>' +
                     '<p>No preset items available</p>' +
                     '<p style="font-size: 12px; margin-top: 4px;">Create your first preset item</p>' +
@@ -2042,7 +2318,7 @@
             var html = '<div class="quote-items-container">' +
                 '<div class="quote-items-header">' +
                 '<div class="quote-items-title">💰 Quote Items (' + currentQuoteItems.length + ')</div>' +
-                '<button type="button" onclick="clearAllQuoteItems()" style="background: rgba(215, 48, 39, 0.2); color: #d73027; border: none; border-radius: 8px; padding: 4px 8px; font-size: 12px; cursor: pointer;">Clear All</button>' +
+                '<button type="button" onclick="clearAllQuoteItems()" style="background: var(--error); color: white; border: none; border-radius: 8px; padding: 4px 8px; font-size: 12px; cursor: pointer;">Clear All</button>' +
                 '</div>';
             
             for (var i = 0; i < currentQuoteItems.length; i++) {
@@ -2265,7 +2541,7 @@
                 container.innerHTML = '<div class="empty-state">' +
                     '<div class="empty-icon">💰</div>' +
                     '<p style="font-weight: 600;">No job quotes found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(64, 22, 10, 0.6);">Create your first job quote</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first job quote</p>' +
                     '</div>';
                 return;
             }
@@ -2279,7 +2555,7 @@
                     '<div class="item-header">' +
                     '<div class="item-info">' +
                     '<h3>' + quote.title + '</h3>' +
-                    '<div style="font-size: 14px; color: rgba(64, 22, 10, 0.8); margin: 8px 0;">' +
+                    '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">' +
                     '📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) +
                     '</div>' +
                     '</div>' +
@@ -2290,9 +2566,9 @@
                     '<button class="icon-btn edit-btn" onclick="editQuote(' + quote.id + ')" title="Edit Quote">✏️</button>' +
                     '<button class="icon-btn delete-btn" onclick="deleteQuote(' + quote.id + ')" title="Delete Quote">🗑️</button>' +
                     '</div>' +
-                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0, 77, 64, 0.1); display: flex; justify-content: space-between; align-items: center;">' +
-                    '<span style="font-size: 12px; color: rgba(0, 77, 64, 0.6);">Items: ' + quote.items.length + '</span>' +
-                    '<span style="font-size: 16px; color: #26a69a; font-weight: 700;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
+                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="font-size: 12px; color: var(--text-muted);">Items: ' + quote.items.length + '</span>' +
+                    '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
                     '</div>' +
                     '</div>';
             }
@@ -2304,13 +2580,13 @@
             var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
             if (!quote) return;
             
-            var quoteHTML = '<div style="background: linear-gradient(135deg, #004d40, #00695c); border-radius: 20px; padding: 20px; margin-bottom: 20px; color: white; border: 2px solid #7dd3c0;">' +
-                '<div style="font-size: 18px; font-weight: 700; color: #a8f0dc; margin-bottom: 8px;">💰 Job Quote #' + quote.id + '</div>' +
-                '<div style="color: #7dd3c0; font-size: 14px; font-weight: 600;">' + quote.title + '</div>' +
+            var quoteHTML = '<div class="card" style="margin-bottom: 20px;">' +
+                '<div style="font-size: 18px; font-weight: 700; color: var(--accent-primary); margin-bottom: 8px;">💰 Job Quote #' + quote.id + '</div>' +
+                '<div style="color: var(--text-secondary); font-size: 14px; font-weight: 600;">' + quote.title + '</div>' +
                 '</div>' +
                 
-                '<div style="background: rgba(168, 240, 220, 0.9); border-radius: 16px; padding: 20px; margin-bottom: 20px;">' +
-                '<h4 style="margin-bottom: 16px; color: #004d40; font-weight: 700;">📋 Quote Details</h4>' +
+                '<div class="card" style="margin-bottom: 20px;">' +
+                '<h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">📋 Quote Details</h4>' +
                 '<div style="display: grid; gap: 12px; font-size: 14px;">' +
                 '<div><strong>Total Items:</strong> ' + quote.items.length + '</div>' +
                 '<div><strong>Created:</strong> ' + formatDate(quote.createdAt) + '</div>' +
@@ -2319,32 +2595,32 @@
                 '</div>';
             
             if (quote.items.length > 0) {
-                quoteHTML += '<div style="background: linear-gradient(135deg, #40160a, #5a1f0f); border-radius: 16px; padding: 20px; margin-bottom: 20px; color: white;">' +
-                    '<h4 style="margin-bottom: 16px; color: #fae9dc; font-weight: 700;">💼 Quote Items</h4>';
+                quoteHTML += '<div class="card" style="margin-bottom: 20px;">' +
+                    '<h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">💼 Quote Items</h4>';
                 
                 for (var i = 0; i < quote.items.length; i++) {
                     var item = quote.items[i];
                     
-                    quoteHTML += '<div style="background: rgba(254, 199, 179, 0.1); border-radius: 12px; padding: 12px; margin-bottom: 8px; border: 1px solid rgba(254, 199, 179, 0.2);">' +
-                        '<div style="font-weight: 700; margin-bottom: 4px;">' + item.description + (item.isPreset ? ' 🏷️' : '') + '</div>' +
-                        '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 12px; color: #f5e6d8;">' +
-                        '<div>Qty: ' + item.quantity + ' ' + item.unit + '</div>' +
-                        '<div>Price: RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
-                        '<div>Total: RM ' + item.total.toFixed(2) + '</div>' +
+                    quoteHTML += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color);">' +
+                        '<div style="font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">' + item.description + (item.isPreset ? ' 🏷️' : '') + '</div>' +
+                        '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 13px; color: var(--text-secondary);">' +
+                        '<div><strong>Qty:</strong> ' + item.quantity + ' ' + item.unit + '</div>' +
+                        '<div><strong>Price:</strong> RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                        '<div><strong>Total:</strong> RM ' + item.total.toFixed(2) + '</div>' +
                         '</div>' +
                         '</div>';
                 }
                 
-                quoteHTML += '<div style="background: linear-gradient(135deg, #74a478, #5a8a5e); border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center;">' +
-                    '<div style="font-size: 14px; font-weight: 600; color: #d4f0d6; margin-bottom: 4px;">Total Quote Amount</div>' +
-                    '<div style="font-size: 28px; font-weight: 800; color: #f0fff1;">RM ' + quote.totalAmount.toFixed(2) + '</div>' +
+                quoteHTML += '<div class="quote-total-section">' +
+                    '<div class="quote-total-label">Total Quote Amount</div>' +
+                    '<div class="quote-total-value">RM ' + quote.totalAmount.toFixed(2) + '</div>' +
                     '</div>' +
                     '</div>';
             }
             
             quoteHTML += '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px;">' +
                 '<button onclick="generateQuotePDF(' + quote.id + ')" class="btn btn-success" style="font-size: 14px;">📄 Generate PDF</button>' +
-                '<button onclick="editQuote(' + quote.id + ')" class="btn btn-purple" style="font-size: 14px;">✏️ Edit Quote</button>' +
+                '<button onclick="editQuote(' + quote.id + ')" class="btn btn-primary" style="font-size: 14px;">✏️ Edit Quote</button>' +
                 '</div>';
             
             document.getElementById('quote-view-content').innerHTML = quoteHTML;
@@ -2401,7 +2677,7 @@
                 container.innerHTML = '<div class="empty-state">' +
                     '<div class="empty-icon">📋</div>' +
                     '<p style="font-weight: 600;">No preset items found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(64, 22, 10, 0.6);">Create preset items for quick quotes</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create preset items for quick quotes</p>' +
                     '</div>';
                 return;
             }
@@ -2425,9 +2701,9 @@
                     '<div class="item-header">' +
                     '<div class="item-info">' +
                     '<h3>' + preset.name + '</h3>' +
-                    '<div style="font-size: 14px; color: rgba(0, 77, 64, 0.8); margin: 8px 0;">' +
+                    '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">' +
                     preset.description + '</div>' +
-                    '<div style="font-size: 12px; color: rgba(0, 77, 64, 0.6);">' +
+                    '<div style="font-size: 12px; color: var(--text-muted);">' +
                     '📂 ' + preset.category.charAt(0).toUpperCase() + preset.category.slice(1) + ' • ' +
                     '📏 ' + preset.unit + ' • ' +
                     '📈 Used ' + usageCount + ' times' +
@@ -2438,9 +2714,9 @@
                     '<button class="icon-btn edit-btn" onclick="editPresetItem(\'' + preset.id + '\')" title="Edit Preset">✏️</button>' +
                     '<button class="icon-btn delete-btn" onclick="deletePresetItem(\'' + preset.id + '\')" title="Delete Preset">🗑️</button>' +
                     '</div>' +
-                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0, 77, 64, 0.1); display: flex; justify-content: space-between; align-items: center;">' +
-                    '<span style="font-size: 12px; color: rgba(0, 77, 64, 0.6);">Usage: ' + usageCount + '</span>' +
-                    '<span style="font-size: 16px; color: #26a69a; font-weight: 700;">RM ' + parseFloat(preset.price).toFixed(2) + '</span>' +
+                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="font-size: 12px; color: var(--text-muted);">Usage: ' + usageCount + '</span>' +
+                    '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + parseFloat(preset.price).toFixed(2) + '</span>' +
                     '</div>' +
                     '</div>';
             }
@@ -2565,8 +2841,9 @@
                 jobQuotes: jobQuotes,
                 presetWorkItems: presetWorkItems,
                 selectedLogo: selectedLogoIndex,
+                themePreference: currentTheme,
                 exportDate: new Date().toISOString(),
-                version: '2.0'
+                version: '3.0'
             };
             
             var dataStr = JSON.stringify(allData, null, 2);
@@ -2574,7 +2851,7 @@
             
             var link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_SimpleQuotes_' + new Date().toISOString().split('T')[0] + '.json';
+            link.download = 'REFIT_EyeFriendly_' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             
             showSuccessMessage('📤 Data exported successfully!');
@@ -2615,6 +2892,18 @@
                 priceInput.addEventListener('input', updateManualTotal);
             }
 
+            // System theme detection
+            if (window.matchMedia) {
+                var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                mediaQuery.addEventListener('change', function(e) {
+                    if (!localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) {
+                        currentTheme = e.matches ? 'dark' : 'light';
+                        document.body.setAttribute('data-theme', currentTheme);
+                        updateThemeToggle();
+                    }
+                });
+            }
+
             // Keyboard shortcuts
             document.addEventListener('keydown', function(e) {
                 if (e.ctrlKey || e.metaKey) {
@@ -2635,6 +2924,10 @@
                             e.preventDefault();
                             openLogoSelector();
                             break;
+                        case 'd':
+                            e.preventDefault();
+                            toggleTheme();
+                            break;
                     }
                 }
                 
@@ -2645,6 +2938,13 @@
                     }
                 }
             });
+        }
+
+        function updateThemeToggle() {
+            var toggleBtn = document.getElementById('theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '☀️ Light';
+            }
         }
 
         // Utility Functions
@@ -2699,7 +2999,7 @@
             if (!container) return;
             
             if (recentQuotes.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 30px 20px; color: rgba(0, 77, 64, 0.6);">' +
+                container.innerHTML = '<div style="text-align: center; padding: 30px 20px; color: var(--text-muted);">' +
                     '<div style="font-size: 32px; margin-bottom: 8px;">💰</div>' +
                     '<p style="font-weight: 600;">No job quotes yet</p>' +
                     '<p style="font-size: 12px; margin-top: 4px;">Create your first job quote</p>' +
@@ -2711,14 +3011,14 @@
             for (var i = 0; i < recentQuotes.length; i++) {
                 var quote = recentQuotes[i];
                 
-                html += '<div style="background: rgba(168, 240, 220, 0.5); border-radius: 12px; padding: 12px; margin-bottom: 8px; border: 1px solid rgba(0, 77, 64, 0.1); cursor: pointer;" onclick="viewQuote(' + quote.id + ')">' +
-                    '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">' +
-                    '<div style="font-weight: 700; font-size: 14px;">' + quote.title + '</div>' +
+                html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;" onclick="viewQuote(' + quote.id + ')" onmouseover="this.style.transform=\'scale(1.02)\'" onmouseout="this.style.transform=\'scale(1)\'">' +
+                    '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">' +
+                    '<div style="font-weight: 700; font-size: 15px; color: var(--text-primary);">' + quote.title + '</div>' +
                     '</div>' +
-                    '<div style="font-size: 12px; color: rgba(0, 77, 64, 0.7); margin-bottom: 4px;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
-                    '<div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px;">' +
-                    '<span style="color: rgba(0, 77, 64, 0.6);">Quote #' + quote.id + '</span>' +
-                    '<span style="font-weight: 700; color: #26a69a;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
+                    '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px;">' +
+                    '<span style="color: var(--text-muted);">Quote #' + quote.id + '</span>' +
+                    '<span style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
                     '</div>' +
                     '</div>';
             }
@@ -2843,6 +3143,9 @@
                 }
                 lastTouchEnd = now;
             }, false);
+
+            // Touch gesture support
+            setupTouchGestures();
         }
 
         function showSuccessMessage(message) {
@@ -2857,173 +3160,51 @@
             }, 3000);
         }
 
-        // Additional Helper Functions for Enhanced Features
-        function resetToDefaultLogo() {
-            selectedLogoIndex = 0;
-            var logoContainer = document.getElementById('main-logo');
-            if (logoContainer && logoTemplates[0]) {
-                logoContainer.innerHTML = logoTemplates[0];
-                localStorage.setItem(STORAGE_KEYS.SELECTED_LOGO, '0');
-                showSuccessMessage('🔄 Logo reset to default professional design');
+        // Enhanced Eye Comfort Features
+        function adjustBlueLightFilter(intensity) {
+            var filter = document.getElementById('blue-light-filter');
+            if (filter) {
+                if (currentTheme === 'dark') {
+                    filter.style.background = 'rgba(255, 214, 102, ' + (intensity * 0.02) + ')';
+                } else {
+                    filter.style.background = 'rgba(255, 214, 102, ' + (intensity * 0.05) + ')';
+                }
+            }
+        }
+
+        function enableReadingMode() {
+            document.body.style.fontSize = '18px';
+            document.body.style.lineHeight = '1.8';
+            showSuccessMessage('📖 Reading mode enabled - Larger text for comfort');
+        }
+
+        function disableReadingMode() {
+            document.body.style.fontSize = '16px';
+            document.body.style.lineHeight = '1.6';
+            showSuccessMessage('📖 Reading mode disabled');
+        }
+
+        // Auto Dark Mode based on time
+        function autoThemeDetection() {
+            var hour = new Date().getHours();
+            var shouldBeDark = hour >= 20 || hour <= 7; // 8 PM to 7 AM
+            
+            if (!localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) {
+                if (shouldBeDark && currentTheme === 'light') {
+                    toggleTheme();
+                    showSuccessMessage('🌙 Auto dark mode activated for night time');
+                } else if (!shouldBeDark && currentTheme === 'dark') {
+                    toggleTheme();
+                    showSuccessMessage('☀️ Auto light mode activated for day time');
+                }
             }
         }
 
-        function getLogoName(index) {
-            var logoNames = [
-                'Professional Tools',
-                'Gear & Wrench', 
-                'House Tools',
-                'Modern Tech',
-                'Service Badge',
-                'Lightning Bolt'
-            ];
-            return logoNames[index] || 'Custom Logo';
-        }
-
-        function validateQuoteData(quote) {
-            if (!quote || !quote.title || !quote.items || quote.items.length === 0) {
-                return false;
+        // Eye strain reminder
+        function eyeStrainReminder() {
+            if (document.hasFocus()) {
+                showSuccessMessage('👁️ Take a 20-second break - Look at something 20 feet away!');
             }
-            
-            for (var i = 0; i < quote.items.length; i++) {
-                var item = quote.items[i];
-                if (!item.description || !item.quantity || !item.price || !item.unit) {
-                    return false;
-                }
-                
-                if (isNaN(item.quantity) || isNaN(item.price) || item.quantity <= 0 || item.price < 0) {
-                    return false;
-                }
-            }
-            
-            return true;
-        }
-
-        function calculateQuoteStatistics() {
-            var stats = {
-                totalQuotes: jobQuotes.length,
-                totalRevenue: 0,
-                averageQuoteValue: 0,
-                mostUsedPresets: {},
-                categoryDistribution: {},
-                monthlyRevenue: {}
-            };
-            
-            for (var i = 0; i < jobQuotes.length; i++) {
-                var quote = jobQuotes[i];
-                stats.totalRevenue += quote.totalAmount;
-                
-                // Track monthly revenue
-                var month = quote.createdAt.substring(0, 7); // YYYY-MM
-                if (!stats.monthlyRevenue[month]) {
-                    stats.monthlyRevenue[month] = 0;
-                }
-                stats.monthlyRevenue[month] += quote.totalAmount;
-                
-                // Track preset usage
-                for (var j = 0; j < quote.items.length; j++) {
-                    var item = quote.items[j];
-                    if (item.isPreset && item.presetId) {
-                        if (!stats.mostUsedPresets[item.presetId]) {
-                            stats.mostUsedPresets[item.presetId] = {
-                                count: 0,
-                                name: item.description
-                            };
-                        }
-                        stats.mostUsedPresets[item.presetId].count++;
-                    }
-                }
-            }
-            
-            stats.averageQuoteValue = stats.totalQuotes > 0 ? stats.totalRevenue / stats.totalQuotes : 0;
-            
-            return stats;
-        }
-
-        function importDataFromFile(event) {
-            var file = event.target.files[0];
-            if (!file) return;
-            
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    var data = JSON.parse(e.target.result);
-                    
-                    if (data.jobQuotes) {
-                        jobQuotes = data.jobQuotes;
-                    }
-                    
-                    if (data.presetWorkItems) {
-                        presetWorkItems = data.presetWorkItems;
-                    }
-                    
-                    if (data.selectedLogo !== undefined) {
-                        selectedLogoIndex = data.selectedLogo;
-                        loadSelectedLogo();
-                    }
-                    
-                    saveDataToStorage();
-                    updateStats();
-                    renderViews();
-                    
-                    showSuccessMessage('📥 Data imported successfully!');
-                } catch (error) {
-                    console.error('Import error:', error);
-                    showSuccessMessage('⚠️ Error importing data. Please check file format.');
-                }
-            };
-            
-            reader.readAsText(file);
-        }
-
-        function createBackup() {
-            var backupData = {
-                timestamp: new Date().toISOString(),
-                appVersion: '2.0',
-                companySettings: companySettings,
-                jobQuotes: jobQuotes,
-                presetWorkItems: presetWorkItems,
-                selectedLogo: selectedLogoIndex,
-                statistics: calculateQuoteStatistics()
-            };
-            
-            var dataStr = JSON.stringify(backupData, null, 2);
-            var dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Backup_' + new Date().toISOString().replace(/[:.]/g, '-') + '.json';
-            link.click();
-            
-            showSuccessMessage('💾 Complete backup created successfully!');
-        }
-
-        // Keyboard Shortcuts Info
-        function showKeyboardShortcuts() {
-            var shortcuts = [
-                'Ctrl+N - Create New Quote',
-                'Ctrl+P - Add Preset Item', 
-                'Ctrl+E - Export Data',
-                'Ctrl+L - Logo Selector',
-                'Escape - Close Modals'
-            ];
-            
-            var message = 'Keyboard Shortcuts:\n' + shortcuts.join('\n');
-            alert(message);
-        }
-
-        // Enhanced Error Handling
-        window.addEventListener('error', function(e) {
-            console.error('Application error:', e.error);
-            showSuccessMessage('⚠️ An error occurred. Please refresh if issues persist.');
-        });
-
-        // Service Worker Registration (if available)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                // Service worker code would go here for offline functionality
-                console.log('🔧 REFIT MAINTENANCE - Enhanced PWA Ready');
-            });
         }
 
         // Touch Gesture Enhancements
@@ -3051,10 +3232,8 @@
                 if (elapsedTime <= allowedTime) {
                     if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) {
                         if (distX > 0) {
-                            // Right swipe - go to previous view
                             handleSwipeRight();
                         } else {
-                            // Left swipe - go to next view
                             handleSwipeLeft();
                         }
                     }
@@ -3076,18 +3255,70 @@
             showView(views[prevIndex]);
         }
 
-        // Initialize touch gestures after DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            setupTouchGestures();
-        });
+        // Analytics & Usage Tracking
+        function trackUserSession() {
+            var sessionStart = Date.now();
+            var sessionData = {
+                startTime: sessionStart,
+                theme: currentTheme,
+                actions: []
+            };
+            
+            window.addEventListener('beforeunload', function() {
+                sessionData.endTime = Date.now();
+                sessionData.duration = sessionData.endTime - sessionData.startTime;
+                
+                // Store session data for analytics
+                var sessions = JSON.parse(sessionStorage.getItem('userSessions') || '[]');
+                sessions.push(sessionData);
+                
+                // Keep only last 10 sessions
+                if (sessions.length > 10) {
+                    sessions = sessions.slice(-10);
+                }
+                
+                sessionStorage.setItem('userSessions', JSON.stringify(sessions));
+            });
+        }
 
-        // Auto-save functionality
+        // Performance optimizations for long sessions
+        function optimizeForLongSession() {
+            // Throttle scroll events
+            var scrollTimeout;
+            document.addEventListener('scroll', function() {
+                if (scrollTimeout) {
+                    clearTimeout(scrollTimeout);
+                }
+                scrollTimeout = setTimeout(function() {
+                    // Handle scroll optimizations
+                }, 100);
+            });
+            
+            // Reduce animations after extended use
+            setTimeout(function() {
+                document.body.classList.add('reduced-motion');
+                showSuccessMessage('🚀 Performance optimized for extended usage');
+            }, 30 * 60 * 1000); // After 30 minutes
+        }
+
+        // Auto-save functionality with visual feedback
         var autoSaveInterval;
+        var lastSaveTime = Date.now();
+
         function startAutoSave() {
             autoSaveInterval = setInterval(function() {
                 saveDataToStorage();
-                console.log('🔄 Auto-save completed');
-            }, 30000); // Auto-save every 30 seconds
+                lastSaveTime = Date.now();
+                
+                // Show subtle save indicator
+                var header = document.querySelector('.header');
+                if (header) {
+                    header.style.boxShadow = '0 4px 20px var(--success)';
+                    setTimeout(function() {
+                        header.style.boxShadow = '0 4px 20px var(--shadow-medium)';
+                    }, 500);
+                }
+            }, 60000); // Auto-save every minute
         }
 
         function stopAutoSave() {
@@ -3096,62 +3327,106 @@
             }
         }
 
-        // Start auto-save when app initializes
-        window.addEventListener('load', function() {
-            startAutoSave();
-        });
-
-        // Stop auto-save when page unloads
-        window.addEventListener('beforeunload', function() {
-            stopAutoSave();
-            saveDataToStorage(); // Final save before leaving
-        });
-
-        // Enhanced Analytics Tracking
-        function trackUserAction(action, details) {
-            var analytics = {
-                timestamp: new Date().toISOString(),
-                action: action,
-                details: details,
-                view: currentView,
-                session: sessionStorage.getItem('sessionId') || Date.now().toString()
-            };
+        // Data validation and integrity checks
+        function validateAppData() {
+            var isValid = true;
+            var errors = [];
             
-            // Store in session for basic analytics
-            var actions = JSON.parse(sessionStorage.getItem('userActions') || '[]');
-            actions.push(analytics);
-            
-            // Keep only last 100 actions
-            if (actions.length > 100) {
-                actions = actions.slice(-100);
+            // Validate quotes
+            for (var i = 0; i < jobQuotes.length; i++) {
+                var quote = jobQuotes[i];
+                if (!quote.id || !quote.title || !Array.isArray(quote.items)) {
+                    errors.push('Invalid quote data found');
+                    isValid = false;
+                    break;
+                }
             }
             
-            sessionStorage.setItem('userActions', JSON.stringify(actions));
+            // Validate presets
+            for (var i = 0; i < presetWorkItems.length; i++) {
+                var preset = presetWorkItems[i];
+                if (!preset.id || !preset.name || !preset.price) {
+                    errors.push('Invalid preset data found');
+                    isValid = false;
+                    break;
+                }
+            }
             
-            console.log('📊 Action tracked:', action, details);
+            if (!isValid) {
+                console.warn('Data validation errors:', errors);
+                showSuccessMessage('⚠️ Data integrity check failed. Consider exporting backup.');
+            }
+            
+            return isValid;
         }
 
-        // Track important user actions
-        function trackQuoteCreated(quoteId) {
-            trackUserAction('quote_created', { quoteId: quoteId, itemCount: currentQuoteItems.length });
+        // Initialize all features when app loads
+        window.addEventListener('load', function() {
+            startAutoSave();
+            trackUserSession();
+            optimizeForLongSession();
+            
+            // Auto theme detection every hour
+            setInterval(autoThemeDetection, 60 * 60 * 1000);
+            
+            // Eye strain reminder every 20 minutes
+            setInterval(eyeStrainReminder, 20 * 60 * 1000);
+            
+            // Data validation check every 5 minutes
+            setInterval(validateAppData, 5 * 60 * 1000);
+            
+            console.log('👁️ REFIT MAINTENANCE - Complete Eye-Friendly System Loaded');
+            console.log('🌙 Dark/Light Theme with Auto Detection');
+            console.log('💫 Reduced Blue Light & Eye Strain Features');
+            console.log('🚀 Performance Optimized for Extended Usage');
+        });
+
+        // Cleanup when page unloads
+        window.addEventListener('beforeunload', function() {
+            stopAutoSave();
+            saveDataToStorage(); // Final save
+        });
+
+        // Handle visibility changes to save battery
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // App hidden, reduce background activity
+                stopAutoSave();
+            } else {
+                // App visible again, resume activity
+                startAutoSave();
+            }
+        });
+
+        // Enhanced error handling with user-friendly messages
+        window.addEventListener('error', function(e) {
+            console.error('Application error:', e.error);
+            showSuccessMessage('⚠️ Minor issue detected. App continues working normally.');
+        });
+
+        // Memory management for long sessions
+        function cleanupMemory() {
+            // Clear old session data
+            var sessions = JSON.parse(sessionStorage.getItem('userSessions') || '[]');
+            if (sessions.length > 10) {
+                sessionStorage.setItem('userSessions', JSON.stringify(sessions.slice(-5)));
+            }
+            
+            // Clear old analytics data
+            var actions = JSON.parse(sessionStorage.getItem('userActions') || '[]');
+            if (actions.length > 100) {
+                sessionStorage.setItem('userActions', JSON.stringify(actions.slice(-50)));
+            }
         }
 
-        function trackPresetUsed(presetId) {
-            trackUserAction('preset_used', { presetId: presetId });
-        }
+        // Run memory cleanup every 10 minutes
+        setInterval(cleanupMemory, 10 * 60 * 1000);
 
-        function trackPDFGenerated(quoteId) {
-            trackUserAction('pdf_generated', { quoteId: quoteId });
-        }
-
-        function trackLogoChanged(logoIndex) {
-            trackUserAction('logo_changed', { logoIndex: logoIndex, logoName: getLogoName(logoIndex) });
-        }
-
-        console.log('🎯 REFIT MAINTENANCE SERVICES - Complete Enhanced System Loaded');
-        console.log('🔧 Professional Logo System Active');
-        console.log('📱 Mobile-Optimized Interface Ready');
-        console.log('💾 Auto-save & Touch Gestures Enabled');
+        console.log('🎯 REFIT MAINTENANCE SERVICES - Complete Eye-Friendly Enhanced System Ready');
+        console.log('🔧 Professional Quote Management');
+        console.log('👁️ Eye Comfort & Extended Usage Optimizations');
+        console.log('📱 Advanced Mobile Experience with Gestures');
+        console.log('💾 Auto-save & Data Integrity Protection');
     </script>
 </body>
 </html>
