@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#2d3748">
     <meta name="msapplication-navbutton-color" content="#2d3748">
     
-    <title>REFIT MAINTENANCE SERVICES - Eye-Friendly Job Quote System</title>
+    <title>REFIT MAINTENANCE SERVICES - Categorized Management System</title>
     
     <!-- Enhanced PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -54,6 +54,16 @@
             --warning: #d69e2e;
             --error: #e53e3e;
             --info: #3182ce;
+            
+            /* Category Colors */
+            --cat-electrical: #3182ce;
+            --cat-plumbing: #0987a0;
+            --cat-hvac: #805ad5;
+            --cat-cleaning: #38a169;
+            --cat-parts: #d69e2e;
+            --cat-labor: #e53e3e;
+            --cat-equipment: #718096;
+            --cat-common: #9f7aea;
         }
         
         [data-theme="dark"] {
@@ -78,6 +88,16 @@
             --warning: #f6d55c;
             --error: #fc8181;
             --info: #63b3ed;
+            
+            /* Category Colors - Dark Mode */
+            --cat-electrical: #63b3ed;
+            --cat-plumbing: #4fd1c7;
+            --cat-hvac: #b794f6;
+            --cat-cleaning: #68d391;
+            --cat-parts: #f6d55c;
+            --cat-labor: #fc8181;
+            --cat-equipment: #a0aec0;
+            --cat-common: #d6bcfa;
         }
         
         body {
@@ -369,6 +389,189 @@
         .main-content::-webkit-scrollbar-thumb {
             background: var(--accent-primary);
             border-radius: 3px;
+        }
+        
+        /* Category System */
+        .category-badge {
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: white;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        
+        .category-electrical { background: var(--cat-electrical); }
+        .category-plumbing { background: var(--cat-plumbing); }
+        .category-hvac { background: var(--cat-hvac); }
+        .category-cleaning { background: var(--cat-cleaning); }
+        .category-parts { background: var(--cat-parts); }
+        .category-labor { background: var(--cat-labor); }
+        .category-equipment { background: var(--cat-equipment); }
+        .category-common { background: var(--cat-common); }
+        
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .category-filter {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid transparent;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .category-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-light);
+        }
+        
+        .category-filter.active {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .category-filter.electrical { border-color: var(--cat-electrical); }
+        .category-filter.electrical.active { background: var(--cat-electrical); }
+        .category-filter.plumbing { border-color: var(--cat-plumbing); }
+        .category-filter.plumbing.active { background: var(--cat-plumbing); }
+        .category-filter.hvac { border-color: var(--cat-hvac); }
+        .category-filter.hvac.active { background: var(--cat-hvac); }
+        .category-filter.cleaning { border-color: var(--cat-cleaning); }
+        .category-filter.cleaning.active { background: var(--cat-cleaning); }
+        .category-filter.parts { border-color: var(--cat-parts); }
+        .category-filter.parts.active { background: var(--cat-parts); }
+        .category-filter.labor { border-color: var(--cat-labor); }
+        .category-filter.labor.active { background: var(--cat-labor); }
+        .category-filter.equipment { border-color: var(--cat-equipment); }
+        .category-filter.equipment.active { background: var(--cat-equipment); }
+        .category-filter.common { border-color: var(--cat-common); }
+        .category-filter.common.active { background: var(--cat-common); }
+        
+        .category-count {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 10px;
+            margin-left: 4px;
+        }
+        
+        /* Category Sections */
+        .category-section {
+            margin-bottom: 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+        
+        .category-section.electrical {
+            border-color: var(--cat-electrical);
+            box-shadow: 0 4px 20px rgba(49, 130, 206, 0.1);
+        }
+        
+        .category-section.plumbing {
+            border-color: var(--cat-plumbing);
+            box-shadow: 0 4px 20px rgba(9, 135, 160, 0.1);
+        }
+        
+        .category-section.hvac {
+            border-color: var(--cat-hvac);
+            box-shadow: 0 4px 20px rgba(128, 90, 213, 0.1);
+        }
+        
+        .category-section.cleaning {
+            border-color: var(--cat-cleaning);
+            box-shadow: 0 4px 20px rgba(56, 161, 105, 0.1);
+        }
+        
+        .category-section.parts {
+            border-color: var(--cat-parts);
+            box-shadow: 0 4px 20px rgba(214, 158, 46, 0.1);
+        }
+        
+        .category-section.labor {
+            border-color: var(--cat-labor);
+            box-shadow: 0 4px 20px rgba(229, 62, 62, 0.1);
+        }
+        
+        .category-section.equipment {
+            border-color: var(--cat-equipment);
+            box-shadow: 0 4px 20px rgba(113, 128, 150, 0.1);
+        }
+        
+        .category-section.common {
+            border-color: var(--cat-common);
+            box-shadow: 0 4px 20px rgba(159, 122, 234, 0.1);
+        }
+        
+        .category-header {
+            padding: 16px 20px;
+            background: var(--bg-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+        
+        .category-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .category-icon.electrical { background: var(--cat-electrical); }
+        .category-icon.plumbing { background: var(--cat-plumbing); }
+        .category-icon.hvac { background: var(--cat-hvac); }
+        .category-icon.cleaning { background: var(--cat-cleaning); }
+        .category-icon.parts { background: var(--cat-parts); }
+        .category-icon.labor { background: var(--cat-labor); }
+        .category-icon.equipment { background: var(--cat-equipment); }
+        .category-icon.common { background: var(--cat-common); }
+        
+        .category-stats {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        .category-body {
+            background: var(--bg-card);
         }
         
         /* Cards */
@@ -670,6 +873,7 @@
             align-items: center;
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
         }
         
         .preset-item:hover {
@@ -756,6 +960,7 @@
             margin-bottom: 16px;
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 12px var(--shadow-light);
+            position: relative;
         }
         
         .quote-item-header {
@@ -1405,6 +1610,15 @@
             .section-title {
                 font-size: 24px;
             }
+            
+            .category-filters {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .category-filter {
+                justify-content: center;
+            }
         }
         
         /* Safe area adjustments */
@@ -1605,7 +1819,7 @@
                 <!-- Performance Card -->
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">📊 Quick Overview</h3>
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">📊 Category Overview</h3>
                         <span style="font-size: 24px;">📈</span>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; font-size: 14px;">
@@ -1614,10 +1828,16 @@
                             <div style="color: var(--text-muted); font-weight: 600;">Average Quote</div>
                         </div>
                         <div style="text-align: center;">
-                            <div style="font-size: 28px; font-weight: 800; color: var(--accent-warm);" id="preset-usage">0%</div>
-                            <div style="color: var(--text-muted); font-weight: 600;">Preset Usage</div>
+                            <div style="font-size: 28px; font-weight: 800; color: var(--accent-warm);" id="total-categories">0</div>
+                            <div style="color: var(--text-muted); font-weight: 600;">Active Categories</div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Category Statistics -->
+                <div class="card">
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">📊 Category Breakdown</h3>
+                    <div id="category-stats-grid"></div>
                 </div>
 
                 <!-- Quick Actions -->
@@ -1667,6 +1887,50 @@
                     <input type="text" class="input" placeholder="Search quotes..." id="quote-search">
                 </div>
 
+                <!-- Category Filters -->
+                <div class="category-filters">
+                    <div class="category-filter active" onclick="filterQuotesByCategory('all')" data-category="all">
+                        <span>📋</span>
+                        <span>All Quotes</span>
+                        <span class="category-count" id="filter-count-all">0</span>
+                    </div>
+                    <div class="category-filter electrical" onclick="filterQuotesByCategory('electrical')" data-category="electrical">
+                        <span>⚡</span>
+                        <span>Electrical</span>
+                        <span class="category-count" id="filter-count-electrical">0</span>
+                    </div>
+                    <div class="category-filter plumbing" onclick="filterQuotesByCategory('plumbing')" data-category="plumbing">
+                        <span>🔧</span>
+                        <span>Plumbing</span>
+                        <span class="category-count" id="filter-count-plumbing">0</span>
+                    </div>
+                    <div class="category-filter hvac" onclick="filterQuotesByCategory('hvac')" data-category="hvac">
+                        <span>❄️</span>
+                        <span>HVAC</span>
+                        <span class="category-count" id="filter-count-hvac">0</span>
+                    </div>
+                    <div class="category-filter cleaning" onclick="filterQuotesByCategory('cleaning')" data-category="cleaning">
+                        <span>🧽</span>
+                        <span>Cleaning</span>
+                        <span class="category-count" id="filter-count-cleaning">0</span>
+                    </div>
+                    <div class="category-filter parts" onclick="filterQuotesByCategory('parts')" data-category="parts">
+                        <span>🔩</span>
+                        <span>Parts</span>
+                        <span class="category-count" id="filter-count-parts">0</span>
+                    </div>
+                    <div class="category-filter labor" onclick="filterQuotesByCategory('labor')" data-category="labor">
+                        <span>👷</span>
+                        <span>Labor</span>
+                        <span class="category-count" id="filter-count-labor">0</span>
+                    </div>
+                    <div class="category-filter equipment" onclick="filterQuotesByCategory('equipment')" data-category="equipment">
+                        <span>🛠️</span>
+                        <span>Equipment</span>
+                        <span class="category-count" id="filter-count-equipment">0</span>
+                    </div>
+                </div>
+
                 <div id="quotes-list"></div>
             </div>
 
@@ -1682,6 +1946,50 @@
                 <div class="search-container">
                     <span class="search-icon">🔍</span>
                     <input type="text" class="input" placeholder="Search preset items..." id="preset-search">
+                </div>
+
+                <!-- Category Filters for Presets -->
+                <div class="category-filters">
+                    <div class="category-filter active" onclick="filterPresetsByCategory('all')" data-category="all">
+                        <span>📋</span>
+                        <span>All Items</span>
+                        <span class="category-count" id="preset-filter-count-all">0</span>
+                    </div>
+                    <div class="category-filter electrical" onclick="filterPresetsByCategory('electrical')" data-category="electrical">
+                        <span>⚡</span>
+                        <span>Electrical</span>
+                        <span class="category-count" id="preset-filter-count-electrical">0</span>
+                    </div>
+                    <div class="category-filter plumbing" onclick="filterPresetsByCategory('plumbing')" data-category="plumbing">
+                        <span>🔧</span>
+                        <span>Plumbing</span>
+                        <span class="category-count" id="preset-filter-count-plumbing">0</span>
+                    </div>
+                    <div class="category-filter hvac" onclick="filterPresetsByCategory('hvac')" data-category="hvac">
+                        <span>❄️</span>
+                        <span>HVAC</span>
+                        <span class="category-count" id="preset-filter-count-hvac">0</span>
+                    </div>
+                    <div class="category-filter cleaning" onclick="filterPresetsByCategory('cleaning')" data-category="cleaning">
+                        <span>🧽</span>
+                        <span>Cleaning</span>
+                        <span class="category-count" id="preset-filter-count-cleaning">0</span>
+                    </div>
+                    <div class="category-filter parts" onclick="filterPresetsByCategory('parts')" data-category="parts">
+                        <span>🔩</span>
+                        <span>Parts</span>
+                        <span class="category-count" id="preset-filter-count-parts">0</span>
+                    </div>
+                    <div class="category-filter labor" onclick="filterPresetsByCategory('labor')" data-category="labor">
+                        <span>👷</span>
+                        <span>Labor</span>
+                        <span class="category-count" id="preset-filter-count-labor">0</span>
+                    </div>
+                    <div class="category-filter equipment" onclick="filterPresetsByCategory('equipment')" data-category="equipment">
+                        <span>🛠️</span>
+                        <span>Equipment</span>
+                        <span class="category-count" id="preset-filter-count-equipment">0</span>
+                    </div>
                 </div>
 
                 <div class="card">
@@ -1745,7 +2053,7 @@
                     <input type="text" class="form-input" placeholder="Job Title/Description *" id="simple-job-title" required style="margin-bottom: 0;">
                 </div>
 
-                <!-- Preset Items Section -->
+                <!-- Preset Items Section with Categories -->
                 <div class="preset-items-section">
                     <div class="preset-items-header">
                         <h4 class="preset-items-title">
@@ -1755,6 +2063,22 @@
                             ➕ New Preset
                         </button>
                     </div>
+                    
+                    <!-- Category Selector for Presets -->
+                    <div style="margin-bottom: 16px;">
+                        <select id="preset-category-selector" class="form-input" style="margin-bottom: 0; padding: 12px 16px; font-size: 14px;" onchange="filterPresetItemsInModal()">
+                            <option value="all">All Categories</option>
+                            <option value="electrical">⚡ Electrical</option>
+                            <option value="plumbing">🔧 Plumbing</option>
+                            <option value="hvac">❄️ HVAC</option>
+                            <option value="cleaning">🧽 Cleaning</option>
+                            <option value="parts">🔩 Parts & Materials</option>
+                            <option value="labor">👷 Labor</option>
+                            <option value="equipment">🛠️ Equipment</option>
+                            <option value="common">🏷️ Common Items</option>
+                        </select>
+                    </div>
+                    
                     <div id="preset-items-list"></div>
                 </div>
 
@@ -1776,18 +2100,31 @@
                             </button>
                         </div>
                         
-                        <select class="quick-add-input" id="manual-unit">
-                            <option value="pcs">Pieces (pcs)</option>
-                            <option value="hours">Hours</option>
-                            <option value="sqft">Square Feet</option>
-                            <option value="sqm">Square Meters</option>
-                            <option value="meters">Meters</option>
-                            <option value="kg">Kilograms</option>
-                            <option value="liters">Liters</option>
-                            <option value="set">Set</option>
-                            <option value="lot">Lot</option>
-                            <option value="service">Service</option>
-                        </select>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <select class="quick-add-input" id="manual-unit">
+                                <option value="pcs">Pieces (pcs)</option>
+                                <option value="hours">Hours</option>
+                                <option value="sqft">Square Feet</option>
+                                <option value="sqm">Square Meters</option>
+                                <option value="meters">Meters</option>
+                                <option value="kg">Kilograms</option>
+                                <option value="liters">Liters</option>
+                                <option value="set">Set</option>
+                                <option value="lot">Lot</option>
+                                <option value="service">Service</option>
+                            </select>
+                            
+                            <select class="quick-add-input" id="manual-category">
+                                <option value="common">🏷️ Common Items</option>
+                                <option value="electrical">⚡ Electrical</option>
+                                <option value="plumbing">🔧 Plumbing</option>
+                                <option value="hvac">❄️ HVAC</option>
+                                <option value="cleaning">🧽 Cleaning</option>
+                                <option value="parts">🔩 Parts & Materials</option>
+                                <option value="labor">👷 Labor</option>
+                                <option value="equipment">🛠️ Equipment</option>
+                            </select>
+                        </div>
                     </div>
                     
                     <div class="quick-add-total">
@@ -1796,7 +2133,7 @@
                     </div>
                 </div>
 
-                <!-- Quote Items List -->
+                <!-- Quote Items List with Categories -->
                 <div id="quote-items-list"></div>
 
                 <!-- Form Actions -->
@@ -1837,14 +2174,14 @@
                         <option value="service">Service</option>
                     </select>
                     <select class="form-input" id="preset-item-category">
-                        <option value="common">Common Items</option>
-                        <option value="electrical">Electrical</option>
-                        <option value="plumbing">Plumbing</option>
-                        <option value="hvac">HVAC</option>
-                        <option value="cleaning">Cleaning</option>
-                        <option value="parts">Parts & Materials</option>
-                        <option value="labor">Labor</option>
-                        <option value="equipment">Equipment</option>
+                        <option value="common">🏷️ Common Items</option>
+                        <option value="electrical">⚡ Electrical</option>
+                        <option value="plumbing">🔧 Plumbing</option>
+                        <option value="hvac">❄️ HVAC</option>
+                        <option value="cleaning">🧽 Cleaning</option>
+                        <option value="parts">🔩 Parts & Materials</option>
+                        <option value="labor">👷 Labor</option>
+                        <option value="equipment">🛠️ Equipment</option>
                     </select>
                     
                     <div class="form-actions">
@@ -1871,9 +2208,9 @@
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - EYE-FRIENDLY JOB QUOTE SYSTEM
+        // REFIT MAINTENANCE SERVICES - CATEGORIZED MANAGEMENT SYSTEM
         // Registration No: 201803348973 (002894203-V)
-        // Optimized for Extended Usage with Dark/Light Themes
+        // Enhanced with Complete Category Organization & Segregation
         // ========================================
         
         // App State Variables
@@ -1885,6 +2222,60 @@
         var editingPreset = null;
         var selectedLogoIndex = 0;
         var currentTheme = 'light';
+        var currentQuoteFilter = 'all';
+        var currentPresetFilter = 'all';
+
+        // Category Configuration
+        var categories = {
+            electrical: {
+                name: 'Electrical',
+                icon: '⚡',
+                color: 'var(--cat-electrical)',
+                description: 'Electrical systems, wiring, and components'
+            },
+            plumbing: {
+                name: 'Plumbing',
+                icon: '🔧',
+                color: 'var(--cat-plumbing)',
+                description: 'Water systems, pipes, and fixtures'
+            },
+            hvac: {
+                name: 'HVAC',
+                icon: '❄️',
+                color: 'var(--cat-hvac)',
+                description: 'Heating, ventilation, and air conditioning'
+            },
+            cleaning: {
+                name: 'Cleaning',
+                icon: '🧽',
+                color: 'var(--cat-cleaning)',
+                description: 'Cleaning services and maintenance'
+            },
+            parts: {
+                name: 'Parts & Materials',
+                icon: '🔩',
+                color: 'var(--cat-parts)',
+                description: 'Replacement parts and materials'
+            },
+            labor: {
+                name: 'Labor',
+                icon: '👷',
+                color: 'var(--cat-labor)',
+                description: 'Labor charges and work hours'
+            },
+            equipment: {
+                name: 'Equipment',
+                icon: '🛠️',
+                color: 'var(--cat-equipment)',
+                description: 'Tools and equipment'
+            },
+            common: {
+                name: 'Common Items',
+                icon: '🏷️',
+                color: 'var(--cat-common)',
+                description: 'Frequently used items'
+            }
+        };
 
         // Logo SVG Templates (Eye-friendly colors)
         var logoTemplates = [
@@ -1964,40 +2355,75 @@
             THEME_PREFERENCE: 'refit_theme_preference'
         };
 
-        // Default Preset Work Items
+        // Enhanced Default Preset Work Items with Better Organization
         var defaultPresetWorkItems = [
             // Electrical Items
-            { id: 'electrical-inspection', name: 'Electrical Safety Inspection', description: 'Complete electrical system check', price: 120.00, unit: 'service', category: 'electrical' },
-            { id: 'led-bulb', name: 'LED Light Bulb', description: 'Energy-efficient LED bulb replacement', price: 15.00, unit: 'pcs', category: 'electrical' },
-            { id: 'switch-socket', name: 'Switch/Socket Installation', description: 'Install electrical switch or socket', price: 45.00, unit: 'pcs', category: 'electrical' },
-            { id: 'circuit-breaker', name: 'Circuit Breaker', description: 'Replace circuit breaker', price: 85.00, unit: 'pcs', category: 'electrical' },
+            { id: 'electrical-inspection', name: 'Electrical Safety Inspection', description: 'Complete electrical system safety check and certification', price: 150.00, unit: 'service', category: 'electrical' },
+            { id: 'led-bulb-basic', name: 'LED Light Bulb (Basic)', description: 'Standard LED bulb replacement 9-12W', price: 15.00, unit: 'pcs', category: 'electrical' },
+            { id: 'led-bulb-premium', name: 'LED Light Bulb (Premium)', description: 'High-efficiency LED bulb 15-20W', price: 25.00, unit: 'pcs', category: 'electrical' },
+            { id: 'switch-socket-basic', name: 'Switch/Socket Installation', description: 'Install standard electrical switch or socket', price: 45.00, unit: 'pcs', category: 'electrical' },
+            { id: 'switch-socket-premium', name: 'Smart Switch Installation', description: 'Install smart switch with app control', price: 85.00, unit: 'pcs', category: 'electrical' },
+            { id: 'circuit-breaker', name: 'Circuit Breaker Replacement', description: 'Replace faulty circuit breaker', price: 95.00, unit: 'pcs', category: 'electrical' },
+            { id: 'electrical-wiring', name: 'Electrical Wiring', description: 'New electrical wiring installation', price: 12.00, unit: 'meters', category: 'electrical' },
             
             // Plumbing Items
-            { id: 'pipe-repair', name: 'Pipe Leak Repair', description: 'Fix water pipe leaks', price: 65.00, unit: 'service', category: 'plumbing' },
-            { id: 'faucet-replacement', name: 'Faucet Replacement', description: 'Replace old faucet', price: 95.00, unit: 'pcs', category: 'plumbing' },
-            { id: 'toilet-repair', name: 'Toilet Repair', description: 'Fix toilet flush system', price: 75.00, unit: 'service', category: 'plumbing' },
-            { id: 'drain-cleaning', name: 'Drain Cleaning', description: 'Clear blocked drains', price: 55.00, unit: 'service', category: 'plumbing' },
+            { id: 'pipe-repair-minor', name: 'Minor Pipe Leak Repair', description: 'Fix small water pipe leaks', price: 65.00, unit: 'service', category: 'plumbing' },
+            { id: 'pipe-repair-major', name: 'Major Pipe Repair', description: 'Fix major pipe damage or replacement', price: 150.00, unit: 'service', category: 'plumbing' },
+            { id: 'faucet-replacement-basic', name: 'Basic Faucet Replacement', description: 'Replace standard faucet', price: 95.00, unit: 'pcs', category: 'plumbing' },
+            { id: 'faucet-replacement-premium', name: 'Premium Faucet Installation', description: 'Install high-end faucet with advanced features', price: 180.00, unit: 'pcs', category: 'plumbing' },
+            { id: 'toilet-repair', name: 'Toilet Repair Service', description: 'Fix toilet flush system and components', price: 85.00, unit: 'service', category: 'plumbing' },
+            { id: 'drain-cleaning-basic', name: 'Basic Drain Cleaning', description: 'Clear minor blocked drains', price: 55.00, unit: 'service', category: 'plumbing' },
+            { id: 'drain-cleaning-heavy', name: 'Heavy Drain Cleaning', description: 'Clear severely blocked drains with equipment', price: 120.00, unit: 'service', category: 'plumbing' },
+            { id: 'water-heater-service', name: 'Water Heater Servicing', description: 'Complete water heater maintenance', price: 100.00, unit: 'service', category: 'plumbing' },
             
             // HVAC Items
-            { id: 'aircon-service', name: 'Air Con Servicing', description: 'Complete AC cleaning & maintenance', price: 80.00, unit: 'pcs', category: 'hvac' },
-            { id: 'aircon-gas', name: 'AC Gas Top-up', description: 'Refill AC refrigerant gas', price: 120.00, unit: 'service', category: 'hvac' },
-            { id: 'fan-install', name: 'Ceiling Fan Installation', description: 'Install ceiling fan', price: 85.00, unit: 'pcs', category: 'hvac' },
-            { id: 'vent-cleaning', name: 'Ventilation Cleaning', description: 'Clean air vents and ducts', price: 45.00, unit: 'sqm', category: 'hvac' },
+            { id: 'aircon-service-basic', name: 'Basic AC Servicing', description: 'Standard AC cleaning and maintenance', price: 80.00, unit: 'pcs', category: 'hvac' },
+            { id: 'aircon-service-premium', name: 'Premium AC Servicing', description: 'Complete AC deep cleaning and tune-up', price: 120.00, unit: 'pcs', category: 'hvac' },
+            { id: 'aircon-gas-topup', name: 'AC Gas Top-up', description: 'Refill AC refrigerant gas R410A', price: 150.00, unit: 'service', category: 'hvac' },
+            { id: 'aircon-installation', name: 'AC Unit Installation', description: 'Install new air conditioning unit', price: 300.00, unit: 'pcs', category: 'hvac' },
+            { id: 'fan-install-ceiling', name: 'Ceiling Fan Installation', description: 'Install ceiling fan with remote', price: 95.00, unit: 'pcs', category: 'hvac' },
+            { id: 'fan-install-exhaust', name: 'Exhaust Fan Installation', description: 'Install bathroom/kitchen exhaust fan', price: 75.00, unit: 'pcs', category: 'hvac' },
+            { id: 'vent-cleaning', name: 'Ventilation Cleaning', description: 'Clean air vents and ductwork', price: 45.00, unit: 'sqm', category: 'hvac' },
+            { id: 'filter-replacement', name: 'HVAC Filter Replacement', description: 'Replace HVAC system filters', price: 35.00, unit: 'pcs', category: 'hvac' },
             
-            // Cleaning
-            { id: 'office-cleaning', name: 'Office Cleaning', description: 'Deep office cleaning service', price: 25.00, unit: 'sqm', category: 'cleaning' },
-            { id: 'carpet-cleaning', name: 'Carpet Cleaning', description: 'Steam clean carpets', price: 35.00, unit: 'sqm', category: 'cleaning' },
-            { id: 'window-cleaning', name: 'Window Cleaning', description: 'Clean windows inside & out', price: 8.00, unit: 'sqm', category: 'cleaning' },
+            // Cleaning Services
+            { id: 'office-cleaning-basic', name: 'Basic Office Cleaning', description: 'Standard office cleaning service', price: 25.00, unit: 'sqm', category: 'cleaning' },
+            { id: 'office-cleaning-deep', name: 'Deep Office Cleaning', description: 'Comprehensive deep cleaning service', price: 40.00, unit: 'sqm', category: 'cleaning' },
+            { id: 'carpet-cleaning-standard', name: 'Standard Carpet Cleaning', description: 'Steam clean carpets', price: 35.00, unit: 'sqm', category: 'cleaning' },
+            { id: 'carpet-cleaning-stain', name: 'Stain Removal Carpet Cleaning', description: 'Deep stain removal and cleaning', price: 50.00, unit: 'sqm', category: 'cleaning' },
+            { id: 'window-cleaning-interior', name: 'Interior Window Cleaning', description: 'Clean windows inside only', price: 8.00, unit: 'sqm', category: 'cleaning' },
+            { id: 'window-cleaning-full', name: 'Full Window Cleaning', description: 'Clean windows inside and outside', price: 15.00, unit: 'sqm', category: 'cleaning' },
+            { id: 'floor-waxing', name: 'Floor Waxing Service', description: 'Professional floor waxing and polishing', price: 18.00, unit: 'sqm', category: 'cleaning' },
             
-            // Labor
-            { id: 'technician-hour', name: 'Technician Labor', description: 'Skilled technician work', price: 45.00, unit: 'hours', category: 'labor' },
-            { id: 'helper-hour', name: 'Helper Labor', description: 'General helper work', price: 25.00, unit: 'hours', category: 'labor' },
-            { id: 'emergency-fee', name: 'Emergency Call-out', description: 'After-hours service fee', price: 150.00, unit: 'service', category: 'labor' },
+            // Labor Categories
+            { id: 'technician-hour-standard', name: 'Standard Technician Labor', description: 'Skilled technician work (regular hours)', price: 45.00, unit: 'hours', category: 'labor' },
+            { id: 'technician-hour-overtime', name: 'Overtime Technician Labor', description: 'Skilled technician work (after hours)', price: 65.00, unit: 'hours', category: 'labor' },
+            { id: 'specialist-hour', name: 'Specialist Technician', description: 'Highly skilled specialist work', price: 75.00, unit: 'hours', category: 'labor' },
+            { id: 'helper-hour-standard', name: 'Helper Labor', description: 'General helper work', price: 25.00, unit: 'hours', category: 'labor' },
+            { id: 'emergency-callout', name: 'Emergency Call-out Fee', description: 'After-hours emergency service fee', price: 180.00, unit: 'service', category: 'labor' },
+            { id: 'transportation-fee', name: 'Transportation Fee', description: 'Travel charges for site visits', price: 30.00, unit: 'service', category: 'labor' },
             
-            // Parts
-            { id: 'electrical-cable', name: 'Electrical Cable', description: 'Standard wiring cable', price: 8.50, unit: 'meters', category: 'parts' },
-            { id: 'pvc-pipe', name: 'PVC Pipe', description: 'Water pipe material', price: 12.00, unit: 'meters', category: 'parts' },
-            { id: 'door-lock', name: 'Door Lock', description: 'Security door lock', price: 65.00, unit: 'pcs', category: 'parts' }
+            // Parts & Materials
+            { id: 'electrical-cable-standard', name: 'Standard Electrical Cable', description: 'Standard wiring cable 2.5mm²', price: 8.50, unit: 'meters', category: 'parts' },
+            { id: 'electrical-cable-heavy', name: 'Heavy Duty Cable', description: 'Heavy duty electrical cable 4.0mm²', price: 15.00, unit: 'meters', category: 'parts' },
+            { id: 'pvc-pipe-half', name: 'PVC Pipe 1/2 inch', description: 'Water pipe material 1/2 inch diameter', price: 8.00, unit: 'meters', category: 'parts' },
+            { id: 'pvc-pipe-full', name: 'PVC Pipe 1 inch', description: 'Water pipe material 1 inch diameter', price: 12.00, unit: 'meters', category: 'parts' },
+            { id: 'door-lock-basic', name: 'Basic Door Lock', description: 'Standard security door lock', price: 65.00, unit: 'pcs', category: 'parts' },
+            { id: 'door-lock-premium', name: 'Premium Door Lock', description: 'High-security door lock with multiple keys', price: 120.00, unit: 'pcs', category: 'parts' },
+            { id: 'pipe-fittings', name: 'Pipe Fittings Set', description: 'Assorted pipe fittings and connectors', price: 25.00, unit: 'set', category: 'parts' },
+            { id: 'electrical-box', name: 'Electrical Junction Box', description: 'Waterproof electrical junction box', price: 18.00, unit: 'pcs', category: 'parts' },
+            
+            // Equipment
+            { id: 'power-drill-rental', name: 'Power Drill Rental', description: 'Professional power drill rental per day', price: 35.00, unit: 'hours', category: 'equipment' },
+            { id: 'ladder-rental', name: 'Extension Ladder Rental', description: 'Extension ladder rental per day', price: 25.00, unit: 'hours', category: 'equipment' },
+            { id: 'cleaning-machine', name: 'Cleaning Machine Usage', description: 'Professional cleaning machine operation', price: 50.00, unit: 'hours', category: 'equipment' },
+            { id: 'generator-rental', name: 'Generator Rental', description: 'Portable generator rental', price: 80.00, unit: 'hours', category: 'equipment' },
+            
+            // Common Items
+            { id: 'service-call', name: 'Standard Service Call', description: 'Basic service call and assessment', price: 75.00, unit: 'service', category: 'common' },
+            { id: 'consultation', name: 'Technical Consultation', description: 'Professional technical consultation', price: 100.00, unit: 'service', category: 'common' },
+            { id: 'material-delivery', name: 'Material Delivery', description: 'Delivery of materials to site', price: 40.00, unit: 'service', category: 'common' },
+            { id: 'warranty-service', name: 'Warranty Service', description: 'Warranty-covered service work', price: 0.00, unit: 'service', category: 'common' }
         ];
 
         // Theme Management Functions
@@ -2062,11 +2488,132 @@
             updateStats();
             renderViews();
             loadSelectedLogo();
+            updateCategoryFilters();
             
-            showSuccessMessage('👁️ Eye-Friendly REFIT MAINTENANCE - Perfect for Extended Use!');
-            console.log('🔧 REFIT MAINTENANCE SERVICES - Eye-Friendly Quote System');
-            console.log('👁️ Optimized for Long-Hour Usage');
-            console.log('🌙 Dark/Light Theme Support');
+            showSuccessMessage('📋 REFIT MAINTENANCE - Complete Category System Ready!');
+            console.log('🔧 REFIT MAINTENANCE SERVICES - Categorized Management System');
+            console.log('📊 Advanced Category Organization & Filtering');
+            console.log('👁️ Eye-Friendly Design for Extended Use');
+        }
+
+        // Category Management Functions
+        function getCategoryIcon(category) {
+            return categories[category] ? categories[category].icon : '🏷️';
+        }
+
+        function getCategoryName(category) {
+            return categories[category] ? categories[category].name : 'Unknown';
+        }
+
+        function getCategoryColor(category) {
+            return categories[category] ? categories[category].color : 'var(--cat-common)';
+        }
+
+        function filterQuotesByCategory(category) {
+            currentQuoteFilter = category;
+            
+            // Update filter buttons
+            var filters = document.querySelectorAll('.category-filter[data-category]');
+            for (var i = 0; i < filters.length; i++) {
+                filters[i].classList.remove('active');
+            }
+            
+            var activeFilter = document.querySelector('.category-filter[data-category="' + category + '"]');
+            if (activeFilter) {
+                activeFilter.classList.add('active');
+            }
+            
+            renderQuotes();
+            showSuccessMessage('📋 Filtered by ' + (category === 'all' ? 'All Categories' : getCategoryName(category)));
+        }
+
+        function filterPresetsByCategory(category) {
+            currentPresetFilter = category;
+            
+            // Update filter buttons
+            var filters = document.querySelectorAll('#presets-view .category-filter[data-category]');
+            for (var i = 0; i < filters.length; i++) {
+                filters[i].classList.remove('active');
+            }
+            
+            var activeFilter = document.querySelector('#presets-view .category-filter[data-category="' + category + '"]');
+            if (activeFilter) {
+                activeFilter.classList.add('active');
+            }
+            
+            renderPresets();
+            showSuccessMessage('📋 Filtered by ' + (category === 'all' ? 'All Categories' : getCategoryName(category)));
+        }
+
+        function filterPresetItemsInModal() {
+            var selectedCategory = document.getElementById('preset-category-selector').value;
+            renderPresetItems(selectedCategory);
+        }
+
+        function updateCategoryFilters() {
+            updateQuoteCategoryFilters();
+            updatePresetCategoryFilters();
+        }
+
+        function updateQuoteCategoryFilters() {
+            var categoryCounts = { all: jobQuotes.length };
+            
+            // Initialize category counts
+            for (var catKey in categories) {
+                categoryCounts[catKey] = 0;
+            }
+            
+            // Count quotes by category
+            for (var i = 0; i < jobQuotes.length; i++) {
+                var quote = jobQuotes[i];
+                var quoteCategories = {};
+                
+                for (var j = 0; j < quote.items.length; j++) {
+                    var item = quote.items[j];
+                    var itemCategory = item.category || 'common';
+                    quoteCategories[itemCategory] = true;
+                }
+                
+                for (var cat in quoteCategories) {
+                    if (categoryCounts[cat] !== undefined) {
+                        categoryCounts[cat]++;
+                    }
+                }
+            }
+            
+            // Update filter counts
+            for (var catKey in categoryCounts) {
+                var countElement = document.getElementById('filter-count-' + catKey);
+                if (countElement) {
+                    countElement.textContent = categoryCounts[catKey];
+                }
+            }
+        }
+
+        function updatePresetCategoryFilters() {
+            var categoryCounts = { all: presetWorkItems.length };
+            
+            // Initialize category counts
+            for (var catKey in categories) {
+                categoryCounts[catKey] = 0;
+            }
+            
+            // Count presets by category
+            for (var i = 0; i < presetWorkItems.length; i++) {
+                var preset = presetWorkItems[i];
+                var category = preset.category || 'common';
+                if (categoryCounts[category] !== undefined) {
+                    categoryCounts[category]++;
+                }
+            }
+            
+            // Update filter counts
+            for (var catKey in categoryCounts) {
+                var countElement = document.getElementById('preset-filter-count-' + catKey);
+                if (countElement) {
+                    countElement.textContent = categoryCounts[catKey];
+                }
+            }
         }
 
         // Logo Management Functions
@@ -2182,7 +2729,8 @@
             editingJob = null;
             document.getElementById('simple-job-modal-title').textContent = '💰 Create Job Quote';
             document.getElementById('simple-job-title').value = '';
-            renderPresetItems();
+            document.getElementById('preset-category-selector').value = 'all';
+            renderPresetItems('all');
             updateQuoteItemsDisplay();
             document.getElementById('simple-job-modal').classList.add('show');
             showSuccessMessage('💰 Simple Job Quote form opened!');
@@ -2194,37 +2742,83 @@
             updateQuoteItemsDisplay();
         }
 
-        function renderPresetItems() {
+        function renderPresetItems(filterCategory) {
+            filterCategory = filterCategory || 'all';
             var container = document.getElementById('preset-items-list');
             if (!container) return;
             
-            if (presetWorkItems.length === 0) {
+            var filteredItems = presetWorkItems.filter(function(item) {
+                return filterCategory === 'all' || item.category === filterCategory;
+            });
+            
+            if (filteredItems.length === 0) {
                 container.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-muted);">' +
                     '<div style="font-size: 32px; margin-bottom: 8px;">📋</div>' +
-                    '<p>No preset items available</p>' +
-                    '<p style="font-size: 12px; margin-top: 4px;">Create your first preset item</p>' +
+                    '<p>No preset items in this category</p>' +
+                    '<p style="font-size: 12px; margin-top: 4px;">Try selecting a different category</p>' +
                     '</div>';
                 return;
             }
             
+            // Group items by category for better organization
+            var groupedItems = {};
+            for (var i = 0; i < filteredItems.length; i++) {
+                var item = filteredItems[i];
+                var category = item.category || 'common';
+                if (!groupedItems[category]) {
+                    groupedItems[category] = [];
+                }
+                groupedItems[category].push(item);
+            }
+            
             var html = '';
-            for (var i = 0; i < presetWorkItems.length; i++) {
-                var item = presetWorkItems[i];
-                html += '<div class="preset-item" onclick="selectPresetItem(\'' + item.id + '\')">' +
-                    '<div class="preset-item-info">' +
-                    '<div class="preset-item-name">' + item.name + '</div>' +
-                    '<div class="preset-item-details">' + item.description + ' • ' + item.unit + '</div>' +
-                    '</div>' +
-                    '<div style="display: flex; align-items: center;">' +
-                    '<div class="preset-item-price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
-                    '<button class="preset-item-add" onclick="event.stopPropagation(); addPresetToQuote(\'' + item.id + '\')">' +
-                    '➕ Add' +
-                    '</button>' +
-                    '</div>' +
-                    '</div>';
+            
+            if (filterCategory === 'all') {
+                // Show all categories grouped
+                for (var category in groupedItems) {
+                    var categoryItems = groupedItems[category];
+                    if (categoryItems.length === 0) continue;
+                    
+                    html += '<div style="margin-bottom: 20px;">' +
+                        '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 8px 12px; background: var(--bg-secondary); border-radius: 8px;">' +
+                        '<span style="font-size: 18px;">' + getCategoryIcon(category) + '</span>' +
+                        '<span style="font-weight: 700; color: var(--text-primary);">' + getCategoryName(category) + '</span>' +
+                        '<span class="category-badge category-' + category + '">' + categoryItems.length + '</span>' +
+                        '</div>';
+                    
+                    for (var j = 0; j < categoryItems.length; j++) {
+                        var item = categoryItems[j];
+                        html += renderPresetItemCard(item);
+                    }
+                    
+                    html += '</div>';
+                }
+            } else {
+                // Show items in selected category only
+                for (var i = 0; i < filteredItems.length; i++) {
+                    var item = filteredItems[i];
+                    html += renderPresetItemCard(item);
+                }
             }
             
             container.innerHTML = html;
+        }
+
+        function renderPresetItemCard(item) {
+            return '<div class="preset-item" onclick="selectPresetItem(\'' + item.id + '\')">' +
+                '<div class="preset-item-info">' +
+                '<div class="preset-item-name">' +
+                '<span class="category-badge category-' + item.category + '">' + getCategoryIcon(item.category) + '</span>' +
+                item.name + '</div>' +
+                '<div class="preset-item-details">' + item.description + ' • ' + item.unit + '</div>' +
+                '</div>' +
+                '<div style="display: flex; align-items: center;">' +
+                '<div class="preset-item-price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                '<button class="preset-item-add" onclick="event.stopPropagation(); addPresetToQuote(\'' + item.id + '\')">' +
+                '➕ Add' +
+                '</button>' +
+                '</div>' +
+                '</div>';
         }
 
         function selectPresetItem(itemId) {
@@ -2235,6 +2829,7 @@
             document.getElementById('manual-quantity').value = '1';
             document.getElementById('manual-price').value = item.price;
             document.getElementById('manual-unit').value = item.unit;
+            document.getElementById('manual-category').value = item.category;
             
             updateManualTotal();
             showSuccessMessage('✅ "' + item.name + '" selected for manual entry');
@@ -2250,6 +2845,7 @@
                 quantity: 1,
                 price: item.price,
                 unit: item.unit,
+                category: item.category,
                 total: item.price,
                 isPreset: true,
                 presetId: item.id
@@ -2276,6 +2872,7 @@
             var quantity = parseFloat(document.getElementById('manual-quantity').value);
             var price = parseFloat(document.getElementById('manual-price').value);
             var unit = document.getElementById('manual-unit').value;
+            var category = document.getElementById('manual-category').value;
             
             if (!description || !quantity || !price) {
                 showSuccessMessage('⚠️ Please fill in all required fields!');
@@ -2288,6 +2885,7 @@
                 quantity: quantity,
                 price: price,
                 unit: unit,
+                category: category,
                 total: quantity * price,
                 isPreset: false
             };
@@ -2299,6 +2897,7 @@
             document.getElementById('manual-quantity').value = '1';
             document.getElementById('manual-price').value = '';
             document.getElementById('manual-unit').value = 'pcs';
+            document.getElementById('manual-category').value = 'common';
             
             updateManualTotal();
             updateQuoteItemsDisplay();
@@ -2314,40 +2913,82 @@
                 return;
             }
             
+            // Group items by category
+            var groupedItems = {};
             var total = 0;
+            
+            for (var i = 0; i < currentQuoteItems.length; i++) {
+                var item = currentQuoteItems[i];
+                var category = item.category || 'common';
+                total += item.total;
+                
+                if (!groupedItems[category]) {
+                    groupedItems[category] = [];
+                }
+                groupedItems[category].push({ item: item, index: i });
+            }
+            
             var html = '<div class="quote-items-container">' +
                 '<div class="quote-items-header">' +
                 '<div class="quote-items-title">💰 Quote Items (' + currentQuoteItems.length + ')</div>' +
                 '<button type="button" onclick="clearAllQuoteItems()" style="background: var(--error); color: white; border: none; border-radius: 8px; padding: 4px 8px; font-size: 12px; cursor: pointer;">Clear All</button>' +
                 '</div>';
             
-            for (var i = 0; i < currentQuoteItems.length; i++) {
-                var item = currentQuoteItems[i];
-                total += item.total;
+            // Render items grouped by category
+            for (var category in groupedItems) {
+                var categoryItems = groupedItems[category];
+                var categoryTotal = 0;
                 
-                html += '<div class="quote-item">' +
-                    '<div class="quote-item-header">' +
-                    '<div class="quote-item-title">' + item.description + (item.isPreset ? ' 🏷️' : '') + '</div>' +
-                    '<div class="quote-item-actions">' +
-                    '<button class="quote-item-btn quote-item-edit" onclick="editQuoteItem(' + i + ')" title="Edit">✏️</button>' +
-                    '<button class="quote-item-btn quote-item-delete" onclick="deleteQuoteItem(' + i + ')" title="Delete">🗑️</button>' +
+                for (var j = 0; j < categoryItems.length; j++) {
+                    categoryTotal += categoryItems[j].item.total;
+                }
+                
+                html += '<div class="category-section ' + category + '" style="margin-bottom: 16px;">' +
+                    '<div class="category-header">' +
+                    '<div class="category-title">' +
+                    '<div class="category-icon ' + category + '">' + getCategoryIcon(category) + '</div>' +
+                    '<span>' + getCategoryName(category) + '</span>' +
+                    '</div>' +
+                    '<div class="category-stats">' +
+                    '<span>' + categoryItems.length + ' items</span>' +
+                    '<span style="font-weight: 700; color: var(--accent-primary);">RM ' + categoryTotal.toFixed(2) + '</span>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="quote-item-details">' +
-                    '<div class="quote-item-detail">' +
-                    '<div class="quote-item-detail-label">Quantity</div>' +
-                    '<div class="quote-item-detail-value">' + item.quantity + ' ' + item.unit + '</div>' +
-                    '</div>' +
-                    '<div class="quote-item-detail">' +
-                    '<div class="quote-item-detail-label">Unit Price</div>' +
-                    '<div class="quote-item-detail-value">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
-                    '</div>' +
-                    '<div class="quote-item-detail">' +
-                    '<div class="quote-item-detail-label">Total</div>' +
-                    '<div class="quote-item-detail-value">RM ' + item.total.toFixed(2) + '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
+                    '<div class="category-body">';
+                
+                for (var j = 0; j < categoryItems.length; j++) {
+                    var itemData = categoryItems[j];
+                    var item = itemData.item;
+                    var index = itemData.index;
+                    
+                    html += '<div class="quote-item">' +
+                        '<div class="quote-item-header">' +
+                        '<div class="quote-item-title">' +
+                        '<span class="category-badge category-' + category + '">' + getCategoryIcon(category) + '</span>' +
+                        item.description + (item.isPreset ? ' 🏷️' : '') + '</div>' +
+                        '<div class="quote-item-actions">' +
+                        '<button class="quote-item-btn quote-item-edit" onclick="editQuoteItem(' + index + ')" title="Edit">✏️</button>' +
+                        '<button class="quote-item-btn quote-item-delete" onclick="deleteQuoteItem(' + index + ')" title="Delete">🗑️</button>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="quote-item-details">' +
+                        '<div class="quote-item-detail">' +
+                        '<div class="quote-item-detail-label">Quantity</div>' +
+                        '<div class="quote-item-detail-value">' + item.quantity + ' ' + item.unit + '</div>' +
+                        '</div>' +
+                        '<div class="quote-item-detail">' +
+                        '<div class="quote-item-detail-label">Unit Price</div>' +
+                        '<div class="quote-item-detail-value">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                        '</div>' +
+                        '<div class="quote-item-detail">' +
+                        '<div class="quote-item-detail-label">Total</div>' +
+                        '<div class="quote-item-detail-value">RM ' + item.total.toFixed(2) + '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                }
+                
+                html += '</div></div>';
             }
             
             if (total > 0) {
@@ -2369,6 +3010,7 @@
             document.getElementById('manual-quantity').value = item.quantity;
             document.getElementById('manual-price').value = item.price;
             document.getElementById('manual-unit').value = item.unit;
+            document.getElementById('manual-category').value = item.category || 'common';
             
             deleteQuoteItem(index);
             updateManualTotal();
@@ -2439,6 +3081,7 @@
             saveDataToStorage();
             updateStats();
             renderViews();
+            updateCategoryFilters();
             showView('quotes');
         }
 
@@ -2495,7 +3138,8 @@
             saveDataToStorage();
             updateStats();
             renderViews();
-            renderPresetItems();
+            updateCategoryFilters();
+            renderPresetItems(document.getElementById('preset-category-selector').value);
         }
 
         function editPresetItem(id) {
@@ -2521,7 +3165,8 @@
                 saveDataToStorage();
                 updateStats();
                 renderViews();
-                renderPresetItems();
+                updateCategoryFilters();
+                renderPresetItems(document.getElementById('preset-category-selector').value);
                 showSuccessMessage('🗑️ Preset item deleted successfully');
             }
         }
@@ -2531,7 +3176,9 @@
             searchTerm = searchTerm || '';
             
             var filteredQuotes = jobQuotes.filter(function(quote) {
-                return quote.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+                var matchesSearch = quote.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+                var matchesCategory = currentQuoteFilter === 'all' || quoteHasCategory(quote, currentQuoteFilter);
+                return matchesSearch && matchesCategory;
             });
 
             var container = document.getElementById('quotes-list');
@@ -2541,7 +3188,7 @@
                 container.innerHTML = '<div class="empty-state">' +
                     '<div class="empty-icon">💰</div>' +
                     '<p style="font-weight: 600;">No job quotes found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first job quote</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first job quote or try different filters</p>' +
                     '</div>';
                 return;
             }
@@ -2550,6 +3197,7 @@
             
             for (var i = 0; i < filteredQuotes.length; i++) {
                 var quote = filteredQuotes[i];
+                var quoteCategories = getQuoteCategories(quote);
                 
                 quotesHTML += '<div class="item-card">' +
                     '<div class="item-header">' +
@@ -2558,6 +3206,7 @@
                     '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">' +
                     '📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) +
                     '</div>' +
+                    '<div style="margin: 8px 0;">' + renderCategoryBadges(quoteCategories) + '</div>' +
                     '</div>' +
                     '</div>' +
                     '<div class="item-actions">' +
@@ -2576,39 +3225,112 @@
             container.innerHTML = quotesHTML;
         }
 
+        function quoteHasCategory(quote, category) {
+            for (var i = 0; i < quote.items.length; i++) {
+                var item = quote.items[i];
+                if ((item.category || 'common') === category) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function getQuoteCategories(quote) {
+            var categories = {};
+            for (var i = 0; i < quote.items.length; i++) {
+                var item = quote.items[i];
+                var category = item.category || 'common';
+                categories[category] = true;
+            }
+            return Object.keys(categories);
+        }
+
+        function renderCategoryBadges(categoryList) {
+            var html = '';
+            for (var i = 0; i < categoryList.length && i < 3; i++) {
+                var category = categoryList[i];
+                html += '<span class="category-badge category-' + category + '">' + getCategoryIcon(category) + ' ' + getCategoryName(category) + '</span>';
+            }
+            if (categoryList.length > 3) {
+                html += '<span class="category-badge" style="background: var(--text-muted);">+' + (categoryList.length - 3) + ' more</span>';
+            }
+            return html;
+        }
+
         function viewQuote(quoteId) {
             var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
             if (!quote) return;
             
+            var quoteCategories = getQuoteCategories(quote);
+            
             var quoteHTML = '<div class="card" style="margin-bottom: 20px;">' +
                 '<div style="font-size: 18px; font-weight: 700; color: var(--accent-primary); margin-bottom: 8px;">💰 Job Quote #' + quote.id + '</div>' +
-                '<div style="color: var(--text-secondary); font-size: 14px; font-weight: 600;">' + quote.title + '</div>' +
+                '<div style="color: var(--text-secondary); font-size: 14px; font-weight: 600; margin-bottom: 12px;">' + quote.title + '</div>' +
+                '<div>' + renderCategoryBadges(quoteCategories) + '</div>' +
                 '</div>' +
                 
                 '<div class="card" style="margin-bottom: 20px;">' +
                 '<h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">📋 Quote Details</h4>' +
                 '<div style="display: grid; gap: 12px; font-size: 14px;">' +
                 '<div><strong>Total Items:</strong> ' + quote.items.length + '</div>' +
+                '<div><strong>Categories:</strong> ' + quoteCategories.length + '</div>' +
                 '<div><strong>Created:</strong> ' + formatDate(quote.createdAt) + '</div>' +
                 '<div><strong>Last Updated:</strong> ' + formatDate(quote.updatedAt) + '</div>' +
                 '</div>' +
                 '</div>';
             
             if (quote.items.length > 0) {
-                quoteHTML += '<div class="card" style="margin-bottom: 20px;">' +
-                    '<h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">💼 Quote Items</h4>';
-                
+                // Group items by category for display
+                var groupedItems = {};
                 for (var i = 0; i < quote.items.length; i++) {
                     var item = quote.items[i];
+                    var category = item.category || 'common';
+                    if (!groupedItems[category]) {
+                        groupedItems[category] = [];
+                    }
+                    groupedItems[category].push(item);
+                }
+                
+                quoteHTML += '<div class="card" style="margin-bottom: 20px;">' +
+                    '<h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">💼 Quote Items by Category</h4>';
+                
+                for (var category in groupedItems) {
+                    var categoryItems = groupedItems[category];
+                    var categoryTotal = 0;
                     
-                    quoteHTML += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color);">' +
-                        '<div style="font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">' + item.description + (item.isPreset ? ' 🏷️' : '') + '</div>' +
-                        '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 13px; color: var(--text-secondary);">' +
-                        '<div><strong>Qty:</strong> ' + item.quantity + ' ' + item.unit + '</div>' +
-                        '<div><strong>Price:</strong> RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
-                        '<div><strong>Total:</strong> RM ' + item.total.toFixed(2) + '</div>' +
+                    for (var j = 0; j < categoryItems.length; j++) {
+                        categoryTotal += categoryItems[j].total;
+                    }
+                    
+                    quoteHTML += '<div class="category-section ' + category + '" style="margin-bottom: 16px;">' +
+                        '<div class="category-header">' +
+                        '<div class="category-title">' +
+                        '<div class="category-icon ' + category + '">' + getCategoryIcon(category) + '</div>' +
+                        '<span>' + getCategoryName(category) + '</span>' +
                         '</div>' +
-                        '</div>';
+                        '<div class="category-stats">' +
+                        '<span>' + categoryItems.length + ' items</span>' +
+                        '<span style="font-weight: 700; color: var(--accent-primary);">RM ' + categoryTotal.toFixed(2) + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="category-body">';
+                    
+                    for (var j = 0; j < categoryItems.length; j++) {
+                        var item = categoryItems[j];
+                        
+                        quoteHTML += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color);">' +
+                            '<div style="font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">' +
+                            '<span class="category-badge category-' + category + '">' + getCategoryIcon(category) + '</span>' +
+                            item.description + (item.isPreset ? ' 🏷️' : '') + '</div>' +
+                            '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 13px; color: var(--text-secondary);">' +
+                            '<div><strong>Qty:</strong> ' + item.quantity + ' ' + item.unit + '</div>' +
+                            '<div><strong>Price:</strong> RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                            '<div><strong>Total:</strong> RM ' + item.total.toFixed(2) + '</div>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                    
+                    quoteHTML += '</div></div>';
                 }
                 
                 quoteHTML += '<div class="quote-total-section">' +
@@ -2640,8 +3362,9 @@
             
             document.getElementById('simple-job-modal-title').textContent = '✏️ Edit Job Quote';
             document.getElementById('simple-job-title').value = quote.title;
+            document.getElementById('preset-category-selector').value = 'all';
             
-            renderPresetItems();
+            renderPresetItems('all');
             updateQuoteItemsDisplay();
             document.getElementById('simple-job-modal').classList.add('show');
             showSuccessMessage('✏️ Editing: ' + quote.title);
@@ -2656,6 +3379,7 @@
                 saveDataToStorage();
                 updateStats();
                 renderViews();
+                updateCategoryFilters();
                 showSuccessMessage('🗑️ Job quote deleted successfully');
             }
         }
@@ -2665,9 +3389,10 @@
             searchTerm = searchTerm || '';
             
             var filteredPresets = presetWorkItems.filter(function(preset) {
-                return preset.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-                       (preset.description && preset.description.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) ||
-                       preset.category.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+                var matchesSearch = preset.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+                       (preset.description && preset.description.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+                var matchesCategory = currentPresetFilter === 'all' || preset.category === currentPresetFilter;
+                return matchesSearch && matchesCategory;
             });
 
             var container = document.getElementById('presets-list');
@@ -2677,54 +3402,103 @@
                 container.innerHTML = '<div class="empty-state">' +
                     '<div class="empty-icon">📋</div>' +
                     '<p style="font-weight: 600;">No preset items found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create preset items for quick quotes</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create preset items or try different filters</p>' +
                     '</div>';
                 return;
             }
             
-            var presetsHTML = '';
-            
+            // Group presets by category
+            var groupedPresets = {};
             for (var i = 0; i < filteredPresets.length; i++) {
                 var preset = filteredPresets[i];
-                var usageCount = 0;
-                
-                // Count usage in quotes
-                for (var j = 0; j < jobQuotes.length; j++) {
-                    for (var k = 0; k < jobQuotes[j].items.length; k++) {
-                        if (jobQuotes[j].items[k].presetId === preset.id) {
-                            usageCount++;
-                        }
-                    }
+                var category = preset.category || 'common';
+                if (!groupedPresets[category]) {
+                    groupedPresets[category] = [];
                 }
-                
-                presetsHTML += '<div class="item-card">' +
-                    '<div class="item-header">' +
-                    '<div class="item-info">' +
-                    '<h3>' + preset.name + '</h3>' +
-                    '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">' +
-                    preset.description + '</div>' +
-                    '<div style="font-size: 12px; color: var(--text-muted);">' +
-                    '📂 ' + preset.category.charAt(0).toUpperCase() + preset.category.slice(1) + ' • ' +
-                    '📏 ' + preset.unit + ' • ' +
-                    '📈 Used ' + usageCount + ' times' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="item-actions">' +
-                    '<button class="icon-btn edit-btn" onclick="editPresetItem(\'' + preset.id + '\')" title="Edit Preset">✏️</button>' +
-                    '<button class="icon-btn delete-btn" onclick="deletePresetItem(\'' + preset.id + '\')" title="Delete Preset">🗑️</button>' +
-                    '</div>' +
-                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
-                    '<span style="font-size: 12px; color: var(--text-muted);">Usage: ' + usageCount + '</span>' +
-                    '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + parseFloat(preset.price).toFixed(2) + '</span>' +
-                    '</div>' +
-                    '</div>';
+                groupedPresets[category].push(preset);
+            }
+            
+            var presetsHTML = '';
+            
+            if (currentPresetFilter === 'all') {
+                // Show all categories grouped
+                for (var category in groupedPresets) {
+                    var categoryPresets = groupedPresets[category];
+                    if (categoryPresets.length === 0) continue;
+                    
+                    var categoryTotal = 0;
+                    for (var j = 0; j < categoryPresets.length; j++) {
+                        categoryTotal += categoryPresets[j].price;
+                    }
+                    var categoryAverage = categoryTotal / categoryPresets.length;
+                    
+                    presetsHTML += '<div class="category-section ' + category + '">' +
+                        '<div class="category-header">' +
+                        '<div class="category-title">' +
+                        '<div class="category-icon ' + category + '">' + getCategoryIcon(category) + '</div>' +
+                        '<span>' + getCategoryName(category) + '</span>' +
+                        '</div>' +
+                        '<div class="category-stats">' +
+                        '<span>' + categoryPresets.length + ' items</span>' +
+                        '<span>Avg: RM ' + categoryAverage.toFixed(0) + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="category-body">';
+                    
+                    for (var j = 0; j < categoryPresets.length; j++) {
+                        presetsHTML += renderPresetCard(categoryPresets[j]);
+                    }
+                    
+                    presetsHTML += '</div></div>';
+                }
+            } else {
+                // Show filtered category only
+                for (var i = 0; i < filteredPresets.length; i++) {
+                    presetsHTML += renderPresetCard(filteredPresets[i]);
+                }
             }
             
             container.innerHTML = presetsHTML;
         }
 
-        // PDF Generation
+        function renderPresetCard(preset) {
+            var usageCount = 0;
+            
+            // Count usage in quotes
+            for (var j = 0; j < jobQuotes.length; j++) {
+                for (var k = 0; k < jobQuotes[j].items.length; k++) {
+                    if (jobQuotes[j].items[k].presetId === preset.id) {
+                        usageCount++;
+                    }
+                }
+            }
+            
+            return '<div class="item-card">' +
+                '<div class="item-header">' +
+                '<div class="item-info">' +
+                '<h3>' +
+                '<span class="category-badge category-' + preset.category + '">' + getCategoryIcon(preset.category) + '</span>' +
+                preset.name + '</h3>' +
+                '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">' +
+                preset.description + '</div>' +
+                '<div style="font-size: 12px; color: var(--text-muted);">' +
+                '📏 ' + preset.unit + ' • ' +
+                '📈 Used ' + usageCount + ' times' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="item-actions">' +
+                '<button class="icon-btn edit-btn" onclick="editPresetItem(\'' + preset.id + '\')" title="Edit Preset">✏️</button>' +
+                '<button class="icon-btn delete-btn" onclick="deletePresetItem(\'' + preset.id + '\')" title="Delete Preset">🗑️</button>' +
+                '</div>' +
+                '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
+                '<span style="font-size: 12px; color: var(--text-muted);">Usage: ' + usageCount + '</span>' +
+                '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + parseFloat(preset.price).toFixed(2) + '</span>' +
+                '</div>' +
+                '</div>';
+        }
+
+        // PDF Generation with Categories
         function generateQuotePDF(quoteId) {
             var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
             if (!quote) return;
@@ -2772,43 +3546,71 @@
                     pdf.text('Created: ' + formatDate(quote.createdAt), margin, currentY);
                     currentY += 15;
                     
-                    // Quote Items
+                    // Quote Items by Category
                     if (quote.items.length > 0) {
-                        pdf.setFontSize(12);
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.text('Quote Items:', margin, currentY);
-                        currentY += 8;
-                        
-                        // Table headers
-                        pdf.setFontSize(9);
-                        pdf.text('Description', margin, currentY);
-                        pdf.text('Qty', margin + 80, currentY);
-                        pdf.text('Unit', margin + 100, currentY);
-                        pdf.text('Price', margin + 120, currentY);
-                        pdf.text('Total', margin + 150, currentY);
-                        currentY += 6;
-                        
-                        pdf.line(margin, currentY, pageWidth - margin, currentY);
-                        currentY += 4;
-                        
-                        pdf.setFont('helvetica', 'normal');
-                        
+                        // Group items by category
+                        var groupedItems = {};
                         for (var i = 0; i < quote.items.length; i++) {
                             var item = quote.items[i];
+                            var category = item.category || 'common';
+                            if (!groupedItems[category]) {
+                                groupedItems[category] = [];
+                            }
+                            groupedItems[category].push(item);
+                        }
+                        
+                        pdf.setFontSize(12);
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.text('Quote Items by Category:', margin, currentY);
+                        currentY += 10;
+                        
+                        for (var category in groupedItems) {
+                            var categoryItems = groupedItems[category];
+                            var categoryTotal = 0;
                             
-                            pdf.text(item.description.substring(0, 30), margin, currentY);
-                            pdf.text(item.quantity.toString(), margin + 80, currentY);
-                            pdf.text(item.unit, margin + 100, currentY);
-                            pdf.text('RM ' + parseFloat(item.price).toFixed(2), margin + 120, currentY);
-                            pdf.text('RM ' + item.total.toFixed(2), margin + 150, currentY);
+                            // Category header
+                            pdf.setFontSize(11);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.text(getCategoryName(category) + ' (' + categoryItems.length + ' items)', margin, currentY);
                             currentY += 6;
+                            
+                            // Table headers
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.text('Description', margin + 5, currentY);
+                            pdf.text('Qty', margin + 80, currentY);
+                            pdf.text('Unit', margin + 100, currentY);
+                            pdf.text('Price', margin + 120, currentY);
+                            pdf.text('Total', margin + 150, currentY);
+                            currentY += 4;
+                            
+                            pdf.line(margin, currentY, pageWidth - margin, currentY);
+                            currentY += 3;
+                            
+                            for (var j = 0; j < categoryItems.length; j++) {
+                                var item = categoryItems[j];
+                                categoryTotal += item.total;
+                                
+                                pdf.text(item.description.substring(0, 25), margin + 5, currentY);
+                                pdf.text(item.quantity.toString(), margin + 80, currentY);
+                                pdf.text(item.unit, margin + 100, currentY);
+                                pdf.text('RM ' + parseFloat(item.price).toFixed(2), margin + 120, currentY);
+                                pdf.text('RM ' + item.total.toFixed(2), margin + 150, currentY);
+                                currentY += 5;
+                            }
+                            
+                            // Category subtotal
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.text('Category Total: RM ' + categoryTotal.toFixed(2), margin + 120, currentY);
+                            currentY += 8;
+                            pdf.setFont('helvetica', 'normal');
                         }
                         
                         currentY += 5;
                         pdf.line(margin, currentY, pageWidth - margin, currentY);
                         currentY += 8;
                         
-                        // Total
+                        // Grand Total
                         pdf.setFontSize(12);
                         pdf.setFont('helvetica', 'bold');
                         pdf.text('TOTAL AMOUNT: RM ' + quote.totalAmount.toFixed(2), margin + 100, currentY);
@@ -2824,7 +3626,7 @@
                     var filename = 'JobQuote_' + quote.id + '_' + quote.title.replace(/[^a-zA-Z0-9]/g, '_') + '.pdf';
                     pdf.save(filename);
                     
-                    showSuccessMessage('📄 PDF quote generated successfully!');
+                    showSuccessMessage('📄 Categorized PDF quote generated successfully!');
                 } catch (error) {
                     console.error('PDF generation error:', error);
                     showSuccessMessage('⚠️ Error generating PDF. Please try again.');
@@ -2842,8 +3644,9 @@
                 presetWorkItems: presetWorkItems,
                 selectedLogo: selectedLogoIndex,
                 themePreference: currentTheme,
+                categories: categories,
                 exportDate: new Date().toISOString(),
-                version: '3.0'
+                version: '4.0'
             };
             
             var dataStr = JSON.stringify(allData, null, 2);
@@ -2851,10 +3654,10 @@
             
             var link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_EyeFriendly_' + new Date().toISOString().split('T')[0] + '.json';
+            link.download = 'REFIT_Categorized_' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             
-            showSuccessMessage('📤 Data exported successfully!');
+            showSuccessMessage('📤 Categorized data exported successfully!');
         }
 
         // Event Listeners
@@ -2928,6 +3731,14 @@
                             e.preventDefault();
                             toggleTheme();
                             break;
+                        case 'f':
+                            e.preventDefault();
+                            if (currentView === 'quotes') {
+                                filterQuotesByCategory('all');
+                            } else if (currentView === 'presets') {
+                                filterPresetsByCategory('all');
+                            }
+                            break;
                     }
                 }
                 
@@ -2974,6 +3785,13 @@
                 activeNav.classList.add('active');
             }
             
+            // Reset filters when changing views
+            if (viewName === 'quotes') {
+                currentQuoteFilter = 'all';
+            } else if (viewName === 'presets') {
+                currentPresetFilter = 'all';
+            }
+            
             // Render view content
             renderViews();
         }
@@ -2985,9 +3803,11 @@
                     break;
                 case 'quotes':
                     renderQuotes();
+                    updateQuoteCategoryFilters();
                     break;
                 case 'presets':
                     renderPresets();
+                    updatePresetCategoryFilters();
                     break;
             }
         }
@@ -3010,15 +3830,92 @@
             var html = '';
             for (var i = 0; i < recentQuotes.length; i++) {
                 var quote = recentQuotes[i];
+                var quoteCategories = getQuoteCategories(quote);
                 
                 html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;" onclick="viewQuote(' + quote.id + ')" onmouseover="this.style.transform=\'scale(1.02)\'" onmouseout="this.style.transform=\'scale(1)\'">' +
                     '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">' +
                     '<div style="font-weight: 700; font-size: 15px; color: var(--text-primary);">' + quote.title + '</div>' +
                     '</div>' +
                     '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
+                    '<div style="margin-bottom: 8px;">' + renderCategoryBadges(quoteCategories) + '</div>' +
                     '<div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px;">' +
                     '<span style="color: var(--text-muted);">Quote #' + quote.id + '</span>' +
                     '<span style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = html;
+            
+            // Render category statistics
+            renderCategoryStatistics();
+        }
+
+        function renderCategoryStatistics() {
+            var container = document.getElementById('category-stats-grid');
+            if (!container) return;
+            
+            var categoryStats = {};
+            var totalItems = 0;
+            
+            // Initialize category stats
+            for (var catKey in categories) {
+                categoryStats[catKey] = {
+                    count: 0,
+                    revenue: 0,
+                    items: 0
+                };
+            }
+            
+            // Calculate statistics
+            for (var i = 0; i < jobQuotes.length; i++) {
+                var quote = jobQuotes[i];
+                for (var j = 0; j < quote.items.length; j++) {
+                    var item = quote.items[j];
+                    var category = item.category || 'common';
+                    totalItems++;
+                    
+                    if (categoryStats[category]) {
+                        categoryStats[category].items++;
+                        categoryStats[category].revenue += item.total;
+                    }
+                }
+            }
+            
+            // Count quotes per category
+            for (var i = 0; i < jobQuotes.length; i++) {
+                var quote = jobQuotes[i];
+                var quoteCategories = getQuoteCategories(quote);
+                for (var j = 0; j < quoteCategories.length; j++) {
+                    var category = quoteCategories[j];
+                    if (categoryStats[category]) {
+                        categoryStats[category].count++;
+                    }
+                }
+            }
+            
+            var html = '';
+            for (var catKey in categoryStats) {
+                var stats = categoryStats[catKey];
+                var percentage = totalItems > 0 ? Math.round((stats.items / totalItems) * 100) : 0;
+                
+                html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; border: 1px solid var(--border-color); transition: all 0.2s ease;" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'">' +
+                    '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">' +
+                    '<div class="category-icon ' + catKey + '">' + getCategoryIcon(catKey) + '</div>' +
+                    '<span style="font-weight: 700; font-size: 14px; color: var(--text-primary);">' + getCategoryName(catKey) + '</span>' +
+                    '</div>' +
+                    '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 12px;">' +
+                    '<div style="text-align: center;">' +
+                    '<div style="color: var(--text-muted);">Quotes</div>' +
+                    '<div style="font-weight: 700; color: var(--accent-primary);">' + stats.count + '</div>' +
+                    '</div>' +
+                    '<div style="text-align: center;">' +
+                    '<div style="color: var(--text-muted);">Revenue</div>' +
+                    '<div style="font-weight: 700; color: var(--accent-warm);">RM ' + Math.round(stats.revenue) + '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div style="margin-top: 8px; text-align: center;">' +
+                    '<div style="color: var(--text-muted); font-size: 11px;">' + percentage + '% of items</div>' +
                     '</div>' +
                     '</div>';
             }
@@ -3034,6 +3931,7 @@
             var todayRevenue = 0;
             var presetUsage = 0;
             var totalPresetItems = 0;
+            var activeCategories = {};
             
             var today = new Date().toISOString().split('T')[0];
             
@@ -3047,17 +3945,21 @@
                     todayRevenue += quote.totalAmount;
                 }
                 
-                // Count preset usage
+                // Count preset usage and categories
                 for (var j = 0; j < quote.items.length; j++) {
+                    var item = quote.items[j];
                     totalPresetItems++;
-                    if (quote.items[j].isPreset) {
+                    if (item.isPreset) {
                         presetUsage++;
                     }
+                    var category = item.category || 'common';
+                    activeCategories[category] = true;
                 }
             }
             
             var presetUsagePercent = totalPresetItems > 0 ? Math.round((presetUsage / totalPresetItems) * 100) : 0;
             var averageQuote = totalQuotes > 0 ? totalRevenue / totalQuotes : 0;
+            var totalActiveCategories = Object.keys(activeCategories).length;
             
             // Calculate preset statistics
             var categories = {};
@@ -3075,7 +3977,7 @@
             updateElementText('today-revenue', 'RM ' + Math.round(todayRevenue));
             updateElementText('total-revenue', 'RM ' + Math.round(totalRevenue));
             updateElementText('average-quote', 'RM ' + Math.round(averageQuote));
-            updateElementText('preset-usage', presetUsagePercent + '%');
+            updateElementText('total-categories', totalActiveCategories);
             updateElementText('daily-revenue', 'RM ' + todayRevenue.toFixed(2));
             
             // Preset statistics
@@ -3160,53 +4062,6 @@
             }, 3000);
         }
 
-        // Enhanced Eye Comfort Features
-        function adjustBlueLightFilter(intensity) {
-            var filter = document.getElementById('blue-light-filter');
-            if (filter) {
-                if (currentTheme === 'dark') {
-                    filter.style.background = 'rgba(255, 214, 102, ' + (intensity * 0.02) + ')';
-                } else {
-                    filter.style.background = 'rgba(255, 214, 102, ' + (intensity * 0.05) + ')';
-                }
-            }
-        }
-
-        function enableReadingMode() {
-            document.body.style.fontSize = '18px';
-            document.body.style.lineHeight = '1.8';
-            showSuccessMessage('📖 Reading mode enabled - Larger text for comfort');
-        }
-
-        function disableReadingMode() {
-            document.body.style.fontSize = '16px';
-            document.body.style.lineHeight = '1.6';
-            showSuccessMessage('📖 Reading mode disabled');
-        }
-
-        // Auto Dark Mode based on time
-        function autoThemeDetection() {
-            var hour = new Date().getHours();
-            var shouldBeDark = hour >= 20 || hour <= 7; // 8 PM to 7 AM
-            
-            if (!localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) {
-                if (shouldBeDark && currentTheme === 'light') {
-                    toggleTheme();
-                    showSuccessMessage('🌙 Auto dark mode activated for night time');
-                } else if (!shouldBeDark && currentTheme === 'dark') {
-                    toggleTheme();
-                    showSuccessMessage('☀️ Auto light mode activated for day time');
-                }
-            }
-        }
-
-        // Eye strain reminder
-        function eyeStrainReminder() {
-            if (document.hasFocus()) {
-                showSuccessMessage('👁️ Take a 20-second break - Look at something 20 feet away!');
-            }
-        }
-
         // Touch Gesture Enhancements
         function setupTouchGestures() {
             var startX, startY, distX, distY;
@@ -3255,60 +4110,12 @@
             showView(views[prevIndex]);
         }
 
-        // Analytics & Usage Tracking
-        function trackUserSession() {
-            var sessionStart = Date.now();
-            var sessionData = {
-                startTime: sessionStart,
-                theme: currentTheme,
-                actions: []
-            };
-            
-            window.addEventListener('beforeunload', function() {
-                sessionData.endTime = Date.now();
-                sessionData.duration = sessionData.endTime - sessionData.startTime;
-                
-                // Store session data for analytics
-                var sessions = JSON.parse(sessionStorage.getItem('userSessions') || '[]');
-                sessions.push(sessionData);
-                
-                // Keep only last 10 sessions
-                if (sessions.length > 10) {
-                    sessions = sessions.slice(-10);
-                }
-                
-                sessionStorage.setItem('userSessions', JSON.stringify(sessions));
-            });
-        }
-
-        // Performance optimizations for long sessions
-        function optimizeForLongSession() {
-            // Throttle scroll events
-            var scrollTimeout;
-            document.addEventListener('scroll', function() {
-                if (scrollTimeout) {
-                    clearTimeout(scrollTimeout);
-                }
-                scrollTimeout = setTimeout(function() {
-                    // Handle scroll optimizations
-                }, 100);
-            });
-            
-            // Reduce animations after extended use
-            setTimeout(function() {
-                document.body.classList.add('reduced-motion');
-                showSuccessMessage('🚀 Performance optimized for extended usage');
-            }, 30 * 60 * 1000); // After 30 minutes
-        }
-
         // Auto-save functionality with visual feedback
         var autoSaveInterval;
-        var lastSaveTime = Date.now();
 
         function startAutoSave() {
             autoSaveInterval = setInterval(function() {
                 saveDataToStorage();
-                lastSaveTime = Date.now();
                 
                 // Show subtle save indicator
                 var header = document.querySelector('.header');
@@ -3327,58 +4134,15 @@
             }
         }
 
-        // Data validation and integrity checks
-        function validateAppData() {
-            var isValid = true;
-            var errors = [];
-            
-            // Validate quotes
-            for (var i = 0; i < jobQuotes.length; i++) {
-                var quote = jobQuotes[i];
-                if (!quote.id || !quote.title || !Array.isArray(quote.items)) {
-                    errors.push('Invalid quote data found');
-                    isValid = false;
-                    break;
-                }
-            }
-            
-            // Validate presets
-            for (var i = 0; i < presetWorkItems.length; i++) {
-                var preset = presetWorkItems[i];
-                if (!preset.id || !preset.name || !preset.price) {
-                    errors.push('Invalid preset data found');
-                    isValid = false;
-                    break;
-                }
-            }
-            
-            if (!isValid) {
-                console.warn('Data validation errors:', errors);
-                showSuccessMessage('⚠️ Data integrity check failed. Consider exporting backup.');
-            }
-            
-            return isValid;
-        }
-
         // Initialize all features when app loads
         window.addEventListener('load', function() {
             startAutoSave();
-            trackUserSession();
-            optimizeForLongSession();
             
-            // Auto theme detection every hour
-            setInterval(autoThemeDetection, 60 * 60 * 1000);
-            
-            // Eye strain reminder every 20 minutes
-            setInterval(eyeStrainReminder, 20 * 60 * 1000);
-            
-            // Data validation check every 5 minutes
-            setInterval(validateAppData, 5 * 60 * 1000);
-            
-            console.log('👁️ REFIT MAINTENANCE - Complete Eye-Friendly System Loaded');
-            console.log('🌙 Dark/Light Theme with Auto Detection');
-            console.log('💫 Reduced Blue Light & Eye Strain Features');
-            console.log('🚀 Performance Optimized for Extended Usage');
+            console.log('📋 REFIT MAINTENANCE SERVICES - Complete Categorized System Loaded');
+            console.log('🏷️ Advanced Category Organization & Filtering');
+            console.log('👁️ Eye-Friendly Design for Extended Use');
+            console.log('📱 Mobile-Optimized with Touch Gestures');
+            console.log('💾 Auto-save & Data Protection Enabled');
         });
 
         // Cleanup when page unloads
@@ -3387,46 +4151,17 @@
             saveDataToStorage(); // Final save
         });
 
-        // Handle visibility changes to save battery
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                // App hidden, reduce background activity
-                stopAutoSave();
-            } else {
-                // App visible again, resume activity
-                startAutoSave();
-            }
-        });
-
-        // Enhanced error handling with user-friendly messages
+        // Enhanced error handling
         window.addEventListener('error', function(e) {
             console.error('Application error:', e.error);
             showSuccessMessage('⚠️ Minor issue detected. App continues working normally.');
         });
 
-        // Memory management for long sessions
-        function cleanupMemory() {
-            // Clear old session data
-            var sessions = JSON.parse(sessionStorage.getItem('userSessions') || '[]');
-            if (sessions.length > 10) {
-                sessionStorage.setItem('userSessions', JSON.stringify(sessions.slice(-5)));
-            }
-            
-            // Clear old analytics data
-            var actions = JSON.parse(sessionStorage.getItem('userActions') || '[]');
-            if (actions.length > 100) {
-                sessionStorage.setItem('userActions', JSON.stringify(actions.slice(-50)));
-            }
-        }
-
-        // Run memory cleanup every 10 minutes
-        setInterval(cleanupMemory, 10 * 60 * 1000);
-
-        console.log('🎯 REFIT MAINTENANCE SERVICES - Complete Eye-Friendly Enhanced System Ready');
-        console.log('🔧 Professional Quote Management');
-        console.log('👁️ Eye Comfort & Extended Usage Optimizations');
-        console.log('📱 Advanced Mobile Experience with Gestures');
-        console.log('💾 Auto-save & Data Integrity Protection');
+        console.log('🎯 REFIT MAINTENANCE SERVICES - Complete Categorized Management System Ready');
+        console.log('📊 Professional Category Organization');
+        console.log('🔧 Advanced Filtering & Segregation');
+        console.log('👁️ Eye-Comfort Optimized Interface');
+        console.log('📱 Touch-Friendly Mobile Experience');
     </script>
 </body>
 </html>
