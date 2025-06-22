@@ -951,6 +951,88 @@
             transform: scale(0.96);
         }
         
+        /* Preset Items Styles */
+        .preset-items-section {
+            background: linear-gradient(135deg, #c1d9d3, #a8cdc1);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #40160a;
+        }
+        
+        .preset-items-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .preset-items-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #40160a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .preset-item {
+            background: rgba(250, 233, 220, 0.9);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(64, 22, 10, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .preset-item:hover {
+            background: rgba(250, 233, 220, 1);
+            transform: scale(1.02);
+        }
+        
+        .preset-item-info {
+            flex: 1;
+        }
+        
+        .preset-item-name {
+            font-weight: 700;
+            color: #40160a;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        
+        .preset-item-details {
+            font-size: 12px;
+            color: rgba(64, 22, 10, 0.7);
+        }
+        
+        .preset-item-price {
+            font-weight: 700;
+            color: #74a478;
+            font-size: 14px;
+        }
+        
+        .preset-item-add {
+            background: linear-gradient(135deg, #fec7b3, #f4b199);
+            color: #40160a;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 8px;
+        }
+        
+        .preset-item-add:active {
+            transform: scale(0.95);
+        }
+        
         /* Work Items Styles */
         .work-items-container {
             background: linear-gradient(135deg, #40160a, #5a1f0f);
@@ -1845,6 +1927,19 @@
                     </form>
                 </div>
 
+                <!-- Preset Items Section -->
+                <div class="preset-items-section">
+                    <div class="preset-items-header">
+                        <h4 class="preset-items-title">
+                            📋 Common Work Items
+                        </h4>
+                        <button type="button" onclick="openPresetItemForm()" style="background: linear-gradient(135deg, #fec7b3, #f4b199); color: #40160a; border: none; border-radius: 8px; padding: 6px 12px; font-size: 12px; cursor: pointer;">
+                            ➕ Add Custom
+                        </button>
+                    </div>
+                    <div id="preset-items-list"></div>
+                </div>
+
                 <!-- Quote Items Section -->
                 <div class="quick-add-work-items">
                     <div class="quick-add-header">
@@ -1905,6 +2000,50 @@
                         Cancel
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preset Item Form Modal -->
+    <div id="preset-item-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="preset-item-modal-title">➕ Add Custom Work Item</h3>
+                <button class="close-btn" onclick="closePresetItemForm()">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="preset-item-form">
+                    <input type="text" class="form-input" placeholder="Item Name *" id="preset-item-name" required>
+                    <textarea class="form-input" placeholder="Description" id="preset-item-description" rows="2" style="resize: none;"></textarea>
+                    <input type="number" class="form-input" placeholder="Default Price (RM) *" id="preset-item-price" step="0.01" required>
+                    <select class="form-input" id="preset-item-unit" style="color: #40160a; font-weight: 600;">
+                        <option value="pcs">Pieces (pcs)</option>
+                        <option value="hours">Hours</option>
+                        <option value="sqft">Square Feet</option>
+                        <option value="sqm">Square Meters</option>
+                        <option value="meters">Meters</option>
+                        <option value="kg">Kilograms</option>
+                        <option value="liters">Liters</option>
+                        <option value="set">Set</option>
+                        <option value="lot">Lot</option>
+                        <option value="service">Service</option>
+                    </select>
+                    <select class="form-input" id="preset-item-category" style="color: #40160a; font-weight: 600;">
+                        <option value="common">Common Items</option>
+                        <option value="electrical">Electrical</option>
+                        <option value="plumbing">Plumbing</option>
+                        <option value="hvac">HVAC</option>
+                        <option value="cleaning">Cleaning</option>
+                        <option value="parts">Parts & Materials</option>
+                        <option value="labor">Labor</option>
+                        <option value="equipment">Equipment</option>
+                    </select>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="form-btn" style="background: linear-gradient(135deg, #fec7b3, #f4b199); color: #40160a;">Save Item</button>
+                        <button type="button" class="form-btn" style="background: linear-gradient(135deg, #ac9987, #9a8976);" onclick="closePresetItemForm()">Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -2079,10 +2218,10 @@
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - COMPLETE SYSTEM WITH HIGH CONTRAST THEME
+        // REFIT MAINTENANCE SERVICES - COMPLETE SYSTEM WITH PRESET ITEMS
         // Registration No: 201803348973 (002894203-V)
-        // Complete Work Management System with Company Logo Functionality
-        // Now featuring high-contrast color palette for better readability
+        // Complete Work Management System with Company Logo & Preset Work Items
+        // Now featuring preset itemized work items with selection
         // ========================================
         
         // App State Variables
@@ -2092,6 +2231,7 @@
         var technicians = [];
         var workItems = {}; // Object to store work items by job ID
         var customServiceTypes = []; // Custom service types array
+        var presetWorkItems = []; // Preset work items array
         var tempWorkItems = []; // Temporary work items for job creation
         var selectedDate = new Date().toISOString().split('T')[0];
         var jobFilter = 'all';
@@ -2100,6 +2240,7 @@
         var editingTechnician = null;
         var editingServiceType = null;
         var editingWorkItem = null;
+        var editingPresetItem = null;
         var selectedJobQuote = null;
         var selectedJobForWorks = null;
         var companyLogo = null; // Store company logo data
@@ -2123,7 +2264,8 @@
             JOBS: 'refit_maintenance_jobs',
             TECHNICIANS: 'refit_maintenance_technicians',
             WORK_ITEMS: 'refit_maintenance_work_items',
-            CUSTOM_SERVICE_TYPES: 'refit_maintenance_custom_service_types'
+            CUSTOM_SERVICE_TYPES: 'refit_maintenance_custom_service_types',
+            PRESET_WORK_ITEMS: 'refit_maintenance_preset_work_items'
         };
 
         // Default Service Types
@@ -2138,6 +2280,45 @@
             { id: 'security', name: 'Security System', description: 'CCTV, alarm systems, access control', category: 'Security', defaultPrice: 150.00, isDefault: true },
             { id: 'landscaping', name: 'Landscaping', description: 'Garden maintenance, lawn care', category: 'Landscaping', defaultPrice: 35.00, isDefault: true },
             { id: 'general', name: 'General Maintenance', description: 'General repair and maintenance services', category: 'General', defaultPrice: 40.00, isDefault: true }
+        ];
+
+        // Default Preset Work Items
+        var defaultPresetWorkItems = [
+            // Electrical Items
+            { id: 'electrical-inspection', name: 'Electrical Safety Inspection', description: 'Comprehensive electrical system safety check', price: 120.00, unit: 'service', category: 'electrical', isDefault: true },
+            { id: 'light-bulb-replacement', name: 'LED Light Bulb Replacement', description: 'Replace with energy-efficient LED bulbs', price: 15.00, unit: 'pcs', category: 'electrical', isDefault: true },
+            { id: 'switch-socket-installation', name: 'Switch/Socket Installation', description: 'Install new electrical switches or sockets', price: 45.00, unit: 'pcs', category: 'electrical', isDefault: true },
+            { id: 'circuit-breaker-replacement', name: 'Circuit Breaker Replacement', description: 'Replace faulty circuit breakers', price: 85.00, unit: 'pcs', category: 'electrical', isDefault: true },
+            
+            // Plumbing Items
+            { id: 'pipe-leak-repair', name: 'Water Pipe Leak Repair', description: 'Fix leaking water pipes', price: 65.00, unit: 'service', category: 'plumbing', isDefault: true },
+            { id: 'faucet-replacement', name: 'Faucet Replacement', description: 'Replace old or damaged faucets', price: 95.00, unit: 'pcs', category: 'plumbing', isDefault: true },
+            { id: 'toilet-repair', name: 'Toilet Flush System Repair', description: 'Fix toilet flushing mechanisms', price: 75.00, unit: 'service', category: 'plumbing', isDefault: true },
+            { id: 'drain-cleaning', name: 'Drain Cleaning Service', description: 'Clear blocked drains and pipes', price: 55.00, unit: 'service', category: 'plumbing', isDefault: true },
+            
+            // HVAC Items
+            { id: 'aircon-servicing', name: 'Air Conditioning Servicing', description: 'Complete AC unit cleaning and maintenance', price: 80.00, unit: 'pcs', category: 'hvac', isDefault: true },
+            { id: 'aircon-gas-top-up', name: 'AC Refrigerant Gas Top-up', description: 'Refill air conditioning refrigerant', price: 120.00, unit: 'service', category: 'hvac', isDefault: true },
+            { id: 'fan-installation', name: 'Ceiling Fan Installation', description: 'Install new ceiling fans', price: 85.00, unit: 'pcs', category: 'hvac', isDefault: true },
+            { id: 'ventilation-cleaning', name: 'Ventilation System Cleaning', description: 'Clean air vents and ducts', price: 45.00, unit: 'sqm', category: 'hvac', isDefault: true },
+            
+            // Cleaning Services
+            { id: 'office-cleaning', name: 'Office Deep Cleaning', description: 'Comprehensive office space cleaning', price: 25.00, unit: 'sqm', category: 'cleaning', isDefault: true },
+            { id: 'carpet-cleaning', name: 'Carpet Steam Cleaning', description: 'Professional carpet cleaning service', price: 35.00, unit: 'sqm', category: 'cleaning', isDefault: true },
+            { id: 'window-cleaning', name: 'Window Cleaning Service', description: 'Clean interior and exterior windows', price: 8.00, unit: 'sqm', category: 'cleaning', isDefault: true },
+            { id: 'floor-polishing', name: 'Floor Polishing & Waxing', description: 'Polish and wax floor surfaces', price: 12.00, unit: 'sqm', category: 'cleaning', isDefault: true },
+            
+            // Parts & Materials
+            { id: 'electrical-cable', name: 'Electrical Cable (per meter)', description: 'Standard electrical wiring cable', price: 8.50, unit: 'meters', category: 'parts', isDefault: true },
+            { id: 'pvc-pipe', name: 'PVC Water Pipe (per meter)', description: 'Standard PVC water pipe', price: 12.00, unit: 'meters', category: 'parts', isDefault: true },
+            { id: 'paint-coverage', name: 'Wall Paint Coverage', description: 'Interior wall paint application', price: 18.00, unit: 'sqm', category: 'parts', isDefault: true },
+            { id: 'door-lock', name: 'Standard Door Lock', description: 'Basic security door lock installation', price: 65.00, unit: 'pcs', category: 'parts', isDefault: true },
+            
+            // Labor Services
+            { id: 'technician-labor', name: 'Skilled Technician Labor', description: 'Professional technician hourly rate', price: 45.00, unit: 'hours', category: 'labor', isDefault: true },
+            { id: 'helper-labor', name: 'General Helper Labor', description: 'General maintenance helper hourly rate', price: 25.00, unit: 'hours', category: 'labor', isDefault: true },
+            { id: 'emergency-callout', name: 'Emergency Call-out Fee', description: 'After-hours emergency service charge', price: 150.00, unit: 'service', category: 'labor', isDefault: true },
+            { id: 'consultation-fee', name: 'Technical Consultation', description: 'Professional technical advice and consultation', price: 80.00, unit: 'hours', category: 'labor', isDefault: true }
         ];
 
         // Initialize App
@@ -2160,12 +2341,134 @@
                 loadSampleData();
             }
             
-            showSuccessMessage('⚡ REFIT MAINTENANCE SERVICES - High Contrast Theme System Ready!');
+            showSuccessMessage('⚡ REFIT MAINTENANCE SERVICES - Complete System with Preset Items Ready!');
             console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Work Management System');
             console.log('📋 Registration: 201803348973 (002894203-V)');
             console.log('⚡ High Contrast Color Theme Active');
             console.log('🖼️ Enhanced with Company Logo Management');
+            console.log('📝 Enhanced with Preset Work Items Selection');
             console.log('💼 All features functional and ready for use');
+        }
+
+        // Preset Work Items Management
+        function initializePresetWorkItems() {
+            if (presetWorkItems.length === 0) {
+                presetWorkItems = [...defaultPresetWorkItems];
+                saveDataToStorage();
+            }
+        }
+
+        function getAllPresetWorkItems() {
+            return presetWorkItems;
+        }
+
+        function renderPresetItems() {
+            var container = document.getElementById('preset-items-list');
+            if (!container) return;
+            
+            var items = getAllPresetWorkItems();
+            
+            if (items.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(64, 22, 10, 0.6);">' +
+                    '<div style="font-size: 32px; margin-bottom: 8px;">📋</div>' +
+                    '<p>No preset items available</p>' +
+                    '<p style="font-size: 12px; margin-top: 4px;">Add custom work items for quick selection</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var html = '';
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                html += '<div class="preset-item" onclick="selectPresetItem(\'' + item.id + '\')">' +
+                    '<div class="preset-item-info">' +
+                    '<div class="preset-item-name">' + item.name + '</div>' +
+                    '<div class="preset-item-details">' + item.description + ' • ' + item.unit + '</div>' +
+                    '</div>' +
+                    '<div style="display: flex; align-items: center;">' +
+                    '<div class="preset-item-price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                    '<button class="preset-item-add" onclick="event.stopPropagation(); addPresetItemToQuote(\'' + item.id + '\')">' +
+                    '➕ Add' +
+                    '</button>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function selectPresetItem(itemId) {
+            var item = presetWorkItems.find(function(item) { return item.id === itemId; });
+            if (!item) return;
+            
+            // Fill the quick add form with preset item data
+            document.getElementById('quick-work-description').value = item.name;
+            document.getElementById('quick-work-quantity').value = '1';
+            document.getElementById('quick-work-price').value = item.price;
+            document.getElementById('quick-work-unit').value = item.unit;
+            
+            updateQuickAddTotal();
+            showSuccessMessage('✅ Preset item "' + item.name + '" selected');
+        }
+
+        function addPresetItemToQuote(itemId) {
+            var item = presetWorkItems.find(function(item) { return item.id === itemId; });
+            if (!item) return;
+            
+            var workItem = {
+                description: item.name,
+                quantity: 1,
+                price: item.price,
+                unit: item.unit,
+                total: item.price
+            };
+            
+            tempWorkItems.push(workItem);
+            updateWorkItemsDisplay();
+            updateOverallTotal();
+            
+            showSuccessMessage('✅ "' + item.name + '" added to quote!');
+        }
+
+        function openPresetItemForm() {
+            editingPresetItem = null;
+            document.getElementById('preset-item-modal-title').textContent = '➕ Add Custom Work Item';
+            document.getElementById('preset-item-form').reset();
+            document.getElementById('preset-item-modal').classList.add('show');
+        }
+
+        function closePresetItemForm() {
+            document.getElementById('preset-item-modal').classList.remove('show');
+            editingPresetItem = null;
+        }
+
+        function handlePresetItemSubmit(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('preset-item-name').value.trim();
+            var price = parseFloat(document.getElementById('preset-item-price').value);
+            
+            if (!name || !price) {
+                showSuccessMessage('⚠️ Please fill in all required fields!');
+                return;
+            }
+
+            var itemData = {
+                id: name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-') + '-' + Date.now(),
+                name: name,
+                description: document.getElementById('preset-item-description').value.trim(),
+                price: price,
+                unit: document.getElementById('preset-item-unit').value,
+                category: document.getElementById('preset-item-category').value,
+                isDefault: false,
+                createdAt: new Date().toISOString()
+            };
+
+            presetWorkItems.push(itemData);
+            closePresetItemForm();
+            saveDataToStorage();
+            renderPresetItems();
+            showSuccessMessage('✅ Custom work item added successfully');
         }
 
         // Company Logo Management Functions
@@ -2301,6 +2604,7 @@
                 localStorage.setItem(STORAGE_KEYS.TECHNICIANS, JSON.stringify(technicians));
                 localStorage.setItem(STORAGE_KEYS.WORK_ITEMS, JSON.stringify(workItems));
                 localStorage.setItem(STORAGE_KEYS.CUSTOM_SERVICE_TYPES, JSON.stringify(customServiceTypes));
+                localStorage.setItem(STORAGE_KEYS.PRESET_WORK_ITEMS, JSON.stringify(presetWorkItems));
                 saveLogoToStorage();
             } catch (e) {
                 console.warn('Storage error:', e);
@@ -2340,6 +2644,14 @@
                     customServiceTypes = JSON.parse(savedCustomServiceTypes);
                 }
 
+                var savedPresetWorkItems = localStorage.getItem(STORAGE_KEYS.PRESET_WORK_ITEMS);
+                if (savedPresetWorkItems) {
+                    presetWorkItems = JSON.parse(savedPresetWorkItems);
+                } else {
+                    // Initialize with default preset items
+                    presetWorkItems = [...defaultPresetWorkItems];
+                }
+
                 loadLogoFromStorage();
             } catch (e) {
                 console.warn('Load error:', e);
@@ -2370,6 +2682,11 @@
                 { id: 'advanced-hvac', name: 'Advanced HVAC Systems', description: 'High-end HVAC installation and maintenance for large commercial buildings', category: 'HVAC', defaultPrice: 200.00, isDefault: false, createdAt: new Date().toISOString() },
                 { id: 'smart-security', name: 'Smart Security Integration', description: 'IoT-based security systems with mobile monitoring', category: 'Security', defaultPrice: 300.00, isDefault: false, createdAt: new Date().toISOString() }
             ];
+
+            // Initialize preset work items if not already loaded
+            if (presetWorkItems.length === 0) {
+                presetWorkItems = [...defaultPresetWorkItems];
+            }
 
             jobs = [];
             workItems = {};
@@ -2648,6 +2965,11 @@
                 serviceTypeForm.addEventListener('submit', handleServiceTypeSubmit);
             }
 
+            var presetItemForm = document.getElementById('preset-item-form');
+            if (presetItemForm) {
+                presetItemForm.addEventListener('submit', handlePresetItemSubmit);
+            }
+
             var addWorkItemForm = document.getElementById('add-work-item-form');
             if (addWorkItemForm) {
                 addWorkItemForm.addEventListener('submit', handleAddWorkItemSubmit);
@@ -2738,6 +3060,7 @@
         function closeAllModals() {
             var modals = [
                 'enhanced-job-modal',
+                'preset-item-modal',
                 'client-modal', 
                 'technician-modal',
                 'service-type-modal',
@@ -2764,6 +3087,7 @@
             populateEnhancedJobClients();
             populateEnhancedJobTechnicians();
             populateServiceTypeSelects();
+            renderPresetItems();
             
             // Set defaults
             document.getElementById('enhanced-job-scheduled-date').value = selectedDate;
@@ -2773,7 +3097,7 @@
             updateOverallTotal();
             
             document.getElementById('enhanced-job-modal').classList.add('show');
-            showSuccessMessage('🔧 Enhanced Job Creation with Quote opened!');
+            showSuccessMessage('🔧 Enhanced Job Creation with Preset Items opened!');
         }
 
         function closeEnhancedJobForm() {
@@ -2906,4 +3230,1300 @@
         function updateOverallTotal() {
             var total = 0;
             for (var i = 0; i < tempWorkItems.length; i++) {
-                total += tempWorkItems
+                total += tempWorkItems[i].total;
+            }
+            
+            var totalSection = document.getElementById('overall-total-section');
+            var totalValue = document.getElementById('overall-total-value');
+            
+            if (totalSection && totalValue) {
+                if (total > 0) {
+                    totalSection.classList.remove('hidden');
+                    totalValue.textContent = 'RM ' + total.toFixed(2);
+                } else {
+                    totalSection.classList.add('hidden');
+                }
+            }
+        }
+
+        function editTempWorkItem(index) {
+            var item = tempWorkItems[index];
+            if (!item) return;
+            
+            document.getElementById('quick-work-description').value = item.description;
+            document.getElementById('quick-work-quantity').value = item.quantity;
+            document.getElementById('quick-work-price').value = item.price;
+            document.getElementById('quick-work-unit').value = item.unit;
+            
+            deleteTempWorkItem(index);
+            updateQuickAddTotal();
+            showSuccessMessage('📝 Item loaded for editing');
+        }
+
+        function deleteTempWorkItem(index) {
+            if (index >= 0 && index < tempWorkItems.length) {
+                var item = tempWorkItems[index];
+                tempWorkItems.splice(index, 1);
+                updateWorkItemsDisplay();
+                updateOverallTotal();
+                showSuccessMessage('🗑️ "' + item.description + '" removed from quote');
+            }
+        }
+
+        function clearAllWorkItems() {
+            if (tempWorkItems.length === 0) {
+                showSuccessMessage('ℹ️ No items to clear');
+                return;
+            }
+            
+            if (confirm('Clear all quote items?\nThis action cannot be undone.')) {
+                tempWorkItems = [];
+                updateWorkItemsDisplay();
+                updateOverallTotal();
+                showSuccessMessage('🗑️ All quote items cleared');
+            }
+        }
+
+        function saveEnhancedJob() {
+            var clientId = document.getElementById('enhanced-job-client').value;
+            var title = document.getElementById('enhanced-job-title').value.trim();
+            
+            if (!clientId || !title) {
+                showSuccessMessage('⚠️ Please fill in required fields (Client & Job Title)!');
+                return;
+            }
+            
+            var client = clients.find(function(c) { return c.id == clientId; });
+            if (!client) {
+                showSuccessMessage('⚠️ Selected client not found!');
+                return;
+            }
+            
+            var jobData = {
+                id: Date.now(),
+                clientId: parseInt(clientId),
+                clientName: client.name,
+                title: title,
+                serviceType: document.getElementById('enhanced-job-service').value,
+                priority: document.getElementById('enhanced-job-priority').value,
+                technicianId: document.getElementById('enhanced-job-technician').value || null,
+                scheduledDate: document.getElementById('enhanced-job-scheduled-date').value,
+                scheduledTime: document.getElementById('enhanced-job-scheduled-time').value,
+                notes: document.getElementById('enhanced-job-notes').value.trim(),
+                status: 'pending',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            // Calculate total amount from work items
+            var totalAmount = 0;
+            for (var i = 0; i < tempWorkItems.length; i++) {
+                totalAmount += tempWorkItems[i].total;
+            }
+            jobData.totalAmount = totalAmount;
+            
+            jobs.push(jobData);
+            
+            // Save work items if any
+            if (tempWorkItems.length > 0) {
+                workItems[jobData.id] = [...tempWorkItems];
+            }
+            
+            closeEnhancedJobForm();
+            saveDataToStorage();
+            updateStats();
+            renderViews();
+            
+            var itemsText = tempWorkItems.length > 0 ? ' with ' + tempWorkItems.length + ' quote items' : '';
+            showSuccessMessage('✅ Job "' + title + '" created successfully' + itemsText + '!');
+            
+            // Show the newly created job
+            showView('jobs');
+        }
+
+        // Client Management Functions
+        function openClientForm() {
+            editingClient = null;
+            document.getElementById('client-modal-title').textContent = '👥 Add Client';
+            document.getElementById('client-form').reset();
+            document.getElementById('client-modal').classList.add('show');
+        }
+
+        function closeClientForm() {
+            document.getElementById('client-modal').classList.remove('show');
+            editingClient = null;
+        }
+
+        function editClient(id) {
+            var client = clients.find(function(c) { return c.id === id; });
+            if (!client) return;
+
+            editingClient = client;
+            document.getElementById('client-modal-title').textContent = '✏️ Edit Client';
+            document.getElementById('client-name').value = client.name;
+            document.getElementById('client-contact').value = client.contact || '';
+            document.getElementById('client-phone').value = client.phone || '';
+            document.getElementById('client-email').value = client.email || '';
+            document.getElementById('client-address').value = client.address || '';
+            document.getElementById('client-type').value = client.type || '';
+            document.getElementById('client-modal').classList.add('show');
+        }
+
+        function deleteClient(id) {
+            var client = clients.find(function(c) { return c.id === id; });
+            if (!client) return;
+
+            // Check if client has any jobs
+            var clientJobs = jobs.filter(function(job) { return job.clientId === id; });
+            
+            if (clientJobs.length > 0) {
+                showSuccessMessage('⚠️ Cannot delete client with ' + clientJobs.length + ' job(s)!');
+                return;
+            }
+
+            if (confirm('Delete client: "' + client.name + '"?\nThis action cannot be undone.')) {
+                clients = clients.filter(function(c) { return c.id !== id; });
+                
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                showSuccessMessage('🗑️ Client deleted successfully');
+            }
+        }
+
+        function handleClientSubmit(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('client-name').value.trim();
+            if (!name) {
+                showSuccessMessage('⚠️ Please enter client name!');
+                return;
+            }
+
+            var clientData = {
+                name: name,
+                contact: document.getElementById('client-contact').value.trim(),
+                phone: document.getElementById('client-phone').value.trim(),
+                email: document.getElementById('client-email').value.trim(),
+                address: document.getElementById('client-address').value.trim(),
+                type: document.getElementById('client-type').value,
+                updatedAt: new Date().toISOString()
+            };
+
+            if (editingClient) {
+                var index = clients.findIndex(function(c) { return c.id === editingClient.id; });
+                if (index !== -1) {
+                    clients[index] = Object.assign({ 
+                        id: editingClient.id, 
+                        createdAt: editingClient.createdAt 
+                    }, clientData);
+                }
+                showSuccessMessage('✏️ Client updated successfully');
+            } else {
+                clientData.id = Date.now();
+                clientData.createdAt = new Date().toISOString();
+                clients.push(clientData);
+                showSuccessMessage('✅ Client added successfully');
+            }
+
+            closeClientForm();
+            saveDataToStorage();
+            updateStats();
+            renderViews();
+            populateEnhancedJobClients();
+        }
+
+        function renderClients(searchTerm) {
+            searchTerm = searchTerm || '';
+            
+            var filteredClients = clients.filter(function(client) {
+                return client.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+                       (client.contact && client.contact.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) ||
+                       (client.phone && client.phone.indexOf(searchTerm) !== -1) ||
+                       (client.email && client.email.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+            });
+
+            var container = document.getElementById('clients-list');
+            if (!container) return;
+            
+            if (filteredClients.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">👥</div>' +
+                    '<p style="font-weight: 600;">No clients found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(64, 22, 10, 0.6);">Add clients to start creating jobs</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var clientsHTML = '';
+            
+            for (var i = 0; i < filteredClients.length; i++) {
+                var client = filteredClients[i];
+                var clientJobs = jobs.filter(function(job) { return job.clientId === client.id; });
+                
+                clientsHTML += '<div class="item-card">' +
+                    '<div class="item-header">' +
+                    '<div class="item-info">' +
+                    '<h3>' + client.name + '</h3>' +
+                    (client.contact ? '<div class="contact-info"><span class="icon">👤</span>' + client.contact + '</div>' : '') +
+                    (client.phone ? '<div class="contact-info"><span class="icon">📞</span>' + client.phone + '</div>' : '') +
+                    (client.email ? '<div class="contact-info"><span class="icon">📧</span>' + client.email + '</div>' : '') +
+                    (client.type ? '<span class="service-type-badge">' + client.type.charAt(0).toUpperCase() + client.type.slice(1) + '</span>' : '') +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="item-actions">' +
+                    '<button class="icon-btn edit-btn" onclick="editClient(' + client.id + ')" title="Edit Client">✏️</button>' +
+                    '<button class="icon-btn delete-btn" onclick="deleteClient(' + client.id + ')" title="Delete Client">🗑️</button>' +
+                    '</div>' +
+                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(64, 22, 10, 0.1); display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="font-size: 12px; color: rgba(64, 22, 10, 0.6);">Total Jobs: ' + clientJobs.length + '</span>' +
+                    '<span style="font-size: 12px; color: rgba(64, 22, 10, 0.6);">Added: ' + formatDate(client.createdAt) + '</span>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = clientsHTML;
+        }
+
+        // Technician Management Functions
+        function openTechnicianForm() {
+            editingTechnician = null;
+            document.getElementById('technician-modal-title').textContent = '👷 Add Technician';
+            document.getElementById('technician-form').reset();
+            populateServiceTypeSelects();
+            document.getElementById('technician-modal').classList.add('show');
+        }
+
+        function closeTechnicianForm() {
+            document.getElementById('technician-modal').classList.remove('show');
+            editingTechnician = null;
+        }
+
+        function editTechnician(id) {
+            var technician = technicians.find(function(t) { return t.id === id; });
+            if (!technician) return;
+
+            editingTechnician = technician;
+            document.getElementById('technician-modal-title').textContent = '✏️ Edit Technician';
+            document.getElementById('technician-name').value = technician.name;
+            document.getElementById('technician-phone').value = technician.phone || '';
+            document.getElementById('technician-email').value = technician.email || '';
+            document.getElementById('technician-employee-id').value = technician.employeeId || '';
+            document.getElementById('technician-specialization').value = technician.specialization || '';
+            document.getElementById('technician-level').value = technician.level;
+            document.getElementById('technician-rate').value = technician.rate || '';
+            document.getElementById('technician-modal').classList.add('show');
+        }
+
+        function deleteTechnician(id) {
+            var technician = technicians.find(function(t) { return t.id === id; });
+            if (!technician) return;
+
+            // Check if technician is assigned to any jobs
+            var assignedJobs = jobs.filter(function(job) { return job.technicianId === id; });
+            
+            if (assignedJobs.length > 0) {
+                showSuccessMessage('⚠️ Cannot delete technician assigned to ' + assignedJobs.length + ' job(s)!');
+                return;
+            }
+
+            if (confirm('Delete technician: "' + technician.name + '"?\nThis action cannot be undone.')) {
+                technicians = technicians.filter(function(t) { return t.id !== id; });
+                
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                populateEnhancedJobTechnicians();
+                showSuccessMessage('🗑️ Technician deleted successfully');
+            }
+        }
+
+        function handleTechnicianSubmit(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('technician-name').value.trim();
+            if (!name) {
+                showSuccessMessage('⚠️ Please enter technician name!');
+                return;
+            }
+
+            var technicianData = {
+                name: name,
+                phone: document.getElementById('technician-phone').value.trim(),
+                email: document.getElementById('technician-email').value.trim(),
+                employeeId: document.getElementById('technician-employee-id').value.trim(),
+                specialization: document.getElementById('technician-specialization').value,
+                level: document.getElementById('technician-level').value,
+                rate: parseFloat(document.getElementById('technician-rate').value) || 0,
+                updatedAt: new Date().toISOString()
+            };
+
+            if (editingTechnician) {
+                var index = technicians.findIndex(function(t) { return t.id === editingTechnician.id; });
+                if (index !== -1) {
+                    technicians[index] = Object.assign({ 
+                        id: editingTechnician.id, 
+                        createdAt: editingTechnician.createdAt 
+                    }, technicianData);
+                }
+                showSuccessMessage('✏️ Technician updated successfully');
+            } else {
+                technicianData.id = Date.now();
+                technicianData.createdAt = new Date().toISOString();
+                technicians.push(technicianData);
+                showSuccessMessage('✅ Technician added successfully');
+            }
+
+            closeTechnicianForm();
+            saveDataToStorage();
+            updateStats();
+            renderViews();
+            populateEnhancedJobTechnicians();
+        }
+
+        function renderTechnicians(searchTerm) {
+            searchTerm = searchTerm || '';
+            
+            var filteredTechnicians = technicians.filter(function(technician) {
+                return technician.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+                       (technician.phone && technician.phone.indexOf(searchTerm) !== -1) ||
+                       (technician.email && technician.email.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) ||
+                       (technician.employeeId && technician.employeeId.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+            });
+
+            var container = document.getElementById('technicians-list');
+            if (!container) return;
+            
+            if (filteredTechnicians.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">👷</div>' +
+                    '<p style="font-weight: 600;">No technicians found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(64, 22, 10, 0.6);">Add technicians to assign to jobs</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var techniciansHTML = '';
+            
+            for (var i = 0; i < filteredTechnicians.length; i++) {
+                var technician = filteredTechnicians[i];
+                var assignedJobs = jobs.filter(function(job) { return job.technicianId === technician.id; });
+                var specialization = getServiceTypeName(technician.specialization) || 'General';
+                
+                techniciansHTML += '<div class="item-card">' +
+                    '<div class="item-header">' +
+                    '<div class="item-info">' +
+                    '<h3>' + technician.name + '</h3>' +
+                    (technician.employeeId ? '<div class="contact-info"><span class="icon">🆔</span>' + technician.employeeId + '</div>' : '') +
+                    (technician.phone ? '<div class="contact-info"><span class="icon">📞</span>' + technician.phone + '</div>' : '') +
+                    (technician.email ? '<div class="contact-info"><span class="icon">📧</span>' + technician.email + '</div>' : '') +
+                    '<div style="margin-top: 8px;">' +
+                    '<span class="service-type-badge">' + technician.level.charAt(0).toUpperCase() + technician.level.slice(1) + '</span>' +
+                    '<span class="service-type-badge">' + specialization + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="item-actions">' +
+                    '<button class="icon-btn edit-btn" onclick="editTechnician(' + technician.id + ')" title="Edit Technician">✏️</button>' +
+                    '<button class="icon-btn delete-btn" onclick="deleteTechnician(' + technician.id + ')" title="Delete Technician">🗑️</button>' +
+                    '</div>' +
+                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(64, 22, 10, 0.1); display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="font-size: 12px; color: rgba(64, 22, 10, 0.6);">Active Jobs: ' + assignedJobs.length + '</span>' +
+                    (technician.rate ? '<span style="font-size: 12px; color: #74a478; font-weight: 600;">RM ' + parseFloat(technician.rate).toFixed(2) + '/hr</span>' : '') +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = techniciansHTML;
+        }
+
+        // Jobs Management Functions
+        function renderJobs() {
+            var filteredJobs = jobs.filter(function(job) {
+                if (jobFilter !== 'all' && job.status !== jobFilter) {
+                    return false;
+                }
+                if (selectedDate && job.scheduledDate && job.scheduledDate !== selectedDate) {
+                    return false;
+                }
+                return true;
+            });
+
+            var container = document.getElementById('jobs-list');
+            if (!container) return;
+            
+            if (filteredJobs.length === 0) {
+                var emptyMessage = jobFilter === 'all' ? 'No jobs found' : 'No ' + jobFilter + ' jobs found';
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">🔧</div>' +
+                    '<p style="font-weight: 600;">' + emptyMessage + '</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: rgba(64, 22, 10, 0.6);">Create a new job to get started</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var jobsHTML = '';
+            
+            for (var i = 0; i < filteredJobs.length; i++) {
+                var job = filteredJobs[i];
+                var client = clients.find(function(c) { return c.id === job.clientId; });
+                var technician = technicians.find(function(t) { return t.id === job.technicianId; });
+                var serviceType = getServiceTypeName(job.serviceType);
+                var jobWorkItems = workItems[job.id] || [];
+                
+                jobsHTML += '<div class="item-card">' +
+                    '<div class="item-header">' +
+                    '<div class="item-info">' +
+                    '<h3>' + job.title + '</h3>' +
+                    '<div class="contact-info"><span class="icon">👤</span>' + (client ? client.name : 'Unknown Client') + '</div>' +
+                    (job.scheduledDate ? '<div class="contact-info"><span class="icon">📅</span>' + formatDate(job.scheduledDate) + (job.scheduledTime ? ' at ' + job.scheduledTime : '') + '</div>' : '') +
+                    (technician ? '<div class="contact-info"><span class="icon">👷</span>' + technician.name + '</div>' : '') +
+                    '<div style="margin-top: 8px;">' +
+                    '<span class="status-badge status-' + job.status + '">' + job.status.charAt(0).toUpperCase() + job.status.slice(1) + '</span>' +
+                    '<span class="priority-badge priority-' + job.priority + '">' + job.priority.toUpperCase() + '</span>' +
+                    (serviceType ? '<span class="service-type-badge">' + serviceType + '</span>' : '') +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="item-actions">' +
+                    '<button class="icon-btn quote-btn" onclick="showJobQuote(' + job.id + ')" title="View Quote">💰</button>' +
+                    '<button class="icon-btn works-btn" onclick="openWorkItemsModal(' + job.id + ')" title="Quote Items (' + jobWorkItems.length + ')">📋</button>' +
+                    '<button class="icon-btn pdf-btn" onclick="generateJobPDF(' + job.id + ')" title="Generate PDF">📄</button>' +
+                    '<button class="icon-btn edit-btn" onclick="editJob(' + job.id + ')" title="Edit Job">✏️</button>' +
+                    '<button class="icon-btn delete-btn" onclick="deleteJob(' + job.id + ')" title="Delete Job">🗑️</button>' +
+                    '</div>' +
+                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(64, 22, 10, 0.1); display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="font-size: 12px; color: rgba(64, 22, 10, 0.6);">Items: ' + jobWorkItems.length + '</span>' +
+                    '<span style="font-size: 12px; color: #74a478; font-weight: 600;">RM ' + (job.totalAmount || 0).toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = jobsHTML;
+        }
+
+        function editJob(id) {
+            var job = jobs.find(function(j) { return j.id === id; });
+            if (!job) return;
+            
+            editingJob = job;
+            tempWorkItems = workItems[id] ? [...workItems[id]] : [];
+            
+            document.getElementById('enhanced-job-modal-title').textContent = '✏️ Edit Service Job';
+            
+            populateEnhancedJobClients();
+            populateEnhancedJobTechnicians();
+            populateServiceTypeSelects();
+            renderPresetItems();
+            
+            // Fill form with job data
+            document.getElementById('enhanced-job-client').value = job.clientId;
+            document.getElementById('enhanced-job-title').value = job.title;
+            document.getElementById('enhanced-job-service').value = job.serviceType || '';
+            document.getElementById('enhanced-job-priority').value = job.priority;
+            document.getElementById('enhanced-job-technician').value = job.technicianId || '';
+            document.getElementById('enhanced-job-scheduled-date').value = job.scheduledDate || '';
+            document.getElementById('enhanced-job-scheduled-time').value = job.scheduledTime || '';
+            document.getElementById('enhanced-job-notes').value = job.notes || '';
+            
+            updateWorkItemsDisplay();
+            updateOverallTotal();
+            
+            document.getElementById('enhanced-job-modal').classList.add('show');
+            showSuccessMessage('✏️ Editing job: ' + job.title);
+        }
+
+        function deleteJob(id) {
+            var job = jobs.find(function(j) { return j.id === id; });
+            if (!job) return;
+
+            if (confirm('Delete job: "' + job.title + '"?\nThis will also delete all associated work items.\nThis action cannot be undone.')) {
+                jobs = jobs.filter(function(j) { return j.id !== id; });
+                delete workItems[id];
+                
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                showSuccessMessage('🗑️ Job deleted successfully');
+            }
+        }
+
+        // Work Items Management Functions
+        function openWorkItemsModal(jobId) {
+            selectedJobForWorks = jobId;
+            var job = jobs.find(function(j) { return j.id === jobId; });
+            if (!job) return;
+            
+            var client = clients.find(function(c) { return c.id === job.clientId; });
+            
+            document.getElementById('work-items-modal-title').textContent = '💰 Quote Items - ' + job.title;
+            document.getElementById('work-items-job-info').textContent = 
+                job.title + ' • ' + (client ? client.name : 'Unknown Client') + 
+                (job.scheduledDate ? ' • ' + formatDate(job.scheduledDate) : '');
+            
+            renderWorkItemsList(jobId);
+            document.getElementById('work-items-modal').classList.add('show');
+        }
+
+        function closeWorkItemsModal() {
+            document.getElementById('work-items-modal').classList.remove('show');
+            selectedJobForWorks = null;
+        }
+
+        function renderWorkItemsList(jobId) {
+            var container = document.getElementById('work-items-container');
+            if (!container) return;
+            
+            var jobWorkItems = workItems[jobId] || [];
+            
+            if (jobWorkItems.length === 0) {
+                container.innerHTML = '<div class="empty-work-items">' +
+                    '<div class="empty-work-items-icon">📋</div>' +
+                    '<p>No quote items found</p>' +
+                    '<p style="font-size: 12px; margin-top: 4px; color: rgba(250, 233, 220, 0.6);">Add items to create a detailed quote</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var html = '<div class="work-items-container">' +
+                '<div class="work-items-header">' +
+                '<div class="work-items-title">💰 Quote Items (' + jobWorkItems.length + ')</div>' +
+                '</div>';
+                
+            var total = 0;
+            for (var i = 0; i < jobWorkItems.length; i++) {
+                var item = jobWorkItems[i];
+                total += item.total;
+                
+                html += '<div class="work-item">' +
+                    '<div class="work-item-header">' +
+                    '<div class="work-item-title">' + item.description + '</div>' +
+                    '<div class="work-item-actions">' +
+                    '<button class="work-item-btn work-item-edit" onclick="editWorkItem(' + jobId + ', ' + i + ')" title="Edit">✏️</button>' +
+                    '<button class="work-item-btn work-item-delete" onclick="deleteWorkItem(' + jobId + ', ' + i + ')" title="Delete">🗑️</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="work-item-details">' +
+                    '<div class="work-item-detail">' +
+                    '<div class="work-item-detail-label">Quantity</div>' +
+                    '<div class="work-item-detail-value">' + item.quantity + ' ' + item.unit + '</div>' +
+                    '</div>' +
+                    '<div class="work-item-detail">' +
+                    '<div class="work-item-detail-label">Unit Price</div>' +
+                    '<div class="work-item-detail-value">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                    '</div>' +
+                    '<div class="work-item-detail">' +
+                    '<div class="work-item-detail-label">Total</div>' +
+                    '<div class="work-item-detail-value">RM ' + item.total.toFixed(2) + '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            if (total > 0) {
+                html += '<div class="work-items-total">' +
+                    '<div class="work-items-total-label">Total Quote Amount</div>' +
+                    '<div class="work-items-total-value">RM ' + total.toFixed(2) + '</div>' +
+                    '</div>';
+            }
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function openAddWorkItemForm() {
+            if (!selectedJobForWorks) return;
+            
+            editingWorkItem = null;
+            document.getElementById('add-work-item-title').textContent = '➕ Add Quote Item';
+            document.getElementById('add-work-item-form').reset();
+            document.getElementById('work-item-total').textContent = 'RM 0.00';
+            document.getElementById('add-work-item-modal').classList.add('show');
+        }
+
+        function closeAddWorkItemForm() {
+            document.getElementById('add-work-item-modal').classList.remove('show');
+            editingWorkItem = null;
+        }
+
+        function updateWorkItemTotal() {
+            var quantity = parseFloat(document.getElementById('work-item-quantity').value) || 0;
+            var price = parseFloat(document.getElementById('work-item-price').value) || 0;
+            var total = quantity * price;
+            
+            var totalElement = document.getElementById('work-item-total');
+            if (totalElement) {
+                totalElement.textContent = 'RM ' + total.toFixed(2);
+            }
+        }
+
+        function editWorkItem(jobId, itemIndex) {
+            var jobWorkItems = workItems[jobId] || [];
+            var item = jobWorkItems[itemIndex];
+            if (!item) return;
+            
+            editingWorkItem = { jobId: jobId, itemIndex: itemIndex };
+            document.getElementById('add-work-item-title').textContent = '✏️ Edit Quote Item';
+            document.getElementById('work-item-description').value = item.description;
+            document.getElementById('work-item-quantity').value = item.quantity;
+            document.getElementById('work-item-price').value = item.price;
+            document.getElementById('work-item-unit').value = item.unit;
+            
+            updateWorkItemTotal();
+            document.getElementById('add-work-item-modal').classList.add('show');
+        }
+
+        function deleteWorkItem(jobId, itemIndex) {
+            var jobWorkItems = workItems[jobId] || [];
+            var item = jobWorkItems[itemIndex];
+            if (!item) return;
+            
+            if (confirm('Delete work item: "' + item.description + '"?\nThis action cannot be undone.')) {
+                jobWorkItems.splice(itemIndex, 1);
+                
+                if (jobWorkItems.length === 0) {
+                    delete workItems[jobId];
+                } else {
+                    workItems[jobId] = jobWorkItems;
+                }
+                
+                // Update job total amount
+                var job = jobs.find(function(j) { return j.id === jobId; });
+                if (job) {
+                    var total = 0;
+                    for (var i = 0; i < jobWorkItems.length; i++) {
+                        total += jobWorkItems[i].total;
+                    }
+                    job.totalAmount = total;
+                    job.updatedAt = new Date().toISOString();
+                }
+                
+                saveDataToStorage();
+                updateStats();
+                renderWorkItemsList(jobId);
+                renderViews();
+                showSuccessMessage('🗑️ Work item deleted successfully');
+            }
+        }
+
+        function handleAddWorkItemSubmit(e) {
+            e.preventDefault();
+            
+            if (!selectedJobForWorks) return;
+            
+            var description = document.getElementById('work-item-description').value.trim();
+            var quantity = parseFloat(document.getElementById('work-item-quantity').value);
+            var price = parseFloat(document.getElementById('work-item-price').value);
+            var unit = document.getElementById('work-item-unit').value;
+            
+            if (!description || !quantity || !price) {
+                showSuccessMessage('⚠️ Please fill in all required fields!');
+                return;
+            }
+            
+            var workItemData = {
+                description: description,
+                quantity: quantity,
+                price: price,
+                unit: unit,
+                total: quantity * price
+            };
+            
+            if (!workItems[selectedJobForWorks]) {
+                workItems[selectedJobForWorks] = [];
+            }
+            
+            if (editingWorkItem) {
+                workItems[editingWorkItem.jobId][editingWorkItem.itemIndex] = workItemData;
+                showSuccessMessage('✏️ Work item updated successfully');
+            } else {
+                workItems[selectedJobForWorks].push(workItemData);
+                showSuccessMessage('✅ Work item added successfully');
+            }
+            
+            // Update job total amount
+            var job = jobs.find(function(j) { return j.id === selectedJobForWorks; });
+            if (job) {
+                var total = 0;
+                var jobWorkItems = workItems[selectedJobForWorks] || [];
+                for (var i = 0; i < jobWorkItems.length; i++) {
+                    total += jobWorkItems[i].total;
+                }
+                job.totalAmount = total;
+                job.updatedAt = new Date().toISOString();
+            }
+            
+            closeAddWorkItemForm();
+            saveDataToStorage();
+            updateStats();
+            renderWorkItemsList(selectedJobForWorks);
+            renderViews();
+        }
+
+        // Quote Functions
+        function showJobQuote(jobId) {
+            selectedJobQuote = jobs.find(function(j) { return j.id === jobId; });
+            if (!selectedJobQuote) return;
+            
+            var client = clients.find(function(c) { return c.id === selectedJobQuote.clientId; });
+            var technician = technicians.find(function(t) { return t.id === selectedJobQuote.technicianId; });
+            var jobWorkItems = workItems[jobId] || [];
+            
+            var quoteHTML = '<div class="quote-header">' +
+                '<div class="quote-title">💰 Job Quote #' + jobId + '</div>' +
+                '<div class="quote-subtitle">' + selectedJobQuote.title + '</div>' +
+                '</div>' +
+                
+                '<div style="background: rgba(250, 233, 220, 0.9); border-radius: 16px; padding: 20px; margin-bottom: 20px;">' +
+                '<h4 style="margin-bottom: 16px; color: #40160a; font-weight: 700;">📋 Job Details</h4>' +
+                '<div style="display: grid; gap: 12px; font-size: 14px;">' +
+                '<div><strong>Client:</strong> ' + (client ? client.name : 'Unknown Client') + '</div>' +
+                '<div><strong>Service:</strong> ' + getServiceTypeName(selectedJobQuote.serviceType) + '</div>' +
+                '<div><strong>Priority:</strong> <span class="priority-badge priority-' + selectedJobQuote.priority + '">' + selectedJobQuote.priority.toUpperCase() + '</span></div>' +
+                (selectedJobQuote.scheduledDate ? '<div><strong>Scheduled:</strong> ' + formatDate(selectedJobQuote.scheduledDate) + (selectedJobQuote.scheduledTime ? ' at ' + selectedJobQuote.scheduledTime : '') + '</div>' : '') +
+                (technician ? '<div><strong>Technician:</strong> ' + technician.name + '</div>' : '') +
+                (selectedJobQuote.notes ? '<div><strong>Notes:</strong> ' + selectedJobQuote.notes + '</div>' : '') +
+                '</div>' +
+                '</div>';
+            
+            if (jobWorkItems.length > 0) {
+                quoteHTML += '<div style="background: linear-gradient(135deg, #40160a, #5a1f0f); border-radius: 16px; padding: 20px; margin-bottom: 20px; color: white;">' +
+                    '<h4 style="margin-bottom: 16px; color: #fae9dc; font-weight: 700;">💼 Quote Items</h4>';
+                
+                var total = 0;
+                for (var i = 0; i < jobWorkItems.length; i++) {
+                    var item = jobWorkItems[i];
+                    total += item.total;
+                    
+                    quoteHTML += '<div style="background: rgba(254, 199, 179, 0.1); border-radius: 12px; padding: 12px; margin-bottom: 8px; border: 1px solid rgba(254, 199, 179, 0.2);">' +
+                        '<div style="font-weight: 700; margin-bottom: 4px;">' + item.description + '</div>' +
+                        '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 12px; color: #f5e6d8;">' +
+                        '<div>Qty: ' + item.quantity + ' ' + item.unit + '</div>' +
+                        '<div>Price: RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                        '<div>Total: RM ' + item.total.toFixed(2) + '</div>' +
+                        '</div>' +
+                        '</div>';
+                }
+                
+                quoteHTML += '<div style="background: linear-gradient(135deg, #74a478, #5a8a5e); border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center;">' +
+                    '<div style="font-size: 14px; font-weight: 600; color: #d4f0d6; margin-bottom: 4px;">Total Quote Amount</div>' +
+                    '<div style="font-size: 28px; font-weight: 800; color: #f0fff1;">RM ' + total.toFixed(2) + '</div>' +
+                    '</div>' +
+                    '</div>';
+            } else {
+                quoteHTML += '<div style="text-align: center; padding: 40px 20px; color: rgba(64, 22, 10, 0.6);">' +
+                    '<div style="font-size: 48px; margin-bottom: 12px; opacity: 0.6;">📋</div>' +
+                    '<p>No quote items found</p>' +
+                    '<p style="font-size: 12px; margin-top: 4px;">Add items to create a detailed quote</p>' +
+                    '</div>';
+            }
+            
+            quoteHTML += '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px;">' +
+                '<button onclick="generateJobPDF(' + jobId + ')" class="btn btn-success" style="font-size: 14px;">📄 Generate PDF</button>' +
+                '<button onclick="openWorkItemsModal(' + jobId + ')" class="btn btn-purple" style="font-size: 14px;">✏️ Edit Items</button>' +
+                '</div>';
+            
+            document.getElementById('job-quote-content').innerHTML = quoteHTML;
+            document.getElementById('job-quote-modal').classList.add('show');
+        }
+
+        function closeJobQuote() {
+            document.getElementById('job-quote-modal').classList.remove('show');
+            selectedJobQuote = null;
+        }
+
+        // PDF Generation Functions
+        function generateJobPDF(jobId) {
+            var job = jobs.find(function(j) { return j.id === jobId; });
+            if (!job) return;
+            
+            document.getElementById('pdf-loading').classList.add('show');
+            
+            setTimeout(function() {
+                try {
+                    var client = clients.find(function(c) { return c.id === job.clientId; });
+                    var technician = technicians.find(function(t) { return t.id === job.technicianId; });
+                    var jobWorkItems = workItems[jobId] || [];
+                    
+                    var pdf = new jsPDF();
+                    var pageWidth = pdf.internal.pageSize.width;
+                    var margin = 20;
+                    var lineHeight = 6;
+                    var currentY = margin;
+                    
+                    // Company Header
+                    pdf.setFontSize(20);
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.text(companySettings.name, margin, currentY);
+                    currentY += 8;
+                    
+                    pdf.setFontSize(10);
+                    pdf.setFont('helvetica', 'normal');
+                    pdf.text('Registration No: ' + companySettings.registration, margin, currentY);
+                    currentY += 5;
+                    pdf.text(companySettings.tagline, margin, currentY);
+                    currentY += 5;
+                    pdf.text(companySettings.address, margin, currentY);
+                    currentY += 5;
+                    pdf.text('Phone: ' + companySettings.phone + ' | Email: ' + companySettings.email, margin, currentY);
+                    currentY += 15;
+                    
+                    // Quote Title
+                    pdf.setFontSize(16);
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.text('SERVICE QUOTE #' + jobId, margin, currentY);
+                    currentY += 10;
+                    
+                    // Job Details
+                    pdf.setFontSize(12);
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.text('Job Details:', margin, currentY);
+                    currentY += 8;
+                    
+                    pdf.setFontSize(10);
+                    pdf.setFont('helvetica', 'normal');
+                    pdf.text('Job Title: ' + job.title, margin, currentY);
+                    currentY += lineHeight;
+                    pdf.text('Client: ' + (client ? client.name : 'Unknown Client'), margin, currentY);
+                    currentY += lineHeight;
+                    pdf.text('Service Type: ' + getServiceTypeName(job.serviceType), margin, currentY);
+                    currentY += lineHeight;
+                    pdf.text('Priority: ' + job.priority.charAt(0).toUpperCase() + job.priority.slice(1), margin, currentY);
+                    currentY += lineHeight;
+                    
+                    if (job.scheduledDate) {
+                        pdf.text('Scheduled: ' + formatDate(job.scheduledDate) + (job.scheduledTime ? ' at ' + job.scheduledTime : ''), margin, currentY);
+                        currentY += lineHeight;
+                    }
+                    
+                    if (technician) {
+                        pdf.text('Assigned Technician: ' + technician.name, margin, currentY);
+                        currentY += lineHeight;
+                    }
+                    
+                    if (job.notes) {
+                        pdf.text('Notes: ' + job.notes, margin, currentY);
+                        currentY += lineHeight;
+                    }
+                    
+                    currentY += 10;
+                    
+                    // Quote Items
+                    if (jobWorkItems.length > 0) {
+                        pdf.setFontSize(12);
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.text('Quote Items:', margin, currentY);
+                        currentY += 8;
+                        
+                        // Table headers
+                        pdf.setFontSize(9);
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.text('Description', margin, currentY);
+                        pdf.text('Qty', margin + 80, currentY);
+                        pdf.text('Unit', margin + 100, currentY);
+                        pdf.text('Price', margin + 120, currentY);
+                        pdf.text('Total', margin + 150, currentY);
+                        currentY += 6;
+                        
+                        // Draw line
+                        pdf.line(margin, currentY, pageWidth - margin, currentY);
+                        currentY += 4;
+                        
+                        var total = 0;
+                        pdf.setFont('helvetica', 'normal');
+                        
+                        for (var i = 0; i < jobWorkItems.length; i++) {
+                            var item = jobWorkItems[i];
+                            total += item.total;
+                            
+                            pdf.text(item.description.substring(0, 30), margin, currentY);
+                            pdf.text(item.quantity.toString(), margin + 80, currentY);
+                            pdf.text(item.unit, margin + 100, currentY);
+                            pdf.text('RM ' + parseFloat(item.price).toFixed(2), margin + 120, currentY);
+                            pdf.text('RM ' + item.total.toFixed(2), margin + 150, currentY);
+                            currentY += lineHeight;
+                        }
+                        
+                        currentY += 5;
+                        pdf.line(margin, currentY, pageWidth - margin, currentY);
+                        currentY += 8;
+                        
+                        // Total
+                        pdf.setFontSize(12);
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.text('TOTAL AMOUNT: RM ' + total.toFixed(2), margin + 100, currentY);
+                    }
+                    
+                    // Footer
+                    currentY = pdf.internal.pageSize.height - 30;
+                    pdf.setFontSize(8);
+                    pdf.setFont('helvetica', 'normal');
+                    pdf.text('Generated on: ' + new Date().toLocaleString(), margin, currentY);
+                    pdf.text('Quote valid for 30 days from date of issue', margin, currentY + 5);
+                    
+                    var filename = 'Quote_' + jobId + '_' + (client ? client.name.replace(/[^a-zA-Z0-9]/g, '_') : 'Unknown') + '.pdf';
+                    pdf.save(filename);
+                    
+                    showSuccessMessage('📄 PDF quote generated successfully!');
+                } catch (error) {
+                    console.error('PDF generation error:', error);
+                    showSuccessMessage('⚠️ Error generating PDF. Please try again.');
+                } finally {
+                    document.getElementById('pdf-loading').classList.remove('show');
+                }
+            }, 1500);
+        }
+
+        // Settings Functions
+        function openSettings() {
+            showView('settings');
+            loadCompanySettings();
+        }
+
+        function loadCompanySettings() {
+            document.getElementById('company-name').value = companySettings.name;
+            document.getElementById('company-reg').value = companySettings.registration;
+            document.getElementById('company-tagline').value = companySettings.tagline;
+            document.getElementById('company-phone').value = companySettings.phone;
+            document.getElementById('company-email').value = companySettings.email;
+            document.getElementById('company-website').value = companySettings.website;
+            document.getElementById('company-address').value = companySettings.address;
+        }
+
+        function handleCompanySubmit(e) {
+            e.preventDefault();
+            
+            companySettings.name = document.getElementById('company-name').value.trim();
+            companySettings.tagline = document.getElementById('company-tagline').value.trim();
+            companySettings.phone = document.getElementById('company-phone').value.trim();
+            companySettings.email = document.getElementById('company-email').value.trim();
+            companySettings.website = document.getElementById('company-website').value.trim();
+            companySettings.address = document.getElementById('company-address').value.trim();
+            
+            // Update header display
+            document.getElementById('company-display-name').textContent = companySettings.name;
+            
+            saveDataToStorage();
+            showSuccessMessage('✅ Company settings saved successfully!');
+        }
+
+        function exportAllData() {
+            var allData = {
+                companySettings: companySettings,
+                clients: clients,
+                jobs: jobs,
+                technicians: technicians,
+                workItems: workItems,
+                customServiceTypes: customServiceTypes,
+                presetWorkItems: presetWorkItems,
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            var dataStr = JSON.stringify(allData, null, 2);
+            var dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'REFIT_Maintenance_Data_' + new Date().toISOString().split('T')[0] + '.json';
+            link.click();
+            
+            showSuccessMessage('📤 Data exported successfully!');
+        }
+
+        function clearAllData() {
+            if (confirm('Clear ALL application data?\n\nThis will delete:\n• All jobs and quotes\n• All clients\n• All technicians\n• All work items\n• All custom service types\n• All preset work items\n\nThis action cannot be undone!')) {
+                if (confirm('Are you absolutely sure?\nThis will permanently delete everything!')) {
+                    // Clear all data
+                    clients = [];
+                    jobs = [];
+                    technicians = [];
+                    workItems = {};
+                    customServiceTypes = [];
+                    presetWorkItems = [...defaultPresetWorkItems];
+                    tempWorkItems = [];
+                    
+                    // Clear storage
+                    for (var key in STORAGE_KEYS) {
+                        localStorage.removeItem(STORAGE_KEYS[key]);
+                    }
+                    
+                    // Reset company settings
+                    companySettings = {
+                        name: 'REFIT MAINTENANCE SERVICES',
+                        registration: '201803348973 (002894203-V)',
+                        tagline: 'Professional Maintenance Solutions',
+                        phone: '+60 3-7967 8888',
+                        email: 'info@refitmaintenance.my',
+                        website: 'www.refitmaintenance.my',
+                        address: 'No. 15, Jalan Teknologi 3/6, Kota Damansara, 47810 Petaling Jaya, Selangor, Malaysia'
+                    };
+                    
+                    // Reset logo
+                    companyLogo = null;
+                    
+                    saveDataToStorage();
+                    updateStats();
+                    renderViews();
+                    updateLogoDisplay();
+                    loadCompanySettings();
+                    
+                    showSuccessMessage('🗑️ All data cleared successfully!');
+                    showView('dashboard');
+                }
+            }
+        }
+
+        // Utility Functions
+        function showView(viewName) {
+            currentView = viewName;
+            
+            // Hide all views
+            var views = document.querySelectorAll('.view');
+            for (var i = 0; i < views.length; i++) {
+                views[i].classList.add('hidden');
+            }
+            
+            // Show selected view
+            var targetView = document.getElementById(viewName + '-view');
+            if (targetView) {
+                targetView.classList.remove('hidden');
+            }
+            
+            // Update navigation
+            var navItems = document.querySelectorAll('.nav-item');
+            for (var i = 0; i < navItems.length; i++) {
+                navItems[i].classList.remove('active');
+            }
+            
+            var activeNav = document.querySelector('.nav-item[onclick*="' + viewName + '"]');
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+            
+            // Render view content
+            renderViews();
+        }
+
+        function renderViews() {
+            switch(currentView) {
+                case 'dashboard':
+                    renderDashboard();
+                    break;
+                case 'clients':
+                    renderClients();
+                    break;
+                case 'jobs':
+                    renderJobs();
+                    break;
+                case 'technicians':
+                    renderTechnicians();
+                    break;
+                case 'services':
+                    renderServiceTypes();
+                    break;
+                case 'settings':
+                    updateSettingsStats();
+                    break;
+            }
+        }
+
+        function renderDashboard() {
+            // Render recent jobs
+            var recentJobs = jobs.slice(-3).reverse();
+            var container = document.getElementById('recent-jobs');
+            if (!container) return;
+            
+            if (recentJobs.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 30px 20px; color: rgba(64, 22, 10, 0.6);">' +
+                    '<div style="font-size: 32px; margin-bottom: 8px;">🔧</div>' +
+                    '<p style="font-weight: 600;">No jobs yet</p>' +
+                    '<p style="font-size: 12px; margin-top: 4px;">Create your first job to get started</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var html = '';
+            for (var i = 0; i < recentJobs.length; i++) {
+                var job = recentJobs[i];
+                var client = clients.find(function(c) { return c.id === job.clientId; });
+                var jobWorkItems = workItems[job.id] || [];
+                
+                html += '<div style="background: rgba(250, 233, 220, 0.5); border-radius: 12px; padding: 12px; margin-bottom: 8px; border: 1px solid rgba(64, 22, 10, 0.1);">' +
+                    '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">' +
+                    '<div style="font-weight: 700; font-size: 14px;">' + job.title + '</div>' +
+                    '<span class="status-badge status-' + job.status + '">' + job.status + '</span>' +
+                    '</div>' +
+                    '<div style="font-size: 12px; color: rgba(64, 22, 10, 0.7); margin-bottom: 4px;">👤 ' + (client ? client.name : 'Unknown Client') + '</div>' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px;">' +
+                    '<span style="color: rgba(64, 22, 10, 0.6);">' + jobWorkItems.length + ' items</span>' +
+                    '<span style="font-weight: 700; color: #74a478;">RM ' + (job.totalAmount || 0).toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function updateStats() {
+            // Count active jobs (not completed or cancelled)
+            var activeJobs = jobs.filter(function(job) { 
+                return job.status !== 'completed' && job.status !== 'cancelled'; 
+            });
+            
+            // Calculate total revenue
+            var totalRevenue = 0;
+            for (var i = 0; i < jobs.length; i++) {
+                totalRevenue += jobs[i].totalAmount || 0;
+            }
+            
+            // Calculate daily revenue (today's completed jobs)
+            var today = new Date().toISOString().split('T')[0];
+            var todayCompletedJobs = jobs.filter(function(job) {
+                return job.status === 'completed' && job.scheduledDate === today;
+            });
+            var dailyRevenue = 0;
+            for (var i = 0; i < todayCompletedJobs.length; i++) {
+                dailyRevenue += todayCompletedJobs[i].totalAmount || 0;
+            }
+            
+            // Get today's jobs by status
+            var todayJobs = jobs.filter(function(job) {
+                return job.scheduledDate === today;
+            });
+            var pendingToday = todayJobs.filter(function(job) { return job.status === 'pending'; });
+            var progressToday = todayJobs.filter(function(job) { return job.status === 'progress'; });
+            var completedToday = todayJobs.filter(function(job) { return job.status === 'completed'; });
+            
+            // Count total work items
+            var totalWorkItems = 0;
+            for (var jobId in workItems) {
+                totalWorkItems += workItems[jobId].length;
+            }
+            
+            // Update DOM elements
+            updateElementText('active-jobs-count', activeJobs.length);
+            updateElementText('clients-count', clients.length);
+            updateElementText('technicians-count', technicians.length);
+            updateElementText('total-revenue', 'RM ' + Math.round(totalRevenue));
+            updateElementText('daily-revenue', 'RM ' + dailyRevenue.toFixed(2));
+            updateElementText('today-jobs', todayJobs.length + ' Jobs');
+            updateElementText('pending-jobs', pendingToday.length);
+            updateElementText('progress-jobs', progressToday.length);
+            updateElementText('completed-jobs', completedToday.length);
+            
+            // Settings stats
+            updateElementText('total-jobs-count', jobs.length);
+            updateElementText('total-work-items-count', totalWorkItems);
+            updateElementText('settings-total-revenue', 'RM ' + totalRevenue.toFixed(2));
+        }
+
+        function updateSettingsStats() {
+            updateStats();
+        }
+
+        function updateElementText(elementId, text) {
+            var element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = text;
+            }
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            var date = new Date(dateString);
+            return date.toLocaleDateString('en-MY', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        function updateStatusBar() {
+            var now = new Date();
+            var timeString = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false 
+            });
+            
+            var timeElement = document.getElementById('status-time');
+            if (timeElement) {
+                timeElement.textContent = timeString;
+            }
+        }
+
+        function updateCurrentDate() {
+            var today = new Date();
+            var dateString = today.toLocaleDateString('en-MY', { 
+                weekday: 'long',
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            var dateElement = document.getElementById('current-date');
+            if (dateElement) {
+                dateElement.textContent = dateString;
+            }
+        }
+
+        function setupMobileOptimizations() {
+            // Update status bar every minute
+            setInterval(updateStatusBar, 60000);
+            
+            // Prevent zoom on double tap
+            var lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                var now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+            
+            // Handle viewport changes
+            window.addEventListener('resize', function() {
+                setTimeout(function() {
+                    var vh = window.innerHeight * 0.01;
+                    document.documentElement.style.setProperty('--vh', vh + 'px');
+                }, 100);
+            });
+        }
+
+        function showSuccessMessage(message) {
+            var messageElement = document.getElementById('success-message');
+            if (!messageElement) return;
+            
+            messageElement.textContent = message;
+            messageElement.classList.add('show');
+            
+            setTimeout(function() {
+                messageElement.classList.remove('show');
+            }, 3000);
+        }
+
+        function showKeyboardShortcuts() {
+            var shortcuts = [
+                'Ctrl+J: Create Job',
+                'Ctrl+C: Add Client', 
+                'Ctrl+T: Add Technician',
+                'Ctrl+V: Add Service Type',
+                'Ctrl+S: Settings',
+                'Ctrl+L: Logo Manager',
+                'Ctrl+P: Generate PDF (when viewing job)',
+                'Ctrl+Q: View Quote (when viewing job)',
+                'Ctrl+W: Edit Work Items (when viewing job)',
+                'Esc: Close Modals'
+            ];
+            
+            showSuccessMessage('⌨️ Keyboard Shortcuts:\n' + shortcuts.join('\n'));
+        }
+
+        // Initialize preset items on app load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePresetWorkItems();
+        });
+    </script>
+</body>
+</html>
