@@ -3437,7 +3437,7 @@
             if (jobWorkItems.length === 0) {
                 container.innerHTML = '<div class="empty-work-items">' +
                     '<div class="empty-work-items-icon">💰</div>' +
-                    '<p style="font-weight: 600; color: #E8D5D5;">No quote items added yet</p>' +
+                    '<p style="font-weight: 600; color: #9B8B8B;">No quote items added yet</p>' +
                     '<p style="font-size: 14px; margin-top: 8px;">Add quote items to create detailed breakdown</p>' +
                     '</div>';
                 return;
@@ -4051,7 +4051,7 @@
             }
         }
 
-        // PDF Generation Function (Enhanced with Logo Support)
+        // PDF Generation Function (Enhanced with Logo Support and Mauve Theme)
         function generateJobPDF(jobId) {
             var job = jobs.find(function(j) { return j.id === jobId; });
             if (!job) {
@@ -4099,7 +4099,7 @@
                     // Document title
                     yPos += 30;
                     doc.setFontSize(16);
-                    doc.setTextColor(0, 0, 0);
+                    doc.setTextColor(74, 59, 59);
                     doc.text('PROFESSIONAL JOB QUOTE', 20, yPos);
                     doc.text('Job #' + job.id + ': ' + job.title, 20, yPos + 10);
                     
@@ -4123,7 +4123,7 @@
                         
                         yPos += 10;
                         doc.setFontSize(12);
-                        doc.setTextColor(0, 0, 0);
+                        doc.setTextColor(74, 59, 59);
                         doc.text('Company: ' + client.name, 20, yPos);
                         if (client.contact) doc.text('Contact: ' + client.contact, 20, yPos + 8);
                         if (client.phone) doc.text('Phone: ' + client.phone, 20, yPos + 16);
@@ -4145,7 +4145,7 @@
                         
                         yPos += 10;
                         doc.setFontSize(12);
-                        doc.setTextColor(0, 0, 0);
+                        doc.setTextColor(74, 59, 59);
                         doc.text('Name: ' + technician.name, 20, yPos);
                         if (technician.employeeId) doc.text('Employee ID: ' + technician.employeeId, 20, yPos + 8);
                         doc.text('Specialization: ' + getServiceTypeName(technician.specialization), 20, yPos + 16);
@@ -4181,7 +4181,7 @@
                         yPos += 10;
                         
                         // Quote items
-                        doc.setTextColor(0, 0, 0);
+                        doc.setTextColor(74, 59, 59);
                         for (var i = 0; i < jobWorkItems.length; i++) {
                             if (yPos > 270) {
                                 doc.addPage();
@@ -4193,7 +4193,7 @@
                             
                             // Alternating row colors
                             if (i % 2 === 1) {
-                                doc.setFillColor(248, 250, 252);
+                                doc.setFillColor(245, 241, 232);
                                 doc.rect(20, yPos - 3, 170, 8, 'F');
                             }
                             
@@ -4232,7 +4232,7 @@
                         
                         yPos += 10;
                         doc.setFontSize(10);
-                        doc.setTextColor(0, 0, 0);
+                        doc.setTextColor(74, 59, 59);
                         var notesLines = doc.splitTextToSize(job.notes, 170);
                         doc.text(notesLines, 20, yPos);
                         yPos += notesLines.length * 5 + 15;
@@ -4243,7 +4243,7 @@
                     for (var i = 1; i <= pageCount; i++) {
                         doc.setPage(i);
                         doc.setFontSize(8);
-                        doc.setTextColor(156, 163, 175);
+                        doc.setTextColor(155, 139, 139);
                         doc.text('Generated: ' + new Date().toLocaleString(), 20, 285);
                         doc.text('Page ' + i + ' of ' + pageCount, 170, 285);
                         
@@ -4262,7 +4262,7 @@
                     doc.save(filename);
                     
                     document.getElementById('pdf-loading').classList.remove('show');
-                    showSuccessMessage('📄 Elegant mauve themed PDF generated with company logo for Job #' + job.id + '!');
+                    showSuccessMessage('📄 Elegant Mauve-themed PDF generated with company logo for Job #' + job.id + '!');
                     
                 } catch (error) {
                     console.error('PDF error:', error);
@@ -4294,7 +4294,7 @@
             link.download = 'REFIT_Maintenance_ElegantMauve_Data_' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             
-            showSuccessMessage('📤 All data exported with elegant mauve theme!');
+            showSuccessMessage('📤 All data exported with elegant Mauve theme!');
         }
 
         function clearAllData() {
@@ -4400,7 +4400,7 @@
                     if (pullDistance > 80) {
                         updateStats();
                         renderViews();
-                        showSuccessMessage('🔄 Data refreshed with elegant mauve theme!');
+                        showSuccessMessage('🔄 Data refreshed with elegant Mauve theme!');
                     }
                     isPulling = false;
                 }
@@ -4420,7 +4420,7 @@
         }
 
         function showKeyboardShortcuts() {
-            var shortcuts = '⌨️ REFIT MAINTENANCE SERVICES - Elegant Mauve Themed Job Quote System:\n\n' +
+            var shortcuts = '⌨️ REFIT MAINTENANCE SERVICES - Elegant Mauve & Vanilla Cream Themed Job Quote System:\n\n' +
                 '🔧 SERVICE MANAGEMENT:\n' +
                 'Ctrl+J or Cmd+J - Enhanced Job Creation with Quote Items\n' +
                 'Ctrl+C or Cmd+C - New Client\n' +
@@ -4431,7 +4431,7 @@
                 'Ctrl+L or Cmd+L - Open Logo Manager\n' +
                 'Click logo in header - Upload/Manage Logo\n' +
                 'Settings > Company Logo - Full Logo Management\n' +
-                'Elegant Pantone-inspired mauve color theme throughout\n\n' +
+                'Elegant Pantone-inspired mauve theme throughout\n\n' +
                 '🛠️ SERVICE TYPES:\n' +
                 '➕ Button in job form - Add Service Type\n' +
                 'Service Types tab - Manage all service types\n' +
@@ -4446,7 +4446,7 @@
                 'ESC - Close any open modal\n' +
                 'Ctrl+E or Cmd+E - Export All Data (includes logo)\n\n' +
                 '💡 ENHANCED FEATURES:\n' +
-                '• Elegant Pantone-inspired mauve color theme\n' +
+                '• Elegant Pantone-inspired mauve & vanilla cream color theme\n' +
                 '• Professional job quote system with company logo\n' +
                 '• Logo upload and management functionality\n' +
                 '• Enhanced PDF generation with mauve theme & logo\n' +
@@ -4456,7 +4456,7 @@
                 '• Advanced themed search and filtering\n\n' +
                 '🏢 Professional service management system\n' +
                 '📋 Registration: 201803348973 (002894203-V)\n' +
-                '🌸 Elegant Pantone Mauve Theme with Company Logo Management\n' +
+                '🌸 Elegant Mauve & Vanilla Cream Theme with Company Logo Management\n' +
                 '✅ All features fully functional and ready for production use!';
             
             alert(shortcuts);
