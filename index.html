@@ -1358,8 +1358,9 @@
         <div class="header">
             <div class="header-left">
                 <div class="logo-container">
-                    <div class="app-logo">
-                        <span>🔧</span>
+                    <div class="app-logo" id="app-logo">
+                        <span id="logo-icon">🔧</span>
+                        <img id="logo-image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px; display: none;" alt="Company Logo">
                     </div>
                     <div class="app-title">
                         <h1 id="company-display-name">REFIT MAINTENANCE SERVICES</h1>
@@ -1591,6 +1592,47 @@
                             💾 Save Company Settings
                         </button>
                     </form>
+                </div>
+
+                <div class="card">
+                    <h3 style="display: flex; align-items: center; gap: 12px; font-weight: 700; margin-bottom: 16px;">
+                        🖼️ Company Logo
+                    </h3>
+                    
+                    <!-- Logo Preview -->
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 16px; margin-bottom: 16px; text-align: center;">
+                        <div style="margin-bottom: 12px;">
+                            <strong>Current Logo:</strong>
+                        </div>
+                        <div id="logo-preview-container" style="display: inline-block; width: 80px; height: 80px; background: linear-gradient(135deg, #3b82f6, #2563eb); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; font-weight: 700; position: relative; overflow: hidden;">
+                            <span id="logo-preview-icon">🔧</span>
+                            <img id="logo-preview-image" style="width: 100%; height: 100%; object-fit: cover; display: none;" alt="Logo Preview">
+                        </div>
+                        <div style="margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.7);">
+                            Recommended: 200x200px, PNG/JPG, Max 500KB
+                        </div>
+                    </div>
+                    
+                    <!-- Logo Upload -->
+                    <input type="file" id="logo-upload" accept="image/*" style="display: none;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <button onclick="document.getElementById('logo-upload').click()" class="btn btn-primary" style="font-size: 14px;">
+                            📤 Upload Logo
+                        </button>
+                        <button onclick="removeLogo()" class="btn btn-danger" style="font-size: 14px;">
+                            🗑️ Remove Logo
+                        </button>
+                    </div>
+                    
+                    <div style="background: rgba(59, 130, 246, 0.1); padding: 12px; border-radius: 12px; margin-top: 16px;">
+                        <div style="font-size: 12px; color: #3b82f6; font-weight: 600; margin-bottom: 4px;">💡 Logo Tips:</div>
+                        <div style="font-size: 11px; color: #1e40af; line-height: 1.4;">
+                            • Square format works best (1:1 ratio)<br>
+                            • Clear, simple designs are more professional<br>
+                            • Logo appears in header and PDF reports<br>
+                            • Transparent background (PNG) recommended
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card">
@@ -1963,7 +2005,8 @@
             phone: '+60 3-7967 8888',
             email: 'info@refitmaintenance.my',
             website: 'www.refitmaintenance.my',
-            address: 'No. 15, Jalan Teknologi 3/6, Kota Damansara, 47810 Petaling Jaya, Selangor, Malaysia'
+            address: 'No. 15, Jalan Teknologi 3/6, Kota Damansara, 47810 Petaling Jaya, Selangor, Malaysia',
+            logo: null // Base64 encoded logo image
         };
 
         // Storage Keys
@@ -2002,6 +2045,7 @@
             updateStatusBar();
             updateCurrentDate();
             updateStats();
+            updateLogoDisplay(); // Initialize logo display
             renderViews();
             
             // Auto-populate sample data if empty
@@ -2372,6 +2416,12 @@
             var addWorkItemForm = document.getElementById('add-work-item-form');
             if (addWorkItemForm) {
                 addWorkItemForm.addEventListener('submit', handleAddWorkItemSubmit);
+            }
+
+            // Logo upload
+            var logoUpload = document.getElementById('logo-upload');
+            if (logoUpload) {
+                logoUpload.addEventListener('change', handleLogoUpload);
             }
 
             // Work item calculations
@@ -3530,6 +3580,9 @@
             document.getElementById('company-email').value = companySettings.email || '';
             document.getElementById('company-website').value = companySettings.website || '';
             document.getElementById('company-address').value = companySettings.address || '';
+            
+            // Update logo preview
+            updateLogoDisplay();
         }
 
         function handleCompanySubmit(e) {
@@ -3550,6 +3603,84 @@
 
             saveDataToStorage();
             showSuccessMessage('🏢 Company information saved successfully!');
+        }
+
+        // Logo Management Functions
+        function handleLogoUpload(e) {
+            var file = e.target.files[0];
+            if (!file) return;
+            
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                showSuccessMessage('⚠️ Please select a valid image file (PNG, JPG, etc.)');
+                return;
+            }
+            
+            // Validate file size (500KB limit)
+            if (file.size > 500 * 1024) {
+                showSuccessMessage('⚠️ Image too large! Please choose a file smaller than 500KB');
+                return;
+            }
+            
+            // Read and convert to base64
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var base64Data = event.target.result;
+                companySettings.logo = base64Data;
+                saveDataToStorage();
+                updateLogoDisplay();
+                showSuccessMessage('✅ Company logo uploaded successfully!');
+            };
+            reader.onerror = function() {
+                showSuccessMessage('❌ Error reading image file. Please try again.');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeLogo() {
+            if (!companySettings.logo) {
+                showSuccessMessage('⚠️ No logo to remove');
+                return;
+            }
+            
+            if (confirm('Remove company logo?\nThis will restore the default icon.')) {
+                companySettings.logo = null;
+                saveDataToStorage();
+                updateLogoDisplay();
+                showSuccessMessage('🗑️ Company logo removed successfully');
+            }
+        }
+
+        function updateLogoDisplay() {
+            // Update header logo
+            var logoIcon = document.getElementById('logo-icon');
+            var logoImage = document.getElementById('logo-image');
+            
+            // Update preview logo
+            var previewIcon = document.getElementById('logo-preview-icon');
+            var previewImage = document.getElementById('logo-preview-image');
+            
+            if (companySettings.logo) {
+                // Show uploaded logo
+                if (logoIcon) logoIcon.style.display = 'none';
+                if (logoImage) {
+                    logoImage.src = companySettings.logo;
+                    logoImage.style.display = 'block';
+                }
+                
+                if (previewIcon) previewIcon.style.display = 'none';
+                if (previewImage) {
+                    previewImage.src = companySettings.logo;
+                    previewImage.style.display = 'block';
+                }
+            } else {
+                // Show default icon
+                if (logoIcon) logoIcon.style.display = 'block';
+                if (logoImage) logoImage.style.display = 'none';
+                
+                if (previewIcon) previewIcon.style.display = 'block';
+                if (previewImage) previewImage.style.display = 'none';
+            }
         }
 
         // Job Quote Functions
@@ -3796,15 +3927,26 @@
                     var doc = new jsPDF('p', 'mm', 'a4');
                     var yPos = 30;
                     
+                    // Add logo if available
+                    if (companySettings.logo) {
+                        try {
+                            doc.addImage(companySettings.logo, 'JPEG', 15, 15, 25, 25);
+                            yPos = 45;
+                        } catch (logoError) {
+                            console.warn('Logo could not be added to PDF:', logoError);
+                            yPos = 30;
+                        }
+                    }
+                    
                     // Header
                     doc.setFontSize(20);
                     doc.setTextColor(30, 64, 175);
-                    doc.text(companySettings.name, 20, yPos);
+                    doc.text(companySettings.name, companySettings.logo ? 45 : 20, yPos);
                     
                     doc.setFontSize(12);
                     doc.setTextColor(107, 114, 128);
-                    doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
-                    doc.text(companySettings.tagline || 'Professional Maintenance Solutions', 20, yPos + 16);
+                    doc.text('Registration: ' + companySettings.registration, companySettings.logo ? 45 : 20, yPos + 8);
+                    doc.text(companySettings.tagline || 'Professional Maintenance Solutions', companySettings.logo ? 45 : 20, yPos + 16);
                     
                     // Document title
                     yPos += 30;
@@ -3997,14 +4139,25 @@
                     var doc = new jsPDF('p', 'mm', 'a4');
                     var yPos = 30;
                     
+                    // Add logo if available
+                    if (companySettings.logo) {
+                        try {
+                            doc.addImage(companySettings.logo, 'JPEG', 15, 15, 25, 25);
+                            yPos = 45;
+                        } catch (logoError) {
+                            console.warn('Logo could not be added to PDF:', logoError);
+                            yPos = 30;
+                        }
+                    }
+                    
                     // Header
                     doc.setFontSize(20);
                     doc.setTextColor(30, 64, 175);
-                    doc.text(companySettings.name, 20, yPos);
+                    doc.text(companySettings.name, companySettings.logo ? 45 : 20, yPos);
                     
                     doc.setFontSize(12);
                     doc.setTextColor(107, 114, 128);
-                    doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
+                    doc.text('Registration: ' + companySettings.registration, companySettings.logo ? 45 : 20, yPos + 8);
                     
                     yPos += 25;
                     doc.setFontSize(16);
@@ -4108,7 +4261,7 @@
         }
 
         function clearAllData() {
-            if (confirm('⚠️ DANGER: Clear all application data?\n\nThis will permanently delete:\n• All jobs and quote items\n• All clients\n• All technicians\n• Custom service types\n• Company settings\n\nThis action cannot be undone!')) {
+            if (confirm('⚠️ DANGER: Clear all application data?\n\nThis will permanently delete:\n• All jobs and quote items\n• All clients\n• All technicians\n• Custom service types\n• Company settings\n• Company logo\n\nThis action cannot be undone!')) {
                 if (confirm('Are you absolutely sure? This will delete everything!')) {
                     clients = [];
                     jobs = [];
@@ -4122,7 +4275,8 @@
                         phone: '',
                         email: '',
                         website: '',
-                        address: ''
+                        address: '',
+                        logo: null
                     };
                     
                     // Clear localStorage
@@ -4133,6 +4287,7 @@
                     saveDataToStorage();
                     updateStats();
                     renderViews();
+                    updateLogoDisplay();
                     populateServiceTypeSelects();
                     showSuccessMessage('🗑️ All data cleared successfully!');
                 }
@@ -4251,17 +4406,24 @@
                 '⚙️ SYSTEM:\n' +
                 'ESC - Close any open modal\n' +
                 'Ctrl+E or Cmd+E - Export All Data\n\n' +
+                '🏢 COMPANY BRANDING:\n' +
+                '• Upload company logo in Settings\n' +
+                '• Logo appears in header and PDF reports\n' +
+                '• Supports PNG/JPG up to 500KB\n' +
+                '• Recommended: 200x200px square format\n\n' +
                 '💡 ENHANCED FEATURES:\n' +
                 '• Professional job quote system\n' +
                 '• Quote items management with real-time totals\n' +
-                '• Enhanced PDF generation with quote details\n' +
+                '• Enhanced PDF generation with logo and quote details\n' +
                 '• Service type integration for quotes\n' +
                 '• Client quote history tracking\n' +
                 '• Professional quote formatting\n' +
+                '• Company logo management\n' +
                 '• Advanced quote search and filtering\n\n' +
                 '🏢 Professional service management system\n' +
                 '📋 Registration: 201803348973 (002894203-V)\n' +
                 '💰 Enhanced with Job Quote Management\n' +
+                '🖼️ Company Logo Support\n' +
                 '✅ All features fully functional and ready for production use!';
             
             alert(shortcuts);
