@@ -4055,7 +4055,7 @@
             }
         }
 
-        // PDF Generation Function with Logo Support
+        // PDF Generation Function
         function generateJobPDF(jobId) {
             var job = jobs.find(function(j) { return j.id === jobId; });
             if (!job) {
@@ -4076,46 +4076,27 @@
                     var doc = new jsPDF('p', 'mm', 'a4');
                     var yPos = 30;
                     
-                    // Header with Logo Support
+                    // Add company logo if available
                     if (companyLogo) {
                         try {
-                            // Add company logo
-                            doc.addImage(companyLogo, 'JPEG', 20, yPos - 10, 25, 25);
-                            // Company name next to logo
-                            doc.setFontSize(20);
-                            doc.setTextColor(30, 64, 175);
-                            doc.text(companySettings.name, 50, yPos + 5);
-                            
-                            doc.setFontSize(12);
-                            doc.setTextColor(107, 114, 128);
-                            doc.text('Registration: ' + companySettings.registration, 50, yPos + 13);
-                            doc.text(companySettings.tagline || 'Professional Maintenance Solutions', 50, yPos + 21);
-                        } catch (logoError) {
-                            console.warn('Logo error in PDF:', logoError);
-                            // Fallback to text-only header
-                            doc.setFontSize(20);
-                            doc.setTextColor(30, 64, 175);
-                            doc.text(companySettings.name, 20, yPos);
-                            
-                            doc.setFontSize(12);
-                            doc.setTextColor(107, 114, 128);
-                            doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
-                            doc.text(companySettings.tagline || 'Professional Maintenance Solutions', 20, yPos + 16);
+                            doc.addImage(companyLogo, 'JPEG', 150, 15, 40, 40);
+                        } catch (e) {
+                            console.warn('Logo could not be added to PDF:', e);
                         }
-                    } else {
-                        // Text-only header
-                        doc.setFontSize(20);
-                        doc.setTextColor(30, 64, 175);
-                        doc.text(companySettings.name, 20, yPos);
-                        
-                        doc.setFontSize(12);
-                        doc.setTextColor(107, 114, 128);
-                        doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
-                        doc.text(companySettings.tagline || 'Professional Maintenance Solutions', 20, yPos + 16);
                     }
                     
+                    // Header
+                    doc.setFontSize(20);
+                    doc.setTextColor(30, 64, 175);
+                    doc.text(companySettings.name, 20, yPos);
+                    
+                    doc.setFontSize(12);
+                    doc.setTextColor(107, 114, 128);
+                    doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
+                    doc.text(companySettings.tagline || 'Professional Maintenance Solutions', 20, yPos + 16);
+                    
                     // Document title
-                    yPos += 35;
+                    yPos += 30;
                     doc.setFontSize(16);
                     doc.setTextColor(0, 0, 0);
                     doc.text('PROFESSIONAL JOB QUOTE', 20, yPos);
@@ -4280,7 +4261,7 @@
                     doc.save(filename);
                     
                     document.getElementById('pdf-loading').classList.remove('show');
-                    showSuccessMessage('📄 Professional Quote PDF with company logo generated for Job #' + job.id + '!');
+                    showSuccessMessage('📄 Professional Quote PDF generated with company logo for Job #' + job.id + '!');
                     
                 } catch (error) {
                     console.error('PDF error:', error);
@@ -4305,36 +4286,23 @@
                     var doc = new jsPDF('p', 'mm', 'a4');
                     var yPos = 30;
                     
-                    // Header with Logo Support
+                    // Add company logo if available
                     if (companyLogo) {
                         try {
-                            doc.addImage(companyLogo, 'JPEG', 20, yPos - 10, 25, 25);
-                            doc.setFontSize(20);
-                            doc.setTextColor(30, 64, 175);
-                            doc.text(companySettings.name, 50, yPos + 5);
-                            
-                            doc.setFontSize(12);
-                            doc.setTextColor(107, 114, 128);
-                            doc.text('Registration: ' + companySettings.registration, 50, yPos + 13);
-                        } catch (logoError) {
-                            console.warn('Logo error in report:', logoError);
-                            doc.setFontSize(20);
-                            doc.setTextColor(30, 64, 175);
-                            doc.text(companySettings.name, 20, yPos);
-                            
-                            doc.setFontSize(12);
-                            doc.setTextColor(107, 114, 128);
-                            doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
+                            doc.addImage(companyLogo, 'JPEG', 150, 15, 40, 40);
+                        } catch (e) {
+                            console.warn('Logo could not be added to PDF:', e);
                         }
-                    } else {
-                        doc.setFontSize(20);
-                        doc.setTextColor(30, 64, 175);
-                        doc.text(companySettings.name, 20, yPos);
-                        
-                        doc.setFontSize(12);
-                        doc.setTextColor(107, 114, 128);
-                        doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
                     }
+                    
+                    // Header
+                    doc.setFontSize(20);
+                    doc.setTextColor(30, 64, 175);
+                    doc.text(companySettings.name, 20, yPos);
+                    
+                    doc.setFontSize(12);
+                    doc.setTextColor(107, 114, 128);
+                    doc.text('Registration: ' + companySettings.registration, 20, yPos + 8);
                     
                     yPos += 25;
                     doc.setFontSize(16);
@@ -4403,7 +4371,7 @@
                     doc.save(filename);
                     
                     document.getElementById('pdf-loading').classList.remove('show');
-                    showSuccessMessage('📊 Enhanced jobs & quotes report with company logo generated!');
+                    showSuccessMessage('📊 Enhanced jobs & quotes report generated with company logo!');
                     
                 } catch (error) {
                     console.error('Report error:', error);
@@ -4432,14 +4400,14 @@
             
             var link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Maintenance_Data_Enhanced_' + new Date().toISOString().split('T')[0] + '.json';
+            link.download = 'REFIT_Maintenance_Data_Enhanced_Logo_' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             
             showSuccessMessage('📤 All data exported successfully with company logo!');
         }
 
         function clearAllData() {
-            if (confirm('⚠️ DANGER: Clear all application data?\n\nThis will permanently delete:\n• All jobs and quote items\n• All clients\n• All technicians\n• Custom service types\n• Company logo\n• Company settings\n\nThis action cannot be undone!')) {
+            if (confirm('⚠️ DANGER: Clear all application data?\n\nThis will permanently delete:\n• All jobs and quote items\n• All clients\n• All technicians\n• Custom service types\n• Company settings\n• Company logo\n\nThis action cannot be undone!')) {
                 if (confirm('Are you absolutely sure? This will delete everything!')) {
                     clients = [];
                     jobs = [];
@@ -4462,10 +4430,10 @@
                         localStorage.removeItem(STORAGE_KEYS[key]);
                     }
                     
-                    updateLogoDisplay();
                     saveDataToStorage();
                     updateStats();
                     renderViews();
+                    updateLogoDisplay();
                     populateServiceTypeSelects();
                     showSuccessMessage('🗑️ All data cleared successfully!');
                 }
@@ -4495,7 +4463,7 @@
             // Touch feedback
             document.addEventListener('touchstart', function(e) {
                 var target = e.target;
-                if (target.matches('button, .nav-item, .item-card, .action-btn, .icon-btn, .addon-btn, .app-logo')) {
+                if (target.matches('button, .nav-item, .item-card, .action-btn, .icon-btn, .addon-btn')) {
                     target.style.transform = 'scale(0.96)';
                     target.style.transition = 'transform 0.1s ease';
                 }
@@ -4503,7 +4471,7 @@
 
             document.addEventListener('touchend', function(e) {
                 var target = e.target;
-                if (target.matches('button, .nav-item, .item-card, .action-btn, .icon-btn, .addon-btn, .app-logo')) {
+                if (target.matches('button, .nav-item, .item-card, .action-btn, .icon-btn, .addon-btn')) {
                     setTimeout(function() {
                         target.style.transform = '';
                     }, 100);
@@ -4561,13 +4529,17 @@
         }
 
         function showKeyboardShortcuts() {
-            var shortcuts = '⌨️ REFIT MAINTENANCE SERVICES - Enhanced System with Company Logo Shortcuts:\n\n' +
+            var shortcuts = '⌨️ REFIT MAINTENANCE SERVICES - Enhanced Job Quote System with Logo Management:\n\n' +
                 '🔧 SERVICE MANAGEMENT:\n' +
                 'Ctrl+J or Cmd+J - Enhanced Job Creation with Quote Items\n' +
                 'Ctrl+C or Cmd+C - New Client\n' +
                 'Ctrl+T or Cmd+T - New Technician\n' +
                 'Ctrl+V or Cmd+V - New Service Type\n' +
                 'Ctrl+S or Cmd+S - Open Settings\n\n' +
+                '🖼️ COMPANY BRANDING:\n' +
+                'Ctrl+L or Cmd+L - Open Logo Manager\n' +
+                'Click header logo - Upload/Change Company Logo\n' +
+                'Settings → Logo Section - Full Logo Management\n\n' +
                 '🛠️ SERVICE TYPES:\n' +
                 '➕ Button in job form - Add Service Type\n' +
                 'Service Types tab - Manage all service types\n' +
@@ -4576,10 +4548,6 @@
                 'Ctrl+Q or Cmd+Q - View Job Quote (when job selected)\n' +
                 'Ctrl+W or Cmd+W - Manage Quote Items (when job selected)\n' +
                 'Ctrl+A or Cmd+A - Add Quote Item to Current Job\n\n' +
-                '🖼️ COMPANY LOGO:\n' +
-                'Ctrl+L or Cmd+L - Open Logo Manager\n' +
-                'Click header logo - Manage company logo\n' +
-                'Settings > Logo section - Upload/Remove logo\n\n' +
                 '📄 PDF & REPORTING:\n' +
                 'Ctrl+P or Cmd+P - Generate Professional Quote PDF with Logo\n' +
                 'Ctrl+R or Cmd+R - Generate Enhanced Comprehensive Report\n\n' +
@@ -4587,15 +4555,15 @@
                 'Ctrl+D or Cmd+D - Create Demo Job with Quote Items\n\n' +
                 '⚙️ SYSTEM:\n' +
                 'ESC - Close any open modal\n' +
-                'Ctrl+E or Cmd+E - Export All Data\n\n' +
+                'Ctrl+E or Cmd+E - Export All Data (includes logo)\n\n' +
                 '💡 ENHANCED FEATURES:\n' +
                 '• Professional company logo management\n' +
-                '• Logo integration in PDF generation\n' +
-                '• Enhanced visual branding throughout app\n' +
-                '• Professional quote system with logo\n' +
-                '• Mobile-optimized logo upload interface\n' +
-                '• Automatic logo display in headers and reports\n' +
-                '• Advanced logo storage and management\n\n' +
+                '• Logo integration in PDF quotes and reports\n' +
+                '• Clickable logo upload in header\n' +
+                '• Logo preview and management in settings\n' +
+                '• Professional branding for client presentations\n' +
+                '• Automatic logo inclusion in all PDFs\n' +
+                '• Logo data backup and restore\n\n' +
                 '🏢 Professional service management system\n' +
                 '📋 Registration: 201803348973 (002894203-V)\n' +
                 '🖼️ Enhanced with Company Logo Management\n' +
@@ -4642,12 +4610,13 @@
             console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Work Management System');
             console.log('📋 Registration: 201803348973 (002894203-V)');
             console.log('🖼️ Enhanced with Company Logo Management');
-            console.log('💼 All features functional: Jobs, Quote Items, Clients, Technicians, Service Types, PDF Generation, Logo Management');
+            console.log('💰 Professional Job Quote System');
+            console.log('💼 All features functional: Jobs, Quote Items, Clients, Technicians, Service Types, Logo Management, PDF Generation');
             console.log('📱 Mobile-optimized with touch feedback and pull-to-refresh');
             console.log('⌨️ Full keyboard shortcuts support with logo shortcuts');
             console.log('📊 Advanced reporting and data export capabilities');
-            console.log('🎨 Professional logo system with enhanced PDF generation');
-            console.log('✅ Ready for production use with enhanced branding management!');
+            console.log('🎨 Professional branding with company logo integration');
+            console.log('✅ Ready for production use with enhanced logo management!');
         }, 2000);
     </script>
 </body>
