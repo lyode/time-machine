@@ -3070,8 +3070,6 @@
                     return job.status === 'pending' || job.status === 'progress'; 
                 }).length;
                 
-                var specializationName = getServiceTypeName(technician.specialization) || technician.specialization;
-                
                 techniciansHTML += '<div class="item-card" style="padding-right: 100px;">' +
                     '<div class="item-actions">' +
                     '<button class="icon-btn edit-btn" onclick="editTechnician(' + technician.id + ')" title="Edit">✏️</button>' +
@@ -3083,7 +3081,7 @@
                     (technician.phone ? '<div class="contact-info"><span class="icon">📞</span><span>' + technician.phone + '</span></div>' : '') +
                     (technician.email ? '<div class="contact-info"><span class="icon">📧</span><span>' + technician.email + '</span></div>' : '') +
                     '<div style="margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap;">' +
-                    (technician.specialization ? '<span class="service-type-badge" style="text-transform: capitalize;">' + specializationName + '</span>' : '') +
+                    (technician.specialization ? '<span class="service-type-badge" style="text-transform: capitalize;">' + getServiceTypeName(technician.specialization) + '</span>' : '') +
                     (technician.level ? '<span class="service-type-badge" style="background: rgba(139, 92, 246, 0.2); text-transform: capitalize;">' + technician.level + '</span>' : '') +
                     '</div>' +
                     '<div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 12px; margin-top: 12px; display: flex; justify-content: space-between; font-size: 14px;">' +
@@ -3584,10 +3582,9 @@
             // Technician info
             content += '<div style="margin-bottom: 16px;"><strong>👷 Assigned Technician:</strong><br>';
             if (technician) {
-                var techSpecialization = getServiceTypeName(technician.specialization) || technician.specialization;
                 content += '<div style="background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 12px; margin-top: 8px;">' +
                     '<div style="font-weight: 700; color: #1f2937;">' + technician.name + '</div>' +
-                    '<div style="color: #6b7280; font-size: 14px;">Specialization: ' + techSpecialization + '</div>' +
+                    '<div style="color: #6b7280; font-size: 14px;">Specialization: ' + getServiceTypeName(technician.specialization) + '</div>' +
                     '<div style="color: #6b7280; font-size: 14px;">Level: ' + technician.level.replace(/\b\w/g, function(l){ return l.toUpperCase() }) + '</div>';
                 if (technician.phone) content += '<div style="color: #6b7280; font-size: 14px;">📞 ' + technician.phone + '</div>';
                 content += '</div>';
@@ -3824,8 +3821,7 @@
                         doc.setTextColor(0, 0, 0);
                         doc.text('Name: ' + technician.name, 20, yPos);
                         if (technician.employeeId) doc.text('Employee ID: ' + technician.employeeId, 20, yPos + 8);
-                        var techSpecialization = getServiceTypeName(technician.specialization) || technician.specialization;
-                        doc.text('Specialization: ' + techSpecialization, 20, yPos + 16);
+                        doc.text('Specialization: ' + getServiceTypeName(technician.specialization), 20, yPos + 16);
                         doc.text('Level: ' + technician.level.replace(/\b\w/g, function(l){ return l.toUpperCase() }), 20, yPos + 24);
                         if (technician.phone) doc.text('Phone: ' + technician.phone, 20, yPos + 32);
                         
@@ -4003,44 +3999,11 @@
                     doc.text('Pending: ' + pendingJobs + ' | In Progress: ' + progressJobs + ' | Completed: ' + completedJobs, 20, yPos + 24);
                     doc.text('Total Clients: ' + clients.length, 20, yPos + 32);
                     doc.text('Total Technicians: ' + technicians.length, 20, yPos + 40);
-                    doc.text('Service Types: ' + allServiceTypes.length + ' (' + defaultServiceTypes.length + ' default, ' + customServiceTypes.length + ' custom)', 20, yPos + 48);
+                    doc.text('Service Types: ' + allServiceTypes.length + ' (' + defaultServiceTypes.length + ' default + ' + customServiceTypes.length + ' custom)', 20, yPos + 48);
                     
                     yPos += 65;
                     
-                    // Service Types Usage
-                    doc.setFontSize(14);
-                    doc.setTextColor(30, 64, 175);
-                    doc.text('SERVICE TYPES USAGE', 20, yPos);
-                    
-                    yPos += 15;
-                    
-                    var serviceUsage = {};
-                    for (var i = 0; i < jobs.length; i++) {
-                        var serviceType = jobs[i].serviceType || 'general';
-                        serviceUsage[serviceType] = (serviceUsage[serviceType] || 0) + 1;
-                    }
-                    
-                    doc.setFontSize(10);
-                    for (var serviceId in serviceUsage) {
-                        var serviceName = getServiceTypeName(serviceId);
-                        var usageCount = serviceUsage[serviceId];
-                        doc.text(serviceName + ': ' + usageCount + ' jobs', 20, yPos);
-                        yPos += 6;
-                        
-                        if (yPos > 260) {
-                            doc.addPage();
-                            yPos = 30;
-                        }
-                    }
-                    
-                    yPos += 10;
-                    
                     // Jobs list
-                    if (yPos > 240) {
-                        doc.addPage();
-                        yPos = 30;
-                    }
-                    
                     doc.setFontSize(14);
                     doc.setTextColor(30, 64, 175);
                     doc.text('ALL JOBS', 20, yPos);
@@ -4073,7 +4036,7 @@
                     doc.save(filename);
                     
                     document.getElementById('pdf-loading').classList.remove('show');
-                    showSuccessMessage('📊 Enhanced jobs report generated with ' + jobs.length + ' jobs and service type analytics!');
+                    showSuccessMessage('📊 Enhanced jobs report generated with ' + jobs.length + ' jobs and ' + allServiceTypes.length + ' service types!');
                     
                 } catch (error) {
                     console.error('Report error:', error);
@@ -4104,7 +4067,7 @@
             link.download = 'REFIT_Maintenance_Data_Enhanced_' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             
-            showSuccessMessage('📤 All data including custom service types exported successfully!');
+            showSuccessMessage('📤 All data exported successfully with enhanced service types!');
         }
 
         function clearAllData() {
@@ -4162,7 +4125,7 @@
             // Touch feedback
             document.addEventListener('touchstart', function(e) {
                 var target = e.target;
-                if (target.matches('button, .nav-item, .item-card, .action-btn, .icon-btn')) {
+                if (target.matches('button, .nav-item, .item-card, .action-btn, .icon-btn, .addon-btn')) {
                     target.style.transform = 'scale(0.96)';
                     target.style.transition = 'transform 0.1s ease';
                 }
@@ -4170,7 +4133,7 @@
 
             document.addEventListener('touchend', function(e) {
                 var target = e.target;
-                if (target.matches('button, .nav-item, .item-card, .action-btn, .icon-btn')) {
+                if (target.matches('button, .nav-item, .item-card, .action-btn, .icon-btn, .addon-btn')) {
                     setTimeout(function() {
                         target.style.transform = '';
                     }, 100);
@@ -4235,30 +4198,32 @@
                 'Ctrl+T or Cmd+T - New Technician\n' +
                 'Ctrl+V or Cmd+V - New Service Type\n' +
                 'Ctrl+S or Cmd+S - Open Settings\n\n' +
+                '🛠️ SERVICE TYPES:\n' +
+                '➕ Button in job form - Add Service Type\n' +
+                'Service Types tab - Manage all service types\n' +
+                'Edit/Delete custom service types\n\n' +
                 '🔧 WORK ITEMS:\n' +
                 'Ctrl+W or Cmd+W - Manage Work Items (when job selected)\n' +
                 'Ctrl+A or Cmd+A - Add Work Item to Current Job\n\n' +
                 '📄 PDF & REPORTING:\n' +
                 'Ctrl+P or Cmd+P - Generate Professional PDF with Work Items\n' +
-                'Ctrl+R or Cmd+R - Generate Comprehensive Report\n\n' +
-                '🛠️ SERVICE TYPES:\n' +
-                '+ Button next to Service Type dropdown - Quick Add Service Type\n' +
-                'Service Types View - Full Management Interface\n\n' +
+                'Ctrl+R or Cmd+R - Generate Enhanced Comprehensive Report\n\n' +
                 '🎯 DEMO & TESTING:\n' +
                 'Ctrl+D or Cmd+D - Create Demo Job with Work Items\n\n' +
                 '⚙️ SYSTEM:\n' +
                 'ESC - Close any open modal\n' +
                 'Ctrl+E or Cmd+E - Export All Data\n\n' +
                 '💡 ENHANCED FEATURES:\n' +
-                '• Custom service type management\n' +
-                '• Default + custom service types\n' +
-                '• Service type usage analytics\n' +
-                '• Enhanced technician specializations\n' +
-                '• Service type integration in reports\n' +
-                '• Real-time service type statistics\n\n' +
+                '• Create and manage custom service types\n' +
+                '• Service type with add-on button in job forms\n' +
+                '• Default + custom service type management\n' +
+                '• Enhanced technician specialization options\n' +
+                '• Improved service type statistics\n' +
+                '• Professional PDF with service type details\n' +
+                '• Advanced service type search and filtering\n\n' +
                 '🏢 Professional service management system\n' +
                 '📋 Registration: 201803348973 (002894203-V)\n' +
-                '🛠️ Enhanced with complete service type management\n' +
+                '🛠️ Enhanced with Service Type Management\n' +
                 '✅ All features fully functional and ready for production use!';
             
             alert(shortcuts);
@@ -4292,16 +4257,22 @@
         // Update status bar time every minute
         setInterval(updateStatusBar, 60000);
 
+        // Initialize service type selects when DOM is ready
+        setTimeout(function() {
+            populateServiceTypeSelects();
+        }, 100);
+
         // Final initialization message
         setTimeout(function() {
             console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Work Management System');
             console.log('📋 Registration: 201803348973 (002894203-V)');
-            console.log('🛠️ Enhanced with complete service type management');
+            console.log('🛠️ Enhanced with Service Type Management');
             console.log('💼 All features functional: Jobs, Work Items, Clients, Technicians, Service Types, PDF Generation');
             console.log('📱 Mobile-optimized with touch feedback and pull-to-refresh');
-            console.log('⌨️ Full keyboard shortcuts support including service type management');
-            console.log('📊 Advanced reporting with service type analytics');
-            console.log('✅ Ready for production use with enhanced capabilities!');
+            console.log('⌨️ Full keyboard shortcuts support with service type shortcuts');
+            console.log('📊 Advanced reporting and data export capabilities');
+            console.log('🎨 Service type add-on button in job creation forms');
+            console.log('✅ Ready for production use with enhanced service management!');
         }, 2000);
     </script>
 </body>
