@@ -1260,7 +1260,8 @@
                 </div>
             </div>
             <div class="header-right">
-                <button class="header-btn" onclick="exportData()">📤</button>
+                <button class="header-btn" onclick="openCompanyInfo()" title="Company Info">👤</button>
+                <button class="header-btn" onclick="exportData()" title="Export">📤</button>
             </div>
         </div>
 
@@ -1436,6 +1437,13 @@
                     <p style="color: var(--accent-primary); font-weight: 600; margin-top: 4px;" id="selected-category-display"></p>
                 </div>
 
+                <!-- Add Custom Item Button -->
+                <div style="margin-bottom: 16px;">
+                    <button type="button" class="btn btn-warm" onclick="openCustomItemForm()" style="width: 100%; font-size: 16px; padding: 16px;">
+                        ➕ Create Custom Item
+                    </button>
+                </div>
+
                 <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;">
                     <div id="preset-items-list"></div>
                 </div>
@@ -1460,6 +1468,101 @@
                         Create Quote
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple Company Info Modal -->
+    <div id="company-info-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🏢 Company Information</h3>
+                <button class="close-btn" onclick="closeCompanyInfo()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">🏢</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Update your company details for quotes</p>
+                </div>
+
+                <input type="text" class="form-input" placeholder="Company Name" id="company-name-input">
+                <input type="text" class="form-input" placeholder="Registration Number" id="company-reg-input">
+                <input type="text" class="form-input" placeholder="Phone Number" id="company-phone-input">
+                <input type="text" class="form-input" placeholder="Email Address" id="company-email-input">
+                <textarea class="form-input" placeholder="Company Address" id="company-address-input" rows="3" style="resize: none;"></textarea>
+
+                <div class="form-actions">
+                    <button type="button" class="form-btn btn-primary" onclick="saveCompanyInfo()">
+                        ✅ Save Details
+                    </button>
+                    <button type="button" class="form-btn btn-secondary" onclick="closeCompanyInfo()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Item Creation Modal -->
+    <div id="custom-item-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>➕ Create Custom Item</h3>
+                <button class="close-btn" onclick="closeCustomItemForm()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">🛠️</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Add a custom item to this quote</p>
+                </div>
+
+                <form id="custom-item-form">
+                    <input type="text" 
+                           class="form-input" 
+                           placeholder="Item name (e.g., Custom Electrical Work)" 
+                           id="custom-item-name" 
+                           required
+                           style="margin-bottom: 16px;">
+                    
+                    <textarea class="form-input" 
+                              placeholder="Item description (optional)" 
+                              id="custom-item-description" 
+                              rows="2" 
+                              style="resize: none; margin-bottom: 16px;"></textarea>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        <input type="number" 
+                               class="form-input" 
+                               placeholder="Price (RM)" 
+                               id="custom-item-price" 
+                               step="0.01" 
+                               min="0"
+                               required
+                               style="margin-bottom: 0;">
+                        
+                        <select class="form-input" id="custom-item-unit" style="margin-bottom: 0;">
+                            <option value="pcs">Pieces (pcs)</option>
+                            <option value="hours">Hours</option>
+                            <option value="sqft">Square Feet</option>
+                            <option value="sqm">Square Meters</option>
+                            <option value="meters">Meters</option>
+                            <option value="kg">Kilograms</option>
+                            <option value="liters">Liters</option>
+                            <option value="set">Set</option>
+                            <option value="lot">Lot</option>
+                            <option value="service">Service</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="form-btn btn-primary">
+                            ✅ Add to Quote
+                        </button>
+                        <button type="button" class="form-btn btn-secondary" onclick="closeCustomItemForm()">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -1799,10 +1902,20 @@
             ]
         };
 
+        // Company Settings (simplified)
+        var companyInfo = {
+            name: 'REFIT MAINTENANCE SERVICES',
+            registration: '201803348973 (002894203-V)',
+            phone: '+60 3-7967 8888',
+            email: 'info@refitmaintenance.my',
+            address: 'No. 15, Jalan Teknologi 3/6, Kota Damansara, 47810 Petaling Jaya, Selangor, Malaysia'
+        };
+
         // Storage Keys
         var STORAGE_KEYS = {
             JOB_QUOTES: 'refit_simplified_quotes',
-            THEME_PREFERENCE: 'refit_theme_preference'
+            THEME_PREFERENCE: 'refit_theme_preference',
+            COMPANY_INFO: 'refit_company_info'
         };
 
         // Theme Management Functions
@@ -1850,6 +1963,7 @@
             try {
                 localStorage.setItem(STORAGE_KEYS.JOB_QUOTES, JSON.stringify(jobQuotes));
                 localStorage.setItem(STORAGE_KEYS.THEME_PREFERENCE, JSON.stringify(currentTheme));
+                localStorage.setItem(STORAGE_KEYS.COMPANY_INFO, JSON.stringify(companyInfo));
             } catch (e) {
                 console.warn('Storage error:', e);
                 showSuccessMessage('⚠️ Storage full! Please export data.');
@@ -1861,6 +1975,16 @@
                 var savedQuotes = localStorage.getItem(STORAGE_KEYS.JOB_QUOTES);
                 if (savedQuotes) {
                     jobQuotes = JSON.parse(savedQuotes);
+                }
+                
+                var savedCompanyInfo = localStorage.getItem(STORAGE_KEYS.COMPANY_INFO);
+                if (savedCompanyInfo) {
+                    companyInfo = Object.assign(companyInfo, JSON.parse(savedCompanyInfo));
+                    // Update header display
+                    document.getElementById('company-name').textContent = companyInfo.name;
+                    document.getElementById('company-registration').innerHTML = 
+                        'Registration No: ' + companyInfo.registration.split('(')[0].trim() + '<br>(' + 
+                        (companyInfo.registration.includes('(') ? companyInfo.registration.split('(')[1] : ')');
                 }
             } catch (e) {
                 console.warn('Load error:', e);
@@ -2176,10 +2300,13 @@
             
             for (var i = 0; i < quote.items.length; i++) {
                 var item = quote.items[i];
+                var itemIcon = item.isCustom ? '🛠️' : categories[quote.category].icon;
+                var itemLabel = item.isCustom ? ' (Custom)' : '';
+                
                 html += '<div class="quote-item">' +
                     '<div class="item-name">' +
-                    '<span>' + categories[quote.category].icon + '</span>' +
-                    item.name +
+                    '<span>' + itemIcon + '</span>' +
+                    item.name + itemLabel +
                     '</div>' +
                     '<div class="item-details">' + item.description + '</div>' +
                     '<div class="item-pricing">' +
@@ -2237,11 +2364,11 @@
                 // Header
                 doc.setFontSize(20);
                 doc.setFont(undefined, 'bold');
-                doc.text('REFIT MAINTENANCE SERVICES', 20, 30);
+                doc.text(companyInfo.name, 20, 30);
                 
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'normal');
-                doc.text('Registration No: 201803348973 (002894203-V)', 20, 40);
+                doc.text('Registration No: ' + companyInfo.registration, 20, 40);
                 doc.text('Professional Maintenance Solutions', 20, 48);
                 
                 // Quote Title
@@ -2279,7 +2406,8 @@
                     yPosition += 10;
                     
                     doc.text((i + 1).toString(), 20, yPosition);
-                    doc.text(item.name.substring(0, 35), 35, yPosition);
+                    var itemName = item.name + (item.isCustom ? ' (Custom)' : '');
+                    doc.text(itemName.substring(0, 35), 35, yPosition);
                     doc.text(item.quantity.toString(), 130, yPosition);
                     doc.text(item.unit, 150, yPosition);
                     doc.text(item.total.toFixed(2), 170, yPosition);
@@ -2307,9 +2435,9 @@
                 yPosition += 30;
                 doc.setFontSize(10);
                 doc.setFont(undefined, 'normal');
-                doc.text('Thank you for choosing REFIT MAINTENANCE SERVICES', 20, yPosition);
-                doc.text('For inquiries, please contact us at +60 3-7967 8888', 20, yPosition + 10);
-                doc.text('Email: info@refitmaintenance.my', 20, yPosition + 20);
+                doc.text('Thank you for choosing ' + companyInfo.name, 20, yPosition);
+                doc.text('For inquiries, please contact us at ' + companyInfo.phone, 20, yPosition + 10);
+                doc.text('Email: ' + companyInfo.email, 20, yPosition + 20);
                 
                 // Generate PDF blob
                 var pdfBlob = doc.output('blob');
@@ -2357,11 +2485,11 @@
                 // Header
                 doc.setFontSize(20);
                 doc.setFont(undefined, 'bold');
-                doc.text('REFIT MAINTENANCE SERVICES', 20, 30);
+                doc.text(companyInfo.name, 20, 30);
                 
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'normal');
-                doc.text('Registration No: 201803348973 (002894203-V)', 20, 40);
+                doc.text('Registration No: ' + companyInfo.registration, 20, 40);
                 doc.text('Professional Maintenance Solutions', 20, 48);
                 
                 // Quote Title
@@ -2399,7 +2527,8 @@
                     yPosition += 10;
                     
                     doc.text((i + 1).toString(), 20, yPosition);
-                    doc.text(item.name.substring(0, 35), 35, yPosition);
+                    var itemName = item.name + (item.isCustom ? ' (Custom)' : '');
+                    doc.text(itemName.substring(0, 35), 35, yPosition);
                     doc.text(item.quantity.toString(), 130, yPosition);
                     doc.text(item.unit, 150, yPosition);
                     doc.text(item.total.toFixed(2), 170, yPosition);
@@ -2427,9 +2556,9 @@
                 yPosition += 30;
                 doc.setFontSize(10);
                 doc.setFont(undefined, 'normal');
-                doc.text('Thank you for choosing REFIT MAINTENANCE SERVICES', 20, yPosition);
-                doc.text('For inquiries, please contact us at +60 3-7967 8888', 20, yPosition + 10);
-                doc.text('Email: info@refitmaintenance.my', 20, yPosition + 20);
+                doc.text('Thank you for choosing ' + companyInfo.name, 20, yPosition);
+                doc.text('For inquiries, please contact us at ' + companyInfo.phone, 20, yPosition + 10);
+                doc.text('Email: ' + companyInfo.email, 20, yPosition + 20);
                 
                 // Download PDF
                 var fileName = 'REFIT_Quote_' + quote.id + '_' + quote.title.replace(/[^a-z0-9]/gi, '_') + '.pdf';
@@ -2665,9 +2794,10 @@
                 jobQuotes: jobQuotes,
                 categories: categories,
                 presetWorkItems: presetWorkItems,
+                companyInfo: companyInfo,
                 themePreference: currentTheme,
                 exportDate: new Date().toISOString(),
-                version: 'Simplified 1.0'
+                version: 'Simplified 1.1'
             };
             
             var dataStr = JSON.stringify(allData, null, 2);
@@ -2681,6 +2811,215 @@
             showSuccessMessage('📤 Data exported successfully!');
         }
 
+        // Simple Company Info Management
+        function openCompanyInfo() {
+            // Load current company info into form
+            document.getElementById('company-name-input').value = companyInfo.name;
+            document.getElementById('company-reg-input').value = companyInfo.registration;
+            document.getElementById('company-phone-input').value = companyInfo.phone;
+            document.getElementById('company-email-input').value = companyInfo.email;
+            document.getElementById('company-address-input').value = companyInfo.address;
+            
+            document.getElementById('company-info-modal').classList.add('show');
+            showSuccessMessage('🏢 Company info opened');
+        }
+
+        function closeCompanyInfo() {
+            document.getElementById('company-info-modal').classList.remove('show');
+        }
+
+        function saveCompanyInfo() {
+            // Update company info
+            companyInfo.name = document.getElementById('company-name-input').value.trim() || companyInfo.name;
+            companyInfo.registration = document.getElementById('company-reg-input').value.trim() || companyInfo.registration;
+            companyInfo.phone = document.getElementById('company-phone-input').value.trim() || companyInfo.phone;
+            companyInfo.email = document.getElementById('company-email-input').value.trim() || companyInfo.email;
+            companyInfo.address = document.getElementById('company-address-input').value.trim() || companyInfo.address;
+            
+            // Update header display
+            document.getElementById('company-name').textContent = companyInfo.name;
+            document.getElementById('company-registration').innerHTML = 
+                'Registration No: ' + companyInfo.registration.split('(')[0].trim() + '<br>(' + 
+                (companyInfo.registration.includes('(') ? companyInfo.registration.split('(')[1] : ')');
+            
+            // Save to storage
+            saveDataToStorage();
+            closeCompanyInfo();
+            showSuccessMessage('✅ Company details saved!');
+        }
+
+        // Custom Item Creation Functions
+        function openCustomItemForm() {
+            // Clear form
+            document.getElementById('custom-item-form').reset();
+            
+            // Show modal
+            document.getElementById('custom-item-modal').classList.add('show');
+            
+            showSuccessMessage('➕ Creating custom item for: ' + categories[currentQuoteData.category].name);
+        }
+
+        function closeCustomItemForm() {
+            document.getElementById('custom-item-modal').classList.remove('show');
+        }
+
+        function handleCustomItemSubmit(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('custom-item-name').value.trim();
+            var description = document.getElementById('custom-item-description').value.trim();
+            var price = parseFloat(document.getElementById('custom-item-price').value);
+            var unit = document.getElementById('custom-item-unit').value;
+            
+            if (!name || !price || price <= 0) {
+                showSuccessMessage('⚠️ Please fill in item name and valid price');
+                return;
+            }
+            
+            // Create custom item
+            var customItem = {
+                id: 'custom-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                name: name,
+                description: description || 'Custom item for ' + currentQuoteData.title,
+                price: price,
+                unit: unit,
+                quantity: 1,
+                total: price,
+                isCustom: true
+            };
+            
+            // Add to current quote items
+            currentQuoteData.items.push(customItem);
+            
+            // Close modal
+            closeCustomItemForm();
+            
+            // Update display
+            renderPresetItems();
+            updateSelectedItemsSummary();
+            
+            showSuccessMessage('✅ Custom item added: ' + name);
+        }
+
+        // Enhanced toggle function to handle custom items
+        function togglePresetItem(itemId) {
+            // Check if it's a custom item already in the quote
+            var existingIndex = currentQuoteData.items.findIndex(function(selectedItem) {
+                return selectedItem.id === itemId;
+            });
+            
+            if (existingIndex !== -1) {
+                // Remove item
+                var removedItem = currentQuoteData.items[existingIndex];
+                currentQuoteData.items.splice(existingIndex, 1);
+                showSuccessMessage('➖ Removed: ' + removedItem.name);
+                renderPresetItems();
+                return;
+            }
+            
+            // Handle preset items
+            var categoryItems = presetWorkItems[currentQuoteData.category] || [];
+            var item = categoryItems.find(function(item) { return item.id === itemId; });
+            
+            if (!item) return;
+            
+            // Add preset item
+            var selectedItem = {
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                price: item.price,
+                unit: item.unit,
+                quantity: 1,
+                total: item.price,
+                isCustom: false
+            };
+            
+            currentQuoteData.items.push(selectedItem);
+            showSuccessMessage('✅ Added: ' + item.name);
+            
+            // Update display
+            renderPresetItems();
+        }
+
+        // Updated renderPresetItems to show custom items
+        function renderPresetItems() {
+            var container = document.getElementById('preset-items-list');
+            if (!container) return;
+            
+            var categoryItems = presetWorkItems[currentQuoteData.category] || [];
+            var html = '';
+            
+            // Show custom items first if any
+            var customItems = currentQuoteData.items.filter(function(item) { return item.isCustom; });
+            if (customItems.length > 0) {
+                html += '<div style="margin-bottom: 20px;">' +
+                    '<div style="font-weight: 700; color: var(--accent-warm); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
+                    '<span style="font-size: 20px;">🛠️</span>' +
+                    '<span>Custom Items (' + customItems.length + ')</span>' +
+                    '</div>';
+                
+                for (var i = 0; i < customItems.length; i++) {
+                    var item = customItems[i];
+                    html += '<div class="preset-item selected" onclick="togglePresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
+                        '<div class="header">' +
+                        '<div class="name">🛠️ ' + item.name + '</div>' +
+                        '<div class="price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                        '</div>' +
+                        '<div class="description">' + item.description + '</div>' +
+                        '<div class="unit">Per ' + item.unit + ' • Custom Item</div>' +
+                        '</div>';
+                }
+                html += '</div>';
+            }
+            
+            // Show preset items
+            if (categoryItems.length === 0) {
+                if (customItems.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">' +
+                        '<div style="font-size: 48px; margin-bottom: 16px;">📦</div>' +
+                        '<p style="font-weight: 600;">No preset items available</p>' +
+                        '<p style="font-size: 14px; margin-top: 8px;">Create custom items for this category</p>' +
+                        '</div>';
+                } else {
+                    container.innerHTML = html;
+                }
+                updateSelectedItemsSummary();
+                return;
+            }
+            
+            if (categoryItems.length > 0) {
+                html += '<div style="margin-bottom: 12px;">' +
+                    '<div style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
+                    '<span style="font-size: 20px;">' + categories[currentQuoteData.category].icon + '</span>' +
+                    '<span>Preset Items (' + categoryItems.length + ')</span>' +
+                    '</div>';
+            }
+            
+            for (var i = 0; i < categoryItems.length; i++) {
+                var item = categoryItems[i];
+                var isSelected = currentQuoteData.items.some(function(selectedItem) {
+                    return selectedItem.id === item.id && !selectedItem.isCustom;
+                });
+                
+                html += '<div class="preset-item' + (isSelected ? ' selected' : '') + '" onclick="togglePresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
+                    '<div class="header">' +
+                    '<div class="name">' + item.name + '</div>' +
+                    '<div class="price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                    '</div>' +
+                    '<div class="description">' + item.description + '</div>' +
+                    '<div class="unit">Per ' + item.unit + '</div>' +
+                    '</div>';
+            }
+            
+            if (categoryItems.length > 0) {
+                html += '</div>';
+            }
+            
+            container.innerHTML = html;
+            updateSelectedItemsSummary();
+        }
+
         // Setup and initialization functions
         function setupEventListeners() {
             // Job title enter key support
@@ -2691,6 +3030,12 @@
                         proceedToCategory();
                     }
                 });
+            }
+            
+            // Custom item form submit
+            var customItemForm = document.getElementById('custom-item-form');
+            if (customItemForm) {
+                customItemForm.addEventListener('submit', handleCustomItemSubmit);
             }
         }
 
@@ -2734,7 +3079,7 @@
             updateStats();
             renderViews();
             
-            showSuccessMessage('🎯 REFIT Simplified Quote System Ready!');
+            showSuccessMessage('🎯 REFIT Quote System Ready! Simple & Fast! 🚀');
             console.log('🔧 REFIT MAINTENANCE SERVICES - Simplified Quote Creation');
             console.log('📱 3-Step Quote Process: Title → Category → Items → Share');
             console.log('📄 PDF Generation & Sharing System');
@@ -2744,8 +3089,10 @@
         console.log('🎯 REFIT SIMPLIFIED - Quote Creation & PDF Sharing System Ready');
         console.log('📝 Step 1: Job Title');
         console.log('🏷️ Step 2: Category Selection');
-        console.log('📋 Step 3: Item Selection');
+        console.log('📋 Step 3: Item Selection + Custom Item Creation');
         console.log('📤 PDF Generation & Sharing');
+        console.log('🛠️ Custom Items: Create items on-the-fly during quote creation');
+        console.log('🏢 Simple Company Info: Optional insert button - no lock-in!');
     </script>
 </body>
 </html>
