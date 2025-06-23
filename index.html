@@ -2239,113 +2239,79 @@
             CUSTOM_LOGO: 'refit_custom_logo'
         };
 
-        // Enhanced Default Preset Work Items with All New Categories
+        // Enhanced Default Preset Work Items with Reset Categories
         var defaultPresetWorkItems = [
-            // Preliminary Work
-            { id: 'preliminary-survey', name: 'Site Survey & Assessment', description: 'Initial site evaluation and condition assessment', price: 250.00, unit: 'service', category: 'preliminary' },
-            { id: 'preliminary-protection', name: 'Protective Covering', description: 'Floor and furniture protection during work', price: 120.00, unit: 'service', category: 'preliminary' },
-            { id: 'preliminary-demolition', name: 'Selective Demolition', description: 'Careful removal of existing structures', price: 85.00, unit: 'sqm', category: 'preliminary' },
-            { id: 'preliminary-cleanup', name: 'Site Cleanup', description: 'Construction debris removal and cleaning', price: 45.00, unit: 'hours', category: 'preliminary' },
+            // Preliminary Work - Reset with specific required items
+            { id: 'preliminary-insurance', name: 'Insurance Coverage (Min 1Mil Public Liability)', description: 'Public liability insurance minimum RM1,000,000 coverage', price: 500.00, unit: 'service', category: 'preliminary' },
+            { id: 'preliminary-id-drawing', name: 'ID Drawing Submission to Management', description: 'Interior design drawing submission to building management', price: 300.00, unit: 'service', category: 'preliminary' },
+            { id: 'preliminary-architect', name: 'Appoint Architect for Drawing with Professional Endorsement', description: 'Professional architect appointment with endorsed drawings', price: 2500.00, unit: 'service', category: 'preliminary' },
+            { id: 'preliminary-authority', name: 'Local Authority Submission (MBSA/MPSJ/MBPJ/DBKL)', description: 'Submission to local council authorities for approval', price: 800.00, unit: 'service', category: 'preliminary' },
+            { id: 'preliminary-signage', name: 'Signage License Submission', description: 'Application for signage license and approval', price: 400.00, unit: 'service', category: 'preliminary' },
             
             // Wall Work
             { id: 'wall-drywall-install', name: 'Drywall Installation', description: 'Standard drywall installation with finishing', price: 35.00, unit: 'sqm', category: 'wall' },
             { id: 'wall-partition', name: 'Partition Wall Construction', description: 'Metal stud partition wall with drywall', price: 65.00, unit: 'sqm', category: 'wall' },
             { id: 'wall-repair-patch', name: 'Wall Patching & Repair', description: 'Minor wall damage repair and patching', price: 25.00, unit: 'sqm', category: 'wall' },
-            { id: 'wall-texture-finish', name: 'Wall Texture Finishing', description: 'Decorative wall texture application', price: 18.00, unit: 'sqm', category: 'wall' },
             
             // Floor Work
             { id: 'floor-vinyl-install', name: 'Vinyl Flooring Installation', description: 'Commercial grade vinyl flooring', price: 45.00, unit: 'sqm', category: 'floor' },
             { id: 'floor-carpet-install', name: 'Carpet Installation', description: 'Commercial carpet with padding', price: 55.00, unit: 'sqm', category: 'floor' },
             { id: 'floor-tile-install', name: 'Ceramic Tile Installation', description: 'Floor tile installation with grouting', price: 68.00, unit: 'sqm', category: 'floor' },
-            { id: 'floor-hardwood-install', name: 'Hardwood Flooring', description: 'Engineered hardwood flooring installation', price: 95.00, unit: 'sqm', category: 'floor' },
-            { id: 'floor-leveling', name: 'Floor Leveling', description: 'Floor surface preparation and leveling', price: 28.00, unit: 'sqm', category: 'floor' },
             
             // Ceiling Work
             { id: 'ceiling-suspended', name: 'Suspended Ceiling Installation', description: 'Mineral fiber suspended ceiling system', price: 42.00, unit: 'sqm', category: 'ceiling' },
             { id: 'ceiling-drywall', name: 'Drywall Ceiling', description: 'Drywall ceiling installation and finishing', price: 38.00, unit: 'sqm', category: 'ceiling' },
-            { id: 'ceiling-repair', name: 'Ceiling Repair', description: 'Water damage and crack repair', price: 35.00, unit: 'sqm', category: 'ceiling' },
-            { id: 'ceiling-insulation', name: 'Ceiling Insulation', description: 'Thermal insulation installation', price: 22.00, unit: 'sqm', category: 'ceiling' },
             
             // Roofing
             { id: 'roofing-shingle-repair', name: 'Shingle Roof Repair', description: 'Asphalt shingle replacement and repair', price: 85.00, unit: 'sqm', category: 'roofing' },
             { id: 'roofing-membrane', name: 'Roof Membrane Installation', description: 'Waterproof membrane application', price: 125.00, unit: 'sqm', category: 'roofing' },
-            { id: 'roofing-gutter-clean', name: 'Gutter Cleaning & Maintenance', description: 'Gutter system cleaning and minor repairs', price: 8.00, unit: 'meters', category: 'roofing' },
-            { id: 'roofing-inspection', name: 'Roof Inspection', description: 'Comprehensive roof condition assessment', price: 180.00, unit: 'service', category: 'roofing' },
             
             // Wet Work
             { id: 'wetwork-waterproofing', name: 'Waterproofing Application', description: 'Bathroom and wet area waterproofing', price: 75.00, unit: 'sqm', category: 'wetwork' },
             { id: 'wetwork-tile-wall', name: 'Wall Tile Installation', description: 'Ceramic wall tiles with waterproof backing', price: 85.00, unit: 'sqm', category: 'wetwork' },
-            { id: 'wetwork-shower-install', name: 'Shower System Installation', description: 'Complete shower enclosure and fixtures', price: 650.00, unit: 'set', category: 'wetwork' },
-            { id: 'wetwork-drainage', name: 'Drainage System', description: 'Floor drainage and waterproofing', price: 220.00, unit: 'pcs', category: 'wetwork' },
             
             // M&E Work
             { id: 'me-panel-install', name: 'Electrical Panel Installation', description: 'Main electrical distribution panel', price: 450.00, unit: 'pcs', category: 'me-work' },
             { id: 'me-conduit-run', name: 'Conduit Installation', description: 'Electrical conduit and cable management', price: 15.00, unit: 'meters', category: 'me-work' },
-            { id: 'me-cable-pull', name: 'Cable Pulling', description: 'Electrical cable installation in conduits', price: 8.50, unit: 'meters', category: 'me-work' },
-            { id: 'me-testing', name: 'Electrical Testing & Commissioning', description: 'System testing and certification', price: 350.00, unit: 'service', category: 'me-work' },
             
             // Exhaust Systems
             { id: 'exhaust-kitchen', name: 'Kitchen Exhaust Installation', description: 'Commercial kitchen exhaust system', price: 850.00, unit: 'set', category: 'exhaust' },
             { id: 'exhaust-bathroom', name: 'Bathroom Exhaust Fan', description: 'Silent bathroom exhaust fan with timer', price: 165.00, unit: 'pcs', category: 'exhaust' },
-            { id: 'exhaust-ductwork', name: 'Exhaust Ductwork', description: 'Galvanized steel exhaust ductwork', price: 35.00, unit: 'meters', category: 'exhaust' },
-            { id: 'exhaust-roof-cap', name: 'Roof Exhaust Cap', description: 'Weatherproof roof exhaust termination', price: 120.00, unit: 'pcs', category: 'exhaust' },
             
             // Lights & Fan
             { id: 'lights-led-panel', name: 'LED Panel Light', description: '40W LED panel light with driver', price: 85.00, unit: 'pcs', category: 'lights-fan' },
             { id: 'lights-downlight', name: 'LED Downlight', description: '12W recessed LED downlight', price: 45.00, unit: 'pcs', category: 'lights-fan' },
-            { id: 'lights-track', name: 'Track Lighting System', description: 'Adjustable track lighting with LED spots', price: 180.00, unit: 'set', category: 'lights-fan' },
             { id: 'fan-ceiling-standard', name: 'Standard Ceiling Fan', description: '52" ceiling fan with remote control', price: 220.00, unit: 'pcs', category: 'lights-fan' },
-            { id: 'fan-ceiling-premium', name: 'Premium Ceiling Fan', description: 'DC motor ceiling fan with LED lighting', price: 380.00, unit: 'pcs', category: 'lights-fan' },
             
             // AC Systems
             { id: 'ac-split-install', name: 'Split AC Installation', description: '1.5HP split unit air conditioner', price: 1200.00, unit: 'set', category: 'ac' },
-            { id: 'ac-ducted-install', name: 'Ducted AC System', description: 'Central ducted air conditioning', price: 3500.00, unit: 'set', category: 'ac' },
             { id: 'ac-maintenance', name: 'AC Maintenance Service', description: 'Quarterly AC cleaning and maintenance', price: 120.00, unit: 'service', category: 'ac' },
-            { id: 'ac-gas-refill', name: 'AC Gas Refill', description: 'R410A refrigerant gas top-up', price: 180.00, unit: 'service', category: 'ac' },
             
             // Paint Works
             { id: 'paint-interior-wall', name: 'Interior Wall Painting', description: 'Two coats premium interior paint', price: 12.00, unit: 'sqm', category: 'paint' },
             { id: 'paint-exterior-wall', name: 'Exterior Wall Painting', description: 'Weather-resistant exterior paint', price: 18.00, unit: 'sqm', category: 'paint' },
-            { id: 'paint-ceiling', name: 'Ceiling Painting', description: 'Ceiling paint with primer', price: 15.00, unit: 'sqm', category: 'paint' },
-            { id: 'paint-texture', name: 'Texture Paint Application', description: 'Decorative texture paint finish', price: 25.00, unit: 'sqm', category: 'paint' },
-            { id: 'paint-primer', name: 'Surface Primer Application', description: 'Primer coat for new surfaces', price: 8.00, unit: 'sqm', category: 'paint' },
             
             // Curtain & Blind
             { id: 'curtain-fabric', name: 'Fabric Curtain Installation', description: 'Custom fabric curtains with hardware', price: 85.00, unit: 'sqm', category: 'curtain' },
-            { id: 'curtain-blackout', name: 'Blackout Curtains', description: 'Light-blocking curtains for bedrooms', price: 95.00, unit: 'sqm', category: 'curtain' },
             { id: 'blind-vertical', name: 'Vertical Blind Installation', description: 'PVC vertical blinds for offices', price: 65.00, unit: 'sqm', category: 'curtain' },
-            { id: 'blind-horizontal', name: 'Horizontal Blind', description: 'Aluminum horizontal mini blinds', price: 55.00, unit: 'sqm', category: 'curtain' },
-            { id: 'blind-roller', name: 'Roller Blind', description: 'Motorized roller blind system', price: 150.00, unit: 'sqm', category: 'curtain' },
             
             // Built-in Furniture
             { id: 'builtin-wardrobe', name: 'Built-in Wardrobe', description: 'Custom melamine wardrobe with drawers', price: 450.00, unit: 'sqm', category: 'builtin' },
             { id: 'builtin-kitchen', name: 'Kitchen Cabinet', description: 'Modular kitchen cabinet system', price: 650.00, unit: 'sqm', category: 'builtin' },
-            { id: 'builtin-bookshelf', name: 'Built-in Bookshelf', description: 'Custom timber bookshelf unit', price: 320.00, unit: 'sqm', category: 'builtin' },
-            { id: 'builtin-desk', name: 'Built-in Study Desk', description: 'Wall-mounted study desk with storage', price: 280.00, unit: 'pcs', category: 'builtin' },
-            { id: 'builtin-tv-console', name: 'TV Console Unit', description: 'Wall-mounted TV console with storage', price: 380.00, unit: 'pcs', category: 'builtin' },
             
             // Loose Furniture
             { id: 'loose-office-chair', name: 'Office Chair', description: 'Ergonomic mesh office chair', price: 250.00, unit: 'pcs', category: 'loose' },
             { id: 'loose-office-desk', name: 'Office Desk', description: 'Modern office desk with drawers', price: 450.00, unit: 'pcs', category: 'loose' },
-            { id: 'loose-sofa-set', name: 'Sofa Set', description: '3-seater fabric sofa set', price: 1200.00, unit: 'set', category: 'loose' },
-            { id: 'loose-dining-set', name: 'Dining Set', description: '6-seater dining table and chairs', price: 850.00, unit: 'set', category: 'loose' },
-            { id: 'loose-storage', name: 'Storage Cabinet', description: 'Mobile storage cabinet with locks', price: 180.00, unit: 'pcs', category: 'loose' },
             
             // Sanitary & Water Pump
             { id: 'sanitary-toilet-suite', name: 'Toilet Suite Installation', description: 'Complete toilet suite with accessories', price: 350.00, unit: 'set', category: 'sanitary' },
             { id: 'sanitary-basin', name: 'Wash Basin Installation', description: 'Wall-hung basin with mixer tap', price: 280.00, unit: 'set', category: 'sanitary' },
-            { id: 'sanitary-shower-set', name: 'Shower Set Installation', description: 'Rain shower set with thermostatic mixer', price: 420.00, unit: 'set', category: 'sanitary' },
-            { id: 'sanitary-water-pump', name: 'Water Pump Installation', description: 'Domestic water pressure pump', price: 650.00, unit: 'set', category: 'sanitary' },
-            { id: 'sanitary-pipe-work', name: 'Sanitary Pipe Work', description: 'PVC sanitary pipe installation', price: 25.00, unit: 'meters', category: 'sanitary' },
             
             // Electrical Appliances
             { id: 'appliances-water-heater', name: 'Electric Water Heater', description: '30L instant electric water heater', price: 380.00, unit: 'pcs', category: 'appliances' },
             { id: 'appliances-hood', name: 'Range Hood Installation', description: 'Kitchen range hood with ducting', price: 450.00, unit: 'pcs', category: 'appliances' },
-            { id: 'appliances-oven', name: 'Built-in Oven', description: 'Electric built-in oven installation', price: 850.00, unit: 'pcs', category: 'appliances' },
-            { id: 'appliances-hob', name: 'Induction Hob', description: '4-burner induction hob installation', price: 650.00, unit: 'pcs', category: 'appliances' },
-            { id: 'appliances-refrigerator', name: 'Refrigerator Installation', description: 'Commercial refrigerator setup', price: 1200.00, unit: 'pcs', category: 'appliances' },
             
-            // Legacy Categories (keeping existing items)
+            // Legacy Categories (simplified)
             { id: 'electrical-inspection', name: 'Electrical Safety Inspection', description: 'Complete electrical system safety check', price: 150.00, unit: 'service', category: 'electrical' },
             { id: 'electrical-outlet', name: 'Power Outlet Installation', description: 'Standard 13A power outlet', price: 45.00, unit: 'pcs', category: 'electrical' },
             { id: 'plumbing-pipe-repair', name: 'Pipe Repair Service', description: 'Water pipe leak repair', price: 65.00, unit: 'service', category: 'plumbing' },
