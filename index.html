@@ -1228,6 +1228,36 @@
                 height: 40px;
                 font-size: 16px;
             }
+            
+            /* Step indicators mobile optimization */
+            .step-indicator-container {
+                flex-direction: column;
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+            
+            .step-indicator-line {
+                width: 2px;
+                height: 20px;
+            }
+            
+            /* Simplified preset cards for mobile */
+            .simple-preset-card {
+                padding: 12px;
+                margin-bottom: 6px;
+            }
+            
+            .simple-preset-card .preset-title {
+                font-size: 14px;
+            }
+            
+            .simple-preset-card .preset-description {
+                font-size: 12px;
+            }
+            
+            .simple-preset-card .preset-price {
+                font-size: 14px;
+            }
         }
         
         /* Safe area adjustments */
@@ -1808,7 +1838,7 @@
         </div>
     </div>
 
-    <!-- Simple Job Form Modal -->
+    <!-- Simplified Job Quote Modal - 2 Step Process -->
     <div id="simple-job-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1816,105 +1846,62 @@
                 <button class="close-btn" onclick="closeSimpleJobForm()">✕</button>
             </div>
             <div class="modal-body">
-                <!-- Job Title Section -->
-                <div class="card" style="margin-bottom: 20px;">
-                    <h4 style="color: var(--text-primary); margin-bottom: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-                        📝 Job Details
-                    </h4>
-                    <input type="text" class="form-input" placeholder="Job Title/Description *" id="simple-job-title" required style="margin-bottom: 0;">
+                <!-- Step Indicator -->
+                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 24px; gap: 16px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div id="step-1-indicator" style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">1</div>
+                        <span style="font-weight: 600; color: var(--text-primary);">Job Title</span>
+                    </div>
+                    <div style="width: 40px; height: 2px; background: var(--border-color);"></div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div id="step-2-indicator" style="width: 32px; height: 32px; border-radius: 50%; background: var(--border-color); color: var(--text-muted); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">2</div>
+                        <span style="font-weight: 600; color: var(--text-muted);">Add Items</span>
+                    </div>
                 </div>
 
-                <!-- Preset Items Section with Enhanced Categories -->
-                <div style="background: var(--bg-card); border-radius: 16px; padding: 24px; margin: 20px 0; border: 2px solid var(--accent-primary); box-shadow: 0 8px 32px var(--shadow-light);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <h4 style="font-size: 18px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
-                            📋 Quick Add Items
-                        </h4>
-                        <button type="button" onclick="openPresetItemForm()" class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;">
-                            ➕ New Preset
+                <!-- Step 1: Job Title -->
+                <div id="step-1-content" style="display: block;">
+                    <div style="background: var(--bg-card); border-radius: 20px; padding: 32px; margin: 20px 0; border: 2px solid var(--accent-primary); box-shadow: 0 8px 32px var(--shadow-light); text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📝</div>
+                        <h3 style="font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Step 1: Enter Job Title</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 16px;">What type of maintenance work is this quote for?</p>
+                        
+                        <input type="text" 
+                               class="form-input" 
+                               placeholder="e.g., Office Renovation, AC Installation, Plumbing Repair..." 
+                               id="simple-job-title" 
+                               required 
+                               style="margin-bottom: 24px; font-size: 18px; padding: 20px 24px; text-align: center; font-weight: 600;">
+                        
+                        <button type="button" 
+                                class="btn btn-primary" 
+                                onclick="proceedToStep2()" 
+                                style="font-size: 18px; padding: 20px 32px; min-height: 60px; width: 100%;">
+                            Next: Add Items ➡️
                         </button>
                     </div>
-                    
-                    <!-- Enhanced Category Selector for Presets -->
-                    <div style="margin-bottom: 16px;">
-                        <select id="preset-category-selector" class="form-input" style="margin-bottom: 0; padding: 12px 16px; font-size: 14px;" onchange="filterPresetItemsInModal()">
-                            <option value="all">All Categories</option>
-                            <optgroup label="Construction">
-                                <option value="preliminary">🏗️ Preliminary Work</option>
-                                <option value="wall">🧱 Wall Work</option>
-                                <option value="floor">🏢 Floor Work</option>
-                                <option value="ceiling">🏠 Ceiling Work</option>
-                                <option value="roofing">🏘️ Roofing</option>
-                                <option value="wetwork">💧 Wet Work</option>
-                            </optgroup>
-                            <optgroup label="M&E Systems">
-                                <option value="me-work">⚙️ M&E Work</option>
-                                <option value="exhaust">🌪️ Exhaust Systems</option>
-                                <option value="lights-fan">💡 Lights & Fan</option>
-                                <option value="ac">❄️ AC Systems</option>
-                            </optgroup>
-                            <optgroup label="Finishing">
-                                <option value="paint">🎨 Paint Works</option>
-                                <option value="curtain">🪟 Curtain & Blind</option>
-                            </optgroup>
-                            <optgroup label="Furniture">
-                                <option value="builtin">🔨 Built-in Furniture</option>
-                                <option value="loose">🪑 Loose Furniture</option>
-                            </optgroup>
-                            <optgroup label="Services">
-                                <option value="sanitary">🚿 Sanitary & Water Pump</option>
-                                <option value="appliances">📺 Electrical Appliances</option>
-                            </optgroup>
-                            <optgroup label="Legacy Categories">
-                                <option value="electrical">⚡ Electrical</option>
-                                <option value="plumbing">🔧 Plumbing</option>
-                                <option value="hvac">🌡️ HVAC</option>
-                                <option value="cleaning">🧽 Cleaning</option>
-                                <option value="parts">🔩 Parts & Materials</option>
-                                <option value="labor">👷 Labor</option>
-                                <option value="equipment">🛠️ Equipment</option>
-                                <option value="common">🏷️ Common Items</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    
-                    <div id="preset-items-list"></div>
                 </div>
 
-                <!-- Manual Add Section -->
-                <div style="background: var(--bg-secondary); border-radius: 16px; padding: 24px; margin: 20px 0; border: 2px solid var(--accent-warm); box-shadow: 0 8px 32px var(--shadow-light);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <h4 style="font-size: 16px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
-                            ✏️ Manual Entry
-                        </h4>
-                    </div>
-                    
-                    <div style="display: grid; gap: 12px;">
-                        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 12px; align-items: end;">
-                            <input type="text" style="padding: 14px 16px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-size: 14px; font-weight: 500; transition: all 0.2s ease;" placeholder="Item Description *" id="manual-description">
-                            <input type="number" style="padding: 14px 16px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-size: 14px; font-weight: 500; transition: all 0.2s ease;" placeholder="Qty" id="manual-quantity" min="1" step="1" value="1">
-                            <input type="number" style="padding: 14px 16px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-size: 14px; font-weight: 500; transition: all 0.2s ease;" placeholder="Price (RM)" id="manual-price" step="0.01">
-                            <button type="button" style="padding: 14px 16px; border-radius: 12px; border: none; background: var(--accent-primary); color: white; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 2px 8px var(--shadow-light);" onclick="addManualItem()">
-                                ➕ Add
+                <!-- Step 2: Add Items -->
+                <div id="step-2-content" style="display: none;">
+                    <div style="background: var(--bg-card); border-radius: 16px; padding: 24px; margin: 20px 0; border: 2px solid var(--accent-secondary); box-shadow: 0 8px 32px var(--shadow-light);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="font-size: 20px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 24px;">📋</span>
+                                Step 2: Select Jobs to Do
+                            </h3>
+                            <button type="button" onclick="backToStep1()" class="btn btn-secondary" style="padding: 8px 16px; font-size: 14px;">
+                                ⬅️ Back
                             </button>
                         </div>
                         
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                            <select style="padding: 14px 16px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-size: 14px; font-weight: 500; transition: all 0.2s ease;" id="manual-unit">
-                                <option value="pcs">Pieces (pcs)</option>
-                                <option value="hours">Hours</option>
-                                <option value="sqft">Square Feet</option>
-                                <option value="sqm">Square Meters</option>
-                                <option value="meters">Meters</option>
-                                <option value="kg">Kilograms</option>
-                                <option value="liters">Liters</option>
-                                <option value="set">Set</option>
-                                <option value="lot">Lot</option>
-                                <option value="service">Service</option>
-                            </select>
-                            
-                            <select style="padding: 14px 16px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-size: 14px; font-weight: 500; transition: all 0.2s ease;" id="manual-category">
-                                <optgroup label="Construction">
+                        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 16px;">Choose from preset job items or browse by category:</p>
+                        
+                        <!-- Category Filter for Step 2 -->
+                        <div style="margin-bottom: 20px;">
+                            <select id="preset-category-selector" class="form-input" style="margin-bottom: 0; padding: 16px 20px; font-size: 16px;" onchange="filterPresetItemsInModal()">
+                                <option value="all">🔍 All Categories</option>
+                                <optgroup label="🏗️ Construction">
                                     <option value="preliminary">🏗️ Preliminary Work</option>
                                     <option value="wall">🧱 Wall Work</option>
                                     <option value="floor">🏢 Floor Work</option>
@@ -1922,25 +1909,25 @@
                                     <option value="roofing">🏘️ Roofing</option>
                                     <option value="wetwork">💧 Wet Work</option>
                                 </optgroup>
-                                <optgroup label="M&E Systems">
+                                <optgroup label="⚙️ M&E Systems">
                                     <option value="me-work">⚙️ M&E Work</option>
                                     <option value="exhaust">🌪️ Exhaust Systems</option>
                                     <option value="lights-fan">💡 Lights & Fan</option>
                                     <option value="ac">❄️ AC Systems</option>
                                 </optgroup>
-                                <optgroup label="Finishing">
+                                <optgroup label="🎨 Finishing">
                                     <option value="paint">🎨 Paint Works</option>
                                     <option value="curtain">🪟 Curtain & Blind</option>
                                 </optgroup>
-                                <optgroup label="Furniture">
+                                <optgroup label="🪑 Furniture">
                                     <option value="builtin">🔨 Built-in Furniture</option>
                                     <option value="loose">🪑 Loose Furniture</option>
                                 </optgroup>
-                                <optgroup label="Services">
+                                <optgroup label="🔧 Services">
                                     <option value="sanitary">🚿 Sanitary & Water Pump</option>
                                     <option value="appliances">📺 Electrical Appliances</option>
                                 </optgroup>
-                                <optgroup label="Legacy">
+                                <optgroup label="🔌 Legacy">
                                     <option value="electrical">⚡ Electrical</option>
                                     <option value="plumbing">🔧 Plumbing</option>
                                     <option value="hvac">🌡️ HVAC</option>
@@ -1948,29 +1935,41 @@
                                     <option value="parts">🔩 Parts & Materials</option>
                                     <option value="labor">👷 Labor</option>
                                     <option value="equipment">🛠️ Equipment</option>
-                                    <option value="common" selected>🏷️ Common Items</option>
+                                    <option value="common">🏷️ Common Items</option>
                                 </optgroup>
                             </select>
                         </div>
+                        
+                        <!-- Preset Items List -->
+                        <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 12px;">
+                            <div id="preset-items-list"></div>
+                        </div>
                     </div>
-                    
-                    <div style="background: var(--bg-card); border-radius: 12px; padding: 16px; text-align: center; margin-top: 16px; border: 1px solid var(--border-color);">
-                        <div style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px;">Current Item Total</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--accent-primary);" id="manual-total">RM 0.00</div>
+
+                    <!-- Selected Items Summary -->
+                    <div id="quote-items-summary" style="display: none;">
+                        <div style="background: var(--bg-secondary); border-radius: 16px; padding: 24px; margin: 20px 0; border: 2px solid var(--accent-primary); box-shadow: 0 8px 32px var(--shadow-light);">
+                            <h4 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 20px;">✅</span>
+                                Selected Items (<span id="selected-items-count">0</span>)
+                            </h4>
+                            <div id="selected-items-list"></div>
+                            <div style="background: var(--accent-primary); border-radius: 12px; padding: 20px; margin-top: 16px; text-align: center; box-shadow: 0 6px 20px var(--shadow-medium);">
+                                <div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 6px;">Total Quote Amount</div>
+                                <div style="font-size: 32px; font-weight: 800; color: #ffffff;" id="total-quote-amount">RM 0.00</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Quote Items List with Enhanced Categories -->
-                <div id="quote-items-list"></div>
-
-                <!-- Form Actions -->
-                <div class="form-actions">
-                    <button type="button" class="form-btn btn-primary" onclick="saveSimpleJob()">
-                        ✅ Save Job Quote
-                    </button>
-                    <button type="button" class="form-btn btn-secondary" onclick="closeSimpleJobForm()">
-                        Cancel
-                    </button>
+                    <!-- Step 2 Actions -->
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-top: 24px;">
+                        <button type="button" class="form-btn btn-secondary" onclick="closeSimpleJobForm()">
+                            Cancel
+                        </button>
+                        <button type="button" class="form-btn btn-primary" onclick="saveSimpleJob()" id="save-quote-btn" disabled>
+                            ✅ Save Job Quote
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2877,23 +2876,69 @@
             }
         }
 
-        // Simple Job Form Functions
+        // Simple Job Form Functions - Simplified 2-Step Process
         function openSimpleJobForm() {
             currentQuoteItems = [];
             editingJob = null;
             document.getElementById('simple-job-modal-title').textContent = '💰 Create Job Quote';
             document.getElementById('simple-job-title').value = '';
-            document.getElementById('preset-category-selector').value = 'all';
-            renderPresetItems('all');
-            updateQuoteItemsDisplay();
+            
+            // Reset to Step 1
+            showStep1();
+            
             document.getElementById('simple-job-modal').classList.add('show');
-            showSuccessMessage('💰 Enhanced Job Quote form opened!');
+            showSuccessMessage('💰 Simple 2-step quote creation opened!');
         }
 
         function closeSimpleJobForm() {
             document.getElementById('simple-job-modal').classList.remove('show');
             currentQuoteItems = [];
-            updateQuoteItemsDisplay();
+            showStep1(); // Reset to step 1 for next time
+        }
+
+        function showStep1() {
+            // Show Step 1, Hide Step 2
+            document.getElementById('step-1-content').style.display = 'block';
+            document.getElementById('step-2-content').style.display = 'none';
+            
+            // Update step indicators
+            document.getElementById('step-1-indicator').style.background = 'var(--accent-primary)';
+            document.getElementById('step-1-indicator').style.color = 'white';
+            document.getElementById('step-2-indicator').style.background = 'var(--border-color)';
+            document.getElementById('step-2-indicator').style.color = 'var(--text-muted)';
+        }
+
+        function showStep2() {
+            // Hide Step 1, Show Step 2
+            document.getElementById('step-1-content').style.display = 'none';
+            document.getElementById('step-2-content').style.display = 'block';
+            
+            // Update step indicators
+            document.getElementById('step-1-indicator').style.background = 'var(--success)';
+            document.getElementById('step-2-indicator').style.background = 'var(--accent-primary)';
+            document.getElementById('step-2-indicator').style.color = 'white';
+            
+            // Load preset items
+            document.getElementById('preset-category-selector').value = 'all';
+            renderPresetItems('all');
+            updateSelectedItemsSummary();
+        }
+
+        function proceedToStep2() {
+            var jobTitle = document.getElementById('simple-job-title').value.trim();
+            
+            if (!jobTitle) {
+                showSuccessMessage('⚠️ Please enter a job title first!');
+                return;
+            }
+            
+            showStep2();
+            showSuccessMessage('✅ Step 1 complete! Now select items for: ' + jobTitle);
+        }
+
+        function backToStep1() {
+            showStep1();
+            showSuccessMessage('⬅️ Back to Step 1: Edit job title');
         }
 
         function renderPresetItems(filterCategory) {
@@ -2906,340 +2951,210 @@
             });
             
             if (filteredItems.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-muted);">' +
-                    '<div style="font-size: 32px; margin-bottom: 8px;">📋</div>' +
-                    '<p>No preset items in this category</p>' +
-                    '<p style="font-size: 12px; margin-top: 4px;">Try selecting a different category</p>' +
+                container.innerHTML = '<div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">' +
+                    '<div style="font-size: 48px; margin-bottom: 16px;">📋</div>' +
+                    '<h4 style="font-weight: 700; margin-bottom: 8px;">No items in this category</h4>' +
+                    '<p style="font-size: 14px;">Try selecting a different category</p>' +
                     '</div>';
                 return;
             }
             
-            // Group items by category for better organization
+            var html = '';
+            
+            // Group items by category if showing all
+            if (filterCategory === 'all') {
+                var groupedItems = {};
+                for (var i = 0; i < filteredItems.length; i++) {
+                    var item = filteredItems[i];
+                    var category = item.category || 'common';
+                    if (!groupedItems[category]) {
+                        groupedItems[category] = [];
+                    }
+                    groupedItems[category].push(item);
+                }
+                
+                // Show popular categories first
+                var popularCategories = ['preliminary', 'electrical', 'plumbing', 'paint', 'cleaning'];
+                var remainingCategories = [];
+                
+                for (var category in groupedItems) {
+                    if (popularCategories.indexOf(category) === -1) {
+                        remainingCategories.push(category);
+                    }
+                }
+                
+                var orderedCategories = popularCategories.concat(remainingCategories);
+                
+                for (var c = 0; c < orderedCategories.length; c++) {
+                    var category = orderedCategories[c];
+                    var categoryItems = groupedItems[category];
+                    if (!categoryItems || categoryItems.length === 0) continue;
+                    
+                    html += '<div style="margin-bottom: 24px;">' +
+                        '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px 16px; background: var(--bg-secondary); border-radius: 12px; border-left: 4px solid ' + getCategoryColor(category) + ';">' +
+                        '<div style="font-size: 24px;">' + getCategoryIcon(category) + '</div>' +
+                        '<div>' +
+                        '<div style="font-weight: 700; color: var(--text-primary); font-size: 16px;">' + getCategoryName(category) + '</div>' +
+                        '<div style="font-size: 12px; color: var(--text-muted);">' + categoryItems.length + ' items available</div>' +
+                        '</div>' +
+                        '</div>';
+                    
+                    for (var j = 0; j < categoryItems.length && j < 5; j++) { // Show max 5 items per category
+                        html += renderSimplePresetCard(categoryItems[j]);
+                    }
+                    
+                    if (categoryItems.length > 5) {
+                        html += '<div style="text-align: center; margin: 12px 0;">' +
+                            '<button onclick="document.getElementById(\'preset-category-selector\').value=\'' + category + '\'; filterPresetItemsInModal();" style="background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 12px;">View all ' + categoryItems.length + ' items</button>' +
+                            '</div>';
+                    }
+                    
+                    html += '</div>';
+                }
+            } else {
+                // Show all items in selected category
+                for (var i = 0; i < filteredItems.length; i++) {
+                    html += renderSimplePresetCard(filteredItems[i]);
+                }
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function renderSimplePresetCard(item) {
+            var isSelected = currentQuoteItems.some(function(quoteItem) {
+                return quoteItem.presetId === item.id;
+            });
+            
+            return '<div style="background: ' + (isSelected ? 'var(--accent-primary)' : 'var(--bg-card)') + '; border-radius: 12px; padding: 16px; margin-bottom: 8px; border: 2px solid ' + (isSelected ? 'var(--accent-primary)' : 'var(--border-color)') + '; cursor: pointer; transition: all 0.2s ease;" onclick="togglePresetItem(\'' + item.id + '\')">' +
+                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                '<div style="flex: 1;">' +
+                '<div style="font-weight: 700; margin-bottom: 4px; color: ' + (isSelected ? 'white' : 'var(--text-primary)') + '; font-size: 15px; display: flex; align-items: center; gap: 8px;">' +
+                '<span style="font-size: 18px;">' + getCategoryIcon(item.category) + '</span>' +
+                item.name + '</div>' +
+                '<div style="font-size: 13px; color: ' + (isSelected ? 'rgba(255,255,255,0.8)' : 'var(--text-muted)') + '; margin-bottom: 4px;">' + item.description + '</div>' +
+                '<div style="font-size: 12px; color: ' + (isSelected ? 'rgba(255,255,255,0.7)' : 'var(--text-muted)') + ';">Unit: ' + item.unit + ' • Category: ' + getCategoryName(item.category) + '</div>' +
+                '</div>' +
+                '<div style="display: flex; align-items: center; gap: 12px;">' +
+                '<div style="text-align: right;">' +
+                '<div style="font-weight: 700; color: ' + (isSelected ? 'white' : 'var(--accent-primary)') + '; font-size: 16px;">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                '<div style="font-size: 10px; color: ' + (isSelected ? 'rgba(255,255,255,0.7)' : 'var(--text-muted)') + ';">per ' + item.unit + '</div>' +
+                '</div>' +
+                '<div style="width: 32px; height: 32px; border-radius: 50%; background: ' + (isSelected ? 'rgba(255,255,255,0.2)' : 'var(--accent-primary)') + '; color: ' + (isSelected ? 'white' : 'white') + '; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700;">' +
+                (isSelected ? '✓' : '+') +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        }
+
+        function togglePresetItem(itemId) {
+            var item = presetWorkItems.find(function(item) { return item.id === itemId; });
+            if (!item) return;
+            
+            // Check if item is already selected
+            var existingIndex = currentQuoteItems.findIndex(function(quoteItem) {
+                return quoteItem.presetId === itemId;
+            });
+            
+            if (existingIndex !== -1) {
+                // Remove item
+                currentQuoteItems.splice(existingIndex, 1);
+                showSuccessMessage('➖ Removed: ' + item.name);
+            } else {
+                // Add item
+                var quoteItem = {
+                    id: Date.now() + Math.random(),
+                    description: item.name,
+                    quantity: 1,
+                    price: item.price,
+                    unit: item.unit,
+                    category: item.category,
+                    total: item.price,
+                    isPreset: true,
+                    presetId: item.id
+                };
+                
+                currentQuoteItems.push(quoteItem);
+                showSuccessMessage('✅ Added: ' + item.name);
+            }
+            
+            // Refresh the display
+            renderPresetItems(document.getElementById('preset-category-selector').value);
+            updateSelectedItemsSummary();
+        }
+
+        function updateSelectedItemsSummary() {
+            var summaryContainer = document.getElementById('quote-items-summary');
+            var countElement = document.getElementById('selected-items-count');
+            var listElement = document.getElementById('selected-items-list');
+            var totalElement = document.getElementById('total-quote-amount');
+            var saveButton = document.getElementById('save-quote-btn');
+            
+            if (currentQuoteItems.length === 0) {
+                summaryContainer.style.display = 'none';
+                saveButton.disabled = true;
+                saveButton.style.opacity = '0.5';
+                return;
+            }
+            
+            summaryContainer.style.display = 'block';
+            saveButton.disabled = false;
+            saveButton.style.opacity = '1';
+            
+            countElement.textContent = currentQuoteItems.length;
+            
+            var totalAmount = 0;
+            var html = '';
+            
+            // Group by category
             var groupedItems = {};
-            for (var i = 0; i < filteredItems.length; i++) {
-                var item = filteredItems[i];
+            for (var i = 0; i < currentQuoteItems.length; i++) {
+                var item = currentQuoteItems[i];
                 var category = item.category || 'common';
+                totalAmount += item.total;
+                
                 if (!groupedItems[category]) {
                     groupedItems[category] = [];
                 }
                 groupedItems[category].push(item);
             }
             
-            var html = '';
-            
-            if (filterCategory === 'all') {
-                // Show all categories grouped
-                for (var category in groupedItems) {
-                    var categoryItems = groupedItems[category];
-                    if (categoryItems.length === 0) continue;
-                    
-                    html += '<div style="margin-bottom: 20px;">' +
-                        '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 8px 12px; background: var(--bg-secondary); border-radius: 8px;">' +
-                        '<span style="font-size: 18px;">' + getCategoryIcon(category) + '</span>' +
-                        '<span style="font-weight: 700; color: var(--text-primary);">' + getCategoryName(category) + '</span>' +
-                        '<span class="category-badge category-' + category + '">' + categoryItems.length + '</span>' +
-                        '</div>';
-                    
-                    for (var j = 0; j < categoryItems.length; j++) {
-                        var item = categoryItems[j];
-                        html += renderPresetItemCard(item);
-                    }
-                    
-                    html += '</div>';
-                }
-            } else {
-                // Show items in selected category only
-                for (var i = 0; i < filteredItems.length; i++) {
-                    var item = filteredItems[i];
-                    html += renderPresetItemCard(item);
-                }
-            }
-            
-            container.innerHTML = html;
-        }
-
-        function renderPresetItemCard(item) {
-            return '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;" onclick="selectPresetItem(\'' + item.id + '\')" onmouseover="this.style.transform=\'scale(1.02)\'" onmouseout="this.style.transform=\'scale(1)\'">' +
-                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                '<div style="flex: 1;">' +
-                '<div style="font-weight: 700; margin-bottom: 4px; color: var(--text-primary); font-size: 15px;">' +
-                '<span style="margin-right: 8px;">' + getCategoryIcon(item.category) + '</span>' +
-                item.name + '</div>' +
-                '<div style="font-size: 13px; color: var(--text-muted); margin-bottom: 4px;">' + item.description + ' • ' + item.unit + '</div>' +
-                '<div style="font-size: 12px; color: var(--text-muted);">Category: ' + getCategoryName(item.category) + '</div>' +
-                '</div>' +
-                '<div style="display: flex; align-items: center; gap: 12px;">' +
-                '<div style="font-weight: 700; color: var(--accent-primary); font-size: 15px;">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
-                '<button style="background: var(--accent-primary); color: white; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 6px var(--shadow-light);" onclick="event.stopPropagation(); addPresetToQuote(\'' + item.id + '\')" onmouseover="this.style.transform=\'translateY(-1px)\'" onmouseout="this.style.transform=\'translateY(0)\'">' +
-                '➕ Add' +
-                '</button>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
-        }
-
-        function selectPresetItem(itemId) {
-            var item = presetWorkItems.find(function(item) { return item.id === itemId; });
-            if (!item) return;
-            
-            document.getElementById('manual-description').value = item.name;
-            document.getElementById('manual-quantity').value = '1';
-            document.getElementById('manual-price').value = item.price;
-            document.getElementById('manual-unit').value = item.unit;
-            document.getElementById('manual-category').value = item.category;
-            
-            updateManualTotal();
-            showSuccessMessage('✅ "' + item.name + '" selected for manual entry');
-        }
-
-        function addPresetToQuote(itemId) {
-            var item = presetWorkItems.find(function(item) { return item.id === itemId; });
-            if (!item) return;
-            
-            var quoteItem = {
-                id: Date.now(),
-                description: item.name,
-                quantity: 1,
-                price: item.price,
-                unit: item.unit,
-                category: item.category,
-                total: item.price,
-                isPreset: true,
-                presetId: item.id
-            };
-            
-            currentQuoteItems.push(quoteItem);
-            updateQuoteItemsDisplay();
-            showSuccessMessage('✅ "' + item.name + '" added to quote!');
-        }
-
-        function updateManualTotal() {
-            var quantity = parseFloat(document.getElementById('manual-quantity').value) || 0;
-            var price = parseFloat(document.getElementById('manual-price').value) || 0;
-            var total = quantity * price;
-            
-            var totalElement = document.getElementById('manual-total');
-            if (totalElement) {
-                totalElement.textContent = 'RM ' + total.toFixed(2);
-            }
-        }
-
-        function addManualItem() {
-            var description = document.getElementById('manual-description').value.trim();
-            var quantity = parseFloat(document.getElementById('manual-quantity').value);
-            var price = parseFloat(document.getElementById('manual-price').value);
-            var unit = document.getElementById('manual-unit').value;
-            var category = document.getElementById('manual-category').value;
-            
-            if (!description || !quantity || !price) {
-                showSuccessMessage('⚠️ Please fill in all required fields!');
-                return;
-            }
-            
-            var quoteItem = {
-                id: Date.now(),
-                description: description,
-                quantity: quantity,
-                price: price,
-                unit: unit,
-                category: category,
-                total: quantity * price,
-                isPreset: false
-            };
-            
-            currentQuoteItems.push(quoteItem);
-            
-            // Clear form
-            document.getElementById('manual-description').value = '';
-            document.getElementById('manual-quantity').value = '1';
-            document.getElementById('manual-price').value = '';
-            document.getElementById('manual-unit').value = 'pcs';
-            document.getElementById('manual-category').value = 'common';
-            
-            updateManualTotal();
-            updateQuoteItemsDisplay();
-            showSuccessMessage('✅ Quote item added manually!');
-        }
-
-        function updateQuoteItemsDisplay() {
-            var container = document.getElementById('quote-items-list');
-            if (!container) return;
-            
-            if (currentQuoteItems.length === 0) {
-                container.innerHTML = '';
-                return;
-            }
-            
-            // Group items by category
-            var groupedItems = {};
-            var total = 0;
-            
-            for (var i = 0; i < currentQuoteItems.length; i++) {
-                var item = currentQuoteItems[i];
-                var category = item.category || 'common';
-                total += item.total;
-                
-                if (!groupedItems[category]) {
-                    groupedItems[category] = [];
-                }
-                groupedItems[category].push({ item: item, index: i });
-            }
-            
-            var html = '<div style="background: var(--bg-secondary); border-radius: 16px; padding: 24px; margin: 20px 0; border: 2px solid var(--accent-primary); box-shadow: 0 8px 32px var(--shadow-light);">' +
-                '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">' +
-                '<div style="font-size: 18px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">💰 Quote Items (' + currentQuoteItems.length + ')</div>' +
-                '<button type="button" onclick="clearAllQuoteItems()" style="background: var(--error); color: white; border: none; border-radius: 8px; padding: 4px 8px; font-size: 12px; cursor: pointer;">Clear All</button>' +
-                '</div>';
-            
-            // Render items grouped by category
             for (var category in groupedItems) {
                 var categoryItems = groupedItems[category];
                 var categoryTotal = 0;
                 
                 for (var j = 0; j < categoryItems.length; j++) {
-                    categoryTotal += categoryItems[j].item.total;
+                    categoryTotal += categoryItems[j].total;
                 }
                 
-                html += '<div style="margin-bottom: 16px; border-radius: 12px; overflow: hidden; border: 2px solid ' + getCategoryColor(category) + '; box-shadow: 0 4px 12px var(--shadow-light);">' +
-                    '<div style="padding: 16px 20px; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">' +
-                    '<div style="display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 16px; color: var(--text-primary);">' +
-                    '<div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; background: ' + getCategoryColor(category) + ';">' + getCategoryIcon(category) + '</div>' +
-                    '<span>' + getCategoryName(category) + '</span>' +
+                html += '<div style="background: var(--bg-card); border-radius: 8px; padding: 12px; margin-bottom: 8px; border-left: 4px solid ' + getCategoryColor(category) + ';">' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">' +
+                    '<div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text-primary);">' +
+                    '<span style="font-size: 16px;">' + getCategoryIcon(category) + '</span>' +
+                    '<span style="font-size: 14px;">' + getCategoryName(category) + '</span>' +
                     '</div>' +
-                    '<div style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted);">' +
-                    '<span>' + categoryItems.length + ' items</span>' +
-                    '<span style="font-weight: 700; color: var(--accent-primary);">RM ' + categoryTotal.toFixed(2) + '</span>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div style="background: var(--bg-card);">';
+                    '<span style="font-weight: 700; color: var(--accent-primary); font-size: 14px;">RM ' + categoryTotal.toFixed(2) + '</span>' +
+                    '</div>';
                 
                 for (var j = 0; j < categoryItems.length; j++) {
-                    var itemData = categoryItems[j];
-                    var item = itemData.item;
-                    var index = itemData.index;
-                    
-                    html += '<div style="background: var(--bg-card); border-radius: 12px; padding: 20px; margin: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 12px var(--shadow-light); position: relative;">' +
-                        '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">' +
-                        '<div style="font-weight: 700; color: var(--text-primary); font-size: 16px;">' +
-                        '<span style="margin-right: 8px;">' + getCategoryIcon(category) + '</span>' +
-                        item.description + (item.isPreset ? ' 🏷️' : '') + '</div>' +
-                        '<div style="display: flex; gap: 8px;">' +
-                        '<button style="width: 36px; height: 36px; border-radius: 8px; border: none; background: var(--accent-primary); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; font-size: 14px;" onclick="editQuoteItem(' + index + ')" title="Edit">✏️</button>' +
-                        '<button style="width: 36px; height: 36px; border-radius: 8px; border: none; background: var(--error); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; font-size: 14px;" onclick="deleteQuoteItem(' + index + ')" title="Delete">🗑️</button>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-size: 14px; color: var(--text-secondary);">' +
-                        '<div style="text-align: center;">' +
-                        '<div style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px;">Quantity</div>' +
-                        '<div style="font-weight: 700; color: var(--text-primary);">' + item.quantity + ' ' + item.unit + '</div>' +
-                        '</div>' +
-                        '<div style="text-align: center;">' +
-                        '<div style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px;">Unit Price</div>' +
-                        '<div style="font-weight: 700; color: var(--text-primary);">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
-                        '</div>' +
-                        '<div style="text-align: center;">' +
-                        '<div style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px;">Total</div>' +
-                        '<div style="font-weight: 700; color: var(--text-primary);">RM ' + item.total.toFixed(2) + '</div>' +
-                        '</div>' +
-                        '</div>' +
+                    var item = categoryItems[j];
+                    html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 12px; color: var(--text-secondary);">' +
+                        '<span>' + item.description + ' (1 ' + item.unit + ')</span>' +
+                        '<span style="font-weight: 600;">RM ' + item.total.toFixed(2) + '</span>' +
                         '</div>';
                 }
                 
-                html += '</div></div>';
+                html += '</div>';
             }
             
-            if (total > 0) {
-                html += '<div style="background: var(--accent-primary); border-radius: 12px; padding: 20px; margin-top: 20px; text-align: center; box-shadow: 0 6px 20px var(--shadow-medium);">' +
-                    '<div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 6px;">Total Quote Amount</div>' +
-                    '<div style="font-size: 28px; font-weight: 800; color: #ffffff;">RM ' + total.toFixed(2) + '</div>' +
-                    '</div>';
-            }
-            
-            html += '</div>';
-            container.innerHTML = html;
+            listElement.innerHTML = html;
+            totalElement.textContent = 'RM ' + totalAmount.toFixed(2);
         }
 
-        function editQuoteItem(index) {
-            var item = currentQuoteItems[index];
-            if (!item) return;
-            
-            document.getElementById('manual-description').value = item.description;
-            document.getElementById('manual-quantity').value = item.quantity;
-            document.getElementById('manual-price').value = item.price;
-            document.getElementById('manual-unit').value = item.unit;
-            document.getElementById('manual-category').value = item.category || 'common';
-            
-            deleteQuoteItem(index);
-            updateManualTotal();
-            showSuccessMessage('📝 Item loaded for editing');
-        }
-
-        function deleteQuoteItem(index) {
-            if (index >= 0 && index < currentQuoteItems.length) {
-                var item = currentQuoteItems[index];
-                currentQuoteItems.splice(index, 1);
-                updateQuoteItemsDisplay();
-                showSuccessMessage('🗑️ "' + item.description + '" removed');
-            }
-        }
-
-        function clearAllQuoteItems() {
-            if (currentQuoteItems.length === 0) {
-                showSuccessMessage('ℹ️ No items to clear');
-                return;
-            }
-            
-            if (confirm('Clear all quote items?\nThis action cannot be undone.')) {
-                currentQuoteItems = [];
-                updateQuoteItemsDisplay();
-                showSuccessMessage('🗑️ All quote items cleared');
-            }
-        }
-
-        function saveSimpleJob() {
-            var title = document.getElementById('simple-job-title').value.trim();
-            
-            if (!title) {
-                showSuccessMessage('⚠️ Please enter a job title!');
-                return;
-            }
-            
-            if (currentQuoteItems.length === 0) {
-                showSuccessMessage('⚠️ Please add at least one quote item!');
-                return;
-            }
-            
-            var totalAmount = 0;
-            for (var i = 0; i < currentQuoteItems.length; i++) {
-                totalAmount += currentQuoteItems[i].total;
-            }
-            
-            var jobData = {
-                id: editingJob ? editingJob.id : Date.now(),
-                title: title,
-                items: [...currentQuoteItems],
-                totalAmount: totalAmount,
-                createdAt: editingJob ? editingJob.createdAt : new Date().toISOString(),
-                updatedAt: new Date().toISOString()
-            };
-            
-            if (editingJob) {
-                var index = jobQuotes.findIndex(function(job) { return job.id === editingJob.id; });
-                if (index !== -1) {
-                    jobQuotes[index] = jobData;
-                }
-                showSuccessMessage('✏️ Job quote updated successfully!');
-            } else {
-                jobQuotes.push(jobData);
-                showSuccessMessage('✅ Job quote created successfully!');
-            }
-            
-            closeSimpleJobForm();
-            saveDataToStorage();
-            updateStats();
-            renderViews();
-            updateCategoryFilters();
-            showView('quotes');
+        function filterPresetItemsInModal() {
+            var selectedCategory = document.getElementById('preset-category-selector').value;
+            renderPresetItems(selectedCategory);
         }
 
         // Continue with remaining functions...
@@ -3487,10 +3402,15 @@
 
         // Setup and initialization functions
         function setupEventListeners() {
-            var quantityInput = document.getElementById('manual-quantity');
-            var priceInput = document.getElementById('manual-price');
-            if (quantityInput) quantityInput.addEventListener('input', updateManualTotal);
-            if (priceInput) priceInput.addEventListener('input', updateManualTotal);
+            // Step 1 job title enter key support
+            var jobTitleInput = document.getElementById('simple-job-title');
+            if (jobTitleInput) {
+                jobTitleInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        proceedToStep2();
+                    }
+                });
+            }
             
             var presetItemForm = document.getElementById('preset-item-form');
             if (presetItemForm) {
@@ -3631,10 +3551,9 @@
             
             document.getElementById('simple-job-modal-title').textContent = '✏️ Edit Job Quote';
             document.getElementById('simple-job-title').value = quote.title;
-            document.getElementById('preset-category-selector').value = 'all';
             
-            renderPresetItems('all');
-            updateQuoteItemsDisplay();
+            // Go directly to step 2 for editing
+            showStep2();
             document.getElementById('simple-job-modal').classList.add('show');
             showSuccessMessage('✏️ Editing: ' + quote.title);
         }
