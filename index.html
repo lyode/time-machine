@@ -104,32 +104,6 @@
             --warning: #f6d55c;
             --error: #fc8181;
             --info: #63b3ed;
-            
-            /* Category Colors - Dark Mode */
-            --cat-electrical: #63b3ed;
-            --cat-plumbing: #4fd1c7;
-            --cat-hvac: #b794f6;
-            --cat-cleaning: #68d391;
-            --cat-parts: #f6d55c;
-            --cat-labor: #fc8181;
-            --cat-equipment: #a0aec0;
-            --cat-common: #d6bcfa;
-            --cat-preliminary: #fc8181;
-            --cat-wall: #f6d55c;
-            --cat-floor: #d6bcfa;
-            --cat-ceiling: #90cdf4;
-            --cat-roofing: #7c3aed;
-            --cat-wetwork: #4fd1c7;
-            --cat-me-work: #fbb6ce;
-            --cat-exhaust: #a0aec0;
-            --cat-lights-fan: #faf089;
-            --cat-ac: #81e6d9;
-            --cat-paint: #fed7aa;
-            --cat-curtain: #d6bcfa;
-            --cat-builtin: #a5b4fc;
-            --cat-loose: #9ae6b4;
-            --cat-sanitary: #90cdf4;
-            --cat-appliances: #fbb6ce;
         }
         
         body {
@@ -295,11 +269,12 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
         
         .header-right .stats {
             text-align: right;
+            margin-right: 8px;
         }
         
         .header-right p {
@@ -309,8 +284,8 @@
         }
         
         .header-btn {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             border: none;
             background: var(--accent-primary);
@@ -322,12 +297,16 @@
             transition: all 0.2s ease;
             font-size: 18px;
             box-shadow: 0 2px 8px var(--shadow-light);
-            margin-left: 8px;
+            position: relative;
         }
         
         .header-btn:active {
             transform: scale(0.9);
-            background: var(--accent-secondary);
+        }
+        
+        .header-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-medium);
         }
         
         .header-btn.user-info {
@@ -336,6 +315,34 @@
         
         .header-btn.icon-upload {
             background: var(--accent-warm);
+        }
+        
+        .header-btn.export {
+            background: var(--info);
+        }
+        
+        /* Tooltip for header buttons */
+        .header-btn::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-primary);
+            color: var(--bg-card);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 1000;
+        }
+        
+        .header-btn:hover::after {
+            opacity: 1;
         }
         
         /* Main Content */
@@ -1211,6 +1218,16 @@
             .category-filters {
                 max-height: 150px;
             }
+            
+            .header-right {
+                gap: 6px;
+            }
+            
+            .header-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
         }
         
         /* Safe area adjustments */
@@ -1257,7 +1274,7 @@
         <div class="header">
             <div class="header-left">
                 <div class="logo-container">
-                    <div class="app-logo" onclick="openLogoSelector()" id="main-logo">
+                    <div class="app-logo" onclick="openUserInfo()" id="main-logo">
                         <!-- Default Professional Maintenance Tool Icon -->
                         <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
@@ -1277,13 +1294,13 @@
                     <p id="current-date">Today</p>
                     <p id="daily-revenue">RM 0.00</p>
                 </div>
-                <button class="header-btn user-info" onclick="openUserInfo()" title="User Info & Logo">
+                <button class="header-btn user-info" onclick="openUserInfo()" data-tooltip="👤 User Info & Logo">
                     👤
                 </button>
-                <button class="header-btn icon-upload" onclick="openIconUpload()" title="Upload Category Icons">
+                <button class="header-btn icon-upload" onclick="openIconUpload()" data-tooltip="🎨 Upload Category Icons">
                     🎨
                 </button>
-                <button class="header-btn" onclick="exportData()" title="Export Data">
+                <button class="header-btn export" onclick="exportData()" data-tooltip="📤 Export Data">
                     📤
                 </button>
             </div>
@@ -1471,7 +1488,7 @@
                         <span>All Quotes</span>
                         <span class="category-count" id="filter-count-all">0</span>
                     </div>
-                    <!-- Construction Categories -->
+                    <!-- New Categories -->
                     <div class="category-filter preliminary" onclick="filterQuotesByCategory('preliminary')" data-category="preliminary">
                         <span id="icon-preliminary">🏗️</span>
                         <span>Preliminary</span>
@@ -2053,7 +2070,7 @@
         // ========================================
         // REFIT MAINTENANCE SERVICES - ENHANCED MANAGEMENT SYSTEM
         // Registration No: 201803348973 (002894203-V)
-        // Enhanced with Custom Icons, User Info & Expanded Categories
+        // Enhanced with Complete Category System & User Management
         // ========================================
         
         // App State Variables
@@ -2071,9 +2088,9 @@
         var userInfo = {};
         var customLogo = null;
 
-        // Enhanced Category Configuration with New Categories
+        // Enhanced Category Configuration with All Requested Categories
         var categories = {
-            // New Construction Categories
+            // Construction Categories
             preliminary: {
                 name: 'Preliminary Work',
                 icon: '🏗️',
@@ -2110,7 +2127,7 @@
                 color: 'var(--cat-wetwork)',
                 description: 'Bathroom, kitchen and wet area work'
             },
-            // New M&E Categories
+            // M&E Categories
             'me-work': {
                 name: 'M&E Work',
                 icon: '⚙️',
@@ -2135,7 +2152,7 @@
                 color: 'var(--cat-ac)',
                 description: 'Air conditioning systems'
             },
-            // New Finishing Categories
+            // Finishing Categories
             paint: {
                 name: 'Paint Works',
                 icon: '🎨',
@@ -2148,7 +2165,7 @@
                 color: 'var(--cat-curtain)',
                 description: 'Window treatments and coverings'
             },
-            // New Furniture Categories
+            // Furniture Categories
             builtin: {
                 name: 'Built-in Furniture',
                 icon: '🔨',
@@ -2161,7 +2178,7 @@
                 color: 'var(--cat-loose)',
                 description: 'Movable furniture and furnishings'
             },
-            // New Service Categories
+            // Service Categories
             sanitary: {
                 name: 'Sanitary & Water Pump',
                 icon: '🚿',
@@ -2247,7 +2264,7 @@
             CUSTOM_LOGO: 'refit_custom_logo'
         };
 
-        // Enhanced Default Preset Work Items with New Categories
+        // Enhanced Default Preset Work Items with All New Categories
         var defaultPresetWorkItems = [
             // Preliminary Work
             { id: 'preliminary-survey', name: 'Site Survey & Assessment', description: 'Initial site evaluation and condition assessment', price: 250.00, unit: 'service', category: 'preliminary' },
@@ -3311,337 +3328,6 @@
             }
         }
 
-        // Quote Management Functions
-        function renderQuotes(searchTerm) {
-            searchTerm = searchTerm || '';
-            
-            var filteredQuotes = jobQuotes.filter(function(quote) {
-                var matchesSearch = quote.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
-                var matchesCategory = currentQuoteFilter === 'all' || quoteHasCategory(quote, currentQuoteFilter);
-                return matchesSearch && matchesCategory;
-            });
-
-            var container = document.getElementById('quotes-list');
-            if (!container) return;
-            
-            if (filteredQuotes.length === 0) {
-                container.innerHTML = '<div class="empty-state">' +
-                    '<div class="empty-icon">💰</div>' +
-                    '<p style="font-weight: 600;">No job quotes found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first job quote or try different filters</p>' +
-                    '</div>';
-                return;
-            }
-            
-            var quotesHTML = '';
-            
-            for (var i = 0; i < filteredQuotes.length; i++) {
-                var quote = filteredQuotes[i];
-                var quoteCategories = getQuoteCategories(quote);
-                
-                quotesHTML += '<div class="item-card">' +
-                    '<div class="item-header">' +
-                    '<div class="item-info">' +
-                    '<h3>' + quote.title + '</h3>' +
-                    '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">' +
-                    '📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) +
-                    '</div>' +
-                    '<div style="margin: 8px 0;">' + renderCategoryBadges(quoteCategories) + '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="item-actions">' +
-                    '<button class="icon-btn quote-btn" onclick="viewQuote(' + quote.id + ')" title="View Quote">👁️</button>' +
-                    '<button class="icon-btn pdf-btn" onclick="generateQuotePDF(' + quote.id + ')" title="Generate PDF">📄</button>' +
-                    '<button class="icon-btn edit-btn" onclick="editQuote(' + quote.id + ')" title="Edit Quote">✏️</button>' +
-                    '<button class="icon-btn delete-btn" onclick="deleteQuote(' + quote.id + ')" title="Delete Quote">🗑️</button>' +
-                    '</div>' +
-                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
-                    '<span style="font-size: 12px; color: var(--text-muted);">Items: ' + quote.items.length + '</span>' +
-                    '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
-                    '</div>' +
-                    '</div>';
-            }
-            
-            container.innerHTML = quotesHTML;
-        }
-
-        function quoteHasCategory(quote, category) {
-            for (var i = 0; i < quote.items.length; i++) {
-                var item = quote.items[i];
-                if ((item.category || 'common') === category) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        function getQuoteCategories(quote) {
-            var categories = {};
-            for (var i = 0; i < quote.items.length; i++) {
-                var item = quote.items[i];
-                var category = item.category || 'common';
-                categories[category] = true;
-            }
-            return Object.keys(categories);
-        }
-
-        function renderCategoryBadges(categoryList) {
-            var html = '';
-            for (var i = 0; i < categoryList.length && i < 3; i++) {
-                var category = categoryList[i];
-                html += '<span class="category-badge category-' + category + '">' + getCategoryIcon(category) + ' ' + getCategoryName(category) + '</span>';
-            }
-            if (categoryList.length > 3) {
-                html += '<span class="category-badge" style="background: var(--text-muted);">+' + (categoryList.length - 3) + ' more</span>';
-            }
-            return html;
-        }
-
-        function viewQuote(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
-            
-            var quoteCategories = getQuoteCategories(quote);
-            
-            var quoteHTML = '<div class="card" style="margin-bottom: 20px;">' +
-                '<div style="font-size: 18px; font-weight: 700; color: var(--accent-primary); margin-bottom: 8px;">💰 Job Quote #' + quote.id + '</div>' +
-                '<div style="color: var(--text-secondary); font-size: 14px; font-weight: 600; margin-bottom: 12px;">' + quote.title + '</div>' +
-                '<div>' + renderCategoryBadges(quoteCategories) + '</div>' +
-                '</div>' +
-                
-                '<div class="card" style="margin-bottom: 20px;">' +
-                '<h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">📋 Quote Details</h4>' +
-                '<div style="display: grid; gap: 12px; font-size: 14px;">' +
-                '<div><strong>Total Items:</strong> ' + quote.items.length + '</div>' +
-                '<div><strong>Categories:</strong> ' + quoteCategories.length + '</div>' +
-                '<div><strong>Created:</strong> ' + formatDate(quote.createdAt) + '</div>' +
-                '<div><strong>Last Updated:</strong> ' + formatDate(quote.updatedAt) + '</div>' +
-                '</div>' +
-                '</div>';
-            
-            if (quote.items.length > 0) {
-                // Group items by category for display
-                var groupedItems = {};
-                for (var i = 0; i < quote.items.length; i++) {
-                    var item = quote.items[i];
-                    var category = item.category || 'common';
-                    if (!groupedItems[category]) {
-                        groupedItems[category] = [];
-                    }
-                    groupedItems[category].push(item);
-                }
-                
-                quoteHTML += '<div class="card" style="margin-bottom: 20px;">' +
-                    '<h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">💼 Quote Items by Category</h4>';
-                
-                for (var category in groupedItems) {
-                    var categoryItems = groupedItems[category];
-                    var categoryTotal = 0;
-                    
-                    for (var j = 0; j < categoryItems.length; j++) {
-                        categoryTotal += categoryItems[j].total;
-                    }
-                    
-                    quoteHTML += '<div style="margin-bottom: 16px; border-radius: 12px; overflow: hidden; border: 2px solid ' + getCategoryColor(category) + '; box-shadow: 0 4px 12px var(--shadow-light);">' +
-                        '<div style="padding: 16px 20px; background: var(--bg-secondary); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">' +
-                        '<div style="display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 16px; color: var(--text-primary);">' +
-                        '<div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; background: ' + getCategoryColor(category) + ';">' + getCategoryIcon(category) + '</div>' +
-                        '<span>' + getCategoryName(category) + '</span>' +
-                        '</div>' +
-                        '<div style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted);">' +
-                        '<span>' + categoryItems.length + ' items</span>' +
-                        '<span style="font-weight: 700; color: var(--accent-primary);">RM ' + categoryTotal.toFixed(2) + '</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div style="background: var(--bg-card);">';
-                    
-                    for (var j = 0; j < categoryItems.length; j++) {
-                        var item = categoryItems[j];
-                        
-                        quoteHTML += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin: 12px; border: 1px solid var(--border-color);">' +
-                            '<div style="font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">' +
-                            '<span style="margin-right: 8px;">' + getCategoryIcon(category) + '</span>' +
-                            item.description + (item.isPreset ? ' 🏷️' : '') + '</div>' +
-                            '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 13px; color: var(--text-secondary);">' +
-                            '<div><strong>Qty:</strong> ' + item.quantity + ' ' + item.unit + '</div>' +
-                            '<div><strong>Price:</strong> RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
-                            '<div><strong>Total:</strong> RM ' + item.total.toFixed(2) + '</div>' +
-                            '</div>' +
-                            '</div>';
-                    }
-                    
-                    quoteHTML += '</div></div>';
-                }
-                
-                quoteHTML += '<div style="background: var(--accent-primary); border-radius: 12px; padding: 20px; margin-top: 20px; text-align: center; box-shadow: 0 6px 20px var(--shadow-medium);">' +
-                    '<div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 6px;">Total Quote Amount</div>' +
-                    '<div style="font-size: 28px; font-weight: 800; color: #ffffff;">RM ' + quote.totalAmount.toFixed(2) + '</div>' +
-                    '</div>' +
-                    '</div>';
-            }
-            
-            quoteHTML += '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px;">' +
-                '<button onclick="generateQuotePDF(' + quote.id + ')" class="btn btn-success" style="font-size: 14px;">📄 Generate PDF</button>' +
-                '<button onclick="editQuote(' + quote.id + ')" class="btn btn-primary" style="font-size: 14px;">✏️ Edit Quote</button>' +
-                '</div>';
-            
-            document.getElementById('quote-view-content').innerHTML = quoteHTML;
-            document.getElementById('quote-view-modal').classList.add('show');
-        }
-
-        function closeQuoteView() {
-            document.getElementById('quote-view-modal').classList.remove('show');
-        }
-
-        function editQuote(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
-            
-            editingJob = quote;
-            currentQuoteItems = [...quote.items];
-            
-            document.getElementById('simple-job-modal-title').textContent = '✏️ Edit Job Quote';
-            document.getElementById('simple-job-title').value = quote.title;
-            document.getElementById('preset-category-selector').value = 'all';
-            
-            renderPresetItems('all');
-            updateQuoteItemsDisplay();
-            document.getElementById('simple-job-modal').classList.add('show');
-            showSuccessMessage('✏️ Editing: ' + quote.title);
-        }
-
-        function deleteQuote(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
-
-            if (confirm('Delete job quote: "' + quote.title + '"?\nThis action cannot be undone.')) {
-                jobQuotes = jobQuotes.filter(function(q) { return q.id !== quoteId; });
-                saveDataToStorage();
-                updateStats();
-                renderViews();
-                updateCategoryFilters();
-                showSuccessMessage('🗑️ Job quote deleted successfully');
-            }
-        }
-
-        function generateQuotePDF(quoteId) {
-            showSuccessMessage('📄 Enhanced PDF generation with custom categories coming soon!');
-        }
-
-        // Preset List Rendering
-        function renderPresets(searchTerm) {
-            searchTerm = searchTerm || '';
-            
-            var filteredPresets = presetWorkItems.filter(function(preset) {
-                var matchesSearch = preset.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-                       (preset.description && preset.description.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
-                var matchesCategory = currentPresetFilter === 'all' || preset.category === currentPresetFilter;
-                return matchesSearch && matchesCategory;
-            });
-
-            var container = document.getElementById('presets-list');
-            if (!container) return;
-            
-            if (filteredPresets.length === 0) {
-                container.innerHTML = '<div class="empty-state">' +
-                    '<div class="empty-icon">📋</div>' +
-                    '<p style="font-weight: 600;">No preset items found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create preset items or try different filters</p>' +
-                    '</div>';
-                return;
-            }
-            
-            // Group presets by category
-            var groupedPresets = {};
-            for (var i = 0; i < filteredPresets.length; i++) {
-                var preset = filteredPresets[i];
-                var category = preset.category || 'common';
-                if (!groupedPresets[category]) {
-                    groupedPresets[category] = [];
-                }
-                groupedPresets[category].push(preset);
-            }
-            
-            var presetsHTML = '';
-            
-            if (currentPresetFilter === 'all') {
-                // Show all categories grouped
-                for (var category in groupedPresets) {
-                    var categoryPresets = groupedPresets[category];
-                    if (categoryPresets.length === 0) continue;
-                    
-                    var categoryTotal = 0;
-                    for (var j = 0; j < categoryPresets.length; j++) {
-                        categoryTotal += categoryPresets[j].price;
-                    }
-                    var categoryAverage = categoryTotal / categoryPresets.length;
-                    
-                    presetsHTML += '<div style="margin-bottom: 24px; border-radius: 16px; overflow: hidden; border: 2px solid ' + getCategoryColor(category) + '; transition: all 0.2s ease;">' +
-                        '<div style="padding: 16px 20px; background: var(--bg-secondary); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">' +
-                        '<div style="display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 16px; color: var(--text-primary);">' +
-                        '<div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; background: ' + getCategoryColor(category) + ';">' + getCategoryIcon(category) + '</div>' +
-                        '<span>' + getCategoryName(category) + '</span>' +
-                        '</div>' +
-                        '<div style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted);">' +
-                        '<span>' + categoryPresets.length + ' items</span>' +
-                        '<span>Avg: RM ' + categoryAverage.toFixed(0) + '</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div style="background: var(--bg-card);">';
-                    
-                    for (var j = 0; j < categoryPresets.length; j++) {
-                        presetsHTML += renderPresetCard(categoryPresets[j]);
-                    }
-                    
-                    presetsHTML += '</div></div>';
-                }
-            } else {
-                // Show filtered category only
-                for (var i = 0; i < filteredPresets.length; i++) {
-                    presetsHTML += renderPresetCard(filteredPresets[i]);
-                }
-            }
-            
-            container.innerHTML = presetsHTML;
-        }
-
-        function renderPresetCard(preset) {
-            var usageCount = 0;
-            
-            // Count usage in quotes
-            for (var j = 0; j < jobQuotes.length; j++) {
-                for (var k = 0; k < jobQuotes[j].items.length; k++) {
-                    if (jobQuotes[j].items[k].presetId === preset.id) {
-                        usageCount++;
-                    }
-                }
-            }
-            
-            return '<div class="item-card">' +
-                '<div class="item-header">' +
-                '<div class="item-info">' +
-                '<h3>' +
-                '<span style="margin-right: 8px;">' + getCategoryIcon(preset.category) + '</span>' +
-                preset.name + '</h3>' +
-                '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">' +
-                preset.description + '</div>' +
-                '<div style="font-size: 12px; color: var(--text-muted);">' +
-                '📏 ' + preset.unit + ' • ' +
-                '📈 Used ' + usageCount + ' times' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="item-actions">' +
-                '<button class="icon-btn edit-btn" onclick="editPresetItem(\'' + preset.id + '\')" title="Edit Preset">✏️</button>' +
-                '<button class="icon-btn delete-btn" onclick="deletePresetItem(\'' + preset.id + '\')" title="Delete Preset">🗑️</button>' +
-                '</div>' +
-                '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
-                '<span style="font-size: 12px; color: var(--text-muted);">Usage: ' + usageCount + '</span>' +
-                '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + parseFloat(preset.price).toFixed(2) + '</span>' +
-                '</div>' +
-                '</div>';
-        }
-
         // Export Data Function
         function exportData() {
             var allData = {
@@ -3669,101 +3355,7 @@
             showSuccessMessage('📤 Enhanced data exported successfully!');
         }
 
-        // Event Listeners
-        function setupEventListeners() {
-            // Search functionality
-            var quoteSearch = document.getElementById('quote-search');
-            if (quoteSearch) {
-                quoteSearch.addEventListener('input', function(e) {
-                    renderQuotes(e.target.value);
-                });
-            }
-
-            var presetSearch = document.getElementById('preset-search');
-            if (presetSearch) {
-                presetSearch.addEventListener('input', function(e) {
-                    renderPresets(e.target.value);
-                });
-            }
-
-            // Forms
-            var presetItemForm = document.getElementById('preset-item-form');
-            if (presetItemForm) {
-                presetItemForm.addEventListener('submit', handlePresetItemSubmit);
-            }
-
-            // Manual item calculations
-            var quantityInput = document.getElementById('manual-quantity');
-            var priceInput = document.getElementById('manual-price');
-            
-            if (quantityInput) {
-                quantityInput.addEventListener('input', updateManualTotal);
-            }
-            
-            if (priceInput) {
-                priceInput.addEventListener('input', updateManualTotal);
-            }
-
-            // System theme detection
-            if (window.matchMedia) {
-                var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-                mediaQuery.addEventListener('change', function(e) {
-                    if (!localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) {
-                        currentTheme = e.matches ? 'dark' : 'light';
-                        document.body.setAttribute('data-theme', currentTheme);
-                        updateThemeToggle();
-                    }
-                });
-            }
-
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey || e.metaKey) {
-                    switch(e.key.toLowerCase()) {
-                        case 'n':
-                            e.preventDefault();
-                            openSimpleJobForm();
-                            break;
-                        case 'p':
-                            e.preventDefault();
-                            openPresetItemForm();
-                            break;
-                        case 'e':
-                            e.preventDefault();
-                            exportData();
-                            break;
-                        case 'u':
-                            e.preventDefault();
-                            openUserInfo();
-                            break;
-                        case 'i':
-                            e.preventDefault();
-                            openIconUpload();
-                            break;
-                        case 'd':
-                            e.preventDefault();
-                            toggleTheme();
-                            break;
-                    }
-                }
-                
-                if (e.key === 'Escape') {
-                    var modals = document.querySelectorAll('.modal.show');
-                    for (var i = 0; i < modals.length; i++) {
-                        modals[i].classList.remove('show');
-                    }
-                }
-            });
-        }
-
-        function updateThemeToggle() {
-            var toggleBtn = document.getElementById('theme-toggle');
-            if (toggleBtn) {
-                toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '☀️ Light';
-            }
-        }
-
-        // Utility Functions
+        // View Management Functions
         function showView(viewName) {
             currentView = viewName;
             
@@ -3954,6 +3546,262 @@
             container.innerHTML = html;
         }
 
+        // Additional Helper Functions
+        function getQuoteCategories(quote) {
+            var categories = {};
+            for (var i = 0; i < quote.items.length; i++) {
+                var item = quote.items[i];
+                var category = item.category || 'common';
+                categories[category] = true;
+            }
+            return Object.keys(categories);
+        }
+
+        function renderCategoryBadges(categoryList) {
+            var html = '';
+            for (var i = 0; i < categoryList.length && i < 3; i++) {
+                var category = categoryList[i];
+                html += '<span class="category-badge category-' + category + '">' + getCategoryIcon(category) + ' ' + getCategoryName(category) + '</span>';
+            }
+            if (categoryList.length > 3) {
+                html += '<span class="category-badge" style="background: var(--text-muted);">+' + (categoryList.length - 3) + ' more</span>';
+            }
+            return html;
+        }
+
+        function renderQuotes(searchTerm) {
+            searchTerm = searchTerm || '';
+            
+            var filteredQuotes = jobQuotes.filter(function(quote) {
+                var matchesSearch = quote.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+                var matchesCategory = currentQuoteFilter === 'all' || quoteHasCategory(quote, currentQuoteFilter);
+                return matchesSearch && matchesCategory;
+            });
+
+            var container = document.getElementById('quotes-list');
+            if (!container) return;
+            
+            if (filteredQuotes.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">💰</div>' +
+                    '<p style="font-weight: 600;">No job quotes found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first job quote or try different filters</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var quotesHTML = '';
+            
+            for (var i = 0; i < filteredQuotes.length; i++) {
+                var quote = filteredQuotes[i];
+                var quoteCategories = getQuoteCategories(quote);
+                
+                quotesHTML += '<div class="item-card">' +
+                    '<div class="item-header">' +
+                    '<div class="item-info">' +
+                    '<h3>' + quote.title + '</h3>' +
+                    '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">' +
+                    '📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) +
+                    '</div>' +
+                    '<div style="margin: 8px 0;">' + renderCategoryBadges(quoteCategories) + '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="item-actions">' +
+                    '<button class="icon-btn quote-btn" onclick="viewQuote(' + quote.id + ')" title="View Quote">👁️</button>' +
+                    '<button class="icon-btn pdf-btn" onclick="generateQuotePDF(' + quote.id + ')" title="Generate PDF">📄</button>' +
+                    '<button class="icon-btn edit-btn" onclick="editQuote(' + quote.id + ')" title="Edit Quote">✏️</button>' +
+                    '<button class="icon-btn delete-btn" onclick="deleteQuote(' + quote.id + ')" title="Delete Quote">🗑️</button>' +
+                    '</div>' +
+                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="font-size: 12px; color: var(--text-muted);">Items: ' + quote.items.length + '</span>' +
+                    '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = quotesHTML;
+        }
+
+        function quoteHasCategory(quote, category) {
+            for (var i = 0; i < quote.items.length; i++) {
+                var item = quote.items[i];
+                if ((item.category || 'common') === category) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function renderPresets(searchTerm) {
+            searchTerm = searchTerm || '';
+            
+            var filteredPresets = presetWorkItems.filter(function(preset) {
+                var matchesSearch = preset.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+                       (preset.description && preset.description.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+                var matchesCategory = currentPresetFilter === 'all' || preset.category === currentPresetFilter;
+                return matchesSearch && matchesCategory;
+            });
+
+            var container = document.getElementById('presets-list');
+            if (!container) return;
+            
+            if (filteredPresets.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">📋</div>' +
+                    '<p style="font-weight: 600;">No preset items found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create preset items or try different filters</p>' +
+                    '</div>';
+                return;
+            }
+            
+            // Group presets by category
+            var groupedPresets = {};
+            for (var i = 0; i < filteredPresets.length; i++) {
+                var preset = filteredPresets[i];
+                var category = preset.category || 'common';
+                if (!groupedPresets[category]) {
+                    groupedPresets[category] = [];
+                }
+                groupedPresets[category].push(preset);
+            }
+            
+            var presetsHTML = '';
+            
+            if (currentPresetFilter === 'all') {
+                // Show all categories grouped
+                for (var category in groupedPresets) {
+                    var categoryPresets = groupedPresets[category];
+                    if (categoryPresets.length === 0) continue;
+                    
+                    var categoryTotal = 0;
+                    for (var j = 0; j < categoryPresets.length; j++) {
+                        categoryTotal += categoryPresets[j].price;
+                    }
+                    var categoryAverage = categoryTotal / categoryPresets.length;
+                    
+                    presetsHTML += '<div style="margin-bottom: 24px; border-radius: 16px; overflow: hidden; border: 2px solid ' + getCategoryColor(category) + '; transition: all 0.2s ease;">' +
+                        '<div style="padding: 16px 20px; background: var(--bg-secondary); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">' +
+                        '<div style="display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 16px; color: var(--text-primary);">' +
+                        '<div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; background: ' + getCategoryColor(category) + ';">' + getCategoryIcon(category) + '</div>' +
+                        '<span>' + getCategoryName(category) + '</span>' +
+                        '</div>' +
+                        '<div style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted);">' +
+                        '<span>' + categoryPresets.length + ' items</span>' +
+                        '<span>Avg: RM ' + categoryAverage.toFixed(0) + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div style="background: var(--bg-card);">';
+                    
+                    for (var j = 0; j < categoryPresets.length; j++) {
+                        presetsHTML += renderPresetCard(categoryPresets[j]);
+                    }
+                    
+                    presetsHTML += '</div></div>';
+                }
+            } else {
+                // Show filtered category only
+                for (var i = 0; i < filteredPresets.length; i++) {
+                    presetsHTML += renderPresetCard(filteredPresets[i]);
+                }
+            }
+            
+            container.innerHTML = presetsHTML;
+        }
+
+        function renderPresetCard(preset) {
+            var usageCount = 0;
+            
+            // Count usage in quotes
+            for (var j = 0; j < jobQuotes.length; j++) {
+                for (var k = 0; k < jobQuotes[j].items.length; k++) {
+                    if (jobQuotes[j].items[k].presetId === preset.id) {
+                        usageCount++;
+                    }
+                }
+            }
+            
+            return '<div class="item-card">' +
+                '<div class="item-header">' +
+                '<div class="item-info">' +
+                '<h3>' +
+                '<span style="margin-right: 8px;">' + getCategoryIcon(preset.category) + '</span>' +
+                preset.name + '</h3>' +
+                '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">' +
+                preset.description + '</div>' +
+                '<div style="font-size: 12px; color: var(--text-muted);">' +
+                '📏 ' + preset.unit + ' • ' +
+                '📈 Used ' + usageCount + ' times' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="item-actions">' +
+                '<button class="icon-btn edit-btn" onclick="editPresetItem(\'' + preset.id + '\')" title="Edit Preset">✏️</button>' +
+                '<button class="icon-btn delete-btn" onclick="deletePresetItem(\'' + preset.id + '\')" title="Delete Preset">🗑️</button>' +
+                '</div>' +
+                '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
+                '<span style="font-size: 12px; color: var(--text-muted);">Usage: ' + usageCount + '</span>' +
+                '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + parseFloat(preset.price).toFixed(2) + '</span>' +
+                '</div>' +
+                '</div>';
+        }
+
+        // Additional Quote Functions
+        function viewQuote(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            var quoteCategories = getQuoteCategories(quote);
+            
+            var quoteHTML = '<div class="card" style="margin-bottom: 20px;">' +
+                '<div style="font-size: 18px; font-weight: 700; color: var(--accent-primary); margin-bottom: 8px;">💰 Job Quote #' + quote.id + '</div>' +
+                '<div style="color: var(--text-secondary); font-size: 14px; font-weight: 600; margin-bottom: 12px;">' + quote.title + '</div>' +
+                '<div>' + renderCategoryBadges(quoteCategories) + '</div>' +
+                '</div>';
+            
+            document.getElementById('quote-view-content').innerHTML = quoteHTML;
+            document.getElementById('quote-view-modal').classList.add('show');
+        }
+
+        function closeQuoteView() {
+            document.getElementById('quote-view-modal').classList.remove('show');
+        }
+
+        function editQuote(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            editingJob = quote;
+            currentQuoteItems = [...quote.items];
+            
+            document.getElementById('simple-job-modal-title').textContent = '✏️ Edit Job Quote';
+            document.getElementById('simple-job-title').value = quote.title;
+            document.getElementById('preset-category-selector').value = 'all';
+            
+            renderPresetItems('all');
+            updateQuoteItemsDisplay();
+            document.getElementById('simple-job-modal').classList.add('show');
+            showSuccessMessage('✏️ Editing: ' + quote.title);
+        }
+
+        function deleteQuote(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+
+            if (confirm('Delete job quote: "' + quote.title + '"?\nThis action cannot be undone.')) {
+                jobQuotes = jobQuotes.filter(function(q) { return q.id !== quoteId; });
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                updateCategoryFilters();
+                showSuccessMessage('🗑️ Job quote deleted successfully');
+            }
+        }
+
+        function generateQuotePDF(quoteId) {
+            showSuccessMessage('📄 Enhanced PDF generation with custom categories coming soon!');
+        }
+
+        // Statistics Functions
         function updateStats() {
             // Calculate statistics
             var totalQuotes = jobQuotes.length;
@@ -4025,6 +3873,7 @@
             }
         }
 
+        // Utility Functions
         function formatDate(dateString) {
             if (!dateString) return '';
             var date = new Date(dateString);
@@ -4081,19 +3930,6 @@
             setupTouchGestures();
         }
 
-        function showSuccessMessage(message) {
-            var messageElement = document.getElementById('success-message');
-            if (!messageElement) return;
-            
-            messageElement.textContent = message;
-            messageElement.classList.add('show');
-            
-            setTimeout(function() {
-                messageElement.classList.remove('show');
-            }, 3000);
-        }
-
-        // Touch Gesture Enhancements
         function setupTouchGestures() {
             var startX, startY, distX, distY;
             var threshold = 150;
@@ -4141,6 +3977,112 @@
             showView(views[prevIndex]);
         }
 
+        function showSuccessMessage(message) {
+            var messageElement = document.getElementById('success-message');
+            if (!messageElement) return;
+            
+            messageElement.textContent = message;
+            messageElement.classList.add('show');
+            
+            setTimeout(function() {
+                messageElement.classList.remove('show');
+            }, 3000);
+        }
+
+        // Event Listeners Setup
+        function setupEventListeners() {
+            // Search functionality
+            var quoteSearch = document.getElementById('quote-search');
+            if (quoteSearch) {
+                quoteSearch.addEventListener('input', function(e) {
+                    renderQuotes(e.target.value);
+                });
+            }
+
+            var presetSearch = document.getElementById('preset-search');
+            if (presetSearch) {
+                presetSearch.addEventListener('input', function(e) {
+                    renderPresets(e.target.value);
+                });
+            }
+
+            // Forms
+            var presetItemForm = document.getElementById('preset-item-form');
+            if (presetItemForm) {
+                presetItemForm.addEventListener('submit', handlePresetItemSubmit);
+            }
+
+            // Manual item calculations
+            var quantityInput = document.getElementById('manual-quantity');
+            var priceInput = document.getElementById('manual-price');
+            
+            if (quantityInput) {
+                quantityInput.addEventListener('input', updateManualTotal);
+            }
+            
+            if (priceInput) {
+                priceInput.addEventListener('input', updateManualTotal);
+            }
+
+            // System theme detection
+            if (window.matchMedia) {
+                var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                mediaQuery.addEventListener('change', function(e) {
+                    if (!localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) {
+                        currentTheme = e.matches ? 'dark' : 'light';
+                        document.body.setAttribute('data-theme', currentTheme);
+                        updateThemeToggle();
+                    }
+                });
+            }
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key.toLowerCase()) {
+                        case 'n':
+                            e.preventDefault();
+                            openSimpleJobForm();
+                            break;
+                        case 'p':
+                            e.preventDefault();
+                            openPresetItemForm();
+                            break;
+                        case 'e':
+                            e.preventDefault();
+                            exportData();
+                            break;
+                        case 'u':
+                            e.preventDefault();
+                            openUserInfo();
+                            break;
+                        case 'i':
+                            e.preventDefault();
+                            openIconUpload();
+                            break;
+                        case 'd':
+                            e.preventDefault();
+                            toggleTheme();
+                            break;
+                    }
+                }
+                
+                if (e.key === 'Escape') {
+                    var modals = document.querySelectorAll('.modal.show');
+                    for (var i = 0; i < modals.length; i++) {
+                        modals[i].classList.remove('show');
+                    }
+                }
+            });
+        }
+
+        function updateThemeToggle() {
+            var toggleBtn = document.getElementById('theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '☀️ Light';
+            }
+        }
+
         // Legacy logo functions (keeping for compatibility)
         var logoTemplates = [
             `<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -4150,10 +4092,6 @@
                 <circle cx="50" cy="50" r="3" fill="currentColor"/>
             </svg>`
         ];
-
-        function openLogoSelector() {
-            showSuccessMessage('💡 Use the User Info button (👤) to upload your custom logo!');
-        }
 
         function loadSelectedLogo() {
             if (customLogo) {
@@ -4205,6 +4143,3 @@
         console.log('👤 User Info & Logo Management');
         console.log('🏗️ 24 Professional Categories');
         console.log('📱 Touch-Friendly Mobile Experience');
-    </script>
-</body>
-</html>
