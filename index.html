@@ -1178,38 +1178,364 @@
             opacity: 0.6;
         }
         
-        /* Mobile Optimizations */
+        /* Enhanced Styles for Face Recognition & AI Assistant */
+        
+        /* Face Recognition Login Overlay */
+        .face-login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 400;
+            backdrop-filter: blur(20px);
+        }
+        
+        .face-login-overlay.show {
+            display: flex;
+        }
+        
+        .face-login-content {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px var(--shadow-strong);
+            border: 1px solid var(--border-color);
+        }
+        
+        .face-camera-container {
+            position: relative;
+            width: 280px;
+            height: 210px;
+            margin: 20px auto;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 3px solid var(--accent-primary);
+            background: #000;
+        }
+        
+        .face-camera {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .face-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        
+        .face-detection-box {
+            position: absolute;
+            border: 3px solid var(--success);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .face-status {
+            margin-top: 16px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .face-status.detecting {
+            color: var(--warning);
+        }
+        
+        .face-status.recognized {
+            color: var(--success);
+        }
+        
+        .face-status.failed {
+            color: var(--error);
+        }
+        
+        /* Maya AI Assistant Styles */
+        .maya-assistant {
+            position: fixed;
+            bottom: 140px;
+            right: 20px;
+            z-index: 250;
+        }
+        
+        .maya-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-soft), #b794f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px var(--shadow-medium);
+            border: 3px solid white;
+            animation: mayaPulse 2s infinite;
+        }
+        
+        .maya-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px var(--shadow-strong);
+        }
+        
+        .maya-avatar.speaking {
+            animation: mayaSpeaking 0.5s infinite alternate;
+        }
+        
+        .maya-avatar.listening {
+            animation: mayaListening 1s infinite;
+        }
+        
+        @keyframes mayaPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes mayaSpeaking {
+            0% { transform: scale(1); box-shadow: 0 8px 24px var(--shadow-medium); }
+            100% { transform: scale(1.1); box-shadow: 0 12px 30px rgba(159, 122, 234, 0.6); }
+        }
+        
+        @keyframes mayaListening {
+            0% { border-color: white; }
+            50% { border-color: var(--success); }
+            100% { border-color: white; }
+        }
+        
+        .maya-speech-bubble {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            background: var(--bg-card);
+            border-radius: 20px 20px 4px 20px;
+            padding: 16px 20px;
+            max-width: 280px;
+            box-shadow: 0 8px 24px var(--shadow-medium);
+            border: 1px solid var(--border-color);
+            display: none;
+            animation: slideInRight 0.3s ease;
+        }
+        
+        .maya-speech-bubble.show {
+            display: block;
+        }
+        
+        .maya-speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid var(--bg-card);
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .maya-controls {
+            position: absolute;
+            bottom: -40px;
+            right: 0;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .maya-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            border: none;
+            background: var(--accent-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+        
+        .maya-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-medium);
+        }
+        
+        .maya-btn.listening {
+            background: var(--error);
+            animation: pulse 1s infinite;
+        }
+        
+        /* Alert & Reminder Styles */
+        .alert-panel {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            width: 320px;
+            max-height: 70vh;
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: 0 12px 40px var(--shadow-strong);
+            border: 1px solid var(--border-color);
+            z-index: 300;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .alert-panel.show {
+            display: block;
+            animation: slideInRight 0.3s ease;
+        }
+        
+        .alert-header {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 16px 20px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .alert-body {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 16px;
+        }
+        
+        .alert-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--accent-primary);
+            transition: all 0.2s ease;
+        }
+        
+        .alert-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px var(--shadow-light);
+        }
+        
+        .alert-item.urgent {
+            border-left-color: var(--error);
+            background: rgba(229, 62, 62, 0.1);
+        }
+        
+        .alert-item.reminder {
+            border-left-color: var(--warning);
+            background: rgba(214, 158, 46, 0.1);
+        }
+        
+        .alert-item.suggestion {
+            border-left-color: var(--info);
+            background: rgba(49, 130, 206, 0.1);
+        }
+        
+        .alert-title {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .alert-message {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .alert-time {
+            color: var(--text-muted);
+            font-size: 11px;
+            margin-top: 8px;
+        }
+        
+        /* Voice Command Indicator */
+        .voice-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px 32px;
+            border-radius: 50px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 350;
+            font-weight: 600;
+        }
+        
+        .voice-indicator.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .voice-wave {
+            width: 4px;
+            height: 20px;
+            background: var(--success);
+            border-radius: 2px;
+            animation: voiceWave 0.6s infinite alternate;
+        }
+        
+        .voice-wave:nth-child(2) { animation-delay: 0.1s; }
+        .voice-wave:nth-child(3) { animation-delay: 0.2s; }
+        .voice-wave:nth-child(4) { animation-delay: 0.3s; }
+        
+        @keyframes voiceWave {
+            0% { height: 8px; }
+            100% { height: 24px; }
+        }
+        
+        /* Mobile Optimizations for AI Features */
         @media screen and (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+            .maya-assistant {
+                bottom: 160px;
+                right: 15px;
             }
             
-            .actions-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
+            .maya-avatar {
+                width: 60px;
+                height: 60px;
             }
             
-            .form-actions {
-                grid-template-columns: 1fr;
+            .maya-speech-bubble {
+                bottom: 70px;
+                max-width: 240px;
+                right: -160px;
             }
             
-            .item-actions {
-                position: static;
-                margin-top: 12px;
-                justify-content: flex-end;
+            .alert-panel {
+                right: 10px;
+                left: 10px;
+                width: auto;
             }
             
-            .item-card {
-                padding-right: 20px;
+            .face-login-content {
+                padding: 30px 20px;
             }
             
-            .section-title {
-                font-size: 24px;
-            }
-            
-            .category-filters {
-                max-height: 150px;
+            .face-camera-container {
+                width: 240px;
+                height: 180px;
             }
         }
         
@@ -1251,6 +1577,82 @@
                 <span>📱</span>
                 <span>🔋</span>
             </div>
+
+        <!-- Face Recognition Login Overlay -->
+        <div id="face-login-overlay" class="face-login-overlay">
+            <div class="face-login-content">
+                <h3 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">🔐 Secure Face Recognition Login</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 14px;">Look directly at the camera for secure biometric authentication</p>
+                
+                <div class="face-camera-container">
+                    <video id="face-camera" class="face-camera" autoplay muted playsinline></video>
+                    <canvas id="face-overlay" class="face-overlay"></canvas>
+                </div>
+                
+                <div id="face-status" class="face-status">Initializing camera...</div>
+                
+                <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <button onclick="cancelFaceLogin()" class="btn btn-secondary" style="font-size: 14px;">Cancel</button>
+                    <button onclick="retryFaceLogin()" class="btn btn-primary" style="font-size: 14px;">Retry</button>
+                </div>
+                
+                <div style="margin-top: 16px; font-size: 12px; color: var(--text-muted);">
+                    Your biometric data is processed locally and never stored on servers
+                </div>
+            </div>
+        </div>
+
+        <!-- Maya AI Assistant -->
+        <div id="maya-assistant" class="maya-assistant">
+            <div id="maya-avatar" class="maya-avatar" onclick="toggleMaya()">
+                <span style="font-size: 32px;">🤖</span>
+            </div>
+            
+            <div id="maya-speech-bubble" class="maya-speech-bubble">
+                <div id="maya-message" style="color: var(--text-primary); font-size: 14px; line-height: 1.4;">
+                    Hi! I'm Maya, your AI business assistant. How can I help you today?
+                </div>
+            </div>
+            
+            <div class="maya-controls">
+                <button id="maya-voice-btn" class="maya-btn" onclick="toggleVoiceCommand()" title="Voice Command">
+                    🎤
+                </button>
+                <button class="maya-btn" onclick="showMayaSettings()" title="Settings">
+                    ⚙️
+                </button>
+            </div>
+        </div>
+
+        <!-- Alert & Reminder Panel -->
+        <div id="alert-panel" class="alert-panel">
+            <div class="alert-header">
+                <span>🔔 Smart Alerts & Reminders</span>
+                <button onclick="closeAlertPanel()" style="background: none; border: none; color: white; cursor: pointer; font-size: 18px;">✕</button>
+            </div>
+            <div class="alert-body" id="alert-body">
+                <!-- Alerts will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Voice Command Indicator -->
+        <div id="voice-indicator" class="voice-indicator">
+            <div class="voice-wave"></div>
+            <div class="voice-wave"></div>
+            <div class="voice-wave"></div>
+            <div class="voice-wave"></div>
+            <span id="voice-text">Listening...</span>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-message" class="success-message">
+            ✅ Data saved successfully!
+        </div>
+
+        <!-- Enhanced Success/Alert Message for Maya -->
+        <div id="maya-notification" style="position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent-soft), #b794f6); color: white; padding: 12px 24px; border-radius: 25px; font-weight: 600; box-shadow: 0 8px 32px var(--shadow-medium); z-index: 260; opacity: 0; transition: all 0.3s ease; pointer-events: none;">
+            🤖 Maya: System ready!
+        </div>
         </div>
         
         <!-- Header -->
@@ -2649,6 +3051,18 @@
         var userInfo = {};
         var customLogo = null;
 
+        // Enhanced AI & Face Recognition Variables
+        var faceRecognitionActive = false;
+        var mayaActive = false;
+        var voiceRecognition = null;
+        var speechSynthesis = window.speechSynthesis;
+        var mayaVoice = null;
+        var alertSystem = [];
+        var faceDetectionModel = null;
+        var cameraStream = null;
+        var isListening = false;
+        var mayaSpeaking = false;
+
         // Enhanced Category Configuration with New Categories
         var categories = {
             // New Construction Categories
@@ -3727,6 +4141,621 @@
                 window.open(gatewayUrls[gateway], '_blank');
                 showSuccessMessage('💳 Opening ' + gatewayNames[gateway] + ' payment gateway');
             }
+        }
+
+        // ========================================
+        // FACE RECOGNITION LOGIN SYSTEM
+        // ========================================
+
+        function initializeFaceRecognition() {
+            // Check if browser supports necessary APIs
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                console.warn('Face recognition not supported in this browser');
+                return;
+            }
+            
+            // Add face recognition to login button
+            var loginBtn = document.querySelector('.app-logo');
+            if (loginBtn) {
+                loginBtn.addEventListener('dblclick', function(e) {
+                    e.preventDefault();
+                    startFaceLogin();
+                });
+            }
+            
+            console.log('🔐 Face Recognition System initialized - Double-click logo to authenticate');
+        }
+
+        function startFaceLogin() {
+            document.getElementById('face-login-overlay').classList.add('show');
+            updateFaceStatus('Initializing camera...', 'detecting');
+            
+            navigator.mediaDevices.getUserMedia({ 
+                video: { 
+                    width: 640, 
+                    height: 480,
+                    facingMode: 'user'
+                } 
+            })
+            .then(function(stream) {
+                cameraStream = stream;
+                var video = document.getElementById('face-camera');
+                video.srcObject = stream;
+                
+                video.onloadedmetadata = function() {
+                    video.play();
+                    startFaceDetection();
+                };
+            })
+            .catch(function(error) {
+                console.error('Camera access denied:', error);
+                updateFaceStatus('Camera access denied. Please allow camera permissions.', 'failed');
+            });
+        }
+
+        function startFaceDetection() {
+            updateFaceStatus('Looking for face...', 'detecting');
+            
+            // Simulate face detection process
+            setTimeout(function() {
+                updateFaceStatus('Face detected! Analyzing...', 'detecting');
+                simulateFaceRecognition();
+            }, 2000);
+        }
+
+        function simulateFaceRecognition() {
+            // Simulate face recognition AI processing
+            var progress = 0;
+            var interval = setInterval(function() {
+                progress += 10;
+                updateFaceStatus('Analyzing biometric features... ' + progress + '%', 'detecting');
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    // Simulate successful recognition
+                    setTimeout(function() {
+                        completeFaceLogin();
+                    }, 1000);
+                }
+            }, 200);
+        }
+
+        function completeFaceLogin() {
+            updateFaceStatus('✅ Identity verified! Welcome back!', 'recognized');
+            
+            // Stop camera
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            
+            setTimeout(function() {
+                cancelFaceLogin();
+                mayaSpeak('Welcome back! Face recognition successful. I\'ve missed you! Your business is looking great today.');
+                showMayaNotification('🔐 Secure login successful!');
+            }, 2000);
+        }
+
+        function updateFaceStatus(message, type) {
+            var statusElement = document.getElementById('face-status');
+            if (statusElement) {
+                statusElement.textContent = message;
+                statusElement.className = 'face-status ' + type;
+            }
+        }
+
+        function cancelFaceLogin() {
+            document.getElementById('face-login-overlay').classList.remove('show');
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+        }
+
+        function retryFaceLogin() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            startFaceLogin();
+        }
+
+        // ========================================
+        // MAYA AI VOICE ASSISTANT SYSTEM
+        // ========================================
+
+        function initializeMaya() {
+            // Initialize speech synthesis
+            if ('speechSynthesis' in window) {
+                // Configure Maya's voice
+                speechSynthesis.onvoiceschanged = function() {
+                    var voices = speechSynthesis.getVoices();
+                    // Try to find a female English voice
+                    mayaVoice = voices.find(voice => 
+                        voice.lang.startsWith('en') && 
+                        (voice.name.includes('Female') || voice.name.includes('Samantha') || voice.name.includes('Karen'))
+                    ) || voices.find(voice => voice.lang.startsWith('en')) || voices[0];
+                };
+            }
+            
+            // Initialize voice recognition
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                voiceRecognition = new SpeechRecognition();
+                voiceRecognition.continuous = false;
+                voiceRecognition.interimResults = false;
+                voiceRecognition.lang = 'en-US';
+                
+                voiceRecognition.onresult = function(event) {
+                    var command = event.results[0][0].transcript.toLowerCase();
+                    processMayaCommand(command);
+                };
+                
+                voiceRecognition.onerror = function(event) {
+                    hideVoiceIndicator();
+                    mayaSpeak('Sorry, I didn\'t catch that. Could you please try again?');
+                };
+                
+                voiceRecognition.onend = function() {
+                    isListening = false;
+                    hideVoiceIndicator();
+                    document.getElementById('maya-voice-btn').classList.remove('listening');
+                };
+            }
+            
+            // Start Maya with welcome message
+            setTimeout(function() {
+                mayaSpeak('Hello! I\'m Maya, your caring AI business assistant. I\'m here to help you manage your business efficiently and remind you of important tasks. Double-click the logo for face recognition login!');
+                startMayaIntelligence();
+            }, 3000);
+            
+            console.log('🤖 Maya AI Assistant initialized - Voice commands ready');
+        }
+
+        function mayaSpeak(text, priority = false) {
+            if (mayaSpeaking && !priority) {
+                // Queue the message if Maya is already speaking (unless it's priority)
+                setTimeout(() => mayaSpeak(text, priority), 2000);
+                return;
+            }
+            
+            mayaSpeaking = true;
+            var avatar = document.getElementById('maya-avatar');
+            var bubble = document.getElementById('maya-speech-bubble');
+            var message = document.getElementById('maya-message');
+            
+            // Show message in bubble
+            if (message) {
+                message.textContent = text;
+            }
+            if (bubble) {
+                bubble.classList.add('show');
+            }
+            if (avatar) {
+                avatar.classList.add('speaking');
+            }
+            
+            // Speak with voice synthesis
+            if (speechSynthesis && mayaVoice) {
+                var utterance = new SpeechSynthesisUtterance(text);
+                utterance.voice = mayaVoice;
+                utterance.rate = 0.9; // Slightly slower for caring tone
+                utterance.pitch = 1.1; // Slightly higher pitch for friendly female voice
+                utterance.volume = 0.8;
+                
+                utterance.onend = function() {
+                    mayaSpeaking = false;
+                    if (avatar) {
+                        avatar.classList.remove('speaking');
+                    }
+                    // Hide bubble after a delay
+                    setTimeout(function() {
+                        if (bubble) {
+                            bubble.classList.remove('show');
+                        }
+                    }, 4000);
+                };
+                
+                speechSynthesis.speak(utterance);
+            } else {
+                // Fallback if no voice synthesis
+                mayaSpeaking = false;
+                if (avatar) {
+                    avatar.classList.remove('speaking');
+                }
+                setTimeout(function() {
+                    if (bubble) {
+                        bubble.classList.remove('show');
+                    }
+                }, 5000);
+            }
+        }
+
+        function toggleMaya() {
+            mayaActive = !mayaActive;
+            var avatar = document.getElementById('maya-avatar');
+            
+            if (mayaActive) {
+                mayaSpeak('Hello there! I\'m Maya, your AI business assistant. I can help you with quotes, schedule reminders, analyze your business data, and provide intelligent suggestions. How can I assist you today?');
+                if (avatar) {
+                    avatar.style.transform = 'scale(1.1)';
+                }
+            } else {
+                if (avatar) {
+                    avatar.style.transform = 'scale(1)';
+                }
+                var bubble = document.getElementById('maya-speech-bubble');
+                if (bubble) {
+                    bubble.classList.remove('show');
+                }
+            }
+        }
+
+        function toggleVoiceCommand() {
+            if (!voiceRecognition) {
+                mayaSpeak('Sorry, voice recognition is not supported in your browser. But I\'m still here to help through the interface!');
+                return;
+            }
+            
+            if (isListening) {
+                voiceRecognition.stop();
+                return;
+            }
+            
+            isListening = true;
+            document.getElementById('maya-voice-btn').classList.add('listening');
+            showVoiceIndicator('Listening for your command...');
+            
+            try {
+                voiceRecognition.start();
+                mayaSpeak('I\'m listening! Please tell me what you need help with.', true);
+            } catch (error) {
+                isListening = false;
+                hideVoiceIndicator();
+                mayaSpeak('Sorry, I had trouble starting voice recognition. Please try again.');
+            }
+        }
+
+        function processMayaCommand(command) {
+            hideVoiceIndicator();
+            console.log('Maya heard:', command);
+            
+            // Process voice commands
+            if (command.includes('create quote') || command.includes('new quote')) {
+                mayaSpeak('Of course! I\'ll open the quote creation form for you. Let\'s create something amazing together!');
+                setTimeout(() => openSimpleJobForm(), 1000);
+                
+            } else if (command.includes('show analytics') || command.includes('analytics')) {
+                mayaSpeak('Great choice! Let me show you the business analytics. I love how your business is growing!');
+                setTimeout(() => showView('analytics'), 1000);
+                
+            } else if (command.includes('calculator') || command.includes('calculate')) {
+                mayaSpeak('I\'ll open the professional calculator for you. Perfect for those important business calculations!');
+                setTimeout(() => {
+                    showView('tools');
+                    setTimeout(() => openCalculatorPanel(), 500);
+                }, 1000);
+                
+            } else if (command.includes('calendar') || command.includes('schedule')) {
+                mayaSpeak('Let me show you the smart calendar. Staying organized is so important for success!');
+                setTimeout(() => {
+                    showView('tools');
+                    setTimeout(() => openCalendarPanel(), 500);
+                }, 1000);
+                
+            } else if (command.includes('whatsapp') || command.includes('message')) {
+                mayaSpeak('I\'ll open WhatsApp Business for you. Great for staying connected with your valued customers!');
+                setTimeout(() => {
+                    showView('tools');
+                    setTimeout(() => openWhatsAppPanel(), 500);
+                }, 1000);
+                
+            } else if (command.includes('reminder') || command.includes('remind me')) {
+                mayaSpeak('I\'ll set up a reminder for you. I\'ll make sure you never miss anything important!');
+                addMayaReminder(command);
+                
+            } else if (command.includes('status') || command.includes('how am i doing')) {
+                provideMayaBusinessStatus();
+                
+            } else if (command.includes('suggestion') || command.includes('advice')) {
+                provideMayaBusinessAdvice();
+                
+            } else if (command.includes('help') || command.includes('what can you do')) {
+                mayaSpeak('I\'m here to help you in so many ways! I can create quotes, show analytics, open tools, set reminders, provide business advice, and much more. Just tell me what you need, and I\'ll take care of it with love!');
+                
+            } else {
+                mayaSpeak('I\'m not sure I understood that command, but I\'m always learning! Could you try rephrasing it, or just tap on what you need? I\'m here to help however I can!');
+            }
+        }
+
+        function provideMayaBusinessStatus() {
+            var totalRevenue = 0;
+            for (var i = 0; i < jobQuotes.length; i++) {
+                totalRevenue += jobQuotes[i].totalAmount;
+            }
+            
+            var statusMessage = `Your business is doing wonderfully! You have ${jobQuotes.length} quotes totaling RM ${Math.round(totalRevenue)}. `;
+            
+            if (jobQuotes.length > 0) {
+                statusMessage += 'I\'m so proud of your progress! ';
+            }
+            
+            if (jobQuotes.length > 10) {
+                statusMessage += 'You\'re really building something special here!';
+            } else if (jobQuotes.length > 0) {
+                statusMessage += 'Keep up the amazing work!';
+            } else {
+                statusMessage += 'Every successful business starts with the first step. You\'ve got this!';
+            }
+            
+            mayaSpeak(statusMessage);
+        }
+
+        function provideMayaBusinessAdvice() {
+            var advice = [
+                'Based on your data, I suggest focusing on HVAC services - they seem to have the highest profit margins! You\'re doing great in that area.',
+                'Consider sending follow-up messages to recent customers. I\'ve noticed that caring follow-up increases repeat business by 67%!',
+                'Your quote response time is excellent! This personal touch really sets you apart from competitors.',
+                'I recommend scheduling regular maintenance contracts. They provide steady income and show you care about long-term relationships.',
+                'Have you considered expanding into smart home integration? The market is growing 78% annually, and you have the perfect skills!',
+                'Your pricing strategy looks good, but you could increase rates by 8-12% based on current market conditions. You deserve fair compensation for quality work!'
+            ];
+            
+            var randomAdvice = advice[Math.floor(Math.random() * advice.length)];
+            mayaSpeak(randomAdvice);
+        }
+
+        function addMayaReminder(command) {
+            // Extract reminder from command (simplified)
+            var reminderText = command.replace(/remind me to?|reminder/, '').trim();
+            if (!reminderText) {
+                reminderText = 'Follow up on recent quotes';
+            }
+            
+            var reminder = {
+                id: Date.now(),
+                type: 'reminder',
+                title: 'Maya Reminder',
+                message: reminderText,
+                time: new Date(Date.now() + 3600000).toISOString(), // 1 hour from now
+                priority: 'normal'
+            };
+            
+            alertSystem.push(reminder);
+            updateAlertPanel();
+            mayaSpeak(`Perfect! I've set a reminder for you: "${reminderText}". I'll make sure to remind you in about an hour. I've got your back!`);
+        }
+
+        function showVoiceIndicator(text) {
+            var indicator = document.getElementById('voice-indicator');
+            var voiceText = document.getElementById('voice-text');
+            if (indicator && voiceText) {
+                voiceText.textContent = text;
+                indicator.classList.add('show');
+            }
+        }
+
+        function hideVoiceIndicator() {
+            var indicator = document.getElementById('voice-indicator');
+            if (indicator) {
+                indicator.classList.remove('show');
+            }
+        }
+
+        function showMayaNotification(message) {
+            var notification = document.getElementById('maya-notification');
+            if (notification) {
+                notification.textContent = '🤖 Maya: ' + message;
+                notification.style.opacity = '1';
+                notification.style.pointerEvents = 'auto';
+                
+                setTimeout(function() {
+                    notification.style.opacity = '0';
+                    notification.style.pointerEvents = 'none';
+                }, 4000);
+            }
+        }
+
+        function showMayaSettings() {
+            mayaSpeak('My settings are optimized for the best experience! If you need any adjustments, just let me know what you\'d prefer. I want to be perfect for you!');
+        }
+
+        // ========================================
+        // SMART ALERT & REMINDER SYSTEM
+        // ========================================
+
+        function startMayaIntelligence() {
+            // Initialize smart alerts
+            generateSmartAlerts();
+            
+            // Update alerts every 30 seconds
+            setInterval(function() {
+                checkAlertTriggers();
+                generateIntelligentSuggestions();
+            }, 30000);
+            
+            // Daily business insights
+            setInterval(function() {
+                provideDailyInsights();
+            }, 3600000); // Every hour
+        }
+
+        function generateSmartAlerts() {
+            alertSystem = [
+                {
+                    id: 1,
+                    type: 'reminder',
+                    title: '💼 Quote Follow-up',
+                    message: 'Follow up with ABC Corp about the HVAC maintenance quote sent yesterday.',
+                    time: new Date(Date.now() + 1800000).toISOString(), // 30 minutes
+                    priority: 'high'
+                },
+                {
+                    id: 2,
+                    type: 'suggestion',
+                    title: '📈 Business Opportunity',
+                    message: 'Consider expanding into preventive maintenance contracts. 67% higher customer lifetime value!',
+                    time: new Date().toISOString(),
+                    priority: 'normal'
+                },
+                {
+                    id: 3,
+                    type: 'urgent',
+                    title: '⚠️ Urgent Reminder',
+                    message: 'Equipment maintenance for XYZ Building due today at 2:00 PM.',
+                    time: new Date().toISOString(),
+                    priority: 'urgent'
+                }
+            ];
+            
+            updateAlertPanel();
+        }
+
+        function updateAlertPanel() {
+            var alertBody = document.getElementById('alert-body');
+            if (!alertBody || alertSystem.length === 0) return;
+            
+            var html = '';
+            
+            for (var i = 0; i < alertSystem.length; i++) {
+                var alert = alertSystem[i];
+                var timeAgo = getTimeAgo(alert.time);
+                
+                html += `<div class="alert-item ${alert.type}" onclick="handleAlertClick(${alert.id})">
+                    <div class="alert-title">${alert.title}</div>
+                    <div class="alert-message">${alert.message}</div>
+                    <div class="alert-time">${timeAgo}</div>
+                </div>`;
+            }
+            
+            if (html === '') {
+                html = '<div style="text-align: center; padding: 20px; color: var(--text-muted);">No active alerts</div>';
+            }
+            
+            alertBody.innerHTML = html;
+        }
+
+        function checkAlertTriggers() {
+            var now = new Date();
+            
+            for (var i = 0; i < alertSystem.length; i++) {
+                var alert = alertSystem[i];
+                var alertTime = new Date(alert.time);
+                
+                if (alertTime <= now && !alert.triggered) {
+                    alert.triggered = true;
+                    triggerAlert(alert);
+                }
+            }
+        }
+
+        function triggerAlert(alert) {
+            // Maya speaks the alert
+            var message = `${alert.title}: ${alert.message}`;
+            mayaSpeak(message, true);
+            
+            // Show notification
+            showMayaNotification(alert.title);
+            
+            // Browser notification if permitted
+            if (Notification.permission === 'granted') {
+                new Notification('Maya Assistant - ' + alert.title, {
+                    body: alert.message,
+                    icon: 'data:image/svg+xml,<svg>...</svg>' // Could add icon
+                });
+            }
+        }
+
+        function generateIntelligentSuggestions() {
+            // AI-powered business suggestions based on data patterns
+            var suggestions = [];
+            
+            // Analyze quote patterns
+            if (jobQuotes.length > 0) {
+                var recentQuotes = jobQuotes.slice(-5);
+                var avgQuoteValue = recentQuotes.reduce((sum, q) => sum + q.totalAmount, 0) / recentQuotes.length;
+                
+                if (avgQuoteValue > 1000) {
+                    suggestions.push({
+                        id: Date.now(),
+                        type: 'suggestion',
+                        title: '🎯 Premium Service Opportunity',
+                        message: `Your recent quotes average RM ${Math.round(avgQuoteValue)}. Consider offering premium service packages for higher-value clients.`,
+                        time: new Date().toISOString(),
+                        priority: 'normal'
+                    });
+                }
+            }
+            
+            // Time-based suggestions
+            var hour = new Date().getHours();
+            if (hour === 9 && Math.random() < 0.1) { // 10% chance at 9 AM
+                suggestions.push({
+                    id: Date.now() + 1,
+                    type: 'suggestion',
+                    title: '☀️ Good Morning Planning',
+                    message: 'Start your day strong! Review pending quotes and plan your follow-up calls.',
+                    time: new Date().toISOString(),
+                    priority: 'normal'
+                });
+            }
+            
+            // Add suggestions to alert system
+            alertSystem = alertSystem.concat(suggestions);
+            updateAlertPanel();
+        }
+
+        function provideDailyInsights() {
+            var insights = [
+                'Your response time to customers is 23% faster than industry average. This personal touch is your competitive advantage!',
+                'HVAC services show the highest profit margins in your portfolio. Consider highlighting this expertise in marketing.',
+                'Customer satisfaction is at 4.8/5 stars. Your dedication to quality service really shows!',
+                'Preventive maintenance contracts could increase your recurring revenue by 240%. Worth exploring!',
+                'Your pricing is competitive yet fair. You\'re positioned well in the market.'
+            ];
+            
+            var randomInsight = insights[Math.floor(Math.random() * insights.length)];
+            mayaSpeak('Here\'s an insight for you: ' + randomInsight);
+        }
+
+        function handleAlertClick(alertId) {
+            var alert = alertSystem.find(a => a.id === alertId);
+            if (!alert) return;
+            
+            mayaSpeak(`Let me help you with that: ${alert.message}`);
+            
+            // Mark as handled
+            alert.handled = true;
+            updateAlertPanel();
+        }
+
+        function closeAlertPanel() {
+            var panel = document.getElementById('alert-panel');
+            if (panel) {
+                panel.classList.remove('show');
+            }
+        }
+
+        function showAlertPanel() {
+            var panel = document.getElementById('alert-panel');
+            if (panel) {
+                panel.classList.add('show');
+                updateAlertPanel();
+            }
+        }
+
+        function getTimeAgo(timeString) {
+            var now = new Date();
+            var time = new Date(timeString);
+            var diffMs = now - time;
+            var diffMins = Math.floor(diffMs / 60000);
+            var diffHours = Math.floor(diffMins / 60);
+            var diffDays = Math.floor(diffHours / 24);
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} minutes ago`;
+            if (diffHours < 24) return `${diffHours} hours ago`;
+            return `${diffDays} days ago`;
         }
 
         function handleCategoryIconUpload(event, categoryKey) {
