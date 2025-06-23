@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#FFB07A">
     <meta name="msapplication-navbutton-color" content="#FFB07A">
     
-    <title>REFIT MAINTENANCE SERVICES - Enhanced Quote Builder</title>
+    <title>REFIT MAINTENANCE SERVICES - AI Enhanced Quote Builder</title>
     
     <!-- Enhanced PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -62,31 +62,10 @@
             --error: #FF6B42;
             --info: #FFA366;
             
-            /* Enhanced Category Colors - Pastel Orange Variations */
-            --cat-electrical: #FFB07A;
-            --cat-plumbing: #FFA366;
-            --cat-hvac: #FF8C42;
-            --cat-cleaning: #FFD4B3;
-            --cat-parts: #E69660;
-            --cat-labor: #FF6B42;
-            --cat-equipment: #FFCC99;
-            --cat-common: #FFE5CC;
-            --cat-preliminary: #FF7F50;
-            --cat-wall: #FFB366;
-            --cat-floor: #FFC299;
-            --cat-ceiling: #FFD1B3;
-            --cat-roofing: #FF9966;
-            --cat-wetwork: #FFE0CC;
-            --cat-me-work: #FF8566;
-            --cat-exhaust: #FFAD80;
-            --cat-lights-fan: #FFC499;
-            --cat-ac: #FFD699;
-            --cat-paint: #FFE8D9;
-            --cat-curtain: #FFB88A;
-            --cat-builtin: #FFC7A3;
-            --cat-loose: #FFD6B6;
-            --cat-sanitary: #FFE5C9;
-            --cat-appliances: #FFF4DC;
+            /* AI Assistant Colors */
+            --ai-primary: #FF69B4;
+            --ai-secondary: #FFB6C1;
+            --ai-accent: #FF1493;
         }
         
         [data-theme="dark"] {
@@ -112,6 +91,11 @@
             --shadow-medium: rgba(255, 176, 122, 0.2);
             --shadow-strong: rgba(255, 176, 122, 0.3);
             --overlay: rgba(0, 0, 0, 0.9);
+            
+            /* AI Assistant Colors - Dark Mode */
+            --ai-primary: #FF69B4;
+            --ai-secondary: #CC5B8F;
+            --ai-accent: #FF1493;
         }
         
         body {
@@ -254,13 +238,6 @@
             filter: drop-shadow(0 2px 4px var(--shadow-light));
         }
         
-        .user-logo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 14px;
-        }
-        
         .app-title h1 {
             font-size: 18px;
             font-weight: 700;
@@ -321,6 +298,16 @@
             transform: scale(0.9);
         }
         
+        .header-btn.ai-btn {
+            background: var(--ai-primary);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 2px 8px var(--shadow-light); }
+            to { box-shadow: 0 4px 16px rgba(255, 105, 180, 0.4); }
+        }
+        
         .cart-badge {
             position: absolute;
             top: -8px;
@@ -336,6 +323,164 @@
             align-items: center;
             justify-content: center;
             border: 2px solid var(--bg-secondary);
+        }
+        
+        /* AI Assistant Floating Button */
+        .ai-assistant-float {
+            position: fixed;
+            bottom: 160px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--ai-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s ease;
+            z-index: 80;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .ai-assistant-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(255, 105, 180, 0.4);
+        }
+        
+        .ai-assistant-float.speaking {
+            animation: pulse 0.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        
+        /* AI Assistant Panel */
+        .ai-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--ai-primary), var(--ai-secondary));
+            color: white;
+            padding: 24px 20px 40px;
+            border-radius: 24px 24px 0 0;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+            z-index: 150;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .ai-panel.show {
+            transform: translateY(0);
+        }
+        
+        .ai-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .ai-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 12px;
+        }
+        
+        .ai-info h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .ai-info p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .ai-controls {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .ai-control-btn {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .ai-control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .ai-control-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .ai-chat {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .ai-message {
+            margin-bottom: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .ai-suggestions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+        }
+        
+        .ai-suggestion {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .ai-suggestion:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
         
         /* Main Content */
@@ -697,6 +842,7 @@
         .action-btn.soft { background: linear-gradient(135deg, var(--accent-soft), var(--accent-primary)); }
         .action-btn.info { background: linear-gradient(135deg, var(--accent-secondary), var(--accent-dark)); }
         .action-btn.secondary { background: linear-gradient(135deg, var(--accent-dark), var(--accent-primary)); }
+        .action-btn.ai { background: linear-gradient(135deg, var(--ai-primary), var(--ai-secondary)); }
         
         .action-btn .icon {
             font-size: 32px;
@@ -1112,6 +1258,10 @@
             .share-buttons {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .ai-suggestions {
+                grid-template-columns: 1fr;
+            }
         }
         
         /* Safe area adjustments */
@@ -1130,7 +1280,9 @@
         @media print {
             .status-bar,
             .bottom-nav,
-            .modal {
+            .modal,
+            .ai-assistant-float,
+            .ai-panel {
                 display: none !important;
             }
             
@@ -1178,12 +1330,65 @@
                     <p id="current-date">Today</p>
                     <p id="daily-revenue">RM 0.00</p>
                 </div>
+                <button class="header-btn ai-btn" onclick="toggleAIAssistant()" title="AI Assistant">
+                    🤖
+                </button>
                 <button class="header-btn" onclick="openQuoteCart()" title="Quote Cart">
                     🛒
                     <span class="cart-badge" id="cart-badge">0</span>
                 </button>
                 <button class="header-btn" onclick="exportData()" title="Export Data">
                     📤
+                </button>
+            </div>
+        </div>
+
+        <!-- AI Assistant Floating Button -->
+        <div class="ai-assistant-float" id="ai-float" onclick="toggleAIAssistant()">
+            💎
+        </div>
+
+        <!-- AI Assistant Panel -->
+        <div class="ai-panel" id="ai-panel">
+            <div class="ai-header">
+                <div style="display: flex; align-items: center;">
+                    <div class="ai-avatar" id="ai-avatar">💎</div>
+                    <div class="ai-info">
+                        <h3 id="ai-name">Ela</h3>
+                        <p id="ai-status">Professional Assistant • Ready to help</p>
+                    </div>
+                </div>
+                <div class="ai-controls">
+                    <button class="ai-control-btn" id="voice-btn" onclick="toggleVoice()" title="Toggle Voice">
+                        🔊
+                    </button>
+                    <button class="ai-control-btn" onclick="openAISettings()" title="AI Settings">
+                        ⚙️
+                    </button>
+                    <button class="ai-control-btn" onclick="toggleAIAssistant()" title="Close">
+                        ✕
+                    </button>
+                </div>
+            </div>
+            
+            <div class="ai-chat" id="ai-chat">
+                <div class="ai-message" id="welcome-message">
+                    👋 Hi there! I'm Ela, your professional maintenance assistant. I'm here to help you with quotes, categories, and business insights. How can I assist you today?
+                </div>
+            </div>
+            
+            <div class="ai-suggestions">
+                <button class="ai-suggestion" onclick="aiSuggestion('help')">
+                    🤝 Show me around the app
+                </button>
+                <button class="ai-suggestion" onclick="aiSuggestion('quote')">
+                    💰 Help me create a quote
+                </button>
+                <button class="ai-suggestion" onclick="aiSuggestion('tips')">
+                    💡 Give me business tips
+                </button>
+                <button class="ai-suggestion" onclick="aiSuggestion('analysis')">
+                    📊 Analyze my data
                 </button>
             </div>
         </div>
@@ -1214,7 +1419,7 @@
 
                 <!-- Quick Actions -->
                 <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🍑 Enhanced Quote Builder</h3>
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🍑 AI Enhanced Quote Builder</h3>
                     <div class="actions-grid">
                         <button class="action-btn primary" onclick="showView('categories')">
                             <span class="icon">🏗️</span>
@@ -1224,14 +1429,22 @@
                             <span class="icon">💰</span>
                             <span style="font-weight: 700;">Saved Quotes</span>
                         </button>
-                        <button class="action-btn warm" onclick="openQuoteCart()">
-                            <span class="icon">🛒</span>
-                            <span style="font-weight: 700;">Quote Cart</span>
+                        <button class="action-btn ai" onclick="toggleAIAssistant()">
+                            <span class="icon">💎</span>
+                            <span style="font-weight: 700;">AI Assistant</span>
                         </button>
                         <button class="action-btn info" onclick="exportData()">
                             <span class="icon">📤</span>
                             <span style="font-weight: 700;">Export Data</span>
                         </button>
+                    </div>
+                </div>
+
+                <!-- AI Insights Card -->
+                <div class="card" style="border: 2px solid var(--ai-primary);">
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--ai-primary);">💎 AI Insights</h3>
+                    <div id="ai-insights">
+                        <!-- AI insights will be populated here -->
                     </div>
                 </div>
 
@@ -1299,12 +1512,116 @@
                     <span class="icon">💰</span>
                     <span>Quotes</span>
                 </div>
-                <div class="nav-item" onclick="openQuoteCart()">
-                    <span class="icon">🛒</span>
-                    <span>Cart</span>
+                <div class="nav-item" onclick="toggleAIAssistant()">
+                    <span class="icon">💎</span>
+                    <span>AI</span>
                 </div>
             </div>
             <div class="home-indicator"></div>
+        </div>
+    </div>
+
+    <!-- AI Settings Modal -->
+    <div id="ai-settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>💎 AI Assistant Settings</h3>
+                <button class="close-btn" onclick="closeAISettings()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="card" style="margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">🤖 Choose Your Assistant</h4>
+                    
+                    <div style="display: grid; gap: 12px;">
+                        <div class="ai-option" onclick="selectAI('ela')" data-ai="ela">
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; border: 2px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;">
+                                <div style="font-size: 24px;">💎</div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary);">Ela</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Sweet & Professional • Age 24 • Intelligent & Caring</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-option" onclick="selectAI('isla')" data-ai="isla">
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; border: 2px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;">
+                                <div style="font-size: 24px;">🌺</div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary);">Isla</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Soft & Lovely • Age 23 • Creative & Thoughtful</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-option" onclick="selectAI('maiya')" data-ai="maiya">
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; border: 2px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;">
+                                <div style="font-size: 24px;">🌸</div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary);">Maiya</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Clever & Pretty • Age 25 • Analytical & Supportive</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-option" onclick="selectAI('violet')" data-ai="violet">
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; border: 2px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;">
+                                <div style="font-size: 24px;">💜</div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary);">Violet</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Concerned & Wise • Age 26 • Strategic & Empathetic</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-option" onclick="selectAI('luna')" data-ai="luna">
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; border: 2px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;">
+                                <div style="font-size: 24px;">🌙</div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary);">Luna</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Gentle & Intuitive • Age 22 • Understanding & Calm</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-option" onclick="selectAI('aria')" data-ai="aria">
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; border: 2px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;">
+                                <div style="font-size: 24px;">✨</div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary);">Aria</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Bright & Cheerful • Age 21 • Energetic & Helpful</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">🔊 Voice Settings</h4>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span style="font-weight: 600;">Voice Assistant</span>
+                        <button class="btn" style="padding: 8px 16px; font-size: 14px;" onclick="toggleVoice()" id="voice-toggle-btn">
+                            🔊 Enable Voice
+                        </button>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 600;">Smart Suggestions</span>
+                        <button class="btn" style="padding: 8px 16px; font-size: 14px;" onclick="toggleSmartSuggestions()" id="suggestions-toggle-btn">
+                            💡 Enable
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="form-btn btn-primary" onclick="closeAISettings()">
+                        ✅ Save Settings
+                    </button>
+                    <button type="button" class="form-btn btn-secondary" onclick="resetAISettings()">
+                        🔄 Reset
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1440,9 +1757,9 @@
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - ENHANCED QUOTE BUILDER
+        // REFIT MAINTENANCE SERVICES - AI ENHANCED QUOTE BUILDER
         // Registration No: 201803348973 (002894203-V)
-        // Complete Category & Item Management System
+        // Complete AI Assistant Integration
         // ========================================
         
         // App State Variables
@@ -1453,6 +1770,70 @@
         var editingCategory = null;
         var editingItem = null;
         var currentTheme = 'light';
+        
+        // AI Assistant State
+        var aiAssistants = {
+            ela: {
+                name: 'Ela',
+                avatar: '💎',
+                age: 24,
+                personality: 'Sweet & Professional',
+                traits: ['Intelligent', 'Caring', 'Helpful'],
+                greeting: 'Hi! I\'m Ela, your sweet and professional maintenance assistant. I love helping with quotes and making your work easier! 💎',
+                voice: 'female'
+            },
+            isla: {
+                name: 'Isla',
+                avatar: '🌺',
+                age: 23,
+                personality: 'Soft & Lovely',
+                traits: ['Creative', 'Thoughtful', 'Gentle'],
+                greeting: 'Hello there! I\'m Isla, and I\'m here to support your business with creativity and care. Let\'s build something beautiful together! 🌺',
+                voice: 'female'
+            },
+            maiya: {
+                name: 'Maiya',
+                avatar: '🌸',
+                age: 25,
+                personality: 'Clever & Pretty',
+                traits: ['Analytical', 'Supportive', 'Smart'],
+                greeting: 'Welcome! I\'m Maiya, your clever assistant ready to analyze data and provide smart insights for your maintenance business! 🌸',
+                voice: 'female'
+            },
+            violet: {
+                name: 'Violet',
+                avatar: '💜',
+                age: 26,
+                personality: 'Concerned & Wise',
+                traits: ['Strategic', 'Empathetic', 'Experienced'],
+                greeting: 'Greetings! I\'m Violet, here to provide wise guidance and strategic support for your business growth. 💜',
+                voice: 'female'
+            },
+            luna: {
+                name: 'Luna',
+                avatar: '🌙',
+                age: 22,
+                personality: 'Gentle & Intuitive',
+                traits: ['Understanding', 'Calm', 'Peaceful'],
+                greeting: 'Hello! I\'m Luna, your gentle guide through the world of maintenance services. I\'m here to bring calm to your busy day! 🌙',
+                voice: 'female'
+            },
+            aria: {
+                name: 'Aria',
+                avatar: '✨',
+                age: 21,
+                personality: 'Bright & Cheerful',
+                traits: ['Energetic', 'Helpful', 'Optimistic'],
+                greeting: 'Hey! I\'m Aria, your bright and cheerful assistant! Ready to make your maintenance work sparkle with efficiency! ✨',
+                voice: 'female'
+            }
+        };
+        
+        var currentAI = 'ela';
+        var voiceEnabled = false;
+        var smartSuggestions = true;
+        var aiPanelOpen = false;
+        var speechSynthesis = window.speechSynthesis;
 
         // Default Categories with Enhanced Structure
         var defaultCategories = [
@@ -1480,32 +1861,6 @@
                     { id: 'w2', name: 'Partition Wall Construction', description: 'Metal stud partition wall with drywall', price: 65.00, unit: 'sqm' },
                     { id: 'w3', name: 'Wall Patching & Repair', description: 'Minor wall damage repair and patching', price: 25.00, unit: 'sqm' },
                     { id: 'w4', name: 'Wall Texture Finishing', description: 'Decorative wall texture application', price: 18.00, unit: 'sqm' }
-                ]
-            },
-            {
-                id: 'floor',
-                name: 'Floor Work',
-                description: 'Flooring installation and finishing',
-                icon: '🏢',
-                color: '#FFC299',
-                items: [
-                    { id: 'f1', name: 'Vinyl Flooring Installation', description: 'Commercial grade vinyl flooring', price: 45.00, unit: 'sqm' },
-                    { id: 'f2', name: 'Carpet Installation', description: 'Commercial carpet with padding', price: 55.00, unit: 'sqm' },
-                    { id: 'f3', name: 'Ceramic Tile Installation', description: 'Floor tile installation with grouting', price: 68.00, unit: 'sqm' },
-                    { id: 'f4', name: 'Hardwood Flooring', description: 'Engineered hardwood flooring installation', price: 95.00, unit: 'sqm' }
-                ]
-            },
-            {
-                id: 'ceiling',
-                name: 'Ceiling Work',
-                description: 'Ceiling installation and finishing',
-                icon: '🏠',
-                color: '#FFD1B3',
-                items: [
-                    { id: 'c1', name: 'Suspended Ceiling Installation', description: 'Mineral fiber suspended ceiling system', price: 42.00, unit: 'sqm' },
-                    { id: 'c2', name: 'Drywall Ceiling', description: 'Drywall ceiling installation and finishing', price: 38.00, unit: 'sqm' },
-                    { id: 'c3', name: 'Ceiling Repair', description: 'Water damage and crack repair', price: 35.00, unit: 'sqm' },
-                    { id: 'c4', name: 'Ceiling Insulation', description: 'Thermal insulation installation', price: 22.00, unit: 'sqm' }
                 ]
             },
             {
@@ -1541,7 +1896,8 @@
             CATEGORIES: 'refit_enhanced_categories',
             SAVED_QUOTES: 'refit_enhanced_saved_quotes',
             SELECTED_ITEMS: 'refit_enhanced_selected_items',
-            THEME_PREFERENCE: 'refit_theme_preference'
+            THEME_PREFERENCE: 'refit_theme_preference',
+            AI_SETTINGS: 'refit_ai_settings'
         };
 
         // Initialize App
@@ -1552,6 +1908,7 @@
         function initializeApp() {
             loadThemePreference();
             loadDataFromStorage();
+            loadAISettings();
             setupEventListeners();
             setupMobileOptimizations();
             updateStatusBar();
@@ -1559,13 +1916,372 @@
             updateStats();
             renderViews();
             updateCartBadge();
+            updateAIDisplay();
+            generateAIInsights();
             
-            showSuccessMessage('🍑 REFIT Enhanced Quote Builder Ready!');
-            console.log('🏗️ REFIT MAINTENANCE SERVICES - Enhanced Quote Builder');
+            showSuccessMessage('💎 REFIT AI Enhanced Quote Builder Ready!');
+            console.log('🏗️ REFIT MAINTENANCE SERVICES - AI Enhanced Quote Builder');
+            console.log('💎 Professional AI Assistant Integration');
             console.log('🍑 Beautiful Pastel Orange Theme');
             console.log('📋 Complete Category & Item Management');
             console.log('🛒 Advanced Quote Cart System');
             console.log('📄 PDF Generation & Sharing');
+        }
+
+        // AI Assistant Functions
+        function toggleAIAssistant() {
+            aiPanelOpen = !aiPanelOpen;
+            var panel = document.getElementById('ai-panel');
+            var floatBtn = document.getElementById('ai-float');
+            
+            if (aiPanelOpen) {
+                panel.classList.add('show');
+                floatBtn.style.display = 'none';
+                addAIMessage(aiAssistants[currentAI].greeting);
+                if (voiceEnabled) {
+                    speakText(aiAssistants[currentAI].greeting);
+                }
+            } else {
+                panel.classList.remove('show');
+                floatBtn.style.display = 'flex';
+            }
+        }
+
+        function selectAI(aiKey) {
+            currentAI = aiKey;
+            updateAIDisplay();
+            saveAISettings();
+            
+            // Update all AI options
+            var options = document.querySelectorAll('.ai-option div');
+            options.forEach(option => {
+                option.style.borderColor = 'var(--border-color)';
+            });
+            
+            // Highlight selected option
+            var selectedOption = document.querySelector(`.ai-option[data-ai="${aiKey}"] div`);
+            if (selectedOption) {
+                selectedOption.style.borderColor = 'var(--ai-primary)';
+            }
+            
+            // Clear chat and show new greeting
+            clearAIChat();
+            addAIMessage(aiAssistants[currentAI].greeting);
+            
+            if (voiceEnabled) {
+                speakText(`Hi! I'm ${aiAssistants[currentAI].name}, your new assistant!`);
+            }
+            
+            showSuccessMessage(`💎 ${aiAssistants[currentAI].name} is now your assistant!`);
+        }
+
+        function updateAIDisplay() {
+            var ai = aiAssistants[currentAI];
+            document.getElementById('ai-name').textContent = ai.name;
+            document.getElementById('ai-avatar').textContent = ai.avatar;
+            document.getElementById('ai-status').textContent = `${ai.personality} • Age ${ai.age} • Ready to help`;
+            document.getElementById('ai-float').textContent = ai.avatar;
+        }
+
+        function toggleVoice() {
+            voiceEnabled = !voiceEnabled;
+            updateVoiceButton();
+            saveAISettings();
+            
+            var message = voiceEnabled ? 'Voice assistant enabled! I can now speak to you!' : 'Voice assistant disabled.';
+            addAIMessage(message);
+            
+            if (voiceEnabled) {
+                speakText(message);
+            }
+            
+            showSuccessMessage(voiceEnabled ? '🔊 Voice enabled' : '🔇 Voice disabled');
+        }
+
+        function updateVoiceButton() {
+            var btn = document.getElementById('voice-btn');
+            var toggleBtn = document.getElementById('voice-toggle-btn');
+            
+            if (btn) {
+                btn.innerHTML = voiceEnabled ? '🔊' : '🔇';
+                btn.classList.toggle('active', voiceEnabled);
+            }
+            
+            if (toggleBtn) {
+                toggleBtn.innerHTML = voiceEnabled ? '🔇 Disable Voice' : '🔊 Enable Voice';
+            }
+        }
+
+        function toggleSmartSuggestions() {
+            smartSuggestions = !smartSuggestions;
+            updateSuggestionsButton();
+            saveAISettings();
+            
+            var message = smartSuggestions ? 'Smart suggestions enabled! I\'ll provide helpful tips.' : 'Smart suggestions disabled.';
+            addAIMessage(message);
+            
+            showSuccessMessage(smartSuggestions ? '💡 Smart suggestions enabled' : '💡 Smart suggestions disabled');
+        }
+
+        function updateSuggestionsButton() {
+            var btn = document.getElementById('suggestions-toggle-btn');
+            if (btn) {
+                btn.innerHTML = smartSuggestions ? '💡 Disable' : '💡 Enable';
+            }
+        }
+
+        function speakText(text) {
+            if (!voiceEnabled || !speechSynthesis) return;
+            
+            speechSynthesis.cancel(); // Stop any current speech
+            
+            var utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9;
+            utterance.pitch = 1.1;
+            utterance.volume = 0.8;
+            
+            // Try to use a female voice
+            var voices = speechSynthesis.getVoices();
+            var femaleVoice = voices.find(voice => 
+                voice.name.toLowerCase().includes('female') ||
+                voice.name.toLowerCase().includes('woman') ||
+                voice.name.toLowerCase().includes('zira') ||
+                voice.name.toLowerCase().includes('susan') ||
+                voice.name.toLowerCase().includes('samantha')
+            );
+            
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            }
+            
+            // Add visual feedback
+            var floatBtn = document.getElementById('ai-float');
+            floatBtn.classList.add('speaking');
+            
+            utterance.onend = function() {
+                floatBtn.classList.remove('speaking');
+            };
+            
+            speechSynthesis.speak(utterance);
+        }
+
+        function addAIMessage(message) {
+            var chat = document.getElementById('ai-chat');
+            var messageDiv = document.createElement('div');
+            messageDiv.className = 'ai-message';
+            messageDiv.textContent = message;
+            chat.appendChild(messageDiv);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function clearAIChat() {
+            var chat = document.getElementById('ai-chat');
+            chat.innerHTML = '';
+        }
+
+        function aiSuggestion(type) {
+            var ai = aiAssistants[currentAI];
+            var response = '';
+            
+            switch(type) {
+                case 'help':
+                    response = `Welcome to REFIT! 🏗️ I'm ${ai.name}, and I'm excited to show you around! 
+
+You can:
+• Build quotes in the "Builder" tab by selecting categories and items
+• View your saved quotes in the "Quotes" tab  
+• Use the cart (🛒) to manage selected items
+• Generate professional PDFs and share quotes
+
+I'm here whenever you need assistance! Just tap my button anytime! 💎`;
+                    break;
+                    
+                case 'quote':
+                    response = `Let me help you create a professional quote! 💰
+
+Here's the smart way to do it:
+1. Go to "Builder" tab
+2. Browse categories like Electrical ⚡, Plumbing 🔧, etc.
+3. Select items by tapping the checkboxes ✓
+4. Review in your cart 🛒
+5. Add project details and generate PDF 📄
+
+Pro tip: Select multiple categories for comprehensive quotes! I'll guide you through each step! 🌟`;
+                    break;
+                    
+                case 'tips':
+                    response = `Here are some business tips from my experience! 💡
+
+💰 Pricing Strategy:
+• Bundle related services for better margins
+• Offer package deals for repeat customers
+• Review prices quarterly based on costs
+
+📊 Efficiency Tips:
+• Use templates for common jobs
+• Keep detailed records for future quotes
+• Follow up on quotes within 48 hours
+
+🤝 Customer Relations:
+• Always provide detailed breakdowns
+• Be transparent about timelines
+• Maintain professional communication
+
+Want specific advice for your situation? Just ask! 😊`;
+                    break;
+                    
+                case 'analysis':
+                    var totalQuotes = savedQuotes.length;
+                    var totalRevenue = savedQuotes.reduce((sum, quote) => sum + quote.total, 0);
+                    var avgQuote = totalQuotes > 0 ? totalRevenue / totalQuotes : 0;
+                    
+                    response = `📊 Here's your business analysis:
+
+📈 Performance Metrics:
+• Total Quotes: ${totalQuotes}
+• Total Revenue: RM ${totalRevenue.toFixed(2)}
+• Average Quote: RM ${avgQuote.toFixed(2)}
+• Categories Used: ${categories.length}
+
+💡 Smart Insights:
+${totalQuotes < 5 ? '• Focus on creating more quotes to build momentum' : '• Great quote activity! Keep it up!'}
+${avgQuote < 500 ? '• Consider bundling services to increase quote values' : '• Excellent average quote value!'}
+${selectedItems.length > 0 ? '• You have items in cart - don\'t forget to complete that quote!' : '• Ready to build your next quote!'}
+
+Want deeper insights? I can analyze specific trends! 📊`;
+                    break;
+            }
+            
+            addAIMessage(response);
+            
+            if (voiceEnabled) {
+                // Speak a shorter version for voice
+                var shortResponse = response.split('\n')[0] + ' Check the chat for full details!';
+                speakText(shortResponse);
+            }
+        }
+
+        function generateAIInsights() {
+            var insights = document.getElementById('ai-insights');
+            if (!insights) return;
+            
+            var ai = aiAssistants[currentAI];
+            var totalQuotes = savedQuotes.length;
+            var totalRevenue = savedQuotes.reduce((sum, quote) => sum + quote.total, 0);
+            
+            var insightHTML = '';
+            
+            if (totalQuotes === 0) {
+                insightHTML = `
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <div style="font-size: 24px;">${ai.avatar}</div>
+                        <div>
+                            <div style="font-weight: 700; color: var(--ai-primary);">Getting Started</div>
+                            <div style="font-size: 14px; color: var(--text-secondary);">Create your first quote to unlock AI insights!</div>
+                        </div>
+                    </div>
+                    <div style="background: var(--ai-secondary); color: white; padding: 12px; border-radius: 12px; font-size: 14px;">
+                        💡 <strong>Pro Tip:</strong> Start with the Category Builder to create professional quotes quickly!
+                    </div>
+                `;
+            } else {
+                var avgQuote = totalRevenue / totalQuotes;
+                var insights = [];
+                
+                if (totalQuotes >= 5) {
+                    insights.push('🎯 You\'re building great momentum with your quotes!');
+                }
+                
+                if (avgQuote > 500) {
+                    insights.push('💰 Excellent average quote value!');
+                } else {
+                    insights.push('📈 Consider bundling services to increase quote values');
+                }
+                
+                if (selectedItems.length > 0) {
+                    insights.push('🛒 Don\'t forget to complete your current cart!');
+                }
+                
+                insightHTML = `
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <div style="font-size: 24px;">${ai.avatar}</div>
+                        <div>
+                            <div style="font-weight: 700; color: var(--ai-primary);">${ai.name}'s Analysis</div>
+                            <div style="font-size: 14px; color: var(--text-secondary);">Based on your ${totalQuotes} quotes</div>
+                        </div>
+                    </div>
+                    <div style="background: var(--ai-secondary); color: white; padding: 12px; border-radius: 12px; font-size: 14px;">
+                        ${insights.join('<br>')}
+                    </div>
+                `;
+            }
+            
+            insights.innerHTML = insightHTML;
+        }
+
+        function openAISettings() {
+            // Update current selections
+            var currentOption = document.querySelector(`.ai-option[data-ai="${currentAI}"] div`);
+            if (currentOption) {
+                // Reset all
+                var options = document.querySelectorAll('.ai-option div');
+                options.forEach(option => {
+                    option.style.borderColor = 'var(--border-color)';
+                });
+                
+                // Highlight current
+                currentOption.style.borderColor = 'var(--ai-primary)';
+            }
+            
+            updateVoiceButton();
+            updateSuggestionsButton();
+            document.getElementById('ai-settings-modal').classList.add('show');
+        }
+
+        function closeAISettings() {
+            document.getElementById('ai-settings-modal').classList.remove('show');
+        }
+
+        function resetAISettings() {
+            if (confirm('Reset AI settings to default?\nThis will change back to Ela with voice disabled.')) {
+                currentAI = 'ela';
+                voiceEnabled = false;
+                smartSuggestions = true;
+                
+                updateAIDisplay();
+                updateVoiceButton();
+                updateSuggestionsButton();
+                saveAISettings();
+                
+                clearAIChat();
+                addAIMessage(aiAssistants[currentAI].greeting);
+                
+                showSuccessMessage('🔄 AI settings reset to default');
+            }
+        }
+
+        function saveAISettings() {
+            var settings = {
+                currentAI: currentAI,
+                voiceEnabled: voiceEnabled,
+                smartSuggestions: smartSuggestions
+            };
+            
+            localStorage.setItem(STORAGE_KEYS.AI_SETTINGS, JSON.stringify(settings));
+        }
+
+        function loadAISettings() {
+            try {
+                var saved = localStorage.getItem(STORAGE_KEYS.AI_SETTINGS);
+                if (saved) {
+                    var settings = JSON.parse(saved);
+                    currentAI = settings.currentAI || 'ela';
+                    voiceEnabled = settings.voiceEnabled || false;
+                    smartSuggestions = settings.smartSuggestions !== false; // Default to true
+                }
+            } catch (e) {
+                console.warn('AI settings load error:', e);
+            }
         }
 
         // Theme Management
@@ -1584,6 +2300,16 @@
             }
             
             saveDataToStorage();
+            
+            // AI feedback for theme change
+            if (aiPanelOpen) {
+                var ai = aiAssistants[currentAI];
+                var message = currentTheme === 'light' ? 
+                    `☀️ Light mode looks fresh and bright! Perfect for daytime work!` :
+                    `🌙 Dark mode is easier on the eyes! Great for evening work sessions!`;
+                addAIMessage(message);
+            }
+            
             showSuccessMessage(currentTheme === 'light' ? '☀️ Light mode activated' : '🌙 Dark mode activated');
         }
 
@@ -1610,6 +2336,7 @@
                 localStorage.setItem(STORAGE_KEYS.SAVED_QUOTES, JSON.stringify(savedQuotes));
                 localStorage.setItem(STORAGE_KEYS.SELECTED_ITEMS, JSON.stringify(selectedItems));
                 localStorage.setItem(STORAGE_KEYS.THEME_PREFERENCE, currentTheme);
+                saveAISettings();
             } catch (e) {
                 console.warn('Storage error:', e);
                 showSuccessMessage('⚠️ Storage full! Please export data.');
@@ -1663,6 +2390,15 @@
             }
             
             document.getElementById('category-modal').classList.add('show');
+            
+            // AI suggestion
+            if (smartSuggestions && aiPanelOpen) {
+                var ai = aiAssistants[currentAI];
+                var message = categoryId ? 
+                    'Great! Editing categories helps keep your quotes organized! 📝' :
+                    'Excellent! Adding new categories will expand your service offerings! 🚀';
+                addAIMessage(message);
+            }
         }
 
         function closeCategoryForm() {
@@ -1698,14 +2434,25 @@
                     categories[index] = categoryData;
                 }
                 showSuccessMessage('🍑 Category updated successfully!');
+                
+                // AI feedback
+                if (aiPanelOpen && smartSuggestions) {
+                    addAIMessage(`Perfect! ${name} category has been updated! Your quotes will look even more professional! ✨`);
+                }
             } else {
                 categories.push(categoryData);
                 showSuccessMessage('🍑 Category added successfully!');
+                
+                // AI feedback
+                if (aiPanelOpen && smartSuggestions) {
+                    addAIMessage(`Wonderful! ${name} category added! Don't forget to add some items to it for complete quotes! 🎯`);
+                }
             }
             
             closeCategoryForm();
             saveDataToStorage();
             renderViews();
+            generateAIInsights();
         }
 
         function deleteCategory(categoryId) {
@@ -1722,7 +2469,14 @@
                 saveDataToStorage();
                 renderViews();
                 updateCartBadge();
+                generateAIInsights();
+                
                 showSuccessMessage('🗑️ Category deleted successfully');
+                
+                // AI feedback
+                if (aiPanelOpen && smartSuggestions) {
+                    addAIMessage(`Category removed! Don't worry, you can always create new categories as your business grows! 🌱`);
+                }
             }
         }
 
@@ -1749,6 +2503,15 @@
             }
             
             document.getElementById('item-modal').classList.add('show');
+            
+            // AI suggestion
+            if (smartSuggestions && aiPanelOpen) {
+                var categoryName = categories.find(c => c.id === categoryId)?.name || 'this category';
+                var message = itemId ? 
+                    'Smart move! Keeping item details accurate ensures professional quotes! 💼' :
+                    `Great choice! Adding items to ${categoryName} will give you more quoting options! 🛠️`;
+                addAIMessage(message);
+            }
         }
 
         function closeItemForm() {
@@ -1787,14 +2550,25 @@
                     category.items[index] = itemData;
                 }
                 showSuccessMessage('🍑 Item updated successfully!');
+                
+                // AI feedback
+                if (aiPanelOpen && smartSuggestions) {
+                    addAIMessage(`Excellent! ${name} has been updated in ${category.name}! Your pricing is always up-to-date! 💯`);
+                }
             } else {
                 category.items.push(itemData);
                 showSuccessMessage('🍑 Item added successfully!');
+                
+                // AI feedback
+                if (aiPanelOpen && smartSuggestions) {
+                    addAIMessage(`Perfect! ${name} added to ${category.name}! RM ${price.toFixed(2)} per ${unit} looks competitive! 💰`);
+                }
             }
             
             closeItemForm();
             saveDataToStorage();
             renderViews();
+            generateAIInsights();
         }
 
         function deleteItem(categoryId, itemId) {
@@ -1814,7 +2588,14 @@
                 saveDataToStorage();
                 renderViews();
                 updateCartBadge();
+                generateAIInsights();
+                
                 showSuccessMessage('🗑️ Item deleted successfully');
+                
+                // AI feedback
+                if (aiPanelOpen && smartSuggestions) {
+                    addAIMessage(`Item removed! Keep your catalog fresh by removing outdated services! 🔄`);
+                }
             }
         }
 
@@ -1825,6 +2606,11 @@
             if (existingIndex !== -1) {
                 selectedItems.splice(existingIndex, 1);
                 showSuccessMessage('🍑 Item removed from cart');
+                
+                // AI feedback
+                if (aiPanelOpen && smartSuggestions) {
+                    addAIMessage('Item removed from cart! Take your time to build the perfect quote! 🎯');
+                }
             } else {
                 var category = categories.find(c => c.id === categoryId);
                 var item = category ? category.items.find(i => i.id === itemId) : null;
@@ -1842,12 +2628,19 @@
                         itemUnit: item.unit
                     });
                     showSuccessMessage('🍑 Item added to cart');
+                    
+                    // AI feedback
+                    if (aiPanelOpen && smartSuggestions) {
+                        var ai = aiAssistants[currentAI];
+                        addAIMessage(`Great choice! ${item.name} added to your cart! Building a comprehensive quote! 🌟`);
+                    }
                 }
             }
             
             saveDataToStorage();
             renderViews();
             updateCartBadge();
+            generateAIInsights();
         }
 
         function selectAllCategories() {
@@ -1873,7 +2666,14 @@
             saveDataToStorage();
             renderViews();
             updateCartBadge();
+            generateAIInsights();
+            
             showSuccessMessage('🍑 All items selected!');
+            
+            // AI feedback
+            if (aiPanelOpen && smartSuggestions) {
+                addAIMessage('Wow! All items selected! This will be a comprehensive quote covering all your services! 🚀');
+            }
         }
 
         function clearAllSelections() {
@@ -1881,13 +2681,26 @@
             saveDataToStorage();
             renderViews();
             updateCartBadge();
+            generateAIInsights();
+            
             showSuccessMessage('🗑️ All selections cleared');
+            
+            // AI feedback
+            if (aiPanelOpen && smartSuggestions) {
+                addAIMessage('Cart cleared! Ready to start fresh with your next quote! 🌟');
+            }
         }
 
         // Quote Cart Management
         function openQuoteCart() {
             renderCartItems();
             document.getElementById('cart-modal').classList.add('show');
+            
+            // AI feedback
+            if (aiPanelOpen && smartSuggestions && selectedItems.length > 0) {
+                var total = selectedItems.reduce((sum, item) => sum + (item.quantity * item.itemPrice), 0);
+                addAIMessage(`Your cart looks great! RM ${total.toFixed(2)} total. Ready to create a professional quote? 💼`);
+            }
         }
 
         function closeQuoteCart() {
@@ -1943,6 +2756,7 @@
                 saveDataToStorage();
                 renderCartItems();
                 updateCartBadge();
+                generateAIInsights();
             }
         }
 
@@ -1953,7 +2767,14 @@
                 renderCartItems();
                 renderViews();
                 updateCartBadge();
+                generateAIInsights();
+                
                 showSuccessMessage('🗑️ Item removed from cart');
+                
+                // AI feedback
+                if (aiPanelOpen && smartSuggestions) {
+                    addAIMessage('Item removed! Keep refining your quote until it\'s perfect! 🎯');
+                }
             }
         }
 
@@ -1966,7 +2787,14 @@
                 renderCartItems();
                 renderViews();
                 updateCartBadge();
+                generateAIInsights();
+                
                 showSuccessMessage('🗑️ Cart cleared');
+                
+                // AI feedback
+                if (aiPanelOpen && smartSuggestions) {
+                    addAIMessage('Cart cleared! Ready for a fresh start on your next quote! 🌟');
+                }
             }
         }
 
@@ -1988,12 +2816,23 @@
         function reviewQuote() {
             if (selectedItems.length === 0) {
                 showSuccessMessage('⚠️ Please add items to cart first!');
+                
+                // AI feedback
+                if (aiPanelOpen && smartSuggestions) {
+                    addAIMessage('Your cart is empty! Head to the Builder tab to select items for your quote! 🏗️');
+                }
                 return;
             }
             
             closeQuoteCart();
             renderQuoteReview();
             document.getElementById('review-modal').classList.add('show');
+            
+            // AI feedback
+            if (aiPanelOpen && smartSuggestions) {
+                var total = selectedItems.reduce((sum, item) => sum + (item.quantity * item.itemPrice), 0);
+                addAIMessage(`Excellent! Your quote review shows RM ${total.toFixed(2)} total. Everything looks professional! 📋✨`);
+            }
         }
 
         function closeQuoteReview() {
@@ -2070,6 +2909,11 @@
         function generatePDF() {
             showSuccessMessage('🍑 Generating professional PDF quote...');
             
+            // AI feedback
+            if (aiPanelOpen && smartSuggestions) {
+                addAIMessage('Creating your professional PDF! This will look amazing for your clients! 📄✨');
+            }
+            
             // Create PDF content
             var { jsPDF } = window.jspdf;
             var doc = new jsPDF();
@@ -2083,24 +2927,25 @@
             doc.setFont(undefined, 'normal');
             doc.text('Registration No: 201803348973 (002894203-V)', 20, 35);
             doc.text('Professional Maintenance Solutions', 20, 42);
+            doc.text('AI Enhanced Quote Builder', 20, 49);
             
             // Quote Details
             doc.setFontSize(16);
             doc.setFont(undefined, 'bold');
-            doc.text('QUOTATION', 20, 60);
+            doc.text('QUOTATION', 20, 67);
             
             doc.setFontSize(10);
             doc.setFont(undefined, 'normal');
-            doc.text('Date: ' + new Date().toLocaleDateString(), 20, 70);
-            doc.text('Quote #: QT-' + Date.now(), 20, 78);
+            doc.text('Date: ' + new Date().toLocaleDateString(), 20, 77);
+            doc.text('Quote #: QT-' + Date.now(), 20, 85);
             
             var title = document.getElementById('quote-title').value.trim();
             if (title) {
-                doc.text('Project: ' + title, 20, 86);
+                doc.text('Project: ' + title, 20, 93);
             }
             
             // Items
-            var yPos = 100;
+            var yPos = 107;
             var total = 0;
             
             doc.setFont(undefined, 'bold');
@@ -2153,12 +2998,18 @@
             doc.text('1. Prices are valid for 30 days from quote date', 20, yPos + 6);
             doc.text('2. Payment terms: 50% deposit, balance upon completion', 20, yPos + 12);
             doc.text('3. All work comes with 12 months warranty', 20, yPos + 18);
+            doc.text('Generated by AI Enhanced Quote Builder', 20, yPos + 24);
             
             // Save PDF
             var filename = 'REFIT_Quote_' + new Date().toISOString().split('T')[0] + '.pdf';
             doc.save(filename);
             
             showSuccessMessage('🍑 PDF generated successfully!');
+            
+            // AI feedback
+            if (aiPanelOpen && smartSuggestions) {
+                addAIMessage('PDF generated successfully! Your professional quote is ready to impress clients! 🎯💼');
+            }
         }
 
         function saveQuote() {
@@ -2189,8 +3040,15 @@
             
             closeQuoteReview();
             renderViews();
+            generateAIInsights();
             
             showSuccessMessage('💾 Quote saved successfully!');
+            
+            // AI feedback
+            if (aiPanelOpen && smartSuggestions) {
+                var ai = aiAssistants[currentAI];
+                addAIMessage(`Fantastic! "${title}" has been saved! You're building a great collection of professional quotes! 📚✨`);
+            }
         }
 
         // Share Functions
@@ -2198,19 +3056,34 @@
             var quoteText = generateQuoteText();
             var url = 'https://wa.me/?text=' + encodeURIComponent(quoteText);
             window.open(url, '_blank');
+            
+            // AI feedback
+            if (aiPanelOpen && smartSuggestions) {
+                addAIMessage('Great choice! WhatsApp sharing makes it easy for clients to receive and respond to quotes! 📱');
+            }
         }
 
         function shareEmail() {
             var quoteText = generateQuoteText();
-            var subject = 'Quotation from REFIT MAINTENANCE SERVICES';
+            var subject = 'Professional Quotation from REFIT MAINTENANCE SERVICES';
             var url = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(quoteText);
             window.open(url);
+            
+            // AI feedback
+            if (aiPanelOpen && smartSuggestions) {
+                addAIMessage('Perfect! Email sharing provides a professional touch for formal business communications! 📧');
+            }
         }
 
         function shareTelegram() {
             var quoteText = generateQuoteText();
             var url = 'https://t.me/share/url?text=' + encodeURIComponent(quoteText);
             window.open(url, '_blank');
+            
+            // AI feedback
+            if (aiPanelOpen && smartSuggestions) {
+                addAIMessage('Smart! Telegram is great for quick business communications with international clients! ✈️');
+            }
         }
 
         function copyQuote() {
@@ -2219,441 +3092,11 @@
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(quoteText).then(function() {
                     showSuccessMessage('📋 Quote copied to clipboard!');
+                    
+                    // AI feedback
+                    if (aiPanelOpen && smartSuggestions) {
+                        addAIMessage('Quote copied! Now you can paste it anywhere you need - social media, documents, or any platform! 📋✨');
+                    }
                 });
             } else {
                 // Fallback for older browsers
-                var textArea = document.createElement('textarea');
-                textArea.value = quoteText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showSuccessMessage('📋 Quote copied to clipboard!');
-            }
-        }
-
-        function generateQuoteText() {
-            var title = document.getElementById('quote-title').value.trim() || 'Quotation';
-            var notes = document.getElementById('quote-notes').value.trim();
-            
-            var text = '🍑 REFIT MAINTENANCE SERVICES\n';
-            text += 'Registration No: 201803348973 (002894203-V)\n';
-            text += 'Professional Maintenance Solutions\n\n';
-            text += '📋 ' + title.toUpperCase() + '\n';
-            text += 'Date: ' + new Date().toLocaleDateString() + '\n';
-            text += 'Quote #: QT-' + Date.now() + '\n\n';
-            
-            if (notes) {
-                text += 'Notes: ' + notes + '\n\n';
-            }
-            
-            text += '--- QUOTE DETAILS ---\n\n';
-            
-            var total = 0;
-            for (var i = 0; i < selectedItems.length; i++) {
-                var item = selectedItems[i];
-                var itemTotal = item.quantity * item.itemPrice;
-                total += itemTotal;
-                
-                text += (i + 1) + '. ' + item.itemName + '\n';
-                text += '   Category: ' + item.categoryName + '\n';
-                text += '   Quantity: ' + item.quantity + ' ' + item.itemUnit + '\n';
-                text += '   Price: RM ' + item.itemPrice.toFixed(2) + '\n';
-                text += '   Total: RM ' + itemTotal.toFixed(2) + '\n\n';
-            }
-            
-            text += '--- SUMMARY ---\n';
-            text += 'Total Items: ' + selectedItems.length + '\n';
-            text += 'TOTAL AMOUNT: RM ' + total.toFixed(2) + '\n\n';
-            
-            text += '--- TERMS & CONDITIONS ---\n';
-            text += '• Prices valid for 30 days\n';
-            text += '• Payment: 50% deposit, balance on completion\n';
-            text += '• 12 months warranty included\n\n';
-            
-            text += 'Thank you for choosing REFIT MAINTENANCE SERVICES! 🍑';
-            
-            return text;
-        }
-
-        // View Management
-        function showView(viewName) {
-            currentView = viewName;
-            
-            // Hide all views
-            var views = document.querySelectorAll('.view');
-            for (var i = 0; i < views.length; i++) {
-                views[i].classList.add('hidden');
-            }
-            
-            // Show selected view
-            var targetView = document.getElementById(viewName + '-view');
-            if (targetView) {
-                targetView.classList.remove('hidden');
-            }
-            
-            // Update navigation
-            var navItems = document.querySelectorAll('.nav-item');
-            for (var i = 0; i < navItems.length; i++) {
-                navItems[i].classList.remove('active');
-            }
-            
-            var activeNav = document.querySelector('.nav-item[onclick*="' + viewName + '"]');
-            if (activeNav) {
-                activeNav.classList.add('active');
-            }
-            
-            renderViews();
-        }
-
-        function renderViews() {
-            switch(currentView) {
-                case 'dashboard':
-                    renderDashboard();
-                    break;
-                case 'categories':
-                    renderCategories();
-                    break;
-                case 'quotes':
-                    renderSavedQuotes();
-                    break;
-            }
-        }
-
-        function renderDashboard() {
-            updateStats();
-            renderRecentActivity();
-        }
-
-        function renderCategories() {
-            var container = document.getElementById('categories-grid');
-            if (!container) return;
-            
-            if (categories.length === 0) {
-                container.innerHTML = '<div class="empty-state">' +
-                    '<div class="empty-icon">🏗️</div>' +
-                    '<p style="font-weight: 600;">No categories found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first category to get started</p>' +
-                    '</div>';
-                return;
-            }
-            
-            var html = '';
-            
-            for (var category of categories) {
-                var selectedCount = selectedItems.filter(si => si.categoryId === category.id).length;
-                var isSelected = selectedCount > 0;
-                
-                html += '<div class="category-card' + (isSelected ? ' selected' : '') + '">' +
-                    '<div class="category-header">' +
-                    '<div class="category-info">' +
-                    '<div class="category-title">' +
-                    '<div class="category-icon" style="background: ' + category.color + ';">' + category.icon + '</div>' +
-                    '<span>' + category.name + '</span>' +
-                    '</div>' +
-                    '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">' + category.description + '</div>' +
-                    '<div style="font-size: 12px; color: var(--text-muted);">' + category.items.length + ' items • ' + selectedCount + ' selected</div>' +
-                    '</div>' +
-                    '<div class="category-actions">' +
-                    '<button class="mini-btn edit" onclick="openCategoryForm(\'' + category.id + '\')" title="Edit Category">✏️</button>' +
-                    '<button class="mini-btn add" onclick="openItemForm(\'' + category.id + '\')" title="Add Item">➕</button>' +
-                    '<button class="mini-btn" style="background: var(--accent-warm);" onclick="deleteCategory(\'' + category.id + '\')" title="Delete Category">🗑️</button>' +
-                    '</div>' +
-                    '</div>';
-                
-                if (category.items.length > 0) {
-                    html += '<div class="items-list">';
-                    
-                    for (var item of category.items) {
-                        var isItemSelected = selectedItems.some(si => si.categoryId === category.id && si.itemId === item.id);
-                        
-                        html += '<div class="item-row' + (isItemSelected ? ' selected' : '') + '">' +
-                            '<div class="select-checkbox' + (isItemSelected ? ' checked' : '') + '" onclick="toggleItemSelection(\'' + category.id + '\', \'' + item.id + '\')">' +
-                            (isItemSelected ? '✓' : '') +
-                            '</div>' +
-                            '<div class="item-info">' +
-                            '<div class="item-name">' + item.name + '</div>' +
-                            '<div class="item-details">' + item.description + ' • ' + item.unit + '</div>' +
-                            '</div>' +
-                            '<div class="item-price">RM ' + item.price.toFixed(2) + '</div>' +
-                            '<div class="item-actions">' +
-                            '<button class="mini-btn edit" onclick="openItemForm(\'' + category.id + '\', \'' + item.id + '\')" title="Edit Item">✏️</button>' +
-                            '<button class="mini-btn" style="background: var(--accent-warm);" onclick="deleteItem(\'' + category.id + '\', \'' + item.id + '\')" title="Delete Item">🗑️</button>' +
-                            '</div>' +
-                            '</div>';
-                    }
-                    
-                    html += '</div>';
-                } else {
-                    html += '<div style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 12px;">' +
-                        'No items yet. Click ➕ to add items.' +
-                        '</div>';
-                }
-                
-                html += '</div>';
-            }
-            
-            container.innerHTML = html;
-        }
-
-        function renderSavedQuotes() {
-            var container = document.getElementById('quotes-list');
-            if (!container) return;
-            
-            if (savedQuotes.length === 0) {
-                container.innerHTML = '<div class="empty-state">' +
-                    '<div class="empty-icon">💰</div>' +
-                    '<p style="font-weight: 600;">No saved quotes</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create quotes from the category builder</p>' +
-                    '</div>';
-                return;
-            }
-            
-            var html = '';
-            var sortedQuotes = [...savedQuotes].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            
-            for (var quote of sortedQuotes) {
-                html += '<div class="card">' +
-                    '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">' +
-                    '<div>' +
-                    '<h3 style="font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">' + quote.title + '</h3>' +
-                    '<div style="font-size: 12px; color: var(--text-muted);">' + quote.items.length + ' items • Created: ' + new Date(quote.createdAt).toLocaleDateString() + '</div>' +
-                    '</div>' +
-                    '<div style="text-align: right;">' +
-                    '<div style="font-size: 20px; font-weight: 700; color: var(--accent-primary);">RM ' + quote.total.toFixed(2) + '</div>' +
-                    '<button class="btn btn-primary" style="padding: 8px 16px; font-size: 12px; margin-top: 8px;" onclick="viewSavedQuote(' + quote.id + ')">View Quote</button>' +
-                    '</div>' +
-                    '</div>';
-                
-                if (quote.notes) {
-                    html += '<div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; margin-bottom: 12px;">' +
-                        '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">Notes:</div>' +
-                        '<div style="font-size: 14px; color: var(--text-primary);">' + quote.notes + '</div>' +
-                        '</div>';
-                }
-                
-                html += '</div>';
-            }
-            
-            container.innerHTML = html;
-        }
-
-        function renderRecentActivity() {
-            var container = document.getElementById('recent-activity');
-            if (!container) return;
-            
-            var activities = [];
-            
-            // Add recent quotes
-            for (var quote of savedQuotes.slice(-5)) {
-                activities.push({
-                    type: 'quote',
-                    title: 'Quote Created',
-                    description: quote.title + ' - RM ' + quote.total.toFixed(2),
-                    time: new Date(quote.createdAt),
-                    icon: '💰'
-                });
-            }
-            
-            // Sort by time
-            activities.sort((a, b) => b.time - a.time);
-            
-            if (activities.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-muted);">' +
-                    '<div style="font-size: 24px; margin-bottom: 8px;">📋</div>' +
-                    '<p>No recent activity</p>' +
-                    '</div>';
-                return;
-            }
-            
-            var html = '';
-            for (var activity of activities.slice(0, 5)) {
-                html += '<div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-color);">' +
-                    '<div style="font-size: 20px;">' + activity.icon + '</div>' +
-                    '<div>' +
-                    '<div style="font-weight: 700; color: var(--text-primary); font-size: 14px;">' + activity.title + '</div>' +
-                    '<div style="font-size: 12px; color: var(--text-muted);">' + activity.description + '</div>' +
-                    '<div style="font-size: 10px; color: var(--text-muted);">' + activity.time.toLocaleDateString() + '</div>' +
-                    '</div>' +
-                    '</div>';
-            }
-            
-            container.innerHTML = html;
-        }
-
-        function viewSavedQuote(quoteId) {
-            var quote = savedQuotes.find(q => q.id === quoteId);
-            if (!quote) return;
-            
-            // Load quote into cart for viewing
-            selectedItems = [...quote.items];
-            document.getElementById('quote-title').value = quote.title;
-            document.getElementById('quote-notes').value = quote.notes || '';
-            
-            updateCartBadge();
-            reviewQuote();
-        }
-
-        // Utility Functions
-        function generateId() {
-            return Date.now().toString(36) + Math.random().toString(36).substr(2);
-        }
-
-        function updateStats() {
-            var totalQuotes = savedQuotes.length;
-            var totalItems = categories.reduce((sum, cat) => sum + cat.items.length, 0);
-            var totalRevenue = savedQuotes.reduce((sum, quote) => sum + quote.total, 0);
-            
-            var today = new Date().toISOString().split('T')[0];
-            var todayRevenue = savedQuotes
-                .filter(quote => quote.createdAt.split('T')[0] === today)
-                .reduce((sum, quote) => sum + quote.total, 0);
-            
-            updateElementText('total-quotes-count', totalQuotes);
-            updateElementText('total-items-count', totalItems);
-            updateElementText('today-revenue', 'RM ' + Math.round(todayRevenue));
-            updateElementText('total-revenue', 'RM ' + Math.round(totalRevenue));
-            updateElementText('daily-revenue', 'RM ' + todayRevenue.toFixed(2));
-        }
-
-        function updateElementText(elementId, text) {
-            var element = document.getElementById(elementId);
-            if (element) {
-                element.textContent = text;
-            }
-        }
-
-        function updateStatusBar() {
-            var now = new Date();
-            var timeString = now.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                hour12: false 
-            });
-            
-            var timeElement = document.getElementById('status-time');
-            if (timeElement) {
-                timeElement.textContent = timeString;
-            }
-        }
-
-        function updateCurrentDate() {
-            var today = new Date();
-            var dateString = today.toLocaleDateString('en-MY', { 
-                weekday: 'long',
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            var dateElement = document.getElementById('current-date');
-            if (dateElement) {
-                dateElement.textContent = dateString;
-            }
-        }
-
-        function setupMobileOptimizations() {
-            // Update status bar every minute
-            setInterval(updateStatusBar, 60000);
-            
-            // Prevent zoom on double tap
-            var lastTouchEnd = 0;
-            document.addEventListener('touchend', function (event) {
-                var now = (new Date()).getTime();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, false);
-        }
-
-        function showSuccessMessage(message) {
-            var messageElement = document.getElementById('success-message');
-            if (!messageElement) return;
-            
-            messageElement.textContent = message;
-            messageElement.classList.add('show');
-            
-            setTimeout(function() {
-                messageElement.classList.remove('show');
-            }, 3000);
-        }
-
-        function exportData() {
-            var allData = {
-                categories: categories,
-                savedQuotes: savedQuotes,
-                selectedItems: selectedItems,
-                themePreference: currentTheme,
-                exportDate: new Date().toISOString(),
-                version: '6.0-enhanced-builder'
-            };
-            
-            var dataStr = JSON.stringify(allData, null, 2);
-            var dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Enhanced_' + new Date().toISOString().split('T')[0] + '.json';
-            link.click();
-            
-            showSuccessMessage('🍑 Enhanced data exported successfully!');
-        }
-
-        // Event Listeners
-        function setupEventListeners() {
-            // Forms
-            var categoryForm = document.getElementById('category-form');
-            if (categoryForm) {
-                categoryForm.addEventListener('submit', handleCategorySubmit);
-            }
-            
-            var itemForm = document.getElementById('item-form');
-            if (itemForm) {
-                itemForm.addEventListener('submit', handleItemSubmit);
-            }
-
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey || e.metaKey) {
-                    switch(e.key.toLowerCase()) {
-                        case 'n':
-                            e.preventDefault();
-                            openCategoryForm();
-                            break;
-                        case 'e':
-                            e.preventDefault();
-                            exportData();
-                            break;
-                        case 'c':
-                            e.preventDefault();
-                            openQuoteCart();
-                            break;
-                        case 'd':
-                            e.preventDefault();
-                            toggleTheme();
-                            break;
-                    }
-                }
-                
-                if (e.key === 'Escape') {
-                    var modals = document.querySelectorAll('.modal.show');
-                    for (var i = 0; i < modals.length; i++) {
-                        modals[i].classList.remove('show');
-                    }
-                }
-            });
-        }
-
-        // Legacy functions for compatibility
-        function openLogoSelector() {
-            showSuccessMessage('🍑 Enhanced Quote Builder - Logo customization available in settings!');
-        }
-
-        console.log('🍑 REFIT ENHANCED QUOTE BUILDER - Complete System Ready!');
-        console.log('🏗️ Category & Item Management');
-        console.log('🛒 Advanced Quote Cart');
-        console.log('📄 PDF Generation & Sharing');
-        console.log('💾 Data Persistence & Export');
-    </script>
-</body>
-</html>
