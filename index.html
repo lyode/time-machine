@@ -1440,30 +1440,6 @@
                     </div>
                 </div>
 
-                <!-- Performance Card -->
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">📊 Category Overview</h3>
-                        <span style="font-size: 24px;">📈</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; font-size: 14px;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 28px; font-weight: 800; color: var(--accent-primary);" id="average-quote">RM 0</div>
-                            <div style="color: var(--text-muted); font-weight: 600;">Average Quote</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 28px; font-weight: 800; color: var(--accent-warm);" id="total-categories">0</div>
-                            <div style="color: var(--text-muted); font-weight: 600;">Active Categories</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Category Statistics -->
-                <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">📊 Category Breakdown</h3>
-                    <div id="category-stats-grid"></div>
-                </div>
-
                 <!-- Quick Actions -->
                 <div class="card">
                     <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">Quick Actions</h3>
@@ -3253,20 +3229,10 @@
                 }
             }
             
-            var averageQuote = totalQuotes > 0 ? totalRevenue / totalQuotes : 0;
-            var activeCategories = {};
-            for (var i = 0; i < jobQuotes.length; i++) {
-                for (var j = 0; j < jobQuotes[i].items.length; j++) {
-                    activeCategories[jobQuotes[i].items[j].category || 'common'] = true;
-                }
-            }
-            
             updateElementText('total-quotes-count', totalQuotes);
             updateElementText('total-items-count', totalItems);
             updateElementText('today-revenue', 'RM ' + Math.round(todayRevenue));
             updateElementText('total-revenue', 'RM ' + Math.round(totalRevenue));
-            updateElementText('average-quote', 'RM ' + Math.round(averageQuote));
-            updateElementText('total-categories', Object.keys(activeCategories).length);
             updateElementText('daily-revenue', 'RM ' + todayRevenue.toFixed(2));
         }
 
