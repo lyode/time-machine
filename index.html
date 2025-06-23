@@ -2,981 +2,1839 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-AI Assistant System - Enhanced</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="REFIT Business Tools">
+    <meta name="theme-color" content="#2d3748">
+    
+    <title>REFIT Business Tools Hub - Complete Integration</title>
+    
     <style>
-        /* Add these styles to your existing CSS */
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
         
-        /* Enhanced AI Assistant Styles */
-        .ai-assistant-panel {
-            position: fixed;
-            bottom: 140px;
-            right: 20px;
-            z-index: 250;
+        :root {
+            /* Light Theme */
+            --bg-primary: #f7f5f3;
+            --bg-secondary: #edeae6;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f9f7f5;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --accent-primary: #38a169;
+            --accent-secondary: #68d391;
+            --accent-warm: #d69e2e;
+            --accent-soft: #9f7aea;
+            --border-color: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+            --shadow-strong: rgba(0, 0, 0, 0.15);
+            --success: #38a169;
+            --warning: #d69e2e;
+            --error: #e53e3e;
+            --info: #3182ce;
+        }
+        
+        [data-theme="dark"] {
+            /* Dark Theme */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-card: #3a3a3a;
+            --bg-card-hover: #454545;
+            --text-primary: #e8e8e8;
+            --text-secondary: #c7c7c7;
+            --text-muted: #9a9a9a;
+            --accent-primary: #4fd69c;
+            --accent-secondary: #68d391;
+            --accent-warm: #f6d55c;
+            --accent-soft: #b794f6;
+            --border-color: #4a4a4a;
+            --shadow-light: rgba(255, 255, 255, 0.05);
+            --shadow-medium: rgba(255, 255, 255, 0.1);
+            --shadow-strong: rgba(255, 255, 255, 0.15);
+            --success: #4fd69c;
+            --warning: #f6d55c;
+            --error: #fc8181;
+            --info: #63b3ed;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
             transition: all 0.3s ease;
         }
-
-        .ai-selector-panel {
-            position: absolute;
-            bottom: 100px;
-            right: 0;
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 12px 40px var(--shadow-strong);
-            border: 1px solid var(--border-color);
-            min-width: 300px;
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-
-        .ai-selector-panel.show {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        .ai-assistant-card {
+        
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px var(--shadow-medium);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             border-radius: 12px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-        }
-
-        .ai-assistant-card:hover {
-            background: var(--bg-card-hover);
-            transform: translateY(-2px);
-        }
-
-        .ai-assistant-card.active {
-            border-color: var(--accent-primary);
-            background: rgba(56, 161, 105, 0.1);
-        }
-
-        .ai-avatar-mini {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 24px;
             color: white;
             font-weight: 700;
+            box-shadow: 0 4px 16px var(--shadow-medium);
         }
-
-        .ai-info {
-            flex: 1;
-        }
-
-        .ai-name {
+        
+        .header-title h1 {
+            font-size: 20px;
             font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        
+        .header-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .theme-toggle {
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 12px;
+            padding: 8px 16px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--accent-secondary);
+            transform: scale(1.05);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Tool Tabs */
+        .tool-tabs {
+            display: flex;
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 16px var(--shadow-light);
+            overflow-x: auto;
+            gap: 4px;
+        }
+        
+        .tool-tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .tool-tab.active {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 2px 8px var(--shadow-medium);
+        }
+        
+        .tool-tab:hover:not(.active) {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+        
+        /* Tool Panels */
+        .tool-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tool-panel.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Card Styles */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px var(--shadow-light);
+            transition: all 0.2s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 12px 40px var(--shadow-medium);
+            transform: translateY(-2px);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
             color: var(--text-primary);
             font-size: 14px;
         }
-
-        .ai-specialty {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .ai-status {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-        }
-
-        /* Different avatar styles for each AI */
-        .maya-avatar { background: linear-gradient(135deg, var(--accent-soft), #b794f6); }
-        .luna-avatar { background: linear-gradient(135deg, #4c51bf, #667eea); }
-        .aria-avatar { background: linear-gradient(135deg, #ed8936, #f6ad55); }
-        .sage-avatar { background: linear-gradient(135deg, #38b2ac, #4fd1c7); }
-        .nova-avatar { background: linear-gradient(135deg, #e53e3e, #fc8181); }
-
-        /* Voice control indicators */
-        .voice-control-panel {
-            background: var(--bg-card);
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
             border-radius: 12px;
-            padding: 12px;
-            margin-top: 12px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.1);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 12px var(--shadow-light);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-primary { background: var(--accent-primary); }
+        .btn-success { background: var(--success); }
+        .btn-warning { background: var(--warning); }
+        .btn-info { background: var(--info); }
+        .btn-danger { background: var(--error); }
+        
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             border: 1px solid var(--border-color);
         }
-
-        .voice-settings {
+        
+        /* Grid Layouts */
+        .grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 8px;
+            gap: 16px;
         }
-
-        .voice-control {
+        
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        
+        /* WhatsApp Styles */
+        .whatsapp-contact {
             background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .whatsapp-contact:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-1px);
+        }
+        
+        .contact-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .contact-info h4 {
+            margin: 0 0 4px 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .contact-info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+        
+        .template-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            width: 100%;
+        }
+        
+        .template-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent-primary);
+        }
+        
+        .template-btn h5 {
+            margin: 0 0 4px 0;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .template-btn p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        /* Calendar Styles */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-nav {
+            background: var(--accent-primary);
+            color: white;
             border: none;
             border-radius: 8px;
-            padding: 8px 4px;
-            font-size: 10px;
+            padding: 8px 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+        
+        .calendar-nav:hover {
+            background: var(--accent-secondary);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            padding: 8px;
+            font-weight: 700;
             color: var(--text-primary);
+            font-size: 12px;
         }
-
-        .voice-control:hover {
-            background: var(--accent-primary);
-            color: white;
-        }
-
-        .voice-control.active {
-            background: var(--accent-primary);
-            color: white;
-        }
-
-        /* Personality indicator */
-        .personality-indicator {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid white;
+        
+        .calendar-day {
+            aspect-ratio: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
-            animation: personalityPulse 2s infinite;
-        }
-
-        @keyframes personalityPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* AI Mood Indicator */
-        .ai-mood {
-            position: absolute;
-            bottom: -2px;
-            left: -2px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            border: 2px solid white;
-            font-size: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Speech bubble variations */
-        .maya-bubble { border-color: var(--accent-soft); }
-        .luna-bubble { border-color: #4c51bf; }
-        .aria-bubble { border-color: #ed8936; }
-        .sage-bubble { border-color: #38b2ac; }
-        .nova-bubble { border-color: #e53e3e; }
-
-        /* Quick action buttons */
-        .ai-quick-actions {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .quick-action-btn {
-            background: var(--accent-primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 4px 8px;
-            font-size: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 600;
         }
-
-        .quick-action-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px var(--shadow-medium);
+        
+        .calendar-day:hover {
+            background: var(--bg-card-hover);
+        }
+        
+        .calendar-day.today {
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .calendar-day.selected {
+            background: var(--accent-secondary);
+            color: white;
+        }
+        
+        .calendar-day.has-event {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .calendar-day.other-month {
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+        
+        .event-item {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-left: 4px solid var(--accent-primary);
+        }
+        
+        .event-item h5 {
+            margin: 0 0 4px 0;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .event-item p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+        
+        /* Calculator Styles */
+        .calculator {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .calculator-display {
+            background: #000;
+            color: #00ff00;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            font-family: 'Courier New', monospace;
+            text-align: right;
+        }
+        
+        .calc-main {
+            font-size: 28px;
+            font-weight: bold;
+            min-height: 40px;
+            word-break: break-all;
+        }
+        
+        .calc-operation {
+            font-size: 16px;
+            opacity: 0.7;
+            min-height: 24px;
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        
+        .calc-btn {
+            aspect-ratio: 1;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-medium);
+        }
+        
+        .calc-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .calc-btn.number {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .calc-btn.operator {
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .calc-btn.special {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .calc-btn.danger {
+            background: var(--error);
+            color: white;
+        }
+        
+        .calc-btn.zero {
+            grid-column: span 2;
+        }
+        
+        /* Banking Styles */
+        .bank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        
+        .bank-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .bank-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px var(--shadow-medium);
+        }
+        
+        .bank-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        
+        .bank-maybank { background: #FFD700; color: #000; }
+        .bank-cimb { background: #D32F2F; }
+        .bank-pbbank { background: #1976D2; }
+        .bank-rhb { background: #1565C0; }
+        .bank-hlbank { background: #C62828; }
+        .bank-ambank { background: #FF9800; }
+        
+        .bank-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .bank-features {
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .payment-gateway {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .payment-gateway:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+        
+        .gateway-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .gateway-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .tool-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tool-tab {
+                min-width: calc(50% - 4px);
+                margin-bottom: 8px;
+            }
+            
+            .card {
+                padding: 16px;
+            }
+            
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            
+            .calculator {
+                max-width: 100%;
+            }
+            
+            .bank-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 8px 32px var(--shadow-medium);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px);
+            transition: all 0.3s ease;
+            max-width: 90%;
+            text-align: center;
+        }
+        
+        .success-message.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
-<body>
 
-<!-- Replace the existing Maya AI Assistant section with this enhanced version -->
-<div id="ai-assistant-panel" class="ai-assistant-panel">
-    <!-- Main AI Avatar -->
-    <div id="ai-avatar" class="maya-avatar" style="width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 24px var(--shadow-medium); border: 3px solid white; position: relative;" onclick="toggleAI()">
-        <span id="ai-avatar-icon" style="font-size: 32px;">🤖</span>
-        
-        <!-- Personality Indicator -->
-        <div id="personality-indicator" class="personality-indicator maya-avatar">
-            <span>💖</span>
-        </div>
-        
-        <!-- AI Mood Indicator -->
-        <div id="ai-mood" class="ai-mood" style="background: var(--success);">
-            <span>😊</span>
-        </div>
-    </div>
-    
-    <!-- AI Selector Panel -->
-    <div id="ai-selector-panel" class="ai-selector-panel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h4 style="margin: 0; color: var(--text-primary); font-weight: 700;">🤖 Choose Your AI Assistant</h4>
-            <button onclick="closeAISelector()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px;">✕</button>
-        </div>
-        
-        <!-- AI Assistant Options -->
-        <div id="ai-assistants-list">
-            <!-- Maya - Caring & Supportive -->
-            <div class="ai-assistant-card active" onclick="selectAI('maya')" data-ai="maya">
-                <div class="ai-avatar-mini maya-avatar">
-                    <span>💖</span>
-                </div>
-                <div class="ai-info">
-                    <div class="ai-name">Maya</div>
-                    <div class="ai-specialty">Caring & Supportive • Business Coach</div>
-                </div>
-                <div class="ai-status"></div>
-            </div>
-            
-            <!-- Luna - Professional & Efficient -->
-            <div class="ai-assistant-card" onclick="selectAI('luna')" data-ai="luna">
-                <div class="ai-avatar-mini luna-avatar">
-                    <span>🌙</span>
-                </div>
-                <div class="ai-info">
-                    <div class="ai-name">Luna</div>
-                    <div class="ai-specialty">Professional & Efficient • Executive Assistant</div>
-                </div>
-                <div class="ai-status"></div>
-            </div>
-            
-            <!-- Aria - Friendly & Energetic -->
-            <div class="ai-assistant-card" onclick="selectAI('aria')" data-ai="aria">
-                <div class="ai-avatar-mini aria-avatar">
-                    <span>🎵</span>
-                </div>
-                <div class="ai-info">
-                    <div class="ai-name">Aria</div>
-                    <div class="ai-specialty">Friendly & Energetic • Creative Partner</div>
-                </div>
-                <div class="ai-status"></div>
-            </div>
-            
-            <!-- Sage - Wise & Analytical -->
-            <div class="ai-assistant-card" onclick="selectAI('sage')" data-ai="sage">
-                <div class="ai-avatar-mini sage-avatar">
-                    <span>🧠</span>
-                </div>
-                <div class="ai-info">
-                    <div class="ai-name">Sage</div>
-                    <div class="ai-specialty">Wise & Analytical • Strategy Advisor</div>
-                </div>
-                <div class="ai-status"></div>
-            </div>
-            
-            <!-- Nova - Innovative & Tech-Savvy -->
-            <div class="ai-assistant-card" onclick="selectAI('nova')" data-ai="nova">
-                <div class="ai-avatar-mini nova-avatar">
-                    <span>⭐</span>
-                </div>
-                <div class="ai-info">
-                    <div class="ai-name">Nova</div>
-                    <div class="ai-specialty">Innovative & Tech-Savvy • Digital Expert</div>
-                </div>
-                <div class="ai-status"></div>
+<body data-theme="light">
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">🛠️</div>
+            <div class="header-title">
+                <h1>REFIT Business Tools Hub</h1>
+                <p>Complete Business Integration Platform</p>
             </div>
         </div>
-        
-        <!-- Voice Controls -->
-        <div class="voice-control-panel">
-            <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">🎵 Voice Settings</div>
-            <div class="voice-settings">
-                <button class="voice-control" onclick="setVoiceSpeed('slow')">Slow</button>
-                <button class="voice-control active" onclick="setVoiceSpeed('normal')">Normal</button>
-                <button class="voice-control" onclick="setVoiceSpeed('fast')">Fast</button>
-                <button class="voice-control" onclick="setVoicePitch('low')">Low</button>
-                <button class="voice-control active" onclick="setVoicePitch('normal')">Medium</button>
-                <button class="voice-control" onclick="setVoicePitch('high')">High</button>
-                <button class="voice-control" onclick="setVoiceVolume('quiet')">Quiet</button>
-                <button class="voice-control active" onclick="setVoiceVolume('normal')">Normal</button>
-                <button class="voice-control" onclick="setVoiceVolume('loud')">Loud</button>
-            </div>
-        </div>
-        
-        <!-- Quick Actions -->
-        <div class="ai-quick-actions">
-            <button class="quick-action-btn" onclick="testCurrentAI()">Test Voice</button>
-            <button class="quick-action-btn" onclick="aiIntroduction()">Introduction</button>
-            <button class="quick-action-btn" onclick="resetAISettings()">Reset</button>
-        </div>
-    </div>
-    
-    <!-- Speech Bubble -->
-    <div id="ai-speech-bubble" class="maya-speech-bubble" style="position: absolute; bottom: 90px; right: 0; background: var(--bg-card); border-radius: 20px 20px 4px 20px; padding: 16px 20px; max-width: 280px; box-shadow: 0 8px 24px var(--shadow-medium); border: 2px solid var(--accent-soft); display: none; animation: slideInRight 0.3s ease;">
-        <div id="ai-message" style="color: var(--text-primary); font-size: 14px; line-height: 1.4;">
-            Hi! I'm Maya, your caring AI assistant. How can I help you today?
-        </div>
-        <div style="position: absolute; bottom: -8px; right: 20px; width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid var(--accent-soft);"></div>
-    </div>
-    
-    <!-- AI Controls -->
-    <div style="position: absolute; bottom: -40px; right: 0; display: flex; gap: 8px;">
-        <button id="ai-voice-btn" class="maya-btn" onclick="toggleVoiceCommand()" title="Voice Command" style="width: 36px; height: 36px; border-radius: 18px; border: none; background: var(--accent-primary); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; font-size: 14px;">
-            🎤
-        </button>
-        <button class="maya-btn" onclick="showAISelector()" title="Switch AI" style="width: 36px; height: 36px; border-radius: 18px; border: none; background: var(--accent-warm); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; font-size: 14px;">
-            🔄
-        </button>
-        <button class="maya-btn" onclick="showAISettings()" title="Settings" style="width: 36px; height: 36px; border-radius: 18px; border: none; background: var(--accent-soft); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; font-size: 14px;">
-            ⚙️
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-toggle">
+            🌙 Dark Mode
         </button>
     </div>
-</div>
 
-<script>
-// Enhanced Multi-AI Assistant System
-var currentAI = 'maya';
-var aiActive = false;
-var voiceSettings = {
-    speed: 'normal',
-    pitch: 'normal',
-    volume: 'normal'
-};
+    <!-- Container -->
+    <div class="container">
+        <!-- Tool Tabs -->
+        <div class="tool-tabs">
+            <button class="tool-tab active" onclick="showTool('whatsapp')">
+                <span>💬</span>
+                <span>WhatsApp</span>
+            </button>
+            <button class="tool-tab" onclick="showTool('calendar')">
+                <span>📅</span>
+                <span>Calendar</span>
+            </button>
+            <button class="tool-tab" onclick="showTool('calculator')">
+                <span>🔢</span>
+                <span>Calculator</span>
+            </button>
+            <button class="tool-tab" onclick="showTool('banking')">
+                <span>🏦</span>
+                <span>Banking</span>
+            </button>
+        </div>
 
-// AI Assistant Personalities
-var aiAssistants = {
-    maya: {
-        name: 'Maya',
-        icon: '💖',
-        emoji: '🤖',
-        mood: '😊',
-        personality: 'caring',
-        avatar: 'maya-avatar',
-        bubble: 'maya-bubble',
-        specialty: 'Caring & Supportive Business Coach',
-        description: 'Maya is your warm, caring business companion who provides emotional support and encouragement.',
-        voiceProfile: {
-            rate: 0.9,
-            pitch: 1.1,
-            volume: 0.8,
-            preferredVoice: 'female'
-        },
-        greetings: [
-            "Hello there! I'm Maya, your caring AI assistant. I'm here to support you and help your business thrive!",
-            "Hi! Maya here, ready to help you with love and care. What can I do for you today?",
-            "Welcome back! I've missed you. How can I support your business journey today?",
-            "Hello! I'm Maya, and I genuinely care about your success. Let's work together!"
-        ],
-        responseStyle: {
-            supportive: "I believe in you! ",
-            encouraging: "You're doing amazing! ",
-            caring: "I'm here for you. ",
-            warm: "Let me help you with that. "
-        }
-    },
-    
-    luna: {
-        name: 'Luna',
-        icon: '🌙',
-        emoji: '👩‍💼',
-        mood: '😎',
-        personality: 'professional',
-        avatar: 'luna-avatar',
-        bubble: 'luna-bubble',
-        specialty: 'Professional & Efficient Executive Assistant',
-        description: 'Luna is your polished, efficient executive assistant focused on productivity and results.',
-        voiceProfile: {
-            rate: 1.1,
-            pitch: 0.9,
-            volume: 0.9,
-            preferredVoice: 'female'
-        },
-        greetings: [
-            "Good day. I'm Luna, your executive AI assistant. Let's optimize your business operations.",
-            "Hello. Luna here, ready to streamline your workflow and boost productivity.",
-            "Greetings. I'm Luna, your professional assistant. How can I enhance your efficiency today?",
-            "Good morning. Luna at your service. Let's make today highly productive."
-        ],
-        responseStyle: {
-            professional: "Certainly. ",
-            efficient: "I'll handle that immediately. ",
-            direct: "Here's what we need to do: ",
-            organized: "Let me organize this for you. "
-        }
-    },
-    
-    aria: {
-        name: 'Aria',
-        icon: '🎵',
-        emoji: '🎨',
-        mood: '😄',
-        personality: 'energetic',
-        avatar: 'aria-avatar',
-        bubble: 'aria-bubble',
-        specialty: 'Friendly & Energetic Creative Partner',
-        description: 'Aria is your enthusiastic, creative partner who brings energy and innovation to everything.',
-        voiceProfile: {
-            rate: 1.2,
-            pitch: 1.3,
-            volume: 0.9,
-            preferredVoice: 'female'
-        },
-        greetings: [
-            "Hey there! I'm Aria, your energetic AI buddy! Ready to create something awesome together?",
-            "Hi! Aria here, bursting with energy and ideas! What exciting project can we tackle today?",
-            "Hello! I'm Aria, and I'm SO excited to help you! Let's make magic happen!",
-            "Hey! Aria at your service! Let's turn your business dreams into reality with style!"
-        ],
-        responseStyle: {
-            energetic: "This is so exciting! ",
-            creative: "Oh, I have a brilliant idea! ",
-            enthusiastic: "Yes! Let's do this! ",
-            innovative: "Here's a fresh approach: "
-        }
-    },
-    
-    sage: {
-        name: 'Sage',
-        icon: '🧠',
-        emoji: '🦉',
-        mood: '🤔',
-        personality: 'analytical',
-        avatar: 'sage-avatar',
-        bubble: 'sage-bubble',
-        specialty: 'Wise & Analytical Strategy Advisor',
-        description: 'Sage is your wise, analytical advisor who provides deep insights and strategic guidance.',
-        voiceProfile: {
-            rate: 0.8,
-            pitch: 0.8,
-            volume: 0.8,
-            preferredVoice: 'female'
-        },
-        greetings: [
-            "Greetings. I am Sage, your analytical advisor. Let us examine your business challenges with wisdom.",
-            "Hello. Sage here, ready to provide strategic insights and analytical guidance.",
-            "Welcome. I'm Sage, your wise counsel. How may I assist in your strategic planning today?",
-            "Good day. Sage at your service. Let's analyze your situation and develop optimal solutions."
-        ],
-        responseStyle: {
-            analytical: "Let me analyze this thoroughly. ",
-            wise: "In my experience, ",
-            strategic: "From a strategic perspective, ",
-            thoughtful: "After careful consideration, "
-        }
-    },
-    
-    nova: {
-        name: 'Nova',
-        icon: '⭐',
-        emoji: '🚀',
-        mood: '🤖',
-        personality: 'innovative',
-        avatar: 'nova-avatar',
-        bubble: 'nova-bubble',
-        specialty: 'Innovative & Tech-Savvy Digital Expert',
-        description: 'Nova is your cutting-edge digital expert focused on innovation and technological advancement.',
-        voiceProfile: {
-            rate: 1.0,
-            pitch: 1.0,
-            volume: 0.9,
-            preferredVoice: 'female'
-        },
-        greetings: [
-            "Hello! I'm Nova, your tech-savvy AI. Ready to innovate and revolutionize your business?",
-            "Hi there! Nova here, bringing cutting-edge solutions to your fingertips!",
-            "Greetings! I'm Nova, your digital transformation specialist. Let's push boundaries!",
-            "Hey! Nova reporting for duty. Time to supercharge your business with next-gen solutions!"
-        ],
-        responseStyle: {
-            innovative: "Here's a cutting-edge approach: ",
-            technical: "From a technical standpoint, ",
-            futuristic: "Let's leverage the latest technology: ",
-            digital: "The digital solution is: "
-        }
-    }
-};
+        <!-- WhatsApp Panel -->
+        <div id="whatsapp-panel" class="tool-panel active">
+            <div class="grid grid-2">
+                <!-- Quick Message -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>💬</span>
+                            <span>Quick Message</span>
+                        </div>
+                        <span class="btn btn-success" style="padding: 4px 8px; font-size: 12px;">ACTIVE</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">📱 Customer Phone Number</label>
+                        <input type="tel" id="wa-phone" class="form-input" placeholder="60123456789" pattern="[0-9]*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">💬 Message</label>
+                        <textarea id="wa-message" class="form-input form-textarea" placeholder="Type your message here..."></textarea>
+                    </div>
+                    
+                    <button onclick="sendWhatsAppMessage()" class="btn btn-success" style="width: 100%;">
+                        <span>📱</span>
+                        <span>Send WhatsApp Message</span>
+                    </button>
+                </div>
 
-// Initialize AI System
-function initializeAISystem() {
-    currentAI = localStorage.getItem('selectedAI') || 'maya';
-    aiActive = false;
-    
-    // Load voice settings
-    var savedVoiceSettings = localStorage.getItem('voiceSettings');
-    if (savedVoiceSettings) {
-        voiceSettings = JSON.parse(savedVoiceSettings);
-        applyVoiceSettings();
-    }
-    
-    // Initialize speech synthesis
-    initializeSpeechSynthesis();
-    
-    // Set initial AI
-    updateAIDisplay();
-    
-    // Welcome message
-    setTimeout(function() {
-        aiSpeak(getRandomGreeting(currentAI));
-    }, 2000);
-    
-    console.log('🤖 Multi-AI Assistant System Initialized');
-    console.log('Available AIs: Maya, Luna, Aria, Sage, Nova');
-}
+                <!-- Quick Contacts -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>👥</span>
+                            <span>Quick Contacts</span>
+                        </div>
+                        <button onclick="addContact()" class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;">
+                            ➕ Add
+                        </button>
+                    </div>
+                    
+                    <div id="contacts-list">
+                        <!-- Contacts will be populated here -->
+                    </div>
+                </div>
+            </div>
 
-// Speech Synthesis Initialization
-function initializeSpeechSynthesis() {
-    if ('speechSynthesis' in window) {
-        speechSynthesis.onvoiceschanged = function() {
-            updateAvailableVoices();
+            <!-- Message Templates -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📝</span>
+                        <span>Message Templates</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-2">
+                    <button class="template-btn" onclick="useTemplate('quote')">
+                        <h5>💰 Quote Follow-up</h5>
+                        <p>Hello! Here's your maintenance service quote. Please review and let us know if you have any questions.</p>
+                    </button>
+                    
+                    <button class="template-btn" onclick="useTemplate('appointment')">
+                        <h5>📅 Appointment Reminder</h5>
+                        <p>Hi! This is a reminder for your scheduled maintenance service tomorrow. Our team will arrive between [TIME].</p>
+                    </button>
+                    
+                    <button class="template-btn" onclick="useTemplate('completed')">
+                        <h5>✅ Job Completed</h5>
+                        <p>Thank you for choosing REFIT! Your maintenance service is completed. Please rate our service and contact us for future needs.</p>
+                    </button>
+                    
+                    <button class="template-btn" onclick="useTemplate('emergency')">
+                        <h5>🚨 Emergency Response</h5>
+                        <p>We received your emergency service request. Our technician is on the way and will arrive within 30 minutes.</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Panel -->
+        <div id="calendar-panel" class="tool-panel">
+            <div class="grid grid-2">
+                <!-- Calendar View -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>📅</span>
+                            <span>Smart Calendar</span>
+                        </div>
+                        <button onclick="addEvent()" class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;">
+                            ➕ Add Event
+                        </button>
+                    </div>
+                    
+                    <div class="calendar-header">
+                        <button class="calendar-nav" onclick="changeMonth(-1)">‹ Prev</button>
+                        <h3 id="calendar-month-year"></h3>
+                        <button class="calendar-nav" onclick="changeMonth(1)">Next ›</button>
+                    </div>
+                    
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- Calendar will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Today's Schedule -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>📋</span>
+                            <span>Today's Schedule</span>
+                        </div>
+                    </div>
+                    
+                    <div id="today-events">
+                        <!-- Today's events will be listed here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Management -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📝</span>
+                        <span>Quick Event Templates</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-3">
+                    <button onclick="quickEvent('maintenance')" class="btn btn-primary">
+                        🔧 Maintenance Call
+                    </button>
+                    <button onclick="quickEvent('quote')" class="btn btn-info">
+                        💰 Quote Meeting
+                    </button>
+                    <button onclick="quickEvent('inspection')" class="btn btn-warning">
+                        🔍 Site Inspection
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Panel -->
+        <div id="calculator-panel" class="tool-panel">
+            <div class="grid grid-2">
+                <!-- Calculator -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🔢</span>
+                            <span>Professional Calculator</span>
+                        </div>
+                        <button onclick="clearCalculator()" class="btn btn-danger" style="padding: 6px 12px; font-size: 12px;">
+                            Clear All
+                        </button>
+                    </div>
+                    
+                    <div class="calculator">
+                        <div class="calculator-display">
+                            <div id="calc-display" class="calc-main">0</div>
+                            <div id="calc-operation" class="calc-operation"></div>
+                        </div>
+                        
+                        <div class="calculator-grid">
+                            <button class="calc-btn danger" onclick="calcFunction('clear')">C</button>
+                            <button class="calc-btn special" onclick="calcFunction('backspace')">⌫</button>
+                            <button class="calc-btn special" onclick="calcFunction('%')">%</button>
+                            <button class="calc-btn operator" onclick="calcFunction('/')">÷</button>
+                            
+                            <button class="calc-btn number" onclick="calcNumber('7')">7</button>
+                            <button class="calc-btn number" onclick="calcNumber('8')">8</button>
+                            <button class="calc-btn number" onclick="calcNumber('9')">9</button>
+                            <button class="calc-btn operator" onclick="calcFunction('*')">×</button>
+                            
+                            <button class="calc-btn number" onclick="calcNumber('4')">4</button>
+                            <button class="calc-btn number" onclick="calcNumber('5')">5</button>
+                            <button class="calc-btn number" onclick="calcNumber('6')">6</button>
+                            <button class="calc-btn operator" onclick="calcFunction('-')">−</button>
+                            
+                            <button class="calc-btn number" onclick="calcNumber('1')">1</button>
+                            <button class="calc-btn number" onclick="calcNumber('2')">2</button>
+                            <button class="calc-btn number" onclick="calcNumber('3')">3</button>
+                            <button class="calc-btn operator" onclick="calcFunction('+')">+</button>
+                            
+                            <button class="calc-btn number zero" onclick="calcNumber('0')">0</button>
+                            <button class="calc-btn number" onclick="calcNumber('.')">.</button>
+                            <button class="calc-btn operator" onclick="calcFunction('=')">=</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Functions -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>💼</span>
+                            <span>Business Functions</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid">
+                        <button onclick="quickCalc('gst')" class="btn btn-warning">
+                            + 6% GST (Malaysian Tax)
+                        </button>
+                        <button onclick="quickCalc('discount10')" class="btn btn-success">
+                            - 10% Discount
+                        </button>
+                        <button onclick="quickCalc('markup20')" class="btn btn-info">
+                            + 20% Markup
+                        </button>
+                        <button onclick="quickCalc('hourly')" class="btn btn-primary">
+                            × Hourly Rate (RM85/hr)
+                        </button>
+                    </div>
+                    
+                    <!-- Quick Calculations -->
+                    <div style="margin-top: 20px;">
+                        <h4 style="margin-bottom: 12px; color: var(--text-primary);">Quick Calculations</h4>
+                        <div class="form-group">
+                            <label class="form-label">Amount (RM)</label>
+                            <input type="number" id="quick-amount" class="form-input" placeholder="1000" step="0.01">
+                        </div>
+                        <div class="grid grid-2">
+                            <button onclick="calculateQuick('gst')" class="btn btn-secondary">With GST</button>
+                            <button onclick="calculateQuick('discount')" class="btn btn-secondary">With 10% Off</button>
+                        </div>
+                        <div id="quick-result" style="margin-top: 12px; padding: 12px; background: var(--bg-secondary); border-radius: 8px; text-align: center; font-weight: 700; color: var(--accent-primary);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banking Panel -->
+        <div id="banking-panel" class="tool-panel">
+            <!-- Malaysian Banks -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>🏛️</span>
+                        <span>Major Malaysian Banks</span>
+                    </div>
+                    <span class="btn btn-success" style="padding: 4px 8px; font-size: 12px;">SECURE</span>
+                </div>
+                
+                <div class="bank-grid">
+                    <div class="bank-card" onclick="openBank('maybank')">
+                        <div class="bank-logo bank-maybank">MB</div>
+                        <div class="bank-name">Maybank</div>
+                        <div class="bank-features">Online Banking • Business Accounts • M2U • Loans</div>
+                    </div>
+                    
+                    <div class="bank-card" onclick="openBank('cimb')">
+                        <div class="bank-logo bank-cimb">CIMB</div>
+                        <div class="bank-name">CIMB Bank</div>
+                        <div class="bank-features">CIMB Clicks • Trade Finance • Corporate Banking</div>
+                    </div>
+                    
+                    <div class="bank-card" onclick="openBank('pbbank')">
+                        <div class="bank-logo bank-pbbank">PB</div>
+                        <div class="bank-name">Public Bank</div>
+                        <div class="bank-features">PB Enterprise • SME Solutions • Investment</div>
+                    </div>
+                    
+                    <div class="bank-card" onclick="openBank('rhb')">
+                        <div class="bank-logo bank-rhb">RHB</div>
+                        <div class="bank-name">RHB Bank</div>
+                        <div class="bank-features">RHB Now • Business Banking • Islamic Banking</div>
+                    </div>
+                    
+                    <div class="bank-card" onclick="openBank('hlbank')">
+                        <div class="bank-logo bank-hlbank">HL</div>
+                        <div class="bank-name">Hong Leong Bank</div>
+                        <div class="bank-features">HLB Connect • SME Banking • Trade Services</div>
+                    </div>
+                    
+                    <div class="bank-card" onclick="openBank('ambank')">
+                        <div class="bank-logo bank-ambank">AM</div>
+                        <div class="bank-name">AmBank</div>
+                        <div class="bank-features">AmOnline • Business Solutions • Financing</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Banking Services -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>💼</span>
+                        <span>Business Banking Services</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-2">
+                    <button onclick="bankingService('transfer')" class="btn btn-primary" style="justify-content: flex-start; padding: 16px;">
+                        <span style="font-size: 24px; margin-right: 12px;">💸</span>
+                        <div style="text-align: left;">
+                            <div style="font-weight: 700;">Instant Transfer</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Quick payments to suppliers & staff</div>
+                        </div>
+                    </button>
+                    
+                    <button onclick="bankingService('statement')" class="btn btn-info" style="justify-content: flex-start; padding: 16px;">
+                        <span style="font-size: 24px; margin-right: 12px;">📊</span>
+                        <div style="text-align: left;">
+                            <div style="font-weight: 700;">Bank Statements</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Download monthly statements</div>
+                        </div>
+                    </button>
+                    
+                    <button onclick="bankingService('payroll')" class="btn btn-success" style="justify-content: flex-start; padding: 16px;">
+                        <span style="font-size: 24px; margin-right: 12px;">👥</span>
+                        <div style="text-align: left;">
+                            <div style="font-weight: 700;">Payroll Management</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Employee salary processing</div>
+                        </div>
+                    </button>
+                    
+                    <button onclick="bankingService('loan')" class="btn btn-warning" style="justify-content: flex-start; padding: 16px;">
+                        <span style="font-size: 24px; margin-right: 12px;">🏠</span>
+                        <div style="text-align: left;">
+                            <div style="font-weight: 700;">Business Loans</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Apply for business financing</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Payment Gateways -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>💳</span>
+                        <span>Payment Gateways</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-4">
+                    <div class="payment-gateway" onclick="openPaymentGateway('fpx')">
+                        <div class="gateway-icon">🏦</div>
+                        <div class="gateway-name">FPX</div>
+                    </div>
+                    
+                    <div class="payment-gateway" onclick="openPaymentGateway('grabpay')">
+                        <div class="gateway-icon">🚗</div>
+                        <div class="gateway-name">GrabPay</div>
+                    </div>
+                    
+                    <div class="payment-gateway" onclick="openPaymentGateway('boost')">
+                        <div class="gateway-icon">🚀</div>
+                        <div class="gateway-name">Boost</div>
+                    </div>
+                    
+                    <div class="payment-gateway" onclick="openPaymentGateway('tng')">
+                        <div class="gateway-icon">💰</div>
+                        <div class="gateway-name">Touch 'n Go</div>
+                    </div>
+                    
+                    <div class="payment-gateway" onclick="openPaymentGateway('paypal')">
+                        <div class="gateway-icon">🌐</div>
+                        <div class="gateway-name">PayPal</div>
+                    </div>
+                    
+                    <div class="payment-gateway" onclick="openPaymentGateway('stripe')">
+                        <div class="gateway-icon">⚡</div>
+                        <div class="gateway-name">Stripe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-message" class="success-message">
+        Success message will appear here
+    </div>
+
+    <script>
+        // ========================================
+        // GLOBAL VARIABLES
+        // ========================================
+        
+        let currentTheme = 'light';
+        let currentTool = 'whatsapp';
+        
+        // Calculator state
+        let calcDisplay = '0';
+        let calcPrevious = null;
+        let calcOperation = null;
+        let calcWaitingForOperand = false;
+        
+        // Calendar state
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+        let selectedDate = null;
+        let events = [];
+        
+        // Contacts data
+        let contacts = [
+            { name: 'ABC Corporation', phone: '60123456789', type: 'Client' },
+            { name: 'XYZ Manufacturing', phone: '60187654321', type: 'Client' },
+            { name: 'Site Supervisor', phone: '60198765432', type: 'Team' },
+            { name: 'Emergency Contractor', phone: '60156789012', type: 'Vendor' }
+        ];
+        
+        // Message templates
+        const messageTemplates = {
+            quote: 'Hello! Here\'s your maintenance service quote from REFIT. Please review and let us know if you have any questions. We\'re here to help! 💼',
+            appointment: 'Hi! This is a reminder for your scheduled maintenance service tomorrow. Our professional team will arrive between [TIME]. Please ensure someone is available on-site. 📅',
+            completed: 'Thank you for choosing REFIT MAINTENANCE SERVICES! ✅ Your maintenance service is completed. Please rate our service and don\'t hesitate to contact us for future needs. 🌟',
+            emergency: '🚨 We received your emergency service request. Our expert technician is on the way and will arrive within 30 minutes. Please stay safe and we\'ll resolve this quickly!'
         };
-        updateAvailableVoices();
-    }
-}
-
-function updateAvailableVoices() {
-    var voices = speechSynthesis.getVoices();
-    
-    // Assign preferred voices for each AI
-    for (var aiKey in aiAssistants) {
-        var ai = aiAssistants[aiKey];
-        ai.voice = findBestVoice(voices, ai.voiceProfile.preferredVoice);
-    }
-}
-
-function findBestVoice(voices, preference) {
-    // Try to find the best female voice for each AI
-    var femaleVoices = voices.filter(voice => 
-        voice.lang.startsWith('en') && 
-        (voice.name.toLowerCase().includes('female') || 
-         voice.name.toLowerCase().includes('woman') ||
-         voice.name.toLowerCase().includes('samantha') ||
-         voice.name.toLowerCase().includes('karen') ||
-         voice.name.toLowerCase().includes('victoria'))
-    );
-    
-    if (femaleVoices.length > 0) {
-        return femaleVoices[Math.floor(Math.random() * femaleVoices.length)];
-    }
-    
-    // Fallback to any English voice
-    var englishVoices = voices.filter(voice => voice.lang.startsWith('en'));
-    return englishVoices.length > 0 ? englishVoices[0] : voices[0];
-}
-
-// AI Selection Functions
-function showAISelector() {
-    document.getElementById('ai-selector-panel').classList.add('show');
-    updateAISelectorDisplay();
-}
-
-function closeAISelector() {
-    document.getElementById('ai-selector-panel').classList.remove('show');
-}
-
-function selectAI(aiKey) {
-    if (aiKey === currentAI) {
-        closeAISelector();
-        return;
-    }
-    
-    var oldAI = currentAI;
-    currentAI = aiKey;
-    
-    // Update display
-    updateAIDisplay();
-    updateAISelectorDisplay();
-    
-    // Save preference
-    localStorage.setItem('selectedAI', currentAI);
-    
-    // Transition message
-    var ai = aiAssistants[currentAI];
-    var oldAIName = aiAssistants[oldAI].name;
-    
-    aiSpeak(`Hello! I'm ${ai.name}, taking over from ${oldAIName}. ${getRandomGreeting(currentAI).split('!')[1] || ai.description}`);
-    
-    closeAISelector();
-    showMayaNotification(`🔄 Switched to ${ai.name} - ${ai.specialty}`);
-}
-
-function updateAIDisplay() {
-    var ai = aiAssistants[currentAI];
-    
-    // Update main avatar
-    var avatar = document.getElementById('ai-avatar');
-    var avatarIcon = document.getElementById('ai-avatar-icon');
-    var personalityIndicator = document.getElementById('personality-indicator');
-    var moodIndicator = document.getElementById('ai-mood');
-    var speechBubble = document.getElementById('ai-speech-bubble');
-    
-    if (avatar) {
-        avatar.className = ai.avatar;
-    }
-    
-    if (avatarIcon) {
-        avatarIcon.textContent = ai.emoji;
-    }
-    
-    if (personalityIndicator) {
-        personalityIndicator.className = `personality-indicator ${ai.avatar}`;
-        personalityIndicator.querySelector('span').textContent = ai.icon;
-    }
-    
-    if (moodIndicator) {
-        moodIndicator.querySelector('span').textContent = ai.mood;
-    }
-    
-    if (speechBubble) {
-        speechBubble.className = `ai-speech-bubble ${ai.bubble}`;
-    }
-}
-
-function updateAISelectorDisplay() {
-    var cards = document.querySelectorAll('.ai-assistant-card');
-    cards.forEach(function(card) {
-        var aiKey = card.getAttribute('data-ai');
-        if (aiKey === currentAI) {
-            card.classList.add('active');
-        } else {
-            card.classList.remove('active');
-        }
-    });
-}
-
-// AI Communication Functions
-function toggleAI() {
-    aiActive = !aiActive;
-    var avatar = document.getElementById('ai-avatar');
-    var speechBubble = document.getElementById('ai-speech-bubble');
-    
-    if (aiActive) {
-        var ai = aiAssistants[currentAI];
-        aiSpeak(getRandomGreeting(currentAI));
-        if (avatar) {
-            avatar.style.transform = 'scale(1.1)';
-        }
-        if (speechBubble) {
-            speechBubble.style.display = 'block';
-        }
-    } else {
-        if (avatar) {
-            avatar.style.transform = 'scale(1)';
-        }
-        if (speechBubble) {
-            speechBubble.style.display = 'none';
-        }
-    }
-}
-
-function aiSpeak(text, priority = false) {
-    var ai = aiAssistants[currentAI];
-    
-    // Show message in bubble
-    var messageElement = document.getElementById('ai-message');
-    var speechBubble = document.getElementById('ai-speech-bubble');
-    
-    if (messageElement) {
-        messageElement.textContent = text;
-    }
-    if (speechBubble) {
-        speechBubble.style.display = 'block';
-        speechBubble.classList.add('show');
-    }
-    
-    // Add personality prefix
-    var personalizedText = addPersonalityToMessage(text, ai);
-    
-    // Speak with voice synthesis
-    if (speechSynthesis && ai.voice) {
-        var utterance = new SpeechSynthesisUtterance(personalizedText);
-        utterance.voice = ai.voice;
         
-        // Apply voice profile and settings
-        utterance.rate = ai.voiceProfile.rate * getVoiceSpeedMultiplier();
-        utterance.pitch = ai.voiceProfile.pitch * getVoicePitchMultiplier();
-        utterance.volume = ai.voiceProfile.volume * getVolumeMultiplier();
+        // Bank URLs
+        const bankUrls = {
+            maybank: 'https://www.maybank2u.com.my',
+            cimb: 'https://www.cimbclicks.com.my',
+            pbbank: 'https://www.pbb.com.my',
+            rhb: 'https://logon.rhbgroup.com',
+            hlbank: 'https://www.hlb.com.my',
+            ambank: 'https://www.ambank.com.my'
+        };
         
-        utterance.onend = function() {
-            // Hide bubble after speaking
-            setTimeout(function() {
-                if (speechBubble && !aiActive) {
-                    speechBubble.style.display = 'none';
+        // Payment gateway URLs
+        const paymentGateways = {
+            fpx: 'https://www.mepsfpx.com.my',
+            grabpay: 'https://www.grab.com/my/pay/',
+            boost: 'https://www.myboost.com.my',
+            tng: 'https://www.touchngo.com.my',
+            paypal: 'https://www.paypal.com/my/',
+            stripe: 'https://stripe.com'
+        };
+        
+        // ========================================
+        // INITIALIZATION
+        // ========================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+        
+        function initializeApp() {
+            loadData();
+            renderContacts();
+            initializeCalendar();
+            renderTodayEvents();
+            showSuccess('🛠️ REFIT Business Tools Hub loaded successfully!');
+            
+            // Auto-save data periodically
+            setInterval(saveData, 60000); // Save every minute
+        }
+        
+        // ========================================
+        // THEME MANAGEMENT
+        // ========================================
+        
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', currentTheme);
+            
+            const toggleBtn = document.getElementById('theme-toggle');
+            toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
+            
+            saveData();
+            showSuccess(currentTheme === 'light' ? '☀️ Light mode activated' : '🌙 Dark mode activated');
+        }
+        
+        // ========================================
+        // TOOL PANEL MANAGEMENT
+        // ========================================
+        
+        function showTool(toolName) {
+            currentTool = toolName;
+            
+            // Update tabs
+            document.querySelectorAll('.tool-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update panels
+            document.querySelectorAll('.tool-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.getElementById(toolName + '-panel').classList.add('active');
+            
+            // Tool-specific initialization
+            switch(toolName) {
+                case 'calendar':
+                    initializeCalendar();
+                    break;
+                case 'calculator':
+                    clearCalculator();
+                    break;
+            }
+            
+            showSuccess(`${getToolIcon(toolName)} ${getToolName(toolName)} panel opened`);
+        }
+        
+        function getToolIcon(toolName) {
+            const icons = {
+                whatsapp: '💬',
+                calendar: '📅',
+                calculator: '🔢',
+                banking: '🏦'
+            };
+            return icons[toolName] || '🛠️';
+        }
+        
+        function getToolName(toolName) {
+            const names = {
+                whatsapp: 'WhatsApp Business',
+                calendar: 'Smart Calendar',
+                calculator: 'Professional Calculator',
+                banking: 'Banking Hub'
+            };
+            return names[toolName] || 'Tool';
+        }
+        
+        // ========================================
+        // WHATSAPP FUNCTIONALITY
+        // ========================================
+        
+        function sendWhatsAppMessage() {
+            const phone = document.getElementById('wa-phone').value.trim();
+            const message = document.getElementById('wa-message').value.trim();
+            
+            if (!phone) {
+                showSuccess('⚠️ Please enter a phone number');
+                return;
+            }
+            
+            let cleanPhone = phone.replace(/\D/g, '');
+            
+            // Format Malaysian numbers
+            if (cleanPhone.startsWith('01')) {
+                cleanPhone = '6' + cleanPhone;
+            } else if (!cleanPhone.startsWith('60')) {
+                cleanPhone = '60' + cleanPhone;
+            }
+            
+            let whatsappUrl = `https://wa.me/${cleanPhone}`;
+            if (message) {
+                whatsappUrl += `?text=${encodeURIComponent(message)}`;
+            }
+            
+            window.open(whatsappUrl, '_blank');
+            showSuccess(`💬 Opening WhatsApp chat with +${cleanPhone}`);
+        }
+        
+        function useTemplate(templateKey) {
+            const template = messageTemplates[templateKey];
+            if (template) {
+                document.getElementById('wa-message').value = template;
+                showSuccess(`📝 Template loaded: ${templateKey.charAt(0).toUpperCase() + templateKey.slice(1)}`);
+            }
+        }
+        
+        function renderContacts() {
+            const container = document.getElementById('contacts-list');
+            if (!container) return;
+            
+            let html = '';
+            contacts.forEach((contact, index) => {
+                const initial = contact.name.charAt(0).toUpperCase();
+                html += `
+                    <div class="whatsapp-contact" onclick="selectContact(${index})">
+                        <div class="contact-avatar">${initial}</div>
+                        <div class="contact-info">
+                            <h4>${contact.name}</h4>
+                            <p>+${contact.phone} • ${contact.type}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function selectContact(index) {
+            const contact = contacts[index];
+            document.getElementById('wa-phone').value = contact.phone;
+            showSuccess(`👤 Selected: ${contact.name}`);
+        }
+        
+        function addContact() {
+            const name = prompt('Enter contact name:');
+            const phone = prompt('Enter phone number (format: 60123456789):');
+            const type = prompt('Enter contact type (Client/Team/Vendor):') || 'Client';
+            
+            if (name && phone) {
+                contacts.push({ name, phone, type });
+                renderContacts();
+                saveData();
+                showSuccess(`✅ Contact "${name}" added successfully`);
+            }
+        }
+        
+        // ========================================
+        // CALENDAR FUNCTIONALITY
+        // ========================================
+        
+        function initializeCalendar() {
+            updateCalendarHeader();
+            renderCalendar();
+            renderTodayEvents();
+        }
+        
+        function updateCalendarHeader() {
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            
+            const headerElement = document.getElementById('calendar-month-year');
+            if (headerElement) {
+                headerElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            }
+        }
+        
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            initializeCalendar();
+            showSuccess(`📅 ${direction > 0 ? 'Next' : 'Previous'} month loaded`);
+        }
+        
+        function renderCalendar() {
+            const container = document.getElementById('calendar-grid');
+            if (!container) return;
+            
+            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const today = new Date();
+            
+            let html = '';
+            
+            // Day headers
+            daysOfWeek.forEach(day => {
+                html += `<div class="calendar-day-header">${day}</div>`;
+            });
+            
+            // Empty cells for days before month starts
+            for (let i = 0; i < firstDay; i++) {
+                html += '<div class="calendar-day other-month"></div>';
+            }
+            
+            // Days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                const isToday = isSameDate(date, today);
+                const isSelected = selectedDate && isSameDate(date, selectedDate);
+                const hasEvent = hasEventOnDate(date);
+                
+                let classes = 'calendar-day';
+                if (isToday) classes += ' today';
+                if (isSelected) classes += ' selected';
+                if (hasEvent) classes += ' has-event';
+                
+                html += `<div class="${classes}" onclick="selectDate(${day})">${day}</div>`;
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        function selectDate(day) {
+            selectedDate = new Date(currentYear, currentMonth, day);
+            renderCalendar();
+            renderTodayEvents();
+            showSuccess(`📅 Selected: ${selectedDate.toLocaleDateString()}`);
+        }
+        
+        function hasEventOnDate(date) {
+            return events.some(event => isSameDate(new Date(event.date), date));
+        }
+        
+        function isSameDate(date1, date2) {
+            return date1.getFullYear() === date2.getFullYear() &&
+                   date1.getMonth() === date2.getMonth() &&
+                   date1.getDate() === date2.getDate();
+        }
+        
+        function renderTodayEvents() {
+            const container = document.getElementById('today-events');
+            if (!container) return;
+            
+            const targetDate = selectedDate || new Date();
+            const dayEvents = events.filter(event => 
+                isSameDate(new Date(event.date), targetDate)
+            );
+            
+            if (dayEvents.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+                        <div style="font-size: 32px; margin-bottom: 8px;">📅</div>
+                        <p>No events scheduled</p>
+                        <p style="font-size: 12px; margin-top: 4px;">Click "Add Event" to schedule</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            dayEvents.forEach((event, index) => {
+                html += `
+                    <div class="event-item">
+                        <h5>${event.title}</h5>
+                        <p>${event.time} • ${event.description}</p>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function addEvent() {
+            const title = prompt('Event title:');
+            const time = prompt('Time (e.g., 10:00 AM):');
+            const description = prompt('Description:') || '';
+            
+            if (title && time) {
+                const eventDate = selectedDate || new Date();
+                events.push({
+                    id: Date.now(),
+                    title,
+                    time,
+                    description,
+                    date: eventDate.toISOString()
+                });
+                
+                renderCalendar();
+                renderTodayEvents();
+                saveData();
+                showSuccess(`✅ Event "${title}" added for ${eventDate.toLocaleDateString()}`);
+            }
+        }
+        
+        function quickEvent(type) {
+            const templates = {
+                maintenance: { title: 'Maintenance Call', time: '10:00 AM', description: 'Scheduled maintenance service' },
+                quote: { title: 'Quote Meeting', time: '2:00 PM', description: 'Client quote presentation' },
+                inspection: { title: 'Site Inspection', time: '9:00 AM', description: 'Property inspection visit' }
+            };
+            
+            const template = templates[type];
+            if (template) {
+                const eventDate = selectedDate || new Date();
+                events.push({
+                    id: Date.now(),
+                    ...template,
+                    date: eventDate.toISOString()
+                });
+                
+                renderCalendar();
+                renderTodayEvents();
+                saveData();
+                showSuccess(`✅ ${template.title} scheduled for ${eventDate.toLocaleDateString()}`);
+            }
+        }
+        
+        // ========================================
+        // CALCULATOR FUNCTIONALITY
+        // ========================================
+        
+        function updateCalcDisplay() {
+            document.getElementById('calc-display').textContent = calcDisplay;
+            
+            const operationElement = document.getElementById('calc-operation');
+            if (calcPrevious !== null && calcOperation) {
+                operationElement.textContent = `${calcPrevious} ${calcOperation}`;
+            } else {
+                operationElement.textContent = '';
+            }
+        }
+        
+        function calcNumber(num) {
+            if (calcWaitingForOperand) {
+                calcDisplay = num;
+                calcWaitingForOperand = false;
+            } else {
+                calcDisplay = calcDisplay === '0' ? num : calcDisplay + num;
+            }
+            updateCalcDisplay();
+        }
+        
+        function calcFunction(nextOperation) {
+            const inputValue = parseFloat(calcDisplay);
+            
+            if (calcPrevious === null) {
+                calcPrevious = inputValue;
+            } else if (calcOperation) {
+                const currentValue = calcPrevious || 0;
+                const newValue = calculate(currentValue, inputValue, calcOperation);
+                
+                calcDisplay = String(newValue);
+                calcPrevious = newValue;
+                updateCalcDisplay();
+            }
+            
+            calcWaitingForOperand = true;
+            
+            switch(nextOperation) {
+                case '=':
+                    calcOperation = null;
+                    calcPrevious = null;
+                    calcWaitingForOperand = false;
+                    break;
+                case 'clear':
+                    clearCalculator();
+                    return;
+                case 'backspace':
+                    calcDisplay = calcDisplay.slice(0, -1) || '0';
+                    updateCalcDisplay();
+                    return;
+                default:
+                    calcOperation = nextOperation;
+            }
+        }
+        
+        function calculate(firstValue, secondValue, operation) {
+            switch (operation) {
+                case '+': return firstValue + secondValue;
+                case '-': return firstValue - secondValue;
+                case '*': return firstValue * secondValue;
+                case '/': return secondValue !== 0 ? firstValue / secondValue : 0;
+                case '%': return firstValue % secondValue;
+                default: return secondValue;
+            }
+        }
+        
+        function clearCalculator() {
+            calcDisplay = '0';
+            calcPrevious = null;
+            calcOperation = null;
+            calcWaitingForOperand = false;
+            updateCalcDisplay();
+        }
+        
+        function quickCalc(operation) {
+            const currentValue = parseFloat(calcDisplay);
+            let newValue;
+            let message;
+            
+            switch (operation) {
+                case 'gst':
+                    newValue = currentValue * 1.06;
+                    message = '💰 Added 6% GST';
+                    break;
+                case 'discount10':
+                    newValue = currentValue * 0.9;
+                    message = '💸 Applied 10% discount';
+                    break;
+                case 'markup20':
+                    newValue = currentValue * 1.2;
+                    message = '📈 Added 20% markup';
+                    break;
+                case 'hourly':
+                    newValue = currentValue * 85;
+                    message = '⏰ Calculated at RM85/hour';
+                    break;
+                default:
+                    return;
+            }
+            
+            calcDisplay = newValue.toFixed(2);
+            updateCalcDisplay();
+            showSuccess(message);
+        }
+        
+        function calculateQuick(type) {
+            const amount = parseFloat(document.getElementById('quick-amount').value) || 0;
+            let result, label;
+            
+            switch (type) {
+                case 'gst':
+                    result = amount * 1.06;
+                    label = 'With 6% GST';
+                    break;
+                case 'discount':
+                    result = amount * 0.9;
+                    label = 'With 10% Discount';
+                    break;
+                default:
+                    return;
+            }
+            
+            document.getElementById('quick-result').innerHTML = 
+                `<div>${label}</div><div style="font-size: 20px;">RM ${result.toFixed(2)}</div>`;
+            
+            showSuccess(`💼 ${label}: RM ${result.toFixed(2)}`);
+        }
+        
+        // ========================================
+        // BANKING FUNCTIONALITY
+        // ========================================
+        
+        function openBank(bankName) {
+            const bankDisplayNames = {
+                maybank: 'Maybank',
+                cimb: 'CIMB Bank',
+                pbbank: 'Public Bank',
+                rhb: 'RHB Bank',
+                hlbank: 'Hong Leong Bank',
+                ambank: 'AmBank'
+            };
+            
+            if (bankUrls[bankName]) {
+                window.open(bankUrls[bankName], '_blank');
+                showSuccess(`🏦 Opening ${bankDisplayNames[bankName]} - Please login securely`);
+            }
+        }
+        
+        function bankingService(service) {
+            const services = {
+                transfer: 'Online Transfer - Use your bank\'s transfer feature',
+                statement: 'Bank Statements - Download from your online banking',
+                payroll: 'Payroll Management - Access business banking payroll',
+                loan: 'Business Loans - Contact your relationship manager'
+            };
+            
+            if (services[service]) {
+                showSuccess(`💼 ${services[service]}`);
+            }
+        }
+        
+        function openPaymentGateway(gateway) {
+            const gatewayNames = {
+                fpx: 'FPX',
+                grabpay: 'GrabPay',
+                boost: 'Boost',
+                tng: 'Touch \'n Go eWallet',
+                paypal: 'PayPal',
+                stripe: 'Stripe'
+            };
+            
+            if (paymentGateways[gateway]) {
+                window.open(paymentGateways[gateway], '_blank');
+                showSuccess(`💳 Opening ${gatewayNames[gateway]} payment gateway`);
+            }
+        }
+        
+        // ========================================
+        // DATA PERSISTENCE
+        // ========================================
+        
+        function saveData() {
+            const data = {
+                theme: currentTheme,
+                contacts: contacts,
+                events: events,
+                savedAt: new Date().toISOString()
+            };
+            
+            try {
+                localStorage.setItem('refit_business_tools', JSON.stringify(data));
+            } catch (error) {
+                console.warn('Failed to save data:', error);
+            }
+        }
+        
+        function loadData() {
+            try {
+                const saved = localStorage.getItem('refit_business_tools');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    
+                    if (data.theme) {
+                        currentTheme = data.theme;
+                        document.body.setAttribute('data-theme', currentTheme);
+                        document.getElementById('theme-toggle').textContent = 
+                            currentTheme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
+                    }
+                    
+                    if (data.contacts) contacts = data.contacts;
+                    if (data.events) events = data.events;
                 }
+            } catch (error) {
+                console.warn('Failed to load data:', error);
+            }
+        }
+        
+        // ========================================
+        // UTILITY FUNCTIONS
+        // ========================================
+        
+        function showSuccess(message) {
+            const successElement = document.getElementById('success-message');
+            successElement.textContent = message;
+            successElement.classList.add('show');
+            
+            setTimeout(() => {
+                successElement.classList.remove('show');
             }, 3000);
-        };
-        
-        speechSynthesis.speak(utterance);
-    }
-}
-
-function addPersonalityToMessage(text, ai) {
-    var style = ai.responseStyle;
-    var keys = Object.keys(style);
-    var randomPrefix = style[keys[Math.floor(Math.random() * keys.length)]];
-    
-    // Add personality-based variations
-    switch (ai.personality) {
-        case 'caring':
-            return randomPrefix + text + " I'm always here to support you! 💖";
-        case 'professional':
-            return randomPrefix + text + " Is there anything else I can assist with?";
-        case 'energetic':
-            return randomPrefix + text + " Let's keep the momentum going! 🎉";
-        case 'analytical':
-            return randomPrefix + text + " I hope this analysis proves valuable.";
-        case 'innovative':
-            return randomPrefix + text + " Ready to innovate further? 🚀";
-        default:
-            return text;
-    }
-}
-
-function getRandomGreeting(aiKey) {
-    var ai = aiAssistants[aiKey];
-    var greetings = ai.greetings;
-    return greetings[Math.floor(Math.random() * greetings.length)];
-}
-
-// Voice Settings Functions
-function setVoiceSpeed(speed) {
-    voiceSettings.speed = speed;
-    updateVoiceControlUI();
-    saveVoiceSettings();
-}
-
-function setVoicePitch(pitch) {
-    voiceSettings.pitch = pitch;
-    updateVoiceControlUI();
-    saveVoiceSettings();
-}
-
-function setVoiceVolume(volume) {
-    voiceSettings.volume = volume;
-    updateVoiceControlUI();
-    saveVoiceSettings();
-}
-
-function getVoiceSpeedMultiplier() {
-    switch (voiceSettings.speed) {
-        case 'slow': return 0.7;
-        case 'fast': return 1.3;
-        default: return 1.0;
-    }
-}
-
-function getVoicePitchMultiplier() {
-    switch (voiceSettings.pitch) {
-        case 'low': return 0.8;
-        case 'high': return 1.2;
-        default: return 1.0;
-    }
-}
-
-function getVolumeMultiplier() {
-    switch (voiceSettings.volume) {
-        case 'quiet': return 0.5;
-        case 'loud': return 1.0;
-        default: return 0.8;
-    }
-}
-
-function updateVoiceControlUI() {
-    // Update button states
-    var buttons = document.querySelectorAll('.voice-control');
-    buttons.forEach(function(btn) {
-        btn.classList.remove('active');
-    });
-    
-    // Mark active buttons
-    document.querySelector(`.voice-control[onclick*="${voiceSettings.speed}"]`).classList.add('active');
-    document.querySelector(`.voice-control[onclick*="${voiceSettings.pitch}"]`).classList.add('active');
-    document.querySelector(`.voice-control[onclick*="${voiceSettings.volume}"]`).classList.add('active');
-}
-
-function applyVoiceSettings() {
-    updateVoiceControlUI();
-}
-
-function saveVoiceSettings() {
-    localStorage.setItem('voiceSettings', JSON.stringify(voiceSettings));
-}
-
-// Test and Control Functions
-function testCurrentAI() {
-    var ai = aiAssistants[currentAI];
-    var testMessages = [
-        `Testing ${ai.name}'s voice! This is how I sound with current settings.`,
-        `Hello! I'm ${ai.name}, your ${ai.specialty.toLowerCase()}. This is my voice profile.`,
-        `Voice test complete! I'm ${ai.name}, ready to assist you with my unique personality.`
-    ];
-    
-    var message = testMessages[Math.floor(Math.random() * testMessages.length)];
-    aiSpeak(message);
-}
-
-function aiIntroduction() {
-    var ai = aiAssistants[currentAI];
-    var intro = `I'm ${ai.name}, your ${ai.specialty}. ${ai.description} My voice is optimized for ${ai.personality} interactions, and I'm here to make your business journey exceptional!`;
-    aiSpeak(intro);
-}
-
-function resetAISettings() {
-    voiceSettings = {
-        speed: 'normal',
-        pitch: 'normal',
-        volume: 'normal'
-    };
-    saveVoiceSettings();
-    applyVoiceSettings();
-    aiSpeak("Voice settings have been reset to default. How do I sound now?");
-}
-
-function showAISettings() {
-    showAISelector();
-    aiSpeak("Here are your AI assistant options. Choose the one that best fits your current needs!");
-}
-
-// Enhanced Command Processing with Personality
-function processAICommand(command) {
-    var ai = aiAssistants[currentAI];
-    var response = "";
-    
-    // Add personality-specific command processing
-    if (command.includes('create quote') || command.includes('new quote')) {
-        switch (ai.personality) {
-            case 'caring':
-                response = "Of course, dear! I'd love to help you create a beautiful quote. Let's make something amazing together!";
-                break;
-            case 'professional':
-                response = "Certainly. I'll open the quote creation interface for efficient data entry.";
-                break;
-            case 'energetic':
-                response = "YES! Let's create an awesome quote! This is going to be so exciting!";
-                break;
-            case 'analytical':
-                response = "Excellent choice. Creating well-structured quotes is crucial for business success. Let me assist you.";
-                break;
-            case 'innovative':
-                response = "Let's revolutionize your quoting process! I'll open the advanced quote creator.";
-                break;
         }
-        setTimeout(() => openSimpleJobForm(), 1000);
         
-    } else if (command.includes('switch') || command.includes('change ai')) {
-        response = `Would you like to switch to a different AI assistant? I'm ${ai.name}, but my colleagues are also here to help!`;
-        setTimeout(() => showAISelector(), 1000);
+        // ========================================
+        // KEYBOARD SHORTCUTS
+        // ========================================
         
-    } else if (command.includes('voice') || command.includes('sound')) {
-        response = `You can adjust my voice settings! I'm currently speaking with ${voiceSettings.speed} speed, ${voiceSettings.pitch} pitch, and ${voiceSettings.volume} volume.`;
-        setTimeout(() => showAISelector(), 1000);
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key.toLowerCase()) {
+                    case '1':
+                        e.preventDefault();
+                        showTool('whatsapp');
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        showTool('calendar');
+                        break;
+                    case '3':
+                        e.preventDefault();
+                        showTool('calculator');
+                        break;
+                    case '4':
+                        e.preventDefault();
+                        showTool('banking');
+                        break;
+                    case 'd':
+                        e.preventDefault();
+                        toggleTheme();
+                        break;
+                }
+            }
+            
+            // Calculator keyboard support
+            if (currentTool === 'calculator') {
+                if (e.key >= '0' && e.key <= '9') {
+                    e.preventDefault();
+                    calcNumber(e.key);
+                } else if (['+', '-', '*', '/', '%'].includes(e.key)) {
+                    e.preventDefault();
+                    calcFunction(e.key === '*' ? '*' : e.key === '/' ? '/' : e.key);
+                } else if (e.key === 'Enter' || e.key === '=') {
+                    e.preventDefault();
+                    calcFunction('=');
+                } else if (e.key === 'Escape' || e.key === 'c' || e.key === 'C') {
+                    e.preventDefault();
+                    clearCalculator();
+                } else if (e.key === 'Backspace') {
+                    e.preventDefault();
+                    calcFunction('backspace');
+                } else if (e.key === '.') {
+                    e.preventDefault();
+                    calcNumber('.');
+                }
+            }
+        });
         
-    } else {
-        // Default personality-based responses
-        switch (ai.personality) {
-            case 'caring':
-                response = "I'm not sure I understood that perfectly, but I'm here to help however I can. Could you try explaining it differently? I care about getting this right for you!";
-                break;
-            case 'professional':
-                response = "I apologize, but I need clarification on that request. Could you please rephrase your instruction?";
-                break;
-            case 'energetic':
-                response = "Ooh, I'm not quite sure what you meant, but I'm excited to help! Can you tell me more about what you need?";
-                break;
-            case 'analytical':
-                response = "I require additional information to process that request effectively. Please provide more specific parameters.";
-                break;
-            case 'innovative':
-                response = "Interesting input! Let me recalibrate my understanding. Could you elaborate on your request?";
-                break;
-        }
-    }
-    
-    aiSpeak(response);
-}
-
-// Integrate with existing voice command system
-function toggleVoiceCommand() {
-    if (!voiceRecognition) {
-        aiSpeak('Voice recognition is not supported in your browser, but I\'m still here to help through our interface!');
-        return;
-    }
-    
-    if (isListening) {
-        voiceRecognition.stop();
-        return;
-    }
-    
-    isListening = true;
-    document.getElementById('ai-voice-btn').classList.add('listening');
-    showVoiceIndicator('Listening for your command...');
-    
-    try {
-        voiceRecognition.start();
-        var ai = aiAssistants[currentAI];
-        aiSpeak(`I'm listening! Please tell me what you need help with.`, true);
-    } catch (error) {
-        isListening = false;
-        hideVoiceIndicator();
-        aiSpeak('Sorry, I had trouble starting voice recognition. Please try again.');
-    }
-}
-
-// Notification system
-function showMayaNotification(message) {
-    var ai = aiAssistants[currentAI];
-    var notification = document.getElementById('maya-notification') || createNotificationElement();
-    if (notification) {
-        notification.textContent = `${ai.emoji} ${ai.name}: ${message}`;
-        notification.style.opacity = '1';
-        notification.style.pointerEvents = 'auto';
+        // ========================================
+        // MOBILE OPTIMIZATIONS
+        // ========================================
         
-        setTimeout(function() {
-            notification.style.opacity = '0';
-            notification.style.pointerEvents = 'none';
-        }, 4000);
-    }
-}
-
-function createNotificationElement() {
-    var notification = document.createElement('div');
-    notification.id = 'maya-notification';
-    notification.style.cssText = `
-        position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
-        background: linear-gradient(135deg, var(--accent-soft), #b794f6);
-        color: white; padding: 12px 24px; border-radius: 25px;
-        font-weight: 600; box-shadow: 0 8px 32px var(--shadow-medium);
-        z-index: 260; opacity: 0; transition: all 0.3s ease; pointer-events: none;
-    `;
-    document.body.appendChild(notification);
-    return notification;
-}
-
-// Initialize the enhanced AI system
-document.addEventListener('DOMContentLoaded', function() {
-    // Replace the existing Maya initialization with the new system
-    setTimeout(function() {
-        initializeAISystem();
-    }, 1000);
-});
-
-// Export for global access
-window.aiAssistants = aiAssistants;
-window.currentAI = currentAI;
-window.selectAI = selectAI;
-window.aiSpeak = aiSpeak;
-window.processAICommand = processAICommand;
-
-console.log('🤖 Multi-AI Lady Assistant System Loaded!');
-console.log('Available AIs: Maya (Caring), Luna (Professional), Aria (Energetic), Sage (Analytical), Nova (Innovative)');
-</script>
-
+        // Prevent zoom on double tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+        
+        // Initialize calculator display on load
+        updateCalcDisplay();
+        
+        console.log('🛠️ REFIT Business Tools Hub - Fully Integrated Platform');
+        console.log('💬 WhatsApp Business Integration');
+        console.log('📅 Smart Calendar with Event Management');
+        console.log('🔢 Professional Calculator with Business Functions');
+        console.log('🏦 Malaysian Banking & Payment Gateway Integration');
+        console.log('📱 Mobile-Optimized Interface');
+        console.log('⌨️ Keyboard Shortcuts: Ctrl+1-4 for tools, Ctrl+D for theme');
+    </script>
 </body>
 </html>
