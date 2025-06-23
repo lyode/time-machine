@@ -1260,6 +1260,7 @@
                 </div>
             </div>
             <div class="header-right">
+                <button class="header-btn" onclick="openBrandingUpload()" title="Branding & Logo">🎨</button>
                 <button class="header-btn" onclick="openCompanyInfo()" title="Company Info">👤</button>
                 <button class="header-btn" onclick="exportData()" title="Export">📤</button>
             </div>
@@ -1398,26 +1399,38 @@
     <div id="category-selection-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>🏷️ Step 2: Select Category</h3>
+                <h3>🏷️ Step 2: Select Categories & Items</h3>
                 <button class="close-btn" onclick="backToJobTitle()">←</button>
             </div>
             <div class="modal-body">
                 <div style="text-align: center; margin-bottom: 24px;">
                     <div style="font-size: 48px; margin-bottom: 16px;">🎯</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Choose the main category for this job:</p>
+                    <p style="color: var(--text-muted); font-size: 16px;">Choose categories and add items:</p>
                     <p style="font-weight: 700; color: var(--text-primary); margin-top: 8px;" id="selected-job-title"></p>
+                </div>
+
+                <!-- Current Quote Summary -->
+                <div id="current-quote-summary" style="display: none; background: var(--bg-secondary); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 2px solid var(--accent-primary);">
+                    <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <span>🛒</span> Current Quote (<span id="total-items-count">0</span> items)
+                    </h4>
+                    <div id="quote-items-preview" style="margin-bottom: 12px;"></div>
+                    <div style="background: var(--accent-primary); border-radius: 12px; padding: 16px; text-align: center;">
+                        <div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">Total Amount</div>
+                        <div style="font-size: 24px; font-weight: 800; color: white;" id="running-total">RM 0.00</div>
+                    </div>
                 </div>
 
                 <div class="category-grid" id="category-grid"></div>
 
-                <button type="button" 
-                        class="btn btn-primary" 
-                        onclick="proceedToItems()" 
-                        id="proceed-to-items-btn"
-                        disabled
-                        style="font-size: 18px; padding: 20px 32px; width: 100%; margin-top: 24px; opacity: 0.5;">
-                    Next: Select Items ➡️
-                </button>
+                <div class="form-actions" style="margin-top: 24px;">
+                    <button type="button" class="form-btn btn-primary" onclick="finalizeQuote()" id="finalize-quote-btn" disabled style="opacity: 0.5;">
+                        ✅ Create Quote
+                    </button>
+                    <button type="button" class="form-btn btn-secondary" onclick="closeCreateQuote()">
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -1427,7 +1440,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>📋 Step 3: Select Items</h3>
-                <button class="close-btn" onclick="backToCategory()">←</button>
+                <button class="close-btn" onclick="backToCategories()">←</button>
             </div>
             <div class="modal-body">
                 <div style="text-align: center; margin-bottom: 24px;">
@@ -1454,18 +1467,64 @@
                         <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">Selected Items (<span id="selected-count">0</span>)</h4>
                         <div id="selected-items-list" style="margin-bottom: 16px;"></div>
                         <div style="background: var(--accent-primary); border-radius: 12px; padding: 16px; text-align: center;">
-                            <div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">Total Quote Amount</div>
-                            <div style="font-size: 28px; font-weight: 800; color: white;" id="total-amount">RM 0.00</div>
+                            <div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">Category Total</div>
+                            <div style="font-size: 28px; font-weight: 800; color: white;" id="category-total-amount">RM 0.00</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="form-btn btn-secondary" onclick="closeCreateQuote()">
-                        Cancel
+                    <button type="button" class="form-btn btn-success" onclick="backToCategories()">
+                        ← Add More Categories
                     </button>
-                    <button type="button" class="form-btn btn-primary" onclick="createQuote()" id="create-quote-btn" disabled>
-                        Create Quote
+                    <button type="button" class="form-btn btn-primary" onclick="finishItemSelection()" id="finish-items-btn">
+                        Done with Category
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Branding & Logo Upload Modal -->
+    <div id="branding-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🎨 Branding & Logo</h3>
+                <button class="close-btn" onclick="closeBrandingUpload()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">🎨</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Customize your company logo and branding</p>
+                </div>
+
+                <!-- Current Logo Display -->
+                <div style="text-align: center; margin-bottom: 24px; padding: 20px; background: var(--bg-secondary); border-radius: 12px;">
+                    <div style="margin-bottom: 12px; color: var(--text-muted); font-size: 14px;">Current Logo</div>
+                    <div id="current-logo-display" style="display: flex; justify-content: center; align-items: center; height: 80px;">
+                        <!-- Logo will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Logo Upload -->
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; color: var(--text-primary); margin-bottom: 8px; display: block;">Upload Company Logo</label>
+                    <div class="file-upload" style="width: 100%;">
+                        <input type="file" id="logo-file-input" accept="image/*" onchange="handleLogoUpload(event)">
+                        <label for="logo-file-input" class="file-upload-label" style="width: 100%; justify-content: center; padding: 16px;">
+                            <span>📁</span>
+                            <span>Choose Logo Image (PNG, JPG, GIF)</span>
+                        </label>
+                    </div>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Recommended: Square format, Max 2MB</p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="form-btn btn-danger" onclick="removeCurrentLogo()">
+                        🗑️ Remove Logo
+                    </button>
+                    <button type="button" class="form-btn btn-secondary" onclick="closeBrandingUpload()">
+                        Done
                     </button>
                 </div>
             </div>
@@ -1612,12 +1671,14 @@
         var jobQuotes = [];
         var currentQuoteData = {
             title: '',
-            category: '',
+            categories: [], // Changed to support multiple categories
             items: [],
             totalAmount: 0
         };
         var currentQuoteId = null;
         var currentTheme = 'light';
+        var currentCategory = ''; // For item selection
+        var customLogo = null;
 
         // Enhanced Category Configuration
         var categories = {
@@ -1915,7 +1976,8 @@
         var STORAGE_KEYS = {
             JOB_QUOTES: 'refit_simplified_quotes',
             THEME_PREFERENCE: 'refit_theme_preference',
-            COMPANY_INFO: 'refit_company_info'
+            COMPANY_INFO: 'refit_company_info',
+            CUSTOM_LOGO: 'refit_custom_logo'
         };
 
         // Theme Management Functions
@@ -1992,12 +2054,12 @@
             }
         }
 
-        // Create Quote Flow Functions
+        // Enhanced Create Quote Flow Functions
         function openCreateQuote() {
             // Reset quote data
             currentQuoteData = {
                 title: '',
-                category: '',
+                categories: [],
                 items: [],
                 totalAmount: 0
             };
@@ -2008,7 +2070,7 @@
             // Show Step 1 modal
             document.getElementById('job-title-modal').classList.add('show');
             
-            showSuccessMessage('📝 Starting new quote creation');
+            showSuccessMessage('📝 Starting enhanced quote creation');
         }
 
         function closeCreateQuote() {
@@ -2020,10 +2082,11 @@
             // Reset data
             currentQuoteData = {
                 title: '',
-                category: '',
+                categories: [],
                 items: [],
                 totalAmount: 0
             };
+            currentCategory = '';
         }
 
         function proceedToCategory() {
@@ -2042,6 +2105,7 @@
             
             // Render categories
             renderCategories();
+            updateQuoteSummaryDisplay();
             
             document.getElementById('category-selection-modal').classList.add('show');
             showSuccessMessage('✅ Job title saved: ' + title);
@@ -2060,61 +2124,137 @@
             
             for (var categoryKey in categories) {
                 var category = categories[categoryKey];
-                html += '<div class="category-item" onclick="selectCategory(\'' + categoryKey + '\')" data-category="' + categoryKey + '">' +
+                var isSelected = currentQuoteData.categories.indexOf(categoryKey) !== -1;
+                var hasItems = currentQuoteData.items.some(function(item) { 
+                    return item.category === categoryKey; 
+                });
+                
+                html += '<div class="category-item' + (hasItems ? ' selected' : '') + '" onclick="selectCategoryForItems(\'' + categoryKey + '\')" data-category="' + categoryKey + '">' +
                     '<div class="icon">' + category.icon + '</div>' +
                     '<div class="name">' + category.name + '</div>' +
+                    (hasItems ? '<div style="font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 4px;">✓ Items Added</div>' : '') +
                     '</div>';
             }
             
             container.innerHTML = html;
         }
 
-        function selectCategory(categoryKey) {
-            // Remove previous selection
-            var items = document.querySelectorAll('.category-item');
-            for (var i = 0; i < items.length; i++) {
-                items[i].classList.remove('selected');
-            }
-            
-            // Select current category
-            var selectedItem = document.querySelector('.category-item[data-category="' + categoryKey + '"]');
-            if (selectedItem) {
-                selectedItem.classList.add('selected');
-            }
-            
-            currentQuoteData.category = categoryKey;
-            
-            // Enable proceed button
-            var proceedBtn = document.getElementById('proceed-to-items-btn');
-            proceedBtn.disabled = false;
-            proceedBtn.style.opacity = '1';
-            
-            showSuccessMessage('✅ Selected: ' + categories[categoryKey].name);
-        }
-
-        function proceedToItems() {
-            if (!currentQuoteData.category) {
-                showSuccessMessage('⚠️ Please select a category');
-                return;
-            }
+        function selectCategoryForItems(categoryKey) {
+            currentCategory = categoryKey;
             
             // Update display
             document.getElementById('category-job-title').textContent = currentQuoteData.title;
-            document.getElementById('selected-category-display').textContent = categories[currentQuoteData.category].name;
+            document.getElementById('selected-category-display').textContent = categories[categoryKey].name;
             
-            // Hide Step 2, Show Step 3
+            // Hide category modal, show items modal
             document.getElementById('category-selection-modal').classList.remove('show');
             
             // Render preset items for selected category
             renderPresetItems();
             
             document.getElementById('item-selection-modal').classList.add('show');
-            showSuccessMessage('✅ Category selected: ' + categories[currentQuoteData.category].name);
+            showSuccessMessage('✅ Selecting items for: ' + categories[categoryKey].name);
         }
 
-        function backToCategory() {
+        function backToCategories() {
             document.getElementById('item-selection-modal').classList.remove('show');
+            
+            // Update categories display and summary
+            renderCategories();
+            updateQuoteSummaryDisplay();
+            
             document.getElementById('category-selection-modal').classList.add('show');
+            showSuccessMessage('⬅️ Back to category selection');
+        }
+
+        function updateQuoteSummaryDisplay() {
+            var summaryContainer = document.getElementById('current-quote-summary');
+            var itemsCountElement = document.getElementById('total-items-count');
+            var previewElement = document.getElementById('quote-items-preview');
+            var totalElement = document.getElementById('running-total');
+            var finalizeBtn = document.getElementById('finalize-quote-btn');
+            
+            if (currentQuoteData.items.length === 0) {
+                summaryContainer.style.display = 'none';
+                finalizeBtn.disabled = true;
+                finalizeBtn.style.opacity = '0.5';
+                return;
+            }
+            
+            summaryContainer.style.display = 'block';
+            finalizeBtn.disabled = false;
+            finalizeBtn.style.opacity = '1';
+            
+            itemsCountElement.textContent = currentQuoteData.items.length;
+            
+            // Group items by category for display
+            var categoryGroups = {};
+            var totalAmount = 0;
+            
+            for (var i = 0; i < currentQuoteData.items.length; i++) {
+                var item = currentQuoteData.items[i];
+                var itemCategory = item.category || 'common';
+                totalAmount += item.total;
+                
+                if (!categoryGroups[itemCategory]) {
+                    categoryGroups[itemCategory] = [];
+                }
+                categoryGroups[itemCategory].push(item);
+            }
+            
+            var html = '';
+            for (var catKey in categoryGroups) {
+                var catItems = categoryGroups[catKey];
+                var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
+                
+                html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 6px; border-left: 4px solid var(--accent-primary);">' +
+                    '<div>' +
+                    '<div style="font-weight: 600; color: var(--text-primary); font-size: 13px;">' + categories[catKey].icon + ' ' + categories[catKey].name + '</div>' +
+                    '<div style="font-size: 11px; color: var(--text-muted);">' + catItems.length + ' items</div>' +
+                    '</div>' +
+                    '<div style="font-weight: 700; color: var(--accent-primary); font-size: 14px;">RM ' + catTotal.toFixed(2) + '</div>' +
+                    '</div>';
+            }
+            
+            previewElement.innerHTML = html;
+            totalElement.textContent = 'RM ' + totalAmount.toFixed(2);
+            currentQuoteData.totalAmount = totalAmount;
+            
+            // Update categories list
+            var uniqueCategories = Object.keys(categoryGroups);
+            currentQuoteData.categories = uniqueCategories;
+        }
+
+        function finalizeQuote() {
+            if (currentQuoteData.items.length === 0) {
+                showSuccessMessage('⚠️ Please add at least one item to the quote');
+                return;
+            }
+            
+            // Create quote object
+            var quote = {
+                id: Date.now(),
+                title: currentQuoteData.title,
+                categories: [...currentQuoteData.categories],
+                items: [...currentQuoteData.items],
+                totalAmount: currentQuoteData.totalAmount,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Add to quotes list
+            jobQuotes.push(quote);
+            currentQuoteId = quote.id;
+            
+            // Save to storage
+            saveDataToStorage();
+            
+            // Close modal
+            closeCreateQuote();
+            
+            // Show quote detail view
+            showQuoteDetail(quote.id);
+            
+            showSuccessMessage('✅ Multi-category quote created successfully!');
         }
 
         function renderPresetItems() {
@@ -2193,32 +2333,33 @@
             var summaryContainer = document.getElementById('selected-items-summary');
             var countElement = document.getElementById('selected-count');
             var listElement = document.getElementById('selected-items-list');
-            var totalElement = document.getElementById('total-amount');
-            var createBtn = document.getElementById('create-quote-btn');
+            var totalElement = document.getElementById('category-total-amount');
             
-            if (currentQuoteData.items.length === 0) {
+            // Filter items for current category only
+            var categoryItems = currentQuoteData.items.filter(function(item) {
+                return item.category === currentCategory;
+            });
+            
+            if (categoryItems.length === 0) {
                 summaryContainer.style.display = 'none';
-                createBtn.disabled = true;
-                createBtn.style.opacity = '0.5';
                 return;
             }
             
             summaryContainer.style.display = 'block';
-            createBtn.disabled = false;
-            createBtn.style.opacity = '1';
+            countElement.textContent = categoryItems.length;
             
-            countElement.textContent = currentQuoteData.items.length;
-            
-            var totalAmount = 0;
+            var categoryTotal = 0;
             var html = '';
             
-            for (var i = 0; i < currentQuoteData.items.length; i++) {
-                var item = currentQuoteData.items[i];
-                totalAmount += item.total;
+            for (var i = 0; i < categoryItems.length; i++) {
+                var item = categoryItems[i];
+                categoryTotal += item.total;
                 
                 html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--accent-primary);">' +
                     '<div>' +
-                    '<div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">' + item.name + '</div>' +
+                    '<div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">' + 
+                    (item.isCustom ? '🛠️ ' : '') + item.name + 
+                    (item.isCustom ? ' (Custom)' : '') + '</div>' +
                     '<div style="font-size: 12px; color: var(--text-muted);">1 ' + item.unit + '</div>' +
                     '</div>' +
                     '<div style="font-weight: 700; color: var(--accent-primary);">RM ' + item.total.toFixed(2) + '</div>' +
@@ -2226,8 +2367,7 @@
             }
             
             listElement.innerHTML = html;
-            totalElement.textContent = 'RM ' + totalAmount.toFixed(2);
-            currentQuoteData.totalAmount = totalAmount;
+            totalElement.textContent = 'RM ' + categoryTotal.toFixed(2);
         }
 
         function createQuote() {
@@ -2811,6 +2951,85 @@
             showSuccessMessage('📤 Data exported successfully!');
         }
 
+        // Branding & Logo Management
+        function openBrandingUpload() {
+            updateCurrentLogoDisplay();
+            document.getElementById('branding-modal').classList.add('show');
+            showSuccessMessage('🎨 Branding & logo panel opened');
+        }
+
+        function closeBrandingUpload() {
+            document.getElementById('branding-modal').classList.remove('show');
+        }
+
+        function updateCurrentLogoDisplay() {
+            var container = document.getElementById('current-logo-display');
+            if (!container) return;
+            
+            if (customLogo) {
+                container.innerHTML = '<img src="' + customLogo + '" style="max-height: 80px; max-width: 200px; object-fit: contain;" alt="Company Logo">';
+            } else {
+                container.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: var(--accent-primary); border-radius: 12px; color: white; font-size: 24px; font-weight: 700;">' +
+                    '<svg style="width: 40px; height: 40px;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+                    '<path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor"/>' +
+                    '<path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor"/>' +
+                    '</svg>' +
+                    '</div>';
+            }
+        }
+
+        function handleLogoUpload(event) {
+            var file = event.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 2 * 1024 * 1024) {
+                showSuccessMessage('⚠️ File too large! Please choose an image under 2MB');
+                return;
+            }
+            
+            if (!file.type.startsWith('image/')) {
+                showSuccessMessage('⚠️ Please select a valid image file');
+                return;
+            }
+            
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                customLogo = e.target.result;
+                saveDataToStorage();
+                updateCurrentLogoDisplay();
+                updateHeaderLogo();
+                showSuccessMessage('✅ Logo uploaded successfully!');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeCurrentLogo() {
+            if (confirm('Remove current logo and revert to default?')) {
+                customLogo = null;
+                document.getElementById('logo-file-input').value = '';
+                saveDataToStorage();
+                updateCurrentLogoDisplay();
+                updateHeaderLogo();
+                showSuccessMessage('🗑️ Logo removed - reverted to default');
+            }
+        }
+
+        function updateHeaderLogo() {
+            var logoContainer = document.querySelector('.app-logo');
+            if (!logoContainer) return;
+            
+            if (customLogo) {
+                logoContainer.innerHTML = '<img src="' + customLogo + '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" alt="Company Logo">';
+            } else {
+                logoContainer.innerHTML = '<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+                    '<path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>' +
+                    '<path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>' +
+                    '<circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.8)" stroke="currentColor" stroke-width="2"/>' +
+                    '<circle cx="50" cy="50" r="3" fill="currentColor"/>' +
+                    '</svg>';
+            }
+        }
+
         // Simple Company Info Management
         function openCompanyInfo() {
             // Load current company info into form
@@ -2848,6 +3067,12 @@
             showSuccessMessage('✅ Company details saved!');
         }
 
+        function finishItemSelection() {
+            // Just go back to categories - items are already added to the main quote
+            backToCategories();
+            showSuccessMessage('✅ Items added to quote. Select another category or finalize quote.');
+        }
+
         // Custom Item Creation Functions
         function openCustomItemForm() {
             // Clear form
@@ -2856,7 +3081,7 @@
             // Show modal
             document.getElementById('custom-item-modal').classList.add('show');
             
-            showSuccessMessage('➕ Creating custom item for: ' + categories[currentQuoteData.category].name);
+            showSuccessMessage('➕ Creating custom item for: ' + categories[currentCategory].name);
         }
 
         function closeCustomItemForm() {
@@ -2885,6 +3110,7 @@
                 unit: unit,
                 quantity: 1,
                 total: price,
+                category: currentCategory,
                 isCustom: true
             };
             
@@ -2901,11 +3127,11 @@
             showSuccessMessage('✅ Custom item added: ' + name);
         }
 
-        // Enhanced toggle function to handle custom items
+        // Enhanced toggle function to handle current category approach
         function togglePresetItem(itemId) {
             // Check if it's a custom item already in the quote
             var existingIndex = currentQuoteData.items.findIndex(function(selectedItem) {
-                return selectedItem.id === itemId;
+                return selectedItem.id === itemId && selectedItem.category === currentCategory;
             });
             
             if (existingIndex !== -1) {
@@ -2918,7 +3144,7 @@
             }
             
             // Handle preset items
-            var categoryItems = presetWorkItems[currentQuoteData.category] || [];
+            var categoryItems = presetWorkItems[currentCategory] || [];
             var item = categoryItems.find(function(item) { return item.id === itemId; });
             
             if (!item) return;
@@ -2932,6 +3158,7 @@
                 unit: item.unit,
                 quantity: 1,
                 total: item.price,
+                category: currentCategory,
                 isCustom: false
             };
             
@@ -2942,16 +3169,19 @@
             renderPresetItems();
         }
 
-        // Updated renderPresetItems to show custom items
+        // Updated renderPresetItems to work with current category
         function renderPresetItems() {
             var container = document.getElementById('preset-items-list');
             if (!container) return;
             
-            var categoryItems = presetWorkItems[currentQuoteData.category] || [];
+            var categoryItems = presetWorkItems[currentCategory] || [];
             var html = '';
             
-            // Show custom items first if any
-            var customItems = currentQuoteData.items.filter(function(item) { return item.isCustom; });
+            // Show custom items for this category first
+            var customItems = currentQuoteData.items.filter(function(item) { 
+                return item.isCustom && item.category === currentCategory; 
+            });
+            
             if (customItems.length > 0) {
                 html += '<div style="margin-bottom: 20px;">' +
                     '<div style="font-weight: 700; color: var(--accent-warm); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
@@ -2991,7 +3221,7 @@
             if (categoryItems.length > 0) {
                 html += '<div style="margin-bottom: 12px;">' +
                     '<div style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
-                    '<span style="font-size: 20px;">' + categories[currentQuoteData.category].icon + '</span>' +
+                    '<span style="font-size: 20px;">' + categories[currentCategory].icon + '</span>' +
                     '<span>Preset Items (' + categoryItems.length + ')</span>' +
                     '</div>';
             }
@@ -2999,7 +3229,7 @@
             for (var i = 0; i < categoryItems.length; i++) {
                 var item = categoryItems[i];
                 var isSelected = currentQuoteData.items.some(function(selectedItem) {
-                    return selectedItem.id === item.id && !selectedItem.isCustom;
+                    return selectedItem.id === item.id && selectedItem.category === currentCategory && !selectedItem.isCustom;
                 });
                 
                 html += '<div class="preset-item' + (isSelected ? ' selected' : '') + '" onclick="togglePresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
