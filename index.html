@@ -33,7 +33,7 @@
         }
         
         :root {
-            /* Light Theme - Warm & Eye-Friendly */
+            /* Light Theme - Warm & Eye-Friendly with Pastel Red-Pink */
             --bg-primary: #f7f5f3;
             --bg-secondary: #edeae6;
             --bg-card: #ffffff;
@@ -41,8 +41,8 @@
             --text-primary: #2d3748;
             --text-secondary: #4a5568;
             --text-muted: #718096;
-            --accent-primary: #38a169;
-            --accent-secondary: #68d391;
+            --accent-primary: #f472b6;
+            --accent-secondary: #f9a8d4;
             --accent-warm: #d69e2e;
             --accent-soft: #9f7aea;
             --border-color: #e2e8f0;
@@ -50,7 +50,7 @@
             --shadow-medium: rgba(0, 0, 0, 0.1);
             --shadow-strong: rgba(0, 0, 0, 0.15);
             --overlay: rgba(45, 55, 72, 0.8);
-            --success: #38a169;
+            --success: #f472b6;
             --warning: #d69e2e;
             --error: #e53e3e;
             --info: #3182ce;
@@ -59,7 +59,7 @@
             --cat-electrical: #3182ce;
             --cat-plumbing: #0987a0;
             --cat-hvac: #805ad5;
-            --cat-cleaning: #38a169;
+            --cat-cleaning: #f472b6;
             --cat-parts: #d69e2e;
             --cat-labor: #e53e3e;
             --cat-equipment: #718096;
@@ -2026,6 +2026,11 @@
                 localStorage.setItem(STORAGE_KEYS.JOB_QUOTES, JSON.stringify(jobQuotes));
                 localStorage.setItem(STORAGE_KEYS.THEME_PREFERENCE, JSON.stringify(currentTheme));
                 localStorage.setItem(STORAGE_KEYS.COMPANY_INFO, JSON.stringify(companyInfo));
+                if (customLogo) {
+                    localStorage.setItem(STORAGE_KEYS.CUSTOM_LOGO, customLogo);
+                } else {
+                    localStorage.removeItem(STORAGE_KEYS.CUSTOM_LOGO);
+                }
             } catch (e) {
                 console.warn('Storage error:', e);
                 showSuccessMessage('⚠️ Storage full! Please export data.');
@@ -2047,6 +2052,12 @@
                     document.getElementById('company-registration').innerHTML = 
                         'Registration No: ' + companyInfo.registration.split('(')[0].trim() + '<br>(' + 
                         (companyInfo.registration.includes('(') ? companyInfo.registration.split('(')[1] : ')');
+                }
+                
+                var savedLogo = localStorage.getItem(STORAGE_KEYS.CUSTOM_LOGO);
+                if (savedLogo) {
+                    customLogo = savedLogo;
+                    updateHeaderLogo();
                 }
             } catch (e) {
                 console.warn('Load error:', e);
@@ -2423,37 +2434,67 @@
             var html = '';
             
             // Quote Header
+            var categoriesText = quote.categories ? quote.categories.map(function(cat) { 
+                return categories[cat] ? categories[cat].name : cat; 
+            }).join(', ') : (quote.category ? categories[quote.category].name : 'Multiple');
+            
             html += '<div class="quote-detail-header">' +
                 '<div class="quote-title">' + quote.title + '</div>' +
-                '<div class="quote-meta">📅 Created: ' + formatDate(quote.createdAt) + ' • 🏷️ Category: ' + categories[quote.category].name + '</div>' +
+                '<div class="quote-meta">📅 Created: ' + formatDate(quote.createdAt) + ' • 🏷️ Categories: ' + categoriesText + '</div>' +
                 '<div class="quote-total">' +
                 '<div class="label">Total Quote Amount</div>' +
                 '<div class="amount">RM ' + quote.totalAmount.toFixed(2) + '</div>' +
                 '</div>' +
                 '</div>';
             
-            // Quote Items
+            // Quote Items grouped by category
             html += '<div class="quote-items">' +
                 '<div class="items-header">' +
                 '<span>📋</span> Quote Items (' + quote.items.length + ')' +
                 '</div>';
             
+            // Group items by category
+            var itemsByCategory = {};
             for (var i = 0; i < quote.items.length; i++) {
                 var item = quote.items[i];
-                var itemIcon = item.isCustom ? '🛠️' : categories[quote.category].icon;
-                var itemLabel = item.isCustom ? ' (Custom)' : '';
+                var itemCategory = item.category || quote.category || 'common';
+                if (!itemsByCategory[itemCategory]) {
+                    itemsByCategory[itemCategory] = [];
+                }
+                itemsByCategory[itemCategory].push(item);
+            }
+            
+            // Render items by category
+            for (var catKey in itemsByCategory) {
+                var catItems = itemsByCategory[catKey];
+                var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
                 
-                html += '<div class="quote-item">' +
-                    '<div class="item-name">' +
-                    '<span>' + itemIcon + '</span>' +
-                    item.name + itemLabel +
-                    '</div>' +
-                    '<div class="item-details">' + item.description + '</div>' +
-                    '<div class="item-pricing">' +
-                    '<span class="quantity">Quantity: ' + item.quantity + ' ' + item.unit + '</span>' +
-                    '<span class="price">RM ' + item.total.toFixed(2) + '</span>' +
-                    '</div>' +
+                html += '<div style="margin-bottom: 20px; border-left: 4px solid ' + (categories[catKey] ? categories[catKey].color : 'var(--accent-primary)') + '; padding-left: 16px;">' +
+                    '<div style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
+                    '<span style="font-size: 20px;">' + (categories[catKey] ? categories[catKey].icon : '📋') + '</span>' +
+                    '<span>' + (categories[catKey] ? categories[catKey].name : catKey) + ' (' + catItems.length + ' items)</span>' +
+                    '<span style="margin-left: auto; color: var(--accent-primary);">RM ' + catTotal.toFixed(2) + '</span>' +
                     '</div>';
+                
+                for (var j = 0; j < catItems.length; j++) {
+                    var item = catItems[j];
+                    var itemIcon = item.isCustom ? '🛠️' : (categories[catKey] ? categories[catKey].icon : '📋');
+                    var itemLabel = item.isCustom ? ' (Custom)' : '';
+                    
+                    html += '<div class="quote-item">' +
+                        '<div class="item-name">' +
+                        '<span>' + itemIcon + '</span>' +
+                        item.name + itemLabel +
+                        '</div>' +
+                        '<div class="item-details">' + item.description + '</div>' +
+                        '<div class="item-pricing">' +
+                        '<span class="quantity">Quantity: ' + item.quantity + ' ' + item.unit + '</span>' +
+                        '<span class="price">RM ' + item.total.toFixed(2) + '</span>' +
+                        '</div>' +
+                        '</div>';
+                }
+                
+                html += '</div>';
             }
             
             html += '</div>';
@@ -2501,10 +2542,19 @@
             var doc = new jsPDF();
             
             try {
-                // Header
+                // Header with Logo
                 doc.setFontSize(20);
                 doc.setFont(undefined, 'bold');
                 doc.text(companyInfo.name, 20, 30);
+                
+                // Add logo if available
+                if (customLogo) {
+                    try {
+                        doc.addImage(customLogo, 'JPEG', 150, 10, 40, 30);
+                    } catch (logoError) {
+                        console.warn('Logo embedding failed:', logoError);
+                    }
+                }
                 
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'normal');
@@ -2522,7 +2572,12 @@
                 doc.text('Quote #: ' + quote.id, 20, 85);
                 doc.text('Date: ' + formatDate(quote.createdAt), 20, 95);
                 doc.text('Job Title: ' + quote.title, 20, 105);
-                doc.text('Category: ' + categories[quote.category].name, 20, 115);
+                
+                // Categories
+                var categoriesText = quote.categories ? quote.categories.map(function(cat) { 
+                    return categories[cat] ? categories[cat].name : cat; 
+                }).join(', ') : (quote.category ? categories[quote.category].name : 'Multiple');
+                doc.text('Categories: ' + categoriesText, 20, 115);
                 
                 // Items Header
                 doc.setFontSize(14);
@@ -2535,9 +2590,10 @@
                 doc.setFont(undefined, 'bold');
                 doc.text('No.', 20, yPosition);
                 doc.text('Description', 35, yPosition);
-                doc.text('Qty', 130, yPosition);
-                doc.text('Unit', 150, yPosition);
-                doc.text('Amount (RM)', 170, yPosition);
+                doc.text('Category', 110, yPosition);
+                doc.text('Qty', 140, yPosition);
+                doc.text('Unit', 155, yPosition);
+                doc.text('Amount (RM)', 175, yPosition);
                 
                 // Items
                 doc.setFont(undefined, 'normal');
@@ -2547,12 +2603,18 @@
                     
                     doc.text((i + 1).toString(), 20, yPosition);
                     var itemName = item.name + (item.isCustom ? ' (Custom)' : '');
-                    doc.text(itemName.substring(0, 35), 35, yPosition);
-                    doc.text(item.quantity.toString(), 130, yPosition);
-                    doc.text(item.unit, 150, yPosition);
-                    doc.text(item.total.toFixed(2), 170, yPosition);
+                    doc.text(itemName.substring(0, 25), 35, yPosition);
                     
-                    if (item.description) {
+                    // Category
+                    var itemCategory = item.category || quote.category || 'common';
+                    var catName = categories[itemCategory] ? categories[itemCategory].name : itemCategory;
+                    doc.text(catName.substring(0, 10), 110, yPosition);
+                    
+                    doc.text(item.quantity.toString(), 140, yPosition);
+                    doc.text(item.unit.substring(0, 8), 155, yPosition);
+                    doc.text(item.total.toFixed(2), 175, yPosition);
+                    
+                    if (item.description && yPosition < 240) {
                         yPosition += 8;
                         doc.setFontSize(8);
                         doc.text(item.description.substring(0, 60), 35, yPosition);
@@ -2622,10 +2684,19 @@
             var doc = new jsPDF();
             
             try {
-                // Header
+                // Header with Logo
                 doc.setFontSize(20);
                 doc.setFont(undefined, 'bold');
                 doc.text(companyInfo.name, 20, 30);
+                
+                // Add logo if available
+                if (customLogo) {
+                    try {
+                        doc.addImage(customLogo, 'JPEG', 150, 10, 40, 30);
+                    } catch (logoError) {
+                        console.warn('Logo embedding failed:', logoError);
+                    }
+                }
                 
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'normal');
@@ -2643,7 +2714,12 @@
                 doc.text('Quote #: ' + quote.id, 20, 85);
                 doc.text('Date: ' + formatDate(quote.createdAt), 20, 95);
                 doc.text('Job Title: ' + quote.title, 20, 105);
-                doc.text('Category: ' + categories[quote.category].name, 20, 115);
+                
+                // Categories
+                var categoriesText = quote.categories ? quote.categories.map(function(cat) { 
+                    return categories[cat] ? categories[cat].name : cat; 
+                }).join(', ') : (quote.category ? categories[quote.category].name : 'Multiple');
+                doc.text('Categories: ' + categoriesText, 20, 115);
                 
                 // Items Header
                 doc.setFontSize(14);
@@ -2656,9 +2732,10 @@
                 doc.setFont(undefined, 'bold');
                 doc.text('No.', 20, yPosition);
                 doc.text('Description', 35, yPosition);
-                doc.text('Qty', 130, yPosition);
-                doc.text('Unit', 150, yPosition);
-                doc.text('Amount (RM)', 170, yPosition);
+                doc.text('Category', 110, yPosition);
+                doc.text('Qty', 140, yPosition);
+                doc.text('Unit', 155, yPosition);
+                doc.text('Amount (RM)', 175, yPosition);
                 
                 // Items
                 doc.setFont(undefined, 'normal');
@@ -2668,12 +2745,18 @@
                     
                     doc.text((i + 1).toString(), 20, yPosition);
                     var itemName = item.name + (item.isCustom ? ' (Custom)' : '');
-                    doc.text(itemName.substring(0, 35), 35, yPosition);
-                    doc.text(item.quantity.toString(), 130, yPosition);
-                    doc.text(item.unit, 150, yPosition);
-                    doc.text(item.total.toFixed(2), 170, yPosition);
+                    doc.text(itemName.substring(0, 25), 35, yPosition);
                     
-                    if (item.description) {
+                    // Category
+                    var itemCategory = item.category || quote.category || 'common';
+                    var catName = categories[itemCategory] ? categories[itemCategory].name : itemCategory;
+                    doc.text(catName.substring(0, 10), 110, yPosition);
+                    
+                    doc.text(item.quantity.toString(), 140, yPosition);
+                    doc.text(item.unit.substring(0, 8), 155, yPosition);
+                    doc.text(item.total.toFixed(2), 175, yPosition);
+                    
+                    if (item.description && yPosition < 240) {
                         yPosition += 8;
                         doc.setFontSize(8);
                         doc.text(item.description.substring(0, 60), 35, yPosition);
@@ -2819,12 +2902,28 @@
             var html = '';
             for (var i = 0; i < recentQuotes.length; i++) {
                 var quote = recentQuotes[i];
+                
+                // Handle both old single category and new multi-category quotes
+                var quoteCategories = quote.categories || (quote.category ? [quote.category] : ['common']);
+                var categoryBadges = '';
+                
+                for (var j = 0; j < Math.min(quoteCategories.length, 2); j++) {
+                    var cat = quoteCategories[j];
+                    if (categories[cat]) {
+                        categoryBadges += '<span class="category-badge category-' + cat + '">' + 
+                            categories[cat].icon + ' ' + categories[cat].name + '</span>';
+                    }
+                }
+                
+                if (quoteCategories.length > 2) {
+                    categoryBadges += '<span class="category-badge" style="background: var(--text-muted);">+' + 
+                        (quoteCategories.length - 2) + '</span>';
+                }
+                
                 html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;" onclick="showQuoteDetail(' + quote.id + ')">' +
                     '<div style="font-weight: 700; font-size: 15px; color: var(--text-primary); margin-bottom: 8px;">' + quote.title + '</div>' +
                     '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
-                    '<div style="margin-bottom: 8px;">' +
-                    '<span class="category-badge category-' + quote.category + '">' + categories[quote.category].icon + ' ' + categories[quote.category].name + '</span>' +
-                    '</div>' +
+                    '<div style="margin-bottom: 8px;">' + categoryBadges + '</div>' +
                     '<div style="display: flex; justify-content: space-between; align-items: center;">' +
                     '<span style="color: var(--text-muted); font-size: 12px;">Quote #' + quote.id + '</span>' +
                     '<span style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
@@ -2850,14 +2949,30 @@
             var html = '';
             for (var i = jobQuotes.length - 1; i >= 0; i--) {
                 var quote = jobQuotes[i];
+                
+                // Handle both old single category and new multi-category quotes
+                var quoteCategories = quote.categories || (quote.category ? [quote.category] : ['common']);
+                var categoryBadges = '';
+                
+                for (var j = 0; j < Math.min(quoteCategories.length, 3); j++) {
+                    var cat = quoteCategories[j];
+                    if (categories[cat]) {
+                        categoryBadges += '<span class="category-badge category-' + cat + '">' + 
+                            categories[cat].icon + ' ' + categories[cat].name + '</span>';
+                    }
+                }
+                
+                if (quoteCategories.length > 3) {
+                    categoryBadges += '<span class="category-badge" style="background: var(--text-muted);">+' + 
+                        (quoteCategories.length - 3) + ' more</span>';
+                }
+                
                 html += '<div class="item-card">' +
                     '<div class="item-header">' +
                     '<div class="item-info">' +
                     '<h3>' + quote.title + '</h3>' +
                     '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
-                    '<div style="margin: 8px 0;">' +
-                    '<span class="category-badge category-' + quote.category + '">' + categories[quote.category].icon + ' ' + categories[quote.category].name + '</span>' +
-                    '</div>' +
+                    '<div style="margin: 8px 0;">' + categoryBadges + '</div>' +
                     '</div>' +
                     '</div>' +
                     '<div class="item-actions">' +
@@ -2935,9 +3050,10 @@
                 categories: categories,
                 presetWorkItems: presetWorkItems,
                 companyInfo: companyInfo,
+                customLogo: customLogo,
                 themePreference: currentTheme,
                 exportDate: new Date().toISOString(),
-                version: 'Simplified 1.1'
+                version: 'Enhanced Multi-Category 2.0'
             };
             
             var dataStr = JSON.stringify(allData, null, 2);
@@ -2945,10 +3061,10 @@
             
             var link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Simplified_' + new Date().toISOString().split('T')[0] + '.json';
+            link.download = 'REFIT_Enhanced_' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             
-            showSuccessMessage('📤 Data exported successfully!');
+            showSuccessMessage('📤 Enhanced data exported successfully!');
         }
 
         // Branding & Logo Management
@@ -3309,20 +3425,24 @@
             updateStats();
             renderViews();
             
-            showSuccessMessage('🎯 REFIT Quote System Ready! Simple & Fast! 🚀');
+            showSuccessMessage('🚀 REFIT Enhanced Multi-Category System Ready! 🎨✨');
             console.log('🔧 REFIT MAINTENANCE SERVICES - Simplified Quote Creation');
             console.log('📱 3-Step Quote Process: Title → Category → Items → Share');
             console.log('📄 PDF Generation & Sharing System');
             console.log('👁️ Eye-Friendly Mobile Design');
         }
 
-        console.log('🎯 REFIT SIMPLIFIED - Quote Creation & PDF Sharing System Ready');
+        console.log('🚀 REFIT ENHANCED - Multi-Category Quote System with Branding!');
         console.log('📝 Step 1: Job Title');
-        console.log('🏷️ Step 2: Category Selection');
+        console.log('🏷️ Step 2: Multi-Category Selection');
         console.log('📋 Step 3: Item Selection + Custom Item Creation');
-        console.log('📤 PDF Generation & Sharing');
+        console.log('✅ Enhanced Workflow: Select multiple categories → Add items → Continue/Finalize');
+        console.log('📤 PDF Generation with Custom Logo & Multi-Category Support');
         console.log('🛠️ Custom Items: Create items on-the-fly during quote creation');
-        console.log('🏢 Simple Company Info: Optional insert button - no lock-in!');
+        console.log('🏢 Company Info: Optional insert button - no lock-in!');
+        console.log('🎨 Branding: Custom logo upload with professional PDF integration');
+        console.log('🔄 Enhanced Navigation: Back and forth between categories');
+        console.log('📊 Multi-Category Display: Professional quote organization by category');
     </script>
 </body>
 </html>
