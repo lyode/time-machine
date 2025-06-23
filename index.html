@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#2d3748">
     <meta name="msapplication-navbutton-color" content="#2d3748">
     
-    <title>REFIT MAINTENANCE SERVICES - Enhanced Management System</title>
+    <title>REFIT MAINTENANCE SERVICES - Simplified Quote System</title>
     
     <!-- Enhanced PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -243,13 +243,6 @@
             filter: drop-shadow(0 2px 4px var(--shadow-light));
         }
         
-        .user-logo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 14px;
-        }
-        
         .app-title h1 {
             font-size: 18px;
             font-weight: 700;
@@ -270,17 +263,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-        
-        .header-right .stats {
-            text-align: right;
-            margin-right: 8px;
-        }
-        
-        .header-right p {
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-weight: 600;
         }
         
         .header-btn {
@@ -307,42 +289,6 @@
         .header-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px var(--shadow-medium);
-        }
-        
-        .header-btn.user-info {
-            background: var(--accent-soft);
-        }
-        
-        .header-btn.icon-upload {
-            background: var(--accent-warm);
-        }
-        
-        .header-btn.export {
-            background: var(--info);
-        }
-        
-        /* Tooltip for header buttons */
-        .header-btn::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: -35px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--text-primary);
-            color: var(--bg-card);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 600;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-            z-index: 1000;
-        }
-        
-        .header-btn:hover::after {
-            opacity: 1;
         }
         
         /* Main Content */
@@ -408,186 +354,6 @@
         .category-loose { background: var(--cat-loose); }
         .category-sanitary { background: var(--cat-sanitary); }
         .category-appliances { background: var(--cat-appliances); }
-        
-        .category-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-            padding: 16px;
-            background: var(--bg-card);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        
-        .category-filter {
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 2px solid transparent;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .category-filter:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow-light);
-        }
-        
-        .category-filter.active {
-            border-color: var(--accent-primary);
-            background: var(--accent-primary);
-            color: white;
-        }
-        
-        /* Individual category filter styles */
-        .category-filter.electrical { border-color: var(--cat-electrical); }
-        .category-filter.electrical.active { background: var(--cat-electrical); }
-        .category-filter.plumbing { border-color: var(--cat-plumbing); }
-        .category-filter.plumbing.active { background: var(--cat-plumbing); }
-        .category-filter.hvac { border-color: var(--cat-hvac); }
-        .category-filter.hvac.active { background: var(--cat-hvac); }
-        .category-filter.cleaning { border-color: var(--cat-cleaning); }
-        .category-filter.cleaning.active { background: var(--cat-cleaning); }
-        .category-filter.parts { border-color: var(--cat-parts); }
-        .category-filter.parts.active { background: var(--cat-parts); }
-        .category-filter.labor { border-color: var(--cat-labor); }
-        .category-filter.labor.active { background: var(--cat-labor); }
-        .category-filter.equipment { border-color: var(--cat-equipment); }
-        .category-filter.equipment.active { background: var(--cat-equipment); }
-        .category-filter.common { border-color: var(--cat-common); }
-        .category-filter.common.active { background: var(--cat-common); }
-        .category-filter.preliminary { border-color: var(--cat-preliminary); }
-        .category-filter.preliminary.active { background: var(--cat-preliminary); }
-        .category-filter.wall { border-color: var(--cat-wall); }
-        .category-filter.wall.active { background: var(--cat-wall); }
-        .category-filter.floor { border-color: var(--cat-floor); }
-        .category-filter.floor.active { background: var(--cat-floor); }
-        .category-filter.ceiling { border-color: var(--cat-ceiling); }
-        .category-filter.ceiling.active { background: var(--cat-ceiling); }
-        .category-filter.roofing { border-color: var(--cat-roofing); }
-        .category-filter.roofing.active { background: var(--cat-roofing); }
-        .category-filter.wetwork { border-color: var(--cat-wetwork); }
-        .category-filter.wetwork.active { background: var(--cat-wetwork); }
-        .category-filter.me-work { border-color: var(--cat-me-work); }
-        .category-filter.me-work.active { background: var(--cat-me-work); }
-        .category-filter.exhaust { border-color: var(--cat-exhaust); }
-        .category-filter.exhaust.active { background: var(--cat-exhaust); }
-        .category-filter.lights-fan { border-color: var(--cat-lights-fan); }
-        .category-filter.lights-fan.active { background: var(--cat-lights-fan); }
-        .category-filter.ac { border-color: var(--cat-ac); }
-        .category-filter.ac.active { background: var(--cat-ac); }
-        .category-filter.paint { border-color: var(--cat-paint); }
-        .category-filter.paint.active { background: var(--cat-paint); }
-        .category-filter.curtain { border-color: var(--cat-curtain); }
-        .category-filter.curtain.active { background: var(--cat-curtain); }
-        .category-filter.builtin { border-color: var(--cat-builtin); }
-        .category-filter.builtin.active { background: var(--cat-builtin); }
-        .category-filter.loose { border-color: var(--cat-loose); }
-        .category-filter.loose.active { background: var(--cat-loose); }
-        .category-filter.sanitary { border-color: var(--cat-sanitary); }
-        .category-filter.sanitary.active { background: var(--cat-sanitary); }
-        .category-filter.appliances { border-color: var(--cat-appliances); }
-        .category-filter.appliances.active { background: var(--cat-appliances); }
-        
-        .category-count {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            padding: 2px 6px;
-            font-size: 10px;
-            margin-left: 4px;
-        }
-        
-        /* Category Sections */
-        .category-section {
-            margin-bottom: 24px;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 2px solid var(--border-color);
-            transition: all 0.2s ease;
-        }
-        
-        .category-header {
-            padding: 16px 20px;
-            background: var(--bg-secondary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .category-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--text-primary);
-        }
-        
-        .category-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 16px;
-        }
-        
-        .category-icon.electrical { background: var(--cat-electrical); }
-        .category-icon.plumbing { background: var(--cat-plumbing); }
-        .category-icon.hvac { background: var(--cat-hvac); }
-        .category-icon.cleaning { background: var(--cat-cleaning); }
-        .category-icon.parts { background: var(--cat-parts); }
-        .category-icon.labor { background: var(--cat-labor); }
-        .category-icon.equipment { background: var(--cat-equipment); }
-        .category-icon.common { background: var(--cat-common); }
-        .category-icon.preliminary { background: var(--cat-preliminary); }
-        .category-icon.wall { background: var(--cat-wall); }
-        .category-icon.floor { background: var(--cat-floor); }
-        .category-icon.ceiling { background: var(--cat-ceiling); }
-        .category-icon.roofing { background: var(--cat-roofing); }
-        .category-icon.wetwork { background: var(--cat-wetwork); }
-        .category-icon.me-work { background: var(--cat-me-work); }
-        .category-icon.exhaust { background: var(--cat-exhaust); }
-        .category-icon.lights-fan { background: var(--cat-lights-fan); }
-        .category-icon.ac { background: var(--cat-ac); }
-        .category-icon.paint { background: var(--cat-paint); }
-        .category-icon.curtain { background: var(--cat-curtain); }
-        .category-icon.builtin { background: var(--cat-builtin); }
-        .category-icon.loose { background: var(--cat-loose); }
-        .category-icon.sanitary { background: var(--cat-sanitary); }
-        .category-icon.appliances { background: var(--cat-appliances); }
-        
-        /* Custom Icon Display */
-        .custom-icon {
-            width: 24px;
-            height: 24px;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-        
-        .category-stats {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-        
-        .category-body {
-            background: var(--bg-card);
-        }
         
         /* Cards */
         .card {
@@ -753,46 +519,6 @@
             box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.1);
         }
         
-        /* File Upload Styles */
-        .file-upload {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-            overflow: hidden;
-            border-radius: 12px;
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            transition: all 0.2s ease;
-        }
-        
-        .file-upload:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
-        }
-        
-        .file-upload input[type="file"] {
-            position: absolute;
-            left: -9999px;
-        }
-        
-        .file-upload-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 16px;
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        .upload-preview {
-            max-width: 100px;
-            max-height: 100px;
-            border-radius: 8px;
-            margin-top: 8px;
-            border: 1px solid var(--border-color);
-        }
-        
         /* Search Input */
         .search-container {
             position: relative;
@@ -881,6 +607,8 @@
         .icon-btn.delete-btn { background: var(--error); color: white; }
         .icon-btn.pdf-btn { background: var(--info); color: white; }
         .icon-btn.quote-btn { background: var(--accent-warm); color: white; }
+        .icon-btn.share-btn { background: var(--success); color: white; }
+        .icon-btn.back-btn { background: var(--text-secondary); color: white; }
         
         .item-actions {
             display: flex;
@@ -1126,6 +854,233 @@
             transform: translateX(-50%) translateY(0);
         }
         
+        /* Category Selection */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .category-item {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .category-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow-medium);
+        }
+        
+        .category-item.selected {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .category-item .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .category-item .name {
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        /* Preset Item Selection */
+        .preset-item {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .preset-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--shadow-light);
+        }
+        
+        .preset-item.selected {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .preset-item .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .preset-item .name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        .preset-item .price {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--accent-primary);
+        }
+        
+        .preset-item.selected .price {
+            color: white;
+        }
+        
+        .preset-item .description {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        
+        .preset-item.selected .description {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .preset-item .unit {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        .preset-item.selected .unit {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Quote Detail Page */
+        .quote-detail-header {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px var(--shadow-light);
+        }
+        
+        .quote-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .quote-meta {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        
+        .quote-total {
+            background: var(--accent-primary);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .quote-total .label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+        
+        .quote-total .amount {
+            font-size: 32px;
+            font-weight: 800;
+        }
+        
+        .quote-items {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px var(--shadow-light);
+        }
+        
+        .items-header {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .quote-item {
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--accent-primary);
+        }
+        
+        .quote-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .quote-item .item-name {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .quote-item .item-details {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        
+        .quote-item .item-pricing {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .quote-item .quantity {
+            color: var(--text-secondary);
+        }
+        
+        .quote-item .price {
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+        
+        /* PDF Actions */
+        .pdf-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+        }
+        
+        .pdf-actions.three-col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
         /* Utility Classes */
         .hidden {
             display: none !important;
@@ -1215,48 +1170,24 @@
                 font-size: 24px;
             }
             
-            .category-filters {
-                max-height: 150px;
-            }
-            
-            .header-right {
-                gap: 6px;
-            }
-            
             .header-btn {
                 width: 40px;
                 height: 40px;
                 font-size: 16px;
             }
             
-            /* Step indicators mobile optimization */
-            .step-indicator-container {
-                flex-direction: column;
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 8px;
-                margin-bottom: 16px;
             }
             
-            .step-indicator-line {
-                width: 2px;
-                height: 20px;
+            .pdf-actions {
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
             
-            /* Simplified preset cards for mobile */
-            .simple-preset-card {
-                padding: 12px;
-                margin-bottom: 6px;
-            }
-            
-            .simple-preset-card .preset-title {
-                font-size: 14px;
-            }
-            
-            .simple-preset-card .preset-description {
-                font-size: 12px;
-            }
-            
-            .simple-preset-card .preset-price {
-                font-size: 14px;
+            .pdf-actions.three-col {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -1272,17 +1203,27 @@
             }
         }
         
-        /* Print styles */
+        /* Print styles for PDF */
         @media print {
             .status-bar,
+            .header,
             .bottom-nav,
-            .modal {
+            .modal,
+            .item-actions {
                 display: none !important;
             }
             
             body {
                 background: white !important;
                 color: black !important;
+                position: static !important;
+                height: auto !important;
+            }
+            
+            .main-content {
+                padding: 20px !important;
+                overflow: visible !important;
+                height: auto !important;
             }
         }
     </style>
@@ -1304,8 +1245,7 @@
         <div class="header">
             <div class="header-left">
                 <div class="logo-container">
-                    <div class="app-logo" onclick="openUserInfo()" id="main-logo">
-                        <!-- Default Professional Maintenance Tool Icon -->
+                    <div class="app-logo">
                         <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
                             <path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
@@ -1320,99 +1260,7 @@
                 </div>
             </div>
             <div class="header-right">
-                <div class="stats">
-                    <p id="current-date">Today</p>
-                    <p id="daily-revenue">RM 0.00</p>
-                </div>
-                <button class="header-btn user-info" onclick="openUserInfo()" data-tooltip="👤 User Info & Logo">
-                    👤
-                </button>
-                <button class="header-btn icon-upload" onclick="openIconUpload()" data-tooltip="🎨 Upload Category Icons">
-                    🎨
-                </button>
-                <button class="header-btn export" onclick="exportData()" data-tooltip="📤 Export Data">
-                    📤
-                </button>
-            </div>
-        </div>
-
-        <!-- User Info Modal -->
-        <div id="user-info-modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>👤 User Info & Company Settings</h3>
-                    <button class="close-btn" onclick="closeUserInfo()">✕</button>
-                </div>
-                <div class="modal-body">
-                    <div class="card" style="margin-bottom: 20px;">
-                        <h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">🏢 Company Information</h4>
-                        <input type="text" class="form-input" placeholder="Company Name" id="user-company-name">
-                        <input type="text" class="form-input" placeholder="Registration Number" id="user-registration">
-                        <input type="text" class="form-input" placeholder="Phone Number" id="user-phone">
-                        <input type="text" class="form-input" placeholder="Email Address" id="user-email">
-                        <textarea class="form-input" placeholder="Company Address" id="user-address" rows="3" style="resize: none;"></textarea>
-                        <input type="text" class="form-input" placeholder="Website" id="user-website">
-                    </div>
-
-                    <div class="card" style="margin-bottom: 20px;">
-                        <h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">🖼️ Company Logo Upload</h4>
-                        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">Upload your company logo (PNG, JPG, GIF - Max 2MB)</p>
-                        
-                        <div class="file-upload">
-                            <input type="file" id="logo-upload" accept="image/*" onchange="handleLogoUpload(event)">
-                            <label for="logo-upload" class="file-upload-label">
-                                <span>📁</span>
-                                <span>Choose Logo Image</span>
-                            </label>
-                        </div>
-                        
-                        <div id="logo-preview" style="margin-top: 12px; text-align: center;"></div>
-                        
-                        <div style="margin-top: 12px;">
-                            <button type="button" onclick="removeCustomLogo()" class="btn btn-danger" style="width: 100%; font-size: 14px;">
-                                🗑️ Remove Custom Logo
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" onclick="saveUserInfo()" class="form-btn btn-primary">
-                            ✅ Save Info
-                        </button>
-                        <button type="button" onclick="closeUserInfo()" class="form-btn btn-secondary">
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Icon Upload Modal -->
-        <div id="icon-upload-modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>🎨 Upload Category Icons</h3>
-                    <button class="close-btn" onclick="closeIconUpload()">✕</button>
-                </div>
-                <div class="modal-body">
-                    <div class="card" style="margin-bottom: 20px;">
-                        <h4 style="margin-bottom: 16px; color: var(--text-primary); font-weight: 700;">📂 Custom Category Icons</h4>
-                        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Upload custom icons for categories (PNG, JPG, SVG - Max 1MB each)</p>
-                        
-                        <div id="category-icon-list">
-                            <!-- Category icon upload items will be populated here -->
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" onclick="resetAllIcons()" class="form-btn btn-danger">
-                            🔄 Reset All Icons
-                        </button>
-                        <button type="button" onclick="closeIconUpload()" class="form-btn btn-secondary">
-                            Done
-                        </button>
-                    </div>
-                </div>
+                <button class="header-btn" onclick="exportData()">📤</button>
             </div>
         </div>
 
@@ -1444,21 +1292,13 @@
                 <div class="card">
                     <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">Quick Actions</h3>
                     <div class="actions-grid">
-                        <button class="action-btn primary" onclick="openSimpleJobForm()">
+                        <button class="action-btn primary" onclick="openCreateQuote()">
                             <span class="icon">➕</span>
-                            <span style="font-weight: 700;">Create Job Quote</span>
+                            <span style="font-weight: 700;">Create New Quote</span>
                         </button>
                         <button class="action-btn success" onclick="showView('quotes')">
                             <span class="icon">💰</span>
                             <span style="font-weight: 700;">View All Quotes</span>
-                        </button>
-                        <button class="action-btn warm" onclick="openPresetManager()">
-                            <span class="icon">📋</span>
-                            <span style="font-weight: 700;">Manage Presets</span>
-                        </button>
-                        <button class="action-btn info" onclick="exportData()">
-                            <span class="icon">📤</span>
-                            <span style="font-weight: 700;">Export Data</span>
                         </button>
                     </div>
                 </div>
@@ -1477,7 +1317,7 @@
             <div id="quotes-view" class="view hidden">
                 <div class="section-header">
                     <h2 class="section-title">Job Quotes</h2>
-                    <button class="add-btn" onclick="openSimpleJobForm()">
+                    <button class="add-btn" onclick="openCreateQuote()">
                         <span>➕</span>
                     </button>
                 </div>
@@ -1487,310 +1327,19 @@
                     <input type="text" class="input" placeholder="Search quotes..." id="quote-search">
                 </div>
 
-                <!-- Enhanced Category Filters -->
-                <div class="category-filters">
-                    <div class="category-filter active" onclick="filterQuotesByCategory('all')" data-category="all">
-                        <span>📋</span>
-                        <span>All Quotes</span>
-                        <span class="category-count" id="filter-count-all">0</span>
-                    </div>
-                    <!-- New Categories -->
-                    <div class="category-filter preliminary" onclick="filterQuotesByCategory('preliminary')" data-category="preliminary">
-                        <span id="icon-preliminary">🏗️</span>
-                        <span>Preliminary</span>
-                        <span class="category-count" id="filter-count-preliminary">0</span>
-                    </div>
-                    <div class="category-filter wall" onclick="filterQuotesByCategory('wall')" data-category="wall">
-                        <span id="icon-wall">🧱</span>
-                        <span>Wall Work</span>
-                        <span class="category-count" id="filter-count-wall">0</span>
-                    </div>
-                    <div class="category-filter floor" onclick="filterQuotesByCategory('floor')" data-category="floor">
-                        <span id="icon-floor">🏢</span>
-                        <span>Floor Work</span>
-                        <span class="category-count" id="filter-count-floor">0</span>
-                    </div>
-                    <div class="category-filter ceiling" onclick="filterQuotesByCategory('ceiling')" data-category="ceiling">
-                        <span id="icon-ceiling">🏠</span>
-                        <span>Ceiling Work</span>
-                        <span class="category-count" id="filter-count-ceiling">0</span>
-                    </div>
-                    <div class="category-filter roofing" onclick="filterQuotesByCategory('roofing')" data-category="roofing">
-                        <span id="icon-roofing">🏘️</span>
-                        <span>Roofing</span>
-                        <span class="category-count" id="filter-count-roofing">0</span>
-                    </div>
-                    <div class="category-filter wetwork" onclick="filterQuotesByCategory('wetwork')" data-category="wetwork">
-                        <span id="icon-wetwork">💧</span>
-                        <span>Wet Work</span>
-                        <span class="category-count" id="filter-count-wetwork">0</span>
-                    </div>
-                    <!-- M&E Categories -->
-                    <div class="category-filter me-work" onclick="filterQuotesByCategory('me-work')" data-category="me-work">
-                        <span id="icon-me-work">⚙️</span>
-                        <span>M&E Work</span>
-                        <span class="category-count" id="filter-count-me-work">0</span>
-                    </div>
-                    <div class="category-filter exhaust" onclick="filterQuotesByCategory('exhaust')" data-category="exhaust">
-                        <span id="icon-exhaust">🌪️</span>
-                        <span>Exhaust</span>
-                        <span class="category-count" id="filter-count-exhaust">0</span>
-                    </div>
-                    <div class="category-filter lights-fan" onclick="filterQuotesByCategory('lights-fan')" data-category="lights-fan">
-                        <span id="icon-lights-fan">💡</span>
-                        <span>Lights & Fan</span>
-                        <span class="category-count" id="filter-count-lights-fan">0</span>
-                    </div>
-                    <div class="category-filter ac" onclick="filterQuotesByCategory('ac')" data-category="ac">
-                        <span id="icon-ac">❄️</span>
-                        <span>AC Systems</span>
-                        <span class="category-count" id="filter-count-ac">0</span>
-                    </div>
-                    <!-- Finishing Categories -->
-                    <div class="category-filter paint" onclick="filterQuotesByCategory('paint')" data-category="paint">
-                        <span id="icon-paint">🎨</span>
-                        <span>Paint Works</span>
-                        <span class="category-count" id="filter-count-paint">0</span>
-                    </div>
-                    <div class="category-filter curtain" onclick="filterQuotesByCategory('curtain')" data-category="curtain">
-                        <span id="icon-curtain">🪟</span>
-                        <span>Curtain & Blind</span>
-                        <span class="category-count" id="filter-count-curtain">0</span>
-                    </div>
-                    <!-- Furniture Categories -->
-                    <div class="category-filter builtin" onclick="filterQuotesByCategory('builtin')" data-category="builtin">
-                        <span id="icon-builtin">🔨</span>
-                        <span>Built-in Furniture</span>
-                        <span class="category-count" id="filter-count-builtin">0</span>
-                    </div>
-                    <div class="category-filter loose" onclick="filterQuotesByCategory('loose')" data-category="loose">
-                        <span id="icon-loose">🪑</span>
-                        <span>Loose Furniture</span>
-                        <span class="category-count" id="filter-count-loose">0</span>
-                    </div>
-                    <!-- Services Categories -->
-                    <div class="category-filter sanitary" onclick="filterQuotesByCategory('sanitary')" data-category="sanitary">
-                        <span id="icon-sanitary">🚿</span>
-                        <span>Sanitary & Water Pump</span>
-                        <span class="category-count" id="filter-count-sanitary">0</span>
-                    </div>
-                    <div class="category-filter appliances" onclick="filterQuotesByCategory('appliances')" data-category="appliances">
-                        <span id="icon-appliances">📺</span>
-                        <span>Electrical Appliances</span>
-                        <span class="category-count" id="filter-count-appliances">0</span>
-                    </div>
-                    <!-- Legacy Categories -->
-                    <div class="category-filter electrical" onclick="filterQuotesByCategory('electrical')" data-category="electrical">
-                        <span id="icon-electrical">⚡</span>
-                        <span>Electrical</span>
-                        <span class="category-count" id="filter-count-electrical">0</span>
-                    </div>
-                    <div class="category-filter plumbing" onclick="filterQuotesByCategory('plumbing')" data-category="plumbing">
-                        <span id="icon-plumbing">🔧</span>
-                        <span>Plumbing</span>
-                        <span class="category-count" id="filter-count-plumbing">0</span>
-                    </div>
-                    <div class="category-filter hvac" onclick="filterQuotesByCategory('hvac')" data-category="hvac">
-                        <span id="icon-hvac">🌡️</span>
-                        <span>HVAC</span>
-                        <span class="category-count" id="filter-count-hvac">0</span>
-                    </div>
-                    <div class="category-filter cleaning" onclick="filterQuotesByCategory('cleaning')" data-category="cleaning">
-                        <span id="icon-cleaning">🧽</span>
-                        <span>Cleaning</span>
-                        <span class="category-count" id="filter-count-cleaning">0</span>
-                    </div>
-                    <div class="category-filter parts" onclick="filterQuotesByCategory('parts')" data-category="parts">
-                        <span id="icon-parts">🔩</span>
-                        <span>Parts</span>
-                        <span class="category-count" id="filter-count-parts">0</span>
-                    </div>
-                    <div class="category-filter labor" onclick="filterQuotesByCategory('labor')" data-category="labor">
-                        <span id="icon-labor">👷</span>
-                        <span>Labor</span>
-                        <span class="category-count" id="filter-count-labor">0</span>
-                    </div>
-                    <div class="category-filter equipment" onclick="filterQuotesByCategory('equipment')" data-category="equipment">
-                        <span id="icon-equipment">🛠️</span>
-                        <span>Equipment</span>
-                        <span class="category-count" id="filter-count-equipment">0</span>
-                    </div>
-                    <div class="category-filter common" onclick="filterQuotesByCategory('common')" data-category="common">
-                        <span id="icon-common">🏷️</span>
-                        <span>Common</span>
-                        <span class="category-count" id="filter-count-common">0</span>
-                    </div>
-                </div>
-
                 <div id="quotes-list"></div>
             </div>
 
-            <!-- Presets View -->
-            <div id="presets-view" class="view hidden">
+            <!-- Quote Detail View -->
+            <div id="quote-detail-view" class="view hidden">
                 <div class="section-header">
-                    <h2 class="section-title">Preset Items</h2>
-                    <button class="add-btn" onclick="openPresetItemForm()">
-                        <span>➕</span>
+                    <h2 class="section-title">Quote Details</h2>
+                    <button class="icon-btn back-btn" onclick="showView('quotes')">
+                        ← Back
                     </button>
                 </div>
 
-                <div class="search-container">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" class="input" placeholder="Search preset items..." id="preset-search">
-                </div>
-
-                <!-- Enhanced Category Filters for Presets -->
-                <div class="category-filters">
-                    <div class="category-filter active" onclick="filterPresetsByCategory('all')" data-category="all">
-                        <span>📋</span>
-                        <span>All Items</span>
-                        <span class="category-count" id="preset-filter-count-all">0</span>
-                    </div>
-                    <!-- Same categories as quotes -->
-                    <div class="category-filter preliminary" onclick="filterPresetsByCategory('preliminary')" data-category="preliminary">
-                        <span id="preset-icon-preliminary">🏗️</span>
-                        <span>Preliminary</span>
-                        <span class="category-count" id="preset-filter-count-preliminary">0</span>
-                    </div>
-                    <div class="category-filter wall" onclick="filterPresetsByCategory('wall')" data-category="wall">
-                        <span id="preset-icon-wall">🧱</span>
-                        <span>Wall Work</span>
-                        <span class="category-count" id="preset-filter-count-wall">0</span>
-                    </div>
-                    <div class="category-filter floor" onclick="filterPresetsByCategory('floor')" data-category="floor">
-                        <span id="preset-icon-floor">🏢</span>
-                        <span>Floor Work</span>
-                        <span class="category-count" id="preset-filter-count-floor">0</span>
-                    </div>
-                    <div class="category-filter ceiling" onclick="filterPresetsByCategory('ceiling')" data-category="ceiling">
-                        <span id="preset-icon-ceiling">🏠</span>
-                        <span>Ceiling Work</span>
-                        <span class="category-count" id="preset-filter-count-ceiling">0</span>
-                    </div>
-                    <div class="category-filter roofing" onclick="filterPresetsByCategory('roofing')" data-category="roofing">
-                        <span id="preset-icon-roofing">🏘️</span>
-                        <span>Roofing</span>
-                        <span class="category-count" id="preset-filter-count-roofing">0</span>
-                    </div>
-                    <div class="category-filter wetwork" onclick="filterPresetsByCategory('wetwork')" data-category="wetwork">
-                        <span id="preset-icon-wetwork">💧</span>
-                        <span>Wet Work</span>
-                        <span class="category-count" id="preset-filter-count-wetwork">0</span>
-                    </div>
-                    <div class="category-filter me-work" onclick="filterPresetsByCategory('me-work')" data-category="me-work">
-                        <span id="preset-icon-me-work">⚙️</span>
-                        <span>M&E Work</span>
-                        <span class="category-count" id="preset-filter-count-me-work">0</span>
-                    </div>
-                    <div class="category-filter exhaust" onclick="filterPresetsByCategory('exhaust')" data-category="exhaust">
-                        <span id="preset-icon-exhaust">🌪️</span>
-                        <span>Exhaust</span>
-                        <span class="category-count" id="preset-filter-count-exhaust">0</span>
-                    </div>
-                    <div class="category-filter lights-fan" onclick="filterPresetsByCategory('lights-fan')" data-category="lights-fan">
-                        <span id="preset-icon-lights-fan">💡</span>
-                        <span>Lights & Fan</span>
-                        <span class="category-count" id="preset-filter-count-lights-fan">0</span>
-                    </div>
-                    <div class="category-filter ac" onclick="filterPresetsByCategory('ac')" data-category="ac">
-                        <span id="preset-icon-ac">❄️</span>
-                        <span>AC Systems</span>
-                        <span class="category-count" id="preset-filter-count-ac">0</span>
-                    </div>
-                    <div class="category-filter paint" onclick="filterPresetsByCategory('paint')" data-category="paint">
-                        <span id="preset-icon-paint">🎨</span>
-                        <span>Paint Works</span>
-                        <span class="category-count" id="preset-filter-count-paint">0</span>
-                    </div>
-                    <div class="category-filter curtain" onclick="filterPresetsByCategory('curtain')" data-category="curtain">
-                        <span id="preset-icon-curtain">🪟</span>
-                        <span>Curtain & Blind</span>
-                        <span class="category-count" id="preset-filter-count-curtain">0</span>
-                    </div>
-                    <div class="category-filter builtin" onclick="filterPresetsByCategory('builtin')" data-category="builtin">
-                        <span id="preset-icon-builtin">🔨</span>
-                        <span>Built-in Furniture</span>
-                        <span class="category-count" id="preset-filter-count-builtin">0</span>
-                    </div>
-                    <div class="category-filter loose" onclick="filterPresetsByCategory('loose')" data-category="loose">
-                        <span id="preset-icon-loose">🪑</span>
-                        <span>Loose Furniture</span>
-                        <span class="category-count" id="preset-filter-count-loose">0</span>
-                    </div>
-                    <div class="category-filter sanitary" onclick="filterPresetsByCategory('sanitary')" data-category="sanitary">
-                        <span id="preset-icon-sanitary">🚿</span>
-                        <span>Sanitary & Water Pump</span>
-                        <span class="category-count" id="preset-filter-count-sanitary">0</span>
-                    </div>
-                    <div class="category-filter appliances" onclick="filterPresetsByCategory('appliances')" data-category="appliances">
-                        <span id="preset-icon-appliances">📺</span>
-                        <span>Electrical Appliances</span>
-                        <span class="category-count" id="preset-filter-count-appliances">0</span>
-                    </div>
-                    <div class="category-filter electrical" onclick="filterPresetsByCategory('electrical')" data-category="electrical">
-                        <span id="preset-icon-electrical">⚡</span>
-                        <span>Electrical</span>
-                        <span class="category-count" id="preset-filter-count-electrical">0</span>
-                    </div>
-                    <div class="category-filter plumbing" onclick="filterPresetsByCategory('plumbing')" data-category="plumbing">
-                        <span id="preset-icon-plumbing">🔧</span>
-                        <span>Plumbing</span>
-                        <span class="category-count" id="preset-filter-count-plumbing">0</span>
-                    </div>
-                    <div class="category-filter hvac" onclick="filterPresetsByCategory('hvac')" data-category="hvac">
-                        <span id="preset-icon-hvac">🌡️</span>
-                        <span>HVAC</span>
-                        <span class="category-count" id="preset-filter-count-hvac">0</span>
-                    </div>
-                    <div class="category-filter cleaning" onclick="filterPresetsByCategory('cleaning')" data-category="cleaning">
-                        <span id="preset-icon-cleaning">🧽</span>
-                        <span>Cleaning</span>
-                        <span class="category-count" id="preset-filter-count-cleaning">0</span>
-                    </div>
-                    <div class="category-filter parts" onclick="filterPresetsByCategory('parts')" data-category="parts">
-                        <span id="preset-icon-parts">🔩</span>
-                        <span>Parts</span>
-                        <span class="category-count" id="preset-filter-count-parts">0</span>
-                    </div>
-                    <div class="category-filter labor" onclick="filterPresetsByCategory('labor')" data-category="labor">
-                        <span id="preset-icon-labor">👷</span>
-                        <span>Labor</span>
-                        <span class="category-count" id="preset-filter-count-labor">0</span>
-                    </div>
-                    <div class="category-filter equipment" onclick="filterPresetsByCategory('equipment')" data-category="equipment">
-                        <span id="preset-icon-equipment">🛠️</span>
-                        <span>Equipment</span>
-                        <span class="category-count" id="preset-filter-count-equipment">0</span>
-                    </div>
-                    <div class="category-filter common" onclick="filterPresetsByCategory('common')" data-category="common">
-                        <span id="preset-icon-common">🏷️</span>
-                        <span>Common</span>
-                        <span class="category-count" id="preset-filter-count-common">0</span>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <h3 style="font-weight: 700; color: var(--text-primary);">📊 Preset Statistics</h3>
-                        <span style="background: var(--bg-secondary); padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600; color: var(--text-primary);" id="preset-count">0 items</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 14px;">
-                        <div style="text-align: center;">
-                            <div style="color: var(--text-muted);">Categories</div>
-                            <div style="font-weight: 700; color: var(--accent-primary);" id="category-count">0</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="color: var(--text-muted);">Avg Price</div>
-                            <div style="font-weight: 700; color: var(--accent-warm);" id="avg-preset-price">RM 0</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="color: var(--text-muted);">Usage</div>
-                            <div style="font-weight: 700; color: var(--text-primary);" id="preset-usage-count">0</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="presets-list"></div>
+                <div id="quote-detail-content"></div>
             </div>
         </div>
 
@@ -1805,265 +1354,169 @@
                     <span class="icon">💰</span>
                     <span>Quotes</span>
                 </div>
-                <div class="nav-item" onclick="showView('presets')">
-                    <span class="icon">📋</span>
-                    <span>Presets</span>
+                <div class="nav-item" onclick="openCreateQuote()">
+                    <span class="icon">➕</span>
+                    <span>Create</span>
                 </div>
             </div>
             <div class="home-indicator"></div>
         </div>
     </div>
 
-    <!-- Simplified Job Quote Modal - 2 Step Process -->
-    <div id="simple-job-modal" class="modal">
+    <!-- Step 1: Job Title Modal -->
+    <div id="job-title-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="simple-job-modal-title">💰 Create Job Quote</h3>
-                <button class="close-btn" onclick="closeSimpleJobForm()">✕</button>
+                <h3>📝 Step 1: Enter Job Title</h3>
+                <button class="close-btn" onclick="closeCreateQuote()">✕</button>
             </div>
             <div class="modal-body">
-                <!-- Step Indicator -->
-                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 24px; gap: 16px;">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <div id="step-1-indicator" style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">1</div>
-                        <span style="font-weight: 600; color: var(--text-primary);">Job Title</span>
-                    </div>
-                    <div style="width: 40px; height: 2px; background: var(--border-color);"></div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <div id="step-2-indicator" style="width: 32px; height: 32px; border-radius: 50%; background: var(--border-color); color: var(--text-muted); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">2</div>
-                        <span style="font-weight: 600; color: var(--text-muted);">Add Items</span>
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">💼</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">What type of maintenance work is this quote for?</p>
+                </div>
+                
+                <input type="text" 
+                       class="form-input" 
+                       placeholder="e.g., Office Renovation, AC Installation, Plumbing Repair..." 
+                       id="job-title-input" 
+                       style="font-size: 18px; padding: 20px 24px; text-align: center; font-weight: 600; margin-bottom: 24px;">
+                
+                <button type="button" 
+                        class="btn btn-primary" 
+                        onclick="proceedToCategory()" 
+                        id="proceed-to-category-btn"
+                        style="font-size: 18px; padding: 20px 32px; width: 100%;">
+                    Next: Select Category ➡️
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Category Selection Modal -->
+    <div id="category-selection-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🏷️ Step 2: Select Category</h3>
+                <button class="close-btn" onclick="backToJobTitle()">←</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">🎯</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Choose the main category for this job:</p>
+                    <p style="font-weight: 700; color: var(--text-primary); margin-top: 8px;" id="selected-job-title"></p>
+                </div>
+
+                <div class="category-grid" id="category-grid"></div>
+
+                <button type="button" 
+                        class="btn btn-primary" 
+                        onclick="proceedToItems()" 
+                        id="proceed-to-items-btn"
+                        disabled
+                        style="font-size: 18px; padding: 20px 32px; width: 100%; margin-top: 24px; opacity: 0.5;">
+                    Next: Select Items ➡️
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Item Selection Modal -->
+    <div id="item-selection-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 Step 3: Select Items</h3>
+                <button class="close-btn" onclick="backToCategory()">←</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Select work items for:</p>
+                    <p style="font-weight: 700; color: var(--text-primary); margin-top: 4px;" id="category-job-title"></p>
+                    <p style="color: var(--accent-primary); font-weight: 600; margin-top: 4px;" id="selected-category-display"></p>
+                </div>
+
+                <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;">
+                    <div id="preset-items-list"></div>
+                </div>
+
+                <!-- Selected Items Summary -->
+                <div id="selected-items-summary" style="display: none;">
+                    <div style="background: var(--bg-secondary); border-radius: 16px; padding: 20px; margin: 20px 0; border: 2px solid var(--accent-primary);">
+                        <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">Selected Items (<span id="selected-count">0</span>)</h4>
+                        <div id="selected-items-list" style="margin-bottom: 16px;"></div>
+                        <div style="background: var(--accent-primary); border-radius: 12px; padding: 16px; text-align: center;">
+                            <div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">Total Quote Amount</div>
+                            <div style="font-size: 28px; font-weight: 800; color: white;" id="total-amount">RM 0.00</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Step 1: Job Title -->
-                <div id="step-1-content" style="display: block;">
-                    <div style="background: var(--bg-card); border-radius: 20px; padding: 32px; margin: 20px 0; border: 2px solid var(--accent-primary); box-shadow: 0 8px 32px var(--shadow-light); text-align: center;">
-                        <div style="font-size: 48px; margin-bottom: 16px;">📝</div>
-                        <h3 style="font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Step 1: Enter Job Title</h3>
-                        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 16px;">What type of maintenance work is this quote for?</p>
-                        
-                        <input type="text" 
-                               class="form-input" 
-                               placeholder="e.g., Office Renovation, AC Installation, Plumbing Repair..." 
-                               id="simple-job-title" 
-                               required 
-                               style="margin-bottom: 24px; font-size: 18px; padding: 20px 24px; text-align: center; font-weight: 600;">
-                        
-                        <button type="button" 
-                                class="btn btn-primary" 
-                                onclick="proceedToStep2()" 
-                                style="font-size: 18px; padding: 20px 32px; min-height: 60px; width: 100%;">
-                            Next: Add Items ➡️
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 2: Add Items -->
-                <div id="step-2-content" style="display: none;">
-                    <div style="background: var(--bg-card); border-radius: 16px; padding: 24px; margin: 20px 0; border: 2px solid var(--accent-secondary); box-shadow: 0 8px 32px var(--shadow-light);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                            <h3 style="font-size: 20px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
-                                <span style="font-size: 24px;">📋</span>
-                                Step 2: Select Jobs to Do
-                            </h3>
-                            <button type="button" onclick="backToStep1()" class="btn btn-secondary" style="padding: 8px 16px; font-size: 14px;">
-                                ⬅️ Back
-                            </button>
-                        </div>
-                        
-                        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 16px;">Choose from preset job items or browse by category:</p>
-                        
-                        <!-- Category Filter for Step 2 -->
-                        <div style="margin-bottom: 20px;">
-                            <select id="preset-category-selector" class="form-input" style="margin-bottom: 0; padding: 16px 20px; font-size: 16px;" onchange="filterPresetItemsInModal()">
-                                <option value="all">🔍 All Categories</option>
-                                <optgroup label="🏗️ Construction">
-                                    <option value="preliminary">🏗️ Preliminary Work</option>
-                                    <option value="wall">🧱 Wall Work</option>
-                                    <option value="floor">🏢 Floor Work</option>
-                                    <option value="ceiling">🏠 Ceiling Work</option>
-                                    <option value="roofing">🏘️ Roofing</option>
-                                    <option value="wetwork">💧 Wet Work</option>
-                                </optgroup>
-                                <optgroup label="⚙️ M&E Systems">
-                                    <option value="me-work">⚙️ M&E Work</option>
-                                    <option value="exhaust">🌪️ Exhaust Systems</option>
-                                    <option value="lights-fan">💡 Lights & Fan</option>
-                                    <option value="ac">❄️ AC Systems</option>
-                                </optgroup>
-                                <optgroup label="🎨 Finishing">
-                                    <option value="paint">🎨 Paint Works</option>
-                                    <option value="curtain">🪟 Curtain & Blind</option>
-                                </optgroup>
-                                <optgroup label="🪑 Furniture">
-                                    <option value="builtin">🔨 Built-in Furniture</option>
-                                    <option value="loose">🪑 Loose Furniture</option>
-                                </optgroup>
-                                <optgroup label="🔧 Services">
-                                    <option value="sanitary">🚿 Sanitary & Water Pump</option>
-                                    <option value="appliances">📺 Electrical Appliances</option>
-                                </optgroup>
-                                <optgroup label="🔌 Legacy">
-                                    <option value="electrical">⚡ Electrical</option>
-                                    <option value="plumbing">🔧 Plumbing</option>
-                                    <option value="hvac">🌡️ HVAC</option>
-                                    <option value="cleaning">🧽 Cleaning</option>
-                                    <option value="parts">🔩 Parts & Materials</option>
-                                    <option value="labor">👷 Labor</option>
-                                    <option value="equipment">🛠️ Equipment</option>
-                                    <option value="common">🏷️ Common Items</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                        
-                        <!-- Preset Items List -->
-                        <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 12px;">
-                            <div id="preset-items-list"></div>
-                        </div>
-                    </div>
-
-                    <!-- Selected Items Summary -->
-                    <div id="quote-items-summary" style="display: none;">
-                        <div style="background: var(--bg-secondary); border-radius: 16px; padding: 24px; margin: 20px 0; border: 2px solid var(--accent-primary); box-shadow: 0 8px 32px var(--shadow-light);">
-                            <h4 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                                <span style="font-size: 20px;">✅</span>
-                                Selected Items (<span id="selected-items-count">0</span>)
-                            </h4>
-                            <div id="selected-items-list"></div>
-                            <div style="background: var(--accent-primary); border-radius: 12px; padding: 20px; margin-top: 16px; text-align: center; box-shadow: 0 6px 20px var(--shadow-medium);">
-                                <div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 6px;">Total Quote Amount</div>
-                                <div style="font-size: 32px; font-weight: 800; color: #ffffff;" id="total-quote-amount">RM 0.00</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 2 Actions -->
-                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-top: 24px;">
-                        <button type="button" class="form-btn btn-secondary" onclick="closeSimpleJobForm()">
-                            Cancel
-                        </button>
-                        <button type="button" class="form-btn btn-primary" onclick="saveSimpleJob()" id="save-quote-btn" disabled>
-                            ✅ Save Job Quote
-                        </button>
-                    </div>
+                <div class="form-actions">
+                    <button type="button" class="form-btn btn-secondary" onclick="closeCreateQuote()">
+                        Cancel
+                    </button>
+                    <button type="button" class="form-btn btn-primary" onclick="createQuote()" id="create-quote-btn" disabled>
+                        Create Quote
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Enhanced Preset Item Form Modal -->
-    <div id="preset-item-modal" class="modal">
+    <!-- PDF Share Modal -->
+    <div id="pdf-share-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="preset-item-modal-title">➕ Add Preset Item</h3>
-                <button class="close-btn" onclick="closePresetItemForm()">✕</button>
+                <h3>📄 Share Quote</h3>
+                <button class="close-btn" onclick="closePdfShare()">✕</button>
             </div>
             <div class="modal-body">
-                <form id="preset-item-form">
-                    <input type="text" class="form-input" placeholder="Item Name *" id="preset-item-name" required>
-                    <textarea class="form-input" placeholder="Description" id="preset-item-description" rows="2" style="resize: none;"></textarea>
-                    <input type="number" class="form-input" placeholder="Default Price (RM) *" id="preset-item-price" step="0.01" required>
-                    <select class="form-input" id="preset-item-unit">
-                        <option value="pcs">Pieces (pcs)</option>
-                        <option value="hours">Hours</option>
-                        <option value="sqft">Square Feet</option>
-                        <option value="sqm">Square Meters</option>
-                        <option value="meters">Meters</option>
-                        <option value="kg">Kilograms</option>
-                        <option value="liters">Liters</option>
-                        <option value="set">Set</option>
-                        <option value="lot">Lot</option>
-                        <option value="service">Service</option>
-                    </select>
-                    <select class="form-input" id="preset-item-category">
-                        <optgroup label="Construction">
-                            <option value="preliminary">🏗️ Preliminary Work</option>
-                            <option value="wall">🧱 Wall Work</option>
-                            <option value="floor">🏢 Floor Work</option>
-                            <option value="ceiling">🏠 Ceiling Work</option>
-                            <option value="roofing">🏘️ Roofing</option>
-                            <option value="wetwork">💧 Wet Work</option>
-                        </optgroup>
-                        <optgroup label="M&E Systems">
-                            <option value="me-work">⚙️ M&E Work</option>
-                            <option value="exhaust">🌪️ Exhaust Systems</option>
-                            <option value="lights-fan">💡 Lights & Fan</option>
-                            <option value="ac">❄️ AC Systems</option>
-                        </optgroup>
-                        <optgroup label="Finishing">
-                            <option value="paint">🎨 Paint Works</option>
-                            <option value="curtain">🪟 Curtain & Blind</option>
-                        </optgroup>
-                        <optgroup label="Furniture">
-                            <option value="builtin">🔨 Built-in Furniture</option>
-                            <option value="loose">🪑 Loose Furniture</option>
-                        </optgroup>
-                        <optgroup label="Services">
-                            <option value="sanitary">🚿 Sanitary & Water Pump</option>
-                            <option value="appliances">📺 Electrical Appliances</option>
-                        </optgroup>
-                        <optgroup label="Legacy">
-                            <option value="electrical">⚡ Electrical</option>
-                            <option value="plumbing">🔧 Plumbing</option>
-                            <option value="hvac">🌡️ HVAC</option>
-                            <option value="cleaning">🧽 Cleaning</option>
-                            <option value="parts">🔩 Parts & Materials</option>
-                            <option value="labor">👷 Labor</option>
-                            <option value="equipment">🛠️ Equipment</option>
-                            <option value="common" selected>🏷️ Common Items</option>
-                        </optgroup>
-                    </select>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="form-btn btn-primary">Save Preset</button>
-                        <button type="button" class="form-btn btn-secondary" onclick="closePresetItemForm()">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">📤</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Generate and share your quote</p>
+                </div>
 
-    <!-- Quote View Modal -->
-    <div id="quote-view-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>💰 Job Quote Details</h3>
-                <button class="close-btn" onclick="closeQuoteView()">✕</button>
-            </div>
-            <div class="modal-body" id="quote-view-content">
-                <!-- Content populated by JavaScript -->
+                <div class="pdf-actions three-col">
+                    <button type="button" class="form-btn btn-success" onclick="generateAndSharePDF()">
+                        📱 Share PDF
+                    </button>
+                    <button type="button" class="form-btn btn-info" onclick="downloadPDF()">
+                        💾 Download PDF
+                    </button>
+                    <button type="button" class="form-btn btn-secondary" onclick="closePdfShare()">
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Success Message -->
     <div id="success-message" class="success-message">
-        ✅ Data saved successfully!
+        ✅ Action completed successfully!
     </div>
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - ENHANCED MANAGEMENT SYSTEM
+        // REFIT MAINTENANCE SERVICES - SIMPLIFIED QUOTE SYSTEM
         // Registration No: 201803348973 (002894203-V)
-        // Enhanced with Complete Category System & User Management
+        // Simplified 3-Step Quote Creation with PDF Sharing
         // ========================================
         
         // App State Variables
         var currentView = 'dashboard';
         var jobQuotes = [];
-        var presetWorkItems = [];
-        var currentQuoteItems = [];
-        var editingJob = null;
-        var editingPreset = null;
-        var selectedLogoIndex = 0;
+        var currentQuoteData = {
+            title: '',
+            category: '',
+            items: [],
+            totalAmount: 0
+        };
+        var currentQuoteId = null;
         var currentTheme = 'light';
-        var currentQuoteFilter = 'all';
-        var currentPresetFilter = 'all';
-        var customIcons = {};
-        var userInfo = {};
-        var customLogo = null;
 
-        // Enhanced Category Configuration with All Requested Categories
+        // Enhanced Category Configuration
         var categories = {
             // Construction Categories
             preliminary: {
@@ -2166,7 +1619,7 @@
                 color: 'var(--cat-appliances)',
                 description: 'Electrical appliances and equipment'
             },
-            // Legacy Categories (keeping for backward compatibility)
+            // Legacy Categories
             electrical: {
                 name: 'Electrical',
                 icon: '⚡',
@@ -2217,111 +1670,140 @@
             }
         };
 
-        // Company Settings
-        var companySettings = {
-            name: 'REFIT MAINTENANCE SERVICES',
-            registration: '201803348973 (002894203-V)',
-            tagline: 'Professional Maintenance Solutions',
-            phone: '+60 3-7967 8888',
-            email: 'info@refitmaintenance.my',
-            website: 'www.refitmaintenance.my',
-            address: 'No. 15, Jalan Teknologi 3/6, Kota Damansara, 47810 Petaling Jaya, Selangor, Malaysia'
+        // Preset Work Items by Category
+        var presetWorkItems = {
+            preliminary: [
+                { id: 'prelim-1', name: 'Insurance Coverage (Min 1Mil Public Liability)', description: 'Public liability insurance minimum RM1,000,000 coverage', price: 500.00, unit: 'service' },
+                { id: 'prelim-2', name: 'ID Drawing Submission to Management', description: 'Interior design drawing submission to building management', price: 300.00, unit: 'service' },
+                { id: 'prelim-3', name: 'Architect Professional Endorsement', description: 'Professional architect appointment with endorsed drawings', price: 2500.00, unit: 'service' },
+                { id: 'prelim-4', name: 'Local Authority Submission', description: 'Submission to local council authorities for approval', price: 800.00, unit: 'service' },
+                { id: 'prelim-5', name: 'Signage License Application', description: 'Application for signage license and approval', price: 400.00, unit: 'service' }
+            ],
+            wall: [
+                { id: 'wall-1', name: 'Drywall Installation', description: 'Standard drywall installation with finishing', price: 35.00, unit: 'sqm' },
+                { id: 'wall-2', name: 'Partition Wall Construction', description: 'Metal stud partition wall with drywall', price: 65.00, unit: 'sqm' },
+                { id: 'wall-3', name: 'Wall Patching & Repair', description: 'Minor wall damage repair and patching', price: 25.00, unit: 'sqm' },
+                { id: 'wall-4', name: 'Wall Insulation', description: 'Thermal and sound insulation installation', price: 45.00, unit: 'sqm' }
+            ],
+            floor: [
+                { id: 'floor-1', name: 'Vinyl Flooring Installation', description: 'Commercial grade vinyl flooring', price: 45.00, unit: 'sqm' },
+                { id: 'floor-2', name: 'Carpet Installation', description: 'Commercial carpet with padding', price: 55.00, unit: 'sqm' },
+                { id: 'floor-3', name: 'Ceramic Tile Installation', description: 'Floor tile installation with grouting', price: 68.00, unit: 'sqm' },
+                { id: 'floor-4', name: 'Laminate Flooring', description: 'High-quality laminate flooring installation', price: 52.00, unit: 'sqm' }
+            ],
+            ceiling: [
+                { id: 'ceiling-1', name: 'Suspended Ceiling Installation', description: 'Mineral fiber suspended ceiling system', price: 42.00, unit: 'sqm' },
+                { id: 'ceiling-2', name: 'Drywall Ceiling', description: 'Drywall ceiling installation and finishing', price: 38.00, unit: 'sqm' },
+                { id: 'ceiling-3', name: 'Acoustic Ceiling Tiles', description: 'Sound-absorbing ceiling tile installation', price: 48.00, unit: 'sqm' }
+            ],
+            roofing: [
+                { id: 'roofing-1', name: 'Shingle Roof Repair', description: 'Asphalt shingle replacement and repair', price: 85.00, unit: 'sqm' },
+                { id: 'roofing-2', name: 'Roof Membrane Installation', description: 'Waterproof membrane application', price: 125.00, unit: 'sqm' },
+                { id: 'roofing-3', name: 'Gutter Installation', description: 'Aluminum gutter system installation', price: 55.00, unit: 'meters' }
+            ],
+            wetwork: [
+                { id: 'wetwork-1', name: 'Waterproofing Application', description: 'Bathroom and wet area waterproofing', price: 75.00, unit: 'sqm' },
+                { id: 'wetwork-2', name: 'Wall Tile Installation', description: 'Ceramic wall tiles with waterproof backing', price: 85.00, unit: 'sqm' },
+                { id: 'wetwork-3', name: 'Shower Cubicle Installation', description: 'Glass shower enclosure with hardware', price: 850.00, unit: 'set' }
+            ],
+            'me-work': [
+                { id: 'me-1', name: 'Electrical Panel Installation', description: 'Main electrical distribution panel', price: 450.00, unit: 'pcs' },
+                { id: 'me-2', name: 'Conduit Installation', description: 'Electrical conduit and cable management', price: 15.00, unit: 'meters' },
+                { id: 'me-3', name: 'Cable Tray System', description: 'Heavy-duty cable tray installation', price: 85.00, unit: 'meters' }
+            ],
+            exhaust: [
+                { id: 'exhaust-1', name: 'Kitchen Exhaust Installation', description: 'Commercial kitchen exhaust system', price: 850.00, unit: 'set' },
+                { id: 'exhaust-2', name: 'Bathroom Exhaust Fan', description: 'Silent bathroom exhaust fan with timer', price: 165.00, unit: 'pcs' },
+                { id: 'exhaust-3', name: 'Industrial Exhaust System', description: 'Heavy-duty industrial ventilation', price: 1200.00, unit: 'set' }
+            ],
+            'lights-fan': [
+                { id: 'lights-1', name: 'LED Panel Light', description: '40W LED panel light with driver', price: 85.00, unit: 'pcs' },
+                { id: 'lights-2', name: 'LED Downlight', description: '12W recessed LED downlight', price: 45.00, unit: 'pcs' },
+                { id: 'lights-3', name: 'Ceiling Fan', description: '52" ceiling fan with remote control', price: 220.00, unit: 'pcs' },
+                { id: 'lights-4', name: 'Track Lighting', description: 'Adjustable track lighting system', price: 180.00, unit: 'set' }
+            ],
+            ac: [
+                { id: 'ac-1', name: 'Split AC Installation', description: '1.5HP split unit air conditioner', price: 1200.00, unit: 'set' },
+                { id: 'ac-2', name: 'AC Maintenance Service', description: 'Quarterly AC cleaning and maintenance', price: 120.00, unit: 'service' },
+                { id: 'ac-3', name: 'Ducted AC System', description: 'Central ducted air conditioning', price: 3500.00, unit: 'set' }
+            ],
+            paint: [
+                { id: 'paint-1', name: 'Interior Wall Painting', description: 'Two coats premium interior paint', price: 12.00, unit: 'sqm' },
+                { id: 'paint-2', name: 'Exterior Wall Painting', description: 'Weather-resistant exterior paint', price: 18.00, unit: 'sqm' },
+                { id: 'paint-3', name: 'Ceiling Painting', description: 'Specialized ceiling paint application', price: 14.00, unit: 'sqm' }
+            ],
+            curtain: [
+                { id: 'curtain-1', name: 'Fabric Curtain Installation', description: 'Custom fabric curtains with hardware', price: 85.00, unit: 'sqm' },
+                { id: 'curtain-2', name: 'Vertical Blind Installation', description: 'PVC vertical blinds for offices', price: 65.00, unit: 'sqm' },
+                { id: 'curtain-3', name: 'Roller Blind System', description: 'Motorized roller blind installation', price: 120.00, unit: 'sqm' }
+            ],
+            builtin: [
+                { id: 'builtin-1', name: 'Built-in Wardrobe', description: 'Custom melamine wardrobe with drawers', price: 450.00, unit: 'sqm' },
+                { id: 'builtin-2', name: 'Kitchen Cabinet', description: 'Modular kitchen cabinet system', price: 650.00, unit: 'sqm' },
+                { id: 'builtin-3', name: 'Office Storage Unit', description: 'Built-in office storage solution', price: 380.00, unit: 'sqm' }
+            ],
+            loose: [
+                { id: 'loose-1', name: 'Office Chair', description: 'Ergonomic mesh office chair', price: 250.00, unit: 'pcs' },
+                { id: 'loose-2', name: 'Office Desk', description: 'Modern office desk with drawers', price: 450.00, unit: 'pcs' },
+                { id: 'loose-3', name: 'Meeting Table', description: 'Conference table for 8 people', price: 850.00, unit: 'pcs' }
+            ],
+            sanitary: [
+                { id: 'sanitary-1', name: 'Toilet Suite Installation', description: 'Complete toilet suite with accessories', price: 350.00, unit: 'set' },
+                { id: 'sanitary-2', name: 'Wash Basin Installation', description: 'Wall-hung basin with mixer tap', price: 280.00, unit: 'set' },
+                { id: 'sanitary-3', name: 'Water Pump System', description: 'Automatic water pump installation', price: 680.00, unit: 'set' }
+            ],
+            appliances: [
+                { id: 'appliances-1', name: 'Electric Water Heater', description: '30L instant electric water heater', price: 380.00, unit: 'pcs' },
+                { id: 'appliances-2', name: 'Range Hood Installation', description: 'Kitchen range hood with ducting', price: 450.00, unit: 'pcs' },
+                { id: 'appliances-3', name: 'Dishwasher Installation', description: 'Built-in dishwasher setup', price: 320.00, unit: 'pcs' }
+            ],
+            electrical: [
+                { id: 'electrical-1', name: 'Power Outlet Installation', description: 'Standard 13A power outlet', price: 45.00, unit: 'pcs' },
+                { id: 'electrical-2', name: 'Light Switch Installation', description: 'Standard wall switch installation', price: 35.00, unit: 'pcs' },
+                { id: 'electrical-3', name: 'Electrical Safety Inspection', description: 'Complete electrical system safety check', price: 150.00, unit: 'service' }
+            ],
+            plumbing: [
+                { id: 'plumbing-1', name: 'Pipe Repair Service', description: 'Water pipe leak repair', price: 65.00, unit: 'service' },
+                { id: 'plumbing-2', name: 'Faucet Installation', description: 'Kitchen or bathroom faucet setup', price: 85.00, unit: 'pcs' },
+                { id: 'plumbing-3', name: 'Drain Cleaning', description: 'Professional drain cleaning service', price: 95.00, unit: 'service' }
+            ],
+            hvac: [
+                { id: 'hvac-1', name: 'HVAC Filter Replacement', description: 'Air filter replacement service', price: 35.00, unit: 'pcs' },
+                { id: 'hvac-2', name: 'Duct Cleaning', description: 'Professional ductwork cleaning', price: 180.00, unit: 'service' },
+                { id: 'hvac-3', name: 'Thermostat Installation', description: 'Digital thermostat setup', price: 125.00, unit: 'pcs' }
+            ],
+            cleaning: [
+                { id: 'cleaning-1', name: 'Office Cleaning Service', description: 'Standard office cleaning', price: 25.00, unit: 'sqm' },
+                { id: 'cleaning-2', name: 'Deep Cleaning Service', description: 'Comprehensive deep cleaning', price: 35.00, unit: 'sqm' },
+                { id: 'cleaning-3', name: 'Window Cleaning', description: 'Professional window cleaning', price: 8.00, unit: 'sqm' }
+            ],
+            parts: [
+                { id: 'parts-1', name: 'Electrical Wire', description: 'Standard electrical wiring cable', price: 8.50, unit: 'meters' },
+                { id: 'parts-2', name: 'PVC Pipe', description: 'Standard PVC water pipe', price: 12.00, unit: 'meters' },
+                { id: 'parts-3', name: 'Hardware Kit', description: 'Assorted screws and fasteners', price: 25.00, unit: 'set' }
+            ],
+            labor: [
+                { id: 'labor-1', name: 'Skilled Technician', description: 'Certified technician work hour', price: 45.00, unit: 'hours' },
+                { id: 'labor-2', name: 'Helper Labor', description: 'General helper work hour', price: 25.00, unit: 'hours' },
+                { id: 'labor-3', name: 'Specialist Labor', description: 'Specialized technician work hour', price: 65.00, unit: 'hours' }
+            ],
+            equipment: [
+                { id: 'equipment-1', name: 'Power Drill Rental', description: 'Professional power drill rental', price: 35.00, unit: 'hours' },
+                { id: 'equipment-2', name: 'Scaffolding Rental', description: 'Mobile scaffolding system rental', price: 85.00, unit: 'days' },
+                { id: 'equipment-3', name: 'Generator Rental', description: 'Portable generator rental', price: 120.00, unit: 'days' }
+            ],
+            common: [
+                { id: 'common-1', name: 'Service Call Fee', description: 'Basic service call charge', price: 75.00, unit: 'service' },
+                { id: 'common-2', name: 'Material Transport', description: 'Material delivery and transport', price: 50.00, unit: 'trip' },
+                { id: 'common-3', name: 'Site Survey', description: 'Professional site assessment', price: 150.00, unit: 'service' }
+            ]
         };
 
         // Storage Keys
         var STORAGE_KEYS = {
-            JOB_QUOTES: 'refit_enhanced_job_quotes',
-            PRESET_WORK_ITEMS: 'refit_enhanced_preset_items',
-            SELECTED_LOGO: 'refit_selected_logo',
-            THEME_PREFERENCE: 'refit_theme_preference',
-            CUSTOM_ICONS: 'refit_custom_icons',
-            USER_INFO: 'refit_user_info',
-            CUSTOM_LOGO: 'refit_custom_logo'
+            JOB_QUOTES: 'refit_simplified_quotes',
+            THEME_PREFERENCE: 'refit_theme_preference'
         };
-
-        // Enhanced Default Preset Work Items with Reset Categories
-        var defaultPresetWorkItems = [
-            // Preliminary Work - Reset with specific required items
-            { id: 'preliminary-insurance', name: 'Insurance Coverage (Min 1Mil Public Liability)', description: 'Public liability insurance minimum RM1,000,000 coverage', price: 500.00, unit: 'service', category: 'preliminary' },
-            { id: 'preliminary-id-drawing', name: 'ID Drawing Submission to Management', description: 'Interior design drawing submission to building management', price: 300.00, unit: 'service', category: 'preliminary' },
-            { id: 'preliminary-architect', name: 'Appoint Architect for Drawing with Professional Endorsement', description: 'Professional architect appointment with endorsed drawings', price: 2500.00, unit: 'service', category: 'preliminary' },
-            { id: 'preliminary-authority', name: 'Local Authority Submission (MBSA/MPSJ/MBPJ/DBKL)', description: 'Submission to local council authorities for approval', price: 800.00, unit: 'service', category: 'preliminary' },
-            { id: 'preliminary-signage', name: 'Signage License Submission', description: 'Application for signage license and approval', price: 400.00, unit: 'service', category: 'preliminary' },
-            
-            // Wall Work
-            { id: 'wall-drywall-install', name: 'Drywall Installation', description: 'Standard drywall installation with finishing', price: 35.00, unit: 'sqm', category: 'wall' },
-            { id: 'wall-partition', name: 'Partition Wall Construction', description: 'Metal stud partition wall with drywall', price: 65.00, unit: 'sqm', category: 'wall' },
-            { id: 'wall-repair-patch', name: 'Wall Patching & Repair', description: 'Minor wall damage repair and patching', price: 25.00, unit: 'sqm', category: 'wall' },
-            
-            // Floor Work
-            { id: 'floor-vinyl-install', name: 'Vinyl Flooring Installation', description: 'Commercial grade vinyl flooring', price: 45.00, unit: 'sqm', category: 'floor' },
-            { id: 'floor-carpet-install', name: 'Carpet Installation', description: 'Commercial carpet with padding', price: 55.00, unit: 'sqm', category: 'floor' },
-            { id: 'floor-tile-install', name: 'Ceramic Tile Installation', description: 'Floor tile installation with grouting', price: 68.00, unit: 'sqm', category: 'floor' },
-            
-            // Ceiling Work
-            { id: 'ceiling-suspended', name: 'Suspended Ceiling Installation', description: 'Mineral fiber suspended ceiling system', price: 42.00, unit: 'sqm', category: 'ceiling' },
-            { id: 'ceiling-drywall', name: 'Drywall Ceiling', description: 'Drywall ceiling installation and finishing', price: 38.00, unit: 'sqm', category: 'ceiling' },
-            
-            // Roofing
-            { id: 'roofing-shingle-repair', name: 'Shingle Roof Repair', description: 'Asphalt shingle replacement and repair', price: 85.00, unit: 'sqm', category: 'roofing' },
-            { id: 'roofing-membrane', name: 'Roof Membrane Installation', description: 'Waterproof membrane application', price: 125.00, unit: 'sqm', category: 'roofing' },
-            
-            // Wet Work
-            { id: 'wetwork-waterproofing', name: 'Waterproofing Application', description: 'Bathroom and wet area waterproofing', price: 75.00, unit: 'sqm', category: 'wetwork' },
-            { id: 'wetwork-tile-wall', name: 'Wall Tile Installation', description: 'Ceramic wall tiles with waterproof backing', price: 85.00, unit: 'sqm', category: 'wetwork' },
-            
-            // M&E Work
-            { id: 'me-panel-install', name: 'Electrical Panel Installation', description: 'Main electrical distribution panel', price: 450.00, unit: 'pcs', category: 'me-work' },
-            { id: 'me-conduit-run', name: 'Conduit Installation', description: 'Electrical conduit and cable management', price: 15.00, unit: 'meters', category: 'me-work' },
-            
-            // Exhaust Systems
-            { id: 'exhaust-kitchen', name: 'Kitchen Exhaust Installation', description: 'Commercial kitchen exhaust system', price: 850.00, unit: 'set', category: 'exhaust' },
-            { id: 'exhaust-bathroom', name: 'Bathroom Exhaust Fan', description: 'Silent bathroom exhaust fan with timer', price: 165.00, unit: 'pcs', category: 'exhaust' },
-            
-            // Lights & Fan
-            { id: 'lights-led-panel', name: 'LED Panel Light', description: '40W LED panel light with driver', price: 85.00, unit: 'pcs', category: 'lights-fan' },
-            { id: 'lights-downlight', name: 'LED Downlight', description: '12W recessed LED downlight', price: 45.00, unit: 'pcs', category: 'lights-fan' },
-            { id: 'fan-ceiling-standard', name: 'Standard Ceiling Fan', description: '52" ceiling fan with remote control', price: 220.00, unit: 'pcs', category: 'lights-fan' },
-            
-            // AC Systems
-            { id: 'ac-split-install', name: 'Split AC Installation', description: '1.5HP split unit air conditioner', price: 1200.00, unit: 'set', category: 'ac' },
-            { id: 'ac-maintenance', name: 'AC Maintenance Service', description: 'Quarterly AC cleaning and maintenance', price: 120.00, unit: 'service', category: 'ac' },
-            
-            // Paint Works
-            { id: 'paint-interior-wall', name: 'Interior Wall Painting', description: 'Two coats premium interior paint', price: 12.00, unit: 'sqm', category: 'paint' },
-            { id: 'paint-exterior-wall', name: 'Exterior Wall Painting', description: 'Weather-resistant exterior paint', price: 18.00, unit: 'sqm', category: 'paint' },
-            
-            // Curtain & Blind
-            { id: 'curtain-fabric', name: 'Fabric Curtain Installation', description: 'Custom fabric curtains with hardware', price: 85.00, unit: 'sqm', category: 'curtain' },
-            { id: 'blind-vertical', name: 'Vertical Blind Installation', description: 'PVC vertical blinds for offices', price: 65.00, unit: 'sqm', category: 'curtain' },
-            
-            // Built-in Furniture
-            { id: 'builtin-wardrobe', name: 'Built-in Wardrobe', description: 'Custom melamine wardrobe with drawers', price: 450.00, unit: 'sqm', category: 'builtin' },
-            { id: 'builtin-kitchen', name: 'Kitchen Cabinet', description: 'Modular kitchen cabinet system', price: 650.00, unit: 'sqm', category: 'builtin' },
-            
-            // Loose Furniture
-            { id: 'loose-office-chair', name: 'Office Chair', description: 'Ergonomic mesh office chair', price: 250.00, unit: 'pcs', category: 'loose' },
-            { id: 'loose-office-desk', name: 'Office Desk', description: 'Modern office desk with drawers', price: 450.00, unit: 'pcs', category: 'loose' },
-            
-            // Sanitary & Water Pump
-            { id: 'sanitary-toilet-suite', name: 'Toilet Suite Installation', description: 'Complete toilet suite with accessories', price: 350.00, unit: 'set', category: 'sanitary' },
-            { id: 'sanitary-basin', name: 'Wash Basin Installation', description: 'Wall-hung basin with mixer tap', price: 280.00, unit: 'set', category: 'sanitary' },
-            
-            // Electrical Appliances
-            { id: 'appliances-water-heater', name: 'Electric Water Heater', description: '30L instant electric water heater', price: 380.00, unit: 'pcs', category: 'appliances' },
-            { id: 'appliances-hood', name: 'Range Hood Installation', description: 'Kitchen range hood with ducting', price: 450.00, unit: 'pcs', category: 'appliances' },
-            
-            // Legacy Categories (simplified)
-            { id: 'electrical-inspection', name: 'Electrical Safety Inspection', description: 'Complete electrical system safety check', price: 150.00, unit: 'service', category: 'electrical' },
-            { id: 'electrical-outlet', name: 'Power Outlet Installation', description: 'Standard 13A power outlet', price: 45.00, unit: 'pcs', category: 'electrical' },
-            { id: 'plumbing-pipe-repair', name: 'Pipe Repair Service', description: 'Water pipe leak repair', price: 65.00, unit: 'service', category: 'plumbing' },
-            { id: 'hvac-filter-change', name: 'HVAC Filter Replacement', description: 'Air filter replacement service', price: 35.00, unit: 'pcs', category: 'hvac' },
-            { id: 'cleaning-office', name: 'Office Cleaning Service', description: 'Standard office cleaning', price: 25.00, unit: 'sqm', category: 'cleaning' },
-            { id: 'parts-electrical-wire', name: 'Electrical Wire', description: 'Standard electrical wiring cable', price: 8.50, unit: 'meters', category: 'parts' },
-            { id: 'labor-technician', name: 'Technician Labor', description: 'Skilled technician work hour', price: 45.00, unit: 'hours', category: 'labor' },
-            { id: 'equipment-drill-rental', name: 'Power Drill Rental', description: 'Professional power drill rental', price: 35.00, unit: 'hours', category: 'equipment' },
-            { id: 'common-service-call', name: 'Service Call Fee', description: 'Basic service call charge', price: 75.00, unit: 'service', category: 'common' }
-        ];
 
         // Theme Management Functions
         function toggleTheme() {
@@ -2339,7 +1821,7 @@
             }
             
             saveDataToStorage();
-            showSuccessMessage(currentTheme === 'light' ? '☀️ Light mode activated' : '🌙 Dark mode activated - Easy on the eyes!');
+            showSuccessMessage(currentTheme === 'light' ? '☀️ Light mode activated' : '🌙 Dark mode activated');
         }
 
         function loadThemePreference() {
@@ -2363,411 +1845,11 @@
             }
         }
 
-        // User Info Management Functions
-        function openUserInfo() {
-            loadUserInfo();
-            document.getElementById('user-info-modal').classList.add('show');
-            showSuccessMessage('👤 User info panel opened');
-        }
-
-        function closeUserInfo() {
-            document.getElementById('user-info-modal').classList.remove('show');
-        }
-
-        function loadUserInfo() {
-            var savedUserInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
-            if (savedUserInfo) {
-                userInfo = JSON.parse(savedUserInfo);
-            }
-            
-            document.getElementById('user-company-name').value = userInfo.companyName || companySettings.name;
-            document.getElementById('user-registration').value = userInfo.registration || companySettings.registration;
-            document.getElementById('user-phone').value = userInfo.phone || companySettings.phone;
-            document.getElementById('user-email').value = userInfo.email || companySettings.email;
-            document.getElementById('user-address').value = userInfo.address || companySettings.address;
-            document.getElementById('user-website').value = userInfo.website || companySettings.website;
-            
-            // Load custom logo preview
-            var savedLogo = localStorage.getItem(STORAGE_KEYS.CUSTOM_LOGO);
-            if (savedLogo) {
-                customLogo = savedLogo;
-                showLogoPreview(savedLogo);
-            }
-        }
-
-        function saveUserInfo() {
-            userInfo = {
-                companyName: document.getElementById('user-company-name').value.trim(),
-                registration: document.getElementById('user-registration').value.trim(),
-                phone: document.getElementById('user-phone').value.trim(),
-                email: document.getElementById('user-email').value.trim(),
-                address: document.getElementById('user-address').value.trim(),
-                website: document.getElementById('user-website').value.trim()
-            };
-            
-            // Update company settings
-            companySettings.name = userInfo.companyName || companySettings.name;
-            companySettings.registration = userInfo.registration || companySettings.registration;
-            companySettings.phone = userInfo.phone || companySettings.phone;
-            companySettings.email = userInfo.email || companySettings.email;
-            companySettings.address = userInfo.address || companySettings.address;
-            companySettings.website = userInfo.website || companySettings.website;
-            
-            // Update header display
-            document.getElementById('company-name').textContent = companySettings.name;
-            document.getElementById('company-registration').innerHTML = 'Registration No: ' + companySettings.registration.split('(')[0] + '<br>(' + companySettings.registration.split('(')[1];
-            
-            localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
-            saveDataToStorage();
-            closeUserInfo();
-            showSuccessMessage('✅ User information saved successfully!');
-        }
-
-        function handleLogoUpload(event) {
-            var file = event.target.files[0];
-            if (!file) return;
-            
-            if (file.size > 2 * 1024 * 1024) {
-                showSuccessMessage('⚠️ File too large! Please choose an image under 2MB');
-                return;
-            }
-            
-            if (!file.type.startsWith('image/')) {
-                showSuccessMessage('⚠️ Please select a valid image file');
-                return;
-            }
-            
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                customLogo = e.target.result;
-                localStorage.setItem(STORAGE_KEYS.CUSTOM_LOGO, customLogo);
-                showLogoPreview(customLogo);
-                applyCustomLogo();
-                showSuccessMessage('✅ Custom logo uploaded successfully!');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function showLogoPreview(logoData) {
-            var previewContainer = document.getElementById('logo-preview');
-            if (previewContainer) {
-                previewContainer.innerHTML = '<img src="' + logoData + '" class="upload-preview" alt="Logo Preview">';
-            }
-        }
-
-        function removeCustomLogo() {
-            if (confirm('Remove custom logo and revert to default?')) {
-                customLogo = null;
-                localStorage.removeItem(STORAGE_KEYS.CUSTOM_LOGO);
-                document.getElementById('logo-preview').innerHTML = '';
-                document.getElementById('logo-upload').value = '';
-                
-                // Revert to default logo
-                var logoContainer = document.getElementById('main-logo');
-                if (logoContainer) {
-                    logoContainer.innerHTML = logoTemplates[selectedLogoIndex];
-                }
-                showSuccessMessage('🗑️ Custom logo removed - reverted to default');
-            }
-        }
-
-        function applyCustomLogo() {
-            if (customLogo) {
-                var logoContainer = document.getElementById('main-logo');
-                if (logoContainer) {
-                    logoContainer.innerHTML = '<img src="' + customLogo + '" class="user-logo" alt="Custom Logo">';
-                }
-            }
-        }
-
-        // Icon Upload Management Functions
-        function openIconUpload() {
-            renderCategoryIconList();
-            document.getElementById('icon-upload-modal').classList.add('show');
-            showSuccessMessage('🎨 Category icon upload panel opened');
-        }
-
-        function closeIconUpload() {
-            document.getElementById('icon-upload-modal').classList.remove('show');
-        }
-
-        function renderCategoryIconList() {
-            var container = document.getElementById('category-icon-list');
-            if (!container) return;
-            
-            var html = '';
-            
-            for (var categoryKey in categories) {
-                var category = categories[categoryKey];
-                var customIcon = customIcons[categoryKey];
-                
-                html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color);">' +
-                    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">' +
-                    '<div style="display: flex; align-items: center; gap: 12px;">' +
-                    '<div class="category-icon ' + categoryKey + '" style="width: 32px; height: 32px;">' +
-                    (customIcon ? '<img src="' + customIcon + '" class="custom-icon" alt="' + category.name + '">' : category.icon) +
-                    '</div>' +
-                    '<div>' +
-                    '<div style="font-weight: 700; color: var(--text-primary); font-size: 14px;">' + category.name + '</div>' +
-                    '<div style="font-size: 12px; color: var(--text-muted);">' + category.description + '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div style="display: flex; gap: 8px;">' +
-                    '<div class="file-upload" style="margin: 0;">' +
-                    '<input type="file" id="icon-' + categoryKey + '" accept="image/*" onchange="handleCategoryIconUpload(event, \'' + categoryKey + '\')" style="position: absolute; left: -9999px;">' +
-                    '<label for="icon-' + categoryKey + '" style="display: flex; align-items: center; gap: 6px; padding: 8px 12px; color: var(--text-primary); font-weight: 600; font-size: 12px; cursor: pointer; border-radius: 8px; background: var(--accent-primary); color: white;">' +
-                    '<span>📁</span><span>Upload</span>' +
-                    '</label>' +
-                    '</div>' +
-                    (customIcon ? '<button onclick="removeCategoryIcon(\'' + categoryKey + '\')" style="padding: 8px 12px; border-radius: 8px; border: none; background: var(--error); color: white; font-size: 12px; cursor: pointer;">🗑️</button>' : '') +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
-            }
-            
-            container.innerHTML = html;
-        }
-
-        function handleCategoryIconUpload(event, categoryKey) {
-            var file = event.target.files[0];
-            if (!file) return;
-            
-            if (file.size > 1024 * 1024) {
-                showSuccessMessage('⚠️ File too large! Please choose an image under 1MB');
-                return;
-            }
-            
-            if (!file.type.startsWith('image/')) {
-                showSuccessMessage('⚠️ Please select a valid image file');
-                return;
-            }
-            
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                customIcons[categoryKey] = e.target.result;
-                localStorage.setItem(STORAGE_KEYS.CUSTOM_ICONS, JSON.stringify(customIcons));
-                updateCategoryIconsDisplay();
-                renderCategoryIconList();
-                showSuccessMessage('✅ ' + categories[categoryKey].name + ' icon uploaded!');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function removeCategoryIcon(categoryKey) {
-            if (confirm('Remove custom icon for ' + categories[categoryKey].name + '?')) {
-                delete customIcons[categoryKey];
-                localStorage.setItem(STORAGE_KEYS.CUSTOM_ICONS, JSON.stringify(customIcons));
-                updateCategoryIconsDisplay();
-                renderCategoryIconList();
-                showSuccessMessage('🗑️ ' + categories[categoryKey].name + ' icon removed');
-            }
-        }
-
-        function resetAllIcons() {
-            if (confirm('Reset all category icons to default?\nThis will remove all custom uploaded icons.')) {
-                customIcons = {};
-                localStorage.removeItem(STORAGE_KEYS.CUSTOM_ICONS);
-                updateCategoryIconsDisplay();
-                renderCategoryIconList();
-                showSuccessMessage('🔄 All category icons reset to default');
-            }
-        }
-
-        function updateCategoryIconsDisplay() {
-            // Update all category icon displays throughout the app
-            for (var categoryKey in categories) {
-                var category = categories[categoryKey];
-                var customIcon = customIcons[categoryKey];
-                var iconContent = customIcon ? '<img src="' + customIcon + '" class="custom-icon" alt="' + category.name + '">' : category.icon;
-                
-                // Update in filters
-                var filterIcon = document.getElementById('icon-' + categoryKey);
-                if (filterIcon) {
-                    filterIcon.innerHTML = iconContent;
-                }
-                
-                var presetFilterIcon = document.getElementById('preset-icon-' + categoryKey);
-                if (presetFilterIcon) {
-                    presetFilterIcon.innerHTML = iconContent;
-                }
-            }
-        }
-
-        function loadCustomIcons() {
-            var savedIcons = localStorage.getItem(STORAGE_KEYS.CUSTOM_ICONS);
-            if (savedIcons) {
-                customIcons = JSON.parse(savedIcons);
-                updateCategoryIconsDisplay();
-            }
-        }
-
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
-        });
-
-        function initializeApp() {
-            loadThemePreference();
-            loadDataFromStorage();
-            loadCustomIcons();
-            loadUserInfo();
-            setupEventListeners();
-            setupMobileOptimizations();
-            updateStatusBar();
-            updateCurrentDate();
-            updateStats();
-            renderViews();
-            loadSelectedLogo();
-            updateCategoryFilters();
-            
-            // Apply custom logo if exists
-            if (customLogo) {
-                applyCustomLogo();
-            }
-            
-            showSuccessMessage('📋 REFIT ENHANCED - Complete Category & Icon System Ready!');
-            console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Management System');
-            console.log('🎨 Custom Icon Upload & User Info Management');
-            console.log('📊 Expanded Category System with 24 Categories');
-            console.log('👁️ Eye-Friendly Design for Extended Use');
-        }
-
-        // Category Management Functions
-        function getCategoryIcon(category) {
-            var customIcon = customIcons[category];
-            if (customIcon) {
-                return '<img src="' + customIcon + '" class="custom-icon" alt="' + categories[category].name + '">';
-            }
-            return categories[category] ? categories[category].icon : '🏷️';
-        }
-
-        function getCategoryName(category) {
-            return categories[category] ? categories[category].name : 'Unknown';
-        }
-
-        function getCategoryColor(category) {
-            return categories[category] ? categories[category].color : 'var(--cat-common)';
-        }
-
-        function filterQuotesByCategory(category) {
-            currentQuoteFilter = category;
-            
-            // Update filter buttons
-            var filters = document.querySelectorAll('#quotes-view .category-filter[data-category]');
-            for (var i = 0; i < filters.length; i++) {
-                filters[i].classList.remove('active');
-            }
-            
-            var activeFilter = document.querySelector('#quotes-view .category-filter[data-category="' + category + '"]');
-            if (activeFilter) {
-                activeFilter.classList.add('active');
-            }
-            
-            renderQuotes();
-            showSuccessMessage('📋 Filtered by ' + (category === 'all' ? 'All Categories' : getCategoryName(category)));
-        }
-
-        function filterPresetsByCategory(category) {
-            currentPresetFilter = category;
-            
-            // Update filter buttons
-            var filters = document.querySelectorAll('#presets-view .category-filter[data-category]');
-            for (var i = 0; i < filters.length; i++) {
-                filters[i].classList.remove('active');
-            }
-            
-            var activeFilter = document.querySelector('#presets-view .category-filter[data-category="' + category + '"]');
-            if (activeFilter) {
-                activeFilter.classList.add('active');
-            }
-            
-            renderPresets();
-            showSuccessMessage('📋 Filtered by ' + (category === 'all' ? 'All Categories' : getCategoryName(category)));
-        }
-
-        function filterPresetItemsInModal() {
-            var selectedCategory = document.getElementById('preset-category-selector').value;
-            renderPresetItems(selectedCategory);
-        }
-
-        function updateCategoryFilters() {
-            updateQuoteCategoryFilters();
-            updatePresetCategoryFilters();
-        }
-
-        function updateQuoteCategoryFilters() {
-            var categoryCounts = { all: jobQuotes.length };
-            
-            // Initialize category counts
-            for (var catKey in categories) {
-                categoryCounts[catKey] = 0;
-            }
-            
-            // Count quotes by category
-            for (var i = 0; i < jobQuotes.length; i++) {
-                var quote = jobQuotes[i];
-                var quoteCategories = {};
-                
-                for (var j = 0; j < quote.items.length; j++) {
-                    var item = quote.items[j];
-                    var itemCategory = item.category || 'common';
-                    quoteCategories[itemCategory] = true;
-                }
-                
-                for (var cat in quoteCategories) {
-                    if (categoryCounts[cat] !== undefined) {
-                        categoryCounts[cat]++;
-                    }
-                }
-            }
-            
-            // Update filter counts
-            for (var catKey in categoryCounts) {
-                var countElement = document.getElementById('filter-count-' + catKey);
-                if (countElement) {
-                    countElement.textContent = categoryCounts[catKey];
-                }
-            }
-        }
-
-        function updatePresetCategoryFilters() {
-            var categoryCounts = { all: presetWorkItems.length };
-            
-            // Initialize category counts
-            for (var catKey in categories) {
-                categoryCounts[catKey] = 0;
-            }
-            
-            // Count presets by category
-            for (var i = 0; i < presetWorkItems.length; i++) {
-                var preset = presetWorkItems[i];
-                var category = preset.category || 'common';
-                if (categoryCounts[category] !== undefined) {
-                    categoryCounts[category]++;
-                }
-            }
-            
-            // Update filter counts
-            for (var catKey in categoryCounts) {
-                var countElement = document.getElementById('preset-filter-count-' + catKey);
-                if (countElement) {
-                    countElement.textContent = categoryCounts[catKey];
-                }
-            }
-        }
-
         // Data Management Functions
         function saveDataToStorage() {
             try {
                 localStorage.setItem(STORAGE_KEYS.JOB_QUOTES, JSON.stringify(jobQuotes));
-                localStorage.setItem(STORAGE_KEYS.PRESET_WORK_ITEMS, JSON.stringify(presetWorkItems));
-                localStorage.setItem(STORAGE_KEYS.SELECTED_LOGO, selectedLogoIndex.toString());
                 localStorage.setItem(STORAGE_KEYS.THEME_PREFERENCE, JSON.stringify(currentTheme));
-                localStorage.setItem(STORAGE_KEYS.CUSTOM_ICONS, JSON.stringify(customIcons));
-                localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
-                if (customLogo) {
-                    localStorage.setItem(STORAGE_KEYS.CUSTOM_LOGO, customLogo);
-                }
             } catch (e) {
                 console.warn('Storage error:', e);
                 showSuccessMessage('⚠️ Storage full! Please export data.');
@@ -2780,405 +1862,751 @@
                 if (savedQuotes) {
                     jobQuotes = JSON.parse(savedQuotes);
                 }
-
-                var savedPresets = localStorage.getItem(STORAGE_KEYS.PRESET_WORK_ITEMS);
-                if (savedPresets) {
-                    presetWorkItems = JSON.parse(savedPresets);
-                } else {
-                    presetWorkItems = [...defaultPresetWorkItems];
-                    saveDataToStorage();
-                }
-
-                var savedLogo = localStorage.getItem(STORAGE_KEYS.SELECTED_LOGO);
-                if (savedLogo !== null) {
-                    selectedLogoIndex = parseInt(savedLogo);
-                }
-
-                var savedCustomLogo = localStorage.getItem(STORAGE_KEYS.CUSTOM_LOGO);
-                if (savedCustomLogo) {
-                    customLogo = savedCustomLogo;
-                }
-
-                var savedUserInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
-                if (savedUserInfo) {
-                    userInfo = JSON.parse(savedUserInfo);
-                    // Update company settings from user info
-                    if (userInfo.companyName) companySettings.name = userInfo.companyName;
-                    if (userInfo.registration) companySettings.registration = userInfo.registration;
-                    if (userInfo.phone) companySettings.phone = userInfo.phone;
-                    if (userInfo.email) companySettings.email = userInfo.email;
-                    if (userInfo.address) companySettings.address = userInfo.address;
-                    if (userInfo.website) companySettings.website = userInfo.website;
-                }
-
             } catch (e) {
                 console.warn('Load error:', e);
-                presetWorkItems = [...defaultPresetWorkItems];
-                selectedLogoIndex = 0;
+                jobQuotes = [];
             }
         }
 
-        // Simple Job Form Functions - Simplified 2-Step Process
-        function openSimpleJobForm() {
-            currentQuoteItems = [];
-            editingJob = null;
-            document.getElementById('simple-job-modal-title').textContent = '💰 Create Job Quote';
-            document.getElementById('simple-job-title').value = '';
+        // Create Quote Flow Functions
+        function openCreateQuote() {
+            // Reset quote data
+            currentQuoteData = {
+                title: '',
+                category: '',
+                items: [],
+                totalAmount: 0
+            };
             
-            // Reset to Step 1
-            showStep1();
+            // Clear form
+            document.getElementById('job-title-input').value = '';
             
-            document.getElementById('simple-job-modal').classList.add('show');
-            showSuccessMessage('💰 Simple 2-step quote creation opened!');
+            // Show Step 1 modal
+            document.getElementById('job-title-modal').classList.add('show');
+            
+            showSuccessMessage('📝 Starting new quote creation');
         }
 
-        function closeSimpleJobForm() {
-            document.getElementById('simple-job-modal').classList.remove('show');
-            currentQuoteItems = [];
-            showStep1(); // Reset to step 1 for next time
-        }
-
-        function showStep1() {
-            // Show Step 1, Hide Step 2
-            document.getElementById('step-1-content').style.display = 'block';
-            document.getElementById('step-2-content').style.display = 'none';
+        function closeCreateQuote() {
+            // Close all modals
+            document.getElementById('job-title-modal').classList.remove('show');
+            document.getElementById('category-selection-modal').classList.remove('show');
+            document.getElementById('item-selection-modal').classList.remove('show');
             
-            // Update step indicators
-            document.getElementById('step-1-indicator').style.background = 'var(--accent-primary)';
-            document.getElementById('step-1-indicator').style.color = 'white';
-            document.getElementById('step-2-indicator').style.background = 'var(--border-color)';
-            document.getElementById('step-2-indicator').style.color = 'var(--text-muted)';
+            // Reset data
+            currentQuoteData = {
+                title: '',
+                category: '',
+                items: [],
+                totalAmount: 0
+            };
         }
 
-        function showStep2() {
+        function proceedToCategory() {
+            var title = document.getElementById('job-title-input').value.trim();
+            
+            if (!title) {
+                showSuccessMessage('⚠️ Please enter a job title');
+                return;
+            }
+            
+            currentQuoteData.title = title;
+            document.getElementById('selected-job-title').textContent = title;
+            
             // Hide Step 1, Show Step 2
-            document.getElementById('step-1-content').style.display = 'none';
-            document.getElementById('step-2-content').style.display = 'block';
+            document.getElementById('job-title-modal').classList.remove('show');
             
-            // Update step indicators
-            document.getElementById('step-1-indicator').style.background = 'var(--success)';
-            document.getElementById('step-2-indicator').style.background = 'var(--accent-primary)';
-            document.getElementById('step-2-indicator').style.color = 'white';
+            // Render categories
+            renderCategories();
             
-            // Load preset items
-            document.getElementById('preset-category-selector').value = 'all';
-            renderPresetItems('all');
-            updateSelectedItemsSummary();
+            document.getElementById('category-selection-modal').classList.add('show');
+            showSuccessMessage('✅ Job title saved: ' + title);
         }
 
-        function proceedToStep2() {
-            var jobTitle = document.getElementById('simple-job-title').value.trim();
-            
-            if (!jobTitle) {
-                showSuccessMessage('⚠️ Please enter a job title first!');
-                return;
-            }
-            
-            showStep2();
-            showSuccessMessage('✅ Step 1 complete! Now select items for: ' + jobTitle);
+        function backToJobTitle() {
+            document.getElementById('category-selection-modal').classList.remove('show');
+            document.getElementById('job-title-modal').classList.add('show');
         }
 
-        function backToStep1() {
-            showStep1();
-            showSuccessMessage('⬅️ Back to Step 1: Edit job title');
-        }
-
-        function renderPresetItems(filterCategory) {
-            filterCategory = filterCategory || 'all';
-            var container = document.getElementById('preset-items-list');
+        function renderCategories() {
+            var container = document.getElementById('category-grid');
             if (!container) return;
-            
-            var filteredItems = presetWorkItems.filter(function(item) {
-                return filterCategory === 'all' || item.category === filterCategory;
-            });
-            
-            if (filteredItems.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">' +
-                    '<div style="font-size: 48px; margin-bottom: 16px;">📋</div>' +
-                    '<h4 style="font-weight: 700; margin-bottom: 8px;">No items in this category</h4>' +
-                    '<p style="font-size: 14px;">Try selecting a different category</p>' +
-                    '</div>';
-                return;
-            }
             
             var html = '';
             
-            // Group items by category if showing all
-            if (filterCategory === 'all') {
-                var groupedItems = {};
-                for (var i = 0; i < filteredItems.length; i++) {
-                    var item = filteredItems[i];
-                    var category = item.category || 'common';
-                    if (!groupedItems[category]) {
-                        groupedItems[category] = [];
-                    }
-                    groupedItems[category].push(item);
-                }
-                
-                // Show popular categories first
-                var popularCategories = ['preliminary', 'electrical', 'plumbing', 'paint', 'cleaning'];
-                var remainingCategories = [];
-                
-                for (var category in groupedItems) {
-                    if (popularCategories.indexOf(category) === -1) {
-                        remainingCategories.push(category);
-                    }
-                }
-                
-                var orderedCategories = popularCategories.concat(remainingCategories);
-                
-                for (var c = 0; c < orderedCategories.length; c++) {
-                    var category = orderedCategories[c];
-                    var categoryItems = groupedItems[category];
-                    if (!categoryItems || categoryItems.length === 0) continue;
-                    
-                    html += '<div style="margin-bottom: 24px;">' +
-                        '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px 16px; background: var(--bg-secondary); border-radius: 12px; border-left: 4px solid ' + getCategoryColor(category) + ';">' +
-                        '<div style="font-size: 24px;">' + getCategoryIcon(category) + '</div>' +
-                        '<div>' +
-                        '<div style="font-weight: 700; color: var(--text-primary); font-size: 16px;">' + getCategoryName(category) + '</div>' +
-                        '<div style="font-size: 12px; color: var(--text-muted);">' + categoryItems.length + ' items available</div>' +
-                        '</div>' +
-                        '</div>';
-                    
-                    for (var j = 0; j < categoryItems.length && j < 5; j++) { // Show max 5 items per category
-                        html += renderSimplePresetCard(categoryItems[j]);
-                    }
-                    
-                    if (categoryItems.length > 5) {
-                        html += '<div style="text-align: center; margin: 12px 0;">' +
-                            '<button onclick="document.getElementById(\'preset-category-selector\').value=\'' + category + '\'; filterPresetItemsInModal();" style="background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 12px;">View all ' + categoryItems.length + ' items</button>' +
-                            '</div>';
-                    }
-                    
-                    html += '</div>';
-                }
-            } else {
-                // Show all items in selected category
-                for (var i = 0; i < filteredItems.length; i++) {
-                    html += renderSimplePresetCard(filteredItems[i]);
-                }
+            for (var categoryKey in categories) {
+                var category = categories[categoryKey];
+                html += '<div class="category-item" onclick="selectCategory(\'' + categoryKey + '\')" data-category="' + categoryKey + '">' +
+                    '<div class="icon">' + category.icon + '</div>' +
+                    '<div class="name">' + category.name + '</div>' +
+                    '</div>';
             }
             
             container.innerHTML = html;
         }
 
-        function renderSimplePresetCard(item) {
-            var isSelected = currentQuoteItems.some(function(quoteItem) {
-                return quoteItem.presetId === item.id;
-            });
+        function selectCategory(categoryKey) {
+            // Remove previous selection
+            var items = document.querySelectorAll('.category-item');
+            for (var i = 0; i < items.length; i++) {
+                items[i].classList.remove('selected');
+            }
             
-            return '<div style="background: ' + (isSelected ? 'var(--accent-primary)' : 'var(--bg-card)') + '; border-radius: 12px; padding: 16px; margin-bottom: 8px; border: 2px solid ' + (isSelected ? 'var(--accent-primary)' : 'var(--border-color)') + '; cursor: pointer; transition: all 0.2s ease;" onclick="togglePresetItem(\'' + item.id + '\')">' +
-                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                '<div style="flex: 1;">' +
-                '<div style="font-weight: 700; margin-bottom: 4px; color: ' + (isSelected ? 'white' : 'var(--text-primary)') + '; font-size: 15px; display: flex; align-items: center; gap: 8px;">' +
-                '<span style="font-size: 18px;">' + getCategoryIcon(item.category) + '</span>' +
-                item.name + '</div>' +
-                '<div style="font-size: 13px; color: ' + (isSelected ? 'rgba(255,255,255,0.8)' : 'var(--text-muted)') + '; margin-bottom: 4px;">' + item.description + '</div>' +
-                '<div style="font-size: 12px; color: ' + (isSelected ? 'rgba(255,255,255,0.7)' : 'var(--text-muted)') + ';">Unit: ' + item.unit + ' • Category: ' + getCategoryName(item.category) + '</div>' +
-                '</div>' +
-                '<div style="display: flex; align-items: center; gap: 12px;">' +
-                '<div style="text-align: right;">' +
-                '<div style="font-weight: 700; color: ' + (isSelected ? 'white' : 'var(--accent-primary)') + '; font-size: 16px;">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
-                '<div style="font-size: 10px; color: ' + (isSelected ? 'rgba(255,255,255,0.7)' : 'var(--text-muted)') + ';">per ' + item.unit + '</div>' +
-                '</div>' +
-                '<div style="width: 32px; height: 32px; border-radius: 50%; background: ' + (isSelected ? 'rgba(255,255,255,0.2)' : 'var(--accent-primary)') + '; color: ' + (isSelected ? 'white' : 'white') + '; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700;">' +
-                (isSelected ? '✓' : '+') +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
+            // Select current category
+            var selectedItem = document.querySelector('.category-item[data-category="' + categoryKey + '"]');
+            if (selectedItem) {
+                selectedItem.classList.add('selected');
+            }
+            
+            currentQuoteData.category = categoryKey;
+            
+            // Enable proceed button
+            var proceedBtn = document.getElementById('proceed-to-items-btn');
+            proceedBtn.disabled = false;
+            proceedBtn.style.opacity = '1';
+            
+            showSuccessMessage('✅ Selected: ' + categories[categoryKey].name);
+        }
+
+        function proceedToItems() {
+            if (!currentQuoteData.category) {
+                showSuccessMessage('⚠️ Please select a category');
+                return;
+            }
+            
+            // Update display
+            document.getElementById('category-job-title').textContent = currentQuoteData.title;
+            document.getElementById('selected-category-display').textContent = categories[currentQuoteData.category].name;
+            
+            // Hide Step 2, Show Step 3
+            document.getElementById('category-selection-modal').classList.remove('show');
+            
+            // Render preset items for selected category
+            renderPresetItems();
+            
+            document.getElementById('item-selection-modal').classList.add('show');
+            showSuccessMessage('✅ Category selected: ' + categories[currentQuoteData.category].name);
+        }
+
+        function backToCategory() {
+            document.getElementById('item-selection-modal').classList.remove('show');
+            document.getElementById('category-selection-modal').classList.add('show');
+        }
+
+        function renderPresetItems() {
+            var container = document.getElementById('preset-items-list');
+            if (!container) return;
+            
+            var categoryItems = presetWorkItems[currentQuoteData.category] || [];
+            
+            if (categoryItems.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">' +
+                    '<div style="font-size: 48px; margin-bottom: 16px;">📦</div>' +
+                    '<p style="font-weight: 600;">No preset items available</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px;">Contact support to add items for this category</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var html = '';
+            
+            for (var i = 0; i < categoryItems.length; i++) {
+                var item = categoryItems[i];
+                var isSelected = currentQuoteData.items.some(function(selectedItem) {
+                    return selectedItem.id === item.id;
+                });
+                
+                html += '<div class="preset-item' + (isSelected ? ' selected' : '') + '" onclick="togglePresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
+                    '<div class="header">' +
+                    '<div class="name">' + item.name + '</div>' +
+                    '<div class="price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                    '</div>' +
+                    '<div class="description">' + item.description + '</div>' +
+                    '<div class="unit">Per ' + item.unit + '</div>' +
+                    '</div>';
+            }
+            
+            container.innerHTML = html;
+            updateSelectedItemsSummary();
         }
 
         function togglePresetItem(itemId) {
-            var item = presetWorkItems.find(function(item) { return item.id === itemId; });
+            var categoryItems = presetWorkItems[currentQuoteData.category] || [];
+            var item = categoryItems.find(function(item) { return item.id === itemId; });
+            
             if (!item) return;
             
             // Check if item is already selected
-            var existingIndex = currentQuoteItems.findIndex(function(quoteItem) {
-                return quoteItem.presetId === itemId;
+            var existingIndex = currentQuoteData.items.findIndex(function(selectedItem) {
+                return selectedItem.id === itemId;
             });
             
             if (existingIndex !== -1) {
                 // Remove item
-                currentQuoteItems.splice(existingIndex, 1);
+                currentQuoteData.items.splice(existingIndex, 1);
                 showSuccessMessage('➖ Removed: ' + item.name);
             } else {
                 // Add item
-                var quoteItem = {
-                    id: Date.now() + Math.random(),
-                    description: item.name,
-                    quantity: 1,
+                var selectedItem = {
+                    id: item.id,
+                    name: item.name,
+                    description: item.description,
                     price: item.price,
                     unit: item.unit,
-                    category: item.category,
-                    total: item.price,
-                    isPreset: true,
-                    presetId: item.id
+                    quantity: 1,
+                    total: item.price
                 };
                 
-                currentQuoteItems.push(quoteItem);
+                currentQuoteData.items.push(selectedItem);
                 showSuccessMessage('✅ Added: ' + item.name);
             }
             
-            // Refresh the display
-            renderPresetItems(document.getElementById('preset-category-selector').value);
-            updateSelectedItemsSummary();
+            // Update display
+            renderPresetItems();
         }
 
         function updateSelectedItemsSummary() {
-            var summaryContainer = document.getElementById('quote-items-summary');
-            var countElement = document.getElementById('selected-items-count');
+            var summaryContainer = document.getElementById('selected-items-summary');
+            var countElement = document.getElementById('selected-count');
             var listElement = document.getElementById('selected-items-list');
-            var totalElement = document.getElementById('total-quote-amount');
-            var saveButton = document.getElementById('save-quote-btn');
+            var totalElement = document.getElementById('total-amount');
+            var createBtn = document.getElementById('create-quote-btn');
             
-            if (currentQuoteItems.length === 0) {
+            if (currentQuoteData.items.length === 0) {
                 summaryContainer.style.display = 'none';
-                saveButton.disabled = true;
-                saveButton.style.opacity = '0.5';
+                createBtn.disabled = true;
+                createBtn.style.opacity = '0.5';
                 return;
             }
             
             summaryContainer.style.display = 'block';
-            saveButton.disabled = false;
-            saveButton.style.opacity = '1';
+            createBtn.disabled = false;
+            createBtn.style.opacity = '1';
             
-            countElement.textContent = currentQuoteItems.length;
+            countElement.textContent = currentQuoteData.items.length;
             
             var totalAmount = 0;
             var html = '';
             
-            // Group by category
-            var groupedItems = {};
-            for (var i = 0; i < currentQuoteItems.length; i++) {
-                var item = currentQuoteItems[i];
-                var category = item.category || 'common';
+            for (var i = 0; i < currentQuoteData.items.length; i++) {
+                var item = currentQuoteData.items[i];
                 totalAmount += item.total;
                 
-                if (!groupedItems[category]) {
-                    groupedItems[category] = [];
-                }
-                groupedItems[category].push(item);
-            }
-            
-            for (var category in groupedItems) {
-                var categoryItems = groupedItems[category];
-                var categoryTotal = 0;
-                
-                for (var j = 0; j < categoryItems.length; j++) {
-                    categoryTotal += categoryItems[j].total;
-                }
-                
-                html += '<div style="background: var(--bg-card); border-radius: 8px; padding: 12px; margin-bottom: 8px; border-left: 4px solid ' + getCategoryColor(category) + ';">' +
-                    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">' +
-                    '<div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text-primary);">' +
-                    '<span style="font-size: 16px;">' + getCategoryIcon(category) + '</span>' +
-                    '<span style="font-size: 14px;">' + getCategoryName(category) + '</span>' +
+                html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--accent-primary);">' +
+                    '<div>' +
+                    '<div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">' + item.name + '</div>' +
+                    '<div style="font-size: 12px; color: var(--text-muted);">1 ' + item.unit + '</div>' +
                     '</div>' +
-                    '<span style="font-weight: 700; color: var(--accent-primary); font-size: 14px;">RM ' + categoryTotal.toFixed(2) + '</span>' +
+                    '<div style="font-weight: 700; color: var(--accent-primary);">RM ' + item.total.toFixed(2) + '</div>' +
                     '</div>';
-                
-                for (var j = 0; j < categoryItems.length; j++) {
-                    var item = categoryItems[j];
-                    html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 12px; color: var(--text-secondary);">' +
-                        '<span>' + item.description + ' (1 ' + item.unit + ')</span>' +
-                        '<span style="font-weight: 600;">RM ' + item.total.toFixed(2) + '</span>' +
-                        '</div>';
-                }
-                
-                html += '</div>';
             }
             
             listElement.innerHTML = html;
             totalElement.textContent = 'RM ' + totalAmount.toFixed(2);
+            currentQuoteData.totalAmount = totalAmount;
         }
 
-        function filterPresetItemsInModal() {
-            var selectedCategory = document.getElementById('preset-category-selector').value;
-            renderPresetItems(selectedCategory);
+        function createQuote() {
+            if (currentQuoteData.items.length === 0) {
+                showSuccessMessage('⚠️ Please select at least one item');
+                return;
+            }
+            
+            // Create quote object
+            var quote = {
+                id: Date.now(),
+                title: currentQuoteData.title,
+                category: currentQuoteData.category,
+                items: [...currentQuoteData.items],
+                totalAmount: currentQuoteData.totalAmount,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Add to quotes list
+            jobQuotes.push(quote);
+            currentQuoteId = quote.id;
+            
+            // Save to storage
+            saveDataToStorage();
+            
+            // Close modal
+            closeCreateQuote();
+            
+            // Show quote detail view
+            showQuoteDetail(quote.id);
+            
+            showSuccessMessage('✅ Quote created successfully!');
         }
 
-        // Continue with remaining functions...
-        // Export, rendering, utility functions, etc.
+        // Quote Detail and PDF Functions
+        function showQuoteDetail(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            currentQuoteId = quoteId;
+            
+            // Render quote detail
+            renderQuoteDetail(quote);
+            
+            // Show quote detail view
+            showView('quote-detail');
+        }
 
-        // Legacy logo functions (keeping for compatibility)
-        var logoTemplates = [
-            `<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
-                <path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
-                <circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.8)" stroke="currentColor" stroke-width="2"/>
-                <circle cx="50" cy="50" r="3" fill="currentColor"/>
-            </svg>`
-        ];
+        function renderQuoteDetail(quote) {
+            var container = document.getElementById('quote-detail-content');
+            if (!container) return;
+            
+            var html = '';
+            
+            // Quote Header
+            html += '<div class="quote-detail-header">' +
+                '<div class="quote-title">' + quote.title + '</div>' +
+                '<div class="quote-meta">📅 Created: ' + formatDate(quote.createdAt) + ' • 🏷️ Category: ' + categories[quote.category].name + '</div>' +
+                '<div class="quote-total">' +
+                '<div class="label">Total Quote Amount</div>' +
+                '<div class="amount">RM ' + quote.totalAmount.toFixed(2) + '</div>' +
+                '</div>' +
+                '</div>';
+            
+            // Quote Items
+            html += '<div class="quote-items">' +
+                '<div class="items-header">' +
+                '<span>📋</span> Quote Items (' + quote.items.length + ')' +
+                '</div>';
+            
+            for (var i = 0; i < quote.items.length; i++) {
+                var item = quote.items[i];
+                html += '<div class="quote-item">' +
+                    '<div class="item-name">' +
+                    '<span>' + categories[quote.category].icon + '</span>' +
+                    item.name +
+                    '</div>' +
+                    '<div class="item-details">' + item.description + '</div>' +
+                    '<div class="item-pricing">' +
+                    '<span class="quantity">Quantity: ' + item.quantity + ' ' + item.unit + '</span>' +
+                    '<span class="price">RM ' + item.total.toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            html += '</div>';
+            
+            // Action Buttons
+            html += '<div class="card">' +
+                '<div class="pdf-actions">' +
+                '<button class="form-btn btn-success" onclick="openPdfShare()">' +
+                '<span>📤</span> Share Quote' +
+                '</button>' +
+                '<button class="form-btn btn-info" onclick="editQuote(' + quote.id + ')">' +
+                '<span>✏️</span> Edit Quote' +
+                '</button>' +
+                '<button class="form-btn btn-danger" onclick="deleteQuote(' + quote.id + ')">' +
+                '<span>🗑️</span> Delete Quote' +
+                '</button>' +
+                '<button class="form-btn btn-secondary" onclick="showView(\'quotes\')">' +
+                '<span>←</span> Back to Quotes' +
+                '</button>' +
+                '</div>' +
+                '</div>';
+            
+            container.innerHTML = html;
+        }
 
-        function loadSelectedLogo() {
-            if (customLogo) {
-                applyCustomLogo();
+        function openPdfShare() {
+            document.getElementById('pdf-share-modal').classList.add('show');
+            showSuccessMessage('📄 PDF sharing options opened');
+        }
+
+        function closePdfShare() {
+            document.getElementById('pdf-share-modal').classList.remove('show');
+        }
+
+        function generateAndSharePDF() {
+            if (!currentQuoteId) return;
+            
+            var quote = jobQuotes.find(function(q) { return q.id === currentQuoteId; });
+            if (!quote) return;
+            
+            showSuccessMessage('📄 Generating PDF...');
+            
+            // Create PDF content
+            var { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+            
+            try {
+                // Header
+                doc.setFontSize(20);
+                doc.setFont(undefined, 'bold');
+                doc.text('REFIT MAINTENANCE SERVICES', 20, 30);
+                
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Registration No: 201803348973 (002894203-V)', 20, 40);
+                doc.text('Professional Maintenance Solutions', 20, 48);
+                
+                // Quote Title
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.text('JOB QUOTE', 20, 70);
+                
+                // Quote Details
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Quote #: ' + quote.id, 20, 85);
+                doc.text('Date: ' + formatDate(quote.createdAt), 20, 95);
+                doc.text('Job Title: ' + quote.title, 20, 105);
+                doc.text('Category: ' + categories[quote.category].name, 20, 115);
+                
+                // Items Header
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('QUOTE ITEMS', 20, 135);
+                
+                // Items Table
+                var yPosition = 150;
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'bold');
+                doc.text('No.', 20, yPosition);
+                doc.text('Description', 35, yPosition);
+                doc.text('Qty', 130, yPosition);
+                doc.text('Unit', 150, yPosition);
+                doc.text('Amount (RM)', 170, yPosition);
+                
+                // Items
+                doc.setFont(undefined, 'normal');
+                for (var i = 0; i < quote.items.length; i++) {
+                    var item = quote.items[i];
+                    yPosition += 10;
+                    
+                    doc.text((i + 1).toString(), 20, yPosition);
+                    doc.text(item.name.substring(0, 35), 35, yPosition);
+                    doc.text(item.quantity.toString(), 130, yPosition);
+                    doc.text(item.unit, 150, yPosition);
+                    doc.text(item.total.toFixed(2), 170, yPosition);
+                    
+                    if (item.description) {
+                        yPosition += 8;
+                        doc.setFontSize(8);
+                        doc.text(item.description.substring(0, 60), 35, yPosition);
+                        doc.setFontSize(10);
+                    }
+                    
+                    if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 30;
+                    }
+                }
+                
+                // Total
+                yPosition += 20;
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('TOTAL AMOUNT: RM ' + quote.totalAmount.toFixed(2), 20, yPosition);
+                
+                // Footer
+                yPosition += 30;
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text('Thank you for choosing REFIT MAINTENANCE SERVICES', 20, yPosition);
+                doc.text('For inquiries, please contact us at +60 3-7967 8888', 20, yPosition + 10);
+                doc.text('Email: info@refitmaintenance.my', 20, yPosition + 20);
+                
+                // Generate PDF blob
+                var pdfBlob = doc.output('blob');
+                var fileName = 'REFIT_Quote_' + quote.id + '_' + quote.title.replace(/[^a-z0-9]/gi, '_') + '.pdf';
+                
+                // Check if Web Share API is available
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([pdfBlob], fileName, { type: 'application/pdf' })] })) {
+                    var file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+                    
+                    navigator.share({
+                        title: 'Job Quote - ' + quote.title,
+                        text: 'Job quote from REFIT MAINTENANCE SERVICES',
+                        files: [file]
+                    }).then(function() {
+                        showSuccessMessage('📤 Quote shared successfully!');
+                        closePdfShare();
+                    }).catch(function(error) {
+                        console.log('Share failed:', error);
+                        downloadPDF(); // Fallback to download
+                    });
+                } else {
+                    // Fallback: Download PDF
+                    downloadPDF();
+                }
+                
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                showSuccessMessage('❌ Error generating PDF. Please try again.');
             }
         }
 
-        // Continue with the remaining comprehensive functions...
-        // I'll continue implementing the rest of the system in a compact way
-        // Export Data Function
-        function exportData() {
-            var allData = {
-                companySettings: companySettings,
-                userInfo: userInfo,
-                jobQuotes: jobQuotes,
-                presetWorkItems: presetWorkItems,
-                selectedLogo: selectedLogoIndex,
-                customLogo: customLogo,
-                customIcons: customIcons,
-                themePreference: currentTheme,
-                categories: categories,
-                exportDate: new Date().toISOString(),
-                version: '5.0'
-            };
+        function downloadPDF() {
+            if (!currentQuoteId) return;
             
-            var dataStr = JSON.stringify(allData, null, 2);
-            var dataBlob = new Blob([dataStr], {type: 'application/json'});
+            var quote = jobQuotes.find(function(q) { return q.id === currentQuoteId; });
+            if (!quote) return;
             
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Enhanced_' + new Date().toISOString().split('T')[0] + '.json';
-            link.click();
+            showSuccessMessage('💾 Downloading PDF...');
             
-            showSuccessMessage('📤 Enhanced data exported successfully!');
+            // Create PDF content (same as share function)
+            var { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+            
+            try {
+                // Header
+                doc.setFontSize(20);
+                doc.setFont(undefined, 'bold');
+                doc.text('REFIT MAINTENANCE SERVICES', 20, 30);
+                
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Registration No: 201803348973 (002894203-V)', 20, 40);
+                doc.text('Professional Maintenance Solutions', 20, 48);
+                
+                // Quote Title
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.text('JOB QUOTE', 20, 70);
+                
+                // Quote Details
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Quote #: ' + quote.id, 20, 85);
+                doc.text('Date: ' + formatDate(quote.createdAt), 20, 95);
+                doc.text('Job Title: ' + quote.title, 20, 105);
+                doc.text('Category: ' + categories[quote.category].name, 20, 115);
+                
+                // Items Header
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('QUOTE ITEMS', 20, 135);
+                
+                // Items Table
+                var yPosition = 150;
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'bold');
+                doc.text('No.', 20, yPosition);
+                doc.text('Description', 35, yPosition);
+                doc.text('Qty', 130, yPosition);
+                doc.text('Unit', 150, yPosition);
+                doc.text('Amount (RM)', 170, yPosition);
+                
+                // Items
+                doc.setFont(undefined, 'normal');
+                for (var i = 0; i < quote.items.length; i++) {
+                    var item = quote.items[i];
+                    yPosition += 10;
+                    
+                    doc.text((i + 1).toString(), 20, yPosition);
+                    doc.text(item.name.substring(0, 35), 35, yPosition);
+                    doc.text(item.quantity.toString(), 130, yPosition);
+                    doc.text(item.unit, 150, yPosition);
+                    doc.text(item.total.toFixed(2), 170, yPosition);
+                    
+                    if (item.description) {
+                        yPosition += 8;
+                        doc.setFontSize(8);
+                        doc.text(item.description.substring(0, 60), 35, yPosition);
+                        doc.setFontSize(10);
+                    }
+                    
+                    if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 30;
+                    }
+                }
+                
+                // Total
+                yPosition += 20;
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('TOTAL AMOUNT: RM ' + quote.totalAmount.toFixed(2), 20, yPosition);
+                
+                // Footer
+                yPosition += 30;
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text('Thank you for choosing REFIT MAINTENANCE SERVICES', 20, yPosition);
+                doc.text('For inquiries, please contact us at +60 3-7967 8888', 20, yPosition + 10);
+                doc.text('Email: info@refitmaintenance.my', 20, yPosition + 20);
+                
+                // Download PDF
+                var fileName = 'REFIT_Quote_' + quote.id + '_' + quote.title.replace(/[^a-z0-9]/gi, '_') + '.pdf';
+                doc.save(fileName);
+                
+                showSuccessMessage('💾 PDF downloaded successfully!');
+                closePdfShare();
+                
+            } catch (error) {
+                console.error('PDF download error:', error);
+                showSuccessMessage('❌ Error downloading PDF. Please try again.');
+            }
         }
 
-        // Utility and core functions
+        // Quote Management Functions
+        function editQuote(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            // Set current quote data for editing
+            currentQuoteData = {
+                title: quote.title,
+                category: quote.category,
+                items: [...quote.items],
+                totalAmount: quote.totalAmount
+            };
+            
+            // Remove original quote (will be re-added when edited)
+            jobQuotes = jobQuotes.filter(function(q) { return q.id !== quoteId; });
+            
+            // Fill form with existing data
+            document.getElementById('job-title-input').value = quote.title;
+            document.getElementById('selected-job-title').textContent = quote.title;
+            document.getElementById('category-job-title').textContent = quote.title;
+            document.getElementById('selected-category-display').textContent = categories[quote.category].name;
+            
+            // Start editing flow from Step 3 (items)
+            renderCategories();
+            renderPresetItems();
+            
+            document.getElementById('item-selection-modal').classList.add('show');
+            showSuccessMessage('✏️ Editing quote: ' + quote.title);
+        }
+
+        function deleteQuote(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            if (confirm('Delete quote: "' + quote.title + '"?\n\nThis action cannot be undone.')) {
+                jobQuotes = jobQuotes.filter(function(q) { return q.id !== quoteId; });
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                showView('quotes');
+                showSuccessMessage('🗑️ Quote deleted successfully');
+            }
+        }
+
+        // View and Navigation Functions
         function showView(viewName) {
             currentView = viewName;
+            
+            // Hide all views
             var views = document.querySelectorAll('.view');
             for (var i = 0; i < views.length; i++) {
                 views[i].classList.add('hidden');
             }
+            
+            // Show target view
             var targetView = document.getElementById(viewName + '-view');
             if (targetView) {
                 targetView.classList.remove('hidden');
             }
+            
+            // Update navigation
             var navItems = document.querySelectorAll('.nav-item');
             for (var i = 0; i < navItems.length; i++) {
                 navItems[i].classList.remove('active');
             }
+            
             var activeNav = document.querySelector('.nav-item[onclick*="' + viewName + '"]');
             if (activeNav) {
                 activeNav.classList.add('active');
             }
+            
+            // Render view content
             renderViews();
         }
 
-        function showSuccessMessage(message) {
-            var messageElement = document.getElementById('success-message');
-            if (!messageElement) return;
-            messageElement.textContent = message;
-            messageElement.classList.add('show');
-            setTimeout(function() {
-                messageElement.classList.remove('show');
-            }, 3000);
+        function renderViews() {
+            switch(currentView) {
+                case 'dashboard':
+                    renderDashboard();
+                    break;
+                case 'quotes':
+                    renderQuotes();
+                    break;
+                case 'quote-detail':
+                    // Already rendered by showQuoteDetail
+                    break;
+            }
         }
 
+        function renderDashboard() {
+            var recentQuotes = jobQuotes.slice(-3).reverse();
+            var container = document.getElementById('recent-quotes');
+            if (!container) return;
+            
+            if (recentQuotes.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 30px 20px; color: var(--text-muted);">' +
+                    '<div style="font-size: 32px; margin-bottom: 8px;">💰</div>' +
+                    '<p style="font-weight: 600;">No job quotes yet</p>' +
+                    '<p style="font-size: 12px; margin-top: 4px;">Create your first job quote</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var html = '';
+            for (var i = 0; i < recentQuotes.length; i++) {
+                var quote = recentQuotes[i];
+                html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;" onclick="showQuoteDetail(' + quote.id + ')">' +
+                    '<div style="font-weight: 700; font-size: 15px; color: var(--text-primary); margin-bottom: 8px;">' + quote.title + '</div>' +
+                    '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
+                    '<div style="margin-bottom: 8px;">' +
+                    '<span class="category-badge category-' + quote.category + '">' + categories[quote.category].icon + ' ' + categories[quote.category].name + '</span>' +
+                    '</div>' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="color: var(--text-muted); font-size: 12px;">Quote #' + quote.id + '</span>' +
+                    '<span style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function renderQuotes() {
+            var container = document.getElementById('quotes-list');
+            if (!container) return;
+            
+            if (jobQuotes.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">💰</div>' +
+                    '<p style="font-weight: 600;">No job quotes found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first job quote</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var html = '';
+            for (var i = jobQuotes.length - 1; i >= 0; i--) {
+                var quote = jobQuotes[i];
+                html += '<div class="item-card">' +
+                    '<div class="item-header">' +
+                    '<div class="item-info">' +
+                    '<h3>' + quote.title + '</h3>' +
+                    '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
+                    '<div style="margin: 8px 0;">' +
+                    '<span class="category-badge category-' + quote.category + '">' + categories[quote.category].icon + ' ' + categories[quote.category].name + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="item-actions">' +
+                    '<button class="icon-btn quote-btn" onclick="showQuoteDetail(' + quote.id + ')" title="View Quote">👁️</button>' +
+                    '<button class="icon-btn share-btn" onclick="currentQuoteId=' + quote.id + '; openPdfShare()" title="Share Quote">📤</button>' +
+                    '<button class="icon-btn edit-btn" onclick="editQuote(' + quote.id + ')" title="Edit Quote">✏️</button>' +
+                    '<button class="icon-btn delete-btn" onclick="deleteQuote(' + quote.id + ')" title="Delete Quote">🗑️</button>' +
+                    '</div>' +
+                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="font-size: 12px; color: var(--text-muted);">Quote #' + quote.id + '</span>' +
+                    '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        // Utility Functions
         function updateStats() {
             var totalQuotes = jobQuotes.length;
             var totalItems = 0;
@@ -3199,7 +2627,6 @@
             updateElementText('total-items-count', totalItems);
             updateElementText('today-revenue', 'RM ' + Math.round(todayRevenue));
             updateElementText('total-revenue', 'RM ' + Math.round(totalRevenue));
-            updateElementText('daily-revenue', 'RM ' + todayRevenue.toFixed(2));
         }
 
         function updateElementText(elementId, text) {
@@ -3209,149 +2636,67 @@
             }
         }
 
-        function renderViews() {
-            switch(currentView) {
-                case 'dashboard':
-                    renderDashboard();
-                    break;
-                case 'quotes':
-                    renderQuotes();
-                    updateQuoteCategoryFilters();
-                    break;
-                case 'presets':
-                    renderPresets();
-                    updatePresetCategoryFilters();
-                    break;
-            }
-        }
-
-        function renderDashboard() {
-            var recentQuotes = jobQuotes.slice(-3).reverse();
-            var container = document.getElementById('recent-quotes');
-            if (!container) return;
-            
-            if (recentQuotes.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 30px 20px; color: var(--text-muted);"><div style="font-size: 32px; margin-bottom: 8px;">💰</div><p style="font-weight: 600;">No job quotes yet</p><p style="font-size: 12px; margin-top: 4px;">Create your first job quote</p></div>';
-                return;
-            }
-            
-            var html = '';
-            for (var i = 0; i < recentQuotes.length; i++) {
-                var quote = recentQuotes[i];
-                var quoteCategories = getQuoteCategories(quote);
-                html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;" onclick="viewQuote(' + quote.id + ')">' +
-                    '<div style="font-weight: 700; font-size: 15px; color: var(--text-primary); margin-bottom: 8px;">' + quote.title + '</div>' +
-                    '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
-                    '<div style="margin-bottom: 8px;">' + renderCategoryBadges(quoteCategories) + '</div>' +
-                    '<div style="display: flex; justify-content: space-between; align-items: center;"><span style="color: var(--text-muted); font-size: 12px;">Quote #' + quote.id + '</span><span style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ' + quote.totalAmount.toFixed(2) + '</span></div>' +
-                    '</div>';
-            }
-            container.innerHTML = html;
-        }
-
-        function getQuoteCategories(quote) {
-            var categories = {};
-            for (var i = 0; i < quote.items.length; i++) {
-                var item = quote.items[i];
-                var category = item.category || 'common';
-                categories[category] = true;
-            }
-            return Object.keys(categories);
-        }
-
-        function renderCategoryBadges(categoryList) {
-            var html = '';
-            for (var i = 0; i < categoryList.length && i < 3; i++) {
-                var category = categoryList[i];
-                html += '<span class="category-badge category-' + category + '">' + getCategoryIcon(category) + ' ' + getCategoryName(category) + '</span>';
-            }
-            if (categoryList.length > 3) {
-                html += '<span class="category-badge" style="background: var(--text-muted);">+' + (categoryList.length - 3) + ' more</span>';
-            }
-            return html;
-        }
-
         function formatDate(dateString) {
             if (!dateString) return '';
             var date = new Date(dateString);
-            return date.toLocaleDateString('en-MY', { year: 'numeric', month: 'short', day: 'numeric' });
-        }
-
-        function renderQuotes() {
-            var container = document.getElementById('quotes-list');
-            if (!container) return;
-            
-            var filteredQuotes = jobQuotes.filter(function(quote) {
-                var matchesCategory = currentQuoteFilter === 'all' || quoteHasCategory(quote, currentQuoteFilter);
-                return matchesCategory;
+            return date.toLocaleDateString('en-MY', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
             });
-            
-            if (filteredQuotes.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div class="empty-icon">💰</div><p style="font-weight: 600;">No job quotes found</p><p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first job quote or try different filters</p></div>';
-                return;
-            }
-            
-            var html = '';
-            for (var i = 0; i < filteredQuotes.length; i++) {
-                var quote = filteredQuotes[i];
-                var quoteCategories = getQuoteCategories(quote);
-                html += '<div class="item-card"><div class="item-header"><div class="item-info"><h3>' + quote.title + '</h3><div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div><div style="margin: 8px 0;">' + renderCategoryBadges(quoteCategories) + '</div></div></div><div class="item-actions"><button class="icon-btn quote-btn" onclick="viewQuote(' + quote.id + ')" title="View Quote">👁️</button><button class="icon-btn edit-btn" onclick="editQuote(' + quote.id + ')" title="Edit Quote">✏️</button><button class="icon-btn delete-btn" onclick="deleteQuote(' + quote.id + ')" title="Delete Quote">🗑️</button></div><div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;"><span style="font-size: 12px; color: var(--text-muted);">Items: ' + quote.items.length + '</span><span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + quote.totalAmount.toFixed(2) + '</span></div></div>';
-            }
-            container.innerHTML = html;
         }
 
-        function quoteHasCategory(quote, category) {
-            for (var i = 0; i < quote.items.length; i++) {
-                var item = quote.items[i];
-                if ((item.category || 'common') === category) {
-                    return true;
-                }
-            }
-            return false;
+        function showSuccessMessage(message) {
+            var messageElement = document.getElementById('success-message');
+            if (!messageElement) return;
+            
+            messageElement.textContent = message;
+            messageElement.classList.add('show');
+            
+            setTimeout(function() {
+                messageElement.classList.remove('show');
+            }, 3000);
         }
 
-        function renderPresets() {
-            var container = document.getElementById('presets-list');
-            if (!container) return;
+        function exportData() {
+            var allData = {
+                jobQuotes: jobQuotes,
+                categories: categories,
+                presetWorkItems: presetWorkItems,
+                themePreference: currentTheme,
+                exportDate: new Date().toISOString(),
+                version: 'Simplified 1.0'
+            };
             
-            var filteredPresets = presetWorkItems.filter(function(preset) {
-                var matchesCategory = currentPresetFilter === 'all' || preset.category === currentPresetFilter;
-                return matchesCategory;
-            });
+            var dataStr = JSON.stringify(allData, null, 2);
+            var dataBlob = new Blob([dataStr], {type: 'application/json'});
             
-            if (filteredPresets.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><p style="font-weight: 600;">No preset items found</p><p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create preset items or try different filters</p></div>';
-                return;
-            }
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'REFIT_Simplified_' + new Date().toISOString().split('T')[0] + '.json';
+            link.click();
             
-            var html = '';
-            for (var i = 0; i < filteredPresets.length; i++) {
-                var preset = filteredPresets[i];
-                html += '<div class="item-card"><div class="item-header"><div class="item-info"><h3><span style="margin-right: 8px;">' + getCategoryIcon(preset.category) + '</span>' + preset.name + '</h3><div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">' + preset.description + '</div><div style="font-size: 12px; color: var(--text-muted);">📏 ' + preset.unit + ' • ' + getCategoryName(preset.category) + '</div></div></div><div class="item-actions"><button class="icon-btn edit-btn" onclick="editPresetItem(\'' + preset.id + '\')" title="Edit Preset">✏️</button><button class="icon-btn delete-btn" onclick="deletePresetItem(\'' + preset.id + '\')" title="Delete Preset">🗑️</button></div><div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;"><span style="font-size: 12px; color: var(--text-muted);">Category: ' + getCategoryName(preset.category) + '</span><span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + parseFloat(preset.price).toFixed(2) + '</span></div></div>';
-            }
-            container.innerHTML = html;
+            showSuccessMessage('📤 Data exported successfully!');
         }
 
         // Setup and initialization functions
         function setupEventListeners() {
-            // Step 1 job title enter key support
-            var jobTitleInput = document.getElementById('simple-job-title');
+            // Job title enter key support
+            var jobTitleInput = document.getElementById('job-title-input');
             if (jobTitleInput) {
                 jobTitleInput.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
-                        proceedToStep2();
+                        proceedToCategory();
                     }
                 });
-            }
-            
-            var presetItemForm = document.getElementById('preset-item-form');
-            if (presetItemForm) {
-                presetItemForm.addEventListener('submit', handlePresetItemSubmit);
             }
         }
 
         function setupMobileOptimizations() {
             setInterval(updateStatusBar, 60000);
+            
             var lastTouchEnd = 0;
             document.addEventListener('touchend', function (event) {
                 var now = (new Date()).getTime();
@@ -3364,151 +2709,43 @@
 
         function updateStatusBar() {
             var now = new Date();
-            var timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+            var timeString = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: false 
+            });
             var timeElement = document.getElementById('status-time');
             if (timeElement) {
                 timeElement.textContent = timeString;
             }
         }
 
-        function updateCurrentDate() {
-            var today = new Date();
-            var dateString = today.toLocaleDateString('en-MY', { weekday: 'long', month: 'long', day: 'numeric' });
-            var dateElement = document.getElementById('current-date');
-            if (dateElement) {
-                dateElement.textContent = dateString;
-            }
-        }
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
 
-        // Preset Management Functions
-        function openPresetManager() {
-            showView('presets');
-        }
-
-        function openPresetItemForm() {
-            editingPreset = null;
-            document.getElementById('preset-item-modal-title').textContent = '➕ Add Preset Item';
-            document.getElementById('preset-item-form').reset();
-            document.getElementById('preset-item-modal').classList.add('show');
-        }
-
-        function closePresetItemForm() {
-            document.getElementById('preset-item-modal').classList.remove('show');
-            editingPreset = null;
-        }
-
-        function handlePresetItemSubmit(e) {
-            e.preventDefault();
-            var name = document.getElementById('preset-item-name').value.trim();
-            var price = parseFloat(document.getElementById('preset-item-price').value);
-            
-            if (!name || !price) {
-                showSuccessMessage('⚠️ Please fill in all required fields!');
-                return;
-            }
-
-            var itemData = {
-                id: editingPreset ? editingPreset.id : (name.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Date.now()),
-                name: name,
-                description: document.getElementById('preset-item-description').value.trim(),
-                price: price,
-                unit: document.getElementById('preset-item-unit').value,
-                category: document.getElementById('preset-item-category').value,
-                createdAt: editingPreset ? editingPreset.createdAt : new Date().toISOString()
-            };
-
-            if (editingPreset) {
-                var index = presetWorkItems.findIndex(function(item) { return item.id === editingPreset.id; });
-                if (index !== -1) {
-                    presetWorkItems[index] = itemData;
-                }
-                showSuccessMessage('✏️ Preset item updated successfully');
-            } else {
-                presetWorkItems.push(itemData);
-                showSuccessMessage('✅ Preset item added successfully');
-            }
-
-            closePresetItemForm();
-            saveDataToStorage();
+        function initializeApp() {
+            loadThemePreference();
+            loadDataFromStorage();
+            setupEventListeners();
+            setupMobileOptimizations();
+            updateStatusBar();
             updateStats();
             renderViews();
-            updateCategoryFilters();
-            renderPresetItems(document.getElementById('preset-category-selector').value);
-        }
-
-        function editPresetItem(id) {
-            var item = presetWorkItems.find(function(item) { return item.id === id; });
-            if (!item) return;
-
-            editingPreset = item;
-            document.getElementById('preset-item-modal-title').textContent = '✏️ Edit Preset Item';
-            document.getElementById('preset-item-name').value = item.name;
-            document.getElementById('preset-item-description').value = item.description || '';
-            document.getElementById('preset-item-price').value = item.price;
-            document.getElementById('preset-item-unit').value = item.unit;
-            document.getElementById('preset-item-category').value = item.category;
-            document.getElementById('preset-item-modal').classList.add('show');
-        }
-
-        function deletePresetItem(id) {
-            var item = presetWorkItems.find(function(item) { return item.id === id; });
-            if (!item) return;
-
-            if (confirm('Delete preset item: "' + item.name + '"?\nThis action cannot be undone.')) {
-                presetWorkItems = presetWorkItems.filter(function(item) { return item.id !== id; });
-                saveDataToStorage();
-                updateStats();
-                renderViews();
-                updateCategoryFilters();
-                renderPresetItems(document.getElementById('preset-category-selector').value);
-                showSuccessMessage('🗑️ Preset item deleted successfully');
-            }
-        }
-
-        // Quote view and management
-        function viewQuote(quoteId) {
-            showSuccessMessage('💰 Quote viewer coming soon!');
-        }
-
-        function closeQuoteView() {
-            document.getElementById('quote-view-modal').classList.remove('show');
-        }
-
-        function editQuote(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
             
-            editingJob = quote;
-            currentQuoteItems = [...quote.items];
-            
-            document.getElementById('simple-job-modal-title').textContent = '✏️ Edit Job Quote';
-            document.getElementById('simple-job-title').value = quote.title;
-            
-            // Go directly to step 2 for editing
-            showStep2();
-            document.getElementById('simple-job-modal').classList.add('show');
-            showSuccessMessage('✏️ Editing: ' + quote.title);
+            showSuccessMessage('🎯 REFIT Simplified Quote System Ready!');
+            console.log('🔧 REFIT MAINTENANCE SERVICES - Simplified Quote Creation');
+            console.log('📱 3-Step Quote Process: Title → Category → Items → Share');
+            console.log('📄 PDF Generation & Sharing System');
+            console.log('👁️ Eye-Friendly Mobile Design');
         }
 
-        function deleteQuote(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
-
-            if (confirm('Delete job quote: "' + quote.title + '"?\nThis action cannot be undone.')) {
-                jobQuotes = jobQuotes.filter(function(q) { return q.id !== quoteId; });
-                saveDataToStorage();
-                updateStats();
-                renderViews();
-                updateCategoryFilters();
-                showSuccessMessage('🗑️ Job quote deleted successfully');
-            }
-        }
-
-        console.log('🎯 REFIT ENHANCED - Complete Management System Ready');
-        console.log('🎨 Custom Icon Upload System');
-        console.log('👤 User Info & Logo Management');
-        console.log('🏗️ 24 Professional Categories');
-        console.log('📱 Touch-Friendly Mobile Experience');
+        console.log('🎯 REFIT SIMPLIFIED - Quote Creation & PDF Sharing System Ready');
+        console.log('📝 Step 1: Job Title');
+        console.log('🏷️ Step 2: Category Selection');
+        console.log('📋 Step 3: Item Selection');
+        console.log('📤 PDF Generation & Sharing');
     </script>
 </body>
 </html>
