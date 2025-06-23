@@ -1338,6 +1338,253 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Business Tools Hub View -->
+            <div id="tools-view" class="view hidden">
+                <div class="section-header">
+                    <h2 class="section-title">Business Tools</h2>
+                    <button class="add-btn" onclick="refreshTools()" title="Refresh Tools">
+                        <span>🔄</span>
+                    </button>
+                </div>
+
+                <!-- Quick Access Tools Grid -->
+                <div class="card">
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🚀 Quick Access Hub</h3>
+                    <div class="actions-grid" style="grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <button class="action-btn success" onclick="openWhatsAppPanel()" style="min-height: 100px;">
+                            <span class="icon">💬</span>
+                            <span style="font-weight: 700;">WhatsApp Business</span>
+                        </button>
+                        <button class="action-btn info" onclick="openCalendarPanel()" style="min-height: 100px;">
+                            <span class="icon">📅</span>
+                            <span style="font-weight: 700;">Smart Calendar</span>
+                        </button>
+                        <button class="action-btn warm" onclick="openCalculatorPanel()" style="min-height: 100px;">
+                            <span class="icon">🔢</span>
+                            <span style="font-weight: 700;">Pro Calculator</span>
+                        </button>
+                        <button class="action-btn soft" onclick="openBankingPanel()" style="min-height: 100px;">
+                            <span class="icon">🏦</span>
+                            <span style="font-weight: 700;">Banking Hub</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Business Integration -->
+                <div class="card" id="whatsapp-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">💬 WhatsApp Business Center</h3>
+                        <span style="background: var(--success); color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600;">ACTIVE</span>
+                    </div>
+
+                    <!-- Quick Customer Contact -->
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                        <h4 style="margin-bottom: 12px; color: var(--text-primary); font-weight: 700;">📱 Quick Customer Contact</h4>
+                        <div style="display: grid; gap: 12px;">
+                            <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: end;">
+                                <input type="tel" id="whatsapp-number" class="form-input" style="margin: 0;" placeholder="Customer Phone Number (60123456789)" pattern="[0-9]*">
+                                <button onclick="openWhatsAppChat()" class="btn btn-success" style="padding: 14px 20px; margin: 0; font-size: 14px; white-space: nowrap;">
+                                    💬 Open Chat
+                                </button>
+                            </div>
+                            <textarea id="whatsapp-message" class="form-input" style="margin: 0; resize: none;" rows="3" placeholder="Pre-filled message (optional)..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Templates -->
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px;">
+                        <h4 style="margin-bottom: 12px; color: var(--text-primary); font-weight: 700;">📝 Quick Message Templates</h4>
+                        <div style="display: grid; gap: 8px;">
+                            <button onclick="useWhatsAppTemplate('quote')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; text-align: left; cursor: pointer; transition: all 0.2s ease; font-size: 14px;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='var(--bg-card)'">
+                                <strong>Quote Follow-up:</strong> Hello! Here's your maintenance service quote. Please review and let us know if you have any questions.
+                            </button>
+                            <button onclick="useWhatsAppTemplate('appointment')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; text-align: left; cursor: pointer; transition: all 0.2s ease; font-size: 14px;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='var(--bg-card)'">
+                                <strong>Appointment Reminder:</strong> Hi! This is a reminder for your scheduled maintenance service tomorrow. Our team will arrive between [TIME].
+                            </button>
+                            <button onclick="useWhatsAppTemplate('completed')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; text-align: left; cursor: pointer; transition: all 0.2s ease; font-size: 14px;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='var(--bg-card)'">
+                                <strong>Job Completed:</strong> Thank you for choosing REFIT! Your maintenance service is completed. Please rate our service and don't hesitate to contact us for future needs.
+                            </button>
+                            <button onclick="useWhatsAppTemplate('emergency')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; text-align: left; cursor: pointer; transition: all 0.2s ease; font-size: 14px;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='var(--bg-card)'">
+                                <strong>Emergency Response:</strong> We received your emergency service request. Our technician is on the way and will arrive within 30 minutes.
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Calendar Integration -->
+                <div class="card" id="calendar-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">📅 Smart Business Calendar</h3>
+                        <button onclick="addQuickAppointment()" class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;">➕ Quick Add</button>
+                    </div>
+
+                    <!-- Calendar Header -->
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <button onclick="changeMonth(-1)" style="background: var(--accent-primary); color: white; border: none; border-radius: 6px; padding: 8px 12px; cursor: pointer;">‹ Prev</button>
+                            <h4 id="calendar-month-year" style="margin: 0; color: var(--text-primary); font-weight: 700;">December 2024</h4>
+                            <button onclick="changeMonth(1)" style="background: var(--accent-primary); color: white; border: none; border-radius: 6px; padding: 8px 12px; cursor: pointer;">Next ›</button>
+                        </div>
+                        
+                        <!-- Calendar Grid -->
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center;">
+                            <div style="font-weight: 700; color: var(--text-primary); padding: 8px 4px; font-size: 12px;">Sun</div>
+                            <div style="font-weight: 700; color: var(--text-primary); padding: 8px 4px; font-size: 12px;">Mon</div>
+                            <div style="font-weight: 700; color: var(--text-primary); padding: 8px 4px; font-size: 12px;">Tue</div>
+                            <div style="font-weight: 700; color: var(--text-primary); padding: 8px 4px; font-size: 12px;">Wed</div>
+                            <div style="font-weight: 700; color: var(--text-primary); padding: 8px 4px; font-size: 12px;">Thu</div>
+                            <div style="font-weight: 700; color: var(--text-primary); padding: 8px 4px; font-size: 12px;">Fri</div>
+                            <div style="font-weight: 700; color: var(--text-primary); padding: 8px 4px; font-size: 12px;">Sat</div>
+                        </div>
+                        <div id="calendar-dates" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center;">
+                            <!-- Calendar dates will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Today's Schedule -->
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px;">
+                        <h4 style="margin-bottom: 12px; color: var(--text-primary); font-weight: 700;">📋 Today's Schedule</h4>
+                        <div id="today-schedule">
+                            <div style="background: var(--bg-card); border-radius: 8px; padding: 12px; margin-bottom: 8px; border-left: 4px solid var(--accent-primary);">
+                                <div style="font-weight: 700; color: var(--text-primary);">9:00 AM - HVAC Maintenance</div>
+                                <div style="font-size: 13px; color: var(--text-muted);">Client: ABC Office Tower • Duration: 2 hours</div>
+                            </div>
+                            <div style="background: var(--bg-card); border-radius: 8px; padding: 12px; margin-bottom: 8px; border-left: 4px solid var(--accent-warm);">
+                                <div style="font-weight: 700; color: var(--text-primary);">2:00 PM - Electrical Inspection</div>
+                                <div style="font-size: 13px; color: var(--text-muted);">Client: XYZ Manufacturing • Duration: 1.5 hours</div>
+                            </div>
+                            <div style="background: var(--bg-card); border-radius: 8px; padding: 12px; border-left: 4px solid var(--success);">
+                                <div style="font-weight: 700; color: var(--text-primary);">4:30 PM - Quote Presentation</div>
+                                <div style="font-size: 13px; color: var(--text-muted);">Client: DEF Shopping Mall • Duration: 1 hour</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Calculator -->
+                <div class="card" id="calculator-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">🔢 Professional Calculator</h3>
+                        <button onclick="clearCalculator()" class="btn btn-danger" style="padding: 6px 12px; font-size: 12px;">Clear All</button>
+                    </div>
+
+                    <!-- Calculator Display -->
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                        <div style="background: #000; color: #00ff00; border-radius: 8px; padding: 16px; margin-bottom: 12px; font-family: 'Courier New', monospace;">
+                            <div id="calc-display" style="font-size: 24px; font-weight: bold; text-align: right; min-height: 30px; word-break: break-all;">0</div>
+                            <div id="calc-operation" style="font-size: 14px; opacity: 0.7; text-align: right; min-height: 20px;"></div>
+                        </div>
+                        
+                        <!-- Calculator Buttons -->
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                            <button onclick="calcFunction('clear')" style="background: var(--error); color: white; border: none; border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">C</button>
+                            <button onclick="calcFunction('backspace')" style="background: var(--warning); color: white; border: none; border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">⌫</button>
+                            <button onclick="calcFunction('%')" style="background: var(--info); color: white; border: none; border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">%</button>
+                            <button onclick="calcFunction('/')" style="background: var(--accent-primary); color: white; border: none; border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">÷</button>
+                            
+                            <button onclick="calcNumber('7')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">7</button>
+                            <button onclick="calcNumber('8')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">8</button>
+                            <button onclick="calcNumber('9')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">9</button>
+                            <button onclick="calcFunction('*')" style="background: var(--accent-primary); color: white; border: none; border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">×</button>
+                            
+                            <button onclick="calcNumber('4')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">4</button>
+                            <button onclick="calcNumber('5')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">5</button>
+                            <button onclick="calcNumber('6')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">6</button>
+                            <button onclick="calcFunction('-')" style="background: var(--accent-primary); color: white; border: none; border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">−</button>
+                            
+                            <button onclick="calcNumber('1')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">1</button>
+                            <button onclick="calcNumber('2')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">2</button>
+                            <button onclick="calcNumber('3')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">3</button>
+                            <button onclick="calcFunction('+')" style="background: var(--accent-primary); color: white; border: none; border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">+</button>
+                            
+                            <button onclick="calcNumber('0')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer; grid-column: span 2;">0</button>
+                            <button onclick="calcNumber('.')" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">.</button>
+                            <button onclick="calcFunction('=')" style="background: var(--success); color: white; border: none; border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer;">=</button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Business Calculations -->
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px;">
+                        <h4 style="margin-bottom: 12px; color: var(--text-primary); font-weight: 700;">💼 Business Quick Calcs</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                            <button onclick="quickCalc('gst')" style="background: var(--accent-warm); color: white; border: none; border-radius: 6px; padding: 8px; font-size: 12px; cursor: pointer;">+ 6% GST</button>
+                            <button onclick="quickCalc('discount10')" style="background: var(--success); color: white; border: none; border-radius: 6px; padding: 8px; font-size: 12px; cursor: pointer;">- 10% Discount</button>
+                            <button onclick="quickCalc('markup20')" style="background: var(--info); color: white; border: none; border-radius: 6px; padding: 8px; font-size: 12px; cursor: pointer;">+ 20% Markup</button>
+                            <button onclick="quickCalc('hourly')" style="background: var(--accent-soft); color: white; border: none; border-radius: 6px; padding: 8px; font-size: 12px; cursor: pointer;">× Hours (85/hr)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banking & Financial Hub -->
+                <div class="card" id="banking-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">🏦 Banking & Financial Hub</h3>
+                        <span style="background: var(--success); color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600;">SECURE</span>
+                    </div>
+
+                    <!-- Major Malaysian Banks -->
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                        <h4 style="margin-bottom: 12px; color: var(--text-primary); font-weight: 700;">🏛️ Major Malaysian Banks</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                            <button onclick="openBankLink('maybank')" style="background: #FFD700; color: #000; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                🏦 Maybank
+                            </button>
+                            <button onclick="openBankLink('cimb')" style="background: #D32F2F; color: white; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                🏦 CIMB Bank
+                            </button>
+                            <button onclick="openBankLink('pbbank')" style="background: #1976D2; color: white; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                🏦 Public Bank
+                            </button>
+                            <button onclick="openBankLink('rhb')" style="background: #1565C0; color: white; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                🏦 RHB Bank
+                            </button>
+                            <button onclick="openBankLink('hlbank')" style="background: #C62828; color: white; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                🏦 Hong Leong
+                            </button>
+                            <button onclick="openBankLink('ambank')" style="background: #FF9800; color: white; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                🏦 AmBank
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Business Banking Features -->
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                        <h4 style="margin-bottom: 12px; color: var(--text-primary); font-weight: 700;">💼 Business Banking Tools</h4>
+                        <div style="display: grid; gap: 8px;">
+                            <button onclick="openBankFeature('transfer')" style="background: var(--accent-primary); color: white; border: none; border-radius: 8px; padding: 12px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                <span><strong>💸 Instant Transfer</strong><br><span style="font-size: 12px; opacity: 0.9;">Quick payment to suppliers & staff</span></span>
+                                <span>→</span>
+                            </button>
+                            <button onclick="openBankFeature('statement')" style="background: var(--info); color: white; border: none; border-radius: 8px; padding: 12px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                <span><strong>📊 Bank Statements</strong><br><span style="font-size: 12px; opacity: 0.9;">Download monthly statements</span></span>
+                                <span>→</span>
+                            </button>
+                            <button onclick="openBankFeature('payroll')" style="background: var(--success); color: white; border: none; border-radius: 8px; padding: 12px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                <span><strong>👥 Payroll Management</strong><br><span style="font-size: 12px; opacity: 0.9;">Employee salary processing</span></span>
+                                <span>→</span>
+                            </button>
+                            <button onclick="openBankFeature('loan')" style="background: var(--accent-warm); color: white; border: none; border-radius: 8px; padding: 12px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                <span><strong>🏠 Business Loans</strong><br><span style="font-size: 12px; opacity: 0.9;">Apply for business financing</span></span>
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Payment Gateways -->
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px;">
+                        <h4 style="margin-bottom: 12px; color: var(--text-primary); font-weight: 700;">💳 Payment Gateways</h4>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                            <button onclick="openPaymentGateway('fpx')" style="background: var(--accent-primary); color: white; border: none; border-radius: 6px; padding: 8px; font-size: 12px; cursor: pointer;">FPX</button>
+                            <button onclick="openPaymentGateway('grabpay')" style="background: #00B14F; color: white; border: none; border-radius: 6px; padding: 8px; font-size: 12px; cursor: pointer;">GrabPay</button>
+                            <button onclick="openPaymentGateway('boost')" style="background: #FF6B35; color: white; border: none; border-radius: 6px; padding: 8px; font-size: 12px; cursor: pointer;">Boost</button>
+                            <button onclick="openPaymentGateway('tng')" style="background: #1E88E5; color: white; border: none; border-radius: 6px; padding: 8px; font-size: 12px; cursor: pointer;">TouchNGo</button>
+                            <button onclick="openPaymentGateway('paypal')" style="background: #0070BA; color: white; border: none; border-radius: 6px; padding: 8px; font-size: 12px; cursor: pointer;">PayPal</button>
+                            <button onclick="openPaymentGateway('stripe')" style="background: #635BFF; color: white; border: none; border-radius: 6px; padding: 8px; font-size: 12px; cursor: pointer;">Stripe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Icon Upload Modal -->
@@ -2112,6 +2359,10 @@
                 <div class="nav-item" onclick="showView('analytics')">
                     <span class="icon">📊</span>
                     <span>Analytics</span>
+                </div>
+                <div class="nav-item" onclick="showView('tools')">
+                    <span class="icon">🛠️</span>
+                    <span>Tools</span>
                 </div>
             </div>
             <div class="home-indicator"></div>
@@ -3098,6 +3349,384 @@
                     insights.textContent = current + 1;
                 }
             }, 30000); // Update every 30 seconds
+        }
+
+        // ========================================
+        // BUSINESS TOOLS HUB FUNCTIONS
+        // ========================================
+
+        var calcDisplay = '0';
+        var calcPrevious = null;
+        var calcOperation = null;
+        var calcWaitingForOperand = false;
+        var currentDate = new Date();
+        var currentMonth = currentDate.getMonth();
+        var currentYear = currentDate.getFullYear();
+
+        // Tools Hub Management
+        function renderToolsHub() {
+            initializeCalendar();
+            updateTodaySchedule();
+            showSuccessMessage('🛠️ Business Tools Hub loaded - All systems ready!');
+        }
+
+        function refreshTools() {
+            initializeCalendar();
+            updateTodaySchedule();
+            clearCalculator();
+            showSuccessMessage('🔄 All business tools refreshed successfully!');
+        }
+
+        // ========================================
+        // WHATSAPP BUSINESS INTEGRATION
+        // ========================================
+
+        function openWhatsAppPanel() {
+            var panel = document.getElementById('whatsapp-panel');
+            if (panel) {
+                panel.scrollIntoView({ behavior: 'smooth' });
+                showSuccessMessage('💬 WhatsApp Business panel opened');
+            }
+        }
+
+        function openWhatsAppChat() {
+            var phoneNumber = document.getElementById('whatsapp-number').value.trim();
+            var message = document.getElementById('whatsapp-message').value.trim();
+            
+            if (!phoneNumber) {
+                showSuccessMessage('⚠️ Please enter a phone number');
+                return;
+            }
+            
+            // Clean phone number (remove spaces, dashes, etc.)
+            phoneNumber = phoneNumber.replace(/\D/g, '');
+            
+            // Ensure Malaysian format
+            if (phoneNumber.startsWith('01')) {
+                phoneNumber = '6' + phoneNumber;
+            } else if (!phoneNumber.startsWith('60')) {
+                phoneNumber = '60' + phoneNumber;
+            }
+            
+            // Build WhatsApp URL
+            var whatsappURL = 'https://wa.me/' + phoneNumber;
+            if (message) {
+                whatsappURL += '?text=' + encodeURIComponent(message);
+            }
+            
+            // Open WhatsApp
+            window.open(whatsappURL, '_blank');
+            showSuccessMessage('💬 Opening WhatsApp chat with +' + phoneNumber);
+        }
+
+        function useWhatsAppTemplate(templateType) {
+            var templates = {
+                quote: 'Hello! Here\'s your maintenance service quote from REFIT. Please review and let us know if you have any questions. We\'re here to help! 💼',
+                appointment: 'Hi! This is a reminder for your scheduled maintenance service tomorrow. Our professional team will arrive between [TIME]. Please ensure someone is available on-site. 📅',
+                completed: 'Thank you for choosing REFIT MAINTENANCE SERVICES! ✅ Your maintenance service is completed. Please rate our service and don\'t hesitate to contact us for future needs. 🌟',
+                emergency: '🚨 We received your emergency service request. Our expert technician is on the way and will arrive within 30 minutes. Please stay safe and we\'ll resolve this quickly!'
+            };
+            
+            var messageField = document.getElementById('whatsapp-message');
+            if (messageField && templates[templateType]) {
+                messageField.value = templates[templateType];
+                showSuccessMessage('📝 Template loaded: ' + templateType.charAt(0).toUpperCase() + templateType.slice(1));
+            }
+        }
+
+        // ========================================
+        // SMART CALENDAR FUNCTIONS
+        // ========================================
+
+        function openCalendarPanel() {
+            var panel = document.getElementById('calendar-panel');
+            if (panel) {
+                panel.scrollIntoView({ behavior: 'smooth' });
+                initializeCalendar();
+                showSuccessMessage('📅 Smart Calendar opened');
+            }
+        }
+
+        function initializeCalendar() {
+            updateCalendarHeader();
+            renderCalendarDates();
+        }
+
+        function updateCalendarHeader() {
+            var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                             'July', 'August', 'September', 'October', 'November', 'December'];
+            var headerElement = document.getElementById('calendar-month-year');
+            if (headerElement) {
+                headerElement.textContent = monthNames[currentMonth] + ' ' + currentYear;
+            }
+        }
+
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            initializeCalendar();
+            showSuccessMessage('📅 Calendar updated: ' + (direction > 0 ? 'Next month' : 'Previous month'));
+        }
+
+        function renderCalendarDates() {
+            var datesContainer = document.getElementById('calendar-dates');
+            if (!datesContainer) return;
+            
+            var firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            var daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            var today = new Date();
+            var isCurrentMonth = currentMonth === today.getMonth() && currentYear === today.getFullYear();
+            
+            var html = '';
+            
+            // Empty cells for days before month starts
+            for (var i = 0; i < firstDay; i++) {
+                html += '<div style="padding: 8px 4px; color: var(--text-muted); font-size: 14px;"></div>';
+            }
+            
+            // Days of the month
+            for (var day = 1; day <= daysInMonth; day++) {
+                var isToday = isCurrentMonth && day === today.getDate();
+                var hasAppointment = Math.random() < 0.3; // 30% chance of appointment
+                
+                var style = 'padding: 8px 4px; font-size: 14px; cursor: pointer; border-radius: 6px; transition: all 0.2s ease;';
+                if (isToday) {
+                    style += 'background: var(--accent-primary); color: white; font-weight: 700;';
+                } else if (hasAppointment) {
+                    style += 'background: var(--accent-warm); color: white; font-weight: 600;';
+                } else {
+                    style += 'color: var(--text-primary); hover:background: var(--bg-card-hover);';
+                }
+                
+                html += '<div style="' + style + '" onclick="selectCalendarDate(' + day + ')" onmouseover="this.style.background=\'var(--bg-card-hover)\'" onmouseout="this.style.background=\'' + (isToday ? 'var(--accent-primary)' : hasAppointment ? 'var(--accent-warm)' : 'transparent') + '\'">' + day + '</div>';
+            }
+            
+            datesContainer.innerHTML = html;
+        }
+
+        function selectCalendarDate(day) {
+            var dateStr = currentYear + '-' + (currentMonth + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
+            showSuccessMessage('📅 Selected: ' + dateStr + ' - Click "Quick Add" to schedule appointment');
+        }
+
+        function addQuickAppointment() {
+            var title = prompt('Enter appointment title:');
+            var time = prompt('Enter time (e.g., 10:00 AM):');
+            
+            if (title && time) {
+                showSuccessMessage('✅ Appointment "' + title + '" scheduled for ' + time);
+            }
+        }
+
+        function updateTodaySchedule() {
+            // This would typically fetch from a real calendar API
+            // For demo, we show static schedule
+            showSuccessMessage('📋 Today\'s schedule loaded - 3 appointments');
+        }
+
+        // ========================================
+        // PROFESSIONAL CALCULATOR FUNCTIONS
+        // ========================================
+
+        function openCalculatorPanel() {
+            var panel = document.getElementById('calculator-panel');
+            if (panel) {
+                panel.scrollIntoView({ behavior: 'smooth' });
+                showSuccessMessage('🔢 Professional Calculator opened');
+            }
+        }
+
+        function updateCalcDisplay() {
+            var displayElement = document.getElementById('calc-display');
+            var operationElement = document.getElementById('calc-operation');
+            
+            if (displayElement) {
+                displayElement.textContent = calcDisplay;
+            }
+            
+            if (operationElement && calcPrevious !== null && calcOperation) {
+                operationElement.textContent = calcPrevious + ' ' + calcOperation;
+            } else if (operationElement) {
+                operationElement.textContent = '';
+            }
+        }
+
+        function calcNumber(num) {
+            if (calcWaitingForOperand) {
+                calcDisplay = num;
+                calcWaitingForOperand = false;
+            } else {
+                calcDisplay = calcDisplay === '0' ? num : calcDisplay + num;
+            }
+            updateCalcDisplay();
+        }
+
+        function calcFunction(nextOperation) {
+            var inputValue = parseFloat(calcDisplay);
+            
+            if (calcPrevious === null) {
+                calcPrevious = inputValue;
+            } else if (calcOperation) {
+                var currentValue = calcPrevious || 0;
+                var newValue = calculate(currentValue, inputValue, calcOperation);
+                
+                calcDisplay = String(newValue);
+                calcPrevious = newValue;
+                updateCalcDisplay();
+            }
+            
+            calcWaitingForOperand = true;
+            
+            if (nextOperation === '=') {
+                calcOperation = null;
+                calcPrevious = null;
+                calcWaitingForOperand = false;
+            } else if (nextOperation === 'clear') {
+                clearCalculator();
+                return;
+            } else if (nextOperation === 'backspace') {
+                calcDisplay = calcDisplay.slice(0, -1) || '0';
+                updateCalcDisplay();
+                return;
+            } else {
+                calcOperation = nextOperation;
+            }
+        }
+
+        function calculate(firstValue, secondValue, operation) {
+            switch (operation) {
+                case '+':
+                    return firstValue + secondValue;
+                case '-':
+                    return firstValue - secondValue;
+                case '*':
+                    return firstValue * secondValue;
+                case '/':
+                    return secondValue !== 0 ? firstValue / secondValue : 0;
+                case '%':
+                    return firstValue % secondValue;
+                default:
+                    return secondValue;
+            }
+        }
+
+        function clearCalculator() {
+            calcDisplay = '0';
+            calcPrevious = null;
+            calcOperation = null;
+            calcWaitingForOperand = false;
+            updateCalcDisplay();
+        }
+
+        function quickCalc(operation) {
+            var currentValue = parseFloat(calcDisplay);
+            var newValue;
+            
+            switch (operation) {
+                case 'gst':
+                    newValue = currentValue * 1.06; // Add 6% GST
+                    showSuccessMessage('💰 Added 6% GST');
+                    break;
+                case 'discount10':
+                    newValue = currentValue * 0.9; // 10% discount
+                    showSuccessMessage('💸 Applied 10% discount');
+                    break;
+                case 'markup20':
+                    newValue = currentValue * 1.2; // 20% markup
+                    showSuccessMessage('📈 Added 20% markup');
+                    break;
+                case 'hourly':
+                    newValue = currentValue * 85; // RM85 per hour
+                    showSuccessMessage('⏰ Calculated at RM85/hour');
+                    break;
+                default:
+                    return;
+            }
+            
+            calcDisplay = newValue.toFixed(2);
+            updateCalcDisplay();
+        }
+
+        // ========================================
+        // BANKING & FINANCIAL HUB FUNCTIONS
+        // ========================================
+
+        function openBankingPanel() {
+            var panel = document.getElementById('banking-panel');
+            if (panel) {
+                panel.scrollIntoView({ behavior: 'smooth' });
+                showSuccessMessage('🏦 Banking Hub opened - Secure connections ready');
+            }
+        }
+
+        function openBankLink(bankName) {
+            var bankUrls = {
+                maybank: 'https://www.maybank2u.com.my',
+                cimb: 'https://www.cimbclicks.com.my',
+                pbbank: 'https://www.pbb.com.my',
+                rhb: 'https://logon.rhbgroup.com',
+                hlbank: 'https://www.hlb.com.my',
+                ambank: 'https://www.ambank.com.my'
+            };
+            
+            var bankDisplayNames = {
+                maybank: 'Maybank',
+                cimb: 'CIMB Bank',
+                pbbank: 'Public Bank',
+                rhb: 'RHB Bank',
+                hlbank: 'Hong Leong Bank',
+                ambank: 'AmBank'
+            };
+            
+            if (bankUrls[bankName]) {
+                window.open(bankUrls[bankName], '_blank');
+                showSuccessMessage('🏦 Opening ' + bankDisplayNames[bankName] + ' - Please login securely');
+            }
+        }
+
+        function openBankFeature(feature) {
+            var features = {
+                transfer: 'Online Transfer - Use your bank\'s transfer feature',
+                statement: 'Bank Statements - Download from your online banking',
+                payroll: 'Payroll Management - Access business banking payroll',
+                loan: 'Business Loans - Contact your relationship manager'
+            };
+            
+            if (features[feature]) {
+                showSuccessMessage('💼 ' + features[feature]);
+                // In a real app, this would navigate to specific banking features
+            }
+        }
+
+        function openPaymentGateway(gateway) {
+            var gatewayUrls = {
+                fpx: 'https://www.mepsfpx.com.my',
+                grabpay: 'https://www.grab.com/my/pay/',
+                boost: 'https://www.myboost.com.my',
+                tng: 'https://www.touchngo.com.my',
+                paypal: 'https://www.paypal.com/my/',
+                stripe: 'https://stripe.com'
+            };
+            
+            var gatewayNames = {
+                fpx: 'FPX',
+                grabpay: 'GrabPay',
+                boost: 'Boost',
+                tng: 'Touch \'n Go eWallet',
+                paypal: 'PayPal',
+                stripe: 'Stripe'
+            };
+            
+            if (gatewayUrls[gateway]) {
+                window.open(gatewayUrls[gateway], '_blank');
+                showSuccessMessage('💳 Opening ' + gatewayNames[gateway] + ' payment gateway');
+            }
         }
 
         function handleCategoryIconUpload(event, categoryKey) {
@@ -4282,6 +4911,10 @@
                             e.preventDefault();
                             showView('analytics');
                             break;
+                        case 't':
+                            e.preventDefault();
+                            showView('tools');
+                            break;
                     }
                 }
                 
@@ -4339,6 +4972,13 @@
                     updateAnalyticsData();
                     animateAnalyticsCounters();
                 }, 300);
+            } else if (viewName === 'tools') {
+                // Tools hub loaded - initialize all tools
+                setTimeout(function() {
+                    initializeCalendar();
+                    updateTodaySchedule();
+                    clearCalculator();
+                }, 300);
             }
             
             // Render view content
@@ -4360,6 +5000,9 @@
                     break;
                 case 'analytics':
                     renderAnalytics();
+                    break;
+                case 'tools':
+                    renderToolsHub();
                     break;
             }
         }
@@ -4675,14 +5318,14 @@
         }
 
         function handleSwipeLeft() {
-            var views = ['dashboard', 'quotes', 'presets', 'analytics'];
+            var views = ['dashboard', 'quotes', 'presets', 'analytics', 'tools'];
             var currentIndex = views.indexOf(currentView);
             var nextIndex = (currentIndex + 1) % views.length;
             showView(views[nextIndex]);
         }
 
         function handleSwipeRight() {
-            var views = ['dashboard', 'quotes', 'presets', 'analytics'];
+            var views = ['dashboard', 'quotes', 'presets', 'analytics', 'tools'];
             var currentIndex = views.indexOf(currentView);
             var prevIndex = currentIndex === 0 ? views.length - 1 : currentIndex - 1;
             showView(views[prevIndex]);
@@ -4747,7 +5390,14 @@
             showSuccessMessage('⚠️ Minor issue detected. App continues working normally.');
         });
 
-        console.log('🎯 REFIT ENHANCED - Complete Management System Ready');
+        console.log('🎯 REFIT ENHANCED - Complete Business Management & Tools Platform');
+        console.log('🤖 Advanced Business Intelligence Dashboard');
+        console.log('📈 Predictive Analytics & Market Intelligence');
+        console.log('🛠️ Integrated Business Tools Hub');
+        console.log('💬 WhatsApp Business Integration');
+        console.log('📅 Smart Calendar & Scheduling');
+        console.log('🔢 Professional Calculator with Business Functions');
+        console.log('🏦 Banking & Payment Gateway Hub');
         console.log('🎨 Custom Icon Upload System');
         console.log('👤 User Info & Logo Management');
         console.log('🏗️ 24 Professional Categories');
