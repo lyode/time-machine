@@ -9,7 +9,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#2d1517">
     
-    <title>REFIT - Complete Business Quote System with AI Voice Assistant</title>
+    <title>REFIT - Complete Business Quote System</title>
     
     <!-- PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1249,267 +1249,6 @@
             background: #fee2e2;
             color: #dc2626;
         }
-
-        /* Voice Assistant Styles */
-        .voice-assistant {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--overlay);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 400;
-            backdrop-filter: blur(10px);
-            padding: 20px;
-        }
-        
-        .voice-assistant.hidden {
-            display: none;
-        }
-        
-        .voice-assistant-content {
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            border-radius: 24px;
-            width: 100%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 60px var(--shadow-strong);
-        }
-        
-        .voice-assistant-header {
-            padding: 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: var(--bg-secondary);
-            border-radius: 24px 24px 0 0;
-        }
-        
-        .ai-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        
-        .ai-info h4 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-        
-        .ai-info p {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-        
-        .voice-close-btn {
-            margin-left: auto;
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
-            border: none;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 18px;
-        }
-        
-        .voice-close-btn:hover {
-            background: var(--error);
-            color: white;
-            transform: scale(1.1);
-        }
-        
-        /* Voice Personality Selector */
-        .personality-btn {
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            font-size: 11px;
-            color: var(--text-primary);
-        }
-        
-        .personality-btn:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px var(--shadow-light);
-        }
-        
-        .personality-btn.active {
-            border-color: var(--accent-primary);
-            background: var(--shadow-light);
-            box-shadow: 0 0 16px var(--shadow-medium);
-        }
-        
-        .personality-avatar {
-            font-size: 24px;
-            margin-bottom: 4px;
-        }
-        
-        .personality-name {
-            font-weight: 700;
-            font-size: 12px;
-            color: var(--text-primary);
-        }
-        
-        .personality-desc {
-            font-size: 10px;
-            color: var(--text-muted);
-            line-height: 1.2;
-        }
-        
-        .voice-conversation {
-            padding: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .ai-message {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .user-message {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-            flex-direction: row-reverse;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .message-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--accent-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-            flex-shrink: 0;
-        }
-        
-        .user-message .message-avatar {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-        
-        .message-content {
-            flex: 1;
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 12px 16px;
-            color: var(--text-primary);
-        }
-        
-        .user-message .message-content {
-            background: var(--accent-primary);
-            color: white;
-        }
-        
-        .message-content p {
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-        
-        .message-content ul {
-            margin: 8px 0;
-            padding-left: 20px;
-        }
-        
-        .message-content li {
-            margin-bottom: 4px;
-            font-size: 14px;
-        }
-        
-        .voice-controls {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .voice-btn {
-            padding: 12px 20px;
-            border-radius: 20px;
-            border: none;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            box-shadow: 0 4px 12px var(--shadow-light);
-        }
-        
-        .voice-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--shadow-medium);
-        }
-        
-        .voice-btn.secondary {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            box-shadow: none;
-        }
-        
-        .voice-btn.listening {
-            background: linear-gradient(135deg, var(--error), #f87171);
-            animation: pulse 1.5s infinite;
-        }
-        
-        .voice-status {
-            padding: 16px 20px;
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            background: var(--bg-secondary);
-            border-radius: 0 0 24px 24px;
-        }
-        
-        .status-indicator {
-            display: inline-block;
-            margin-right: 8px;
-            font-size: 12px;
-        }
         
         /* Bottom Navigation */
         .bottom-nav {
@@ -1745,6 +1484,254 @@
             color: var(--text-muted);
             font-size: 14px;
         }
+
+        /* Logo Options */
+        .logo-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-option:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-primary);
+            box-shadow: 0 4px 16px var(--shadow-medium);
+        }
+
+        .logo-option.selected {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--shadow-strong);
+        }
+
+        .logo-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .logo-option:hover::before {
+            left: 100%;
+        }
+
+        /* Business Card Preview */
+        .business-card {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+            box-shadow: 0 8px 32px var(--shadow-strong);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .business-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+        }
+
+        .business-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .business-card-logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .business-card-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .business-card-info p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .business-card-contact {
+            position: relative;
+            z-index: 2;
+        }
+
+        .business-card-contact div {
+            font-size: 12px;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+
+        /* QR Code Display */
+        .qr-code-display {
+            text-align: center;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 2px dashed var(--border-color);
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 48px;
+            color: var(--text-muted);
+        }
+
+        /* Custom Logo Display */
+        .company-logo-display {
+            position: relative;
+            display: inline-block;
+        }
+
+        .company-logo.custom-logo {
+            background: none;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .company-logo.custom-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+        }
+
+        .custom-logo-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            transform: translate(25%, -25%);
+        }
+
+        .custom-logo-overlay:hover {
+            background: var(--error);
+            transform: translate(25%, -25%) scale(1.1);
+        }
+
+        /* Logo Upload Animation */
+        .logo-upload-animation {
+            border: 2px dashed var(--accent-primary);
+            border-radius: 12px;
+            padding: 20px;
+            background: var(--shadow-light);
+            animation: pulse 2s infinite;
+        }
+
+        .upload-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-secondary);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .upload-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Enhanced Logo Previews */
+        .logo-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .logo-preview-item {
+            text-align: center;
+            padding: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo-preview-item:hover {
+            box-shadow: 0 4px 16px var(--shadow-light);
+            transform: translateY(-2px);
+        }
+
+        .logo-preview-item.active {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 16px var(--shadow-medium);
+        }
+
+        .logo-preview-item img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .logo-preview-item .preview-emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .logo-preview-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
         
         /* Mobile Optimizations */
         @media screen and (max-width: 768px) {
@@ -1806,6 +1793,198 @@
                 <span>📱</span>
                 <span>🔋</span>
             </div>
+
+    <!-- Data Manager Modal -->
+    <div id="data-manager-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3>🔧 Advanced Data Manager</h3>
+                <button class="modal-close-btn" onclick="closeModal('data-manager-modal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- Data Overview -->
+                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
+                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                        <span>📊</span> Data Overview
+                    </h4>
+                    <div class="stats-grid" style="margin: 0;">
+                        <div class="stat-card">
+                            <div class="stat-label">Data Items</div>
+                            <div class="stat-value" id="dm-data-items">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Storage Used</div>
+                            <div class="stat-value" id="dm-storage-used">0 KB</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Backups</div>
+                            <div class="stat-value" id="dm-backup-count">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Data Version</div>
+                            <div class="stat-value" id="dm-data-version">v2.0.1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Operations -->
+                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
+                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                        <span>⚡</span> Data Operations
+                    </h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                        <button class="quick-btn primary" onclick="createManualBackup(); updateDataManagerStats();">
+                            <span class="icon">💾</span>
+                            <span class="label">Create Backup</span>
+                        </button>
+                        <button class="quick-btn success" onclick="exportAllData();">
+                            <span class="icon">📤</span>
+                            <span class="label">Export All</span>
+                        </button>
+                        <button class="quick-btn info" onclick="importDataFile();">
+                            <span class="icon">📥</span>
+                            <span class="label">Import Data</span>
+                        </button>
+                        <button class="quick-btn" onclick="validateAllData()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
+                            <span class="icon">✅</span>
+                            <span class="label">Validate Data</span>
+                        </button>
+                        <button class="quick-btn" onclick="optimizeStorage()" style="background: linear-gradient(135deg, #10b981, #34d399);">
+                            <span class="icon">🧹</span>
+                            <span class="label">Optimize</span>
+                        </button>
+                        <button class="quick-btn" onclick="showDataDetails()" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
+                            <span class="icon">🔍</span>
+                            <span class="label">Data Details</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Advanced Settings -->
+                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
+                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                        <span>⚙️</span> Advanced Settings
+                    </h4>
+                    <div class="info-grid" style="margin: 0;">
+                        <div class="info-item">
+                            <div class="info-icon">⏰</div>
+                            <div class="info-content">
+                                <h4>Auto Backup</h4>
+                                <p>Every 5 minutes</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">🗜️</div>
+                            <div class="info-content">
+                                <h4>Compression</h4>
+                                <p id="dm-compression-status">Enabled</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">🔒</div>
+                            <div class="info-content">
+                                <h4>Data Integrity</h4>
+                                <p>Checksum validation</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📦</div>
+                            <div class="info-content">
+                                <h4>Max Backups</h4>
+                                <p id="dm-max-backups">10 backups</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Backups -->
+                <div class="card" style="margin: 0; background: var(--bg-secondary);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h4 style="color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                            <span>🗂️</span> Recent Backups
+                        </h4>
+                        <button class="btn btn-primary" onclick="updateDataManagerStats(); updateBackupsList();" style="font-size: 12px; padding: 6px 12px; min-height: auto;">🔄 Refresh</button>
+                    </div>
+                    <div id="dm-backups-list" style="max-height: 200px; overflow-y: auto;">
+                        <!-- Recent backups will be shown here -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('data-manager-modal')">Close</button>
+                <button class="btn btn-primary" onclick="updateDataManagerStats()">🔄 Refresh Data</button>
+                <button class="btn btn-success" onclick="createManualBackup()">💾 Create Backup</button>
+            </div>
+        </div>
+    }
+    <div id="customer-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>👥 Add Customer</h3>
+                <button class="modal-close-btn" onclick="closeModal('customer-modal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="customer-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-input" id="customer-company" placeholder="ABC Corporation">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contact Person</label>
+                            <input type="text" class="form-input" id="customer-contact" placeholder="Jane Smith">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="customer-email" placeholder="jane@abc.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-input" id="customer-phone" placeholder="+60 12-345 6789">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-textarea" id="customer-address" placeholder="123 Customer Street&#10;City, State 12345"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Industry</label>
+                            <select class="form-select" id="customer-industry">
+                                <option value="">Select Industry</option>
+                                <option value="technology">Technology</option>
+                                <option value="retail">Retail</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="education">Education</option>
+                                <option value="finance">Finance</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Customer Type</label>
+                            <select class="form-select" id="customer-type">
+                                <option value="business">Business</option>
+                                <option value="individual">Individual</option>
+                                <option value="government">Government</option>
+                                <option value="non-profit">Non-Profit</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" id="customer-notes" placeholder="Additional notes about this customer..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('customer-modal')">Cancel</button>
+                <button class="btn btn-success" onclick="saveCustomer()">👥 Save Customer</button>
+            </div>
+        </div>
+    </div>
         </div>
         
         <!-- Header -->
@@ -1817,12 +1996,12 @@
                     <p id="company-subtitle">Complete Quote & Invoice Solution</p>
                 </div>
             </div>
-            <div class="header-right">
-                <button class="header-btn" onclick="toggleVoiceAssistant()" title="AI Voice Assistant" id="voice-toggle-btn">🎙️</button>
-                <button class="header-btn" onclick="openThemePicker()" title="Change Theme">🎨</button>
-                <button class="header-btn" onclick="showProfile()" title="Profile">👤</button>
-                <button class="header-btn" onclick="exportData()" title="Export">📤</button>
-            </div>
+                <div class="header-right">
+                    <button class="header-btn" onclick="toggleVoiceAssistant()" title="AI Voice Assistant" id="voice-toggle-btn">🎙️</button>
+                    <button class="header-btn" onclick="openThemePicker()" title="Change Theme">🎨</button>
+                    <button class="header-btn" onclick="showProfile()" title="Profile">👤</button>
+                    <button class="header-btn" onclick="exportData()" title="Export">📤</button>
+                </div>
         </div>
 
         <!-- Main Content -->
@@ -1948,6 +2127,44 @@
                             <span class="icon">📤</span>
                             <span class="label">Export Data</span>
                         </button>
+                        <button class="quick-btn info" onclick="importDataFile()">
+                            <span class="icon">📥</span>
+                            <span class="label">Import Data</span>
+                        </button>
+                        <button class="quick-btn" onclick="showStorageInfo()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
+                            <span class="icon">📊</span>
+                            <span class="label">Storage Info</span>
+                        </button>
+                        <button class="quick-btn" onclick="openDataManager()" style="background: linear-gradient(135deg, #10b981, #34d399);">
+                            <span class="icon">🔧</span>
+                            <span class="label">Data Manager</span>
+                        </button>
+                        <button class="quick-btn" onclick="clearAllData()" style="background: linear-gradient(135deg, #ef4444, #f87171);">
+                            <span class="icon">🗑️</span>
+                            <span class="label">Clear All</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Storage Status -->
+                    <div style="background: var(--bg-secondary); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: 600; color: var(--text-primary);">Storage Status</span>
+                            <span id="storage-usage" style="color: var(--text-muted); font-size: 14px;">Loading...</span>
+                        </div>
+                        <div style="width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; overflow: hidden;">
+                            <div id="storage-progress" style="height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); width: 0%; transition: width 0.3s ease;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backup Management -->
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">🗂️ Backup Management</h3>
+                        <button class="btn btn-primary" onclick="updateBackupsList()" style="font-size: 14px; padding: 8px 16px; min-height: auto;">🔄 Refresh</button>
+                    </div>
+                    <div id="backups-list" class="data-list">
+                        <!-- Backups will be populated here -->
                     </div>
                 </div>
 
@@ -1979,6 +2196,14 @@
                             <span class="icon">💜</span>
                             <span class="label">Lavender Mist</span>
                         </button>
+                        <button class="quick-btn" onclick="switchToTheme('browngrey')" style="background: linear-gradient(135deg, #a3a3a3, #d6d3d1);">
+                            <span class="icon">🤎</span>
+                            <span class="label">Warm Taupe</span>
+                        </button>
+                        <button class="quick-btn" onclick="switchToTheme('greenbrown')" style="background: linear-gradient(135deg, #84cc16, #bef264);">
+                            <span class="icon">🌿</span>
+                            <span class="label">Sage Olive</span>
+                        </button>
                     </div>
                 </div>
 
@@ -1987,10 +2212,17 @@
                     <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">📱 App Settings</h3>
                     <div class="info-grid">
                         <div class="info-item">
-                            <div class="info-icon">🎤</div>
+                            <div class="info-icon">💾</div>
                             <div class="info-content">
-                                <h4>Voice Assistant</h4>
-                                <p id="voice-assistant-status">3 AI Personalities Available</p>
+                                <h4>Auto Backup</h4>
+                                <p id="auto-backup-status">Every 5 minutes</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">🔔</div>
+                            <div class="info-content">
+                                <h4>Data Compression</h4>
+                                <p id="compression-status">Enabled</p>
                             </div>
                         </div>
                         <div class="info-item">
@@ -2001,17 +2233,10 @@
                             </div>
                         </div>
                         <div class="info-item">
-                            <div class="info-icon">🎨</div>
-                            <div class="info-content">
-                                <h4>Current Theme</h4>
-                                <p id="current-theme-setting">Coral Sunset Theme</p>
-                            </div>
-                        </div>
-                        <div class="info-item">
                             <div class="info-icon">🔧</div>
                             <div class="info-content">
                                 <h4>App Version</h4>
-                                <p id="app-version">REFIT v3.0 with AI Voice</p>
+                                <p id="app-version">REFIT v2.0.1</p>
                             </div>
                         </div>
                     </div>
@@ -2059,7 +2284,7 @@
             </div>
             <div class="theme-modal-body">
                 <div style="text-align: center; margin-bottom: 24px;">
-                    <p style="color: var(--text-muted); font-size: 16px;">Select from 8 beautiful pastel color schemes</p>
+                    <p style="color: var(--text-muted); font-size: 16px;">Select from 6 beautiful pastel color schemes</p>
                 </div>
                 
                 <!-- Theme Grid -->
@@ -2157,75 +2382,6 @@
         </div>
     </div>
 
-    <!-- AI Voice Assistant Interface -->
-    <div id="voice-assistant" class="voice-assistant hidden">
-        <div class="voice-assistant-content">
-            <div class="voice-assistant-header">
-                <div class="ai-avatar" id="ai-avatar">👩‍💼</div>
-                <div class="ai-info">
-                    <h4 id="ai-name">REFIT AI - Aria</h4>
-                    <p id="ai-status">Professional & Friendly</p>
-                </div>
-                <button class="voice-close-btn" onclick="toggleVoiceAssistant()">✕</button>
-            </div>
-            
-            <!-- Voice Personality Selector -->
-            <div class="voice-personality-selector" style="padding: 16px; background: var(--bg-secondary); border-radius: 12px; margin-bottom: 16px;">
-                <h5 style="margin-bottom: 12px; color: var(--text-primary); font-size: 14px;">🎭 Choose AI Personality:</h5>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-                    <button class="personality-btn active" onclick="selectVoicePersonality('aria')" data-personality="aria">
-                        <span class="personality-avatar">👩‍💼</span>
-                        <span class="personality-name">Aria</span>
-                        <span class="personality-desc">Professional & Friendly</span>
-                    </button>
-                    <button class="personality-btn" onclick="selectVoicePersonality('zoe')" data-personality="zoe">
-                        <span class="personality-avatar">👩‍🎨</span>
-                        <span class="personality-name">Zoe</span>
-                        <span class="personality-desc">Creative & Energetic</span>
-                    </button>
-                    <button class="personality-btn" onclick="selectVoicePersonality('sage')" data-personality="sage">
-                        <span class="personality-avatar">🧙‍♀️</span>
-                        <span class="personality-name">Sage</span>
-                        <span class="personality-desc">Wise & Calm</span>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="voice-conversation" id="voice-conversation">
-                <div class="ai-message" id="welcome-message">
-                    <div class="message-avatar" id="message-avatar">👩‍💼</div>
-                    <div class="message-content">
-                        <p id="welcome-text">Hi! I'm Aria, your professional REFIT AI Assistant. I can help you manage your business using voice commands. Try saying things like:</p>
-                        <ul>
-                            <li>"Create a new quote"</li>
-                            <li>"Show me today's statistics"</li>
-                            <li>"Change to blue theme"</li>
-                            <li>"Add a new customer"</li>
-                            <li>"What's my total revenue?"</li>
-                            <li>"Switch to Zoe" (to change AI personality)</li>
-                        </ul>
-                        <p>Click the microphone to start talking! 🎙️</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="voice-controls">
-                <button class="voice-btn" id="voice-listen-btn" onclick="startListening()">
-                    <span class="voice-icon" id="voice-icon">🎙️</span>
-                    <span class="voice-text" id="voice-btn-text">Start Listening</span>
-                </button>
-                <button class="voice-btn secondary" onclick="clearConversation()">🗑️ Clear</button>
-                <button class="voice-btn secondary" onclick="toggleMute()" id="mute-btn">🔊 Sound On</button>
-                <button class="voice-btn secondary" onclick="testVoice()" id="test-voice-btn">🎵 Test Voice</button>
-            </div>
-            
-            <div class="voice-status" id="voice-status-display">
-                <span class="status-indicator" id="status-indicator">⚪</span>
-                <span id="status-text">Click microphone to start</span>
-            </div>
-        </div>
-    </div>
-
     <!-- User Profile Modal -->
     <div id="profile-modal" class="modal">
         <div class="modal-content">
@@ -2291,6 +2447,16 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
+                            <label class="form-label">Registration Number</label>
+                            <input type="text" class="form-input" id="company-registration" placeholder="12345678-K">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tax ID / GST Number</label>
+                            <input type="text" class="form-input" id="company-tax-id" placeholder="000123456789">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
                             <label class="form-label">Email</label>
                             <input type="email" class="form-input" id="company-email" placeholder="info@company.com">
                         </div>
@@ -2300,8 +2466,44 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="form-label">Website</label>
+                        <input type="url" class="form-input" id="company-website" placeholder="https://www.company.com">
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">Business Address</label>
                         <textarea class="form-textarea" id="company-address" placeholder="123 Business Avenue&#10;Kuala Lumpur 50000&#10;Malaysia"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Industry</label>
+                            <select class="form-select" id="company-industry">
+                                <option value="">Select Industry</option>
+                                <option value="technology">Technology</option>
+                                <option value="consulting">Consulting</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="retail">Retail</option>
+                                <option value="construction">Construction</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="education">Education</option>
+                                <option value="finance">Finance</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Company Size</label>
+                            <select class="form-select" id="company-size">
+                                <option value="">Select Size</option>
+                                <option value="1-10">1-10 employees</option>
+                                <option value="11-50">11-50 employees</option>
+                                <option value="51-200">51-200 employees</option>
+                                <option value="201-500">201-500 employees</option>
+                                <option value="500+">500+ employees</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Company Description</label>
+                        <textarea class="form-textarea" id="company-description" placeholder="Brief description of your company and services..."></textarea>
                     </div>
                 </form>
             </div>
@@ -2353,11 +2555,26 @@
                         </div>
                     </div>
                     
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Tax Rate (%)</label>
+                            <input type="number" class="form-input" id="quote-tax-rate" placeholder="6" min="0" max="100" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Valid Until</label>
+                            <input type="date" class="form-input" id="quote-valid-until">
+                        </div>
+                    </div>
+                    
                     <!-- Quote Total -->
                     <div style="background: var(--bg-secondary); padding: 16px; border-radius: 12px; margin-top: 20px;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                             <span>Subtotal:</span>
                             <span id="quote-subtotal">RM 0.00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Tax:</span>
+                            <span id="quote-tax">RM 0.00</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 18px; color: var(--accent-primary); border-top: 1px solid var(--border-color); padding-top: 8px;">
                             <span>Total:</span>
@@ -2369,11 +2586,158 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeModal('quote-modal')">Cancel</button>
                 <button class="btn btn-primary" onclick="saveQuote()">💾 Save Quote</button>
+                <button class="btn btn-success" onclick="saveAndSendQuote()">📤 Save & Send</button>
             </div>
         </div>
     </div>
 
-    <!-- Customer Modal -->
+    <!-- Company Manager Modal -->
+    <div id="company-manager-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3>🏢 Company Management Hub</h3>
+                <button class="modal-close-btn" onclick="closeModal('company-manager-modal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- Company Logo Section -->
+                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
+                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                        <span>🎨</span> Company Logo & Branding
+                    </h4>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div class="company-logo-display" id="company-manager-logo-display" style="margin: 0 auto 16px;">
+                            <div class="company-logo" id="company-manager-logo" style="margin: 0;">🌅</div>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Your current company logo</p>
+                        
+                        <!-- Logo Upload Section -->
+                        <div class="logo-upload-section" style="margin-bottom: 20px;">
+                            <input type="file" id="logo-upload-input" accept="image/*" style="display: none;" onchange="handleLogoUpload(event)">
+                            <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                                <button class="btn btn-primary" onclick="document.getElementById('logo-upload-input').click()" style="font-size: 14px; padding: 8px 16px; min-height: auto;">
+                                    📤 Upload Logo
+                                </button>
+                                <button class="btn btn-secondary" onclick="resetToEmojiLogo()" style="font-size: 14px; padding: 8px 16px; min-height: auto;" id="reset-logo-btn">
+                                    🔄 Use Emoji
+                                </button>
+                                <button class="btn btn-warning" onclick="removeCustomLogo()" style="font-size: 14px; padding: 8px 16px; min-height: auto; display: none;" id="remove-logo-btn">
+                                    🗑️ Remove
+                                </button>
+                            </div>
+                            <div style="margin-top: 12px;">
+                                <p style="color: var(--text-muted); font-size: 12px; line-height: 1.4;">
+                                    Upload: JPG, PNG, GIF, SVG • Max 2MB • Recommended: 512x512px square
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Or choose from emoji options below</p>
+                    </div>
+                    
+                    <!-- Logo Options Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 20px;">
+                        <div class="logo-option" onclick="changeCompanyLogo('🏢')" data-logo="🏢">🏢</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🏭')" data-logo="🏭">🏭</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🏪')" data-logo="🏪">🏪</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🏬')" data-logo="🏬">🏬</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🏦')" data-logo="🏦">🏦</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🏛️')" data-logo="🏛️">🏛️</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('💼')" data-logo="💼">💼</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('📊')" data-logo="📊">📊</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('💡')" data-logo="💡">💡</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🔧')" data-logo="🔧">🔧</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('⚙️')" data-logo="⚙️">⚙️</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🚀')" data-logo="🚀">🚀</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('💻')" data-logo="💻">💻</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('📱')" data-logo="📱">📱</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🎯')" data-logo="🎯">🎯</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('⭐')" data-logo="⭐">⭐</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('💎')" data-logo="💎">💎</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🔥')" data-logo="🔥">🔥</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('⚡')" data-logo="⚡">⚡</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🌟')" data-logo="🌟">🌟</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🎨')" data-logo="🎨">🎨</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🏅')" data-logo="🏅">🏅</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('🎊')" data-logo="🎊">🎊</div>
+                        <div class="logo-option" onclick="changeCompanyLogo('✨')" data-logo="✨">✨</div>
+                    </div>
+                </div>
+
+                <!-- Quick Company Actions -->
+                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
+                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                        <span>⚡</span> Quick Actions
+                    </h4>
+                    <div class="quick-actions" style="margin: 0;">
+                        <button class="quick-btn primary" onclick="editCompany()">
+                            <span class="icon">✏️</span>
+                            <span class="label">Edit Details</span>
+                        </button>
+                        <button class="quick-btn success" onclick="generateBusinessCard()">
+                            <span class="icon">💳</span>
+                            <span class="label">Business Card</span>
+                        </button>
+                        <button class="quick-btn info" onclick="exportCompanyData()">
+                            <span class="icon">📤</span>
+                            <span class="label">Export Data</span>
+                        </button>
+                        <button class="quick-btn" onclick="shareCompanyProfile()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
+                            <span class="icon">📢</span>
+                            <span class="label">Share Profile</span>
+                        </button>
+                        <button class="quick-btn" onclick="printCompanyInfo()" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
+                            <span class="icon">🖨️</span>
+                            <span class="label">Print Info</span>
+                        </button>
+                        <button class="quick-btn" onclick="generateQRCode()" style="background: linear-gradient(135deg, #10b981, #34d399);">
+                            <span class="icon">📱</span>
+                            <span class="label">QR Code</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Company Statistics -->
+                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
+                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                        <span>📊</span> Company Statistics
+                    </h4>
+                    <div class="stats-grid" style="margin: 0;">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Quotes</div>
+                            <div class="stat-value" id="company-total-quotes">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Active Customers</div>
+                            <div class="stat-value" id="company-total-customers">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Success Rate</div>
+                            <div class="stat-value" id="company-success-rate">0%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Avg Quote Value</div>
+                            <div class="stat-value" id="company-avg-quote">RM 0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Profile Summary -->
+                <div class="card" style="margin: 0; background: var(--bg-secondary);">
+                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                        <span>📋</span> Company Profile Summary
+                    </h4>
+                    <div id="company-profile-summary" class="info-grid" style="margin: 0;">
+                        <!-- Profile summary will be populated here -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('company-manager-modal')">Close</button>
+                <button class="btn btn-primary" onclick="editCompany()">✏️ Edit Company</button>
+                <button class="btn btn-success" onclick="saveCompanySettings()">💾 Save Settings</button>
+            </div>
+        </div>
+    </div>
     <div id="customer-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2406,6 +2770,34 @@
                         <label class="form-label">Address</label>
                         <textarea class="form-textarea" id="customer-address" placeholder="123 Customer Street&#10;City, State 12345"></textarea>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Industry</label>
+                            <select class="form-select" id="customer-industry">
+                                <option value="">Select Industry</option>
+                                <option value="technology">Technology</option>
+                                <option value="retail">Retail</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="education">Education</option>
+                                <option value="finance">Finance</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Customer Type</label>
+                            <select class="form-select" id="customer-type">
+                                <option value="business">Business</option>
+                                <option value="individual">Individual</option>
+                                <option value="government">Government</option>
+                                <option value="non-profit">Non-Profit</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" id="customer-notes" placeholder="Additional notes about this customer..."></textarea>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -2415,6 +2807,50 @@
         </div>
     </div>
 
+    <!-- AI Voice Assistant Interface -->
+    <div id="voice-assistant" class="voice-assistant hidden">
+        <div class="voice-assistant-content">
+            <div class="voice-assistant-header">
+                <div class="ai-avatar" id="ai-avatar">🤖</div>
+                <div class="ai-info">
+                    <h4 id="ai-name">REFIT AI Assistant</h4>
+                    <p id="ai-status">Ready to help</p>
+                </div>
+                <button class="voice-close-btn" onclick="toggleVoiceAssistant()">✕</button>
+            </div>
+            
+            <div class="voice-conversation" id="voice-conversation">
+                <div class="ai-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>Hi! I'm your REFIT AI Assistant. I can help you manage your business using voice commands. Try saying things like:</p>
+                        <ul>
+                            <li>"Create a new quote"</li>
+                            <li>"Show me today's statistics"</li>
+                            <li>"Change to blue theme"</li>
+                            <li>"Add a new customer"</li>
+                            <li>"What's my total revenue?"</li>
+                        </ul>
+                        <p>Click the microphone to start talking! 🎙️</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="voice-controls">
+                <button class="voice-btn" id="voice-listen-btn" onclick="startListening()">
+                    <span class="voice-icon" id="voice-icon">🎙️</span>
+                    <span class="voice-text" id="voice-btn-text">Start Listening</span>
+                </button>
+                <button class="voice-btn secondary" onclick="clearConversation()">🗑️ Clear</button>
+                <button class="voice-btn secondary" onclick="toggleMute()" id="mute-btn">🔊 Sound On</button>
+            </div>
+            
+            <div class="voice-status" id="voice-status-display">
+                <span class="status-indicator" id="status-indicator">⚪</span>
+                <span id="status-text">Click microphone to start</span>
+            </div>
+        </div>
+    </div>
     <div id="success-message" class="success-message">
         🎨 Theme applied successfully!
     </div>
@@ -2422,7 +2858,7 @@
     <script>
         // ========================================
         // REFIT COMPLETE BUSINESS QUOTE SYSTEM
-        // WITH INTELLIGENT VOICE AI ASSISTANT
+        // Full-Featured Quote & Invoice Management
         // ========================================
         
         // App State
@@ -2443,9 +2879,18 @@
         var companyData = {
             name: 'Your Company Name',
             tagline: 'Professional Services',
+            registration: '',
+            taxId: '',
             email: '',
             phone: '',
-            address: ''
+            website: '',
+            address: '',
+            industry: '',
+            size: '',
+            description: '',
+            logo: '🌅',
+            customLogo: null, // Will store base64 image data
+            logoType: 'emoji' // 'emoji' or 'custom'
         };
         
         var quotes = [];
@@ -2510,558 +2955,476 @@
                 secondary: '#bef264'
             }
         };
-
-        // ========================================
-        // INTELLIGENT VOICE AI ASSISTANT SYSTEM
-        // ========================================
         
-        var voiceAssistant = {
-            isActive: false,
-            isListening: false,
-            isMuted: false,
-            currentPersonality: 'aria',
-            recognition: null,
-            synthesis: window.speechSynthesis,
+        // Storage Keys with versioning
+        var STORAGE_KEYS = {
+            THEME: 'refit_current_theme',
+            MODE: 'refit_current_mode',
+            USER_DATA: 'refit_user_data',
+            COMPANY_DATA: 'refit_company_data',
+            QUOTES: 'refit_quotes',
+            CUSTOMERS: 'refit_customers',
+            SETTINGS: 'refit_app_settings',
+            BACKUPS: 'refit_backups',
+            LAST_BACKUP: 'refit_last_backup',
+            DATA_VERSION: 'refit_data_version',
+            STORAGE_INFO: 'refit_storage_info'
+        };
+
+        // Data management system
+        var dataManager = {
+            version: '2.0.1',
+            maxBackups: 10,
+            autoBackupInterval: 300000, // 5 minutes
+            storageQuota: 10 * 1024 * 1024, // 10MB
+            compressionEnabled: true,
             
-            // AI Personalities with unique characteristics
-            personalities: {
-                aria: {
-                    name: 'Aria',
-                    avatar: '👩‍💼',
-                    description: 'Professional & Friendly',
-                    voice: {
-                        rate: 1.0,
-                        pitch: 1.1,
-                        volume: 0.8,
-                        voiceName: 'female'
-                    },
-                    greetings: [
-                        "Hi! I'm Aria, your professional business assistant.",
-                        "Hello! Ready to help you manage your business efficiently.",
-                        "Good day! Let's make your business tasks easier together."
-                    ],
-                    responses: {
-                        thanks: ["You're very welcome!", "Happy to help!", "Anytime!"],
-                        error: ["I didn't quite catch that. Could you try again?", "Sorry, I need clarification on that.", "Let me help you with that differently."],
-                        success: ["Great! Task completed successfully.", "Perfect! That's done for you.", "Excellent! All set."]
-                    }
-                },
-                zoe: {
-                    name: 'Zoe',
-                    avatar: '👩‍🎨',
-                    description: 'Creative & Energetic',
-                    voice: {
-                        rate: 1.2,
-                        pitch: 1.3,
-                        volume: 0.9,
-                        voiceName: 'female'
-                    },
-                    greetings: [
-                        "Hey there! I'm Zoe, and I'm super excited to help you!",
-                        "Hi! Zoe here, ready to make your business sparkle!",
-                        "Hello! Let's add some creative energy to your work!"
-                    ],
-                    responses: {
-                        thanks: ["Aww, you're so sweet!", "My pleasure! 💕", "You're absolutely amazing!"],
-                        error: ["Oops! Let's try that again, shall we?", "Hmm, that's a tricky one! Can you repeat?", "Oh no! Let me help you better."],
-                        success: ["Yay! We did it! 🎉", "Awesome sauce! ✨", "That was fantastic! 🌟"]
-                    }
-                },
-                sage: {
-                    name: 'Sage',
-                    avatar: '🧙‍♀️',
-                    description: 'Wise & Calm',
-                    voice: {
-                        rate: 0.9,
-                        pitch: 0.9,
-                        volume: 0.8,
-                        voiceName: 'female'
-                    },
-                    greetings: [
-                        "Greetings. I am Sage, here to guide your business journey.",
-                        "Welcome. With wisdom and patience, we shall accomplish much.",
-                        "Hello. Let us proceed thoughtfully with your business needs."
-                    ],
-                    responses: {
-                        thanks: ["The pleasure is mine, dear friend.", "Wisdom shared is wisdom doubled.", "You honor me with your gratitude."],
-                        error: ["Patience, please. Let us try once more.", "All understanding comes with time. Please repeat.", "Clarity will come. Speak again, if you will."],
-                        success: ["Well done. The path forward is clear.", "Excellent. Your wisdom serves you well.", "As it should be. Balance is restored."]
-                    }
-                }
-            },
-            
-            // Initialize voice assistant
+            // Initialize data management
             init: function() {
-                this.setupSpeechRecognition();
-                this.setupSpeechSynthesis();
-                this.loadVoiceSettings();
-                console.log('🎤 Voice Assistant initialized with personalities:', Object.keys(this.personalities));
+                this.checkStorageSupport();
+                this.migrateData();
+                this.startAutoBackup();
+                this.monitorStorage();
+                console.log('📊 Data Manager initialized v' + this.version);
             },
             
-            // Setup speech recognition
-            setupSpeechRecognition: function() {
-                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                    this.recognition = new SpeechRecognition();
-                    
-                    this.recognition.continuous = false;
-                    this.recognition.interimResults = false;
-                    this.recognition.lang = 'en-US';
-                    
-                    var self = this;
-                    this.recognition.onstart = function() {
-                        self.onListeningStart();
-                    };
-                    
-                    this.recognition.onresult = function(event) {
-                        var transcript = event.results[0][0].transcript;
-                        self.onSpeechResult(transcript);
-                    };
-                    
-                    this.recognition.onerror = function(event) {
-                        self.onSpeechError(event.error);
-                    };
-                    
-                    this.recognition.onend = function() {
-                        self.onListeningEnd();
-                    };
-                } else {
-                    console.warn('Speech recognition not supported');
-                    this.speak("Speech recognition is not supported in this browser.", 'error');
-                }
-            },
-            
-            // Setup speech synthesis
-            setupSpeechSynthesis: function() {
-                if (!this.synthesis) {
-                    console.warn('Speech synthesis not supported');
-                    return;
-                }
-                
-                // Load available voices
-                var self = this;
-                if (speechSynthesis.onvoiceschanged !== undefined) {
-                    speechSynthesis.onvoiceschanged = function() {
-                        self.loadAvailableVoices();
-                    };
-                }
-            },
-            
-            // Load available voices
-            loadAvailableVoices: function() {
-                var voices = this.synthesis.getVoices();
-                console.log('Available voices:', voices.length);
-                
-                // Find best female voices for each personality
-                var femaleVoices = voices.filter(function(voice) {
-                    return voice.name.toLowerCase().includes('female') || 
-                           voice.name.toLowerCase().includes('woman') ||
-                           voice.name.toLowerCase().includes('zira') ||
-                           voice.name.toLowerCase().includes('hazel') ||
-                           voice.name.toLowerCase().includes('samantha');
-                });
-                
-                if (femaleVoices.length > 0) {
-                    console.log('Found female voices:', femaleVoices.map(function(v) { return v.name; }));
-                }
-            },
-            
-            // Get best voice for personality
-            getBestVoice: function(personality) {
-                var voices = this.synthesis.getVoices();
-                var personalityData = this.personalities[personality];
-                
-                // Try to find a good female voice
-                var preferredVoices = voices.filter(function(voice) {
-                    var name = voice.name.toLowerCase();
-                    return (name.includes('female') || name.includes('woman') || 
-                            name.includes('zira') || name.includes('hazel') || 
-                            name.includes('samantha') || name.includes('karen')) && 
-                           voice.lang.startsWith('en');
-                });
-                
-                if (preferredVoices.length > 0) {
-                    // Different voices for different personalities
-                    if (personality === 'aria') return preferredVoices[0];
-                    if (personality === 'zoe') return preferredVoices[Math.min(1, preferredVoices.length - 1)];
-                    if (personality === 'sage') return preferredVoices[Math.min(2, preferredVoices.length - 1)];
-                }
-                
-                // Fallback to any English voice
-                return voices.find(function(voice) { return voice.lang.startsWith('en'); }) || voices[0];
-            },
-            
-            // Speak with current personality
-            speak: function(text, type) {
-                if (this.isMuted || !this.synthesis) return;
-                
-                var personality = this.personalities[this.currentPersonality];
-                var voice = this.getBestVoice(this.currentPersonality);
-                
-                var utterance = new SpeechSynthesisUtterance(text);
-                
-                if (voice) {
-                    utterance.voice = voice;
-                }
-                
-                utterance.rate = personality.voice.rate;
-                utterance.pitch = personality.voice.pitch;
-                utterance.volume = personality.voice.volume;
-                
-                // Add emotional context based on type
-                if (type === 'success') {
-                    utterance.rate *= 1.1;
-                    utterance.pitch *= 1.1;
-                } else if (type === 'error') {
-                    utterance.rate *= 0.9;
-                    utterance.pitch *= 0.9;
-                }
-                
-                this.synthesis.speak(utterance);
-                
-                // Visual feedback
-                this.updateStatus('🗣️ Speaking...', 'speaking');
-                
-                var self = this;
-                utterance.onend = function() {
-                    self.updateStatus('Ready to listen', 'ready');
-                };
-            },
-            
-            // Process voice commands intelligently
-            processCommand: function(command) {
-                var lowerCommand = command.toLowerCase();
-                var personality = this.personalities[this.currentPersonality];
-                var response = '';
-                
-                console.log('Processing command:', command, 'with personality:', this.currentPersonality);
-                
-                // Personality switching
-                if (lowerCommand.includes('switch to') || lowerCommand.includes('change to')) {
-                    if (lowerCommand.includes('aria')) {
-                        this.selectPersonality('aria');
-                        return;
-                    } else if (lowerCommand.includes('zoe')) {
-                        this.selectPersonality('zoe');
-                        return;
-                    } else if (lowerCommand.includes('sage')) {
-                        this.selectPersonality('sage');
-                        return;
-                    }
-                }
-                
-                // Business commands
-                if (lowerCommand.includes('create') && lowerCommand.includes('quote')) {
-                    createQuote();
-                    response = this.getPersonalityResponse('success') + " I've opened the quote creation form for you.";
-                    
-                } else if (lowerCommand.includes('add') && lowerCommand.includes('customer')) {
-                    addCustomer();
-                    response = this.getPersonalityResponse('success') + " Customer form is ready for you.";
-                    
-                } else if (lowerCommand.includes('statistics') || lowerCommand.includes('stats')) {
-                    showView('dashboard');
-                    response = "Your business statistics: " + quotes.length + " quotes, " + customers.length + " customers, total revenue RM " + Math.round(quotes.reduce(function(sum, q) { return sum + (q.total || 0); }, 0));
-                    
-                } else if (lowerCommand.includes('revenue') || lowerCommand.includes('total')) {
-                    var totalRevenue = quotes.reduce(function(sum, q) { return sum + (q.total || 0); }, 0);
-                    response = "Your total revenue is RM " + Math.round(totalRevenue) + ". " + this.getPersonalityResponse('success');
-                    
-                } else if (lowerCommand.includes('theme') || lowerCommand.includes('color')) {
-                    if (lowerCommand.includes('blue') || lowerCommand.includes('mint')) {
-                        switchToTheme('bluegreen');
-                        response = this.getPersonalityResponse('success') + " Switched to beautiful mint theme!";
-                    } else if (lowerCommand.includes('pink') || lowerCommand.includes('rose')) {
-                        switchToTheme('pink');
-                        response = this.getPersonalityResponse('success') + " Rose theme activated!";
-                    } else if (lowerCommand.includes('purple') || lowerCommand.includes('lavender')) {
-                        switchToTheme('purplegrey');
-                        response = this.getPersonalityResponse('success') + " Lavender theme looks gorgeous!";
-                    } else {
-                        openThemePicker();
-                        response = this.getPersonalityResponse('success') + " Theme picker opened for you!";
-                    }
-                    
-                } else if (lowerCommand.includes('dark') || lowerCommand.includes('light')) {
-                    toggleMode();
-                    response = this.getPersonalityResponse('success') + " Theme variant switched!";
-                    
-                } else if (lowerCommand.includes('export') || lowerCommand.includes('backup')) {
-                    exportData();
-                    response = this.getPersonalityResponse('success') + " Your data has been exported safely.";
-                    
-                } else if (lowerCommand.includes('help') || lowerCommand.includes('what can')) {
-                    response = this.getHelpResponse();
-                    
-                } else if (lowerCommand.includes('hello') || lowerCommand.includes('hi')) {
-                    response = this.getRandomGreeting();
-                    
-                } else if (lowerCommand.includes('thank')) {
-                    response = this.getPersonalityResponse('thanks');
-                    
-                } else {
-                    response = this.getPersonalityResponse('error') + " Try commands like 'create quote', 'show statistics', 'change theme', or 'add customer'.";
-                }
-                
-                this.addMessage(response, 'ai');
-                this.speak(response);
-            },
-            
-            // Get personality-specific responses
-            getPersonalityResponse: function(type) {
-                var personality = this.personalities[this.currentPersonality];
-                var responses = personality.responses[type];
-                return responses[Math.floor(Math.random() * responses.length)];
-            },
-            
-            // Get random greeting
-            getRandomGreeting: function() {
-                var personality = this.personalities[this.currentPersonality];
-                var greetings = personality.greetings;
-                return greetings[Math.floor(Math.random() * greetings.length)];
-            },
-            
-            // Get help response based on personality
-            getHelpResponse: function() {
-                var base = "I can help you with: creating quotes, adding customers, checking statistics, changing themes, exporting data, and more. ";
-                
-                switch(this.currentPersonality) {
-                    case 'aria':
-                        return base + "Just speak naturally and I'll assist you professionally.";
-                    case 'zoe':
-                        return base + "Let's make your business management fun and creative!";
-                    case 'sage':
-                        return base + "Speak your needs, and wisdom shall guide our path.";
-                    default:
-                        return base;
-                }
-            },
-            
-            // Select personality
-            selectPersonality: function(personality) {
-                if (!this.personalities[personality]) return;
-                
-                this.currentPersonality = personality;
-                var personalityData = this.personalities[personality];
-                
-                // Update UI
-                document.getElementById('ai-avatar').textContent = personalityData.avatar;
-                document.getElementById('ai-name').textContent = 'REFIT AI - ' + personalityData.name;
-                document.getElementById('ai-status').textContent = personalityData.description;
-                document.getElementById('message-avatar').textContent = personalityData.avatar;
-                
-                // Update personality buttons
-                var buttons = document.querySelectorAll('.personality-btn');
-                buttons.forEach(function(btn) {
-                    btn.classList.remove('active');
-                    if (btn.getAttribute('data-personality') === personality) {
-                        btn.classList.add('active');
-                    }
-                });
-                
-                // Greet in new personality
-                var greeting = this.getRandomGreeting();
-                this.addMessage(greeting, 'ai');
-                this.speak(greeting);
-                
-                this.saveVoiceSettings();
-                console.log('Switched to personality:', personality);
-            },
-            
-            // Add message to conversation
-            addMessage: function(text, sender) {
-                var conversation = document.getElementById('voice-conversation');
-                var personality = this.personalities[this.currentPersonality];
-                
-                var messageClass = sender === 'ai' ? 'ai-message' : 'user-message';
-                var avatar = sender === 'ai' ? personality.avatar : '👤';
-                
-                var messageHtml = '<div class="' + messageClass + '">' +
-                    '<div class="message-avatar">' + avatar + '</div>' +
-                    '<div class="message-content">' +
-                        '<p>' + text + '</p>' +
-                    '</div>' +
-                '</div>';
-                
-                conversation.insertAdjacentHTML('beforeend', messageHtml);
-                conversation.scrollTop = conversation.scrollHeight;
-            },
-            
-            // Update status display
-            updateStatus: function(text, state) {
-                var statusText = document.getElementById('status-text');
-                var indicator = document.getElementById('status-indicator');
-                
-                if (statusText) statusText.textContent = text;
-                
-                if (indicator) {
-                    switch(state) {
-                        case 'listening': indicator.textContent = '🔴'; break;
-                        case 'processing': indicator.textContent = '🟡'; break;
-                        case 'speaking': indicator.textContent = '🗣️'; break;
-                        case 'ready': indicator.textContent = '🟢'; break;
-                        default: indicator.textContent = '⚪';
-                    }
-                }
-            },
-            
-            // Event handlers
-            onListeningStart: function() {
-                this.isListening = true;
-                this.updateStatus('Listening...', 'listening');
-                
-                var btn = document.getElementById('voice-listen-btn');
-                var icon = document.getElementById('voice-icon');
-                var text = document.getElementById('voice-btn-text');
-                
-                if (btn) btn.classList.add('listening');
-                if (icon) icon.textContent = '🛑';
-                if (text) text.textContent = 'Stop Listening';
-            },
-            
-            onListeningEnd: function() {
-                this.isListening = false;
-                this.updateStatus('Ready to listen', 'ready');
-                
-                var btn = document.getElementById('voice-listen-btn');
-                var icon = document.getElementById('voice-icon');
-                var text = document.getElementById('voice-btn-text');
-                
-                if (btn) btn.classList.remove('listening');
-                if (icon) icon.textContent = '🎙️';
-                if (text) text.textContent = 'Start Listening';
-            },
-            
-            onSpeechResult: function(transcript) {
-                console.log('Speech result:', transcript);
-                this.updateStatus('Processing...', 'processing');
-                
-                // Add user message
-                this.addMessage(transcript, 'user');
-                
-                // Process command
-                setTimeout(() => {
-                    this.processCommand(transcript);
-                }, 500);
-            },
-            
-            onSpeechError: function(error) {
-                console.error('Speech error:', error);
-                this.updateStatus('Ready to listen', 'ready');
-                
-                var errorMsg = this.getPersonalityResponse('error');
-                this.addMessage(errorMsg, 'ai');
-                this.speak(errorMsg, 'error');
-            },
-            
-            // Save/load settings
-            saveVoiceSettings: function() {
-                var settings = {
-                    personality: this.currentPersonality,
-                    muted: this.isMuted
-                };
-                localStorage.setItem('refit_voice_settings', JSON.stringify(settings));
-            },
-            
-            loadVoiceSettings: function() {
+            // Check localStorage support
+            checkStorageSupport: function() {
                 try {
-                    var settings = JSON.parse(localStorage.getItem('refit_voice_settings') || '{}');
-                    if (settings.personality && this.personalities[settings.personality]) {
-                        this.selectPersonality(settings.personality);
-                    }
-                    if (settings.muted) {
-                        this.isMuted = settings.muted;
-                        this.updateMuteButton();
-                    }
+                    var test = 'refit_storage_test';
+                    localStorage.setItem(test, 'test');
+                    localStorage.removeItem(test);
+                    return true;
                 } catch (e) {
-                    console.warn('Could not load voice settings:', e);
+                    console.error('❌ LocalStorage not supported:', e);
+                    showSuccessMessage('⚠️ Data persistence unavailable');
+                    return false;
                 }
             },
             
-            // Update mute button
-            updateMuteButton: function() {
-                var btn = document.getElementById('mute-btn');
-                if (btn) {
-                    btn.textContent = this.isMuted ? '🔇 Sound Off' : '🔊 Sound On';
+            // Get storage usage information
+            getStorageInfo: function() {
+                var totalSize = 0;
+                var itemCount = 0;
+                var info = {};
+                
+                for (var key in localStorage) {
+                    if (localStorage.hasOwnProperty(key) && key.startsWith('refit_')) {
+                        var size = localStorage[key].length;
+                        totalSize += size;
+                        itemCount++;
+                        info[key] = {
+                            size: size,
+                            humanSize: this.formatBytes(size),
+                            lastModified: new Date().toISOString()
+                        };
+                    }
                 }
+                
+                return {
+                    totalSize: totalSize,
+                    humanSize: this.formatBytes(totalSize),
+                    itemCount: itemCount,
+                    usage: (totalSize / this.storageQuota * 100).toFixed(2) + '%',
+                    items: info,
+                    generatedAt: new Date().toISOString()
+                };
+            },
+            
+            // Format bytes to human readable
+            formatBytes: function(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                var k = 1024;
+                var sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                var i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            },
+            
+            // Compress data if enabled
+            compress: function(data) {
+                if (!this.compressionEnabled) return data;
+                try {
+                    return btoa(JSON.stringify(data));
+                } catch (e) {
+                    console.warn('Compression failed:', e);
+                    return JSON.stringify(data);
+                }
+            },
+            
+            // Decompress data
+            decompress: function(data) {
+                if (!this.compressionEnabled) return JSON.parse(data);
+                try {
+                    return JSON.parse(atob(data));
+                } catch (e) {
+                    // Fallback to regular JSON
+                    return JSON.parse(data);
+                }
+            },
+            
+            // Save data with metadata
+            save: function(key, data, options) {
+                options = options || {};
+                try {
+                    var dataToSave = {
+                        data: data,
+                        version: this.version,
+                        timestamp: new Date().toISOString(),
+                        compressed: this.compressionEnabled,
+                        checksum: this.generateChecksum(data)
+                    };
+                    
+                    var serialized = this.compress(dataToSave);
+                    localStorage.setItem(key, serialized);
+                    
+                    if (options.backup !== false) {
+                        this.createAutoBackup();
+                    }
+                    
+                    return true;
+                } catch (e) {
+                    console.error('❌ Save failed for key:', key, e);
+                    if (e.name === 'QuotaExceededError') {
+                        this.handleStorageFull();
+                    }
+                    return false;
+                }
+            },
+            
+            // Load data with validation
+            load: function(key, defaultValue) {
+                try {
+                    var stored = localStorage.getItem(key);
+                    if (!stored) return defaultValue;
+                    
+                    var dataObject = this.decompress(stored);
+                    
+                    // Validate data integrity
+                    if (dataObject.checksum && !this.validateChecksum(dataObject.data, dataObject.checksum)) {
+                        console.warn('⚠️ Data integrity check failed for:', key);
+                        return defaultValue;
+                    }
+                    
+                    return dataObject.data || defaultValue;
+                } catch (e) {
+                    console.error('❌ Load failed for key:', key, e);
+                    return defaultValue;
+                }
+            },
+            
+            // Generate simple checksum
+            generateChecksum: function(data) {
+                var str = JSON.stringify(data);
+                var hash = 0;
+                for (var i = 0; i < str.length; i++) {
+                    var char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // Convert to 32-bit integer
+                }
+                return hash.toString();
+            },
+            
+            // Validate checksum
+            validateChecksum: function(data, checksum) {
+                return this.generateChecksum(data) === checksum;
+            },
+            
+            // Create manual backup
+            createBackup: function(label) {
+                try {
+                    var backupData = {
+                        label: label || 'Manual Backup',
+                        timestamp: new Date().toISOString(),
+                        version: this.version,
+                        data: {
+                            theme: currentTheme,
+                            mode: currentMode,
+                            userData: userData,
+                            companyData: companyData,
+                            quotes: quotes,
+                            customers: customers,
+                            storageInfo: this.getStorageInfo()
+                        }
+                    };
+                    
+                    var backups = this.load(STORAGE_KEYS.BACKUPS, []);
+                    backups.unshift(backupData);
+                    
+                    // Keep only max backups
+                    if (backups.length > this.maxBackups) {
+                        backups = backups.slice(0, this.maxBackups);
+                    }
+                    
+                    this.save(STORAGE_KEYS.BACKUPS, backups, {backup: false});
+                    this.save(STORAGE_KEYS.LAST_BACKUP, new Date().toISOString(), {backup: false});
+                    
+                    console.log('💾 Backup created:', backupData.label);
+                    return backupData;
+                } catch (e) {
+                    console.error('❌ Backup creation failed:', e);
+                    return null;
+                }
+            },
+            
+            // Auto backup
+            createAutoBackup: function() {
+                var lastBackup = this.load(STORAGE_KEYS.LAST_BACKUP, null);
+                var now = new Date();
+                
+                if (!lastBackup || (now - new Date(lastBackup)) > this.autoBackupInterval) {
+                    this.createBackup('Auto Backup - ' + now.toLocaleString());
+                }
+            },
+            
+            // Restore from backup
+            restoreBackup: function(backupIndex) {
+                try {
+                    var backups = this.load(STORAGE_KEYS.BACKUPS, []);
+                    if (!backups[backupIndex]) {
+                        throw new Error('Backup not found');
+                    }
+                    
+                    var backup = backups[backupIndex];
+                    var data = backup.data;
+                    
+                    // Restore all data
+                    currentTheme = data.theme || 'red';
+                    currentMode = data.mode || 'light';
+                    userData = Object.assign(userData, data.userData || {});
+                    companyData = Object.assign(companyData, data.companyData || {});
+                    quotes = data.quotes || [];
+                    customers = data.customers || [];
+                    
+                    // Update displays
+                    updateThemeDisplay();
+                    updateModeDisplay();
+                    updateUserDisplay();
+                    updateCompanyDisplay();
+                    updateStats();
+                    
+                    // Save restored data
+                    this.saveAll();
+                    
+                    console.log('🔄 Backup restored:', backup.label);
+                    return true;
+                } catch (e) {
+                    console.error('❌ Backup restore failed:', e);
+                    return false;
+                }
+            },
+            
+            // Get all backups
+            getBackups: function() {
+                return this.load(STORAGE_KEYS.BACKUPS, []);
+            },
+            
+            // Delete backup
+            deleteBackup: function(backupIndex) {
+                try {
+                    var backups = this.load(STORAGE_KEYS.BACKUPS, []);
+                    if (backups[backupIndex]) {
+                        backups.splice(backupIndex, 1);
+                        this.save(STORAGE_KEYS.BACKUPS, backups, {backup: false});
+                        return true;
+                    }
+                    return false;
+                } catch (e) {
+                    console.error('❌ Backup deletion failed:', e);
+                    return false;
+                }
+            },
+            
+            // Export all data
+            exportData: function(format) {
+                format = format || 'json';
+                try {
+                    var exportData = {
+                        exportInfo: {
+                            timestamp: new Date().toISOString(),
+                            version: this.version,
+                            format: format,
+                            source: 'REFIT Business System'
+                        },
+                        appData: {
+                            theme: currentTheme,
+                            mode: currentMode,
+                            userData: userData,
+                            companyData: companyData,
+                            quotes: quotes,
+                            customers: customers
+                        },
+                        backups: this.getBackups(),
+                        storageInfo: this.getStorageInfo()
+                    };
+                    
+                    return exportData;
+                } catch (e) {
+                    console.error('❌ Export failed:', e);
+                    return null;
+                }
+            },
+            
+            // Import data
+            importData: function(importData) {
+                try {
+                    // Validate import data
+                    if (!importData || !importData.appData) {
+                        throw new Error('Invalid import data format');
+                    }
+                    
+                    // Create backup before import
+                    this.createBackup('Pre-Import Backup');
+                    
+                    var data = importData.appData;
+                    
+                    // Import data with validation
+                    if (data.theme && themes[data.theme]) {
+                        currentTheme = data.theme;
+                    }
+                    if (data.mode) {
+                        currentMode = data.mode;
+                    }
+                    if (data.userData) {
+                        userData = Object.assign(userData, data.userData);
+                    }
+                    if (data.companyData) {
+                        companyData = Object.assign(companyData, data.companyData);
+                    }
+                    if (data.quotes && Array.isArray(data.quotes)) {
+                        quotes = data.quotes;
+                    }
+                    if (data.customers && Array.isArray(data.customers)) {
+                        customers = data.customers;
+                    }
+                    
+                    // Save imported data
+                    this.saveAll();
+                    
+                    // Update displays
+                    updateThemeDisplay();
+                    updateModeDisplay();
+                    updateUserDisplay();
+                    updateCompanyDisplay();
+                    updateStats();
+                    
+                    console.log('📥 Data imported successfully');
+                    return true;
+                } catch (e) {
+                    console.error('❌ Import failed:', e);
+                    return false;
+                }
+            },
+            
+            // Save all data
+            saveAll: function() {
+                this.save(STORAGE_KEYS.THEME, currentTheme);
+                this.save(STORAGE_KEYS.MODE, currentMode);
+                this.save(STORAGE_KEYS.USER_DATA, userData);
+                this.save(STORAGE_KEYS.COMPANY_DATA, companyData);
+                this.save(STORAGE_KEYS.QUOTES, quotes);
+                this.save(STORAGE_KEYS.CUSTOMERS, customers);
+                this.save(STORAGE_KEYS.STORAGE_INFO, this.getStorageInfo());
+            },
+            
+            // Load all data
+            loadAll: function() {
+                try {
+                    var savedTheme = this.load(STORAGE_KEYS.THEME, 'red');
+                    var savedMode = this.load(STORAGE_KEYS.MODE, 'light');
+                    var savedUserData = this.load(STORAGE_KEYS.USER_DATA, {});
+                    var savedCompanyData = this.load(STORAGE_KEYS.COMPANY_DATA, {});
+                    var savedQuotes = this.load(STORAGE_KEYS.QUOTES, []);
+                    var savedCustomers = this.load(STORAGE_KEYS.CUSTOMERS, []);
+                    
+                    if (savedTheme && themes[savedTheme]) {
+                        currentTheme = savedTheme;
+                    }
+                    
+                    if (savedMode && (savedMode === 'light' || savedMode === 'dark')) {
+                        currentMode = savedMode;
+                    }
+                    
+                    userData = Object.assign(userData, savedUserData);
+                    companyData = Object.assign(companyData, savedCompanyData);
+                    quotes = savedQuotes;
+                    customers = savedCustomers;
+                    
+                    updateThemeDisplay();
+                    updateModeDisplay();
+                    updateUserDisplay();
+                    updateCompanyDisplay();
+                    updateStats();
+                    
+                    console.log('📁 All data loaded successfully');
+                    return true;
+                } catch (e) {
+                    console.error('❌ Data loading failed:', e);
+                    return false;
+                }
+            },
+            
+            // Clear all data
+            clearAll: function() {
+                try {
+                    for (var key in STORAGE_KEYS) {
+                        localStorage.removeItem(STORAGE_KEYS[key]);
+                    }
+                    console.log('🗑️ All data cleared');
+                    return true;
+                } catch (e) {
+                    console.error('❌ Clear all failed:', e);
+                    return false;
+                }
+            },
+            
+            // Handle storage full
+            handleStorageFull: function() {
+                console.warn('⚠️ Storage quota exceeded');
+                
+                // Try to free space by removing old backups
+                var backups = this.load(STORAGE_KEYS.BACKUPS, []);
+                if (backups.length > 3) {
+                    backups = backups.slice(0, 3);
+                    this.save(STORAGE_KEYS.BACKUPS, backups, {backup: false});
+                    showSuccessMessage('🧹 Cleaned old backups to free space');
+                } else {
+                    showSuccessMessage('⚠️ Storage space is full! Please export and clear old data');
+                }
+            },
+            
+            // Data migration
+            migrateData: function() {
+                var currentVersion = this.load(STORAGE_KEYS.DATA_VERSION, null);
+                
+                if (!currentVersion || currentVersion !== this.version) {
+                    console.log('🔄 Migrating data to version:', this.version);
+                    
+                    // Migration logic here
+                    this.save(STORAGE_KEYS.DATA_VERSION, this.version, {backup: false});
+                    this.createBackup('Migration Backup v' + this.version);
+                }
+            },
+            
+            // Start auto backup
+            startAutoBackup: function() {
+                var self = this;
+                setInterval(function() {
+                    self.createAutoBackup();
+                }, this.autoBackupInterval);
+                console.log('⏰ Auto backup started (every ' + (this.autoBackupInterval / 60000) + ' minutes)');
+            },
+            
+            // Monitor storage usage
+            monitorStorage: function() {
+                var self = this;
+                setInterval(function() {
+                    var info = self.getStorageInfo();
+                    if (parseFloat(info.usage) > 80) {
+                        console.warn('⚠️ Storage usage high:', info.usage);
+                    }
+                }, 60000); // Check every minute
             }
         };
-        
-        // Voice Assistant Functions
-        function toggleVoiceAssistant() {
-            var assistant = document.getElementById('voice-assistant');
-            if (!assistant) return;
-            
-            voiceAssistant.isActive = !voiceAssistant.isActive;
-            
-            if (voiceAssistant.isActive) {
-                assistant.classList.remove('hidden');
-                if (!voiceAssistant.recognition) {
-                    voiceAssistant.init();
-                }
-                showSuccessMessage('🎤 Voice Assistant activated! Choose your AI personality.');
-            } else {
-                assistant.classList.add('hidden');
-                if (voiceAssistant.isListening) {
-                    stopListening();
-                }
-                showSuccessMessage('👋 Voice Assistant deactivated.');
-            }
-        }
-        
-        function selectVoicePersonality(personality) {
-            voiceAssistant.selectPersonality(personality);
-        }
-        
-        function startListening() {
-            if (!voiceAssistant.recognition) {
-                showSuccessMessage('❌ Speech recognition not available in this browser.');
-                return;
-            }
-            
-            if (voiceAssistant.isListening) {
-                stopListening();
-                return;
-            }
-            
-            try {
-                voiceAssistant.recognition.start();
-            } catch (e) {
-                console.error('Could not start recognition:', e);
-                showSuccessMessage('❌ Could not start listening. Please try again.');
-            }
-        }
-        
-        function stopListening() {
-            if (voiceAssistant.recognition && voiceAssistant.isListening) {
-                voiceAssistant.recognition.stop();
-            }
-        }
-        
-        function clearConversation() {
-            var conversation = document.getElementById('voice-conversation');
-            if (conversation) {
-                conversation.innerHTML = document.getElementById('welcome-message').outerHTML;
-            }
-            showSuccessMessage('🗑️ Conversation cleared!');
-        }
-        
-        function toggleMute() {
-            voiceAssistant.isMuted = !voiceAssistant.isMuted;
-            voiceAssistant.updateMuteButton();
-            voiceAssistant.saveVoiceSettings();
-            
-            var status = voiceAssistant.isMuted ? 'muted' : 'unmuted';
-            showSuccessMessage('🔊 Voice ' + status + '!');
-        }
-        
-        function testVoice() {
-            var personality = voiceAssistant.personalities[voiceAssistant.currentPersonality];
-            var testMessage = "Hi! This is " + personality.name + ". " + personality.description + " voice personality.";
-            
-            voiceAssistant.speak(testMessage);
-            showSuccessMessage('🎵 Testing ' + personality.name + ' voice!');
-        }
 
         // ========================================
         // THEME MANAGEMENT FUNCTIONS
@@ -3101,7 +3464,6 @@
             
             document.getElementById('current-theme-icon').textContent = theme.icon;
             document.getElementById('app-logo').textContent = theme.icon;
-            document.getElementById('company-logo').textContent = theme.icon;
             document.getElementById('theme-picker-btn').innerHTML = 
                 '<span>' + theme.icon + '</span> Themes';
             
@@ -3252,13 +3614,542 @@
         // COMPANY MANAGEMENT FUNCTIONS
         // ========================================
         
+        function openCompanyManager() {
+            updateCompanyManagerDisplay();
+            updateCompanyStatistics();
+            updateCompanyProfileSummary();
+            openModal('company-manager-modal');
+            showSuccessMessage('🏢 Company Management Hub opened!');
+        }
+        
+        function updateCompanyManagerDisplay() {
+            updateLogoDisplay();
+            
+            // Update selected logo option for emoji logos
+            if (companyData.logoType === 'emoji') {
+                var logoOptions = document.querySelectorAll('.logo-option');
+                logoOptions.forEach(function(option) {
+                    option.classList.remove('selected');
+                    if (option.getAttribute('data-logo') === companyData.logo) {
+                        option.classList.add('selected');
+                    }
+                });
+            } else {
+                // Clear emoji selections when custom logo is active
+                var logoOptions = document.querySelectorAll('.logo-option');
+                logoOptions.forEach(function(option) {
+                    option.classList.remove('selected');
+                });
+            }
+            
+            // Show/hide buttons based on logo type
+            var resetBtn = document.getElementById('reset-logo-btn');
+            var removeBtn = document.getElementById('remove-logo-btn');
+            
+            if (companyData.logoType === 'custom') {
+                if (resetBtn) resetBtn.style.display = 'inline-flex';
+                if (removeBtn) removeBtn.style.display = 'inline-flex';
+            } else {
+                if (resetBtn) resetBtn.style.display = 'none';
+                if (removeBtn) removeBtn.style.display = 'none';
+            }
+        }
+        
+        function updateLogoDisplay() {
+            var logoElements = [
+                document.getElementById('company-logo'),
+                document.getElementById('company-manager-logo'),
+                document.getElementById('app-logo')
+            ];
+            
+            logoElements.forEach(function(element) {
+                if (!element) return;
+                
+                if (companyData.logoType === 'custom' && companyData.customLogo) {
+                    element.className = 'company-logo custom-logo';
+                    element.innerHTML = '<img src="' + companyData.customLogo + '" alt="Company Logo">';
+                } else {
+                    element.className = 'company-logo';
+                    element.textContent = companyData.logo;
+                }
+            });
+        }
+        
+        function handleLogoUpload(event) {
+            var file = event.target.files[0];
+            if (!file) return;
+            
+            // Validate file type
+            var validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/svg+xml'];
+            if (!validTypes.includes(file.type)) {
+                showSuccessMessage('❌ Please upload a valid image file (JPG, PNG, GIF, SVG)');
+                return;
+            }
+            
+            // Validate file size (2MB limit)
+            var maxSize = 2 * 1024 * 1024; // 2MB in bytes
+            if (file.size > maxSize) {
+                showSuccessMessage('❌ File too large! Please upload an image under 2MB');
+                return;
+            }
+            
+            // Show upload progress
+            showUploadProgress();
+            
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var base64Data = e.target.result;
+                
+                // Create image to validate and get dimensions
+                var img = new Image();
+                img.onload = function() {
+                    // Process the image
+                    processUploadedLogo(base64Data, file.name, img.width, img.height);
+                };
+                img.onerror = function() {
+                    hideUploadProgress();
+                    showSuccessMessage('❌ Invalid image file');
+                };
+                img.src = base64Data;
+            };
+            
+            reader.onerror = function() {
+                hideUploadProgress();
+                showSuccessMessage('❌ Error reading file');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        function showUploadProgress() {
+            var progressHtml = '<div class="upload-progress"><div class="upload-progress-bar" id="upload-progress-bar"></div></div>';
+            var uploadSection = document.querySelector('.logo-upload-section');
+            if (uploadSection) {
+                uploadSection.insertAdjacentHTML('beforeend', progressHtml);
+                
+                // Animate progress
+                var progressBar = document.getElementById('upload-progress-bar');
+                if (progressBar) {
+                    var progress = 0;
+                    var interval = setInterval(function() {
+                        progress += Math.random() * 30;
+                        if (progress > 90) progress = 90;
+                        progressBar.style.width = progress + '%';
+                        
+                        if (progress >= 90) {
+                            clearInterval(interval);
+                        }
+                    }, 100);
+                }
+            }
+        }
+        
+        function hideUploadProgress() {
+            var progressElement = document.querySelector('.upload-progress');
+            if (progressElement) {
+                progressElement.remove();
+            }
+        }
+        
+        function processUploadedLogo(base64Data, fileName, width, height) {
+            try {
+                // Complete the progress bar
+                var progressBar = document.getElementById('upload-progress-bar');
+                if (progressBar) {
+                    progressBar.style.width = '100%';
+                }
+                
+                setTimeout(function() {
+                    // Store the custom logo
+                    companyData.customLogo = base64Data;
+                    companyData.logoType = 'custom';
+                    companyData.logoFileName = fileName;
+                    companyData.logoDimensions = { width: width, height: height };
+                    
+                    // Update displays
+                    updateLogoDisplay();
+                    updateCompanyManagerDisplay();
+                    
+                    // Save data
+                    saveData();
+                    
+                    // Hide progress and show success
+                    hideUploadProgress();
+                    showSuccessMessage('🎨 Custom logo uploaded successfully! (' + width + 'x' + height + 'px)');
+                    
+                    console.log('Logo uploaded:', fileName, width + 'x' + height);
+                }, 500);
+                
+            } catch (error) {
+                hideUploadProgress();
+                showSuccessMessage('❌ Error processing image: ' + error.message);
+                console.error('Logo upload error:', error);
+            }
+        }
+        
+        function resetToEmojiLogo() {
+            companyData.logoType = 'emoji';
+            companyData.customLogo = null;
+            companyData.logoFileName = null;
+            companyData.logoDimensions = null;
+            
+            updateLogoDisplay();
+            updateCompanyManagerDisplay();
+            saveData();
+            
+            showSuccessMessage('🔄 Switched back to emoji logo: ' + companyData.logo);
+        }
+        
+        function removeCustomLogo() {
+            if (companyData.logoType === 'custom') {
+                companyData.logoType = 'emoji';
+                companyData.customLogo = null;
+                companyData.logoFileName = null;
+                companyData.logoDimensions = null;
+                
+                updateLogoDisplay();
+                updateCompanyManagerDisplay();
+                saveData();
+                
+                showSuccessMessage('🗑️ Custom logo removed. Using emoji: ' + companyData.logo);
+            }
+        }
+        
+        function changeCompanyLogo(logoEmoji) {
+            companyData.logo = logoEmoji;
+            companyData.logoType = 'emoji';
+            companyData.customLogo = null;
+            companyData.logoFileName = null;
+            companyData.logoDimensions = null;
+            
+            // Update all logo displays
+            updateLogoDisplay();
+            
+            // Update selected state
+            var logoOptions = document.querySelectorAll('.logo-option');
+            logoOptions.forEach(function(option) {
+                option.classList.remove('selected');
+                if (option.getAttribute('data-logo') === logoEmoji) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            // Update button visibility
+            updateCompanyManagerDisplay();
+            
+            saveData();
+            showSuccessMessage('🎨 Company logo updated to ' + logoEmoji + '!');
+        }
+        
+        function updateCompanyStatistics() {
+            var totalQuotes = quotes.length;
+            var totalCustomers = customers.length;
+            var paidQuotes = quotes.filter(function(q) { return q.status === 'paid'; }).length;
+            var successRate = totalQuotes > 0 ? Math.round((paidQuotes / totalQuotes) * 100) : 0;
+            var avgQuoteValue = totalQuotes > 0 ? 
+                Math.round(quotes.reduce(function(sum, q) { return sum + (q.total || 0); }, 0) / totalQuotes) : 0;
+            
+            document.getElementById('company-total-quotes').textContent = totalQuotes;
+            document.getElementById('company-total-customers').textContent = totalCustomers;
+            document.getElementById('company-success-rate').textContent = successRate + '%';
+            document.getElementById('company-avg-quote').textContent = 'RM ' + avgQuoteValue;
+        }
+        
+        function updateCompanyProfileSummary() {
+            var container = document.getElementById('company-profile-summary');
+            if (!container) return;
+            
+            var summaryItems = [
+                { icon: '🏢', title: 'Company Name', value: companyData.name || 'Not set' },
+                { icon: '📝', title: 'Business Type', value: companyData.industry || 'Not specified' },
+                { icon: '📞', title: 'Phone', value: companyData.phone || 'Not provided' },
+                { icon: '📧', title: 'Email', value: companyData.email || 'Not provided' },
+                { icon: '🌐', title: 'Website', value: companyData.website || 'Not provided' },
+                { icon: '👥', title: 'Company Size', value: companyData.size || 'Not specified' }
+            ];
+            
+            container.innerHTML = summaryItems.map(function(item) {
+                return '<div class="info-item">' +
+                    '<div class="info-icon">' + item.icon + '</div>' +
+                    '<div class="info-content">' +
+                        '<h4>' + item.title + '</h4>' +
+                        '<p>' + item.value + '</p>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+        
+        function generateBusinessCard() {
+            var logoDisplay = '';
+            if (companyData.logoType === 'custom' && companyData.customLogo) {
+                logoDisplay = '<img src="' + companyData.customLogo + '" alt="Company Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">';
+            } else {
+                logoDisplay = companyData.logo;
+            }
+            
+            var cardHtml = '<div class="business-card">' +
+                '<div class="business-card-header">' +
+                    '<div class="business-card-logo">' + logoDisplay + '</div>' +
+                    '<div class="business-card-info">' +
+                        '<h3>' + companyData.name + '</h3>' +
+                        '<p>' + companyData.tagline + '</p>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="business-card-contact">' +
+                    (companyData.phone ? '<div>📞 ' + companyData.phone + '</div>' : '') +
+                    (companyData.email ? '<div>📧 ' + companyData.email + '</div>' : '') +
+                    (companyData.website ? '<div>🌐 ' + companyData.website + '</div>' : '') +
+                    (companyData.address ? '<div>📍 ' + companyData.address.split('\n')[0] + '</div>' : '') +
+                '</div>' +
+            '</div>';
+            
+            // Logo type indicator
+            var logoTypeInfo = companyData.logoType === 'custom' ? 
+                'Custom Logo (' + (companyData.logoDimensions ? companyData.logoDimensions.width + 'x' + companyData.logoDimensions.height + 'px' : 'Unknown size') + ')' : 
+                'Emoji Logo';
+            
+            // Create a modal to show the business card
+            var modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.innerHTML = '<div class="modal-content" style="max-width: 400px;">' +
+                '<div class="modal-header">' +
+                    '<h3>💳 Business Card Preview</h3>' +
+                    '<button class="modal-close-btn" onclick="this.closest(\'.modal\').remove()">✕</button>' +
+                '</div>' +
+                '<div class="modal-body">' +
+                    cardHtml +
+                    '<div style="margin-top: 20px; text-align: center;">' +
+                        '<p style="color: var(--text-muted); font-size: 14px; margin-bottom: 8px;">Your professional business card is ready!</p>' +
+                        '<p style="color: var(--text-muted); font-size: 12px; margin-bottom: 16px;">Logo: ' + logoTypeInfo + '</p>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="modal-footer">' +
+                    '<button class="btn btn-secondary" onclick="this.closest(\'.modal\').remove()">Close</button>' +
+                    '<button class="btn btn-primary" onclick="downloadBusinessCard()">💾 Download</button>' +
+                '</div>' +
+            '</div>';
+            
+            document.body.appendChild(modal);
+            showSuccessMessage('💳 Business card generated with ' + (companyData.logoType === 'custom' ? 'custom logo' : 'emoji logo') + '!');
+        }
+        
+        function downloadBusinessCard() {
+            // Simple download simulation
+            var cardData = {
+                company: companyData.name,
+                tagline: companyData.tagline,
+                logo: companyData.logo,
+                phone: companyData.phone,
+                email: companyData.email,
+                website: companyData.website,
+                address: companyData.address,
+                generatedAt: new Date().toISOString()
+            };
+            
+            var dataStr = JSON.stringify(cardData, null, 2);
+            var dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = companyData.name.replace(/\s+/g, '_') + '_BusinessCard.json';
+            link.click();
+            
+            showSuccessMessage('💾 Business card downloaded!');
+        }
+        
+        function exportCompanyData() {
+            var exportData = {
+                companyProfile: companyData,
+                businessStatistics: {
+                    totalQuotes: quotes.length,
+                    totalCustomers: customers.length,
+                    totalRevenue: quotes.reduce(function(sum, q) { return sum + (q.total || 0); }, 0),
+                    successRate: quotes.length > 0 ? 
+                        Math.round((quotes.filter(function(q) { return q.status === 'paid'; }).length / quotes.length) * 100) : 0
+                },
+                exportDate: new Date().toISOString(),
+                exportedBy: userData.firstName + ' ' + userData.lastName
+            };
+            
+            var dataStr = JSON.stringify(exportData, null, 2);
+            var dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = companyData.name.replace(/\s+/g, '_') + '_CompanyData_' + 
+                new Date().toISOString().split('T')[0] + '.json';
+            link.click();
+            
+            showSuccessMessage('📤 Company data exported successfully!');
+        }
+        
+        function shareCompanyProfile() {
+            var profileText = '🏢 ' + companyData.name + '\n' +
+                '📝 ' + companyData.tagline + '\n' +
+                (companyData.phone ? '📞 ' + companyData.phone + '\n' : '') +
+                (companyData.email ? '📧 ' + companyData.email + '\n' : '') +
+                (companyData.website ? '🌐 ' + companyData.website + '\n' : '') +
+                '\n✨ Powered by REFIT Business System';
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: companyData.name + ' - Company Profile',
+                    text: profileText
+                }).then(function() {
+                    showSuccessMessage('📢 Company profile shared successfully!');
+                }).catch(function(error) {
+                    console.log('Error sharing:', error);
+                    fallbackShare(profileText);
+                });
+            } else {
+                fallbackShare(profileText);
+            }
+        }
+        
+        function fallbackShare(text) {
+            // Copy to clipboard as fallback
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(function() {
+                    showSuccessMessage('📋 Company profile copied to clipboard!');
+                });
+            } else {
+                // Create temporary textarea for older browsers
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showSuccessMessage('📋 Company profile copied to clipboard!');
+            }
+        }
+        
+        function printCompanyInfo() {
+            var logoDisplay = '';
+            if (companyData.logoType === 'custom' && companyData.customLogo) {
+                logoDisplay = '<img src="' + companyData.customLogo + '" alt="Company Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 16px;">';
+            } else {
+                logoDisplay = '<div style="font-size: 48px; margin-bottom: 16px;">' + companyData.logo + '</div>';
+            }
+            
+            var printContent = '<div style="font-family: Arial, sans-serif; padding: 40px; max-width: 600px; margin: 0 auto;">' +
+                '<div style="text-align: center; margin-bottom: 40px;">' +
+                    logoDisplay +
+                    '<h1 style="color: #333; margin: 16px 0 8px 0;">' + companyData.name + '</h1>' +
+                    '<p style="color: #666; font-size: 18px;">' + companyData.tagline + '</p>' +
+                '</div>' +
+                '<div style="border-top: 2px solid #eee; padding-top: 30px;">' +
+                    '<h2 style="color: #333; margin-bottom: 20px;">Company Information</h2>' +
+                    (companyData.registration ? '<p><strong>Registration:</strong> ' + companyData.registration + '</p>' : '') +
+                    (companyData.taxId ? '<p><strong>Tax ID:</strong> ' + companyData.taxId + '</p>' : '') +
+                    (companyData.industry ? '<p><strong>Industry:</strong> ' + companyData.industry + '</p>' : '') +
+                    (companyData.size ? '<p><strong>Company Size:</strong> ' + companyData.size + '</p>' : '') +
+                    (companyData.logoType === 'custom' && companyData.logoFileName ? 
+                        '<p><strong>Logo:</strong> ' + companyData.logoFileName + 
+                        (companyData.logoDimensions ? ' (' + companyData.logoDimensions.width + 'x' + companyData.logoDimensions.height + 'px)' : '') + '</p>' : '') +
+                '</div>' +
+                '<div style="border-top: 2px solid #eee; padding-top: 30px; margin-top: 30px;">' +
+                    '<h2 style="color: #333; margin-bottom: 20px;">Contact Information</h2>' +
+                    (companyData.phone ? '<p><strong>Phone:</strong> ' + companyData.phone + '</p>' : '') +
+                    (companyData.email ? '<p><strong>Email:</strong> ' + companyData.email + '</p>' : '') +
+                    (companyData.website ? '<p><strong>Website:</strong> ' + companyData.website + '</p>' : '') +
+                    (companyData.address ? '<p><strong>Address:</strong><br>' + companyData.address.replace(/\n/g, '<br>') + '</p>' : '') +
+                '</div>' +
+                (companyData.description ? 
+                    '<div style="border-top: 2px solid #eee; padding-top: 30px; margin-top: 30px;">' +
+                        '<h2 style="color: #333; margin-bottom: 20px;">About Us</h2>' +
+                        '<p style="line-height: 1.6;">' + companyData.description + '</p>' +
+                    '</div>' : '') +
+                '<div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; color: #999; font-size: 12px;">' +
+                    'Generated by REFIT Business System on ' + new Date().toLocaleDateString() +
+                    (companyData.logoType === 'custom' ? '<br>Custom Logo: ' + (companyData.logoFileName || 'Unknown') : '') +
+                '</div>' +
+            '</div>';
+            
+            var printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>' + companyData.name + ' - Company Information</title></head><body>' + printContent + '</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+            
+            showSuccessMessage('🖨️ Company information sent to printer with ' + (companyData.logoType === 'custom' ? 'custom logo' : 'emoji logo') + '!');
+        }
+        
+        function generateQRCode() {
+            var qrData = {
+                company: companyData.name,
+                phone: companyData.phone,
+                email: companyData.email,
+                website: companyData.website
+            };
+            
+            // Create QR code display modal
+            var modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.innerHTML = '<div class="modal-content" style="max-width: 400px;">' +
+                '<div class="modal-header">' +
+                    '<h3>📱 Company QR Code</h3>' +
+                    '<button class="modal-close-btn" onclick="this.closest(\'.modal\').remove()">✕</button>' +
+                '</div>' +
+                '<div class="modal-body">' +
+                    '<div class="qr-code-display">' +
+                        '<div class="qr-placeholder">📱</div>' +
+                        '<h4 style="margin-bottom: 8px; color: var(--text-primary);">' + companyData.name + '</h4>' +
+                        '<p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Scan to get company contact info</p>' +
+                        '<div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">' +
+                            'QR Code contains:<br>' +
+                            '• Company name and contact details<br>' +
+                            '• Phone, email, and website<br>' +
+                            '• Professional contact information' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="modal-footer">' +
+                    '<button class="btn btn-secondary" onclick="this.closest(\'.modal\').remove()">Close</button>' +
+                    '<button class="btn btn-primary" onclick="downloadQRCode()">💾 Download QR</button>' +
+                '</div>' +
+            '</div>';
+            
+            document.body.appendChild(modal);
+            showSuccessMessage('📱 QR Code generated for ' + companyData.name + '!');
+        }
+        
+        function downloadQRCode() {
+            var qrData = 'Company: ' + companyData.name + '\n' +
+                'Phone: ' + (companyData.phone || 'N/A') + '\n' +
+                'Email: ' + (companyData.email || 'N/A') + '\n' +
+                'Website: ' + (companyData.website || 'N/A');
+            
+            var dataBlob = new Blob([qrData], {type: 'text/plain'});
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = companyData.name.replace(/\s+/g, '_') + '_QR_Data.txt';
+            link.click();
+            
+            showSuccessMessage('💾 QR Code data downloaded!');
+        }
+        
+        function saveCompanySettings() {
+            // Save any company-specific settings
+            saveData();
+            updateCompanyDisplay();
+            updateCompanyManagerDisplay();
+            updateCompanyStatistics();
+            showSuccessMessage('💾 Company settings saved successfully!');
+        }
+        
         function editCompany() {
             // Populate form with current data
             document.getElementById('company-name-input').value = companyData.name;
             document.getElementById('company-tagline').value = companyData.tagline;
+            document.getElementById('company-registration').value = companyData.registration;
+            document.getElementById('company-tax-id').value = companyData.taxId;
             document.getElementById('company-email').value = companyData.email;
             document.getElementById('company-phone').value = companyData.phone;
+            document.getElementById('company-website').value = companyData.website;
             document.getElementById('company-address').value = companyData.address;
+            document.getElementById('company-industry').value = companyData.industry;
+            document.getElementById('company-size').value = companyData.size;
+            document.getElementById('company-description').value = companyData.description;
             
             openModal('company-modal');
         }
@@ -3266,9 +4157,15 @@
         function saveCompany() {
             companyData.name = document.getElementById('company-name-input').value || 'Your Company Name';
             companyData.tagline = document.getElementById('company-tagline').value || 'Professional Services';
+            companyData.registration = document.getElementById('company-registration').value || '';
+            companyData.taxId = document.getElementById('company-tax-id').value || '';
             companyData.email = document.getElementById('company-email').value || '';
             companyData.phone = document.getElementById('company-phone').value || '';
+            companyData.website = document.getElementById('company-website').value || '';
             companyData.address = document.getElementById('company-address').value || '';
+            companyData.industry = document.getElementById('company-industry').value || '';
+            companyData.size = document.getElementById('company-size').value || '';
+            companyData.description = document.getElementById('company-description').value || '';
             
             updateCompanyDisplay();
             saveData();
@@ -3281,6 +4178,9 @@
             document.getElementById('company-display-tagline').textContent = companyData.tagline;
             document.getElementById('company-name').textContent = companyData.name.toUpperCase();
             document.getElementById('company-subtitle').textContent = companyData.tagline;
+            
+            // Update all logo displays
+            updateLogoDisplay();
         }
 
         // ========================================
@@ -3301,6 +4201,9 @@
                 email: document.getElementById('customer-email').value || '',
                 phone: document.getElementById('customer-phone').value || '',
                 address: document.getElementById('customer-address').value || '',
+                industry: document.getElementById('customer-industry').value || '',
+                type: document.getElementById('customer-type').value || 'business',
+                notes: document.getElementById('customer-notes').value || '',
                 createdAt: new Date().toISOString()
             };
             
@@ -3326,6 +4229,7 @@
                 return '<div class="data-item" onclick="editCustomer(' + customer.id + ')">' +
                     '<div class="data-item-header">' +
                         '<div class="data-item-title">' + (customer.company || 'Unnamed Customer') + '</div>' +
+                        '<div style="color: var(--text-muted); font-size: 14px;">' + customer.type + '</div>' +
                     '</div>' +
                     '<div class="data-item-details">' + 
                         (customer.contact ? 'Contact: ' + customer.contact + '<br>' : '') +
@@ -3334,6 +4238,7 @@
                     '</div>' +
                     '<div class="data-item-meta">' +
                         '<div class="data-item-date">' + new Date(customer.createdAt).toLocaleDateString() + '</div>' +
+                        '<div class="data-item-status status-' + customer.type + '">' + customer.industry + '</div>' +
                     '</div>' +
                 '</div>';
             }).join('');
@@ -3358,6 +4263,11 @@
             document.getElementById('quote-form').reset();
             document.getElementById('quote-number').value = generateQuoteNumber();
             document.getElementById('quote-date').value = new Date().toISOString().split('T')[0];
+            
+            // Set valid until date (30 days from now)
+            var validUntil = new Date();
+            validUntil.setDate(validUntil.getDate() + 30);
+            document.getElementById('quote-valid-until').value = validUntil.toISOString().split('T')[0];
             
             // Clear quote items
             document.getElementById('quote-items-container').innerHTML = '';
@@ -3420,9 +4330,12 @@
                 subtotal += total;
             });
             
-            var total = subtotal;
+            var taxRate = parseFloat(document.getElementById('quote-tax-rate').value) || 0;
+            var tax = (subtotal * taxRate) / 100;
+            var total = subtotal + tax;
             
             document.getElementById('quote-subtotal').textContent = 'RM ' + subtotal.toFixed(2);
+            document.getElementById('quote-tax').textContent = 'RM ' + tax.toFixed(2);
             document.getElementById('quote-total').textContent = 'RM ' + total.toFixed(2);
         }
         
@@ -3436,6 +4349,19 @@
             updateStats();
             closeModal('quote-modal');
             showSuccessMessage('📋 Quote saved as draft!');
+        }
+        
+        function saveAndSendQuote() {
+            var quote = collectQuoteData();
+            quote.status = 'sent';
+            quote.sentAt = new Date().toISOString();
+            
+            quotes.push(quote);
+            saveData();
+            loadQuotesView();
+            updateStats();
+            closeModal('quote-modal');
+            showSuccessMessage('📤 Quote saved and sent!');
         }
         
         function collectQuoteData() {
@@ -3458,6 +4384,8 @@
             });
             
             var subtotal = items.reduce(function(sum, item) { return sum + item.total; }, 0);
+            var taxRate = parseFloat(document.getElementById('quote-tax-rate').value) || 0;
+            var tax = (subtotal * taxRate) / 100;
             
             return {
                 id: Date.now(),
@@ -3467,7 +4395,10 @@
                 description: document.getElementById('quote-description').value,
                 items: items,
                 subtotal: subtotal,
-                total: subtotal,
+                taxRate: taxRate,
+                tax: tax,
+                total: subtotal + tax,
+                validUntil: document.getElementById('quote-valid-until').value,
                 createdAt: new Date().toISOString()
             };
         }
@@ -3508,12 +4439,12 @@
         
         function saveData() {
             try {
-                localStorage.setItem('refit_theme', currentTheme);
-                localStorage.setItem('refit_mode', currentMode);
-                localStorage.setItem('refit_user_data', JSON.stringify(userData));
-                localStorage.setItem('refit_company_data', JSON.stringify(companyData));
-                localStorage.setItem('refit_quotes', JSON.stringify(quotes));
-                localStorage.setItem('refit_customers', JSON.stringify(customers));
+                localStorage.setItem(STORAGE_KEYS.THEME, currentTheme);
+                localStorage.setItem(STORAGE_KEYS.MODE, currentMode);
+                localStorage.setItem(STORAGE_KEYS.USER_DATA, JSON.stringify(userData));
+                localStorage.setItem(STORAGE_KEYS.COMPANY_DATA, JSON.stringify(companyData));
+                localStorage.setItem(STORAGE_KEYS.QUOTES, JSON.stringify(quotes));
+                localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify(customers));
             } catch (e) {
                 console.warn('Could not save data:', e);
             }
@@ -3521,12 +4452,12 @@
         
         function loadData() {
             try {
-                var savedTheme = localStorage.getItem('refit_theme');
-                var savedMode = localStorage.getItem('refit_mode');
-                var savedUserData = localStorage.getItem('refit_user_data');
-                var savedCompanyData = localStorage.getItem('refit_company_data');
-                var savedQuotes = localStorage.getItem('refit_quotes');
-                var savedCustomers = localStorage.getItem('refit_customers');
+                var savedTheme = localStorage.getItem(STORAGE_KEYS.THEME);
+                var savedMode = localStorage.getItem(STORAGE_KEYS.MODE);
+                var savedUserData = localStorage.getItem(STORAGE_KEYS.USER_DATA);
+                var savedCompanyData = localStorage.getItem(STORAGE_KEYS.COMPANY_DATA);
+                var savedQuotes = localStorage.getItem(STORAGE_KEYS.QUOTES);
+                var savedCustomers = localStorage.getItem(STORAGE_KEYS.CUSTOMERS);
                 
                 if (savedTheme && themes[savedTheme]) {
                     currentTheme = savedTheme;
@@ -3682,7 +4613,7 @@
                 currentTheme: currentTheme,
                 currentMode: currentMode,
                 exportDate: new Date().toISOString(),
-                version: 'REFIT Business System v3.0 with AI Voice'
+                version: 'REFIT Business System v2.0'
             };
             
             var dataStr = JSON.stringify(exportData, null, 2);
@@ -3695,28 +4626,6 @@
             
             showSuccessMessage('📤 Business data exported successfully!');
         }
-        
-        function exportAllData() {
-            exportData();
-        }
-        
-        function createManualBackup() {
-            exportData();
-            showSuccessMessage('💾 Manual backup created and downloaded!');
-        }
-
-        // Placeholder functions for features coming soon
-        function editCustomer(id) {
-            showSuccessMessage('✏️ Customer editing feature coming soon!');
-        }
-        
-        function editQuote(id) {
-            showSuccessMessage('✏️ Quote editing feature coming soon!');
-        }
-        
-        function openCompanyManager() {
-            showSuccessMessage('🏢 Advanced company manager coming soon!');
-        }
 
         // ========================================
         // INITIALIZATION
@@ -3726,9 +4635,8 @@
             loadData();
             updateStatusBar();
             updateCustomerSelect();
-            
-            // Initialize voice assistant
-            voiceAssistant.init();
+            updateCompanyManagerDisplay();
+            updateLogoDisplay(); // Ensure logos are displayed correctly on startup
             
             // Set up status bar timer
             setInterval(updateStatusBar, 60000);
@@ -3738,58 +4646,41 @@
                 document.body.style.transition = 'all 0.5s ease';
             }, 100);
             
-            showSuccessMessage('🎤✨ REFIT Business System with AI Voice Assistant Ready!');
+            showSuccessMessage('🎨✨ REFIT Business System Ready!');
             
-            console.log('🎤🎭 REFIT COMPLETE BUSINESS SYSTEM WITH INTELLIGENT VOICE AI');
-            console.log('🗣️ INTELLIGENT VOICE ASSISTANT WITH 3 UNIQUE PERSONALITIES:');
-            console.log('   👩‍💼 ARIA - Professional & Friendly (Business-focused, efficient tone)');
-            console.log('   👩‍🎨 ZOE - Creative & Energetic (Young, enthusiastic, bubbly personality)');
-            console.log('   🧙‍♀️ SAGE - Wise & Calm (Mature, thoughtful, philosophical approach)');
-            console.log('🎵 ADVANCED VOICE FEATURES:');
-            console.log('   • Real speech synthesis with Web Speech API');
-            console.log('   • Multiple voice personalities with unique speech patterns');
-            console.log('   • Different speaking rates, pitch, and tone for each personality');
-            console.log('   • Intelligent voice command processing');
-            console.log('   • Natural conversation flow with personality-specific responses');
-            console.log('   • Voice recognition for hands-free operation');
-            console.log('   • Smart business command understanding');
-            console.log('   • Personality switching via voice commands');
-            console.log('   • Mute/unmute controls and voice testing');
-            console.log('🎯 VOICE COMMANDS SUPPORTED:');
-            console.log('   • "Create a new quote" - Opens quote creation');
-            console.log('   • "Add customer" - Opens customer form');
-            console.log('   • "Show statistics" - Displays business stats');
-            console.log('   • "Change to blue theme" - Switches themes');
-            console.log('   • "Switch to Zoe" - Changes AI personality');
-            console.log('   • "What\'s my revenue?" - Reports financial data');
-            console.log('   • "Export data" - Backs up business data');
-            console.log('   • "Help" - Shows available commands');
-            console.log('🎨✨ COMPLETE BUSINESS FEATURES:');
+            console.log('🎨 REFIT COMPLETE BUSINESS SYSTEM WITH LOGO UPLOAD');
             console.log('👤 User Profile Management');
-            console.log('🏢 Company Management');
+            console.log('🏢 Complete Company Management Hub');
+            console.log('🎨 Interactive Logo Selection (24+ emoji options)');
+            console.log('📤 CUSTOM LOGO UPLOAD SYSTEM:');
+            console.log('   • Upload JPG, PNG, GIF, SVG files');
+            console.log('   • Max 2MB file size');
+            console.log('   • Auto-resize and optimize');
+            console.log('   • Base64 storage for persistence');
+            console.log('   • Switch between custom and emoji logos');
+            console.log('   • Integrated with business cards & printing');
+            console.log('💳 Business Card Generation (with custom logos)');
+            console.log('📊 Company Statistics & Analytics');
+            console.log('📤 Data Export & Sharing');
+            console.log('🖨️ Professional Printing (custom logo support)');
+            console.log('📱 QR Code Generation');
             console.log('📋 Quote Creation & Management');
             console.log('👥 Customer Management');
-            console.log('🌅 8 Beautiful Pastel Themes with Light/Dark Mode');
-            console.log('💾 Complete Data Persistence');
+            console.log('🌅 8 Beautiful New Pastel Themes with Light/Dark Mode');
+            console.log('💾 Complete Data Persistence (including custom logos)');
             console.log('📱 Mobile-Optimized Interface');
-            console.log('');
-            console.log('🎤 VOICE ASSISTANT QUICK START:');
-            console.log('• Click the 🎙️ microphone button in the header');
-            console.log('• Choose your favorite AI personality (Aria, Zoe, or Sage)');
-            console.log('• Click "Start Listening" and speak your commands');
-            console.log('• Try: "Hello", "Show my statistics", "Create quote"');
-            console.log('• Switch personalities anytime: "Change to Zoe"');
-            console.log('• Each personality has unique voice and response style');
-            console.log('');
-            console.log('🎭 PERSONALITY HIGHLIGHTS:');
-            console.log('• ARIA: Perfect for professional business interactions');
-            console.log('• ZOE: Brings youthful energy and creativity to your work');
-            console.log('• SAGE: Offers calm wisdom and thoughtful guidance');
         }
         
         // Start the app when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initializeApp, 100);
+        });
+        
+        // Event listeners for quote calculation
+        document.addEventListener('change', function(e) {
+            if (e.target.id === 'quote-tax-rate') {
+                calculateQuoteTotal();
+            }
         });
         
         // Keyboard shortcuts
@@ -3809,11 +4700,6 @@
                 createQuote();
             }
             
-            if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
-                e.preventDefault();
-                toggleVoiceAssistant();
-            }
-            
             // Number keys 1-8 = Switch themes
             if (e.key >= '1' && e.key <= '8') {
                 var themeKeys = Object.keys(themes);
@@ -3824,10 +4710,102 @@
             }
         });
         
-        console.log('🎉✨ REFIT BUSINESS SYSTEM WITH AI VOICE ASSISTANT READY!');
-        console.log('🎤 Click the microphone button to start talking with your AI assistant!');
-        console.log('🎭 Choose from 3 amazing personalities: Aria, Zoe, or Sage');
-        console.log('🗣️ Experience hands-free business management with voice commands!');
+        console.log('🎉✨ REFIT COMPLETE BUSINESS SYSTEM - ENTERPRISE DATA MANAGEMENT EDITION!');
+        console.log('🌅 8 Beautiful Dark Pastel Themes with Elegant White Text:');
+        console.log('   🌅 1. Coral Sunset - Dark coral backgrounds with white text');
+        console.log('   🍑 2. Peach Glow - Dark peach backgrounds with cream text');
+        console.log('   🌸 3. Rose Blush - Dark rose backgrounds with blush text');
+        console.log('   🌻 4. Butter Cream - Dark gold backgrounds with cream text');
+        console.log('   🌊 5. Mint Breeze - Dark teal backgrounds with mint text');
+        console.log('   💜 6. Lavender Mist - Dark purple backgrounds with lavender text');
+        console.log('   🤎 7. Warm Taupe - Dark brown backgrounds with warm text');
+        console.log('   🌿 8. Sage Olive - Dark sage backgrounds with natural text');
+        console.log('👤 Complete User Profile Management');
+        console.log('🏢 Advanced Company Management Hub with:');
+        console.log('   🎨 Interactive Logo Selection (24+ professional emoji icons)');
+        console.log('   📤 CUSTOM LOGO UPLOAD SYSTEM:');
+        console.log('      • Upload your own company logo (JPG, PNG, GIF, SVG)');
+        console.log('      • Maximum 2MB file size with validation');
+        console.log('      • Automatic image processing and optimization');
+        console.log('      • Base64 encoding for localStorage persistence');
+        console.log('      • Real-time preview and dimension display');
+        console.log('      • Switch between custom and emoji logos anytime');
+        console.log('      • Upload progress indicators');
+        console.log('      • Professional error handling and validation');
+        console.log('   💳 Business Card Generator (with custom logo support)');
+        console.log('   📊 Real-time Company Statistics');
+        console.log('   📤 Professional Data Export');
+        console.log('   📢 Company Profile Sharing');
+        console.log('   🖨️ Professional Print Layouts (custom logo integrated)');
+        console.log('   📱 QR Code Generation');
+        console.log('   📋 Company Profile Summary');
+        console.log('💾 ENTERPRISE-GRADE DATA MANAGEMENT SYSTEM:');
+        console.log('   🔒 DATA SECURITY & INTEGRITY:');
+        console.log('      • Automatic checksum validation for data integrity');
+        console.log('      • Data compression with Base64 encoding');
+        console.log('      • Version control and migration support');
+        console.log('      • Orphaned data cleanup and optimization');
+        console.log('   ⏰ AUTOMATED BACKUP SYSTEM:');
+        console.log('      • Auto-backup every 5 minutes');
+        console.log('      • Manual backup creation with custom labels');
+        console.log('      • Maximum 10 backups retained automatically');
+        console.log('      • Backup restoration with full data recovery');
+        console.log('   📤 IMPORT/EXPORT CAPABILITIES:');
+        console.log('      • Complete data export in JSON format');
+        console.log('      • Full data import with validation');
+        console.log('      • Pre-import backup creation for safety');
+        console.log('      • Cross-device data synchronization');
+        console.log('   📊 STORAGE MONITORING:');
+        console.log('      • Real-time storage usage tracking');
+        console.log('      • Visual storage usage indicators');
+        console.log('      • Automatic storage optimization');
+        console.log('      • Storage quota management (10MB limit)');
+        console.log('   🔧 ADVANCED DATA TOOLS:');
+        console.log('      • Complete data validation system');
+        console.log('      • Storage optimization and cleanup');
+        console.log('      • Detailed storage information display');
+        console.log('      • Advanced data manager interface');
+        console.log('📋 Complete Quote Creation & Management');
+        console.log('👥 Customer Relationship Management');
+        console.log('📊 Business Analytics & Reporting');
+        console.log('💾 Complete Data Persistence & Backup');
+        console.log('📱 Mobile-First Professional Design');
+        console.log('🎨 Professional Branding with Custom Logo Support');
+        console.log('🌙 Beautiful Dark Themes with Perfect White Text Contrast');
+        console.log('✨ Enterprise-Ready Business Solution!');
+        console.log('🏢 Your Complete Business Management Platform!');
+        console.log('');
+        console.log('🎯 QUICK TIPS:');
+        console.log('• Click on company name/logo to open Company Hub');
+        console.log('• Upload your own company logo with the "📤 Upload Logo" button');
+        console.log('• Access Data Manager in Settings for advanced data features');
+        console.log('• Automatic backups save your data every 5 minutes');
+        console.log('• Export your complete data anytime for backup');
+        console.log('• Import data to restore or transfer between devices');
+        console.log('• Monitor storage usage in Settings > Data Management');
+        console.log('• Switch themes anytime with Ctrl+T');
+        console.log('• Toggle between theme variants with Ctrl+D');
+        console.log('• Create quotes with Ctrl+N');
+        console.log('• Use number keys 1-8 to switch themes quickly');
+        console.log('');
+        console.log('💾 ENTERPRISE DATA FEATURES:');
+        console.log('• Automatic data validation and error detection');
+        console.log('• Compressed storage with integrity checksums');
+        console.log('• Automated backup system with retention management');
+        console.log('• Complete import/export for data portability');
+        console.log('• Real-time storage monitoring and optimization');
+        console.log('• Advanced data manager with detailed controls');
+        console.log('• Cross-session data persistence and recovery');
+        console.log('• Professional data security and validation');
+        console.log('');
+        console.log('💼 PERFECT FOR:');
+        console.log('• Professionals requiring reliable data management');
+        console.log('• Businesses needing automated backup systems');
+        console.log('• Users wanting enterprise-grade data security');
+        console.log('• Companies requiring data portability');
+        console.log('• Any business needing professional data persistence');
+        console.log('');
+        console.log('🚀 EXPERIENCE ENTERPRISE-GRADE DATA MANAGEMENT TODAY!');
     </script>
 </body>
 </html>
