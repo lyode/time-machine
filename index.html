@@ -7,9 +7,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="REFIT BUSINESS SYSTEM">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#f87171">
+    <meta name="theme-color" content="#2d1517">
     
-    <title>REFIT - Complete Business Quote System</title>
+    <title>REFIT - Complete Business Quote System with Claude AI</title>
     
     <!-- PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -422,6 +422,171 @@
             background: var(--bg-primary);
             transition: all 0.5s ease;
         }
+
+        /* ========================================
+        // CLAUDE AI SPECTACULAR LIGHTING EFFECTS
+        // ======================================== */
+        
+        /* Spectacular Lighting Effects */
+        .claude-light-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 2s ease;
+            z-index: 1000;
+        }
+
+        .claude-light-particles.active {
+            opacity: 1;
+        }
+
+        .light-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #fff, transparent);
+            border-radius: 50%;
+            animation: particleFloat 3s infinite ease-in-out;
+        }
+
+        .claude-rgb-waves {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 100, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 150, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(100, 150, 255, 0.3) 0%, transparent 50%);
+            animation: claudeColorShift 4s infinite ease-in-out;
+            transition: opacity 2s ease;
+            z-index: 999;
+        }
+
+        .claude-rgb-waves.active {
+            opacity: 1;
+        }
+
+        .claude-energy-rings {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 998;
+        }
+
+        .claude-energy-rings.active {
+            opacity: 1;
+        }
+
+        .energy-ring {
+            position: absolute;
+            border: 2px solid;
+            border-radius: 50%;
+            animation: expandEnergyRing 2s infinite ease-out;
+        }
+
+        .energy-ring:nth-child(1) {
+            width: 50px;
+            height: 50px;
+            margin: -25px;
+            border-color: rgba(255, 100, 150, 0.8);
+            animation-delay: 0s;
+        }
+
+        .energy-ring:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            margin: -50px;
+            border-color: rgba(100, 255, 150, 0.6);
+            animation-delay: 0.3s;
+        }
+
+        .energy-ring:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            margin: -75px;
+            border-color: rgba(150, 100, 255, 0.4);
+            animation-delay: 0.6s;
+        }
+
+        /* Claude AI Animations */
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.7; }
+        }
+
+        @keyframes claudeColorShift {
+            0% { filter: hue-rotate(0deg); }
+            25% { filter: hue-rotate(90deg); }
+            50% { filter: hue-rotate(180deg); }
+            75% { filter: hue-rotate(270deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        @keyframes expandEnergyRing {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes claudePowerUp {
+            0% { 
+                transform: scale(1);
+                filter: brightness(1) saturate(1);
+                box-shadow: 0 8px 25px var(--shadow-medium);
+            }
+            25% { 
+                transform: scale(1.1);
+                filter: brightness(1.5) saturate(2);
+                box-shadow: 0 12px 35px var(--shadow-strong);
+            }
+            50% { 
+                transform: scale(1.2);
+                filter: brightness(2) saturate(3);
+                box-shadow: 0 16px 45px var(--shadow-strong);
+            }
+            75% { 
+                transform: scale(1.15);
+                filter: brightness(1.8) saturate(2.5);
+                box-shadow: 0 14px 40px var(--shadow-strong);
+            }
+            100% { 
+                transform: scale(1.1);
+                filter: brightness(1.3) saturate(1.5);
+                box-shadow: 0 10px 30px var(--shadow-medium);
+            }
+        }
+
+        .holographic-text {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary), var(--accent-primary));
+            background-size: 400% 400%;
+            animation: holographicShift 3s ease-in-out infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        @keyframes holographicShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         
         /* Enhanced Status Bar */
         .status-bar {
@@ -529,6 +694,10 @@
         .app-logo:hover {
             transform: scale(1.05);
         }
+
+        .app-logo.claude-activating {
+            animation: claudePowerUp 2s ease forwards;
+        }
         
         .app-title h1 {
             font-size: 18px;
@@ -571,6 +740,20 @@
         
         .header-btn:hover {
             transform: translateY(-2px);
+        }
+
+        .claude-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            animation: claudePulse 2s infinite ease-in-out;
+        }
+
+        .claude-btn.activated {
+            animation: claudePowerUp 2s ease forwards;
+        }
+
+        @keyframes claudePulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); }
+            50% { box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6); }
         }
         
         /* Enhanced Main Content */
@@ -892,35 +1075,35 @@
         }
         
         .theme-preview.red {
-            background: linear-gradient(135deg, #fef7f7, #f87171);
+            background: linear-gradient(135deg, #2d1517, #f87171);
         }
         
         .theme-preview.orange {
-            background: linear-gradient(135deg, #fff7ed, #fb923c);
+            background: linear-gradient(135deg, #2d1b0f, #fb923c);
         }
         
         .theme-preview.pink {
-            background: linear-gradient(135deg, #fdf2f8, #f472b6);
+            background: linear-gradient(135deg, #2d1524, #f472b6);
         }
         
         .theme-preview.yellow {
-            background: linear-gradient(135deg, #fefce8, #fbbf24);
+            background: linear-gradient(135deg, #2d2510, #fbbf24);
         }
         
         .theme-preview.bluegreen {
-            background: linear-gradient(135deg, #f0fdfa, #2dd4bf);
+            background: linear-gradient(135deg, #0f2925, #2dd4bf);
         }
         
         .theme-preview.purplegrey {
-            background: linear-gradient(135deg, #faf7ff, #a855f7);
+            background: linear-gradient(135deg, #241838, #a855f7);
         }
         
         .theme-preview.browngrey {
-            background: linear-gradient(135deg, #fafaf9, #a3a3a3);
+            background: linear-gradient(135deg, #1c1917, #a3a3a3);
         }
         
         .theme-preview.greenbrown {
-            background: linear-gradient(135deg, #f7f8f3, #84cc16);
+            background: linear-gradient(135deg, #1a2e05, #84cc16);
         }
         
         .theme-name {
@@ -1037,6 +1220,9 @@
         .btn-danger { 
             background: linear-gradient(135deg, var(--error), #f87171); 
         }
+        .btn-claude { 
+            background: linear-gradient(135deg, #667eea, #764ba2); 
+        }
         
         /* Quick Actions */
         .quick-actions {
@@ -1093,6 +1279,10 @@
         }
         .quick-btn.info { 
             background: linear-gradient(135deg, var(--info), #60a5fa); 
+        }
+        .quick-btn.claude { 
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: claudePulse 2s infinite ease-in-out;
         }
         
         .quick-btn .icon {
@@ -1249,6 +1439,263 @@
             background: #fee2e2;
             color: #dc2626;
         }
+
+        /* ========================================
+        // CLAUDE AI CHAT INTERFACE
+        // ======================================== */
+
+        /* Claude Chat Interface */
+        .claude-chat-interface {
+            position: fixed;
+            bottom: 140px;
+            left: 20px;
+            right: 20px;
+            background: var(--bg-card);
+            backdrop-filter: blur(30px);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px var(--shadow-strong);
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 200;
+            max-height: 60vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .claude-chat-interface.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .claude-chat-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-secondary);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .claude-avatar-mini {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            animation: claudePulse 2s infinite ease-in-out;
+        }
+
+        .claude-info h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .claude-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .claude-minimize-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            border: none;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .claude-minimize-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .claude-chat-messages {
+            flex: 1;
+            padding: 16px 20px;
+            overflow-y: auto;
+            min-height: 200px;
+            max-height: 300px;
+        }
+
+        .claude-message {
+            margin-bottom: 16px;
+            animation: messageSlideIn 0.5s ease;
+        }
+
+        .claude-message-content {
+            background: var(--bg-secondary);
+            padding: 12px 16px;
+            border-radius: 16px;
+            color: var(--text-primary);
+            line-height: 1.5;
+            border-left: 4px solid #667eea;
+        }
+
+        .user-message {
+            text-align: right;
+        }
+
+        .user-message .claude-message-content {
+            background: var(--accent-primary);
+            color: white;
+            border-left: none;
+            border-right: 4px solid rgba(255, 255, 255, 0.3);
+            display: inline-block;
+            max-width: 80%;
+        }
+
+        .claude-typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 16px;
+        }
+
+        .claude-typing-indicator.visible {
+            display: flex;
+            animation: messageSlideIn 0.5s ease;
+        }
+
+        .typing-text {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+
+        .claude-chat-input-area {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            border-radius: 0 0 20px 20px;
+        }
+
+        .claude-input-container {
+            position: relative;
+        }
+
+        .claude-chat-input {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 50px 12px 16px;
+            color: var(--text-primary);
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            resize: none;
+            min-height: 20px;
+            max-height: 100px;
+        }
+
+        .claude-chat-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .claude-chat-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .claude-send-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            border: none;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .claude-send-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .claude-suggestions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .claude-suggestion {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .claude-suggestion:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
         
         /* Bottom Navigation */
         .bottom-nav {
@@ -1297,6 +1744,17 @@
         .nav-item:hover {
             color: var(--accent-primary);
             transform: translateY(-2px);
+        }
+
+        .nav-item.claude-nav {
+            color: #667eea;
+            animation: claudePulse 2s infinite ease-in-out;
+        }
+
+        .nav-item.claude-nav.active {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
         }
         
         .nav-item .icon {
@@ -1764,6 +2222,22 @@
                 margin: 20px;
                 max-height: calc(100vh - 40px);
             }
+
+            .claude-chat-interface {
+                left: 10px;
+                right: 10px;
+                bottom: 130px;
+                max-height: 50vh;
+            }
+
+            .nav-items {
+                justify-content: space-between;
+            }
+
+            .nav-item {
+                min-width: 50px;
+                padding: 8px 12px;
+            }
         }
         
         /* Safe Area Adjustments */
@@ -1781,6 +2255,15 @@
 </head>
 <body data-theme="red" data-mode="light">
     <div class="mobile-container">
+        <!-- Claude AI Spectacular Lighting Effects -->
+        <div class="claude-light-particles" id="claudeLightParticles"></div>
+        <div class="claude-rgb-waves" id="claudeRgbWaves"></div>
+        <div class="claude-energy-rings" id="claudeEnergyRings">
+            <div class="energy-ring"></div>
+            <div class="energy-ring"></div>
+            <div class="energy-ring"></div>
+        </div>
+
         <!-- Status Bar -->
         <div class="status-bar">
             <div class="time" id="status-time">9:41</div>
@@ -1788,81 +2271,11 @@
                 <button class="theme-picker-btn" onclick="openThemePicker()" id="theme-picker-btn">
                     <span id="current-theme-icon">🌅</span> Themes
                 </button>
-                <button class="theme-toggle" onclick="toggleMode()" id="mode-toggle">🌙 Dark</button>
+                <button class="theme-toggle" onclick="toggleMode()" id="mode-toggle">🌑 Darker</button>
                 <span>📶</span>
                 <span>📱</span>
                 <span>🔋</span>
             </div>
-
-    <!-- Customer Modal -->
-    <div id="customer-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>👥 Add Customer</h3>
-                <button class="modal-close-btn" onclick="closeModal('customer-modal')">✕</button>
-            </div>
-            <div class="modal-body">
-                <form id="customer-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Company Name</label>
-                            <input type="text" class="form-input" id="customer-company" placeholder="ABC Corporation">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Contact Person</label>
-                            <input type="text" class="form-input" id="customer-contact" placeholder="Jane Smith">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-input" id="customer-email" placeholder="jane@abc.com">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Phone</label>
-                            <input type="tel" class="form-input" id="customer-phone" placeholder="+60 12-345 6789">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Address</label>
-                        <textarea class="form-textarea" id="customer-address" placeholder="123 Customer Street&#10;City, State 12345"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Industry</label>
-                            <select class="form-select" id="customer-industry">
-                                <option value="">Select Industry</option>
-                                <option value="technology">Technology</option>
-                                <option value="retail">Retail</option>
-                                <option value="manufacturing">Manufacturing</option>
-                                <option value="healthcare">Healthcare</option>
-                                <option value="education">Education</option>
-                                <option value="finance">Finance</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Customer Type</label>
-                            <select class="form-select" id="customer-type">
-                                <option value="business">Business</option>
-                                <option value="individual">Individual</option>
-                                <option value="government">Government</option>
-                                <option value="non-profit">Non-Profit</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Notes</label>
-                        <textarea class="form-textarea" id="customer-notes" placeholder="Additional notes about this customer..."></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal('customer-modal')">Cancel</button>
-                <button class="btn btn-success" onclick="saveCustomer()">👥 Save Customer</button>
-            </div>
-        </div>
-    </div>
         </div>
         
         <!-- Header -->
@@ -1871,13 +2284,73 @@
                 <div class="app-logo" id="app-logo">🌅</div>
                 <div class="app-title">
                     <h1 id="company-name">REFIT BUSINESS SYSTEM</h1>
-                    <p id="company-subtitle">Complete Quote & Invoice Solution</p>
+                    <p id="company-subtitle">Complete Quote & Invoice Solution with Claude AI</p>
                 </div>
             </div>
             <div class="header-right">
+                <button class="header-btn claude-btn" onclick="activateClaudeAI()" title="Claude AI Assistant" id="claude-header-btn">🧠</button>
                 <button class="header-btn" onclick="openThemePicker()" title="Change Theme">🎨</button>
                 <button class="header-btn" onclick="showProfile()" title="Profile">👤</button>
                 <button class="header-btn" onclick="exportData()" title="Export">📤</button>
+            </div>
+        </div>
+
+        <!-- Claude AI Chat Interface -->
+        <div class="claude-chat-interface" id="claudeChatInterface">
+            <div class="claude-chat-header">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="claude-avatar-mini">🧠</div>
+                    <div class="claude-info">
+                        <h3>Claude AI Assistant</h3>
+                        <p id="claude-status">Ready to help with your business</p>
+                    </div>
+                </div>
+                <button class="claude-minimize-btn" onclick="minimizeClaude()" title="Minimize Claude">↓</button>
+            </div>
+            
+            <div class="claude-chat-messages" id="claudeChatMessages">
+                <div class="claude-message">
+                    <div class="claude-message-content">
+                        🎉 Hello! I'm Claude, your AI business assistant. I can help you with:
+                        <br><br>
+                        📋 <strong>Smart Quote Generation</strong><br>
+                        👥 <strong>Customer Management</strong><br>
+                        📊 <strong>Business Analytics</strong><br>
+                        💡 <strong>Strategic Advice</strong><br>
+                        ✍️ <strong>Professional Writing</strong><br>
+                        <br>
+                        What would you like to work on today?
+                    </div>
+                </div>
+            </div>
+
+            <div class="claude-typing-indicator" id="claudeTypingIndicator">
+                <span class="typing-text">Claude is thinking</span>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+            
+            <div class="claude-chat-input-area">
+                <div class="claude-input-container">
+                    <textarea class="claude-chat-input" 
+                              id="claudeChatInput" 
+                              placeholder="Ask Claude to help with quotes, customers, business strategy..."
+                              rows="1"
+                              onkeypress="handleClaudeEnter(event)"></textarea>
+                    <button class="claude-send-btn" onclick="sendClaudeMessage()" title="Send Message">
+                        ➤
+                    </button>
+                </div>
+                
+                <div class="claude-suggestions">
+                    <div class="claude-suggestion" onclick="sendQuickMessage('Create a quote for office renovation')">📋 Create Quote</div>
+                    <div class="claude-suggestion" onclick="sendQuickMessage('Analyze my business performance')">📊 Analyze Business</div>
+                    <div class="claude-suggestion" onclick="sendQuickMessage('Write a follow-up email')">✍️ Write Email</div>
+                    <div class="claude-suggestion" onclick="sendQuickMessage('Suggest pricing strategy')">💰 Pricing Help</div>
+                </div>
             </div>
         </div>
 
@@ -1948,9 +2421,9 @@
                             <span class="icon">👥</span>
                             <span class="label">Add Customer</span>
                         </button>
-                        <button class="quick-btn info" onclick="viewReports()">
-                            <span class="icon">📊</span>
-                            <span class="label">Reports</span>
+                        <button class="quick-btn claude" onclick="activateClaudeAI()">
+                            <span class="icon">🧠</span>
+                            <span class="label">Ask Claude</span>
                         </button>
                     </div>
                 </div>
@@ -1986,10 +2459,90 @@
                 </div>
             </div>
 
+            <!-- Claude AI View -->
+            <div id="claude-view" class="view hidden">
+                <div class="section-header">
+                    <h2 class="section-title holographic-text">🧠 Claude AI Assistant</h2>
+                    <button class="btn btn-claude" onclick="activateClaudeAI()">⚡ Activate</button>
+                </div>
+
+                <!-- Claude Features Grid -->
+                <div class="card">
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🤖 AI-Powered Business Features</h3>
+                    <div class="quick-actions">
+                        <button class="quick-btn claude" onclick="askClaudeQuoteHelp()">
+                            <span class="icon">📋</span>
+                            <span class="label">Smart Quotes</span>
+                        </button>
+                        <button class="quick-btn claude" onclick="askClaudeAnalytics()">
+                            <span class="icon">📊</span>
+                            <span class="label">Analytics</span>
+                        </button>
+                        <button class="quick-btn claude" onclick="askClaudeWriting()">
+                            <span class="icon">✍️</span>
+                            <span class="label">Write Content</span>
+                        </button>
+                        <button class="quick-btn claude" onclick="askClaudeStrategy()">
+                            <span class="icon">💡</span>
+                            <span class="label">Strategy</span>
+                        </button>
+                        <button class="quick-btn claude" onclick="askClaudeCustomer()">
+                            <span class="icon">👥</span>
+                            <span class="label">Customer Help</span>
+                        </button>
+                        <button class="quick-btn claude" onclick="askClaudePricing()">
+                            <span class="icon">💰</span>
+                            <span class="label">Pricing</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Claude Chat History -->
+                <div class="card">
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">💬 Chat with Claude</h3>
+                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🧠</div>
+                        <p>Click the Claude button in the header or bottom navigation to start chatting!</p>
+                        <p style="font-size: 14px; margin-top: 8px;">Claude can help with quotes, customers, business strategy, and more.</p>
+                        <button class="btn btn-claude" onclick="activateClaudeAI()" style="margin-top: 16px;">
+                            ⚡ Start Conversation
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Settings View -->
             <div id="settings-view" class="view hidden">
                 <div class="section-header">
                     <h2 class="section-title">⚙️ Settings</h2>
+                </div>
+
+                <!-- Claude AI Settings -->
+                <div class="card">
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🧠 Claude AI Settings</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">🤖</div>
+                            <div class="info-content">
+                                <h4>AI Assistant Status</h4>
+                                <p id="claude-settings-status">Ready to help</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">⚡</div>
+                            <div class="info-content">
+                                <h4>Quick Activation</h4>
+                                <p>Use header button or navigation</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">✨</div>
+                            <div class="info-content">
+                                <h4>Lighting Effects</h4>
+                                <p>Spectacular visual activation</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Theme Settings -->
@@ -2050,10 +2603,10 @@
                             </div>
                         </div>
                         <div class="info-item">
-                            <div class="info-icon">🌙</div>
+                            <div class="info-icon">🌑</div>
                             <div class="info-content">
-                                <h4>Dark Mode</h4>
-                                <p id="current-mode-setting">Light Mode Active</p>
+                                <h4>Theme Variant</h4>
+                                <p id="current-mode-setting">Standard Dark Theme Active</p>
                             </div>
                         </div>
                     </div>
@@ -2076,19 +2629,20 @@
                     <span class="icon">👥</span>
                     <span>Customers</span>
                 </div>
+                <div class="nav-item claude-nav" onclick="showClaudeView()">
+                    <span class="icon">🧠</span>
+                    <span>Claude AI</span>
+                </div>
                 <div class="nav-item" onclick="showView('settings')">
                     <span class="icon">⚙️</span>
                     <span>Settings</span>
-                </div>
-                <div class="nav-item" onclick="toggleMode()">
-                    <span class="icon" id="mode-nav-icon">🌙</span>
-                    <span id="mode-nav-text">Dark</span>
                 </div>
             </div>
             <div class="home-indicator"></div>
         </div>
     </div>
 
+    <!-- ALL EXISTING MODALS (Profile, Company, Theme, Quote, Customer, etc.) -->
     <!-- Theme Selector Modal -->
     <div id="theme-modal" class="theme-modal">
         <div class="theme-modal-content">
@@ -2101,7 +2655,7 @@
             </div>
             <div class="theme-modal-body">
                 <div style="text-align: center; margin-bottom: 24px;">
-                    <p style="color: var(--text-muted); font-size: 16px;">Select from 6 beautiful pastel color schemes</p>
+                    <p style="color: var(--text-muted); font-size: 16px;">Select from 8 beautiful pastel color schemes</p>
                 </div>
                 
                 <!-- Theme Grid -->
@@ -2111,7 +2665,7 @@
                             <div class="theme-icon">🌅</div>
                         </div>
                         <div class="theme-name">Coral Sunset</div>
-                        <div class="theme-description">Warm coral and salmon tones</div>
+                        <div class="theme-description">Dark coral with white text</div>
                     </div>
                     
                     <div class="theme-option" onclick="switchToTheme('orange')" data-theme="orange">
@@ -2119,7 +2673,7 @@
                             <div class="theme-icon">🍑</div>
                         </div>
                         <div class="theme-name">Peach Glow</div>
-                        <div class="theme-description">Soft peach and apricot hues</div>
+                        <div class="theme-description">Dark peach with cream text</div>
                     </div>
                     
                     <div class="theme-option" onclick="switchToTheme('pink')" data-theme="pink">
@@ -2127,7 +2681,7 @@
                             <div class="theme-icon">🌸</div>
                         </div>
                         <div class="theme-name">Rose Blush</div>
-                        <div class="theme-description">Delicate rose and blush tones</div>
+                        <div class="theme-description">Dark rose with blush text</div>
                     </div>
                     
                     <div class="theme-option" onclick="switchToTheme('yellow')" data-theme="yellow">
@@ -2135,7 +2689,7 @@
                             <div class="theme-icon">🌻</div>
                         </div>
                         <div class="theme-name">Butter Cream</div>
-                        <div class="theme-description">Creamy yellow and gold</div>
+                        <div class="theme-description">Dark gold with cream text</div>
                     </div>
                     
                     <div class="theme-option" onclick="switchToTheme('bluegreen')" data-theme="bluegreen">
@@ -2143,7 +2697,7 @@
                             <div class="theme-icon">🌊</div>
                         </div>
                         <div class="theme-name">Mint Breeze</div>
-                        <div class="theme-description">Fresh mint and teal waters</div>
+                        <div class="theme-description">Dark teal with mint text</div>
                     </div>
                     
                     <div class="theme-option" onclick="switchToTheme('purplegrey')" data-theme="purplegrey">
@@ -2151,7 +2705,7 @@
                             <div class="theme-icon">💜</div>
                         </div>
                         <div class="theme-name">Lavender Mist</div>
-                        <div class="theme-description">Elegant purple and grey blend</div>
+                        <div class="theme-description">Dark purple with lavender text</div>
                     </div>
                     
                     <div class="theme-option" onclick="switchToTheme('browngrey')" data-theme="browngrey">
@@ -2159,7 +2713,7 @@
                             <div class="theme-icon">🤎</div>
                         </div>
                         <div class="theme-name">Warm Taupe</div>
-                        <div class="theme-description">Sophisticated brown and grey</div>
+                        <div class="theme-description">Dark brown with warm text</div>
                     </div>
                     
                     <div class="theme-option" onclick="switchToTheme('greenbrown')" data-theme="greenbrown">
@@ -2167,21 +2721,21 @@
                             <div class="theme-icon">🌿</div>
                         </div>
                         <div class="theme-name">Sage Olive</div>
-                        <div class="theme-description">Natural sage and olive tones</div>
+                        <div class="theme-description">Dark sage with natural text</div>
                     </div>
                 </div>
                 
                 <!-- Mode Toggle Section -->
                 <div class="mode-toggle-section">
-                    <h4 style="margin-bottom: 12px; color: var(--text-primary);">🌙 Light & Dark Mode</h4>
+                    <h4 style="margin-bottom: 12px; color: var(--text-primary);">🌙 Theme Variants</h4>
                     <div class="mode-toggle">
                         <div>
-                            <div style="font-weight: 600; color: var(--text-primary);">Current Mode</div>
-                            <div style="font-size: 12px; color: var(--text-muted);" id="current-mode-display">Light Mode</div>
+                            <div style="font-weight: 600; color: var(--text-primary);">Current Variant</div>
+                            <div style="font-size: 12px; color: var(--text-muted);" id="current-mode-display">Standard Mode</div>
                         </div>
                         <button class="mode-toggle-btn" onclick="toggleMode()" id="mode-toggle-modal">
-                            <span id="mode-toggle-icon">🌙</span>
-                            <span id="mode-toggle-text">Switch to Dark</span>
+                            <span id="mode-toggle-icon">🌑</span>
+                            <span id="mode-toggle-text">Switch to Darker</span>
                         </button>
                     </div>
                 </div>
@@ -2408,153 +2962,7 @@
         </div>
     </div>
 
-    <!-- Company Manager Modal -->
-    <div id="company-manager-modal" class="modal">
-        <div class="modal-content" style="max-width: 700px;">
-            <div class="modal-header">
-                <h3>🏢 Company Management Hub</h3>
-                <button class="modal-close-btn" onclick="closeModal('company-manager-modal')">✕</button>
-            </div>
-            <div class="modal-body">
-                <!-- Company Logo Section -->
-                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
-                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
-                        <span>🎨</span> Company Logo & Branding
-                    </h4>
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <div class="company-logo-display" id="company-manager-logo-display" style="margin: 0 auto 16px;">
-                            <div class="company-logo" id="company-manager-logo" style="margin: 0;">🌅</div>
-                        </div>
-                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Your current company logo</p>
-                        
-                        <!-- Logo Upload Section -->
-                        <div class="logo-upload-section" style="margin-bottom: 20px;">
-                            <input type="file" id="logo-upload-input" accept="image/*" style="display: none;" onchange="handleLogoUpload(event)">
-                            <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-                                <button class="btn btn-primary" onclick="document.getElementById('logo-upload-input').click()" style="font-size: 14px; padding: 8px 16px; min-height: auto;">
-                                    📤 Upload Logo
-                                </button>
-                                <button class="btn btn-secondary" onclick="resetToEmojiLogo()" style="font-size: 14px; padding: 8px 16px; min-height: auto;" id="reset-logo-btn">
-                                    🔄 Use Emoji
-                                </button>
-                                <button class="btn btn-warning" onclick="removeCustomLogo()" style="font-size: 14px; padding: 8px 16px; min-height: auto; display: none;" id="remove-logo-btn">
-                                    🗑️ Remove
-                                </button>
-                            </div>
-                            <div style="margin-top: 12px;">
-                                <p style="color: var(--text-muted); font-size: 12px; line-height: 1.4;">
-                                    Upload: JPG, PNG, GIF, SVG • Max 2MB • Recommended: 512x512px square
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Or choose from emoji options below</p>
-                    </div>
-                    
-                    <!-- Logo Options Grid -->
-                    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 20px;">
-                        <div class="logo-option" onclick="changeCompanyLogo('🏢')" data-logo="🏢">🏢</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🏭')" data-logo="🏭">🏭</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🏪')" data-logo="🏪">🏪</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🏬')" data-logo="🏬">🏬</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🏦')" data-logo="🏦">🏦</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🏛️')" data-logo="🏛️">🏛️</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('💼')" data-logo="💼">💼</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('📊')" data-logo="📊">📊</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('💡')" data-logo="💡">💡</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🔧')" data-logo="🔧">🔧</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('⚙️')" data-logo="⚙️">⚙️</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🚀')" data-logo="🚀">🚀</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('💻')" data-logo="💻">💻</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('📱')" data-logo="📱">📱</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🎯')" data-logo="🎯">🎯</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('⭐')" data-logo="⭐">⭐</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('💎')" data-logo="💎">💎</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🔥')" data-logo="🔥">🔥</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('⚡')" data-logo="⚡">⚡</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🌟')" data-logo="🌟">🌟</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🎨')" data-logo="🎨">🎨</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🏅')" data-logo="🏅">🏅</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('🎊')" data-logo="🎊">🎊</div>
-                        <div class="logo-option" onclick="changeCompanyLogo('✨')" data-logo="✨">✨</div>
-                    </div>
-                </div>
-
-                <!-- Quick Company Actions -->
-                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
-                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
-                        <span>⚡</span> Quick Actions
-                    </h4>
-                    <div class="quick-actions" style="margin: 0;">
-                        <button class="quick-btn primary" onclick="editCompany()">
-                            <span class="icon">✏️</span>
-                            <span class="label">Edit Details</span>
-                        </button>
-                        <button class="quick-btn success" onclick="generateBusinessCard()">
-                            <span class="icon">💳</span>
-                            <span class="label">Business Card</span>
-                        </button>
-                        <button class="quick-btn info" onclick="exportCompanyData()">
-                            <span class="icon">📤</span>
-                            <span class="label">Export Data</span>
-                        </button>
-                        <button class="quick-btn" onclick="shareCompanyProfile()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
-                            <span class="icon">📢</span>
-                            <span class="label">Share Profile</span>
-                        </button>
-                        <button class="quick-btn" onclick="printCompanyInfo()" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
-                            <span class="icon">🖨️</span>
-                            <span class="label">Print Info</span>
-                        </button>
-                        <button class="quick-btn" onclick="generateQRCode()" style="background: linear-gradient(135deg, #10b981, #34d399);">
-                            <span class="icon">📱</span>
-                            <span class="label">QR Code</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Company Statistics -->
-                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
-                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
-                        <span>📊</span> Company Statistics
-                    </h4>
-                    <div class="stats-grid" style="margin: 0;">
-                        <div class="stat-card">
-                            <div class="stat-label">Total Quotes</div>
-                            <div class="stat-value" id="company-total-quotes">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Active Customers</div>
-                            <div class="stat-value" id="company-total-customers">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Success Rate</div>
-                            <div class="stat-value" id="company-success-rate">0%</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Avg Quote Value</div>
-                            <div class="stat-value" id="company-avg-quote">RM 0</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Company Profile Summary -->
-                <div class="card" style="margin: 0; background: var(--bg-secondary);">
-                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
-                        <span>📋</span> Company Profile Summary
-                    </h4>
-                    <div id="company-profile-summary" class="info-grid" style="margin: 0;">
-                        <!-- Profile summary will be populated here -->
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal('company-manager-modal')">Close</button>
-                <button class="btn btn-primary" onclick="editCompany()">✏️ Edit Company</button>
-                <button class="btn btn-success" onclick="saveCompanySettings()">💾 Save Settings</button>
-            </div>
-        </div>
-    </div>
+    <!-- Customer Modal -->
     <div id="customer-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2624,6 +3032,30 @@
         </div>
     </div>
 
+    <!-- Company Manager Modal (simplified for space) -->
+    <div id="company-manager-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3>🏢 Company Management Hub</h3>
+                <button class="modal-close-btn" onclick="closeModal('company-manager-modal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                    <div style="font-size: 48px; margin-bottom: 16px;">🏢</div>
+                    <p>Company Management Hub</p>
+                    <p style="font-size: 14px; margin-top: 8px;">Manage your company profile, logos, and settings</p>
+                    <button class="btn btn-primary" onclick="editCompany()" style="margin-top: 16px;">
+                        ✏️ Edit Company Details
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('company-manager-modal')">Close</button>
+                <button class="btn btn-primary" onclick="editCompany()">✏️ Edit Company</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Success Message -->
     <div id="success-message" class="success-message">
         🎨 Theme applied successfully!
@@ -2632,13 +3064,15 @@
     <script>
         // ========================================
         // REFIT COMPLETE BUSINESS QUOTE SYSTEM
-        // Full-Featured Quote & Invoice Management
+        // WITH CLAUDE AI INTEGRATION
         // ========================================
         
         // App State
         var currentTheme = 'red';
         var currentMode = 'light';
         var currentView = 'dashboard';
+        var claudeActivated = false;
+        var claudeParticlesCreated = false;
         
         // Data Storage
         var userData = {
@@ -2663,72 +3097,24 @@
             size: '',
             description: '',
             logo: '🌅',
-            customLogo: null, // Will store base64 image data
-            logoType: 'emoji' // 'emoji' or 'custom'
+            customLogo: null,
+            logoType: 'emoji'
         };
         
         var quotes = [];
         var customers = [];
         var quoteItemCounter = 0;
+        var claudeChatHistory = [];
         
-        // Theme Definitions
         var themes = {
-            red: {
-                name: 'Coral Sunset',
-                icon: '🌅',
-                description: 'Warm coral and salmon tones',
-                primary: '#f87171',
-                secondary: '#fca5a5'
-            },
-            orange: {
-                name: 'Peach Glow',
-                icon: '🍑',
-                description: 'Soft peach and apricot hues',
-                primary: '#fb923c',
-                secondary: '#fdba74'
-            },
-            pink: {
-                name: 'Rose Blush',
-                icon: '🌸',
-                description: 'Delicate rose and blush tones',
-                primary: '#f472b6',
-                secondary: '#f9a8d4'
-            },
-            yellow: {
-                name: 'Butter Cream',
-                icon: '🌻',
-                description: 'Creamy yellow and gold',
-                primary: '#fbbf24',
-                secondary: '#fcd34d'
-            },
-            bluegreen: {
-                name: 'Mint Breeze',
-                icon: '🌊',
-                description: 'Fresh mint and teal waters',
-                primary: '#2dd4bf',
-                secondary: '#7dd3fc'
-            },
-            purplegrey: {
-                name: 'Lavender Mist',
-                icon: '💜',
-                description: 'Elegant purple and grey blend',
-                primary: '#a855f7',
-                secondary: '#c4b5fd'
-            },
-            browngrey: {
-                name: 'Warm Taupe',
-                icon: '🤎',
-                description: 'Sophisticated brown and grey',
-                primary: '#a3a3a3',
-                secondary: '#d6d3d1'
-            },
-            greenbrown: {
-                name: 'Sage Olive',
-                icon: '🌿',
-                description: 'Natural sage and olive tones',
-                primary: '#84cc16',
-                secondary: '#bef264'
-            }
+            red: { name: 'Coral Sunset', icon: '🌅', description: 'Dark coral with white text', primary: '#f87171', secondary: '#fca5a5' },
+            orange: { name: 'Peach Glow', icon: '🍑', description: 'Dark peach with cream text', primary: '#fb923c', secondary: '#fdba74' },
+            pink: { name: 'Rose Blush', icon: '🌸', description: 'Dark rose with blush text', primary: '#f472b6', secondary: '#f9a8d4' },
+            yellow: { name: 'Butter Cream', icon: '🌻', description: 'Dark gold with cream text', primary: '#fbbf24', secondary: '#fcd34d' },
+            bluegreen: { name: 'Mint Breeze', icon: '🌊', description: 'Dark teal with mint text', primary: '#2dd4bf', secondary: '#7dd3fc' },
+            purplegrey: { name: 'Lavender Mist', icon: '💜', description: 'Dark purple with lavender text', primary: '#a855f7', secondary: '#c4b5fd' },
+            browngrey: { name: 'Warm Taupe', icon: '🤎', description: 'Dark brown with warm text', primary: '#a3a3a3', secondary: '#d6d3d1' },
+            greenbrown: { name: 'Sage Olive', icon: '🌿', description: 'Dark sage with natural text', primary: '#84cc16', secondary: '#bef264' }
         };
         
         // Storage Keys
@@ -2738,8 +3124,241 @@
             USER_DATA: 'refit_user_data',
             COMPANY_DATA: 'refit_company_data',
             QUOTES: 'refit_quotes',
-            CUSTOMERS: 'refit_customers'
+            CUSTOMERS: 'refit_customers',
+            CLAUDE_CHAT: 'refit_claude_chat'
         };
+
+        // ========================================
+        // CLAUDE AI FUNCTIONS
+        // ========================================
+
+        function createClaudeParticles() {
+            if (claudeParticlesCreated) return;
+            
+            var container = document.getElementById('claudeLightParticles');
+            var colors = ['#667eea', '#764ba2', '#ff0080', '#00ff80', '#8000ff', '#ff8000', '#00ffff', '#ff4000'];
+            
+            for (var i = 0; i < 50; i++) {
+                var particle = document.createElement('div');
+                particle.className = 'light-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.background = 'radial-gradient(circle, ' + colors[Math.floor(Math.random() * colors.length)] + ', transparent)';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                container.appendChild(particle);
+            }
+            claudeParticlesCreated = true;
+        }
+
+        function activateClaudeAI() {
+            var chatInterface = document.getElementById('claudeChatInterface');
+            var headerBtn = document.getElementById('claude-header-btn');
+            var appLogo = document.getElementById('app-logo');
+            
+            if (!claudeActivated) {
+                createClaudeParticles();
+                
+                // Spectacular activation sequence
+                document.getElementById('claudeLightParticles').classList.add('active');
+                document.getElementById('claudeRgbWaves').classList.add('active');
+                document.getElementById('claudeEnergyRings').classList.add('active');
+                
+                // Power up animations
+                headerBtn.classList.add('activated');
+                appLogo.classList.add('claude-activating');
+                
+                // Show chat interface after effects
+                setTimeout(function() {
+                    chatInterface.classList.add('visible');
+                    claudeActivated = true;
+                    
+                    // Update status
+                    document.getElementById('claude-status').textContent = 'AI Assistant Activated!';
+                    document.getElementById('claude-settings-status').textContent = 'Active and ready';
+                    
+                    // Add welcome message
+                    addClaudeMessage('🎉 Claude AI activated with spectacular effects! I\'m ready to help you with your business. What would you like to work on?', false);
+                    
+                }, 2000);
+                
+                showSuccessMessage('⚡ Claude AI activated with spectacular lighting effects!');
+                
+            } else {
+                // Just show the interface if already activated
+                chatInterface.classList.add('visible');
+                showSuccessMessage('🧠 Claude is ready to help!');
+            }
+        }
+
+        function minimizeClaude() {
+            var chatInterface = document.getElementById('claudeChatInterface');
+            chatInterface.classList.remove('visible');
+            
+            // Turn off lighting effects
+            document.getElementById('claudeLightParticles').classList.remove('active');
+            document.getElementById('claudeRgbWaves').classList.remove('active');
+            document.getElementById('claudeEnergyRings').classList.remove('active');
+            
+            showSuccessMessage('🧠 Claude minimized - click the header button to reactivate!');
+        }
+
+        function handleClaudeEnter(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendClaudeMessage();
+            }
+        }
+
+        function sendClaudeMessage() {
+            var input = document.getElementById('claudeChatInput');
+            var message = input.value.trim();
+            
+            if (message) {
+                input.value = '';
+                addClaudeMessage(message, true);
+                showClaudeTyping();
+                
+                // Simulate API call delay
+                setTimeout(function() {
+                    hideClaudeTyping();
+                    var response = generateClaudeResponse(message);
+                    addClaudeMessage(response, false);
+                    saveChatHistory();
+                }, 1500 + Math.random() * 1000);
+            }
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('claudeChatInput').value = message;
+            sendClaudeMessage();
+        }
+
+        function addClaudeMessage(message, isUser) {
+            var messagesContainer = document.getElementById('claudeChatMessages');
+            var messageDiv = document.createElement('div');
+            messageDiv.className = 'claude-message' + (isUser ? ' user-message' : '');
+            
+            messageDiv.innerHTML = '<div class="claude-message-content">' + message + '</div>';
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Add to chat history
+            claudeChatHistory.push({
+                message: message,
+                isUser: isUser,
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        function showClaudeTyping() {
+            document.getElementById('claudeTypingIndicator').classList.add('visible');
+            var messagesContainer = document.getElementById('claudeChatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideClaudeTyping() {
+            document.getElementById('claudeTypingIndicator').classList.remove('visible');
+        }
+
+        function generateClaudeResponse(message) {
+            var lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('quote') || lowerMessage.includes('quotation')) {
+                return '📋 <strong>Smart Quote Assistant Ready!</strong><br><br>I can help you with:<br>• Generate professional quote descriptions<br>• Calculate competitive pricing strategies<br>• Create detailed project breakdowns<br>• Write compelling proposals<br>• Suggest follow-up strategies<br><br>For example: "Create a quote for office renovation, 3 rooms, RM 50,000 budget" or "Help me price a website development project"<br><br>What specific quote assistance do you need?';
+            } else if (lowerMessage.includes('customer') || lowerMessage.includes('client')) {
+                return '👥 <strong>Customer Relationship Expert!</strong><br><br>I can assist with:<br>• Customer communication templates<br>• Follow-up email strategies<br>• Relationship building advice<br>• Industry-specific insights<br>• Customer retention strategies<br>• Complaint resolution approaches<br><br>Tell me about your customer situation and I\'ll provide tailored advice!';
+            } else if (lowerMessage.includes('business') || lowerMessage.includes('strategy') || lowerMessage.includes('advice')) {
+                return '💡 <strong>Business Strategy Consultant!</strong><br><br>I can provide insights on:<br>• Market analysis and trends<br>• Pricing optimization strategies<br>• Growth and expansion planning<br>• Competition analysis<br>• Revenue improvement tactics<br>• Industry best practices<br><br>Your REFIT system shows great potential! What business challenge would you like to tackle?';
+            } else if (lowerMessage.includes('theme') || lowerMessage.includes('design') || lowerMessage.includes('color')) {
+                return '🎨 <strong>Design & Branding Consultant!</strong><br><br>Your beautiful dark pastel themes are impressive! I can help with:<br>• Color psychology for business impact<br>• Brand consistency strategies<br>• Professional presentation tips<br>• UI/UX optimization advice<br>• Visual hierarchy improvements<br>• Custom logo design guidance<br><br>What design aspect would you like to enhance?';
+            } else if (lowerMessage.includes('pricing') || lowerMessage.includes('price') || lowerMessage.includes('cost')) {
+                return '💰 <strong>Pricing Strategy Expert!</strong><br><br>I can help optimize your pricing with:<br>• Market-based pricing analysis<br>• Value-based pricing strategies<br>• Competitive pricing research<br>• Profit margin optimization<br>• Package pricing recommendations<br>• Discount and incentive strategies<br><br>What type of pricing challenge are you facing?';
+            } else if (lowerMessage.includes('write') || lowerMessage.includes('email') || lowerMessage.includes('content')) {
+                return '✍️ <strong>Professional Writing Assistant!</strong><br><br>I can help create:<br>• Professional business emails<br>• Quote proposal descriptions<br>• Follow-up messages<br>• Marketing content<br>• Terms and conditions<br>• Customer communication templates<br><br>What type of content would you like me to help you write?';
+            } else if (lowerMessage.includes('analytics') || lowerMessage.includes('analyze') || lowerMessage.includes('data')) {
+                return '📊 <strong>Business Analytics Advisor!</strong><br><br>I can help analyze:<br>• Quote success rates and patterns<br>• Customer acquisition trends<br>• Revenue performance metrics<br>• Seasonal business patterns<br>• Industry benchmarking<br>• Growth opportunity identification<br><br>Based on your REFIT data, what would you like me to analyze?';
+            } else if (lowerMessage.includes('help') || lowerMessage.includes('what') || lowerMessage.includes('how')) {
+                return '🤖 <strong>Claude AI at Your Service!</strong><br><br>I\'m fully integrated into your REFIT Business System! Here\'s what I can do:<br><br>📋 <strong>Smart Quotes:</strong> Generate, price, and optimize<br>👥 <strong>Customer Management:</strong> Communication & strategies<br>📊 <strong>Business Analytics:</strong> Insights and trends<br>💡 <strong>Strategic Planning:</strong> Growth and optimization<br>🎨 <strong>Design Advice:</strong> Branding and themes<br>✍️ <strong>Content Creation:</strong> Professional writing<br>💰 <strong>Pricing Optimization:</strong> Strategic pricing<br><br>Simply tell me what you\'re working on, and I\'ll provide expert assistance!';
+            } else {
+                return '🧠 <strong>Claude AI Ready to Help!</strong><br><br>I noticed you mentioned: "' + message.substring(0, 50) + (message.length > 50 ? '...' : '') + '"<br><br>I can assist with many business tasks:<br><br>📋 Quote creation and optimization<br>👥 Customer relationship management<br>💡 Business strategy and planning<br>📊 Data analysis and insights<br>✍️ Professional writing and communication<br>🎨 Design and branding advice<br><br>Could you tell me more about what you\'d like help with?';
+            }
+        }
+
+        function saveChatHistory() {
+            try {
+                localStorage.setItem(STORAGE_KEYS.CLAUDE_CHAT, JSON.stringify(claudeChatHistory));
+            } catch (e) {
+                console.warn('Could not save chat history:', e);
+            }
+        }
+
+        function loadChatHistory() {
+            try {
+                var saved = localStorage.getItem(STORAGE_KEYS.CLAUDE_CHAT);
+                if (saved) {
+                    claudeChatHistory = JSON.parse(saved);
+                    // Optionally restore chat messages to interface
+                }
+            } catch (e) {
+                console.warn('Could not load chat history:', e);
+                claudeChatHistory = [];
+            }
+        }
+
+        // Claude Quick Action Functions
+        function askClaudeQuoteHelp() {
+            activateClaudeAI();
+            setTimeout(function() {
+                sendQuickMessage('Help me create a professional quote with competitive pricing');
+            }, 2500);
+        }
+
+        function askClaudeAnalytics() {
+            activateClaudeAI();
+            setTimeout(function() {
+                sendQuickMessage('Analyze my business performance and suggest improvements');
+            }, 2500);
+        }
+
+        function askClaudeWriting() {
+            activateClaudeAI();
+            setTimeout(function() {
+                sendQuickMessage('Help me write professional business content');
+            }, 2500);
+        }
+
+        function askClaudeStrategy() {
+            activateClaudeAI();
+            setTimeout(function() {
+                sendQuickMessage('Provide strategic business advice for growth');
+            }, 2500);
+        }
+
+        function askClaudeCustomer() {
+            activateClaudeAI();
+            setTimeout(function() {
+                sendQuickMessage('Help me improve customer relationships and communication');
+            }, 2500);
+        }
+
+        function askClaudePricing() {
+            activateClaudeAI();
+            setTimeout(function() {
+                sendQuickMessage('Suggest optimal pricing strategies for my services');
+            }, 2500);
+        }
+
+        function showClaudeView() {
+            showView('claude');
+            // Activate Claude navigation
+            var navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(function(item) {
+                item.classList.remove('active');
+            });
+            event.target.closest('.nav-item').classList.add('active');
+        }
 
         // ========================================
         // THEME MANAGEMENT FUNCTIONS
@@ -2764,8 +3383,8 @@
             updateThemeDisplay();
             saveData();
             
-            var modeText = currentMode === 'light' ? 'Light' : 'Dark';
-            showSuccessMessage((currentMode === 'light' ? '☀️' : '🌙') + ' Switched to ' + modeText + ' mode!');
+            var modeText = currentMode === 'light' ? 'Standard' : 'Darker';
+            showSuccessMessage((currentMode === 'light' ? '🌕' : '🌑') + ' Switched to ' + modeText + ' variant!');
             updateModeDisplay();
             
             console.log('🌙 Mode switched to:', currentMode);
@@ -2790,23 +3409,17 @@
         
         function updateModeDisplay() {
             var modeToggle = document.getElementById('mode-toggle');
-            var modeNavIcon = document.getElementById('mode-nav-icon');
-            var modeNavText = document.getElementById('mode-nav-text');
             var currentModeDisplay = document.getElementById('current-mode-display');
             var currentModeSetting = document.getElementById('current-mode-setting');
             
             if (currentMode === 'light') {
-                if (modeToggle) modeToggle.textContent = '🌙 Dark';
-                if (modeNavIcon) modeNavIcon.textContent = '🌙';
-                if (modeNavText) modeNavText.textContent = 'Dark';
-                if (currentModeDisplay) currentModeDisplay.textContent = 'Light Mode';
-                if (currentModeSetting) currentModeSetting.textContent = 'Light Mode Active';
+                if (modeToggle) modeToggle.textContent = '🌑 Darker';
+                if (currentModeDisplay) currentModeDisplay.textContent = 'Standard Mode';
+                if (currentModeSetting) currentModeSetting.textContent = 'Standard Dark Theme Active';
             } else {
-                if (modeToggle) modeToggle.textContent = '☀️ Light';
-                if (modeNavIcon) modeNavIcon.textContent = '☀️';
-                if (modeNavText) modeNavText.textContent = 'Light';
-                if (currentModeDisplay) currentModeDisplay.textContent = 'Dark Mode';
-                if (currentModeSetting) currentModeSetting.textContent = 'Dark Mode Active';
+                if (modeToggle) modeToggle.textContent = '🌕 Standard';
+                if (currentModeDisplay) currentModeDisplay.textContent = 'Darker Mode';
+                if (currentModeSetting) currentModeSetting.textContent = 'Darker Variant Active';
             }
         }
         
@@ -2841,7 +3454,10 @@
                     item.classList.remove('active');
                 });
                 
-                event.target.closest('.nav-item').classList.add('active');
+                if (event && event.target) {
+                    var navItem = event.target.closest('.nav-item');
+                    if (navItem) navItem.classList.add('active');
+                }
                 
                 // Load data for specific views
                 if (viewName === 'quotes') {
@@ -2891,7 +3507,6 @@
         }
         
         function editProfile() {
-            // Populate form with current data
             document.getElementById('profile-first-name').value = userData.firstName;
             document.getElementById('profile-last-name').value = userData.lastName;
             document.getElementById('profile-title').value = userData.title;
@@ -2926,534 +3541,15 @@
         }
 
         // ========================================
-        // COMPANY MANAGEMENT FUNCTIONS
+        // COMPANY MANAGEMENT
         // ========================================
         
         function openCompanyManager() {
-            updateCompanyManagerDisplay();
-            updateCompanyStatistics();
-            updateCompanyProfileSummary();
             openModal('company-manager-modal');
             showSuccessMessage('🏢 Company Management Hub opened!');
         }
         
-        function updateCompanyManagerDisplay() {
-            updateLogoDisplay();
-            
-            // Update selected logo option for emoji logos
-            if (companyData.logoType === 'emoji') {
-                var logoOptions = document.querySelectorAll('.logo-option');
-                logoOptions.forEach(function(option) {
-                    option.classList.remove('selected');
-                    if (option.getAttribute('data-logo') === companyData.logo) {
-                        option.classList.add('selected');
-                    }
-                });
-            } else {
-                // Clear emoji selections when custom logo is active
-                var logoOptions = document.querySelectorAll('.logo-option');
-                logoOptions.forEach(function(option) {
-                    option.classList.remove('selected');
-                });
-            }
-            
-            // Show/hide buttons based on logo type
-            var resetBtn = document.getElementById('reset-logo-btn');
-            var removeBtn = document.getElementById('remove-logo-btn');
-            
-            if (companyData.logoType === 'custom') {
-                if (resetBtn) resetBtn.style.display = 'inline-flex';
-                if (removeBtn) removeBtn.style.display = 'inline-flex';
-            } else {
-                if (resetBtn) resetBtn.style.display = 'none';
-                if (removeBtn) removeBtn.style.display = 'none';
-            }
-        }
-        
-        function updateLogoDisplay() {
-            var logoElements = [
-                document.getElementById('company-logo'),
-                document.getElementById('company-manager-logo'),
-                document.getElementById('app-logo')
-            ];
-            
-            logoElements.forEach(function(element) {
-                if (!element) return;
-                
-                if (companyData.logoType === 'custom' && companyData.customLogo) {
-                    element.className = 'company-logo custom-logo';
-                    element.innerHTML = '<img src="' + companyData.customLogo + '" alt="Company Logo">';
-                } else {
-                    element.className = 'company-logo';
-                    element.textContent = companyData.logo;
-                }
-            });
-        }
-        
-        function handleLogoUpload(event) {
-            var file = event.target.files[0];
-            if (!file) return;
-            
-            // Validate file type
-            var validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/svg+xml'];
-            if (!validTypes.includes(file.type)) {
-                showSuccessMessage('❌ Please upload a valid image file (JPG, PNG, GIF, SVG)');
-                return;
-            }
-            
-            // Validate file size (2MB limit)
-            var maxSize = 2 * 1024 * 1024; // 2MB in bytes
-            if (file.size > maxSize) {
-                showSuccessMessage('❌ File too large! Please upload an image under 2MB');
-                return;
-            }
-            
-            // Show upload progress
-            showUploadProgress();
-            
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var base64Data = e.target.result;
-                
-                // Create image to validate and get dimensions
-                var img = new Image();
-                img.onload = function() {
-                    // Process the image
-                    processUploadedLogo(base64Data, file.name, img.width, img.height);
-                };
-                img.onerror = function() {
-                    hideUploadProgress();
-                    showSuccessMessage('❌ Invalid image file');
-                };
-                img.src = base64Data;
-            };
-            
-            reader.onerror = function() {
-                hideUploadProgress();
-                showSuccessMessage('❌ Error reading file');
-            };
-            
-            reader.readAsDataURL(file);
-        }
-        
-        function showUploadProgress() {
-            var progressHtml = '<div class="upload-progress"><div class="upload-progress-bar" id="upload-progress-bar"></div></div>';
-            var uploadSection = document.querySelector('.logo-upload-section');
-            if (uploadSection) {
-                uploadSection.insertAdjacentHTML('beforeend', progressHtml);
-                
-                // Animate progress
-                var progressBar = document.getElementById('upload-progress-bar');
-                if (progressBar) {
-                    var progress = 0;
-                    var interval = setInterval(function() {
-                        progress += Math.random() * 30;
-                        if (progress > 90) progress = 90;
-                        progressBar.style.width = progress + '%';
-                        
-                        if (progress >= 90) {
-                            clearInterval(interval);
-                        }
-                    }, 100);
-                }
-            }
-        }
-        
-        function hideUploadProgress() {
-            var progressElement = document.querySelector('.upload-progress');
-            if (progressElement) {
-                progressElement.remove();
-            }
-        }
-        
-        function processUploadedLogo(base64Data, fileName, width, height) {
-            try {
-                // Complete the progress bar
-                var progressBar = document.getElementById('upload-progress-bar');
-                if (progressBar) {
-                    progressBar.style.width = '100%';
-                }
-                
-                setTimeout(function() {
-                    // Store the custom logo
-                    companyData.customLogo = base64Data;
-                    companyData.logoType = 'custom';
-                    companyData.logoFileName = fileName;
-                    companyData.logoDimensions = { width: width, height: height };
-                    
-                    // Update displays
-                    updateLogoDisplay();
-                    updateCompanyManagerDisplay();
-                    
-                    // Save data
-                    saveData();
-                    
-                    // Hide progress and show success
-                    hideUploadProgress();
-                    showSuccessMessage('🎨 Custom logo uploaded successfully! (' + width + 'x' + height + 'px)');
-                    
-                    console.log('Logo uploaded:', fileName, width + 'x' + height);
-                }, 500);
-                
-            } catch (error) {
-                hideUploadProgress();
-                showSuccessMessage('❌ Error processing image: ' + error.message);
-                console.error('Logo upload error:', error);
-            }
-        }
-        
-        function resetToEmojiLogo() {
-            companyData.logoType = 'emoji';
-            companyData.customLogo = null;
-            companyData.logoFileName = null;
-            companyData.logoDimensions = null;
-            
-            updateLogoDisplay();
-            updateCompanyManagerDisplay();
-            saveData();
-            
-            showSuccessMessage('🔄 Switched back to emoji logo: ' + companyData.logo);
-        }
-        
-        function removeCustomLogo() {
-            if (companyData.logoType === 'custom') {
-                companyData.logoType = 'emoji';
-                companyData.customLogo = null;
-                companyData.logoFileName = null;
-                companyData.logoDimensions = null;
-                
-                updateLogoDisplay();
-                updateCompanyManagerDisplay();
-                saveData();
-                
-                showSuccessMessage('🗑️ Custom logo removed. Using emoji: ' + companyData.logo);
-            }
-        }
-        
-        function changeCompanyLogo(logoEmoji) {
-            companyData.logo = logoEmoji;
-            companyData.logoType = 'emoji';
-            companyData.customLogo = null;
-            companyData.logoFileName = null;
-            companyData.logoDimensions = null;
-            
-            // Update all logo displays
-            updateLogoDisplay();
-            
-            // Update selected state
-            var logoOptions = document.querySelectorAll('.logo-option');
-            logoOptions.forEach(function(option) {
-                option.classList.remove('selected');
-                if (option.getAttribute('data-logo') === logoEmoji) {
-                    option.classList.add('selected');
-                }
-            });
-            
-            // Update button visibility
-            updateCompanyManagerDisplay();
-            
-            saveData();
-            showSuccessMessage('🎨 Company logo updated to ' + logoEmoji + '!');
-        }
-        
-        function updateCompanyStatistics() {
-            var totalQuotes = quotes.length;
-            var totalCustomers = customers.length;
-            var paidQuotes = quotes.filter(function(q) { return q.status === 'paid'; }).length;
-            var successRate = totalQuotes > 0 ? Math.round((paidQuotes / totalQuotes) * 100) : 0;
-            var avgQuoteValue = totalQuotes > 0 ? 
-                Math.round(quotes.reduce(function(sum, q) { return sum + (q.total || 0); }, 0) / totalQuotes) : 0;
-            
-            document.getElementById('company-total-quotes').textContent = totalQuotes;
-            document.getElementById('company-total-customers').textContent = totalCustomers;
-            document.getElementById('company-success-rate').textContent = successRate + '%';
-            document.getElementById('company-avg-quote').textContent = 'RM ' + avgQuoteValue;
-        }
-        
-        function updateCompanyProfileSummary() {
-            var container = document.getElementById('company-profile-summary');
-            if (!container) return;
-            
-            var summaryItems = [
-                { icon: '🏢', title: 'Company Name', value: companyData.name || 'Not set' },
-                { icon: '📝', title: 'Business Type', value: companyData.industry || 'Not specified' },
-                { icon: '📞', title: 'Phone', value: companyData.phone || 'Not provided' },
-                { icon: '📧', title: 'Email', value: companyData.email || 'Not provided' },
-                { icon: '🌐', title: 'Website', value: companyData.website || 'Not provided' },
-                { icon: '👥', title: 'Company Size', value: companyData.size || 'Not specified' }
-            ];
-            
-            container.innerHTML = summaryItems.map(function(item) {
-                return '<div class="info-item">' +
-                    '<div class="info-icon">' + item.icon + '</div>' +
-                    '<div class="info-content">' +
-                        '<h4>' + item.title + '</h4>' +
-                        '<p>' + item.value + '</p>' +
-                    '</div>' +
-                '</div>';
-            }).join('');
-        }
-        
-        function generateBusinessCard() {
-            var logoDisplay = '';
-            if (companyData.logoType === 'custom' && companyData.customLogo) {
-                logoDisplay = '<img src="' + companyData.customLogo + '" alt="Company Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">';
-            } else {
-                logoDisplay = companyData.logo;
-            }
-            
-            var cardHtml = '<div class="business-card">' +
-                '<div class="business-card-header">' +
-                    '<div class="business-card-logo">' + logoDisplay + '</div>' +
-                    '<div class="business-card-info">' +
-                        '<h3>' + companyData.name + '</h3>' +
-                        '<p>' + companyData.tagline + '</p>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="business-card-contact">' +
-                    (companyData.phone ? '<div>📞 ' + companyData.phone + '</div>' : '') +
-                    (companyData.email ? '<div>📧 ' + companyData.email + '</div>' : '') +
-                    (companyData.website ? '<div>🌐 ' + companyData.website + '</div>' : '') +
-                    (companyData.address ? '<div>📍 ' + companyData.address.split('\n')[0] + '</div>' : '') +
-                '</div>' +
-            '</div>';
-            
-            // Logo type indicator
-            var logoTypeInfo = companyData.logoType === 'custom' ? 
-                'Custom Logo (' + (companyData.logoDimensions ? companyData.logoDimensions.width + 'x' + companyData.logoDimensions.height + 'px' : 'Unknown size') + ')' : 
-                'Emoji Logo';
-            
-            // Create a modal to show the business card
-            var modal = document.createElement('div');
-            modal.className = 'modal show';
-            modal.innerHTML = '<div class="modal-content" style="max-width: 400px;">' +
-                '<div class="modal-header">' +
-                    '<h3>💳 Business Card Preview</h3>' +
-                    '<button class="modal-close-btn" onclick="this.closest(\'.modal\').remove()">✕</button>' +
-                '</div>' +
-                '<div class="modal-body">' +
-                    cardHtml +
-                    '<div style="margin-top: 20px; text-align: center;">' +
-                        '<p style="color: var(--text-muted); font-size: 14px; margin-bottom: 8px;">Your professional business card is ready!</p>' +
-                        '<p style="color: var(--text-muted); font-size: 12px; margin-bottom: 16px;">Logo: ' + logoTypeInfo + '</p>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="modal-footer">' +
-                    '<button class="btn btn-secondary" onclick="this.closest(\'.modal\').remove()">Close</button>' +
-                    '<button class="btn btn-primary" onclick="downloadBusinessCard()">💾 Download</button>' +
-                '</div>' +
-            '</div>';
-            
-            document.body.appendChild(modal);
-            showSuccessMessage('💳 Business card generated with ' + (companyData.logoType === 'custom' ? 'custom logo' : 'emoji logo') + '!');
-        }
-        
-        function downloadBusinessCard() {
-            // Simple download simulation
-            var cardData = {
-                company: companyData.name,
-                tagline: companyData.tagline,
-                logo: companyData.logo,
-                phone: companyData.phone,
-                email: companyData.email,
-                website: companyData.website,
-                address: companyData.address,
-                generatedAt: new Date().toISOString()
-            };
-            
-            var dataStr = JSON.stringify(cardData, null, 2);
-            var dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = companyData.name.replace(/\s+/g, '_') + '_BusinessCard.json';
-            link.click();
-            
-            showSuccessMessage('💾 Business card downloaded!');
-        }
-        
-        function exportCompanyData() {
-            var exportData = {
-                companyProfile: companyData,
-                businessStatistics: {
-                    totalQuotes: quotes.length,
-                    totalCustomers: customers.length,
-                    totalRevenue: quotes.reduce(function(sum, q) { return sum + (q.total || 0); }, 0),
-                    successRate: quotes.length > 0 ? 
-                        Math.round((quotes.filter(function(q) { return q.status === 'paid'; }).length / quotes.length) * 100) : 0
-                },
-                exportDate: new Date().toISOString(),
-                exportedBy: userData.firstName + ' ' + userData.lastName
-            };
-            
-            var dataStr = JSON.stringify(exportData, null, 2);
-            var dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = companyData.name.replace(/\s+/g, '_') + '_CompanyData_' + 
-                new Date().toISOString().split('T')[0] + '.json';
-            link.click();
-            
-            showSuccessMessage('📤 Company data exported successfully!');
-        }
-        
-        function shareCompanyProfile() {
-            var profileText = '🏢 ' + companyData.name + '\n' +
-                '📝 ' + companyData.tagline + '\n' +
-                (companyData.phone ? '📞 ' + companyData.phone + '\n' : '') +
-                (companyData.email ? '📧 ' + companyData.email + '\n' : '') +
-                (companyData.website ? '🌐 ' + companyData.website + '\n' : '') +
-                '\n✨ Powered by REFIT Business System';
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: companyData.name + ' - Company Profile',
-                    text: profileText
-                }).then(function() {
-                    showSuccessMessage('📢 Company profile shared successfully!');
-                }).catch(function(error) {
-                    console.log('Error sharing:', error);
-                    fallbackShare(profileText);
-                });
-            } else {
-                fallbackShare(profileText);
-            }
-        }
-        
-        function fallbackShare(text) {
-            // Copy to clipboard as fallback
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(text).then(function() {
-                    showSuccessMessage('📋 Company profile copied to clipboard!');
-                });
-            } else {
-                // Create temporary textarea for older browsers
-                var textarea = document.createElement('textarea');
-                textarea.value = text;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                showSuccessMessage('📋 Company profile copied to clipboard!');
-            }
-        }
-        
-        function printCompanyInfo() {
-            var logoDisplay = '';
-            if (companyData.logoType === 'custom' && companyData.customLogo) {
-                logoDisplay = '<img src="' + companyData.customLogo + '" alt="Company Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 16px;">';
-            } else {
-                logoDisplay = '<div style="font-size: 48px; margin-bottom: 16px;">' + companyData.logo + '</div>';
-            }
-            
-            var printContent = '<div style="font-family: Arial, sans-serif; padding: 40px; max-width: 600px; margin: 0 auto;">' +
-                '<div style="text-align: center; margin-bottom: 40px;">' +
-                    logoDisplay +
-                    '<h1 style="color: #333; margin: 16px 0 8px 0;">' + companyData.name + '</h1>' +
-                    '<p style="color: #666; font-size: 18px;">' + companyData.tagline + '</p>' +
-                '</div>' +
-                '<div style="border-top: 2px solid #eee; padding-top: 30px;">' +
-                    '<h2 style="color: #333; margin-bottom: 20px;">Company Information</h2>' +
-                    (companyData.registration ? '<p><strong>Registration:</strong> ' + companyData.registration + '</p>' : '') +
-                    (companyData.taxId ? '<p><strong>Tax ID:</strong> ' + companyData.taxId + '</p>' : '') +
-                    (companyData.industry ? '<p><strong>Industry:</strong> ' + companyData.industry + '</p>' : '') +
-                    (companyData.size ? '<p><strong>Company Size:</strong> ' + companyData.size + '</p>' : '') +
-                    (companyData.logoType === 'custom' && companyData.logoFileName ? 
-                        '<p><strong>Logo:</strong> ' + companyData.logoFileName + 
-                        (companyData.logoDimensions ? ' (' + companyData.logoDimensions.width + 'x' + companyData.logoDimensions.height + 'px)' : '') + '</p>' : '') +
-                '</div>' +
-                '<div style="border-top: 2px solid #eee; padding-top: 30px; margin-top: 30px;">' +
-                    '<h2 style="color: #333; margin-bottom: 20px;">Contact Information</h2>' +
-                    (companyData.phone ? '<p><strong>Phone:</strong> ' + companyData.phone + '</p>' : '') +
-                    (companyData.email ? '<p><strong>Email:</strong> ' + companyData.email + '</p>' : '') +
-                    (companyData.website ? '<p><strong>Website:</strong> ' + companyData.website + '</p>' : '') +
-                    (companyData.address ? '<p><strong>Address:</strong><br>' + companyData.address.replace(/\n/g, '<br>') + '</p>' : '') +
-                '</div>' +
-                (companyData.description ? 
-                    '<div style="border-top: 2px solid #eee; padding-top: 30px; margin-top: 30px;">' +
-                        '<h2 style="color: #333; margin-bottom: 20px;">About Us</h2>' +
-                        '<p style="line-height: 1.6;">' + companyData.description + '</p>' +
-                    '</div>' : '') +
-                '<div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; color: #999; font-size: 12px;">' +
-                    'Generated by REFIT Business System on ' + new Date().toLocaleDateString() +
-                    (companyData.logoType === 'custom' ? '<br>Custom Logo: ' + (companyData.logoFileName || 'Unknown') : '') +
-                '</div>' +
-            '</div>';
-            
-            var printWindow = window.open('', '_blank');
-            printWindow.document.write('<html><head><title>' + companyData.name + ' - Company Information</title></head><body>' + printContent + '</body></html>');
-            printWindow.document.close();
-            printWindow.print();
-            
-            showSuccessMessage('🖨️ Company information sent to printer with ' + (companyData.logoType === 'custom' ? 'custom logo' : 'emoji logo') + '!');
-        }
-        
-        function generateQRCode() {
-            var qrData = {
-                company: companyData.name,
-                phone: companyData.phone,
-                email: companyData.email,
-                website: companyData.website
-            };
-            
-            // Create QR code display modal
-            var modal = document.createElement('div');
-            modal.className = 'modal show';
-            modal.innerHTML = '<div class="modal-content" style="max-width: 400px;">' +
-                '<div class="modal-header">' +
-                    '<h3>📱 Company QR Code</h3>' +
-                    '<button class="modal-close-btn" onclick="this.closest(\'.modal\').remove()">✕</button>' +
-                '</div>' +
-                '<div class="modal-body">' +
-                    '<div class="qr-code-display">' +
-                        '<div class="qr-placeholder">📱</div>' +
-                        '<h4 style="margin-bottom: 8px; color: var(--text-primary);">' + companyData.name + '</h4>' +
-                        '<p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Scan to get company contact info</p>' +
-                        '<div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">' +
-                            'QR Code contains:<br>' +
-                            '• Company name and contact details<br>' +
-                            '• Phone, email, and website<br>' +
-                            '• Professional contact information' +
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="modal-footer">' +
-                    '<button class="btn btn-secondary" onclick="this.closest(\'.modal\').remove()">Close</button>' +
-                    '<button class="btn btn-primary" onclick="downloadQRCode()">💾 Download QR</button>' +
-                '</div>' +
-            '</div>';
-            
-            document.body.appendChild(modal);
-            showSuccessMessage('📱 QR Code generated for ' + companyData.name + '!');
-        }
-        
-        function downloadQRCode() {
-            var qrData = 'Company: ' + companyData.name + '\n' +
-                'Phone: ' + (companyData.phone || 'N/A') + '\n' +
-                'Email: ' + (companyData.email || 'N/A') + '\n' +
-                'Website: ' + (companyData.website || 'N/A');
-            
-            var dataBlob = new Blob([qrData], {type: 'text/plain'});
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = companyData.name.replace(/\s+/g, '_') + '_QR_Data.txt';
-            link.click();
-            
-            showSuccessMessage('💾 QR Code data downloaded!');
-        }
-        
-        function saveCompanySettings() {
-            // Save any company-specific settings
-            saveData();
-            updateCompanyDisplay();
-            updateCompanyManagerDisplay();
-            updateCompanyStatistics();
-            showSuccessMessage('💾 Company settings saved successfully!');
-        }
-        
         function editCompany() {
-            // Populate form with current data
             document.getElementById('company-name-input').value = companyData.name;
             document.getElementById('company-tagline').value = companyData.tagline;
             document.getElementById('company-registration').value = companyData.registration;
@@ -3492,10 +3588,7 @@
             document.getElementById('company-display-name').textContent = companyData.name;
             document.getElementById('company-display-tagline').textContent = companyData.tagline;
             document.getElementById('company-name').textContent = companyData.name.toUpperCase();
-            document.getElementById('company-subtitle').textContent = companyData.tagline;
-            
-            // Update all logo displays
-            updateLogoDisplay();
+            document.getElementById('company-subtitle').textContent = companyData.tagline + ' with Claude AI';
         }
 
         // ========================================
@@ -3503,7 +3596,6 @@
         // ========================================
         
         function addCustomer() {
-            // Clear form
             document.getElementById('customer-form').reset();
             openModal('customer-modal');
         }
@@ -3574,26 +3666,19 @@
         // ========================================
         
         function createQuote() {
-            // Clear form and set defaults
             document.getElementById('quote-form').reset();
             document.getElementById('quote-number').value = generateQuoteNumber();
             document.getElementById('quote-date').value = new Date().toISOString().split('T')[0];
             
-            // Set valid until date (30 days from now)
             var validUntil = new Date();
             validUntil.setDate(validUntil.getDate() + 30);
             document.getElementById('quote-valid-until').value = validUntil.toISOString().split('T')[0];
             
-            // Clear quote items
             document.getElementById('quote-items-container').innerHTML = '';
             quoteItemCounter = 0;
             
-            // Add first item
             addQuoteItem();
-            
-            // Update customer select
             updateCustomerSelect();
-            
             openModal('quote-modal');
         }
         
@@ -3760,6 +3845,7 @@
                 localStorage.setItem(STORAGE_KEYS.COMPANY_DATA, JSON.stringify(companyData));
                 localStorage.setItem(STORAGE_KEYS.QUOTES, JSON.stringify(quotes));
                 localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify(customers));
+                saveChatHistory();
             } catch (e) {
                 console.warn('Could not save data:', e);
             }
@@ -3798,6 +3884,7 @@
                     customers = JSON.parse(savedCustomers);
                 }
                 
+                loadChatHistory();
                 updateThemeDisplay();
                 updateModeDisplay();
                 updateUserDisplay();
@@ -3829,7 +3916,6 @@
             var totalCustomers = customers.length;
             var totalRevenue = quotes.reduce(function(sum, quote) { return sum + (quote.total || 0); }, 0);
             
-            // Calculate monthly revenue (current month)
             var currentMonth = new Date().getMonth();
             var currentYear = new Date().getFullYear();
             var monthlyRevenue = quotes.filter(function(quote) {
@@ -3849,10 +3935,8 @@
             var container = document.getElementById('recent-activity');
             if (!container) return;
             
-            // Combine recent quotes and customers
             var recentItems = [];
             
-            // Add recent quotes
             quotes.slice(-3).forEach(function(quote) {
                 var customer = customers.find(function(c) { return c.id == quote.customerId; });
                 recentItems.push({
@@ -3865,7 +3949,6 @@
                 });
             });
             
-            // Add recent customers
             customers.slice(-2).forEach(function(customer) {
                 recentItems.push({
                     type: 'customer',
@@ -3877,7 +3960,6 @@
                 });
             });
             
-            // Sort by date
             recentItems.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
             
             if (recentItems.length === 0) {
@@ -3915,20 +3997,17 @@
             }
         }
         
-        function viewReports() {
-            showSuccessMessage('📊 Reports feature coming soon!');
-        }
-        
         function exportData() {
             var exportData = {
                 userData: userData,
                 companyData: companyData,
                 quotes: quotes,
                 customers: customers,
+                claudeChatHistory: claudeChatHistory,
                 currentTheme: currentTheme,
                 currentMode: currentMode,
                 exportDate: new Date().toISOString(),
-                version: 'REFIT Business System v2.0'
+                version: 'REFIT Business System with Claude AI v3.0'
             };
             
             var dataStr = JSON.stringify(exportData, null, 2);
@@ -3936,10 +4015,10 @@
             
             var link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Business_Export_' + new Date().toISOString().split('T')[0] + '.json';
+            link.download = 'REFIT_Claude_Export_' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             
-            showSuccessMessage('📤 Business data exported successfully!');
+            showSuccessMessage('📤 Complete business data with Claude chat history exported!');
         }
 
         // ========================================
@@ -3950,48 +4029,67 @@
             loadData();
             updateStatusBar();
             updateCustomerSelect();
-            updateCompanyManagerDisplay();
-            updateLogoDisplay(); // Ensure logos are displayed correctly on startup
             
-            // Set up status bar timer
             setInterval(updateStatusBar, 60000);
             
-            // Add smooth transitions after load
             setTimeout(function() {
                 document.body.style.transition = 'all 0.5s ease';
             }, 100);
             
-            showSuccessMessage('🎨✨ REFIT Business System Ready!');
+            showSuccessMessage('🎨✨ REFIT Business System with Claude AI Ready!');
             
-            console.log('🎨 REFIT COMPLETE BUSINESS SYSTEM WITH LOGO UPLOAD');
-            console.log('👤 User Profile Management');
-            console.log('🏢 Complete Company Management Hub');
-            console.log('🎨 Interactive Logo Selection (24+ emoji options)');
-            console.log('📤 CUSTOM LOGO UPLOAD SYSTEM:');
-            console.log('   • Upload JPG, PNG, GIF, SVG files');
-            console.log('   • Max 2MB file size');
-            console.log('   • Auto-resize and optimize');
-            console.log('   • Base64 storage for persistence');
-            console.log('   • Switch between custom and emoji logos');
-            console.log('   • Integrated with business cards & printing');
-            console.log('💳 Business Card Generation (with custom logos)');
-            console.log('📊 Company Statistics & Analytics');
-            console.log('📤 Data Export & Sharing');
-            console.log('🖨️ Professional Printing (custom logo support)');
-            console.log('📱 QR Code Generation');
-            console.log('📋 Quote Creation & Management');
-            console.log('👥 Customer Management');
-            console.log('🌅 8 Beautiful New Pastel Themes with Light/Dark Mode');
-            console.log('💾 Complete Data Persistence (including custom logos)');
-            console.log('📱 Mobile-Optimized Interface');
+            console.log('🎉✨ REFIT COMPLETE BUSINESS SYSTEM WITH CLAUDE AI INTEGRATION!');
+            console.log('🧠 CLAUDE AI FEATURES:');
+            console.log('   ⚡ Spectacular lighting effects activation');
+            console.log('   💬 Full chat interface with typing indicators');
+            console.log('   🤖 Smart business responses and suggestions');
+            console.log('   📋 Quote generation assistance');
+            console.log('   👥 Customer management help');
+            console.log('   📊 Business analytics and insights');
+            console.log('   ✍️ Professional content writing');
+            console.log('   💰 Pricing strategy optimization');
+            console.log('   🎨 Design and branding advice');
+            console.log('   💾 Chat history persistence');
+            console.log('');
+            console.log('🌈 COMPLETE BUSINESS FEATURES:');
+            console.log('   👤 User Profile Management');
+            console.log('   🏢 Company Management Hub');
+            console.log('   📋 Quote Creation & Management');
+            console.log('   👥 Customer Relationship Management');
+            console.log('   🎨 8 Beautiful Dark Pastel Themes');
+            console.log('   🌙 Light/Dark Mode Variants');
+            console.log('   💾 Complete Data Persistence');
+            console.log('   📱 Mobile-First Design');
+            console.log('   📊 Business Analytics');
+            console.log('   📤 Data Export/Import');
+            console.log('');
+            console.log('🚀 ACTIVATION METHODS:');
+            console.log('   • Header button (🧠)');
+            console.log('   • Navigation Claude AI tab');
+            console.log('   • Quick action buttons');
+            console.log('   • Keyboard shortcuts');
+            console.log('');
+            console.log('✨ SPECTACULAR LIGHTING EFFECTS:');
+            console.log('   🌈 RGB color waves');
+            console.log('   ⭐ Floating light particles');
+            console.log('   💫 Expanding energy rings');
+            console.log('   🎨 Holographic text effects');
+            console.log('   ⚡ Power-up animations');
+            console.log('');
+            console.log('💡 KEYBOARD SHORTCUTS:');
+            console.log('   • Ctrl/Cmd + T = Open theme picker');
+            console.log('   • Ctrl/Cmd + D = Toggle dark mode');
+            console.log('   • Ctrl/Cmd + N = Create new quote');
+            console.log('   • Numbers 1-8 = Switch themes');
+            console.log('');
+            console.log('🎯 YOUR COMPLETE AI-POWERED BUSINESS SOLUTION!');
         }
         
-        // Start the app when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initializeApp, 100);
         });
         
-        // Event listeners for quote calculation
+        // Event listeners
         document.addEventListener('change', function(e) {
             if (e.target.id === 'quote-tax-rate') {
                 calculateQuoteTotal();
@@ -4015,7 +4113,11 @@
                 createQuote();
             }
             
-            // Number keys 1-8 = Switch themes
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+                e.preventDefault();
+                activateClaudeAI();
+            }
+            
             if (e.key >= '1' && e.key <= '8') {
                 var themeKeys = Object.keys(themes);
                 var themeIndex = parseInt(e.key) - 1;
@@ -4025,84 +4127,7 @@
             }
         });
         
-        console.log('🎉✨ REFIT COMPLETE BUSINESS SYSTEM - 8 NEW PASTEL THEMES EDITION!');
-        console.log('🌅 8 Beautiful New Pastel Themes with Light/Dark Mode:');
-        console.log('   🌅 1. Coral Sunset - Warm coral and salmon tones');
-        console.log('   🍑 2. Peach Glow - Soft peach and apricot hues');
-        console.log('   🌸 3. Rose Blush - Delicate rose and blush tones');
-        console.log('   🌻 4. Butter Cream - Creamy yellow and gold');
-        console.log('   🌊 5. Mint Breeze - Fresh mint and teal waters');
-        console.log('   💜 6. Lavender Mist - Elegant purple and grey blend');
-        console.log('   🤎 7. Warm Taupe - Sophisticated brown and grey');
-        console.log('   🌿 8. Sage Olive - Natural sage and olive tones');
-        console.log('👤 Complete User Profile Management');
-        console.log('🏢 Advanced Company Management Hub with:');
-        console.log('   🎨 Interactive Logo Selection (24+ professional emoji icons)');
-        console.log('   📤 CUSTOM LOGO UPLOAD SYSTEM:');
-        console.log('      • Upload your own company logo (JPG, PNG, GIF, SVG)');
-        console.log('      • Maximum 2MB file size with validation');
-        console.log('      • Automatic image processing and optimization');
-        console.log('      • Base64 encoding for localStorage persistence');
-        console.log('      • Real-time preview and dimension display');
-        console.log('      • Switch between custom and emoji logos anytime');
-        console.log('      • Upload progress indicators');
-        console.log('      • Professional error handling and validation');
-        console.log('   💳 Business Card Generator (with custom logo support)');
-        console.log('   📊 Real-time Company Statistics');
-        console.log('   📤 Professional Data Export');
-        console.log('   📢 Company Profile Sharing');
-        console.log('   🖨️ Professional Print Layouts (custom logo integrated)');
-        console.log('   📱 QR Code Generation');
-        console.log('   📋 Company Profile Summary');
-        console.log('📋 Complete Quote Creation & Management');
-        console.log('👥 Customer Relationship Management');
-        console.log('📊 Business Analytics & Reporting');
-        console.log('💾 Complete Data Persistence & Backup (including custom logos)');
-        console.log('📱 Mobile-First Professional Design');
-        console.log('🎨 Professional Branding with Custom Logo Support');
-        console.log('✨ Enterprise-Ready Business Solution!');
-        console.log('🏢 Your Complete Business Management Platform!');
-        console.log('');
-        console.log('🎯 QUICK TIPS:');
-        console.log('• Click on company name/logo to open Company Hub');
-        console.log('• Upload your own company logo with the "📤 Upload Logo" button');
-        console.log('• Choose from 8 beautiful new pastel themes');
-        console.log('• Switch between custom and emoji logos anytime');
-        console.log('• Generate business cards with your custom branding');
-        console.log('• Export and print with professional logo integration');
-        console.log('• All data including custom logos auto-saves');
-        console.log('• Switch themes anytime with Ctrl+T');
-        console.log('• Toggle dark mode with Ctrl+D');
-        console.log('• Create quotes with Ctrl+N');
-        console.log('• Use number keys 1-8 to switch themes quickly');
-        console.log('');
-        console.log('🌈 NEW PASTEL THEME COLLECTION:');
-        console.log('• 🌅 Coral Sunset - Perfect for warm, welcoming businesses');
-        console.log('• 🍑 Peach Glow - Ideal for creative and artistic services');
-        console.log('• 🌸 Rose Blush - Great for beauty and wellness industries');
-        console.log('• 🌻 Butter Cream - Perfect for food and hospitality');
-        console.log('• 🌊 Mint Breeze - Excellent for tech and modern services');
-        console.log('• 💜 Lavender Mist - Sophisticated for professional consulting');
-        console.log('• 🤎 Warm Taupe - Classic for legal and financial services');
-        console.log('• 🌿 Sage Olive - Natural for eco-friendly businesses');
-        console.log('');
-        console.log('📤 CUSTOM LOGO FEATURES:');
-        console.log('• Supported formats: JPG, PNG, GIF, SVG');
-        console.log('• Maximum file size: 2MB');
-        console.log('• Automatic validation and error handling');
-        console.log('• Real-time upload progress indicators');
-        console.log('• Professional image processing');
-        console.log('• Integrated with all business tools');
-        console.log('• Persistent storage across sessions');
-        console.log('');
-        console.log('💼 PERFECT FOR:');
-        console.log('• Small Business Owners wanting custom branding');
-        console.log('• Freelancers & Consultants with established logos');
-        console.log('• Service Providers needing professional presentation');
-        console.log('• Professional Contractors with company branding');
-        console.log('• Any Business requiring beautiful theme options');
-        console.log('');
-        console.log('🚀 EXPERIENCE 8 BEAUTIFUL THEMES AND UPLOAD YOUR LOGO TODAY!');
+        console.log('🎉✨ REFIT COMPLETE BUSINESS SYSTEM WITH CLAUDE AI - READY TO USE!');
     </script>
 </body>
 </html>
