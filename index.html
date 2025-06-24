@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#fb923c">
     <meta name="msapplication-navbutton-color" content="#fb923c">
     
-    <title>REFIT MAINTENANCE SERVICES - AI Voice Assistant</title>
+    <title>REFIT MAINTENANCE SERVICES - Pastel Orange Branding System</title>
     
     <!-- Enhanced PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -54,12 +54,6 @@
             --warning: #f59e0b;
             --error: #ef4444;
             --info: #3b82f6;
-            
-            /* AI Assistant Colors */
-            --ai-primary: #ff6b9d;
-            --ai-secondary: #c44569;
-            --ai-soft: #ffa8cc;
-            --ai-background: rgba(255, 107, 157, 0.1);
             
             /* Enhanced Category Colors with Orange Harmony */
             --cat-electrical: #6366f1;
@@ -110,12 +104,6 @@
             --warning: #fbbf24;
             --error: #f87171;
             --info: #60a5fa;
-            
-            /* AI Assistant Dark Mode */
-            --ai-primary: #ff6b9d;
-            --ai-secondary: #c44569;
-            --ai-soft: #ffa8cc;
-            --ai-background: rgba(255, 107, 157, 0.15);
         }
         
         body {
@@ -327,325 +315,6 @@
             left: 100%;
         }
         
-        /* AI Assistant Button */
-        .ai-assistant-btn {
-            background: linear-gradient(135deg, var(--ai-primary), var(--ai-secondary)) !important;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .ai-assistant-btn.active {
-            background: linear-gradient(135deg, var(--ai-secondary), var(--ai-primary)) !important;
-            animation: aiPulse 2s infinite;
-        }
-        
-        @keyframes aiPulse {
-            0%, 100% { box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3); }
-            50% { box-shadow: 0 4px 25px rgba(255, 107, 157, 0.6); }
-        }
-        
-        .ai-assistant-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-        
-        .ai-assistant-btn:hover::before {
-            left: 100%;
-        }
-        
-        /* AI Assistant Interface */
-        .ai-assistant-panel {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 350px;
-            height: 100vh;
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            border-left: 1px solid var(--border-color);
-            box-shadow: -8px 0 40px var(--shadow-strong);
-            transition: right 0.3s ease;
-            z-index: 150;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .ai-assistant-panel.active {
-            right: 0;
-        }
-        
-        .ai-header {
-            padding: 20px;
-            background: linear-gradient(135deg, var(--ai-primary), var(--ai-secondary));
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .ai-character {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .ai-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            animation: avatarFloat 3s ease-in-out infinite;
-        }
-        
-        @keyframes avatarFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-        
-        .ai-info h3 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        
-        .ai-info p {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-        
-        .ai-close {
-            width: 36px;
-            height: 36px;
-            border-radius: 18px;
-            border: none;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .ai-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-        
-        .ai-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .ai-chat {
-            flex: 1;
-            margin-bottom: 20px;
-        }
-        
-        .ai-message {
-            margin-bottom: 16px;
-            padding: 12px 16px;
-            border-radius: 16px;
-            max-width: 90%;
-            animation: messageSlide 0.3s ease;
-        }
-        
-        @keyframes messageSlide {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .ai-message.assistant {
-            background: var(--ai-background);
-            color: var(--text-primary);
-            margin-right: auto;
-            border-bottom-left-radius: 4px;
-        }
-        
-        .ai-message.user {
-            background: var(--accent-primary);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 4px;
-        }
-        
-        .ai-input-container {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        
-        .ai-input {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 20px;
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-        
-        .ai-input:focus {
-            outline: none;
-            border-color: var(--ai-primary);
-            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.15);
-        }
-        
-        .ai-send {
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
-            border: none;
-            background: linear-gradient(135deg, var(--ai-primary), var(--ai-secondary));
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .ai-send:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
-        }
-        
-        .ai-voice-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
-            border: none;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .ai-voice-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px var(--shadow-medium);
-        }
-        
-        .ai-voice-btn.listening {
-            background: linear-gradient(135deg, var(--error), #f87171);
-            animation: voicePulse 1s infinite;
-        }
-        
-        @keyframes voicePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        /* AI Character Selection */
-        .ai-character-selection {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--overlay);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-            backdrop-filter: blur(10px);
-        }
-        
-        .ai-character-selection.show {
-            display: flex;
-        }
-        
-        .character-modal {
-            background: var(--bg-card);
-            border-radius: 24px;
-            padding: 32px;
-            max-width: 90vw;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: modalPop 0.3s ease;
-        }
-        
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        
-        .character-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 16px;
-            margin-top: 20px;
-        }
-        
-        .character-card {
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 20px 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-        }
-        
-        .character-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px var(--shadow-medium);
-            border-color: var(--ai-primary);
-        }
-        
-        .character-card.selected {
-            background: linear-gradient(135deg, var(--ai-primary), var(--ai-secondary));
-            color: white;
-            transform: scale(1.05);
-        }
-        
-        .character-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--ai-primary), var(--ai-secondary));
-            margin: 0 auto 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-        }
-        
-        .character-card.selected .character-avatar {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .character-name {
-            font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-        
-        .character-trait {
-            font-size: 11px;
-            opacity: 0.8;
-        }
-        
         /* Main Content */
         .main-content {
             flex: 1;
@@ -655,11 +324,6 @@
             position: relative;
             height: calc(100vh - 44px);
             scroll-behavior: smooth;
-            transition: margin-right 0.3s ease;
-        }
-        
-        .main-content.ai-active {
-            margin-right: 350px;
         }
         
         .main-content::-webkit-scrollbar {
@@ -895,10 +559,6 @@
             background: linear-gradient(135deg, #ff8c42, #ff6b35);
             box-shadow: 0 8px 25px rgba(255, 140, 66, 0.4);
         }
-        .action-btn.ai-assistant {
-            background: linear-gradient(135deg, var(--ai-primary), var(--ai-secondary));
-            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
-        }
         
         .action-btn .icon {
             font-size: 32px;
@@ -1066,11 +726,6 @@
             padding: 12px 20px 32px;
             z-index: 100;
             box-shadow: 0 -4px 20px var(--shadow-medium);
-            transition: right 0.3s ease;
-        }
-        
-        .bottom-nav.ai-active {
-            right: 350px;
         }
         
         .nav-items {
@@ -1773,23 +1428,6 @@
         
         /* Mobile Optimizations */
         @media screen and (max-width: 768px) {
-            .ai-assistant-panel {
-                width: 100vw;
-                right: -100vw;
-            }
-            
-            .ai-assistant-panel.active {
-                right: 0;
-            }
-            
-            .main-content.ai-active {
-                margin-right: 0;
-            }
-            
-            .bottom-nav.ai-active {
-                right: 0;
-            }
-            
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
@@ -1802,11 +1440,6 @@
             
             .branding-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
-            .character-grid {
-                grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
             }
             
@@ -1871,8 +1504,7 @@
             .header,
             .bottom-nav,
             .modal,
-            .item-actions,
-            .ai-assistant-panel {
+            .item-actions {
                 display: none !important;
             }
             
@@ -1887,7 +1519,6 @@
                 padding: 20px !important;
                 overflow: visible !important;
                 height: auto !important;
-                margin-right: 0 !important;
             }
         }
     </style>
@@ -1924,53 +1555,9 @@
                 </div>
             </div>
             <div class="header-right">
-                <button class="header-btn ai-assistant-btn" onclick="toggleAIAssistant()" title="🤖 AI Assistant" id="ai-toggle-btn">🤖</button>
                 <button class="header-btn branding-insert-btn" onclick="openBrandingInsert()" title="🎨 Branding Insert">🎨</button>
                 <button class="header-btn" onclick="openCompanyInfo()" title="Company Info">👤</button>
                 <button class="header-btn" onclick="exportData()" title="Export">📤</button>
-            </div>
-        </div>
-
-        <!-- AI Assistant Panel -->
-        <div class="ai-assistant-panel" id="ai-assistant-panel">
-            <div class="ai-header">
-                <div class="ai-character">
-                    <div class="ai-avatar" id="ai-avatar">👧</div>
-                    <div class="ai-info">
-                        <h3 id="ai-name">Ela</h3>
-                        <p id="ai-trait">Sweet & Intelligent</p>
-                    </div>
-                </div>
-                <button class="ai-close" onclick="toggleAIAssistant()">✕</button>
-            </div>
-            <div class="ai-content">
-                <div class="ai-chat" id="ai-chat">
-                    <div class="ai-message assistant">
-                        <div>Hi! I'm <span id="ai-greeting-name">Ela</span>, your AI assistant! 😊 I'm here to help you with quotes, maintenance questions, and make your work easier. How can I assist you today?</div>
-                    </div>
-                </div>
-                <div class="ai-input-container">
-                    <input type="text" class="ai-input" id="ai-input" placeholder="Ask me anything about maintenance or quotes...">
-                    <button class="ai-voice-btn" onclick="toggleVoiceInput()" id="voice-btn" title="Voice Input">🎤</button>
-                    <button class="ai-send" onclick="sendAIMessage()" id="send-btn">➤</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- AI Character Selection Modal -->
-        <div class="ai-character-selection" id="character-selection">
-            <div class="character-modal">
-                <h3 style="text-align: center; margin-bottom: 8px; font-size: 24px; color: var(--text-primary);">🤖 Choose Your AI Assistant</h3>
-                <p style="text-align: center; color: var(--text-muted); margin-bottom: 24px;">Select a cute AI girl to help you with maintenance work</p>
-                
-                <div class="character-grid" id="character-grid">
-                    <!-- Characters will be generated here -->
-                </div>
-                
-                <div style="display: flex; gap: 16px; margin-top: 24px;">
-                    <button class="btn btn-primary" onclick="selectAICharacter()" style="flex: 1;">✅ Select Assistant</button>
-                    <button class="btn btn-secondary" onclick="closeCharacterSelection()" style="flex: 1;">Cancel</button>
-                </div>
             </div>
         </div>
 
@@ -2044,9 +1631,9 @@
                             <span class="icon">🎨</span>
                             <span style="font-weight: 700;">Branding Suite</span>
                         </button>
-                        <button class="action-btn ai-assistant" onclick="toggleAIAssistant()">
-                            <span class="icon">🤖</span>
-                            <span style="font-weight: 700;">AI Assistant</span>
+                        <button class="action-btn info" onclick="previewBranding()">
+                            <span class="icon">👁️</span>
+                            <span style="font-weight: 700;">Preview Branding</span>
                         </button>
                     </div>
                 </div>
@@ -2092,7 +1679,7 @@
         </div>
 
         <!-- Bottom Navigation -->
-        <div class="bottom-nav" id="bottom-nav">
+        <div class="bottom-nav">
             <div class="nav-items">
                 <div class="nav-item active" onclick="showView('dashboard')">
                     <span class="icon">🏠</span>
@@ -2106,9 +1693,9 @@
                     <span class="icon">➕</span>
                     <span>Create</span>
                 </div>
-                <div class="nav-item" onclick="toggleAIAssistant()">
-                    <span class="icon">🤖</span>
-                    <span>AI</span>
+                <div class="nav-item" onclick="openBrandingInsert()">
+                    <span class="icon">🎨</span>
+                    <span>Branding</span>
                 </div>
             </div>
             <div class="home-indicator"></div>
@@ -2486,9 +2073,9 @@
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - AI VOICE ASSISTANT SYSTEM
+        // REFIT MAINTENANCE SERVICES - PASTEL ORANGE BRANDING SYSTEM
         // Registration No: 201803348973 (002894203-V)
-        // Complete AI Assistant with Cute Girl Characters & Voice Features
+        // Complete Pastel Orange Branding Insert Suite with Professional Features
         // ========================================
         
         // App State Variables
@@ -2504,98 +2091,6 @@
         var currentTheme = 'light';
         var currentCategory = '';
         var customLogo = null;
-
-        // AI Assistant State
-        var aiAssistantActive = false;
-        var currentAICharacter = null;
-        var aiConversation = [];
-        var isListening = false;
-        var recognition = null;
-        var speechSynthesis = window.speechSynthesis;
-
-        // AI Character Database
-        var aiCharacters = [
-            {
-                id: 'ela',
-                name: 'Ela',
-                avatar: '👧',
-                trait: 'Sweet & Intelligent',
-                personality: 'sweet, caring, intelligent',
-                voice: { pitch: 1.2, rate: 0.9 },
-                greeting: "Hi! I'm Ela, your sweet AI assistant! 😊 I'm here to help you with quotes and maintenance work. How can I make your day better?",
-                specialties: ['quotes', 'calculations', 'organization']
-            },
-            {
-                id: 'isla',
-                name: 'Isla',
-                avatar: '🌸',
-                trait: 'Pretty & Clever',
-                personality: 'pretty, clever, sophisticated',
-                voice: { pitch: 1.1, rate: 1.0 },
-                greeting: "Hello! I'm Isla, and I love helping with complex maintenance projects! ✨ My clever mind is perfect for solving your business challenges.",
-                specialties: ['analysis', 'recommendations', 'planning']
-            },
-            {
-                id: 'maiya',
-                name: 'Maiya',
-                avatar: '💖',
-                trait: 'Lovely & Soft',
-                personality: 'lovely, soft, gentle',
-                voice: { pitch: 1.3, rate: 0.8 },
-                greeting: "Hi there! I'm Maiya, your gentle assistant! 💕 I'll take care of all your maintenance needs with love and attention to detail.",
-                specialties: ['customer care', 'communication', 'details']
-            },
-            {
-                id: 'violet',
-                name: 'Violet',
-                avatar: '💜',
-                trait: 'Concern & Smart',
-                personality: 'concerned, smart, analytical',
-                voice: { pitch: 1.0, rate: 1.1 },
-                greeting: "Hello! I'm Violet, and I'm genuinely concerned about your business success! 💜 Let me analyze your maintenance needs and provide smart solutions.",
-                specialties: ['troubleshooting', 'efficiency', 'solutions']
-            },
-            {
-                id: 'luna',
-                name: 'Luna',
-                avatar: '🌙',
-                trait: 'Cute & Wise',
-                personality: 'cute, wise, thoughtful',
-                voice: { pitch: 1.2, rate: 0.9 },
-                greeting: "Hi! I'm Luna, your wise little helper! 🌙 I may be cute, but I have deep knowledge about maintenance and quotes!",
-                specialties: ['education', 'explanations', 'guidance']
-            },
-            {
-                id: 'rose',
-                name: 'Rose',
-                avatar: '🌹',
-                trait: 'Beautiful & Kind',
-                personality: 'beautiful, kind, compassionate',
-                voice: { pitch: 1.1, rate: 0.9 },
-                greeting: "Hello beautiful! I'm Rose, and I'm here to make your work life more beautiful! 🌹 Let's create amazing quotes together!",
-                specialties: ['creativity', 'presentation', 'aesthetics']
-            },
-            {
-                id: 'sky',
-                name: 'Sky',
-                avatar: '☁️',
-                trait: 'Free & Creative',
-                personality: 'free-spirited, creative, innovative',
-                voice: { pitch: 1.0, rate: 1.0 },
-                greeting: "Hey! I'm Sky, your creative assistant! ☁️ I love thinking outside the box and finding innovative solutions for your maintenance projects!",
-                specialties: ['innovation', 'creativity', 'brainstorming']
-            },
-            {
-                id: 'aria',
-                name: 'Aria',
-                avatar: '🎵',
-                trait: 'Harmonious & Peaceful',
-                personality: 'harmonious, peaceful, balanced',
-                voice: { pitch: 1.1, rate: 0.8 },
-                greeting: "Hello! I'm Aria, bringing harmony to your maintenance work! 🎵 Let's create perfectly balanced quotes with peaceful efficiency.",
-                specialties: ['coordination', 'balance', 'harmony']
-            }
-        ];
 
         // Enhanced Branding System - PASTEL ORANGE THEME
         var brandingData = {
@@ -2898,4 +2393,1697 @@
             common: [
                 { id: 'common-1', name: 'Service Call Fee', description: 'Basic service call charge', price: 75.00, unit: 'service' },
                 { id: 'common-2', name: 'Material Transport', description: 'Material delivery and transport', price: 50.00, unit: 'trip' },
-                { id: 'common-3', name: 'Site Survey
+                { id: 'common-3', name: 'Site Survey', description: 'Professional site assessment', price: 150.00, unit: 'service' }
+            ]
+        };
+
+        // Company Settings (simplified)
+        var companyInfo = {
+            name: 'REFIT MAINTENANCE SERVICES',
+            registration: '201803348973 (002894203-V)',
+            phone: '+60 3-7967 8888',
+            email: 'info@refitmaintenance.my',
+            address: 'No. 15, Jalan Teknologi 3/6, Kota Damansara, 47810 Petaling Jaya, Selangor, Malaysia'
+        };
+
+        // Storage Keys
+        var STORAGE_KEYS = {
+            JOB_QUOTES: 'refit_orange_quotes',
+            THEME_PREFERENCE: 'refit_orange_theme_preference',
+            COMPANY_INFO: 'refit_orange_company_info',
+            CUSTOM_LOGO: 'refit_orange_custom_logo',
+            BRANDING_DATA: 'refit_orange_branding_data'
+        };
+
+        // Theme Management Functions
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', currentTheme);
+            
+            var toggleBtn = document.getElementById('theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '🧡 Light';
+            }
+            
+            var metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (metaTheme) {
+                metaTheme.content = currentTheme === 'light' ? '#fb923c' : '#2c1810';
+            }
+            
+            saveDataToStorage();
+            showSuccessMessage(currentTheme === 'light' ? '🧡 Beautiful Orange Light Mode!' : '🌙 Dark Orange Mode Activated!');
+        }
+
+        function loadThemePreference() {
+            var savedTheme = JSON.parse(localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) || 'light';
+            
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) {
+                savedTheme = 'dark';
+            }
+            
+            currentTheme = savedTheme;
+            document.body.setAttribute('data-theme', currentTheme);
+            
+            var toggleBtn = document.getElementById('theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '🧡 Light';
+            }
+            
+            var metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (metaTheme) {
+                metaTheme.content = currentTheme === 'light' ? '#fb923c' : '#2c1810';
+            }
+        }
+
+        // Data Management Functions
+        function saveDataToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEYS.JOB_QUOTES, JSON.stringify(jobQuotes));
+                localStorage.setItem(STORAGE_KEYS.THEME_PREFERENCE, JSON.stringify(currentTheme));
+                localStorage.setItem(STORAGE_KEYS.COMPANY_INFO, JSON.stringify(companyInfo));
+                localStorage.setItem(STORAGE_KEYS.BRANDING_DATA, JSON.stringify(brandingData));
+                if (customLogo) {
+                    localStorage.setItem(STORAGE_KEYS.CUSTOM_LOGO, customLogo);
+                } else {
+                    localStorage.removeItem(STORAGE_KEYS.CUSTOM_LOGO);
+                }
+            } catch (e) {
+                console.warn('Storage error:', e);
+                showSuccessMessage('⚠️ Storage full! Please export data.');
+            }
+        }
+
+        function loadDataFromStorage() {
+            try {
+                var savedQuotes = localStorage.getItem(STORAGE_KEYS.JOB_QUOTES);
+                if (savedQuotes) {
+                    jobQuotes = JSON.parse(savedQuotes);
+                }
+                
+                var savedCompanyInfo = localStorage.getItem(STORAGE_KEYS.COMPANY_INFO);
+                if (savedCompanyInfo) {
+                    companyInfo = Object.assign(companyInfo, JSON.parse(savedCompanyInfo));
+                    updateHeaderDisplay();
+                }
+                
+                var savedBrandingData = localStorage.getItem(STORAGE_KEYS.BRANDING_DATA);
+                if (savedBrandingData) {
+                    brandingData = Object.assign(brandingData, JSON.parse(savedBrandingData));
+                    updateBrandingDisplay();
+                }
+                
+                var savedLogo = localStorage.getItem(STORAGE_KEYS.CUSTOM_LOGO);
+                if (savedLogo) {
+                    customLogo = savedLogo;
+                    brandingData.logo = savedLogo;
+                    updateHeaderLogo();
+                }
+            } catch (e) {
+                console.warn('Load error:', e);
+                jobQuotes = [];
+            }
+        }
+
+        function updateHeaderDisplay() {
+            document.getElementById('company-name').textContent = companyInfo.name;
+            document.getElementById('company-registration').innerHTML = 
+                'Registration No: ' + companyInfo.registration.split('(')[0].trim() + '<br>(' + 
+                (companyInfo.registration.includes('(') ? companyInfo.registration.split('(')[1] : ')');
+        }
+
+        function updateBrandingDisplay() {
+            // Update brand preview if modal is open
+            if (document.getElementById('branding-insert-modal').classList.contains('show')) {
+                updateBrandPreview();
+            }
+        }
+
+        // Enhanced Branding Insert Functions
+        function openBrandingInsert() {
+            renderColorPicker();
+            updateBrandPreview();
+            
+            // Load current values
+            document.getElementById('company-tagline-input').value = brandingData.tagline;
+            
+            document.getElementById('branding-insert-modal').classList.add('show');
+            showSuccessMessage('🎨 Professional pastel orange branding suite opened');
+        }
+
+        function closeBrandingInsert() {
+            document.getElementById('branding-insert-modal').classList.remove('show');
+        }
+
+        function renderColorPicker() {
+            var container = document.getElementById('color-picker');
+            if (!container) return;
+            
+            var html = '';
+            for (var i = 0; i < colorThemes.length; i++) {
+                var theme = colorThemes[i];
+                var isSelected = brandingData.primaryColor === theme.primary;
+                
+                html += '<div class="color-option' + (isSelected ? ' selected' : '') + '" ' +
+                    'onclick="selectColorTheme(\'' + theme.primary + '\', \'' + theme.secondary + '\', \'' + theme.accent + '\')" ' +
+                    'style="background: linear-gradient(135deg, ' + theme.primary + ', ' + theme.secondary + ');" ' +
+                    'title="' + theme.name + '">' +
+                    '</div>';
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function selectColorTheme(primary, secondary, accent) {
+            brandingData.primaryColor = primary;
+            brandingData.secondaryColor = secondary;
+            brandingData.accentColor = accent;
+            
+            renderColorPicker();
+            updateBrandPreview();
+            saveDataToStorage();
+            
+            showSuccessMessage('🧡 Color theme applied: ' + getThemeName(primary));
+        }
+
+        function getThemeName(primaryColor) {
+            for (var i = 0; i < colorThemes.length; i++) {
+                if (colorThemes[i].primary === primaryColor) {
+                    return colorThemes[i].name;
+                }
+            }
+            return 'Custom Orange';
+        }
+
+        function updateBrandPreview() {
+            var logoPreview = document.getElementById('logo-preview');
+            var companyPreview = document.getElementById('company-preview');
+            var taglinePreview = document.getElementById('tagline-preview');
+            
+            if (!logoPreview || !companyPreview || !taglinePreview) return;
+            
+            // Update logo
+            if (brandingData.logo) {
+                logoPreview.innerHTML = '<img src="' + brandingData.logo + '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;" alt="Company Logo">';
+            } else {
+                logoPreview.innerHTML = '<svg style="width: 40px; height: 40px; color: white;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+                    '<path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor"/>' +
+                    '<path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor"/>' +
+                    '</svg>';
+            }
+            
+            // Update colors
+            logoPreview.style.background = 'linear-gradient(135deg, ' + brandingData.primaryColor + ', ' + brandingData.secondaryColor + ')';
+            companyPreview.textContent = companyInfo.name;
+            taglinePreview.textContent = brandingData.tagline;
+        }
+
+        function handleBrandingLogoUpload(event) {
+            var file = event.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 2 * 1024 * 1024) {
+                showSuccessMessage('⚠️ File too large! Please choose an image under 2MB');
+                return;
+            }
+            
+            if (!file.type.startsWith('image/')) {
+                showSuccessMessage('⚠️ Please select a valid image file');
+                return;
+            }
+            
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                brandingData.logo = e.target.result;
+                customLogo = e.target.result;
+                updateBrandPreview();
+                updateHeaderLogo();
+                saveDataToStorage();
+                showSuccessMessage('✅ Logo uploaded and applied to branding!');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateHeaderLogo() {
+            var logoContainer = document.querySelector('.app-logo');
+            if (!logoContainer) return;
+            
+            if (customLogo) {
+                logoContainer.innerHTML = '<img src="' + customLogo + '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" alt="Company Logo">';
+            } else {
+                logoContainer.innerHTML = '<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+                    '<path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>' +
+                    '<path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>' +
+                    '<circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.8)" stroke="currentColor" stroke-width="2"/>' +
+                    '<circle cx="50" cy="50" r="3" fill="currentColor"/>' +
+                    '</svg>';
+            }
+        }
+
+        function applyBranding() {
+            // Update tagline
+            brandingData.tagline = document.getElementById('company-tagline-input').value.trim() || brandingData.tagline;
+            
+            // Save branding data
+            saveDataToStorage();
+            
+            // Update brand preview
+            updateBrandPreview();
+            
+            closeBrandingInsert();
+            showSuccessMessage('✅ Professional pastel orange branding applied successfully!');
+        }
+
+        // Quick Branding Action Functions
+        function openLogoUpload() {
+            document.getElementById('branding-logo-input').click();
+        }
+
+        function openColorTheme() {
+            openBrandingInsert();
+            // Auto-scroll to color section
+            setTimeout(function() {
+                var colorSection = document.getElementById('color-picker');
+                if (colorSection) {
+                    colorSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 300);
+        }
+
+        function openCompanyBranding() {
+            openCompanyInfo();
+        }
+
+        function insertBrandingToQuote() {
+            if (!currentQuoteId) {
+                showSuccessMessage('⚠️ Please create or select a quote first');
+                return;
+            }
+            
+            var quote = jobQuotes.find(function(q) { return q.id === currentQuoteId; });
+            if (!quote) {
+                showSuccessMessage('⚠️ Quote not found');
+                return;
+            }
+            
+            // Apply branding to current quote
+            quote.branding = Object.assign({}, brandingData);
+            saveDataToStorage();
+            
+            showSuccessMessage('✅ Orange branding inserted to current quote');
+        }
+
+        function saveBrandingTemplate() {
+            brandingData.template = 'orange_custom_' + Date.now();
+            saveDataToStorage();
+            showSuccessMessage('💾 Orange branding template saved');
+        }
+
+        function previewBrandedQuote() {
+            closeBrandingInsert();
+            setTimeout(function() {
+                previewBranding();
+            }, 300);
+        }
+
+        function exportBrandingPackage() {
+            var brandingPackage = {
+                branding: brandingData,
+                company: companyInfo,
+                logo: customLogo,
+                timestamp: new Date().toISOString(),
+                version: 'Pastel Orange Branding Suite 1.0'
+            };
+            
+            var dataStr = JSON.stringify(brandingPackage, null, 2);
+            var dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'REFIT_Orange_Branding_Package_' + new Date().toISOString().split('T')[0] + '.json';
+            link.click();
+            
+            showSuccessMessage('📦 Orange branding package exported successfully!');
+        }
+
+        function previewBranding() {
+            document.getElementById('branding-preview-modal').classList.add('show');
+            
+            var content = document.getElementById('branding-preview-content');
+            if (!content) return;
+            
+            var html = '<div style="background: white; border-radius: 16px; padding: 24px; border: 1px solid #e5e7eb; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">' +
+                // Header with branding
+                '<div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid ' + brandingData.primaryColor + ';">' +
+                '<div style="width: 60px; height: 60px; border-radius: 12px; background: linear-gradient(135deg, ' + brandingData.primaryColor + ', ' + brandingData.secondaryColor + '); display: flex; align-items: center; justify-content: center; color: white;">';
+            
+            if (brandingData.logo) {
+                html += '<img src="' + brandingData.logo + '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" alt="Logo">';
+            } else {
+                html += '<svg style="width: 30px; height: 30px;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+                    '<path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor"/>' +
+                    '<path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor"/>' +
+                    '</svg>';
+            }
+            
+            html += '</div>' +
+                '<div>' +
+                '<h2 style="font-size: 20px; font-weight: 800; color: #1f2937; margin: 0;">' + companyInfo.name + '</h2>' +
+                '<p style="font-size: 14px; color: #6b7280; margin: 4px 0 0 0;">' + companyInfo.registration + '</p>' +
+                '<p style="font-size: 12px; color: ' + brandingData.primaryColor + '; font-weight: 600; margin: 4px 0 0 0;">' + brandingData.tagline + '</p>' +
+                '</div>' +
+                '</div>' +
+                
+                // Sample quote content
+                '<div style="margin-bottom: 20px;">' +
+                '<h3 style="font-size: 18px; font-weight: 700; color: #1f2937; margin-bottom: 8px;">JOB QUOTE PREVIEW</h3>' +
+                '<p style="font-size: 14px; color: #6b7280;">Quote #12345 • Date: ' + new Date().toLocaleDateString() + '</p>' +
+                '<p style="font-size: 16px; font-weight: 600; color: #1f2937; margin-top: 8px;">Office Renovation Project</p>' +
+                '</div>' +
+                
+                // Sample items with orange theme
+                '<div style="background: #fef7ed; border-radius: 12px; padding: 16px; margin-bottom: 20px;">' +
+                '<h4 style="font-size: 16px; font-weight: 700; color: #1f2937; margin-bottom: 12px;">Quote Items</h4>' +
+                '<div style="padding: 12px; background: white; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid ' + brandingData.primaryColor + ';">' +
+                '<div style="font-weight: 600; color: #1f2937;">Electrical Work</div>' +
+                '<div style="font-size: 14px; color: #6b7280;">Power outlet installation and wiring</div>' +
+                '<div style="display: flex; justify-content: space-between; margin-top: 4px;">' +
+                '<span style="font-size: 14px; color: #6b7280;">5 outlets</span>' +
+                '<span style="font-weight: 700; color: ' + brandingData.primaryColor + ';">RM 225.00</span>' +
+                '</div>' +
+                '</div>' +
+                '<div style="padding: 12px; background: white; border-radius: 8px; border-left: 4px solid ' + brandingData.secondaryColor + ';">' +
+                '<div style="font-weight: 600; color: #1f2937;">Paint Work</div>' +
+                '<div style="font-size: 14px; color: #6b7280;">Interior wall painting with premium finish</div>' +
+                '<div style="display: flex; justify-content: space-between; margin-top: 4px;">' +
+                '<span style="font-size: 14px; color: #6b7280;">50 sqm</span>' +
+                '<span style="font-weight: 700; color: ' + brandingData.primaryColor + ';">RM 600.00</span>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                
+                // Total section with orange theme
+                '<div style="background: linear-gradient(135deg, ' + brandingData.primaryColor + ', ' + brandingData.secondaryColor + '); color: white; padding: 20px; border-radius: 12px; text-align: center;">' +
+                '<div style="font-size: 14px; opacity: 0.9; margin-bottom: 4px;">Total Quote Amount</div>' +
+                '<div style="font-size: 28px; font-weight: 800;">RM 825.00</div>' +
+                '</div>' +
+                
+                // Footer
+                '<div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb; text-align: center;">' +
+                '<p style="font-size: 14px; color: #6b7280;">Thank you for choosing ' + companyInfo.name + '</p>' +
+                '<p style="font-size: 12px; color: #9ca3af; margin-top: 4px;">Contact: ' + companyInfo.phone + ' | ' + companyInfo.email + '</p>' +
+                '</div>' +
+                
+                '</div>';
+            
+            content.innerHTML = html;
+            showSuccessMessage('👁️ Orange branding preview generated');
+        }
+
+        function closeBrandingPreview() {
+            document.getElementById('branding-preview-modal').classList.remove('show');
+        }
+
+        function generatePreviewPDF() {
+            showSuccessMessage('📄 Generating orange branded PDF preview...');
+            
+            var { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+            
+            try {
+                // Header with custom branding
+                doc.setFontSize(20);
+                doc.setFont(undefined, 'bold');
+                doc.text(companyInfo.name, 20, 30);
+                
+                // Add logo if available
+                if (brandingData.logo) {
+                    try {
+                        doc.addImage(brandingData.logo, 'JPEG', 150, 10, 40, 30);
+                    } catch (logoError) {
+                        console.warn('Logo embedding failed:', logoError);
+                    }
+                }
+                
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Registration No: ' + companyInfo.registration, 20, 40);
+                doc.text(brandingData.tagline, 20, 48);
+                
+                // Quote content with branding
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.text('PASTEL ORANGE BRANDED QUOTE PREVIEW', 20, 70);
+                
+                // Content
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('This is a preview of how your quotes will look with pastel orange branding.', 20, 90);
+                doc.text('• Custom logo integration', 20, 105);
+                doc.text('• Beautiful orange colors and styling', 20, 115);
+                doc.text('• Professional company information', 20, 125);
+                doc.text('• Customized tagline: ' + brandingData.tagline, 20, 135);
+                
+                // Color demonstration
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('Pastel Orange Brand Colors Applied:', 20, 160);
+                doc.text('Primary: ' + brandingData.primaryColor, 20, 175);
+                doc.text('Secondary: ' + brandingData.secondaryColor, 20, 185);
+                doc.text('Accent: ' + brandingData.accentColor, 20, 195);
+                
+                // Footer
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text('Generated by REFIT Pastel Orange Branding System', 20, 270);
+                doc.text(new Date().toLocaleString(), 20, 280);
+                
+                // Download
+                doc.save('REFIT_Orange_Branding_Preview_' + new Date().toISOString().split('T')[0] + '.pdf');
+                
+                showSuccessMessage('📄 Orange branded PDF preview downloaded!');
+                
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                showSuccessMessage('❌ Error generating PDF preview');
+            }
+        }
+
+        // Enhanced Create Quote Flow Functions
+        function openCreateQuote() {
+            // Reset quote data
+            currentQuoteData = {
+                title: '',
+                categories: [],
+                items: [],
+                totalAmount: 0
+            };
+            
+            // Clear form
+            document.getElementById('job-title-input').value = '';
+            
+            // Show Step 1 modal
+            document.getElementById('job-title-modal').classList.add('show');
+            
+            showSuccessMessage('📝 Starting enhanced quote creation');
+        }
+
+        function closeCreateQuote() {
+            // Close all modals
+            document.getElementById('job-title-modal').classList.remove('show');
+            document.getElementById('category-selection-modal').classList.remove('show');
+            document.getElementById('item-selection-modal').classList.remove('show');
+            
+            // Reset data
+            currentQuoteData = {
+                title: '',
+                categories: [],
+                items: [],
+                totalAmount: 0
+            };
+            currentCategory = '';
+        }
+
+        function proceedToCategory() {
+            var title = document.getElementById('job-title-input').value.trim();
+            
+            if (!title) {
+                showSuccessMessage('⚠️ Please enter a job title');
+                return;
+            }
+            
+            currentQuoteData.title = title;
+            document.getElementById('selected-job-title').textContent = title;
+            
+            // Hide Step 1, Show Step 2
+            document.getElementById('job-title-modal').classList.remove('show');
+            
+            // Render categories
+            renderCategories();
+            updateQuoteSummaryDisplay();
+            
+            document.getElementById('category-selection-modal').classList.add('show');
+            showSuccessMessage('✅ Job title saved: ' + title);
+        }
+
+        function backToJobTitle() {
+            document.getElementById('category-selection-modal').classList.remove('show');
+            document.getElementById('job-title-modal').classList.add('show');
+        }
+
+        function renderCategories() {
+            var container = document.getElementById('category-grid');
+            if (!container) return;
+            
+            var html = '';
+            
+            for (var categoryKey in categories) {
+                var category = categories[categoryKey];
+                var isSelected = currentQuoteData.categories.indexOf(categoryKey) !== -1;
+                var hasItems = currentQuoteData.items.some(function(item) { 
+                    return item.category === categoryKey; 
+                });
+                
+                html += '<div class="category-item' + (hasItems ? ' selected' : '') + '" onclick="selectCategoryForItems(\'' + categoryKey + '\')" data-category="' + categoryKey + '">' +
+                    '<div class="icon">' + category.icon + '</div>' +
+                    '<div class="name">' + category.name + '</div>' +
+                    (hasItems ? '<div style="font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 4px;">✓ Items Added</div>' : '') +
+                    '</div>';
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function selectCategoryForItems(categoryKey) {
+            currentCategory = categoryKey;
+            
+            // Update display
+            document.getElementById('category-job-title').textContent = currentQuoteData.title;
+            document.getElementById('selected-category-display').textContent = categories[categoryKey].name;
+            
+            // Hide category modal, show items modal
+            document.getElementById('category-selection-modal').classList.remove('show');
+            
+            // Render preset items for selected category
+            renderPresetItems();
+            
+            document.getElementById('item-selection-modal').classList.add('show');
+            showSuccessMessage('✅ Selecting items for: ' + categories[categoryKey].name);
+        }
+
+        function backToCategories() {
+            document.getElementById('item-selection-modal').classList.remove('show');
+            
+            // Update categories display and summary
+            renderCategories();
+            updateQuoteSummaryDisplay();
+            
+            document.getElementById('category-selection-modal').classList.add('show');
+            showSuccessMessage('⬅️ Back to category selection');
+        }
+
+        function updateQuoteSummaryDisplay() {
+            var summaryContainer = document.getElementById('current-quote-summary');
+            var itemsCountElement = document.getElementById('total-items-count');
+            var previewElement = document.getElementById('quote-items-preview');
+            var totalElement = document.getElementById('running-total');
+            var finalizeBtn = document.getElementById('finalize-quote-btn');
+            
+            if (currentQuoteData.items.length === 0) {
+                summaryContainer.style.display = 'none';
+                finalizeBtn.disabled = true;
+                finalizeBtn.style.opacity = '0.5';
+                return;
+            }
+            
+            summaryContainer.style.display = 'block';
+            finalizeBtn.disabled = false;
+            finalizeBtn.style.opacity = '1';
+            
+            itemsCountElement.textContent = currentQuoteData.items.length;
+            
+            // Group items by category for display
+            var categoryGroups = {};
+            var totalAmount = 0;
+            
+            for (var i = 0; i < currentQuoteData.items.length; i++) {
+                var item = currentQuoteData.items[i];
+                var itemCategory = item.category || 'common';
+                totalAmount += item.total;
+                
+                if (!categoryGroups[itemCategory]) {
+                    categoryGroups[itemCategory] = [];
+                }
+                categoryGroups[itemCategory].push(item);
+            }
+            
+            var html = '';
+            for (var catKey in categoryGroups) {
+                var catItems = categoryGroups[catKey];
+                var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
+                
+                html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 6px; border-left: 4px solid var(--accent-primary);">' +
+                    '<div>' +
+                    '<div style="font-weight: 600; color: var(--text-primary); font-size: 13px;">' + categories[catKey].icon + ' ' + categories[catKey].name + '</div>' +
+                    '<div style="font-size: 11px; color: var(--text-muted);">' + catItems.length + ' items</div>' +
+                    '</div>' +
+                    '<div style="font-weight: 700; color: var(--accent-primary); font-size: 14px;">RM ' + catTotal.toFixed(2) + '</div>' +
+                    '</div>';
+            }
+            
+            previewElement.innerHTML = html;
+            totalElement.textContent = 'RM ' + totalAmount.toFixed(2);
+            currentQuoteData.totalAmount = totalAmount;
+            
+            // Update categories list
+            var uniqueCategories = Object.keys(categoryGroups);
+            currentQuoteData.categories = uniqueCategories;
+        }
+
+        function finalizeQuote() {
+            if (currentQuoteData.items.length === 0) {
+                showSuccessMessage('⚠️ Please add at least one item to the quote');
+                return;
+            }
+            
+            // Create quote object with branding
+            var quote = {
+                id: Date.now(),
+                title: currentQuoteData.title,
+                categories: [...currentQuoteData.categories],
+                items: [...currentQuoteData.items],
+                totalAmount: currentQuoteData.totalAmount,
+                createdAt: new Date().toISOString(),
+                branding: Object.assign({}, brandingData) // Include current branding
+            };
+            
+            // Add to quotes list
+            jobQuotes.push(quote);
+            currentQuoteId = quote.id;
+            
+            // Save to storage
+            saveDataToStorage();
+            
+            // Close modal
+            closeCreateQuote();
+            
+            // Show quote detail view
+            showQuoteDetail(quote.id);
+            
+            showSuccessMessage('✅ Professional orange branded quote created!');
+        }
+
+        function renderPresetItems() {
+            var container = document.getElementById('preset-items-list');
+            if (!container) return;
+            
+            var categoryItems = presetWorkItems[currentCategory] || [];
+            var html = '';
+            
+            // Show custom items for this category first
+            var customItems = currentQuoteData.items.filter(function(item) { 
+                return item.isCustom && item.category === currentCategory; 
+            });
+            
+            if (customItems.length > 0) {
+                html += '<div style="margin-bottom: 20px;">' +
+                    '<div style="font-weight: 700; color: var(--accent-warm); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
+                    '<span style="font-size: 20px;">🛠️</span>' +
+                    '<span>Custom Items (' + customItems.length + ')</span>' +
+                    '</div>';
+                
+                for (var i = 0; i < customItems.length; i++) {
+                    var item = customItems[i];
+                    html += '<div class="preset-item selected" onclick="togglePresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
+                        '<div class="header">' +
+                        '<div class="name">🛠️ ' + item.name + '</div>' +
+                        '<div class="price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                        '</div>' +
+                        '<div class="description">' + item.description + '</div>' +
+                        '<div class="unit">Per ' + item.unit + ' • Custom Item</div>' +
+                        '</div>';
+                }
+                html += '</div>';
+            }
+            
+            // Show preset items
+            if (categoryItems.length === 0) {
+                if (customItems.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">' +
+                        '<div style="font-size: 48px; margin-bottom: 16px;">📦</div>' +
+                        '<p style="font-weight: 600;">No preset items available</p>' +
+                        '<p style="font-size: 14px; margin-top: 8px;">Create custom items for this category</p>' +
+                        '</div>';
+                } else {
+                    container.innerHTML = html;
+                }
+                updateSelectedItemsSummary();
+                return;
+            }
+            
+            if (categoryItems.length > 0) {
+                html += '<div style="margin-bottom: 12px;">' +
+                    '<div style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
+                    '<span style="font-size: 20px;">' + categories[currentCategory].icon + '</span>' +
+                    '<span>Preset Items (' + categoryItems.length + ')</span>' +
+                    '</div>';
+            }
+            
+            for (var i = 0; i < categoryItems.length; i++) {
+                var item = categoryItems[i];
+                var isSelected = currentQuoteData.items.some(function(selectedItem) {
+                    return selectedItem.id === item.id && selectedItem.category === currentCategory && !selectedItem.isCustom;
+                });
+                
+                html += '<div class="preset-item' + (isSelected ? ' selected' : '') + '" onclick="togglePresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
+                    '<div class="header">' +
+                    '<div class="name">' + item.name + '</div>' +
+                    '<div class="price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                    '</div>' +
+                    '<div class="description">' + item.description + '</div>' +
+                    '<div class="unit">Per ' + item.unit + '</div>' +
+                    '</div>';
+            }
+            
+            if (categoryItems.length > 0) {
+                html += '</div>';
+            }
+            
+            container.innerHTML = html;
+            updateSelectedItemsSummary();
+        }
+
+        function togglePresetItem(itemId) {
+            // Check if it's a custom item already in the quote
+            var existingIndex = currentQuoteData.items.findIndex(function(selectedItem) {
+                return selectedItem.id === itemId && selectedItem.category === currentCategory;
+            });
+            
+            if (existingIndex !== -1) {
+                // Remove item
+                var removedItem = currentQuoteData.items[existingIndex];
+                currentQuoteData.items.splice(existingIndex, 1);
+                showSuccessMessage('➖ Removed: ' + removedItem.name);
+                renderPresetItems();
+                return;
+            }
+            
+            // Handle preset items
+            var categoryItems = presetWorkItems[currentCategory] || [];
+            var item = categoryItems.find(function(item) { return item.id === itemId; });
+            
+            if (!item) return;
+            
+            // Add preset item
+            var selectedItem = {
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                price: item.price,
+                unit: item.unit,
+                quantity: 1,
+                total: item.price,
+                category: currentCategory,
+                isCustom: false
+            };
+            
+            currentQuoteData.items.push(selectedItem);
+            showSuccessMessage('✅ Added: ' + item.name);
+            
+            // Update display
+            renderPresetItems();
+        }
+
+        function updateSelectedItemsSummary() {
+            var summaryContainer = document.getElementById('selected-items-summary');
+            var countElement = document.getElementById('selected-count');
+            var listElement = document.getElementById('selected-items-list');
+            var totalElement = document.getElementById('category-total-amount');
+            
+            // Filter items for current category only
+            var categoryItems = currentQuoteData.items.filter(function(item) {
+                return item.category === currentCategory;
+            });
+            
+            if (categoryItems.length === 0) {
+                summaryContainer.style.display = 'none';
+                return;
+            }
+            
+            summaryContainer.style.display = 'block';
+            countElement.textContent = categoryItems.length;
+            
+            var categoryTotal = 0;
+            var html = '';
+            
+            for (var i = 0; i < categoryItems.length; i++) {
+                var item = categoryItems[i];
+                categoryTotal += item.total;
+                
+                html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--accent-primary);">' +
+                    '<div>' +
+                    '<div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">' + 
+                    (item.isCustom ? '🛠️ ' : '') + item.name + 
+                    (item.isCustom ? ' (Custom)' : '') + '</div>' +
+                    '<div style="font-size: 12px; color: var(--text-muted);">1 ' + item.unit + '</div>' +
+                    '</div>' +
+                    '<div style="font-weight: 700; color: var(--accent-primary);">RM ' + item.total.toFixed(2) + '</div>' +
+                    '</div>';
+            }
+            
+            listElement.innerHTML = html;
+            totalElement.textContent = 'RM ' + categoryTotal.toFixed(2);
+        }
+
+        function finishItemSelection() {
+            // Just go back to categories - items are already added to the main quote
+            backToCategories();
+            showSuccessMessage('✅ Items added to quote. Select another category or finalize quote.');
+        }
+
+        // Custom Item Creation Functions
+        function openCustomItemForm() {
+            // Clear form
+            document.getElementById('custom-item-form').reset();
+            
+            // Show modal
+            document.getElementById('custom-item-modal').classList.add('show');
+            
+            showSuccessMessage('➕ Creating custom item for: ' + categories[currentCategory].name);
+        }
+
+        function closeCustomItemForm() {
+            document.getElementById('custom-item-modal').classList.remove('show');
+        }
+
+        function handleCustomItemSubmit(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('custom-item-name').value.trim();
+            var description = document.getElementById('custom-item-description').value.trim();
+            var price = parseFloat(document.getElementById('custom-item-price').value);
+            var unit = document.getElementById('custom-item-unit').value;
+            
+            if (!name || !price || price <= 0) {
+                showSuccessMessage('⚠️ Please fill in item name and valid price');
+                return;
+            }
+            
+            // Create custom item
+            var customItem = {
+                id: 'custom-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                name: name,
+                description: description || 'Custom item for ' + currentQuoteData.title,
+                price: price,
+                unit: unit,
+                quantity: 1,
+                total: price,
+                category: currentCategory,
+                isCustom: true
+            };
+            
+            // Add to current quote items
+            currentQuoteData.items.push(customItem);
+            
+            // Close modal
+            closeCustomItemForm();
+            
+            // Update display
+            renderPresetItems();
+            updateSelectedItemsSummary();
+            
+            showSuccessMessage('✅ Custom item added: ' + name);
+        }
+
+        // Quote Detail and PDF Functions
+        function showQuoteDetail(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            currentQuoteId = quoteId;
+            
+            // Render quote detail
+            renderQuoteDetail(quote);
+            
+            // Show quote detail view
+            showView('quote-detail');
+        }
+
+        function renderQuoteDetail(quote) {
+            var container = document.getElementById('quote-detail-content');
+            if (!container) return;
+            
+            var html = '';
+            
+            // Quote Header
+            var categoriesText = quote.categories ? quote.categories.map(function(cat) { 
+                return categories[cat] ? categories[cat].name : cat; 
+            }).join(', ') : (quote.category ? categories[quote.category].name : 'Multiple');
+            
+            html += '<div class="quote-detail-header">' +
+                '<div class="quote-title">' + quote.title + '</div>' +
+                '<div class="quote-meta">📅 Created: ' + formatDate(quote.createdAt) + ' • 🏷️ Categories: ' + categoriesText + '</div>' +
+                '<div class="quote-total">' +
+                '<div class="label">Total Quote Amount</div>' +
+                '<div class="amount">RM ' + quote.totalAmount.toFixed(2) + '</div>' +
+                '</div>' +
+                '</div>';
+            
+            // Quote Items grouped by category
+            html += '<div class="quote-items">' +
+                '<div class="items-header">' +
+                '<span>📋</span> Quote Items (' + quote.items.length + ')' +
+                '</div>';
+            
+            // Group items by category
+            var itemsByCategory = {};
+            for (var i = 0; i < quote.items.length; i++) {
+                var item = quote.items[i];
+                var itemCategory = item.category || quote.category || 'common';
+                if (!itemsByCategory[itemCategory]) {
+                    itemsByCategory[itemCategory] = [];
+                }
+                itemsByCategory[itemCategory].push(item);
+            }
+            
+            // Render items by category
+            for (var catKey in itemsByCategory) {
+                var catItems = itemsByCategory[catKey];
+                var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
+                
+                html += '<div style="margin-bottom: 20px; border-left: 4px solid ' + (categories[catKey] ? categories[catKey].color : 'var(--accent-primary)') + '; padding-left: 16px;">' +
+                    '<div style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
+                    '<span style="font-size: 20px;">' + (categories[catKey] ? categories[catKey].icon : '📋') + '</span>' +
+                    '<span>' + (categories[catKey] ? categories[catKey].name : catKey) + ' (' + catItems.length + ' items)</span>' +
+                    '<span style="margin-left: auto; color: var(--accent-primary);">RM ' + catTotal.toFixed(2) + '</span>' +
+                    '</div>';
+                
+                for (var j = 0; j < catItems.length; j++) {
+                    var item = catItems[j];
+                    var itemIcon = item.isCustom ? '🛠️' : (categories[catKey] ? categories[catKey].icon : '📋');
+                    var itemLabel = item.isCustom ? ' (Custom)' : '';
+                    
+                    html += '<div class="quote-item">' +
+                        '<div class="item-name">' +
+                        '<span>' + itemIcon + '</span>' +
+                        item.name + itemLabel +
+                        '</div>' +
+                        '<div class="item-details">' + item.description + '</div>' +
+                        '<div class="item-pricing">' +
+                        '<span class="quantity">Quantity: ' + item.quantity + ' ' + item.unit + '</span>' +
+                        '<span class="price">RM ' + item.total.toFixed(2) + '</span>' +
+                        '</div>' +
+                        '</div>';
+                }
+                
+                html += '</div>';
+            }
+            
+            html += '</div>';
+            
+            // Action Buttons
+            html += '<div class="card">' +
+                '<div class="pdf-actions">' +
+                '<button class="form-btn btn-success" onclick="openPdfShare()">' +
+                '<span>📤</span> Share Quote' +
+                '</button>' +
+                '<button class="form-btn btn-info" onclick="editQuote(' + quote.id + ')">' +
+                '<span>✏️</span> Edit Quote' +
+                '</button>' +
+                '<button class="form-btn btn-danger" onclick="deleteQuote(' + quote.id + ')">' +
+                '<span>🗑️</span> Delete Quote' +
+                '</button>' +
+                '<button class="form-btn btn-secondary" onclick="showView(\'quotes\')">' +
+                '<span>←</span> Back to Quotes' +
+                '</button>' +
+                '</div>' +
+                '</div>';
+            
+            container.innerHTML = html;
+        }
+
+        function openPdfShare() {
+            document.getElementById('pdf-share-modal').classList.add('show');
+            showSuccessMessage('📄 PDF sharing options opened');
+        }
+
+        function closePdfShare() {
+            document.getElementById('pdf-share-modal').classList.remove('show');
+        }
+
+        function generateAndSharePDF() {
+            if (!currentQuoteId) return;
+            
+            var quote = jobQuotes.find(function(q) { return q.id === currentQuoteId; });
+            if (!quote) return;
+            
+            showSuccessMessage('📄 Generating orange branded PDF...');
+            
+            // Create PDF content with enhanced branding
+            var { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+            
+            try {
+                // Use quote's branding if available, otherwise use current branding
+                var quoteBranding = quote.branding || brandingData;
+                
+                // Header with Logo and Branding
+                doc.setFontSize(20);
+                doc.setFont(undefined, 'bold');
+                doc.text(companyInfo.name, 20, 30);
+                
+                // Add logo if available
+                if (quoteBranding.logo) {
+                    try {
+                        doc.addImage(quoteBranding.logo, 'JPEG', 150, 10, 40, 30);
+                    } catch (logoError) {
+                        console.warn('Logo embedding failed:', logoError);
+                    }
+                }
+                
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Registration No: ' + companyInfo.registration, 20, 40);
+                doc.text(quoteBranding.tagline, 20, 48);
+                
+                // Quote Title
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.text('PROFESSIONAL JOB QUOTE', 20, 70);
+                
+                // Quote Details
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Quote #: ' + quote.id, 20, 85);
+                doc.text('Date: ' + formatDate(quote.createdAt), 20, 95);
+                doc.text('Job Title: ' + quote.title, 20, 105);
+                
+                // Categories
+                var categoriesText = quote.categories ? quote.categories.map(function(cat) { 
+                    return categories[cat] ? categories[cat].name : cat; 
+                }).join(', ') : (quote.category ? categories[quote.category].name : 'Multiple');
+                doc.text('Categories: ' + categoriesText, 20, 115);
+                
+                // Items Header
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('QUOTE ITEMS', 20, 135);
+                
+                // Items Table
+                var yPosition = 150;
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'bold');
+                doc.text('No.', 20, yPosition);
+                doc.text('Description', 35, yPosition);
+                doc.text('Category', 110, yPosition);
+                doc.text('Qty', 140, yPosition);
+                doc.text('Unit', 155, yPosition);
+                doc.text('Amount (RM)', 175, yPosition);
+                
+                // Items
+                doc.setFont(undefined, 'normal');
+                for (var i = 0; i < quote.items.length; i++) {
+                    var item = quote.items[i];
+                    yPosition += 10;
+                    
+                    doc.text((i + 1).toString(), 20, yPosition);
+                    var itemName = item.name + (item.isCustom ? ' (Custom)' : '');
+                    doc.text(itemName.substring(0, 25), 35, yPosition);
+                    
+                    // Category
+                    var itemCategory = item.category || quote.category || 'common';
+                    var catName = categories[itemCategory] ? categories[itemCategory].name : itemCategory;
+                    doc.text(catName.substring(0, 10), 110, yPosition);
+                    
+                    doc.text(item.quantity.toString(), 140, yPosition);
+                    doc.text(item.unit.substring(0, 8), 155, yPosition);
+                    doc.text(item.total.toFixed(2), 175, yPosition);
+                    
+                    if (item.description && yPosition < 240) {
+                        yPosition += 8;
+                        doc.setFontSize(8);
+                        doc.text(item.description.substring(0, 60), 35, yPosition);
+                        doc.setFontSize(10);
+                    }
+                    
+                    if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 30;
+                    }
+                }
+                
+                // Total
+                yPosition += 20;
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('TOTAL AMOUNT: RM ' + quote.totalAmount.toFixed(2), 20, yPosition);
+                
+                // Footer with branding
+                yPosition += 30;
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text('Thank you for choosing ' + companyInfo.name, 20, yPosition);
+                doc.text('For inquiries, please contact us at ' + companyInfo.phone, 20, yPosition + 10);
+                doc.text('Email: ' + companyInfo.email, 20, yPosition + 20);
+                doc.text('Professional orange branding by REFIT System', 20, yPosition + 30);
+                
+                // Generate PDF blob
+                var pdfBlob = doc.output('blob');
+                var fileName = 'REFIT_Orange_Quote_' + quote.id + '_' + quote.title.replace(/[^a-z0-9]/gi, '_') + '.pdf';
+                
+                // Check if Web Share API is available
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([pdfBlob], fileName, { type: 'application/pdf' })] })) {
+                    var file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+                    
+                    navigator.share({
+                        title: 'Professional Job Quote - ' + quote.title,
+                        text: 'Professional orange branded quote from ' + companyInfo.name,
+                        files: [file]
+                    }).then(function() {
+                        showSuccessMessage('📤 Orange branded quote shared successfully!');
+                        closePdfShare();
+                    }).catch(function(error) {
+                        console.log('Share failed:', error);
+                        downloadPDF(); // Fallback to download
+                    });
+                } else {
+                    // Fallback: Download PDF
+                    downloadPDF();
+                }
+                
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                showSuccessMessage('❌ Error generating orange branded PDF. Please try again.');
+            }
+        }
+
+        function downloadPDF() {
+            if (!currentQuoteId) return;
+            
+            var quote = jobQuotes.find(function(q) { return q.id === currentQuoteId; });
+            if (!quote) return;
+            
+            showSuccessMessage('💾 Downloading orange branded PDF...');
+            
+            // Create PDF content (same as share function but with download)
+            var { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+            
+            try {
+                // Use quote's branding if available, otherwise use current branding
+                var quoteBranding = quote.branding || brandingData;
+                
+                // Header with Logo and Branding
+                doc.setFontSize(20);
+                doc.setFont(undefined, 'bold');
+                doc.text(companyInfo.name, 20, 30);
+                
+                // Add logo if available
+                if (quoteBranding.logo) {
+                    try {
+                        doc.addImage(quoteBranding.logo, 'JPEG', 150, 10, 40, 30);
+                    } catch (logoError) {
+                        console.warn('Logo embedding failed:', logoError);
+                    }
+                }
+                
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Registration No: ' + companyInfo.registration, 20, 40);
+                doc.text(quoteBranding.tagline, 20, 48);
+                
+                // Quote Title
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.text('PROFESSIONAL JOB QUOTE', 20, 70);
+                
+                // Quote Details
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Quote #: ' + quote.id, 20, 85);
+                doc.text('Date: ' + formatDate(quote.createdAt), 20, 95);
+                doc.text('Job Title: ' + quote.title, 20, 105);
+                
+                // Categories
+                var categoriesText = quote.categories ? quote.categories.map(function(cat) { 
+                    return categories[cat] ? categories[cat].name : cat; 
+                }).join(', ') : (quote.category ? categories[quote.category].name : 'Multiple');
+                doc.text('Categories: ' + categoriesText, 20, 115);
+                
+                // Items Header
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('QUOTE ITEMS', 20, 135);
+                
+                // Items Table
+                var yPosition = 150;
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'bold');
+                doc.text('No.', 20, yPosition);
+                doc.text('Description', 35, yPosition);
+                doc.text('Category', 110, yPosition);
+                doc.text('Qty', 140, yPosition);
+                doc.text('Unit', 155, yPosition);
+                doc.text('Amount (RM)', 175, yPosition);
+                
+                // Items
+                doc.setFont(undefined, 'normal');
+                for (var i = 0; i < quote.items.length; i++) {
+                    var item = quote.items[i];
+                    yPosition += 10;
+                    
+                    doc.text((i + 1).toString(), 20, yPosition);
+                    var itemName = item.name + (item.isCustom ? ' (Custom)' : '');
+                    doc.text(itemName.substring(0, 25), 35, yPosition);
+                    
+                    // Category
+                    var itemCategory = item.category || quote.category || 'common';
+                    var catName = categories[itemCategory] ? categories[itemCategory].name : itemCategory;
+                    doc.text(catName.substring(0, 10), 110, yPosition);
+                    
+                    doc.text(item.quantity.toString(), 140, yPosition);
+                    doc.text(item.unit.substring(0, 8), 155, yPosition);
+                    doc.text(item.total.toFixed(2), 175, yPosition);
+                    
+                    if (item.description && yPosition < 240) {
+                        yPosition += 8;
+                        doc.setFontSize(8);
+                        doc.text(item.description.substring(0, 60), 35, yPosition);
+                        doc.setFontSize(10);
+                    }
+                    
+                    if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 30;
+                    }
+                }
+                
+                // Total
+                yPosition += 20;
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('TOTAL AMOUNT: RM ' + quote.totalAmount.toFixed(2), 20, yPosition);
+                
+                // Footer with branding
+                yPosition += 30;
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text('Thank you for choosing ' + companyInfo.name, 20, yPosition);
+                doc.text('For inquiries, please contact us at ' + companyInfo.phone, 20, yPosition + 10);
+                doc.text('Email: ' + companyInfo.email, 20, yPosition + 20);
+                doc.text('Professional orange branding by REFIT System', 20, yPosition + 30);
+                
+                // Download PDF
+                var fileName = 'REFIT_Orange_Quote_' + quote.id + '_' + quote.title.replace(/[^a-z0-9]/gi, '_') + '.pdf';
+                doc.save(fileName);
+                
+                showSuccessMessage('💾 Orange branded PDF downloaded successfully!');
+                closePdfShare();
+                
+            } catch (error) {
+                console.error('PDF download error:', error);
+                showSuccessMessage('❌ Error downloading orange branded PDF. Please try again.');
+            }
+        }
+
+        // Quote Management Functions
+        function editQuote(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            // Set current quote data for editing
+            currentQuoteData = {
+                title: quote.title,
+                categories: quote.categories || [],
+                items: [...quote.items],
+                totalAmount: quote.totalAmount
+            };
+            
+            // Remove original quote (will be re-added when edited)
+            jobQuotes = jobQuotes.filter(function(q) { return q.id !== quoteId; });
+            
+            // Fill form with existing data
+            document.getElementById('job-title-input').value = quote.title;
+            document.getElementById('selected-job-title').textContent = quote.title;
+            
+            // Start editing flow from Step 2 (categories)
+            renderCategories();
+            updateQuoteSummaryDisplay();
+            
+            document.getElementById('category-selection-modal').classList.add('show');
+            showSuccessMessage('✏️ Editing quote: ' + quote.title);
+        }
+
+        function deleteQuote(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            if (confirm('Delete quote: "' + quote.title + '"?\n\nThis action cannot be undone.')) {
+                jobQuotes = jobQuotes.filter(function(q) { return q.id !== quoteId; });
+                saveDataToStorage();
+                updateStats();
+                renderViews();
+                showView('quotes');
+                showSuccessMessage('🗑️ Quote deleted successfully');
+            }
+        }
+
+        // View and Navigation Functions
+        function showView(viewName) {
+            currentView = viewName;
+            
+            // Hide all views
+            var views = document.querySelectorAll('.view');
+            for (var i = 0; i < views.length; i++) {
+                views[i].classList.add('hidden');
+            }
+            
+            // Show target view
+            var targetView = document.getElementById(viewName + '-view');
+            if (targetView) {
+                targetView.classList.remove('hidden');
+            }
+            
+            // Update navigation
+            var navItems = document.querySelectorAll('.nav-item');
+            for (var i = 0; i < navItems.length; i++) {
+                navItems[i].classList.remove('active');
+            }
+            
+            var activeNav = document.querySelector('.nav-item[onclick*="' + viewName + '"]');
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+            
+            // Render view content
+            renderViews();
+        }
+
+        function renderViews() {
+            switch(currentView) {
+                case 'dashboard':
+                    renderDashboard();
+                    break;
+                case 'quotes':
+                    renderQuotes();
+                    break;
+                case 'quote-detail':
+                    // Already rendered by showQuoteDetail
+                    break;
+            }
+        }
+
+        function renderDashboard() {
+            var recentQuotes = jobQuotes.slice(-3).reverse();
+            var container = document.getElementById('recent-quotes');
+            if (!container) return;
+            
+            if (recentQuotes.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 30px 20px; color: var(--text-muted);">' +
+                    '<div style="font-size: 32px; margin-bottom: 8px;">💰</div>' +
+                    '<p style="font-weight: 600;">No job quotes yet</p>' +
+                    '<p style="font-size: 12px; margin-top: 4px;">Create your first professional orange quote</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var html = '';
+            for (var i = 0; i < recentQuotes.length; i++) {
+                var quote = recentQuotes[i];
+                
+                // Handle both old single category and new multi-category quotes
+                var quoteCategories = quote.categories || (quote.category ? [quote.category] : ['common']);
+                var categoryBadges = '';
+                
+                for (var j = 0; j < Math.min(quoteCategories.length, 2); j++) {
+                    var cat = quoteCategories[j];
+                    if (categories[cat]) {
+                        categoryBadges += '<span class="category-badge category-' + cat + '">' + 
+                            categories[cat].icon + ' ' + categories[cat].name + '</span>';
+                    }
+                }
+                
+                if (quoteCategories.length > 2) {
+                    categoryBadges += '<span class="category-badge" style="background: var(--text-muted);">+' + 
+                        (quoteCategories.length - 2) + '</span>';
+                }
+                
+                // Add branding indicator
+                var brandingIndicator = quote.branding ? '<span style="color: var(--accent-primary); font-size: 12px;">🧡 Orange Branded</span>' : '';
+                
+                html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;" onclick="showQuoteDetail(' + quote.id + ')">' +
+                    '<div style="font-weight: 700; font-size: 15px; color: var(--text-primary); margin-bottom: 8px;">' + quote.title + '</div>' +
+                    '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + ' ' + brandingIndicator + '</div>' +
+                    '<div style="margin-bottom: 8px;">' + categoryBadges + '</div>' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="color: var(--text-muted); font-size: 12px;">Quote #' + quote.id + '</span>' +
+                    '<span style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function renderQuotes() {
+            var container = document.getElementById('quotes-list');
+            if (!container) return;
+            
+            if (jobQuotes.length === 0) {
+                container.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-icon">💰</div>' +
+                    '<p style="font-weight: 600;">No job quotes found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first professional orange quote</p>' +
+                    '</div>';
+                return;
+            }
+            
+            var html = '';
+            for (var i = jobQuotes.length - 1; i >= 0; i--) {
+                var quote = jobQuotes[i];
+                
+                // Handle both old single category and new multi-category quotes
+                var quoteCategories = quote.categories || (quote.category ? [quote.category] : ['common']);
+                var categoryBadges = '';
+                
+                for (var j = 0; j < Math.min(quoteCategories.length, 3); j++) {
+                    var cat = quoteCategories[j];
+                    if (categories[cat]) {
+                        categoryBadges += '<span class="category-badge category-' + cat + '">' + 
+                            categories[cat].icon + ' ' + categories[cat].name + '</span>';
+                    }
+                }
+                
+                if (quoteCategories.length > 3) {
+                    categoryBadges += '<span class="category-badge" style="background: var(--text-muted);">+' + 
+                        (quoteCategories.length - 3) + ' more</span>';
+                }
+                
+                // Add branding indicator
+                var brandingIndicator = quote.branding ? '<span class="category-badge" style="background: var(--accent-primary);">🧡 Orange Branded</span>' : '';
+                
+                html += '<div class="item-card">' +
+                    '<div class="item-header">' +
+                    '<div class="item-info">' +
+                    '<h3>' + quote.title + '</h3>' +
+                    '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
+                    '<div style="margin: 8px 0;">' + categoryBadges + brandingIndicator + '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="item-actions">' +
+                    '<button class="icon-btn quote-btn" onclick="showQuoteDetail(' + quote.id + ')" title="View Quote">👁️</button>' +
+                    '<button class="icon-btn share-btn" onclick="currentQuoteId=' + quote.id + '; openPdfShare()" title="Share Quote">📤</button>' +
+                    '<button class="icon-btn edit-btn" onclick="editQuote(' + quote.id + ')" title="Edit Quote">✏️</button>' +
+                    '<button class="icon-btn delete-btn" onclick="deleteQuote(' + quote.id + ')" title="Delete Quote">🗑️</button>' +
+                    '</div>' +
+                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="font-size: 12px; color: var(--text-muted);">Quote #' + quote.id + '</span>' +
+                    '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        // Company Info Management
+        function openCompanyInfo() {
+            // Load current company info into form
+            document.getElementById('company-name-input').value = companyInfo.name;
+            document.getElementById('company-reg-input').value = companyInfo.registration;
+            document.getElementById('company-phone-input').value = companyInfo.phone;
+            document.getElementById('company-email-input').value = companyInfo.email;
+            document.getElementById('company-address-input').value = companyInfo.address;
+            
+            document.getElementById('company-info-modal').classList.add('show');
+            showSuccessMessage('🏢 Company info opened');
+        }
+
+        function closeCompanyInfo() {
+            document.getElementById('company-info-modal').classList.remove('show');
+        }
+
+        function saveCompanyInfo() {
+            // Update company info
+            companyInfo.name = document.getElementById('company-name-input').value.trim() || companyInfo.name;
+            companyInfo.registration = document.getElementById('company-reg-input').value.trim() || companyInfo.registration;
+            companyInfo.phone = document.getElementById('company-phone-input').value.trim() || companyInfo.phone;
+            companyInfo.email = document.getElementById('company-email-input').value.trim() || companyInfo.email;
+            companyInfo.address = document.getElementById('company-address-input').value.trim() || companyInfo.address;
+            
+            // Update header display
+            updateHeaderDisplay();
+            
+            // Save to storage
+            saveDataToStorage();
+            closeCompanyInfo();
+            showSuccessMessage('✅ Company details saved!');
+        }
+
+        // Utility Functions
+        function updateStats() {
+            var totalQuotes = jobQuotes.length;
+            var totalItems = 0;
+            var totalRevenue = 0;
+            var todayRevenue = 0;
+            var today = new Date().toISOString().split('T')[0];
+            
+            for (var i = 0; i < jobQuotes.length; i++) {
+                var quote = jobQuotes[i];
+                totalItems += quote.items.length;
+                totalRevenue += quote.totalAmount;
+                if (quote.createdAt.split('T')[0] === today) {
+                    todayRevenue += quote.totalAmount;
+                }
+            }
+            
+            updateElementText('total-quotes-count', totalQuotes);
+            updateElementText('total-items-count', totalItems);
+            updateElementText('today-revenue', 'RM ' + Math.round(todayRevenue));
+            updateElementText('total-revenue', 'RM ' + Math.round(totalRevenue));
+        }
+
+        function updateElementText(elementId, text) {
+            var element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = text;
+            }
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            var date = new Date(dateString);
+            return date.toLocaleDateString('en-MY', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function showSuccessMessage(message) {
+            var messageElement = document.getElementById('success-message');
+            if (!messageElement) return;
+            
+            messageElement.textContent = message;
+            messageElement.classList.add('show');
+            
+            setTimeout(function() {
+                messageElement.classList.remove('show');
+            }, 3000);
+        }
+
+        function exportData() {
+            var allData = {
+                jobQuotes: jobQuotes,
+                categories: categories,
+                presetWorkItems: presetWorkItems,
+                companyInfo: companyInfo,
+                brandingData: brandingData,
+                customLogo: customLogo,
+                themePreference: currentTheme,
+                exportDate: new Date().toISOString(),
+                version: 'Pastel Orange Branding System 4.0'
+            };
+            
+            var dataStr = JSON.stringify(allData, null, 2);
+            var dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'REFIT_Orange_Branding_' + new Date().toISOString().split('T')[0] + '.json';
+            link.click();
+            
+            showSuccessMessage('🧡📤 Pastel orange branding system data exported! 💕');
+        }
+
+        // Setup and initialization functions
+        function setupEventListeners() {
+            // Job title enter key support
+            var jobTitleInput = document.getElementById('job-title-input');
+            if (jobTitleInput) {
+                jobTitleInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        proceedToCategory();
+                    }
+                });
+            }
+            
+            // Custom item form submit
+            var customItemForm = document.getElementById('custom-item-form');
+            if (customItemForm) {
+                customItemForm.addEventListener('submit', handleCustomItemSubmit);
+            }
+            
+            // Company tagline input update
+            var taglineInput = document.getElementById('company-tagline-input');
+            if (taglineInput) {
+                taglineInput.addEventListener('input', function(e) {
+                    brandingData.tagline = e.target.value;
+                    updateBrandPreview();
+                });
+            }
+        }
+
+        function setupMobileOptimizations() {
+            setInterval(updateStatusBar, 60000);
+            
+            var lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                var now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+        }
+
+        function updateStatusBar() {
+            var now = new Date();
+            var timeString = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: false 
+            });
+            var timeElement = document.getElementById('status-time');
+            if (timeElement) {
+                timeElement.textContent = timeString;
+            }
+        }
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            loadThemePreference();
+            loadDataFromStorage();
+            setupEventListeners();
+            setupMobileOptimizations();
+            updateStatusBar();
+            updateStats();
+            renderViews();
+            
+            showSuccessMessage('🧡✨ REFIT Pastel Orange Branding System Ready! Complete professional customization! 💕');
+            console.log('🔧 REFIT MAINTENANCE SERVICES - Pastel Orange Branding System');
+            console.log('🧡 Complete Orange Branding Suite: Logo + Colors + Templates');
+            console.log('📄 Professional PDF Generation with Orange Branding');
+            console.log('👁️ Brand Preview & Export Capabilities');
+            console.log('🏢 Company Info Integration');
+        }
+
+        console.log('🧡💕 REFIT ENHANCED - Complete Pastel Orange Professional Branding System!');
+        console.log('📝 Enhanced Quote Creation with Orange Branding Integration');
+        console.log('🎨 Branding Insert Button: Full orange customization suite');
+        console.log('📷 Logo Upload: Professional logo integration');
+        console.log('🧡 Orange Color Themes: 8 professional orange color schemes');
+        console.log('✨ Company Taglines: Custom messaging');
+        console.log('👁️ Branding Preview: See before you apply');
+        console.log('📦 Export Package: Complete orange branding export');
+        console.log('📄 Orange Branded PDFs: Professional quote generation');
+        console.log('💾 Template Saving: Reusable orange branding templates');
+        console.log('🔄 Quick Insert: Apply orange branding to existing quotes');
+        console.log('🏢 Company Integration: Complete business info management');
+        console.log('🧡💕 Beautiful Professional Orange Design: Enhanced pastel orange aesthetics with branding power!');
+    </script>
+</body>
+</html>
