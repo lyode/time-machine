@@ -9,23 +9,23 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#f472b6">
     
-    <title>REFIT MAINTENANCE SERVICES - Complete 5-Step Workflow</title>
+    <title>REFIT MAINTENANCE SERVICES - Enhanced Quote Creation</title>
     
-    <!-- Enhanced PDF Generation Libraries -->
+    <!-- PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        /* Reset and Base Styles */
+        /* Enhanced CSS with Better Mobile Optimization and Animations */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         :root {
-            /* Beautiful Pink Theme Variables */
+            /* Enhanced Pink Theme Variables */
             --bg-primary: #fdf2f8;
             --bg-secondary: #fce7f3;
             --bg-card: #ffffff;
@@ -46,7 +46,7 @@
             --error: #ef4444;
             --info: #3b82f6;
             
-            /* Category Colors */
+            /* Enhanced Category Colors */
             --cat-electrical: #6366f1;
             --cat-plumbing: #06b6d4;
             --cat-hvac: #8b5cf6;
@@ -83,7 +83,7 @@
             transition: all 0.3s ease;
         }
         
-        /* Mobile Layout Container */
+        /* Enhanced Mobile Layout Container */
         .mobile-container {
             position: relative;
             width: 100%;
@@ -94,7 +94,7 @@
             background: var(--bg-primary);
         }
         
-        /* Status Bar */
+        /* Enhanced Status Bar */
         .status-bar {
             height: 44px;
             background: var(--bg-secondary);
@@ -132,7 +132,7 @@
             transform: scale(1.05);
         }
         
-        /* Header */
+        /* Enhanced Header */
         .header {
             background: var(--bg-secondary);
             backdrop-filter: blur(30px);
@@ -217,7 +217,7 @@
             transform: translateY(-2px);
         }
         
-        /* Main Content */
+        /* Enhanced Main Content */
         .main-content {
             flex: 1;
             overflow-y: auto;
@@ -242,7 +242,7 @@
             border-radius: 3px;
         }
         
-        /* Cards */
+        /* Enhanced Cards */
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
@@ -251,7 +251,7 @@
             margin: 20px 0;
             border: 1px solid var(--border-color);
             box-shadow: 0 8px 32px var(--shadow-light);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
         
         .card:hover {
@@ -259,7 +259,7 @@
             transform: translateY(-2px);
         }
         
-        /* Stats Grid */
+        /* Enhanced Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -275,7 +275,7 @@
             text-align: center;
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 16px var(--shadow-light);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
         
         .stat-card:hover {
@@ -299,7 +299,7 @@
             color: var(--accent-primary);
         }
         
-        /* Buttons */
+        /* Enhanced Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -312,10 +312,12 @@
             font-weight: 600;
             font-size: 16px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             min-height: 52px;
             text-decoration: none;
             box-shadow: 0 4px 12px var(--shadow-light);
+            position: relative;
+            overflow: hidden;
         }
         
         .btn:hover {
@@ -325,6 +327,21 @@
         
         .btn:active {
             transform: scale(0.96);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
         }
         
         .btn-primary { 
@@ -346,7 +363,7 @@
             background: linear-gradient(135deg, var(--text-secondary), #9ca3af); 
         }
         
-        /* Action Buttons */
+        /* Enhanced Action Buttons */
         .actions-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -364,15 +381,32 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
             min-height: 120px;
             box-shadow: 0 6px 20px var(--shadow-light);
+            position: relative;
+            overflow: hidden;
         }
         
         .action-btn:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 30px var(--shadow-medium);
+        }
+        
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .action-btn:hover::before {
+            left: 100%;
         }
         
         .action-btn.primary { 
@@ -387,7 +421,7 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
         
-        /* Form Elements */
+        /* Enhanced Form Elements */
         .form-input {
             width: 100%;
             padding: 18px 20px;
@@ -398,7 +432,8 @@
             font-size: 16px;
             font-weight: 500;
             margin-bottom: 16px;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
         .form-input::placeholder {
@@ -409,9 +444,20 @@
             outline: none;
             border-color: var(--accent-primary);
             box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.15);
+            transform: translateY(-1px);
         }
         
-        /* Search Input */
+        .form-input.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+        }
+        
+        .form-input.success {
+            border-color: var(--success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+        
+        /* Enhanced Search Input */
         .search-container {
             position: relative;
             margin-bottom: 20px;
@@ -424,13 +470,14 @@
             transform: translateY(-50%);
             font-size: 18px;
             color: var(--text-muted);
+            z-index: 2;
         }
         
         .search-container input {
             padding-left: 56px;
         }
         
-        /* Item Cards */
+        /* Enhanced Item Cards */
         .item-card {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
@@ -439,7 +486,7 @@
             margin-bottom: 16px;
             border: 1px solid var(--border-color);
             box-shadow: 0 8px 32px var(--shadow-light);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             position: relative;
         }
         
@@ -462,7 +509,7 @@
             color: var(--text-primary);
         }
         
-        /* Icon Buttons */
+        /* Enhanced Icon Buttons */
         .icon-btn {
             width: 44px;
             height: 44px;
@@ -474,7 +521,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             font-size: 16px;
             box-shadow: 0 2px 8px var(--shadow-light);
         }
@@ -509,16 +556,7 @@
             color: white; 
         }
         
-        .item-actions {
-            display: flex;
-            gap: 8px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 10;
-        }
-        
-        /* Bottom Navigation */
+        /* Enhanced Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -549,7 +587,7 @@
             text-decoration: none;
             font-size: 12px;
             font-weight: 600;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
             min-width: 60px;
         }
@@ -568,18 +606,14 @@
         
         .nav-item .icon {
             font-size: 24px;
+            transition: all 0.3s ease;
         }
         
-        .home-indicator {
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 2px;
-            width: 140px;
-            margin: 12px auto 0;
-            opacity: 0.8;
+        .nav-item.active .icon {
+            transform: scale(1.2);
         }
         
-        /* Modals */
+        /* Enhanced Modals */
         .modal {
             position: fixed;
             top: 0;
@@ -606,6 +640,18 @@
         @keyframes slideUp {
             from { transform: translateY(100%); }
             to { transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
         
         .modal-content {
@@ -651,7 +697,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             font-size: 18px;
         }
         
@@ -665,7 +711,7 @@
             padding: 24px;
         }
         
-        /* Form Actions */
+        /* Enhanced Form Actions */
         .form-actions {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -681,9 +727,11 @@
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             min-height: 56px;
             box-shadow: 0 4px 15px var(--shadow-light);
+            position: relative;
+            overflow: hidden;
         }
         
         .form-btn:hover {
@@ -693,6 +741,21 @@
         
         .form-btn:active {
             transform: scale(0.97);
+        }
+        
+        .form-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .form-btn:hover::before {
+            left: 100%;
         }
         
         .form-btn.btn-primary {
@@ -719,7 +782,7 @@
             background: linear-gradient(135deg, var(--text-secondary), #9ca3af);
         }
         
-        /* Enhanced Custom Item Form */
+        /* Enhanced Quantity Selector */
         .quantity-selector {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
@@ -733,8 +796,8 @@
         }
         
         .quantity-btn {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             border: none;
             background: var(--accent-primary);
@@ -743,7 +806,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             font-size: 18px;
             font-weight: 700;
         }
@@ -751,6 +814,10 @@
         .quantity-btn:hover {
             background: var(--accent-secondary);
             transform: scale(1.1);
+        }
+        
+        .quantity-btn:active {
+            transform: scale(0.95);
         }
         
         .quantity-display {
@@ -761,6 +828,7 @@
             min-width: 60px;
         }
         
+        /* Enhanced Price Calculation */
         .price-calculation {
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white;
@@ -768,6 +836,7 @@
             border-radius: 12px;
             margin: 16px 0;
             text-align: center;
+            box-shadow: 0 4px 15px var(--shadow-medium);
         }
         
         .price-breakdown {
@@ -781,7 +850,7 @@
             font-weight: 800;
         }
         
-        /* Success Message */
+        /* Enhanced Success Message */
         .success-message {
             position: fixed;
             top: 120px;
@@ -807,7 +876,7 @@
             transform: translateX(-50%) translateY(0);
         }
         
-        /* Category Selection */
+        /* Enhanced Category Selection */
         .category-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -822,13 +891,15 @@
             padding: 20px 16px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             min-height: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            position: relative;
+            overflow: hidden;
         }
         
         .category-item:hover {
@@ -843,6 +914,21 @@
             transform: scale(1.05);
         }
         
+        .category-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .category-item:hover::before {
+            left: 100%;
+        }
+        
         .category-item .icon {
             font-size: 32px;
             margin-bottom: 8px;
@@ -855,7 +941,7 @@
             line-height: 1.2;
         }
         
-        /* Preset Item Selection */
+        /* Enhanced Preset Item Selection */
         .preset-item {
             background: var(--bg-card);
             border: 2px solid var(--border-color);
@@ -863,7 +949,9 @@
             padding: 16px;
             margin-bottom: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
         .preset-item:hover {
@@ -875,6 +963,21 @@
             border-color: var(--accent-primary);
             background: var(--accent-primary);
             color: white;
+        }
+        
+        .preset-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .preset-item:hover::before {
+            left: 100%;
         }
         
         .preset-item .header {
@@ -918,7 +1021,7 @@
             color: rgba(255, 255, 255, 0.7);
         }
         
-        /* Workflow Step Indicators */
+        /* Enhanced Step Indicators */
         .step-indicator {
             display: flex;
             justify-content: center;
@@ -935,19 +1038,87 @@
             height: 12px;
             border-radius: 50%;
             background: var(--text-muted);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
         
         .step-dot.active {
             background: var(--accent-primary);
             transform: scale(1.3);
+            box-shadow: 0 0 10px var(--accent-primary);
         }
         
         .step-dot.completed {
             background: var(--success);
+            transform: scale(1.2);
         }
         
-        /* Utility Classes */
+        /* Enhanced Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-secondary);
+            border-radius: 3px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+        
+        /* Enhanced Validation Messages */
+        .validation-message {
+            font-size: 12px;
+            margin-top: -12px;
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .validation-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border-left: 4px solid var(--error);
+        }
+        
+        .validation-message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+        
+        /* Enhanced Loading States */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+            position: relative;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid var(--accent-primary);
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Enhanced Utility Classes */
         .hidden {
             display: none !important;
         }
@@ -980,7 +1151,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             font-size: 24px;
             box-shadow: 0 8px 25px var(--shadow-medium);
         }
@@ -1002,7 +1173,7 @@
             opacity: 0.6;
         }
         
-        /* Mobile Optimizations */
+        /* Enhanced Mobile Optimizations */
         @media screen and (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1018,14 +1189,9 @@
                 grid-template-columns: 1fr;
             }
             
-            .item-actions {
-                position: static;
-                margin-top: 12px;
-                justify-content: flex-end;
-            }
-            
-            .item-card {
-                padding-right: 20px;
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
             }
             
             .section-title {
@@ -1037,14 +1203,9 @@
                 height: 40px;
                 font-size: 16px;
             }
-            
-            .category-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
         }
         
-        /* Safe area adjustments */
+        /* Enhanced Safe Area Adjustments */
         @supports (padding: max(0px)) {
             .status-bar {
                 padding-top: env(safe-area-inset-top);
@@ -1054,6 +1215,101 @@
             .bottom-nav {
                 padding-bottom: calc(32px + env(safe-area-inset-bottom));
             }
+        }
+        
+        /* Enhanced Field Focus Effects */
+        .form-field {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .form-field label {
+            position: absolute;
+            top: 18px;
+            left: 20px;
+            color: var(--text-muted);
+            font-size: 16px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .form-field input:focus + label,
+        .form-field input:not(:placeholder-shown) + label {
+            top: -8px;
+            left: 16px;
+            font-size: 12px;
+            color: var(--accent-primary);
+            background: var(--bg-card);
+            padding: 0 8px;
+        }
+        
+        /* Enhanced Quote Summary Cards */
+        .quote-summary-card {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin: 20px 0;
+            box-shadow: 0 8px 32px var(--shadow-strong);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quote-summary-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+        }
+        
+        .quote-summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .quote-summary-title {
+            font-size: 18px;
+            font-weight: 700;
+            opacity: 0.9;
+        }
+        
+        .quote-summary-count {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .quote-summary-body {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .quote-summary-total {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            margin-top: 16px;
+        }
+        
+        .quote-summary-total-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+        
+        .quote-summary-total-amount {
+            font-size: 32px;
+            font-weight: 800;
         }
     </style>
 </head>
@@ -1113,9 +1369,9 @@
                 <div class="card">
                     <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">Quick Actions</h3>
                     <div class="actions-grid">
-                        <button class="action-btn primary" onclick="startNewQuote()">
-                            <span class="icon">➕</span>
-                            <span style="font-weight: 700;">Create New Quote</span>
+                        <button class="action-btn primary" onclick="startEnhancedNewQuote()">
+                            <span class="icon">🎨</span>
+                            <span style="font-weight: 700;">Enhanced Quote Creation</span>
                         </button>
                         <button class="action-btn success" onclick="showView('quotes')">
                             <span class="icon">💰</span>
@@ -1138,8 +1394,8 @@
             <div id="quotes-view" class="view hidden">
                 <div class="section-header">
                     <h2 class="section-title">Job Quotes</h2>
-                    <button class="add-btn" onclick="startNewQuote()">
-                        <span>➕</span>
+                    <button class="add-btn" onclick="startEnhancedNewQuote()">
+                        <span>✨</span>
                     </button>
                 </div>
 
@@ -1175,9 +1431,9 @@
                     <span class="icon">💰</span>
                     <span>Quotes</span>
                 </div>
-                <div class="nav-item" onclick="startNewQuote()">
-                    <span class="icon">➕</span>
-                    <span>Create</span>
+                <div class="nav-item" onclick="startEnhancedNewQuote()">
+                    <span class="icon">✨</span>
+                    <span>Enhanced</span>
                 </div>
                 <div class="nav-item" onclick="openCompanyInfo()">
                     <span class="icon">👤</span>
@@ -1188,15 +1444,15 @@
         </div>
     </div>
 
-    <!-- Step 1: Client Information Modal -->
-    <div id="client-info-modal" class="modal">
+    <!-- Enhanced Step 1: Client Information Modal -->
+    <div id="enhanced-client-info-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>👤 Step 1: Client Information</h3>
-                <button class="close-btn" onclick="cancelQuoteCreation()">✕</button>
+                <h3>✨ Step 1: Enhanced Client Information</h3>
+                <button class="close-btn" onclick="cancelEnhancedQuoteCreation()">✕</button>
             </div>
             <div class="modal-body">
-                <!-- Step Indicator -->
+                <!-- Enhanced Step Indicator -->
                 <div class="step-indicator">
                     <div class="step-dot active"></div>
                     <div class="step-dot"></div>
@@ -1205,22 +1461,48 @@
                     <div class="step-dot"></div>
                 </div>
                 
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">👤</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Enter client details for this quote</p>
+                <!-- Enhanced Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 20%;"></div>
                 </div>
                 
-                <input type="text" class="form-input" placeholder="Client Name *" id="client-name" required>
-                <input type="text" class="form-input" placeholder="Company Name (Optional)" id="client-company">
-                <input type="tel" class="form-input" placeholder="Phone Number *" id="client-phone" required>
-                <input type="email" class="form-input" placeholder="Email Address" id="client-email">
-                <textarea class="form-input" placeholder="Address *" id="client-address" rows="3" style="resize: none;" required></textarea>
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">👤</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Enter client details for this professional quote</p>
+                    <p style="color: var(--accent-primary); font-size: 14px; margin-top: 8px;">All fields with * are required</p>
+                </div>
+                
+                <form id="enhanced-client-form">
+                    <div class="form-field">
+                        <input type="text" class="form-input" placeholder="Client Name *" id="enhanced-client-name" required>
+                        <div class="validation-message" id="client-name-validation"></div>
+                    </div>
+                    
+                    <div class="form-field">
+                        <input type="text" class="form-input" placeholder="Company Name (Optional)" id="enhanced-client-company">
+                    </div>
+                    
+                    <div class="form-field">
+                        <input type="tel" class="form-input" placeholder="Phone Number *" id="enhanced-client-phone" required>
+                        <div class="validation-message" id="client-phone-validation"></div>
+                    </div>
+                    
+                    <div class="form-field">
+                        <input type="email" class="form-input" placeholder="Email Address" id="enhanced-client-email">
+                        <div class="validation-message" id="client-email-validation"></div>
+                    </div>
+                    
+                    <div class="form-field">
+                        <textarea class="form-input" placeholder="Complete Address *" id="enhanced-client-address" rows="3" style="resize: none;" required></textarea>
+                        <div class="validation-message" id="client-address-validation"></div>
+                    </div>
+                </form>
                 
                 <div class="form-actions">
-                    <button type="button" class="form-btn btn-secondary" onclick="cancelQuoteCreation()">
+                    <button type="button" class="form-btn btn-secondary" onclick="cancelEnhancedQuoteCreation()">
                         ❌ Cancel
                     </button>
-                    <button type="button" class="form-btn btn-primary" onclick="proceedToJobTitle()" id="proceed-to-job-title-btn">
+                    <button type="button" class="form-btn btn-primary" onclick="proceedToEnhancedJobTitle()" id="enhanced-proceed-to-job-title-btn" disabled>
                         Next: Job Title ➡️
                     </button>
                 </div>
@@ -1228,15 +1510,15 @@
         </div>
     </div>
 
-    <!-- Step 2: Job Title Modal -->
-    <div id="job-title-modal" class="modal">
+    <!-- Enhanced Step 2: Job Title Modal -->
+    <div id="enhanced-job-title-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>📝 Step 2: Job Title</h3>
-                <button class="close-btn" onclick="backToClientInfo()">←</button>
+                <h3>✨ Step 2: Enhanced Job Title</h3>
+                <button class="close-btn" onclick="backToEnhancedClientInfo()">←</button>
             </div>
             <div class="modal-body">
-                <!-- Step Indicator -->
+                <!-- Enhanced Step Indicator -->
                 <div class="step-indicator">
                     <div class="step-dot completed"></div>
                     <div class="step-dot active"></div>
@@ -1245,26 +1527,47 @@
                     <div class="step-dot"></div>
                 </div>
                 
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">💼</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">What type of maintenance work is this quote for?</p>
-                    <p style="font-weight: 700; color: var(--text-primary); margin-top: 8px;" id="client-name-display"></p>
+                <!-- Enhanced Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 40%;"></div>
                 </div>
                 
-                <input type="text" 
-                       class="form-input" 
-                       placeholder="e.g., Office Renovation, AC Installation, Plumbing Repair..." 
-                       id="job-title-input" 
-                       style="font-size: 18px; padding: 20px 24px; text-align: center; font-weight: 600; margin-bottom: 24px;">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">💼</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">What type of maintenance work is this quote for?</p>
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 12px; margin-top: 16px; border-left: 4px solid var(--accent-primary);">
+                        <p style="font-weight: 700; color: var(--text-primary);" id="enhanced-client-name-display"></p>
+                    </div>
+                </div>
+                
+                <!-- Job Title Suggestions -->
+                <div style="margin-bottom: 20px;">
+                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">💡 Popular job titles:</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <button type="button" class="btn btn-secondary" onclick="selectJobTitleSuggestion('Office Renovation')" style="font-size: 12px; padding: 8px 12px; min-height: auto;">Office Renovation</button>
+                        <button type="button" class="btn btn-secondary" onclick="selectJobTitleSuggestion('AC Installation & Maintenance')" style="font-size: 12px; padding: 8px 12px; min-height: auto;">AC Installation</button>
+                        <button type="button" class="btn btn-secondary" onclick="selectJobTitleSuggestion('Plumbing Repair & Upgrade')" style="font-size: 12px; padding: 8px 12px; min-height: auto;">Plumbing Repair</button>
+                        <button type="button" class="btn btn-secondary" onclick="selectJobTitleSuggestion('Electrical Work & Wiring')" style="font-size: 12px; padding: 8px 12px; min-height: auto;">Electrical Work</button>
+                    </div>
+                </div>
+                
+                <div class="form-field">
+                    <input type="text" 
+                           class="form-input" 
+                           placeholder="e.g., Office Renovation, AC Installation, Plumbing Repair..." 
+                           id="enhanced-job-title-input" 
+                           style="font-size: 18px; padding: 20px 24px; text-align: center; font-weight: 600;">
+                    <div class="validation-message" id="job-title-validation"></div>
+                </div>
                 
                 <div class="form-actions">
-                    <button type="button" class="form-btn btn-secondary" onclick="backToClientInfo()">
+                    <button type="button" class="form-btn btn-secondary" onclick="backToEnhancedClientInfo()">
                         ← Back
                     </button>
                     <button type="button" 
                             class="form-btn btn-primary" 
-                            onclick="proceedToCategories()" 
-                            id="proceed-to-categories-btn">
+                            onclick="proceedToEnhancedCategories()" 
+                            id="enhanced-proceed-to-categories-btn" disabled>
                         Next: Categories ➡️
                     </button>
                 </div>
@@ -1272,15 +1575,15 @@
         </div>
     </div>
 
-    <!-- Step 3: Category Selection Modal -->
-    <div id="category-selection-modal" class="modal">
+    <!-- Enhanced Step 3: Category Selection Modal -->
+    <div id="enhanced-category-selection-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>🏷️ Step 3: Select Categories</h3>
-                <button class="close-btn" onclick="backToJobTitle()">←</button>
+                <h3>✨ Step 3: Enhanced Categories</h3>
+                <button class="close-btn" onclick="backToEnhancedJobTitle()">←</button>
             </div>
             <div class="modal-body">
-                <!-- Step Indicator -->
+                <!-- Enhanced Step Indicator -->
                 <div class="step-indicator">
                     <div class="step-dot completed"></div>
                     <div class="step-dot completed"></div>
@@ -1289,31 +1592,41 @@
                     <div class="step-dot"></div>
                 </div>
                 
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">🎯</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Choose categories for your quote:</p>
-                    <p style="font-weight: 700; color: var(--text-primary); margin-top: 8px;" id="selected-job-title"></p>
+                <!-- Enhanced Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%;"></div>
                 </div>
-
-                <!-- Current Quote Summary -->
-                <div id="current-quote-summary" style="display: none; background: var(--bg-secondary); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 2px solid var(--accent-primary);">
-                    <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                        <span>🛒</span> Current Quote (<span id="total-items-count-summary">0</span> items)
-                    </h4>
-                    <div id="quote-items-preview" style="margin-bottom: 12px;"></div>
-                    <div style="background: var(--accent-primary); border-radius: 12px; padding: 16px; text-align: center;">
-                        <div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">Total Amount</div>
-                        <div style="font-size: 24px; font-weight: 800; color: white;" id="running-total">RM 0.00</div>
+                
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">🎯</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Choose work categories for your professional quote</p>
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 12px; margin-top: 16px; border-left: 4px solid var(--accent-primary);">
+                        <p style="font-weight: 700; color: var(--text-primary);" id="enhanced-selected-job-title"></p>
                     </div>
                 </div>
 
-                <div class="category-grid" id="category-grid"></div>
+                <!-- Enhanced Quote Summary -->
+                <div id="enhanced-current-quote-summary" class="quote-summary-card" style="display: none;">
+                    <div class="quote-summary-header">
+                        <div class="quote-summary-title">🛒 Current Quote</div>
+                        <div class="quote-summary-count"><span id="enhanced-total-items-count-summary">0</span> items</div>
+                    </div>
+                    <div class="quote-summary-body">
+                        <div id="enhanced-quote-items-preview"></div>
+                        <div class="quote-summary-total">
+                            <div class="quote-summary-total-label">Total Amount</div>
+                            <div class="quote-summary-total-amount" id="enhanced-running-total">RM 0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-grid" id="enhanced-category-grid"></div>
 
                 <div class="form-actions" style="margin-top: 24px;">
-                    <button type="button" class="form-btn btn-secondary" onclick="backToJobTitle()">
+                    <button type="button" class="form-btn btn-secondary" onclick="backToEnhancedJobTitle()">
                         ← Back
                     </button>
-                    <button type="button" class="form-btn btn-primary" onclick="proceedToReview()" id="proceed-review-btn" disabled style="opacity: 0.5;">
+                    <button type="button" class="form-btn btn-primary" onclick="proceedToEnhancedReview()" id="enhanced-proceed-review-btn" disabled style="opacity: 0.5;">
                         Next: Review ➡️
                     </button>
                 </div>
@@ -1321,15 +1634,15 @@
         </div>
     </div>
 
-    <!-- Step 4: Item Selection Modal -->
-    <div id="item-selection-modal" class="modal">
+    <!-- Enhanced Step 4: Item Selection Modal -->
+    <div id="enhanced-item-selection-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>📋 Step 4: Select Items</h3>
-                <button class="close-btn" onclick="backToCategories()">←</button>
+                <h3>✨ Step 4: Enhanced Items</h3>
+                <button class="close-btn" onclick="backToEnhancedCategories()">←</button>
             </div>
             <div class="modal-body">
-                <!-- Step Indicator -->
+                <!-- Enhanced Step Indicator -->
                 <div class="step-indicator">
                     <div class="step-dot completed"></div>
                     <div class="step-dot completed"></div>
@@ -1338,41 +1651,53 @@
                     <div class="step-dot"></div>
                 </div>
                 
+                <!-- Enhanced Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%;"></div>
+                </div>
+                
                 <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Select work items for:</p>
-                    <p style="font-weight: 700; color: var(--text-primary); margin-top: 4px;" id="category-job-title"></p>
-                    <p style="color: var(--accent-primary); font-weight: 600; margin-top: 4px;" id="selected-category-display"></p>
+                    <div style="font-size: 64px; margin-bottom: 16px;">✅</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Select professional work items for:</p>
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 12px; margin-top: 16px; border-left: 4px solid var(--accent-primary);">
+                        <p style="font-weight: 700; color: var(--text-primary);" id="enhanced-category-job-title"></p>
+                        <p style="color: var(--accent-primary); font-weight: 600;" id="enhanced-selected-category-display"></p>
+                    </div>
                 </div>
 
-                <!-- Add Custom Item Button -->
+                <!-- Enhanced Add Custom Item Button -->
                 <div style="margin-bottom: 16px;">
-                    <button type="button" class="btn btn-warning" onclick="openCustomItemForm()" style="width: 100%; font-size: 16px; padding: 16px;">
-                        ➕ Create Custom Item
+                    <button type="button" class="btn btn-warning" onclick="openEnhancedCustomItemForm()" style="width: 100%; font-size: 16px; padding: 16px;">
+                        🛠️ Create Enhanced Custom Item
                     </button>
                 </div>
 
                 <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;">
-                    <div id="preset-items-list"></div>
+                    <div id="enhanced-preset-items-list"></div>
                 </div>
 
-                <!-- Selected Items Summary -->
-                <div id="selected-items-summary" style="display: none;">
-                    <div style="background: var(--bg-secondary); border-radius: 16px; padding: 20px; margin: 20px 0; border: 2px solid var(--accent-primary);">
-                        <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">Selected Items (<span id="selected-count">0</span>)</h4>
-                        <div id="selected-items-list" style="margin-bottom: 16px;"></div>
-                        <div style="background: var(--accent-primary); border-radius: 12px; padding: 16px; text-align: center;">
-                            <div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">Category Total</div>
-                            <div style="font-size: 28px; font-weight: 800; color: white;" id="category-total-amount">RM 0.00</div>
+                <!-- Enhanced Selected Items Summary -->
+                <div id="enhanced-selected-items-summary" style="display: none;">
+                    <div class="quote-summary-card">
+                        <div class="quote-summary-header">
+                            <div class="quote-summary-title">Selected Items</div>
+                            <div class="quote-summary-count"><span id="enhanced-selected-count">0</span> items</div>
+                        </div>
+                        <div class="quote-summary-body">
+                            <div id="enhanced-selected-items-list"></div>
+                            <div class="quote-summary-total">
+                                <div class="quote-summary-total-label">Category Total</div>
+                                <div class="quote-summary-total-amount" id="enhanced-category-total-amount">RM 0.00</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="form-btn btn-secondary" onclick="backToCategories()">
+                    <button type="button" class="form-btn btn-secondary" onclick="backToEnhancedCategories()">
                         ← Back to Categories
                     </button>
-                    <button type="button" class="form-btn btn-primary" onclick="finishCategoryItems()" id="finish-items-btn">
+                    <button type="button" class="form-btn btn-primary" onclick="finishEnhancedCategoryItems()" id="enhanced-finish-items-btn">
                         Done ✅
                     </button>
                 </div>
@@ -1380,15 +1705,15 @@
         </div>
     </div>
 
-    <!-- Step 5: Final Review & PDF Generation Modal -->
-    <div id="final-review-modal" class="modal">
+    <!-- Enhanced Step 5: Final Review & PDF Generation Modal -->
+    <div id="enhanced-final-review-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>👁️ Step 5: Final Review</h3>
-                <button class="close-btn" onclick="backToCategories()">←</button>
+                <h3>✨ Step 5: Enhanced Final Review</h3>
+                <button class="close-btn" onclick="backToEnhancedCategories()">←</button>
             </div>
             <div class="modal-body">
-                <!-- Step Indicator -->
+                <!-- Enhanced Step Indicator -->
                 <div class="step-indicator">
                     <div class="step-dot completed"></div>
                     <div class="step-dot completed"></div>
@@ -1397,106 +1722,121 @@
                     <div class="step-dot active"></div>
                 </div>
                 
+                <!-- Enhanced Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+                
                 <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📋</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Review all details before generating PDF</p>
-                    <p style="font-weight: 700; color: var(--text-primary); margin-top: 8px;" id="review-job-title"></p>
+                    <div style="font-size: 64px; margin-bottom: 16px;">📋</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Review all details before generating professional PDF</p>
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 12px; margin-top: 16px; border-left: 4px solid var(--success);">
+                        <p style="font-weight: 700; color: var(--text-primary);" id="enhanced-review-job-title"></p>
+                        <p style="color: var(--success); font-weight: 600; font-size: 14px;">✅ Ready for Professional PDF Generation</p>
+                    </div>
                 </div>
 
-                <!-- Complete Quote Review -->
-                <div id="complete-review-content" style="background: var(--bg-card); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 16px var(--shadow-light);">
+                <!-- Enhanced Complete Quote Review -->
+                <div id="enhanced-complete-review-content" class="card">
                     <!-- Content will be populated by JavaScript -->
                 </div>
 
                 <div class="form-actions" style="grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                    <button type="button" class="form-btn btn-secondary" onclick="editQuoteFromReview()">
+                    <button type="button" class="form-btn btn-secondary" onclick="editEnhancedQuoteFromReview()">
                         ✏️ Edit Quote
                     </button>
-                    <button type="button" class="form-btn btn-warning" onclick="backToCategories()">
+                    <button type="button" class="form-btn btn-warning" onclick="backToEnhancedCategories()">
                         ← Back
                     </button>
-                    <button type="button" class="form-btn btn-danger" onclick="cancelQuoteCreation()">
+                    <button type="button" class="form-btn btn-danger" onclick="cancelEnhancedQuoteCreation()">
                         ❌ Cancel
                     </button>
-                    <button type="button" class="form-btn btn-success" onclick="generateFinalPDF()" id="final-generate-btn">
-                        📄 OK - Generate PDF
+                    <button type="button" class="form-btn btn-success loading" onclick="generateEnhancedFinalPDF()" id="enhanced-final-generate-btn">
+                        🎨 Generate Enhanced PDF
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Custom Item Creation Modal -->
-    <div id="custom-item-modal" class="modal">
+    <!-- Enhanced Custom Item Creation Modal -->
+    <div id="enhanced-custom-item-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>➕ Create Custom Item</h3>
-                <button class="close-btn" onclick="closeCustomItemForm()">✕</button>
+                <h3>🛠️ Enhanced Custom Item Creator</h3>
+                <button class="close-btn" onclick="closeEnhancedCustomItemForm()">✕</button>
             </div>
             <div class="modal-body">
                 <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">🛠️</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Add a custom item to this quote</p>
+                    <div style="font-size: 64px; margin-bottom: 16px;">🛠️</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Create a professional custom item for this quote</p>
                 </div>
 
-                <form id="custom-item-form">
-                    <input type="text" 
-                           class="form-input" 
-                           placeholder="Item name (e.g., Custom Electrical Work)" 
-                           id="custom-item-name" 
-                           required
-                           style="margin-bottom: 16px;">
+                <form id="enhanced-custom-item-form">
+                    <div class="form-field">
+                        <input type="text" 
+                               class="form-input" 
+                               placeholder="Item name (e.g., Custom Electrical Work)" 
+                               id="enhanced-custom-item-name" 
+                               required>
+                        <div class="validation-message" id="custom-item-name-validation"></div>
+                    </div>
                     
-                    <textarea class="form-input" 
-                              placeholder="Item description (optional)" 
-                              id="custom-item-description" 
-                              rows="2" 
-                              style="resize: none; margin-bottom: 16px;"></textarea>
+                    <div class="form-field">
+                        <textarea class="form-input" 
+                                  placeholder="Item description (optional)" 
+                                  id="enhanced-custom-item-description" 
+                                  rows="2" 
+                                  style="resize: none;"></textarea>
+                    </div>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-                        <input type="number" 
-                               class="form-input" 
-                               placeholder="Price per unit (RM)" 
-                               id="custom-item-price" 
-                               step="0.01" 
-                               min="0"
-                               required
-                               oninput="calculateCustomTotal()"
-                               style="margin-bottom: 0;">
+                        <div class="form-field">
+                            <input type="number" 
+                                   class="form-input" 
+                                   placeholder="Price per unit (RM)" 
+                                   id="enhanced-custom-item-price" 
+                                   step="0.01" 
+                                   min="0"
+                                   required>
+                            <div class="validation-message" id="custom-item-price-validation"></div>
+                        </div>
                         
-                        <select class="form-input" id="custom-item-unit" style="margin-bottom: 0;">
-                            <option value="pcs">Pieces (pcs)</option>
-                            <option value="hours">Hours</option>
-                            <option value="sqft">Square Feet</option>
-                            <option value="sqm">Square Meters</option>
-                            <option value="meters">Meters</option>
-                            <option value="kg">Kilograms</option>
-                            <option value="liters">Liters</option>
-                            <option value="set">Set</option>
-                            <option value="lot">Lot</option>
-                            <option value="service">Service</option>
-                        </select>
+                        <div class="form-field">
+                            <select class="form-input" id="enhanced-custom-item-unit">
+                                <option value="pcs">Pieces (pcs)</option>
+                                <option value="hours">Hours</option>
+                                <option value="sqft">Square Feet</option>
+                                <option value="sqm">Square Meters</option>
+                                <option value="meters">Meters</option>
+                                <option value="kg">Kilograms</option>
+                                <option value="liters">Liters</option>
+                                <option value="set">Set</option>
+                                <option value="lot">Lot</option>
+                                <option value="service">Service</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <!-- Quantity Selector -->
+                    <!-- Enhanced Quantity Selector -->
                     <div class="quantity-selector">
-                        <button type="button" class="quantity-btn" onclick="adjustCustomQuantity(-1)">-</button>
-                        <div class="quantity-display" id="custom-quantity-display">1</div>
-                        <button type="button" class="quantity-btn" onclick="adjustCustomQuantity(1)">+</button>
+                        <button type="button" class="quantity-btn" onclick="adjustEnhancedCustomQuantity(-1)">-</button>
+                        <div class="quantity-display" id="enhanced-custom-quantity-display">1</div>
+                        <button type="button" class="quantity-btn" onclick="adjustEnhancedCustomQuantity(1)">+</button>
                     </div>
 
-                    <!-- Price Calculation Display -->
-                    <div class="price-calculation" id="custom-price-calculation">
+                    <!-- Enhanced Price Calculation Display -->
+                    <div class="price-calculation" id="enhanced-custom-price-calculation">
                         <div class="price-breakdown">1 unit × RM 0.00 =</div>
                         <div class="total-price">RM 0.00</div>
                     </div>
 
                     <div class="form-actions">
-                        <button type="button" class="form-btn btn-secondary" onclick="closeCustomItemForm()">
+                        <button type="button" class="form-btn btn-secondary" onclick="closeEnhancedCustomItemForm()">
                             Cancel
                         </button>
-                        <button type="button" class="form-btn btn-success" onclick="addCustomItemToQuote()" id="add-custom-item-btn" disabled>
-                            ➕ Add to Quote
+                        <button type="button" class="form-btn btn-success" onclick="addEnhancedCustomItemToQuote()" id="enhanced-add-custom-item-btn" disabled>
+                            🛠️ Add Enhanced Item
                         </button>
                     </div>
                 </form>
@@ -1535,22 +1875,22 @@
         </div>
     </div>
 
-    <!-- Success Message -->
+    <!-- Enhanced Success Message -->
     <div id="success-message" class="success-message">
-        ✅ Action completed successfully!
+        ✨ Enhanced action completed successfully!
     </div>
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - COMPLETE 5-STEP WORKFLOW SYSTEM
+        // REFIT MAINTENANCE SERVICES - ENHANCED COMPLETE 5-STEP WORKFLOW SYSTEM
         // Registration No: 201803348973 (002894203-V)
-        // Complete Navigation: Client → Job Title → Categories → Items → Review → PDF
+        // Enhanced Navigation: Client → Job Title → Categories → Items → Review → PDF
         // ========================================
         
-        // App State Variables
+        // Enhanced App State Variables
         var currentView = 'dashboard';
         var jobQuotes = [];
-        var currentQuoteData = {
+        var enhancedCurrentQuoteData = {
             client: {
                 name: '',
                 company: '',
@@ -1566,83 +1906,92 @@
         };
         var currentQuoteId = null;
         var currentTheme = 'light';
-        var currentCategory = '';
-        var customQuantity = 1;
+        var enhancedCurrentCategory = '';
+        var enhancedCustomQuantity = 1;
         var isEditMode = false;
+        var validationErrors = {};
 
         // Enhanced Category Configuration
         var categories = {
-            electrical: { name: 'Electrical', icon: '⚡', color: 'var(--cat-electrical)' },
-            plumbing: { name: 'Plumbing', icon: '🔧', color: 'var(--cat-plumbing)' },
-            hvac: { name: 'HVAC', icon: '🌡️', color: 'var(--cat-hvac)' },
-            cleaning: { name: 'Cleaning', icon: '🧽', color: 'var(--cat-cleaning)' },
-            parts: { name: 'Parts & Materials', icon: '🔩', color: 'var(--cat-parts)' },
-            labor: { name: 'Labor', icon: '👷', color: 'var(--cat-labor)' },
-            equipment: { name: 'Equipment', icon: '🛠️', color: 'var(--cat-equipment)' },
-            common: { name: 'Common Items', icon: '🏷️', color: 'var(--cat-common)' }
+            electrical: { name: 'Electrical Work', icon: '⚡', color: '#6366f1' },
+            plumbing: { name: 'Plumbing & Water', icon: '🔧', color: '#06b6d4' },
+            hvac: { name: 'HVAC & Cooling', icon: '🌡️', color: '#8b5cf6' },
+            cleaning: { name: 'Cleaning Services', icon: '🧽', color: '#10b981' },
+            parts: { name: 'Parts & Materials', icon: '🔩', color: '#f59e0b' },
+            labor: { name: 'Labor & Manpower', icon: '👷', color: '#ef4444' },
+            equipment: { name: 'Equipment Rental', icon: '🛠️', color: '#6b7280' },
+            common: { name: 'Common Services', icon: '🏷️', color: '#a855f7' }
         };
 
-        // Preset Work Items by Category
+        // Enhanced Preset Work Items by Category
         var presetWorkItems = {
             electrical: [
-                { id: 'electrical-1', name: 'Power Outlet Installation', description: 'Standard 13A power outlet', price: 45.00, unit: 'pcs' },
-                { id: 'electrical-2', name: 'Light Switch Installation', description: 'Standard wall switch installation', price: 35.00, unit: 'pcs' },
-                { id: 'electrical-3', name: 'Electrical Safety Inspection', description: 'Complete electrical system safety check', price: 150.00, unit: 'service' },
-                { id: 'electrical-4', name: 'Ceiling Fan Installation', description: 'Standard ceiling fan with lights', price: 120.00, unit: 'set' },
-                { id: 'electrical-5', name: 'LED Light Installation', description: 'Energy efficient LED lighting', price: 25.00, unit: 'pcs' }
+                { id: 'electrical-1', name: 'Power Outlet Installation', description: 'Professional 13A power outlet with safety compliance', price: 85.00, unit: 'pcs' },
+                { id: 'electrical-2', name: 'LED Light Installation', description: 'Energy-efficient LED lighting with premium fixtures', price: 45.00, unit: 'pcs' },
+                { id: 'electrical-3', name: 'Electrical Safety Inspection', description: 'Complete electrical system safety audit & certification', price: 250.00, unit: 'service' },
+                { id: 'electrical-4', name: 'Ceiling Fan Installation', description: 'Premium ceiling fan with LED lights & remote control', price: 180.00, unit: 'set' },
+                { id: 'electrical-5', name: 'Circuit Breaker Upgrade', description: 'Modern circuit breaker installation with safety features', price: 320.00, unit: 'pcs' },
+                { id: 'electrical-6', name: 'Electrical Wiring (per meter)', description: 'High-quality electrical wiring with proper insulation', price: 12.00, unit: 'meters' }
             ],
             plumbing: [
-                { id: 'plumbing-1', name: 'Pipe Repair Service', description: 'Water pipe leak repair', price: 65.00, unit: 'service' },
-                { id: 'plumbing-2', name: 'Faucet Installation', description: 'Kitchen or bathroom faucet setup', price: 85.00, unit: 'pcs' },
-                { id: 'plumbing-3', name: 'Drain Cleaning', description: 'Professional drain cleaning service', price: 95.00, unit: 'service' },
-                { id: 'plumbing-4', name: 'Toilet Installation', description: 'Complete toilet replacement', price: 180.00, unit: 'set' },
-                { id: 'plumbing-5', name: 'Water Heater Service', description: 'Water heater maintenance and repair', price: 120.00, unit: 'service' }
+                { id: 'plumbing-1', name: 'Pipe Repair & Replacement', description: 'Professional pipe repair with warranty', price: 120.00, unit: 'service' },
+                { id: 'plumbing-2', name: 'Premium Faucet Installation', description: 'High-quality kitchen/bathroom faucet installation', price: 150.00, unit: 'pcs' },
+                { id: 'plumbing-3', name: 'Drain Cleaning & Maintenance', description: 'Professional drain cleaning with equipment', price: 180.00, unit: 'service' },
+                { id: 'plumbing-4', name: 'Toilet Complete Installation', description: 'Complete toilet replacement with modern features', price: 350.00, unit: 'set' },
+                { id: 'plumbing-5', name: 'Water Heater Service', description: 'Water heater maintenance, repair & optimization', price: 200.00, unit: 'service' },
+                { id: 'plumbing-6', name: 'Water Pressure System', description: 'Water pressure pump installation & setup', price: 450.00, unit: 'set' }
             ],
             hvac: [
-                { id: 'hvac-1', name: 'Split AC Installation', description: '1.5HP split unit air conditioner', price: 1200.00, unit: 'set' },
-                { id: 'hvac-2', name: 'AC Maintenance Service', description: 'Quarterly AC cleaning and maintenance', price: 120.00, unit: 'service' },
-                { id: 'hvac-3', name: 'Ducted AC System', description: 'Central ducted air conditioning', price: 3500.00, unit: 'set' },
-                { id: 'hvac-4', name: 'AC Gas Top-up', description: 'Refrigerant gas refill service', price: 80.00, unit: 'service' },
-                { id: 'hvac-5', name: 'Ventilation Installation', description: 'Exhaust fan and ventilation setup', price: 150.00, unit: 'set' }
+                { id: 'hvac-1', name: 'Split AC Installation (1.5HP)', description: 'Premium 1.5HP split unit with installation & warranty', price: 1800.00, unit: 'set' },
+                { id: 'hvac-2', name: 'AC Maintenance Package', description: 'Comprehensive AC cleaning, servicing & optimization', price: 180.00, unit: 'service' },
+                { id: 'hvac-3', name: 'Ducted AC System', description: 'Central ducted air conditioning with professional installation', price: 5500.00, unit: 'set' },
+                { id: 'hvac-4', name: 'AC Gas Top-up Service', description: 'Refrigerant gas refill with leak detection', price: 150.00, unit: 'service' },
+                { id: 'hvac-5', name: 'Ventilation System', description: 'Complete exhaust fan & ventilation installation', price: 280.00, unit: 'set' },
+                { id: 'hvac-6', name: 'AC Compressor Replacement', description: 'Professional AC compressor replacement with warranty', price: 850.00, unit: 'pcs' }
             ],
             cleaning: [
-                { id: 'cleaning-1', name: 'Office Cleaning Service', description: 'Standard office cleaning', price: 25.00, unit: 'sqm' },
-                { id: 'cleaning-2', name: 'Deep Cleaning Service', description: 'Comprehensive deep cleaning', price: 35.00, unit: 'sqm' },
-                { id: 'cleaning-3', name: 'Window Cleaning', description: 'Professional window cleaning', price: 8.00, unit: 'sqm' },
-                { id: 'cleaning-4', name: 'Carpet Cleaning', description: 'Professional carpet steam cleaning', price: 15.00, unit: 'sqm' },
-                { id: 'cleaning-5', name: 'Post-Renovation Cleanup', description: 'Complete post-construction cleaning', price: 50.00, unit: 'sqm' }
+                { id: 'cleaning-1', name: 'Professional Office Cleaning', description: 'Comprehensive office cleaning with eco-friendly products', price: 35.00, unit: 'sqm' },
+                { id: 'cleaning-2', name: 'Deep Cleaning Service', description: 'Intensive deep cleaning for renovation projects', price: 55.00, unit: 'sqm' },
+                { id: 'cleaning-3', name: 'Window & Glass Cleaning', description: 'Professional window cleaning with streak-free finish', price: 15.00, unit: 'sqm' },
+                { id: 'cleaning-4', name: 'Carpet Steam Cleaning', description: 'Professional carpet cleaning with stain removal', price: 25.00, unit: 'sqm' },
+                { id: 'cleaning-5', name: 'Post-Renovation Cleanup', description: 'Complete post-construction cleaning & debris removal', price: 75.00, unit: 'sqm' },
+                { id: 'cleaning-6', name: 'Disinfection Service', description: 'Professional disinfection with certified chemicals', price: 45.00, unit: 'sqm' }
             ],
             parts: [
-                { id: 'parts-1', name: 'Standard Screws & Bolts', description: 'Various sizes hardware set', price: 25.00, unit: 'set' },
-                { id: 'parts-2', name: 'Electrical Wire (10m)', description: '2.5mm electrical wiring', price: 35.00, unit: 'roll' },
-                { id: 'parts-3', name: 'PVC Pipe (3m)', description: '1/2 inch PVC piping', price: 15.00, unit: 'pcs' },
-                { id: 'parts-4', name: 'Paint (5L)', description: 'Interior wall paint', price: 85.00, unit: 'pcs' },
-                { id: 'parts-5', name: 'Sealant Tube', description: 'Waterproof sealant', price: 12.00, unit: 'pcs' }
+                { id: 'parts-1', name: 'Premium Hardware Set', description: 'High-quality screws, bolts & fasteners collection', price: 45.00, unit: 'set' },
+                { id: 'parts-2', name: 'Electrical Wire (15m Roll)', description: '2.5mm certified electrical wiring with safety standards', price: 85.00, unit: 'roll' },
+                { id: 'parts-3', name: 'PVC Pipe System (3m)', description: 'Premium PVC piping with fittings included', price: 35.00, unit: 'pcs' },
+                { id: 'parts-4', name: 'Premium Paint (5L)', description: 'High-quality interior wall paint with primer', price: 150.00, unit: 'pcs' },
+                { id: 'parts-5', name: 'Professional Sealant', description: 'Industrial-grade waterproof sealant', price: 25.00, unit: 'pcs' },
+                { id: 'parts-6', name: 'Safety Equipment Set', description: 'Complete safety gear & protective equipment', price: 120.00, unit: 'set' }
             ],
             labor: [
-                { id: 'labor-1', name: 'Skilled Technician', description: 'Professional technician hourly rate', price: 45.00, unit: 'hours' },
-                { id: 'labor-2', name: 'Helper/Assistant', description: 'General helper hourly rate', price: 25.00, unit: 'hours' },
-                { id: 'labor-3', name: 'Specialist Engineer', description: 'Professional engineer consultation', price: 80.00, unit: 'hours' },
-                { id: 'labor-4', name: 'Project Manager', description: 'Project management and coordination', price: 65.00, unit: 'hours' },
-                { id: 'labor-5', name: 'Safety Officer', description: 'Workplace safety supervision', price: 55.00, unit: 'hours' }
+                { id: 'labor-1', name: 'Certified Technician', description: 'Skilled professional technician with certification', price: 65.00, unit: 'hours' },
+                { id: 'labor-2', name: 'General Helper', description: 'Experienced general helper for support tasks', price: 35.00, unit: 'hours' },
+                { id: 'labor-3', name: 'Specialist Engineer', description: 'Professional engineer for complex projects', price: 120.00, unit: 'hours' },
+                { id: 'labor-4', name: 'Project Manager', description: 'Dedicated project management & coordination', price: 95.00, unit: 'hours' },
+                { id: 'labor-5', name: 'Safety Officer', description: 'Certified workplace safety supervision', price: 80.00, unit: 'hours' },
+                { id: 'labor-6', name: 'Quality Inspector', description: 'Professional quality assurance & inspection', price: 85.00, unit: 'hours' }
             ],
             equipment: [
-                { id: 'equipment-1', name: 'Power Drill Rental', description: 'Professional power drill daily rental', price: 35.00, unit: 'days' },
-                { id: 'equipment-2', name: 'Ladder Rental', description: 'Extension ladder daily rental', price: 25.00, unit: 'days' },
-                { id: 'equipment-3', name: 'Generator Rental', description: 'Portable generator daily rental', price: 85.00, unit: 'days' },
-                { id: 'equipment-4', name: 'Pressure Washer', description: 'High-pressure cleaning equipment', price: 65.00, unit: 'days' },
-                { id: 'equipment-5', name: 'Scaffolding Setup', description: 'Temporary scaffolding rental', price: 150.00, unit: 'set' }
+                { id: 'equipment-1', name: 'Professional Power Tools', description: 'Industrial power drill & tools daily rental', price: 55.00, unit: 'days' },
+                { id: 'equipment-2', name: 'Extension Ladder Rental', description: 'Professional extension ladder with safety features', price: 45.00, unit: 'days' },
+                { id: 'equipment-3', name: 'Generator Rental', description: 'Portable generator with fuel for power supply', price: 125.00, unit: 'days' },
+                { id: 'equipment-4', name: 'Pressure Washer', description: 'Industrial pressure washing equipment rental', price: 95.00, unit: 'days' },
+                { id: 'equipment-5', name: 'Scaffolding System', description: 'Professional scaffolding setup with safety compliance', price: 250.00, unit: 'set' },
+                { id: 'equipment-6', name: 'Lifting Equipment', description: 'Professional lifting equipment & crane services', price: 350.00, unit: 'days' }
             ],
             common: [
-                { id: 'common-1', name: 'Site Visit & Assessment', description: 'Initial consultation and quote preparation', price: 50.00, unit: 'service' },
-                { id: 'common-2', name: 'Transportation Fee', description: 'Vehicle and transport costs', price: 30.00, unit: 'trip' },
-                { id: 'common-3', name: 'Emergency Call-out', description: '24/7 emergency response service', price: 100.00, unit: 'service' },
-                { id: 'common-4', name: 'Permit Application', description: 'Government permit and approval', price: 200.00, unit: 'service' },
-                { id: 'common-5', name: 'Warranty Extension', description: '12-month extended warranty', price: 150.00, unit: 'service' }
+                { id: 'common-1', name: 'Professional Site Visit', description: 'Comprehensive consultation & detailed quote preparation', price: 85.00, unit: 'service' },
+                { id: 'common-2', name: 'Transportation & Logistics', description: 'Professional transport for materials & equipment', price: 65.00, unit: 'trip' },
+                { id: 'common-3', name: 'Emergency Response', description: '24/7 emergency call-out service with rapid response', price: 180.00, unit: 'service' },
+                { id: 'common-4', name: 'Permit & Documentation', description: 'Government permits, approvals & documentation', price: 350.00, unit: 'service' },
+                { id: 'common-5', name: 'Extended Warranty', description: '24-month extended warranty coverage', price: 250.00, unit: 'service' },
+                { id: 'common-6', name: 'Quality Assurance', description: 'Professional quality testing & certification', price: 120.00, unit: 'service' }
             ]
         };
 
-        // Company Settings
+        // Enhanced Company Settings
         var companyInfo = {
             name: 'REFIT MAINTENANCE SERVICES',
             registration: '201803348973 (002894203-V)',
@@ -1653,92 +2002,30 @@
 
         // Storage Keys
         var STORAGE_KEYS = {
-            JOB_QUOTES: 'refit_complete_quotes_v5',
+            JOB_QUOTES: 'refit_enhanced_quotes_v6',
             THEME_PREFERENCE: 'refit_theme_preference',
             COMPANY_INFO: 'refit_company_info'
         };
 
-        // Theme Management Functions
-        function toggleTheme() {
-            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.body.setAttribute('data-theme', currentTheme);
-            
-            var toggleBtn = document.getElementById('theme-toggle');
-            if (toggleBtn) {
-                toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '🌸 Light';
-            }
-            
-            saveDataToStorage();
-            showSuccessMessage(currentTheme === 'light' ? '🌸 Beautiful Pink Light Mode!' : '🌙 Dark Pink Mode Activated!');
-        }
-
-        function loadThemePreference() {
-            try {
-                var savedTheme = JSON.parse(localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) || 'light';
-                currentTheme = savedTheme;
-                document.body.setAttribute('data-theme', currentTheme);
-                
-                var toggleBtn = document.getElementById('theme-toggle');
-                if (toggleBtn) {
-                    toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '🌸 Light';
-                }
-            } catch (e) {
-                currentTheme = 'light';
-            }
-        }
-
-        // Data Management Functions
-        function saveDataToStorage() {
-            try {
-                localStorage.setItem(STORAGE_KEYS.JOB_QUOTES, JSON.stringify(jobQuotes));
-                localStorage.setItem(STORAGE_KEYS.THEME_PREFERENCE, JSON.stringify(currentTheme));
-                localStorage.setItem(STORAGE_KEYS.COMPANY_INFO, JSON.stringify(companyInfo));
-            } catch (e) {
-                console.warn('Storage error:', e);
-                showSuccessMessage('⚠️ Storage full! Please export data.');
-            }
-        }
-
-        function loadDataFromStorage() {
-            try {
-                var savedQuotes = localStorage.getItem(STORAGE_KEYS.JOB_QUOTES);
-                if (savedQuotes) {
-                    jobQuotes = JSON.parse(savedQuotes);
-                }
-                
-                var savedCompanyInfo = localStorage.getItem(STORAGE_KEYS.COMPANY_INFO);
-                if (savedCompanyInfo) {
-                    companyInfo = Object.assign(companyInfo, JSON.parse(savedCompanyInfo));
-                    updateHeaderDisplay();
-                }
-            } catch (e) {
-                console.warn('Load error:', e);
-                jobQuotes = [];
-            }
-        }
-
-        function updateHeaderDisplay() {
-            document.getElementById('company-name').textContent = companyInfo.name;
-            document.getElementById('company-registration').innerHTML = 
-                'Registration No: ' + companyInfo.registration.split('(')[0].trim() + '<br>(' + 
-                (companyInfo.registration.includes('(') ? companyInfo.registration.split('(')[1] : ')');
-        }
-
         // ========================================
-        // COMPLETE 5-STEP WORKFLOW IMPLEMENTATION
+        // ENHANCED 5-STEP WORKFLOW IMPLEMENTATION
         // ========================================
 
-        // Step 1: Start New Quote - Client Information
-        function startNewQuote() {
-            resetQuoteData();
+        // Enhanced Step 1: Start New Quote - Client Information with Validation
+        function startEnhancedNewQuote() {
+            resetEnhancedQuoteData();
             isEditMode = false;
+            clearValidationErrors();
             
-            document.getElementById('client-info-modal').classList.add('show');
-            showSuccessMessage('🎉 Step 1: Starting complete 5-step quote workflow!');
+            document.getElementById('enhanced-client-info-modal').classList.add('show');
+            showEnhancedSuccessMessage('🎨✨ Enhanced 5-step professional quote workflow started!');
+            
+            // Setup real-time validation
+            setupEnhancedClientValidation();
         }
 
-        function resetQuoteData() {
-            currentQuoteData = {
+        function resetEnhancedQuoteData() {
+            enhancedCurrentQuoteData = {
                 client: {
                     name: '',
                     company: '',
@@ -1752,169 +2039,323 @@
                 totalAmount: 0,
                 createdAt: null
             };
-            currentCategory = '';
-            customQuantity = 1;
+            enhancedCurrentCategory = '';
+            enhancedCustomQuantity = 1;
+            validationErrors = {};
         }
 
-        function cancelQuoteCreation() {
+        function cancelEnhancedQuoteCreation() {
             closeAllModals();
-            resetQuoteData();
-            showSuccessMessage('❌ Quote creation cancelled');
+            resetEnhancedQuoteData();
+            showEnhancedSuccessMessage('❌ Enhanced quote creation cancelled');
         }
 
-        function proceedToJobTitle() {
-            // Validate client information
-            var clientName = document.getElementById('client-name').value.trim();
-            var clientPhone = document.getElementById('client-phone').value.trim();
-            var clientAddress = document.getElementById('client-address').value.trim();
+        function setupEnhancedClientValidation() {
+            var inputs = [
+                { id: 'enhanced-client-name', validator: validateClientName },
+                { id: 'enhanced-client-phone', validator: validateClientPhone },
+                { id: 'enhanced-client-email', validator: validateClientEmail },
+                { id: 'enhanced-client-address', validator: validateClientAddress }
+            ];
+
+            inputs.forEach(function(input) {
+                var element = document.getElementById(input.id);
+                if (element) {
+                    element.addEventListener('input', function() {
+                        input.validator(this.value, input.id);
+                        updateEnhancedProceedButton();
+                    });
+                    element.addEventListener('blur', function() {
+                        input.validator(this.value, input.id);
+                    });
+                }
+            });
+        }
+
+        function validateClientName(value, fieldId) {
+            var isValid = value.trim().length >= 2;
+            updateValidationState(fieldId, isValid, isValid ? '✅ Valid client name' : '❌ Name must be at least 2 characters');
+            return isValid;
+        }
+
+        function validateClientPhone(value, fieldId) {
+            var phoneRegex = /^[\+]?[0-9\s\-\(\)]{8,15}$/;
+            var isValid = phoneRegex.test(value.trim());
+            updateValidationState(fieldId, isValid, isValid ? '✅ Valid phone number' : '❌ Please enter a valid phone number');
+            return isValid;
+        }
+
+        function validateClientEmail(value, fieldId) {
+            if (!value.trim()) {
+                updateValidationState(fieldId, true, ''); // Email is optional
+                return true;
+            }
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var isValid = emailRegex.test(value.trim());
+            updateValidationState(fieldId, isValid, isValid ? '✅ Valid email address' : '❌ Please enter a valid email address');
+            return isValid;
+        }
+
+        function validateClientAddress(value, fieldId) {
+            var isValid = value.trim().length >= 10;
+            updateValidationState(fieldId, isValid, isValid ? '✅ Valid address' : '❌ Address must be at least 10 characters');
+            return isValid;
+        }
+
+        function updateValidationState(fieldId, isValid, message) {
+            var input = document.getElementById(fieldId);
+            var validationDiv = document.getElementById(fieldId.replace('enhanced-', '').replace('-', '-') + '-validation');
             
-            if (!clientName || !clientPhone || !clientAddress) {
-                showSuccessMessage('⚠️ Please fill in all required client information');
-                return;
+            if (input) {
+                input.classList.remove('error', 'success');
+                if (message) {
+                    input.classList.add(isValid ? 'success' : 'error');
+                }
             }
             
+            if (validationDiv) {
+                validationDiv.textContent = message;
+                validationDiv.className = 'validation-message ' + (isValid ? 'success' : 'error');
+                validationDiv.style.display = message ? 'block' : 'none';
+            }
+            
+            validationErrors[fieldId] = !isValid && message;
+        }
+
+        function updateEnhancedProceedButton() {
+            var nameValid = validateClientName(document.getElementById('enhanced-client-name').value, 'enhanced-client-name');
+            var phoneValid = validateClientPhone(document.getElementById('enhanced-client-phone').value, 'enhanced-client-phone');
+            var emailValid = validateClientEmail(document.getElementById('enhanced-client-email').value, 'enhanced-client-email');
+            var addressValid = validateClientAddress(document.getElementById('enhanced-client-address').value, 'enhanced-client-address');
+            
+            var allValid = nameValid && phoneValid && emailValid && addressValid;
+            
+            var proceedBtn = document.getElementById('enhanced-proceed-to-job-title-btn');
+            if (proceedBtn) {
+                proceedBtn.disabled = !allValid;
+                proceedBtn.style.opacity = allValid ? '1' : '0.5';
+                proceedBtn.style.background = allValid ? 
+                    'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))' : 
+                    'linear-gradient(135deg, var(--text-secondary), #9ca3af)';
+            }
+        }
+
+        function clearValidationErrors() {
+            var validationMessages = document.querySelectorAll('.validation-message');
+            validationMessages.forEach(function(msg) {
+                msg.style.display = 'none';
+            });
+            
+            var inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(function(input) {
+                input.classList.remove('error', 'success');
+            });
+            
+            validationErrors = {};
+        }
+
+        function proceedToEnhancedJobTitle() {
             // Save client information
-            currentQuoteData.client = {
-                name: clientName,
-                company: document.getElementById('client-company').value.trim(),
-                phone: clientPhone,
-                email: document.getElementById('client-email').value.trim(),
-                address: clientAddress
+            enhancedCurrentQuoteData.client = {
+                name: document.getElementById('enhanced-client-name').value.trim(),
+                company: document.getElementById('enhanced-client-company').value.trim(),
+                phone: document.getElementById('enhanced-client-phone').value.trim(),
+                email: document.getElementById('enhanced-client-email').value.trim(),
+                address: document.getElementById('enhanced-client-address').value.trim()
             };
             
             // Show client name in next step
-            document.getElementById('client-name-display').textContent = 'Client: ' + clientName;
+            document.getElementById('enhanced-client-name-display').textContent = 'Client: ' + enhancedCurrentQuoteData.client.name;
             
             // Close Step 1, Show Step 2
-            document.getElementById('client-info-modal').classList.remove('show');
-            document.getElementById('job-title-modal').classList.add('show');
+            document.getElementById('enhanced-client-info-modal').classList.remove('show');
+            document.getElementById('enhanced-job-title-modal').classList.add('show');
             
-            showSuccessMessage('✅ Step 2: Enter job title for ' + clientName);
+            // Setup job title validation
+            setupEnhancedJobTitleValidation();
+            
+            showEnhancedSuccessMessage('✅ Step 2: Enhanced job title for ' + enhancedCurrentQuoteData.client.name);
         }
 
-        function backToClientInfo() {
-            document.getElementById('job-title-modal').classList.remove('show');
-            document.getElementById('client-info-modal').classList.add('show');
-            showSuccessMessage('⬅️ Back to Step 1: Client Information');
+        function backToEnhancedClientInfo() {
+            document.getElementById('enhanced-job-title-modal').classList.remove('show');
+            document.getElementById('enhanced-client-info-modal').classList.add('show');
+            showEnhancedSuccessMessage('⬅️ Back to Step 1: Enhanced Client Information');
         }
 
-        // Step 2: Job Title
-        function proceedToCategories() {
-            var title = document.getElementById('job-title-input').value.trim();
+        // Enhanced Step 2: Job Title with Suggestions
+        function setupEnhancedJobTitleValidation() {
+            var jobTitleInput = document.getElementById('enhanced-job-title-input');
+            if (jobTitleInput) {
+                jobTitleInput.addEventListener('input', function() {
+                    validateJobTitle(this.value);
+                    updateEnhancedJobTitleButton();
+                });
+            }
+        }
+
+        function validateJobTitle(value) {
+            var isValid = value.trim().length >= 5;
+            var validationDiv = document.getElementById('job-title-validation');
+            var input = document.getElementById('enhanced-job-title-input');
             
-            if (!title) {
-                showSuccessMessage('⚠️ Please enter a job title');
+            if (input) {
+                input.classList.remove('error', 'success');
+                input.classList.add(isValid ? 'success' : 'error');
+            }
+            
+            if (validationDiv) {
+                var message = isValid ? '✅ Great job title!' : '❌ Job title must be at least 5 characters';
+                validationDiv.textContent = message;
+                validationDiv.className = 'validation-message ' + (isValid ? 'success' : 'error');
+                validationDiv.style.display = 'block';
+            }
+            
+            return isValid;
+        }
+
+        function selectJobTitleSuggestion(suggestion) {
+            document.getElementById('enhanced-job-title-input').value = suggestion;
+            validateJobTitle(suggestion);
+            updateEnhancedJobTitleButton();
+            showEnhancedSuccessMessage('💡 Job title suggestion selected: ' + suggestion);
+        }
+
+        function updateEnhancedJobTitleButton() {
+            var isValid = validateJobTitle(document.getElementById('enhanced-job-title-input').value);
+            var proceedBtn = document.getElementById('enhanced-proceed-to-categories-btn');
+            
+            if (proceedBtn) {
+                proceedBtn.disabled = !isValid;
+                proceedBtn.style.opacity = isValid ? '1' : '0.5';
+                proceedBtn.style.background = isValid ? 
+                    'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))' : 
+                    'linear-gradient(135deg, var(--text-secondary), #9ca3af)';
+            }
+        }
+
+        function proceedToEnhancedCategories() {
+            var title = document.getElementById('enhanced-job-title-input').value.trim();
+            
+            if (!validateJobTitle(title)) {
+                showEnhancedSuccessMessage('⚠️ Please enter a valid job title');
                 return;
             }
             
-            currentQuoteData.title = title;
-            document.getElementById('selected-job-title').textContent = title;
+            enhancedCurrentQuoteData.title = title;
+            document.getElementById('enhanced-selected-job-title').textContent = title;
             
             // Close Step 2, Show Step 3
-            document.getElementById('job-title-modal').classList.remove('show');
+            document.getElementById('enhanced-job-title-modal').classList.remove('show');
             
-            renderCategories();
-            updateQuoteSummaryDisplay();
+            renderEnhancedCategories();
+            updateEnhancedQuoteSummaryDisplay();
             
-            document.getElementById('category-selection-modal').classList.add('show');
-            showSuccessMessage('✅ Step 3: Select categories for "' + title + '"');
+            document.getElementById('enhanced-category-selection-modal').classList.add('show');
+            showEnhancedSuccessMessage('✅ Step 3: Enhanced categories for "' + title + '"');
         }
 
-        function backToJobTitle() {
-            document.getElementById('category-selection-modal').classList.remove('show');
-            document.getElementById('job-title-modal').classList.add('show');
-            showSuccessMessage('⬅️ Back to Step 2: Job Title');
+        function backToEnhancedJobTitle() {
+            document.getElementById('enhanced-category-selection-modal').classList.remove('show');
+            document.getElementById('enhanced-job-title-modal').classList.add('show');
+            showEnhancedSuccessMessage('⬅️ Back to Step 2: Enhanced Job Title');
         }
 
-        // Step 3: Category Selection
-        function renderCategories() {
-            var container = document.getElementById('category-grid');
+        // Enhanced Step 3: Category Selection with Visual Improvements
+        function renderEnhancedCategories() {
+            var container = document.getElementById('enhanced-category-grid');
             if (!container) return;
             
             var html = '';
             
             for (var categoryKey in categories) {
                 var category = categories[categoryKey];
-                var hasItems = currentQuoteData.items.some(function(item) { 
+                var hasItems = enhancedCurrentQuoteData.items.some(function(item) { 
                     return item.category === categoryKey; 
                 });
                 
-                html += '<div class="category-item' + (hasItems ? ' selected' : '') + '" onclick="selectCategoryForItems(\'' + categoryKey + '\')" data-category="' + categoryKey + '">' +
+                var itemCount = enhancedCurrentQuoteData.items.filter(function(item) {
+                    return item.category === categoryKey;
+                }).length;
+                
+                html += '<div class="category-item' + (hasItems ? ' selected' : '') + '" onclick="selectEnhancedCategoryForItems(\'' + categoryKey + '\')" data-category="' + categoryKey + '">' +
                     '<div class="icon">' + category.icon + '</div>' +
                     '<div class="name">' + category.name + '</div>' +
-                    (hasItems ? '<div style="font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 4px;">✓ Items Added</div>' : '') +
+                    (hasItems ? '<div style="font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 4px;">✓ ' + itemCount + ' items added</div>' : '') +
                     '</div>';
             }
             
             container.innerHTML = html;
         }
 
-        function selectCategoryForItems(categoryKey) {
-            currentCategory = categoryKey;
+        function selectEnhancedCategoryForItems(categoryKey) {
+            enhancedCurrentCategory = categoryKey;
             
-            document.getElementById('category-job-title').textContent = currentQuoteData.title;
-            document.getElementById('selected-category-display').textContent = categories[categoryKey].name;
+            document.getElementById('enhanced-category-job-title').textContent = enhancedCurrentQuoteData.title;
+            document.getElementById('enhanced-selected-category-display').textContent = categories[categoryKey].name;
             
             // Close Step 3, Show Step 4
-            document.getElementById('category-selection-modal').classList.remove('show');
+            document.getElementById('enhanced-category-selection-modal').classList.remove('show');
             
-            renderPresetItems();
+            renderEnhancedPresetItems();
             
-            document.getElementById('item-selection-modal').classList.add('show');
-            showSuccessMessage('✅ Step 4: Selecting items for ' + categories[categoryKey].name);
+            document.getElementById('enhanced-item-selection-modal').classList.add('show');
+            showEnhancedSuccessMessage('✅ Step 4: Enhanced items for ' + categories[categoryKey].name);
         }
 
-        function backToCategories() {
-            document.getElementById('item-selection-modal').classList.remove('show');
-            document.getElementById('final-review-modal').classList.remove('show');
+        function backToEnhancedCategories() {
+            document.getElementById('enhanced-item-selection-modal').classList.remove('show');
+            document.getElementById('enhanced-final-review-modal').classList.remove('show');
             
-            renderCategories();
-            updateQuoteSummaryDisplay();
-            updateProceedButton();
+            renderEnhancedCategories();
+            updateEnhancedQuoteSummaryDisplay();
+            updateEnhancedProceedButton();
             
-            document.getElementById('category-selection-modal').classList.add('show');
-            showSuccessMessage('⬅️ Back to Step 3: Category selection');
+            document.getElementById('enhanced-category-selection-modal').classList.add('show');
+            showEnhancedSuccessMessage('⬅️ Back to Step 3: Enhanced category selection');
         }
 
-        function proceedToReview() {
-            if (currentQuoteData.items.length === 0) {
-                showSuccessMessage('⚠️ Please add at least one item to proceed');
+        function proceedToEnhancedReview() {
+            if (enhancedCurrentQuoteData.items.length === 0) {
+                showEnhancedSuccessMessage('⚠️ Please add at least one item to proceed');
                 return;
             }
             
             // Close Step 3, Show Step 5 (Final Review)
-            document.getElementById('category-selection-modal').classList.remove('show');
+            document.getElementById('enhanced-category-selection-modal').classList.remove('show');
             
-            renderFinalReview();
+            renderEnhancedFinalReview();
             
-            document.getElementById('final-review-modal').classList.add('show');
-            showSuccessMessage('✅ Step 5: Final review - check all details');
+            document.getElementById('enhanced-final-review-modal').classList.add('show');
+            showEnhancedSuccessMessage('✅ Step 5: Enhanced final review - professional PDF ready');
         }
 
-        function updateProceedButton() {
-            var proceedBtn = document.getElementById('proceed-review-btn');
+        function updateEnhancedProceedButton() {
+            var proceedBtn = document.getElementById('enhanced-proceed-review-btn');
             if (proceedBtn) {
-                if (currentQuoteData.items.length > 0) {
+                if (enhancedCurrentQuoteData.items.length > 0) {
                     proceedBtn.disabled = false;
                     proceedBtn.style.opacity = '1';
+                    proceedBtn.style.background = 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))';
                 } else {
                     proceedBtn.disabled = true;
                     proceedBtn.style.opacity = '0.5';
+                    proceedBtn.style.background = 'linear-gradient(135deg, var(--text-secondary), #9ca3af)';
                 }
             }
         }
 
-        // Step 4: Item Selection
-        function renderPresetItems() {
-            var container = document.getElementById('preset-items-list');
+        // Enhanced Step 4: Item Selection with Better UX
+        function renderEnhancedPresetItems() {
+            var container = document.getElementById('enhanced-preset-items-list');
             if (!container) return;
             
-            var categoryItems = presetWorkItems[currentCategory] || [];
+            var categoryItems = presetWorkItems[enhancedCurrentCategory] || [];
             var html = '';
             
             // Show custom items for this category first
-            var customItems = currentQuoteData.items.filter(function(item) { 
-                return item.isCustom && item.category === currentCategory; 
+            var customItems = enhancedCurrentQuoteData.items.filter(function(item) { 
+                return item.isCustom && item.category === enhancedCurrentCategory; 
             });
             
             if (customItems.length > 0) {
@@ -1926,7 +2367,7 @@
                 
                 for (var i = 0; i < customItems.length; i++) {
                     var item = customItems[i];
-                    html += '<div class="preset-item selected" onclick="togglePresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
+                    html += '<div class="preset-item selected" onclick="toggleEnhancedPresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
                         '<div class="header">' +
                         '<div class="name">🛠️ ' + item.name + '</div>' +
                         '<div class="price">RM ' + parseFloat(item.total).toFixed(2) + '</div>' +
@@ -1943,30 +2384,30 @@
                     container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">' +
                         '<div style="font-size: 48px; margin-bottom: 16px;">📦</div>' +
                         '<p style="font-weight: 600;">No preset items available</p>' +
-                        '<p style="font-size: 14px; margin-top: 8px;">Create custom items for this category</p>' +
+                        '<p style="font-size: 14px; margin-top: 8px;">Create enhanced custom items for this category</p>' +
                         '</div>';
                 } else {
                     container.innerHTML = html;
                 }
-                updateSelectedItemsSummary();
+                updateEnhancedSelectedItemsSummary();
                 return;
             }
             
             if (categoryItems.length > 0) {
                 html += '<div style="margin-bottom: 12px;">' +
                     '<div style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
-                    '<span style="font-size: 20px;">' + categories[currentCategory].icon + '</span>' +
-                    '<span>Preset Items (' + categoryItems.length + ')</span>' +
+                    '<span style="font-size: 20px;">' + categories[enhancedCurrentCategory].icon + '</span>' +
+                    '<span>Enhanced Preset Items (' + categoryItems.length + ')</span>' +
                     '</div>';
             }
             
             for (var i = 0; i < categoryItems.length; i++) {
                 var item = categoryItems[i];
-                var isSelected = currentQuoteData.items.some(function(selectedItem) {
-                    return selectedItem.id === item.id && selectedItem.category === currentCategory && !selectedItem.isCustom;
+                var isSelected = enhancedCurrentQuoteData.items.some(function(selectedItem) {
+                    return selectedItem.id === item.id && selectedItem.category === enhancedCurrentCategory && !selectedItem.isCustom;
                 });
                 
-                html += '<div class="preset-item' + (isSelected ? ' selected' : '') + '" onclick="togglePresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
+                html += '<div class="preset-item' + (isSelected ? ' selected' : '') + '" onclick="toggleEnhancedPresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
                     '<div class="header">' +
                     '<div class="name">' + item.name + '</div>' +
                     '<div class="price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
@@ -1981,25 +2422,25 @@
             }
             
             container.innerHTML = html;
-            updateSelectedItemsSummary();
+            updateEnhancedSelectedItemsSummary();
         }
 
-        function togglePresetItem(itemId) {
-            var existingIndex = currentQuoteData.items.findIndex(function(selectedItem) {
-                return selectedItem.id === itemId && selectedItem.category === currentCategory;
+        function toggleEnhancedPresetItem(itemId) {
+            var existingIndex = enhancedCurrentQuoteData.items.findIndex(function(selectedItem) {
+                return selectedItem.id === itemId && selectedItem.category === enhancedCurrentCategory;
             });
             
             if (existingIndex !== -1) {
-                var removedItem = currentQuoteData.items[existingIndex];
-                currentQuoteData.items.splice(existingIndex, 1);
-                showSuccessMessage('➖ Removed: ' + removedItem.name);
-                renderPresetItems();
-                updateQuoteSummaryDisplay();
-                updateProceedButton();
+                var removedItem = enhancedCurrentQuoteData.items[existingIndex];
+                enhancedCurrentQuoteData.items.splice(existingIndex, 1);
+                showEnhancedSuccessMessage('➖ Removed: ' + removedItem.name);
+                renderEnhancedPresetItems();
+                updateEnhancedQuoteSummaryDisplay();
+                updateEnhancedProceedButton();
                 return;
             }
             
-            var categoryItems = presetWorkItems[currentCategory] || [];
+            var categoryItems = presetWorkItems[enhancedCurrentCategory] || [];
             var item = categoryItems.find(function(item) { return item.id === itemId; });
             
             if (!item) return;
@@ -2012,31 +2453,31 @@
                 unit: item.unit,
                 quantity: 1,
                 total: item.price,
-                category: currentCategory,
+                category: enhancedCurrentCategory,
                 isCustom: false
             };
             
-            currentQuoteData.items.push(selectedItem);
-            showSuccessMessage('✅ Added: ' + item.name);
+            enhancedCurrentQuoteData.items.push(selectedItem);
+            showEnhancedSuccessMessage('✅ Added: ' + item.name + ' (RM ' + item.price.toFixed(2) + ')');
             
-            renderPresetItems();
-            updateQuoteSummaryDisplay();
-            updateProceedButton();
+            renderEnhancedPresetItems();
+            updateEnhancedQuoteSummaryDisplay();
+            updateEnhancedProceedButton();
         }
 
-        function finishCategoryItems() {
-            backToCategories();
-            showSuccessMessage('✅ Category items completed. Add more categories or proceed to review.');
+        function finishEnhancedCategoryItems() {
+            backToEnhancedCategories();
+            showEnhancedSuccessMessage('✅ Enhanced category completed. Add more or proceed to review.');
         }
 
-        function updateSelectedItemsSummary() {
-            var summaryContainer = document.getElementById('selected-items-summary');
-            var countElement = document.getElementById('selected-count');
-            var listElement = document.getElementById('selected-items-list');
-            var totalElement = document.getElementById('category-total-amount');
+        function updateEnhancedSelectedItemsSummary() {
+            var summaryContainer = document.getElementById('enhanced-selected-items-summary');
+            var countElement = document.getElementById('enhanced-selected-count');
+            var listElement = document.getElementById('enhanced-selected-items-list');
+            var totalElement = document.getElementById('enhanced-category-total-amount');
             
-            var categoryItems = currentQuoteData.items.filter(function(item) {
-                return item.category === currentCategory;
+            var categoryItems = enhancedCurrentQuoteData.items.filter(function(item) {
+                return item.category === enhancedCurrentCategory;
             });
             
             if (categoryItems.length === 0) {
@@ -2054,14 +2495,14 @@
                 var item = categoryItems[i];
                 categoryTotal += item.total;
                 
-                html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--accent-primary);">' +
+                html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; margin-bottom: 8px;">' +
                     '<div>' +
-                    '<div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">' + 
+                    '<div style="font-weight: 600; color: white; font-size: 14px;">' + 
                     (item.isCustom ? '🛠️ ' : '') + item.name + 
                     (item.isCustom ? ' (Custom)' : '') + '</div>' +
-                    '<div style="font-size: 12px; color: var(--text-muted);">' + item.quantity + ' ' + item.unit + '</div>' +
+                    '<div style="font-size: 12px; color: rgba(255,255,255,0.8);">' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + '</div>' +
                     '</div>' +
-                    '<div style="font-weight: 700; color: var(--accent-primary);">RM ' + item.total.toFixed(2) + '</div>' +
+                    '<div style="font-weight: 700; color: white; font-size: 16px;">RM ' + item.total.toFixed(2) + '</div>' +
                     '</div>';
             }
             
@@ -2070,1051 +2511,298 @@
         }
 
         // Enhanced Custom Item Creation
-        function openCustomItemForm() {
-            customQuantity = 1;
-            document.getElementById('custom-item-form').reset();
-            document.getElementById('custom-quantity-display').textContent = '1';
-            calculateCustomTotal();
+        function openEnhancedCustomItemForm() {
+            enhancedCustomQuantity = 1;
             
-            document.getElementById('custom-item-modal').classList.add('show');
-            showSuccessMessage('➕ Creating custom item for: ' + categories[currentCategory].name);
+            document.getElementById('enhanced-custom-item-modal').classList.add('show');
+            
+            setTimeout(function() {
+                resetEnhancedCustomItemForm();
+                setupEnhancedCustomItemListeners();
+            }, 100);
+            
+            showEnhancedSuccessMessage('🛠️ Enhanced custom item creator for: ' + categories[enhancedCurrentCategory].name);
         }
 
-        function closeCustomItemForm() {
-            document.getElementById('custom-item-modal').classList.remove('show');
-        }
-
-        function adjustCustomQuantity(change) {
-            customQuantity = Math.max(1, customQuantity + change);
-            document.getElementById('custom-quantity-display').textContent = customQuantity;
-            calculateCustomTotal();
-        }
-
-        function calculateCustomTotal() {
-            var priceInput = document.getElementById('custom-item-price');
-            var unitSelect = document.getElementById('custom-item-unit');
-            var addBtn = document.getElementById('add-custom-item-btn');
-            var calculationDiv = document.getElementById('custom-price-calculation');
+        function resetEnhancedCustomItemForm() {
+            var nameInput = document.getElementById('enhanced-custom-item-name');
+            var descInput = document.getElementById('enhanced-custom-item-description');
+            var priceInput = document.getElementById('enhanced-custom-item-price');
+            var unitSelect = document.getElementById('enhanced-custom-item-unit');
+            var quantityDisplay = document.getElementById('enhanced-custom-quantity-display');
+            var addBtn = document.getElementById('enhanced-add-custom-item-btn');
             
-            var unitPrice = parseFloat(priceInput.value) || 0;
-            var unitName = unitSelect.options[unitSelect.selectedIndex].text;
-            var totalPrice = unitPrice * customQuantity;
+            if (nameInput) nameInput.value = '';
+            if (descInput) descInput.value = '';
+            if (priceInput) priceInput.value = '';
+            if (unitSelect) unitSelect.value = 'pcs';
+            if (quantityDisplay) quantityDisplay.textContent = '1';
             
-            calculationDiv.querySelector('.price-breakdown').textContent = 
-                customQuantity + ' ' + unitName + ' × RM ' + unitPrice.toFixed(2) + ' =';
-            calculationDiv.querySelector('.total-price').textContent = 'RM ' + totalPrice.toFixed(2);
-            
-            var name = document.getElementById('custom-item-name').value.trim();
-            
-            if (name && unitPrice > 0) {
-                addBtn.disabled = false;
-                addBtn.style.opacity = '1';
-            } else {
+            if (addBtn) {
                 addBtn.disabled = true;
                 addBtn.style.opacity = '0.5';
+                addBtn.style.background = 'linear-gradient(135deg, var(--text-secondary), #9ca3af)';
+            }
+            
+            calculateEnhancedCustomTotal();
+            clearValidationErrors();
+        }
+
+        function setupEnhancedCustomItemListeners() {
+            var nameInput = document.getElementById('enhanced-custom-item-name');
+            var priceInput = document.getElementById('enhanced-custom-item-price');
+            var unitSelect = document.getElementById('enhanced-custom-item-unit');
+            
+            if (nameInput) {
+                nameInput.addEventListener('input', function() {
+                    validateCustomItemName(this.value);
+                    calculateEnhancedCustomTotal();
+                });
+            }
+            
+            if (priceInput) {
+                priceInput.addEventListener('input', function() {
+                    validateCustomItemPrice(this.value);
+                    calculateEnhancedCustomTotal();
+                });
+            }
+            
+            if (unitSelect) {
+                unitSelect.addEventListener('change', function() {
+                    calculateEnhancedCustomTotal();
+                });
             }
         }
 
-        function addCustomItemToQuote() {
-            var name = document.getElementById('custom-item-name').value.trim();
-            var description = document.getElementById('custom-item-description').value.trim();
-            var price = parseFloat(document.getElementById('custom-item-price').value);
-            var unit = document.getElementById('custom-item-unit').value;
+        function validateCustomItemName(value) {
+            var isValid = value.trim().length >= 3;
+            updateValidationState('enhanced-custom-item-name', isValid, isValid ? '✅ Valid item name' : '❌ Name must be at least 3 characters');
+            return isValid;
+        }
+
+        function validateCustomItemPrice(value) {
+            var price = parseFloat(value);
+            var isValid = !isNaN(price) && price > 0;
+            updateValidationState('enhanced-custom-item-price', isValid, isValid ? '✅ Valid price' : '❌ Price must be greater than 0');
+            return isValid;
+        }
+
+        function closeEnhancedCustomItemForm() {
+            document.getElementById('enhanced-custom-item-modal').classList.remove('show');
+        }
+
+        function adjustEnhancedCustomQuantity(change) {
+            enhancedCustomQuantity = Math.max(1, enhancedCustomQuantity + change);
+            document.getElementById('enhanced-custom-quantity-display').textContent = enhancedCustomQuantity;
+            calculateEnhancedCustomTotal();
+        }
+
+        function calculateEnhancedCustomTotal() {
+            var priceInput = document.getElementById('enhanced-custom-item-price');
+            var unitSelect = document.getElementById('enhanced-custom-item-unit');
+            var addBtn = document.getElementById('enhanced-add-custom-item-btn');
+            var calculationDiv = document.getElementById('enhanced-custom-price-calculation');
+            var nameInput = document.getElementById('enhanced-custom-item-name');
             
-            if (!name || !price || price <= 0) {
-                showSuccessMessage('⚠️ Please fill in item name and valid price');
+            if (!priceInput || !unitSelect || !addBtn || !calculationDiv || !nameInput) return;
+            
+            var unitPrice = parseFloat(priceInput.value) || 0;
+            var selectedOption = unitSelect.options[unitSelect.selectedIndex];
+            var unitName = selectedOption ? selectedOption.text : 'pcs';
+            var totalPrice = unitPrice * enhancedCustomQuantity;
+            var name = nameInput.value.trim();
+            
+            // Update price calculation display
+            var breakdownEl = calculationDiv.querySelector('.price-breakdown');
+            var totalEl = calculationDiv.querySelector('.total-price');
+            
+            if (breakdownEl && totalEl) {
+                breakdownEl.textContent = enhancedCustomQuantity + ' ' + unitName + ' × RM ' + unitPrice.toFixed(2) + ' =';
+                totalEl.textContent = 'RM ' + totalPrice.toFixed(2);
+            }
+            
+            // Enhanced validation
+            var nameValid = validateCustomItemName(name);
+            var priceValid = validateCustomItemPrice(unitPrice.toString());
+            var isValid = nameValid && priceValid;
+            
+            addBtn.disabled = !isValid;
+            addBtn.style.opacity = isValid ? '1' : '0.5';
+            addBtn.style.background = isValid ? 
+                'linear-gradient(135deg, var(--success), #34d399)' : 
+                'linear-gradient(135deg, var(--text-secondary), #9ca3af)';
+        }
+
+        function addEnhancedCustomItemToQuote() {
+            var nameInput = document.getElementById('enhanced-custom-item-name');
+            var descriptionInput = document.getElementById('enhanced-custom-item-description');
+            var priceInput = document.getElementById('enhanced-custom-item-price');
+            var unitSelect = document.getElementById('enhanced-custom-item-unit');
+            
+            if (!nameInput || !priceInput || !unitSelect) {
+                showEnhancedSuccessMessage('⚠️ Form elements not found - please try again');
+                return;
+            }
+            
+            var name = nameInput.value.trim();
+            var description = descriptionInput ? descriptionInput.value.trim() : '';
+            var price = parseFloat(priceInput.value);
+            var unit = unitSelect.value;
+            
+            // Final validation
+            if (!validateCustomItemName(name) || !validateCustomItemPrice(price.toString())) {
+                showEnhancedSuccessMessage('⚠️ Please fix validation errors first');
                 return;
             }
             
             var customItem = {
-                id: 'custom-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                id: 'enhanced-custom-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
                 name: name,
-                description: description || 'Custom item for ' + currentQuoteData.title,
+                description: description || 'Enhanced custom item for ' + enhancedCurrentQuoteData.title,
                 price: price,
                 unit: unit,
-                quantity: customQuantity,
-                total: price * customQuantity,
-                category: currentCategory,
+                quantity: enhancedCustomQuantity,
+                total: price * enhancedCustomQuantity,
+                category: enhancedCurrentCategory,
                 isCustom: true
             };
             
-            currentQuoteData.items.push(customItem);
+            enhancedCurrentQuoteData.items.push(customItem);
             
-            closeCustomItemForm();
-            renderPresetItems();
-            updateSelectedItemsSummary();
-            updateQuoteSummaryDisplay();
-            updateProceedButton();
+            closeEnhancedCustomItemForm();
             
-            showSuccessMessage('✅ Custom item added: ' + name + ' (Qty: ' + customQuantity + ')');
+            renderEnhancedPresetItems();
+            updateEnhancedSelectedItemsSummary();
+            updateEnhancedQuoteSummaryDisplay();
+            updateEnhancedProceedButton();
+            
+            showEnhancedSuccessMessage('✅ Enhanced custom item added: ' + name + ' (Total: RM ' + customItem.total.toFixed(2) + ')');
         }
 
-        // Step 5: Final Review & PDF Generation
-        function renderFinalReview() {
-            var container = document.getElementById('complete-review-content');
-            var titleElement = document.getElementById('review-job-title');
+        // Enhanced Step 5: Final Review & PDF Generation
+        function renderEnhancedFinalReview() {
+            var container = document.getElementById('enhanced-complete-review-content');
+            var titleElement = document.getElementById('enhanced-review-job-title');
             
             if (!container || !titleElement) return;
             
-            titleElement.textContent = currentQuoteData.title;
+            titleElement.textContent = enhancedCurrentQuoteData.title;
             
             var html = '';
             
-            // Client Information Section
-            html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 16px; border-left: 4px solid var(--accent-primary);">' +
-                '<h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
-                '<span style="font-size: 18px;">👤</span> Client Information' +
+            // Enhanced Client Information Section
+            html += '<div style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; border-radius: 16px; padding: 20px; margin-bottom: 20px;">' +
+                '<h4 style="font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">' +
+                '<span style="font-size: 20px;">👤</span> Enhanced Client Information' +
                 '</h4>' +
                 '<div style="display: grid; gap: 8px; font-size: 14px;">' +
-                '<div><strong>Name:</strong> ' + currentQuoteData.client.name + '</div>' +
-                (currentQuoteData.client.company ? '<div><strong>Company:</strong> ' + currentQuoteData.client.company + '</div>' : '') +
-                '<div><strong>Phone:</strong> ' + currentQuoteData.client.phone + '</div>' +
-                (currentQuoteData.client.email ? '<div><strong>Email:</strong> ' + currentQuoteData.client.email + '</div>' : '') +
-                '<div><strong>Address:</strong> ' + currentQuoteData.client.address + '</div>' +
+                '<div><strong>Name:</strong> ' + enhancedCurrentQuoteData.client.name + '</div>' +
+                (enhancedCurrentQuoteData.client.company ? '<div><strong>Company:</strong> ' + enhancedCurrentQuoteData.client.company + '</div>' : '') +
+                '<div><strong>Phone:</strong> ' + enhancedCurrentQuoteData.client.phone + '</div>' +
+                (enhancedCurrentQuoteData.client.email ? '<div><strong>Email:</strong> ' + enhancedCurrentQuoteData.client.email + '</div>' : '') +
+                '<div><strong>Address:</strong> ' + enhancedCurrentQuoteData.client.address + '</div>' +
                 '</div>' +
                 '</div>';
             
-            // Quote Summary Header
-            html += '<div style="text-align: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--accent-primary);">' +
-                '<h3 style="font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">' + currentQuoteData.title + '</h3>' +
-                '<p style="color: var(--text-muted); font-size: 14px;">Complete Quote Review • ' + currentQuoteData.items.length + ' items • ' + currentQuoteData.categories.length + ' categories</p>' +
+            // Enhanced Quote Summary Header
+            html += '<div style="text-align: center; margin-bottom: 24px; padding: 20px; background: var(--bg-secondary); border-radius: 16px; border: 2px solid var(--accent-primary);">' +
+                '<h3 style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">🎨 ' + enhancedCurrentQuoteData.title + '</h3>' +
+                '<p style="color: var(--text-muted); font-size: 14px;">Enhanced Professional Quote • ' + enhancedCurrentQuoteData.items.length + ' items • ' + enhancedCurrentQuoteData.categories.length + ' categories</p>' +
                 '</div>';
             
             // Calculate total
             var grandTotal = 0;
-            for (var i = 0; i < currentQuoteData.items.length; i++) {
-                grandTotal += currentQuoteData.items[i].total;
+            for (var i = 0; i < enhancedCurrentQuoteData.items.length; i++) {
+                grandTotal += enhancedCurrentQuoteData.items[i].total;
             }
-            currentQuoteData.totalAmount = grandTotal;
+            enhancedCurrentQuoteData.totalAmount = grandTotal;
             
             // Group items by category
             var itemsByCategory = {};
-            for (var i = 0; i < currentQuoteData.items.length; i++) {
-                var item = currentQuoteData.items[i];
+            for (var i = 0; i < enhancedCurrentQuoteData.items.length; i++) {
+                var item = enhancedCurrentQuoteData.items[i];
                 if (!itemsByCategory[item.category]) {
                     itemsByCategory[item.category] = [];
                 }
                 itemsByCategory[item.category].push(item);
             }
             
-            // Render items by category
+            // Enhanced render items by category
             for (var catKey in itemsByCategory) {
                 var catItems = itemsByCategory[catKey];
                 var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
+                var categoryInfo = categories[catKey] || { icon: '📋', name: catKey, color: 'var(--accent-primary)' };
                 
-                html += '<div style="margin-bottom: 16px; background: var(--bg-secondary); border-radius: 12px; padding: 16px; border-left: 4px solid ' + (categories[catKey] ? categories[catKey].color : 'var(--accent-primary)') + ';">' +
-                    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">' +
+                html += '<div style="margin-bottom: 20px; background: var(--bg-card); border-radius: 16px; padding: 20px; border-left: 4px solid ' + categoryInfo.color + '; box-shadow: 0 4px 16px var(--shadow-light);">' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">' +
                     '<div style="font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">' +
-                    '<span style="font-size: 18px;">' + (categories[catKey] ? categories[catKey].icon : '📋') + '</span>' +
-                    '<span>' + (categories[catKey] ? categories[catKey].name : catKey) + '</span>' +
-                    '<span style="font-size: 12px; background: var(--accent-primary); color: white; padding: 2px 8px; border-radius: 8px;">' + catItems.length + '</span>' +
+                    '<span style="font-size: 20px;">' + categoryInfo.icon + '</span>' +
+                    '<span>' + categoryInfo.name + '</span>' +
+                    '<span style="font-size: 12px; background: ' + categoryInfo.color + '; color: white; padding: 4px 8px; border-radius: 8px;">' + catItems.length + '</span>' +
                     '</div>' +
-                    '<div style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ' + catTotal.toFixed(2) + '</div>' +
+                    '<div style="font-weight: 700; color: ' + categoryInfo.color + '; font-size: 18px;">RM ' + catTotal.toFixed(2) + '</div>' +
                     '</div>';
                 
                 for (var j = 0; j < catItems.length; j++) {
                     var item = catItems[j];
-                    html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 8px;">' +
+                    html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg-secondary); border-radius: 12px; margin-bottom: 8px;">' +
                         '<div>' +
-                        '<div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">' +
-                        (item.isCustom ? '🛠️ ' : '') + item.name + (item.isCustom ? ' (Custom)' : '') + '</div>' +
-                        '<div style="font-size: 12px; color: var(--text-muted);">' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + '</div>' +
+                        '<div style="font-weight: 600; color: var(--text-primary); font-size: 15px;">' +
+                        (item.isCustom ? '🛠️ ' : '') + item.name + (item.isCustom ? ' (Enhanced Custom)' : '') + '</div>' +
+                        '<div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">' + item.description + '</div>' +
+                        '<div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + '</div>' +
                         '</div>' +
-                        '<div style="font-weight: 700; color: var(--text-secondary);">RM ' + item.total.toFixed(2) + '</div>' +
+                        '<div style="font-weight: 700; color: ' + categoryInfo.color + '; font-size: 16px;">RM ' + item.total.toFixed(2) + '</div>' +
                         '</div>';
                 }
                 
                 html += '</div>';
             }
             
-            // Grand Total
-            html += '<div style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; padding: 20px; border-radius: 16px; text-align: center; margin-top: 20px; box-shadow: 0 8px 25px var(--shadow-medium);">' +
-                '<div style="font-size: 16px; font-weight: 600; margin-bottom: 8px; opacity: 0.9;">TOTAL QUOTE AMOUNT</div>' +
-                '<div style="font-size: 36px; font-weight: 800;">RM ' + grandTotal.toFixed(2) + '</div>' +
+            // Enhanced Grand Total
+            html += '<div class="quote-summary-card" style="margin-top: 24px;">' +
+                '<div class="quote-summary-total">' +
+                '<div class="quote-summary-total-label">🎨 ENHANCED TOTAL QUOTE AMOUNT</div>' +
+                '<div class="quote-summary-total-amount" style="font-size: 40px;">RM ' + grandTotal.toFixed(2) + '</div>' +
+                '</div>' +
                 '</div>';
             
             container.innerHTML = html;
         }
 
-        function editQuoteFromReview() {
-            // Go back to categories to allow editing
-            backToCategories();
-            showSuccessMessage('✏️ Editing quote - modify categories and items');
+        function editEnhancedQuoteFromReview() {
+            backToEnhancedCategories();
+            showEnhancedSuccessMessage('✏️ Enhanced editing mode - modify categories and items');
         }
 
-        function generateFinalPDF() {
-            if (currentQuoteData.items.length === 0) {
-                showSuccessMessage('⚠️ Cannot generate PDF - no items in quote');
+        function generateEnhancedFinalPDF() {
+            if (enhancedCurrentQuoteData.items.length === 0) {
+                showEnhancedSuccessMessage('⚠️ Cannot generate PDF - no items in quote');
                 return;
             }
             
+            // Add loading state
+            var generateBtn = document.getElementById('enhanced-final-generate-btn');
+            if (generateBtn) {
+                generateBtn.classList.add('loading');
+                generateBtn.textContent = '🎨 Generating Enhanced PDF...';
+            }
+            
             // Set creation date
-            currentQuoteData.createdAt = new Date().toISOString();
+            enhancedCurrentQuoteData.createdAt = new Date().toISOString();
             
             // Create final quote object
             var quote = {
                 id: Date.now(),
-                client: Object.assign({}, currentQuoteData.client),
-                title: currentQuoteData.title,
-                categories: [...currentQuoteData.categories],
-                items: [...currentQuoteData.items],
-                totalAmount: currentQuoteData.totalAmount,
-                createdAt: currentQuoteData.createdAt
+                client: Object.assign({}, enhancedCurrentQuoteData.client),
+                title: '🎨 ' + enhancedCurrentQuoteData.title,
+                categories: [...enhancedCurrentQuoteData.categories],
+                items: [...enhancedCurrentQuoteData.items],
+                totalAmount: enhancedCurrentQuoteData.totalAmount,
+                createdAt: enhancedCurrentQuoteData.createdAt,
+                isEnhanced: true
             };
             
-            // Add to quotes list (or update if editing)
-            if (isEditMode && currentQuoteId) {
-                var existingIndex = jobQuotes.findIndex(function(q) { return q.id === currentQuoteId; });
-                if (existingIndex !== -1) {
-                    quote.id = currentQuoteId;
-                    jobQuotes[existingIndex] = quote;
-                } else {
-                    jobQuotes.push(quote);
-                }
-            } else {
-                jobQuotes.push(quote);
-            }
-            
-            currentQuoteId = quote.id;
-            
-            // Save to storage
-            saveDataToStorage();
-            
-            // Close all modals
-            closeAllModals();
-            
-            // Generate PDF immediately
-            generateCompletePDF(quote);
-            
-            // Update stats and show dashboard
-            updateStats();
-            renderViews();
-            showView('dashboard');
-            
-            showSuccessMessage('🎉 Complete quote created! PDF generated and ready to send!');
-        }
-
-        // Enhanced PDF Generation with Client Information
-        function generateCompletePDF(quote) {
-            showSuccessMessage('📄 Generating professional PDF with client information...');
-            
-            var { jsPDF } = window.jspdf;
-            var doc = new jsPDF();
-            
-            try {
-                // Professional header with company branding
-                doc.setFillColor(244, 114, 182); // Pink header
-                doc.rect(0, 0, 210, 40, 'F');
-                
-                // Company info in white
-                doc.setTextColor(255, 255, 255);
-                doc.setFontSize(20);
-                doc.setFont(undefined, 'bold');
-                doc.text(companyInfo.name, 20, 20);
-                
-                doc.setFontSize(11);
-                doc.setFont(undefined, 'normal');
-                doc.text('Registration: ' + companyInfo.registration, 20, 28);
-                doc.text('Phone: ' + companyInfo.phone + ' • Email: ' + companyInfo.email, 20, 35);
-                
-                // Reset text color
-                doc.setTextColor(0, 0, 0);
-                
-                // Quote details
-                doc.setFontSize(18);
-                doc.setFont(undefined, 'bold');
-                doc.text('PROFESSIONAL MAINTENANCE QUOTE', 20, 55);
-                
-                doc.setFontSize(12);
-                doc.setFont(undefined, 'normal');
-                doc.text('Quote #: ' + quote.id, 20, 70);
-                doc.text('Date: ' + formatDate(quote.createdAt), 20, 80);
-                doc.text('Project: ' + quote.title, 20, 90);
-                
-                // Client Information Section
-                doc.setFontSize(14);
-                doc.setFont(undefined, 'bold');
-                doc.text('CLIENT INFORMATION', 20, 110);
-                
-                doc.setFontSize(11);
-                doc.setFont(undefined, 'normal');
-                var yPos = 125;
-                doc.text('Client Name: ' + quote.client.name, 20, yPos);
-                yPos += 10;
-                
-                if (quote.client.company) {
-                    doc.text('Company: ' + quote.client.company, 20, yPos);
-                    yPos += 10;
-                }
-                
-                doc.text('Phone: ' + quote.client.phone, 20, yPos);
-                yPos += 10;
-                
-                if (quote.client.email) {
-                    doc.text('Email: ' + quote.client.email, 20, yPos);
-                    yPos += 10;
-                }
-                
-                doc.text('Address: ' + quote.client.address, 20, yPos);
-                yPos += 20;
-                
-                // Items table
-                doc.setFontSize(14);
-                doc.setFont(undefined, 'bold');
-                doc.text('QUOTE ITEMS', 20, yPos);
-                yPos += 15;
-                
-                doc.setFontSize(10);
-                doc.setFont(undefined, 'bold');
-                doc.text('No.', 20, yPos);
-                doc.text('Description', 35, yPos);
-                doc.text('Qty', 140, yPos);
-                doc.text('Unit', 155, yPos);
-                doc.text('Rate', 170, yPos);
-                doc.text('Amount', 185, yPos);
-                
-                doc.setFont(undefined, 'normal');
-                for (var i = 0; i < quote.items.length; i++) {
-                    var item = quote.items[i];
-                    yPos += 12;
-                    
-                    doc.text((i + 1).toString(), 20, yPos);
-                    var itemName = item.name + (item.isCustom ? ' (Custom)' : '');
-                    doc.text(itemName.substring(0, 30), 35, yPos);
-                    doc.text(item.quantity.toString(), 140, yPos);
-                    doc.text(item.unit.substring(0, 8), 155, yPos);
-                    doc.text(item.price.toFixed(2), 170, yPos);
-                    doc.text(item.total.toFixed(2), 185, yPos);
-                    
-                    if (yPos > 250) {
-                        doc.addPage();
-                        yPos = 30;
-                    }
-                }
-                
-                // Total with pink background
-                yPos += 15;
-                doc.setFillColor(244, 114, 182);
-                doc.rect(20, yPos - 5, 170, 20, 'F');
-                
-                doc.setTextColor(255, 255, 255);
-                doc.setFontSize(16);
-                doc.setFont(undefined, 'bold');
-                doc.text('TOTAL AMOUNT: RM ' + quote.totalAmount.toFixed(2), 25, yPos + 7);
-                
-                // Footer
-                doc.setTextColor(0, 0, 0);
-                doc.setFontSize(10);
-                doc.setFont(undefined, 'normal');
-                doc.text('Thank you for choosing ' + companyInfo.name, 20, yPos + 35);
-                doc.text('We look forward to serving you!', 20, yPos + 45);
-                
-                // Save/Share PDF
-                var fileName = 'REFIT_Quote_' + quote.id + '_' + quote.client.name.replace(/[^a-z0-9]/gi, '_') + '.pdf';
-                
-                if (navigator.share && navigator.canShare) {
-                    var pdfBlob = doc.output('blob');
-                    var file = new File([pdfBlob], fileName, { type: 'application/pdf' });
-                    
-                    navigator.share({
-                        title: 'Professional Quote - ' + quote.title,
-                        text: 'Quote from ' + companyInfo.name + ' for ' + quote.client.name,
-                        files: [file]
-                    }).then(function() {
-                        showSuccessMessage('📤 PDF shared successfully!');
-                    }).catch(function(error) {
-                        console.log('Share failed, downloading instead:', error);
-                        doc.save(fileName);
-                        showSuccessMessage('💾 PDF downloaded successfully!');
-                    });
-                } else {
-                    doc.save(fileName);
-                    showSuccessMessage('💾 PDF downloaded successfully!');
-                }
-                
-            } catch (error) {
-                console.error('PDF generation error:', error);
-                showSuccessMessage('❌ Error generating PDF. Please try again.');
-            }
-        }
-
-        // Quote Summary Update Functions
-        function updateQuoteSummaryDisplay() {
-            var summaryContainer = document.getElementById('current-quote-summary');
-            var itemsCountElement = document.getElementById('total-items-count-summary');
-            var previewElement = document.getElementById('quote-items-preview');
-            var totalElement = document.getElementById('running-total');
-            
-            if (currentQuoteData.items.length === 0) {
-                summaryContainer.style.display = 'none';
-                return;
-            }
-            
-            summaryContainer.style.display = 'block';
-            itemsCountElement.textContent = currentQuoteData.items.length;
-            
-            var categoryGroups = {};
-            var totalAmount = 0;
-            
-            for (var i = 0; i < currentQuoteData.items.length; i++) {
-                var item = currentQuoteData.items[i];
-                var itemCategory = item.category || 'common';
-                totalAmount += item.total;
-                
-                if (!categoryGroups[itemCategory]) {
-                    categoryGroups[itemCategory] = [];
-                }
-                categoryGroups[itemCategory].push(item);
-            }
-            
-            var html = '';
-            for (var catKey in categoryGroups) {
-                var catItems = categoryGroups[catKey];
-                var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
-                
-                html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 6px; border-left: 4px solid var(--accent-primary);">' +
-                    '<div>' +
-                    '<div style="font-weight: 600; color: var(--text-primary); font-size: 13px;">' + categories[catKey].icon + ' ' + categories[catKey].name + '</div>' +
-                    '<div style="font-size: 11px; color: var(--text-muted);">' + catItems.length + ' items</div>' +
-                    '</div>' +
-                    '<div style="font-weight: 700; color: var(--accent-primary); font-size: 14px;">RM ' + catTotal.toFixed(2) + '</div>' +
-                    '</div>';
-            }
-            
-            previewElement.innerHTML = html;
-            totalElement.textContent = 'RM ' + totalAmount.toFixed(2);
-            currentQuoteData.totalAmount = totalAmount;
-            
-            var uniqueCategories = Object.keys(categoryGroups);
-            currentQuoteData.categories = uniqueCategories;
-        }
-
-        // Quote Detail and Management Functions
-        function showQuoteDetail(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
-            
-            currentQuoteId = quoteId;
-            renderQuoteDetail(quote);
-            showView('quote-detail');
-        }
-
-        function renderQuoteDetail(quote) {
-            var container = document.getElementById('quote-detail-content');
-            if (!container) return;
-            
-            var html = '';
-            
-            // Client Information Card
-            html += '<div style="background: var(--bg-card); border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 8px 32px var(--shadow-light);">' +
-                '<h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">' +
-                '<span style="font-size: 20px;">👤</span> Client Information' +
-                '</h4>' +
-                '<div style="display: grid; gap: 8px; font-size: 14px; color: var(--text-secondary);">' +
-                '<div><strong style="color: var(--text-primary);">Name:</strong> ' + quote.client.name + '</div>' +
-                (quote.client.company ? '<div><strong style="color: var(--text-primary);">Company:</strong> ' + quote.client.company + '</div>' : '') +
-                '<div><strong style="color: var(--text-primary);">Phone:</strong> ' + quote.client.phone + '</div>' +
-                (quote.client.email ? '<div><strong style="color: var(--text-primary);">Email:</strong> ' + quote.client.email + '</div>' : '') +
-                '<div><strong style="color: var(--text-primary);">Address:</strong> ' + quote.client.address + '</div>' +
-                '</div>' +
-                '</div>';
-            
-            // Quote Header
-            var categoriesText = quote.categories ? quote.categories.map(function(cat) { 
-                return categories[cat] ? categories[cat].name : cat; 
-            }).join(', ') : 'Multiple';
-            
-            html += '<div style="background: var(--bg-card); border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 8px 32px var(--shadow-light);">' +
-                '<div style="font-size: 24px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">' + quote.title + '</div>' +
-                '<div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">📅 Created: ' + formatDate(quote.createdAt) + ' • 🏷️ Categories: ' + categoriesText + '</div>' +
-                '<div style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; padding: 16px; border-radius: 12px; text-align: center; box-shadow: 0 6px 20px var(--shadow-medium);">' +
-                '<div style="font-size: 14px; opacity: 0.9; margin-bottom: 4px;">Total Quote Amount</div>' +
-                '<div style="font-size: 32px; font-weight: 800;">RM ' + quote.totalAmount.toFixed(2) + '</div>' +
-                '</div>' +
-                '</div>';
-            
-            // Quote Items
-            html += '<div style="background: var(--bg-card); border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 8px 32px var(--shadow-light);">' +
-                '<div style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">' +
-                '<span>📋</span> Quote Items (' + quote.items.length + ')' +
-                '</div>';
-            
-            var itemsByCategory = {};
-            for (var i = 0; i < quote.items.length; i++) {
-                var item = quote.items[i];
-                var itemCategory = item.category || 'common';
-                if (!itemsByCategory[itemCategory]) {
-                    itemsByCategory[itemCategory] = [];
-                }
-                itemsByCategory[itemCategory].push(item);
-            }
-            
-            for (var catKey in itemsByCategory) {
-                var catItems = itemsByCategory[catKey];
-                var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
-                
-                html += '<div style="margin-bottom: 20px; border-left: 4px solid ' + (categories[catKey] ? categories[catKey].color : 'var(--accent-primary)') + '; padding-left: 16px;">' +
-                    '<div style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
-                    '<span style="font-size: 20px;">' + (categories[catKey] ? categories[catKey].icon : '📋') + '</span>' +
-                    '<span>' + (categories[catKey] ? categories[catKey].name : catKey) + ' (' + catItems.length + ' items)</span>' +
-                    '<span style="margin-left: auto; color: var(--accent-primary);">RM ' + catTotal.toFixed(2) + '</span>' +
-                    '</div>';
-                
-                for (var j = 0; j < catItems.length; j++) {
-                    var item = catItems[j];
-                    var itemIcon = item.isCustom ? '🛠️' : (categories[catKey] ? categories[catKey].icon : '📋');
-                    var itemLabel = item.isCustom ? ' (Custom)' : '';
-                    
-                    html += '<div style="padding: 16px; background: var(--bg-secondary); border-radius: 12px; margin-bottom: 12px;">' +
-                        '<div style="font-weight: 700; color: var(--text-primary); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">' +
-                        '<span>' + itemIcon + '</span>' + item.name + itemLabel +
-                        '</div>' +
-                        '<div style="font-size: 14px; color: var(--text-muted); margin-bottom: 8px;">' + item.description + '</div>' +
-                        '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                        '<span style="color: var(--text-secondary); font-size: 12px;">Quantity: ' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + '</span>' +
-                        '<span style="font-weight: 700; color: var(--accent-primary);">RM ' + item.total.toFixed(2) + '</span>' +
-                        '</div>' +
-                        '</div>';
-                }
-                
-                html += '</div>';
-            }
-            
-            html += '</div>';
-            
-            // Action Buttons
-            html += '<div style="background: var(--bg-card); border-radius: 20px; padding: 24px; border: 1px solid var(--border-color); box-shadow: 0 8px 32px var(--shadow-light);">' +
-                '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px;">' +
-                '<button class="form-btn btn-success" onclick="shareExistingQuotePDF(' + quote.id + ')">' +
-                '<span>📤</span> Share PDF' +
-                '</button>' +
-                '<button class="form-btn btn-info" onclick="downloadExistingQuotePDF(' + quote.id + ')">' +
-                '<span>💾</span> Download PDF' +
-                '</button>' +
-                '<button class="form-btn btn-warning" onclick="editQuote(' + quote.id + ')">' +
-                '<span>✏️</span> Edit Quote' +
-                '</button>' +
-                '<button class="form-btn btn-danger" onclick="deleteQuote(' + quote.id + ')">' +
-                '<span>🗑️</span> Delete Quote' +
-                '</button>' +
-                '</div>' +
-                '<button class="form-btn btn-secondary" onclick="showView(\'quotes\')" style="width: 100%;">' +
-                '<span>←</span> Back to All Quotes' +
-                '</button>' +
-                '</div>';
-            
-            container.innerHTML = html;
-        }
-
-        function editQuote(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
-            
-            // Set edit mode
-            isEditMode = true;
-            currentQuoteId = quote.id;
-            
-            // Populate current quote data
-            currentQuoteData = {
-                client: Object.assign({}, quote.client),
-                title: quote.title,
-                categories: quote.categories || [],
-                items: [...quote.items],
-                totalAmount: quote.totalAmount,
-                createdAt: quote.createdAt
-            };
-            
-            // Remove from quotes list temporarily (will be re-added when saved)
-            jobQuotes = jobQuotes.filter(function(q) { return q.id !== quoteId; });
-            
-            // Populate client info form
-            document.getElementById('client-name').value = quote.client.name;
-            document.getElementById('client-company').value = quote.client.company || '';
-            document.getElementById('client-phone').value = quote.client.phone;
-            document.getElementById('client-email').value = quote.client.email || '';
-            document.getElementById('client-address').value = quote.client.address;
-            
-            // Populate job title
-            document.getElementById('job-title-input').value = quote.title;
-            document.getElementById('selected-job-title').textContent = quote.title;
-            document.getElementById('client-name-display').textContent = 'Client: ' + quote.client.name;
-            
-            // Start from categories step
-            renderCategories();
-            updateQuoteSummaryDisplay();
-            updateProceedButton();
-            
-            document.getElementById('category-selection-modal').classList.add('show');
-            showSuccessMessage('✏️ Editing quote: ' + quote.title);
-        }
-
-        function deleteQuote(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
-            
-            if (confirm('Delete quote: "' + quote.title + '" for ' + quote.client.name + '?\n\nThis action cannot be undone.')) {
-                jobQuotes = jobQuotes.filter(function(q) { return q.id !== quoteId; });
-                saveDataToStorage();
-                updateStats();
-                renderViews();
-                showView('quotes');
-                showSuccessMessage('🗑️ Quote deleted successfully');
-            }
-        }
-
-        function shareExistingQuotePDF(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
-            
-            currentQuoteId = quoteId;
-            generateCompletePDF(quote);
-        }
-
-        function downloadExistingQuotePDF(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
-            
-            showSuccessMessage('💾 Downloading PDF...');
-            generateCompletePDF(quote);
-        }
-
-        // View and Navigation Functions
-        function showView(viewName) {
-            currentView = viewName;
-            
-            var views = document.querySelectorAll('.view');
-            for (var i = 0; i < views.length; i++) {
-                views[i].classList.add('hidden');
-            }
-            
-            var targetView = document.getElementById(viewName + '-view');
-            if (targetView) {
-                targetView.classList.remove('hidden');
-            }
-            
-            var navItems = document.querySelectorAll('.nav-item');
-            for (var i = 0; i < navItems.length; i++) {
-                navItems[i].classList.remove('active');
-            }
-            
-            var activeNav = document.querySelector('.nav-item[onclick*="' + viewName + '"]');
-            if (activeNav) {
-                activeNav.classList.add('active');
-            }
-            
-            renderViews();
-        }
-
-        function renderViews() {
-            switch(currentView) {
-                case 'dashboard':
-                    renderDashboard();
-                    break;
-                case 'quotes':
-                    renderQuotes();
-                    break;
-                case 'quote-detail':
-                    break;
-            }
-        }
-
-        function renderDashboard() {
-            var recentQuotes = jobQuotes.slice(-3).reverse();
-            var container = document.getElementById('recent-quotes');
-            if (!container) return;
-            
-            if (recentQuotes.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 30px 20px; color: var(--text-muted);">' +
-                    '<div style="font-size: 32px; margin-bottom: 8px;">💰</div>' +
-                    '<p style="font-weight: 600;">No job quotes yet</p>' +
-                    '<p style="font-size: 12px; margin-top: 4px;">Create your first quote with the complete 5-step workflow</p>' +
-                    '</div>';
-                return;
-            }
-            
-            var html = '';
-            for (var i = 0; i < recentQuotes.length; i++) {
-                var quote = recentQuotes[i];
-                
-                html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;" onclick="showQuoteDetail(' + quote.id + ')">' +
-                    '<div style="font-weight: 700; font-size: 15px; color: var(--text-primary); margin-bottom: 8px;">' + quote.title + '</div>' +
-                    '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">👤 ' + quote.client.name + ' • 📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
-                    '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                    '<span style="color: var(--text-muted); font-size: 12px;">Quote #' + quote.id + '</span>' +
-                    '<span style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
-                    '</div>' +
-                    '</div>';
-            }
-            container.innerHTML = html;
-        }
-
-        function renderQuotes() {
-            var container = document.getElementById('quotes-list');
-            if (!container) return;
-            
-            if (jobQuotes.length === 0) {
-                container.innerHTML = '<div class="empty-state">' +
-                    '<div class="empty-icon">💰</div>' +
-                    '<p style="font-weight: 600;">No job quotes found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first quote using the complete 5-step workflow</p>' +
-                    '</div>';
-                return;
-            }
-            
-            var html = '';
-            for (var i = jobQuotes.length - 1; i >= 0; i--) {
-                var quote = jobQuotes[i];
-                
-                var quoteCategories = quote.categories || ['common'];
-                var categoryBadges = '';
-                
-                for (var j = 0; j < Math.min(quoteCategories.length, 3); j++) {
-                    var cat = quoteCategories[j];
-                    if (categories[cat]) {
-                        categoryBadges += '<span style="background: ' + categories[cat].color + '; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; font-weight: 700; margin-right: 6px;">' + 
-                            categories[cat].icon + ' ' + categories[cat].name + '</span>';
-                    }
-                }
-                
-                if (quoteCategories.length > 3) {
-                    categoryBadges += '<span style="background: var(--text-muted); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; font-weight: 700;">+' + 
-                        (quoteCategories.length - 3) + ' more</span>';
-                }
-                
-                html += '<div class="item-card">' +
-                    '<div class="item-header">' +
-                    '<div class="item-info">' +
-                    '<h3>' + quote.title + '</h3>' +
-                    '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">👤 ' + quote.client.name + ' • 📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
-                    '<div style="margin: 8px 0;">' + categoryBadges + '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="item-actions">' +
-                    '<button class="icon-btn quote-btn" onclick="showQuoteDetail(' + quote.id + ')" title="View Quote">👁️</button>' +
-                    '<button class="icon-btn share-btn" onclick="shareExistingQuotePDF(' + quote.id + ')" title="Share PDF">📤</button>' +
-                    '<button class="icon-btn edit-btn" onclick="editQuote(' + quote.id + ')" title="Edit Quote">✏️</button>' +
-                    '<button class="icon-btn delete-btn" onclick="deleteQuote(' + quote.id + ')" title="Delete Quote">🗑️</button>' +
-                    '</div>' +
-                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
-                    '<span style="font-size: 12px; color: var(--text-muted);">Quote #' + quote.id + '</span>' +
-                    '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
-                    '</div>' +
-                    '</div>';
-            }
-            container.innerHTML = html;
-        }
-
-        // Company Info Management
-        function openCompanyInfo() {
-            document.getElementById('company-name-input').value = companyInfo.name;
-            document.getElementById('company-reg-input').value = companyInfo.registration;
-            document.getElementById('company-phone-input').value = companyInfo.phone;
-            document.getElementById('company-email-input').value = companyInfo.email;
-            document.getElementById('company-address-input').value = companyInfo.address;
-            
-            document.getElementById('company-info-modal').classList.add('show');
-            showSuccessMessage('🏢 Company info opened');
-        }
-
-        function closeCompanyInfo() {
-            document.getElementById('company-info-modal').classList.remove('show');
-        }
-
-        function saveCompanyInfo() {
-            companyInfo.name = document.getElementById('company-name-input').value.trim() || companyInfo.name;
-            companyInfo.registration = document.getElementById('company-reg-input').value.trim() || companyInfo.registration;
-            companyInfo.phone = document.getElementById('company-phone-input').value.trim() || companyInfo.phone;
-            companyInfo.email = document.getElementById('company-email-input').value.trim() || companyInfo.email;
-            companyInfo.address = document.getElementById('company-address-input').value.trim() || companyInfo.address;
-            
-            updateHeaderDisplay();
-            saveDataToStorage();
-            closeCompanyInfo();
-            showSuccessMessage('✅ Company details saved!');
-        }
-
-        // Utility Functions
-        function updateStats() {
-            var totalQuotes = jobQuotes.length;
-            var totalItems = 0;
-            var totalRevenue = 0;
-            var todayRevenue = 0;
-            var today = new Date().toISOString().split('T')[0];
-            
-            for (var i = 0; i < jobQuotes.length; i++) {
-                var quote = jobQuotes[i];
-                totalItems += quote.items.length;
-                totalRevenue += quote.totalAmount;
-                if (quote.createdAt && quote.createdAt.split('T')[0] === today) {
-                    todayRevenue += quote.totalAmount;
-                }
-            }
-            
-            updateElementText('total-quotes-count', totalQuotes);
-            updateElementText('total-items-count', totalItems);
-            updateElementText('today-revenue', 'RM ' + Math.round(todayRevenue));
-            updateElementText('total-revenue', 'RM ' + Math.round(totalRevenue));
-        }
-
-        function updateElementText(elementId, text) {
-            var element = document.getElementById(elementId);
-            if (element) {
-                element.textContent = text;
-            }
-        }
-
-        function formatDate(dateString) {
-            if (!dateString) return '';
-            var date = new Date(dateString);
-            return date.toLocaleDateString('en-MY', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        function showSuccessMessage(message) {
-            var messageElement = document.getElementById('success-message');
-            if (!messageElement) return;
-            
-            messageElement.textContent = message;
-            messageElement.classList.add('show');
-            
-            setTimeout(function() {
-                messageElement.classList.remove('show');
-            }, 3000);
-        }
-
-        function closeAllModals() {
-            var modals = document.querySelectorAll('.modal');
-            for (var i = 0; i < modals.length; i++) {
-                modals[i].classList.remove('show');
-            }
-        }
-
-        function exportData() {
-            var allData = {
-                jobQuotes: jobQuotes,
-                categories: categories,
-                presetWorkItems: presetWorkItems,
-                companyInfo: companyInfo,
-                themePreference: currentTheme,
-                exportDate: new Date().toISOString(),
-                version: 'Complete 5-Step Workflow System v2.0'
-            };
-            
-            var dataStr = JSON.stringify(allData, null, 2);
-            var dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Complete_5Step_Workflow_' + new Date().toISOString().split('T')[0] + '.json';
-            link.click();
-            
-            showSuccessMessage('🎉📤 Complete workflow data exported successfully! 💕');
-        }
-
-        // Setup and initialization functions
-        function setupEventListeners() {
-            // Client info form enter key support
-            var clientInputs = ['client-name', 'client-phone', 'client-address'];
-            for (var i = 0; i < clientInputs.length; i++) {
-                var input = document.getElementById(clientInputs[i]);
-                if (input) {
-                    input.addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            proceedToJobTitle();
-                        }
-                    });
-                }
-            }
-            
-            // Job title input enter key support
-            var jobTitleInput = document.getElementById('job-title-input');
-            if (jobTitleInput) {
-                jobTitleInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        proceedToCategories();
-                    }
-                });
-            }
-            
-            // Custom item inputs
-            var customItemInputs = ['custom-item-name', 'custom-item-price'];
-            for (var i = 0; i < customItemInputs.length; i++) {
-                var input = document.getElementById(customItemInputs[i]);
-                if (input) {
-                    input.addEventListener('input', calculateCustomTotal);
-                }
-            }
-
-            // Search functionality
-            var searchInput = document.getElementById('quote-search');
-            if (searchInput) {
-                searchInput.addEventListener('input', function(e) {
-                    filterQuotes(e.target.value);
-                });
-            }
-        }
-
-        function filterQuotes(searchTerm) {
-            if (!searchTerm.trim()) {
-                renderQuotes();
-                return;
-            }
-            
-            var filteredQuotes = jobQuotes.filter(function(quote) {
-                return quote.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                       quote.client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                       quote.client.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                       quote.id.toString().includes(searchTerm);
-            });
-            
-            var container = document.getElementById('quotes-list');
-            if (!container) return;
-            
-            if (filteredQuotes.length === 0) {
-                container.innerHTML = '<div class="empty-state">' +
-                    '<div class="empty-icon">🔍</div>' +
-                    '<p style="font-weight: 600;">No quotes found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Try a different search term</p>' +
-                    '</div>';
-                return;
-            }
-            
-            // Render filtered results (similar to renderQuotes but with filteredQuotes)
-            var html = '';
-            for (var i = filteredQuotes.length - 1; i >= 0; i--) {
-                var quote = filteredQuotes[i];
-                
-                var quoteCategories = quote.categories || ['common'];
-                var categoryBadges = '';
-                
-                for (var j = 0; j < Math.min(quoteCategories.length, 3); j++) {
-                    var cat = quoteCategories[j];
-                    if (categories[cat]) {
-                        categoryBadges += '<span style="background: ' + categories[cat].color + '; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; font-weight: 700; margin-right: 6px;">' + 
-                            categories[cat].icon + ' ' + categories[cat].name + '</span>';
-                    }
-                }
-                
-                html += '<div class="item-card">' +
-                    '<div class="item-header">' +
-                    '<div class="item-info">' +
-                    '<h3>' + quote.title + '</h3>' +
-                    '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">👤 ' + quote.client.name + ' • 📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
-                    '<div style="margin: 8px 0;">' + categoryBadges + '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="item-actions">' +
-                    '<button class="icon-btn quote-btn" onclick="showQuoteDetail(' + quote.id + ')" title="View Quote">👁️</button>' +
-                    '<button class="icon-btn share-btn" onclick="shareExistingQuotePDF(' + quote.id + ')" title="Share PDF">📤</button>' +
-                    '<button class="icon-btn edit-btn" onclick="editQuote(' + quote.id + ')" title="Edit Quote">✏️</button>' +
-                    '<button class="icon-btn delete-btn" onclick="deleteQuote(' + quote.id + ')" title="Delete Quote">🗑️</button>' +
-                    '</div>' +
-                    '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
-                    '<span style="font-size: 12px; color: var(--text-muted);">Quote #' + quote.id + '</span>' +
-                    '<span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
-                    '</div>' +
-                    '</div>';
-            }
-            container.innerHTML = html;
-        }
-
-        function setupMobileOptimizations() {
-            setInterval(updateStatusBar, 60000);
-            
-            var lastTouchEnd = 0;
-            document.addEventListener('touchend', function (event) {
-                var now = (new Date()).getTime();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, false);
-
-            // Prevent zoom on double tap
-            var meta = document.querySelector('meta[name=viewport]');
-            meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
-        }
-
-        function updateStatusBar() {
-            var now = new Date();
-            var timeString = now.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                hour12: false 
-            });
-            var timeElement = document.getElementById('status-time');
-            if (timeElement) {
-                timeElement.textContent = timeString;
-            }
-        }
-
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
-        });
-
-        function initializeApp() {
-            loadThemePreference();
-            loadDataFromStorage();
-            setupEventListeners();
-            setupMobileOptimizations();
-            updateStatusBar();
-            updateStats();
-            renderViews();
-            
-            showSuccessMessage('🎉✨ REFIT Complete 5-Step Workflow System Ready! 💕');
-            console.log('🔧 REFIT MAINTENANCE SERVICES - Complete 5-Step Workflow System');
-            console.log('👤 Step 1: Client Information Entry');
-            console.log('📝 Step 2: Job Title Entry');
-            console.log('🏷️ Step 3: Multi-Category Selection');
-            console.log('📋 Step 4: Enhanced Item Selection (Preset + Custom)');
-            console.log('👁️ Step 5: Final Review & PDF Generation');
-            console.log('🔄 Complete Navigation: Client → Job → Categories → Items → Review → PDF');
-            console.log('✏️ Edit Mode: Modify existing quotes through same workflow');
-            console.log('📤 Professional PDF: Client info, detailed items, totals');
-            console.log('🗑️ Delete, Share, Download options available');
-            console.log('🌸💕 Beautiful Pink UI throughout!');
-        }
-
-        console.log('🎉💕 REFIT COMPLETE 5-STEP WORKFLOW SYSTEM - Professional Quote Creation!');
-        console.log('👤 Step 1: CLIENT INFORMATION');
-        console.log('   • Client Name, Company, Phone, Email, Address');
-        console.log('   • Required fields validation');
-        console.log('   • Cancel or Next navigation');
-        console.log('📝 Step 2: JOB TITLE');
-        console.log('   • Project description entry');
-        console.log('   • Back to client info or Next to categories');
-        console.log('🏷️ Step 3: CATEGORY SELECTION');
-        console.log('   • Multi-category selection with visual indicators');
-        console.log('   • Live quote summary with running totals');
-        console.log('   • Category completion tracking');
-        console.log('📋 Step 4: ITEM SELECTION PER CATEGORY');
-        console.log('   • Preset items with toggle selection');
-        console.log('   • Custom items with quantity & pricing controls');
-        console.log('   • Category-wise item management');
-        console.log('   • Done button to complete category');
-        console.log('👁️ Step 5: FINAL REVIEW & PDF GENERATION');
-        console.log('   • Complete client and quote overview');
-        console.log('   • Edit, Back, Cancel, OK options');
-        console.log('   • OK generates professional PDF with client info');
-        console.log('🔄 COMPLETE NAVIGATION SYSTEM:');
-        console.log('   • ➕ Add (manually add items)');
-        console.log('   • ✏️ Edit (modify existing quotes)');
-        console.log('   • ← Back (return to previous step)');
-        console.log('   • ❌ Cancel (abort process)');
-        console.log('   • 📄 OK - Generate PDF (finalize & send)');
-        console.log('📤 PDF FEATURES:');
-        console.log('   • Professional company branding');
-        console.log('   • Complete client information section');
-        console.log('   • Detailed itemized breakdown');
-        console.log('   • Category organization');
-        console.log('   • Share and download options');
-        console.log('🌸💕 Beautiful Pink Theme with Enhanced Animations!');
-    </script>
-</body>
-</html>
+            // Add to quotes list
+            jobQuotes.push(quote);
+            currentQuoteId = quote.i
