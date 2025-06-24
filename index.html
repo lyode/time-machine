@@ -903,6 +903,10 @@
             margin-top: 24px;
         }
         
+        .form-actions.three-col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
         .form-btn {
             padding: 18px 24px;
             border-radius: 16px;
@@ -1810,12 +1814,13 @@
                     </div>
                 </div>
 
+                <!-- Enhanced Navigation Controls -->
                 <div class="form-actions">
-                    <button type="button" class="form-btn btn-success" onclick="backToCategories()">
-                        ← Add More Categories
+                    <button type="button" class="form-btn btn-secondary" onclick="backToCategories()">
+                        ← Back
                     </button>
                     <button type="button" class="form-btn btn-primary" onclick="finishItemSelection()" id="finish-items-btn">
-                        Done with Category
+                        ✅ Done
                     </button>
                 </div>
             </div>
@@ -1945,7 +1950,7 @@
         </div>
     </div>
 
-    <!-- Custom Item Creation Modal -->
+    <!-- Enhanced Custom Item Creation Modal -->
     <div id="custom-item-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1955,7 +1960,8 @@
             <div class="modal-body">
                 <div style="text-align: center; margin-bottom: 24px;">
                     <div style="font-size: 48px; margin-bottom: 16px;">🛠️</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Add a custom item to this quote</p>
+                    <p style="color: var(--text-muted); font-size: 16px;">Add a custom item with pricing details</p>
+                    <p style="font-weight: 700; color: var(--accent-primary); margin-top: 8px;" id="custom-item-category-display"></p>
                 </div>
 
                 <form id="custom-item-form">
@@ -1972,39 +1978,103 @@
                               rows="2" 
                               style="resize: none; margin-bottom: 16px;"></textarea>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-                        <input type="number" 
-                               class="form-input" 
-                               placeholder="Price (RM)" 
-                               id="custom-item-price" 
-                               step="0.01" 
-                               min="0"
-                               required
-                               style="margin-bottom: 0;">
+                    <!-- Enhanced Pricing Section -->
+                    <div style="background: var(--bg-secondary); border-radius: 16px; padding: 20px; margin-bottom: 16px;">
+                        <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                            <span>💰</span> Pricing Details
+                        </h4>
                         
-                        <select class="form-input" id="custom-item-unit" style="margin-bottom: 0;">
-                            <option value="pcs">Pieces (pcs)</option>
-                            <option value="hours">Hours</option>
-                            <option value="sqft">Square Feet</option>
-                            <option value="sqm">Square Meters</option>
-                            <option value="meters">Meters</option>
-                            <option value="kg">Kilograms</option>
-                            <option value="liters">Liters</option>
-                            <option value="set">Set</option>
-                            <option value="lot">Lot</option>
-                            <option value="service">Service</option>
-                        </select>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
+                            <input type="number" 
+                                   class="form-input" 
+                                   placeholder="Unit Price (RM)" 
+                                   id="custom-item-unit-price" 
+                                   step="0.01" 
+                                   min="0"
+                                   required
+                                   oninput="calculateCustomItemTotal()"
+                                   style="margin-bottom: 0;">
+                            
+                            <select class="form-input" id="custom-item-unit" style="margin-bottom: 0;">
+                                <option value="pcs">Pieces (pcs)</option>
+                                <option value="hours">Hours</option>
+                                <option value="sqft">Square Feet</option>
+                                <option value="sqm">Square Meters</option>
+                                <option value="meters">Meters</option>
+                                <option value="kg">Kilograms</option>
+                                <option value="liters">Liters</option>
+                                <option value="set">Set</option>
+                                <option value="lot">Lot</option>
+                                <option value="service">Service</option>
+                            </select>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <label style="font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: block;">Quantity</label>
+                                <input type="number" 
+                                       class="form-input" 
+                                       placeholder="Quantity" 
+                                       id="custom-item-quantity" 
+                                       min="1"
+                                       value="1"
+                                       required
+                                       oninput="calculateCustomItemTotal()"
+                                       style="margin-bottom: 0;">
+                            </div>
+                            
+                            <div>
+                                <label style="font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: block;">Total Price</label>
+                                <div style="background: var(--accent-primary); color: white; border-radius: 12px; padding: 18px 20px; font-weight: 700; font-size: 18px; text-align: center;" id="custom-item-total-display">
+                                    RM 0.00
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="form-btn btn-primary">
-                            ✅ Add to Quote
-                        </button>
                         <button type="button" class="form-btn btn-secondary" onclick="closeCustomItemForm()">
-                            Cancel
+                            ← Cancel
+                        </button>
+                        <button type="submit" class="form-btn btn-primary" id="add-custom-item-btn" disabled>
+                            ➕ Add Item
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Review Modal -->
+    <div id="final-review-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 Final Review</h3>
+                <button class="close-btn" onclick="closeFinalReview()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">📋</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Review your complete quote before generating PDF</p>
+                </div>
+
+                <!-- Quote Summary -->
+                <div id="final-review-content">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+
+                <!-- Navigation Actions -->
+                <div class="form-actions three-col">
+                    <button type="button" class="form-btn btn-secondary" onclick="editQuoteFromReview()">
+                        ✏️ Edit
+                    </button>
+                    <button type="button" class="form-btn btn-warning" onclick="closeFinalReview()">
+                        ← Back
+                    </button>
+                    <button type="button" class="form-btn btn-success" onclick="confirmAndCreateQuote()">
+                        ✅ Create Quote
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -3966,6 +4036,22 @@
             var customItemForm = document.getElementById('custom-item-form');
             if (customItemForm) {
                 customItemForm.addEventListener('submit', handleCustomItemSubmit);
+            }
+            
+            // Enhanced custom item form listeners
+            var customItemName = document.getElementById('custom-item-name');
+            if (customItemName) {
+                customItemName.addEventListener('input', calculateCustomItemTotal);
+            }
+            
+            var customItemUnitPrice = document.getElementById('custom-item-unit-price');
+            if (customItemUnitPrice) {
+                customItemUnitPrice.addEventListener('input', calculateCustomItemTotal);
+            }
+            
+            var customItemQuantity = document.getElementById('custom-item-quantity');
+            if (customItemQuantity) {
+                customItemQuantity.addEventListener('input', calculateCustomItemTotal);
             }
         }
 
