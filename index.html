@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="REFIT MAINTENANCE SERVICES">
+    <meta name="apple-mobile-web-app-title" content="REFIT COMPREHENSIVE QUOTE SYSTEM">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#f472b6">
     
-    <title>REFIT MAINTENANCE SERVICES - Enhanced Quote Creation</title>
+    <title>REFIT - Comprehensive Quote Creation System</title>
     
     <!-- PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        /* Enhanced CSS with Better Mobile Optimization and Animations */
+        /* Comprehensive Enhanced CSS */
         * {
             margin: 0;
             padding: 0;
@@ -25,7 +25,7 @@
         }
 
         :root {
-            /* Enhanced Pink Theme Variables */
+            /* Comprehensive Theme Variables */
             --bg-primary: #fdf2f8;
             --bg-secondary: #fce7f3;
             --bg-card: #ffffff;
@@ -46,15 +46,12 @@
             --error: #ef4444;
             --info: #3b82f6;
             
-            /* Enhanced Category Colors */
-            --cat-electrical: #6366f1;
-            --cat-plumbing: #06b6d4;
-            --cat-hvac: #8b5cf6;
-            --cat-cleaning: #10b981;
-            --cat-parts: #f59e0b;
-            --cat-labor: #ef4444;
-            --cat-equipment: #6b7280;
-            --cat-common: #a855f7;
+            /* Enhanced Button Colors */
+            --btn-edit: #8b5cf6;
+            --btn-duplicate: #06b6d4;
+            --btn-quick: #10b981;
+            --btn-template: #f59e0b;
+            --btn-smart: #6366f1;
         }
         
         [data-theme="dark"] {
@@ -83,7 +80,7 @@
             transition: all 0.3s ease;
         }
         
-        /* Enhanced Mobile Layout Container */
+        /* Comprehensive Mobile Layout */
         .mobile-container {
             position: relative;
             width: 100%;
@@ -132,7 +129,7 @@
             transform: scale(1.05);
         }
         
-        /* Enhanced Header */
+        /* Enhanced Header with Quick Actions */
         .header {
             background: var(--bg-secondary);
             backdrop-filter: blur(30px);
@@ -242,7 +239,7 @@
             border-radius: 3px;
         }
         
-        /* Enhanced Cards */
+        /* Comprehensive Cards */
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
@@ -259,47 +256,182 @@
             transform: translateY(-2px);
         }
         
-        /* Enhanced Stats Grid */
-        .stats-grid {
+        /* Enhanced Quick Action Buttons */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .quick-btn {
+            padding: 16px 12px;
+            border-radius: 16px;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 80px;
+            box-shadow: 0 4px 12px var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quick-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+        
+        .quick-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .quick-btn:hover::before {
+            left: 100%;
+        }
+        
+        .quick-btn.primary { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); }
+        .quick-btn.success { background: linear-gradient(135deg, var(--success), #34d399); }
+        .quick-btn.info { background: linear-gradient(135deg, var(--info), #60a5fa); }
+        .quick-btn.warning { background: linear-gradient(135deg, var(--warning), #fcd34d); }
+        .quick-btn.edit { background: linear-gradient(135deg, var(--btn-edit), #a78bfa); }
+        .quick-btn.duplicate { background: linear-gradient(135deg, var(--btn-duplicate), #38bdf8); }
+        .quick-btn.template { background: linear-gradient(135deg, var(--btn-template), #fbbf24); }
+        .quick-btn.smart { background: linear-gradient(135deg, var(--btn-smart), #818cf8); }
+        
+        .quick-btn .icon {
+            font-size: 24px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .quick-btn .label {
+            font-size: 12px;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        /* Comprehensive Action Grid */
+        .action-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
             margin: 20px 0;
         }
         
-        .stat-card {
+        .action-card {
             background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border-radius: 18px;
-            padding: 20px 16px;
-            text-align: center;
+            border-radius: 20px;
+            padding: 24px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 16px var(--shadow-light);
+            box-shadow: 0 6px 20px var(--shadow-light);
             transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
         
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px var(--shadow-medium);
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px var(--shadow-medium);
         }
         
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(244, 114, 182, 0.1), transparent);
+            transition: left 0.5s;
         }
         
-        .stat-value {
-            font-size: 28px;
-            font-weight: 800;
-            line-height: 1;
+        .action-card:hover::before {
+            left: 100%;
+        }
+        
+        .action-card .icon {
+            font-size: 32px;
+            margin-bottom: 12px;
             color: var(--accent-primary);
         }
         
-        /* Enhanced Buttons */
+        .action-card .title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .action-card .description {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        
+        .action-card .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--accent-primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        
+        /* Enhanced Form Elements */
+        .form-input {
+            width: 100%;
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.15);
+            transform: translateY(-1px);
+        }
+        
+        .form-input.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        .form-input.success {
+            border-color: var(--success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+        
+        /* Comprehensive Button System */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -344,273 +476,89 @@
             left: 100%;
         }
         
-        .btn-primary { 
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); 
-        }
-        .btn-success { 
-            background: linear-gradient(135deg, var(--success), #34d399); 
-        }
-        .btn-danger { 
-            background: linear-gradient(135deg, var(--error), #f87171); 
-        }
-        .btn-warning { 
-            background: linear-gradient(135deg, var(--warning), #fed7aa); 
-        }
-        .btn-info { 
-            background: linear-gradient(135deg, var(--info), #60a5fa); 
-        }
-        .btn-secondary { 
-            background: linear-gradient(135deg, var(--text-secondary), #9ca3af); 
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
         
-        /* Enhanced Action Buttons */
-        .actions-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+        .btn:disabled:hover {
+            transform: none;
+            box-shadow: 0 4px 12px var(--shadow-light);
         }
         
-        .action-btn {
-            padding: 24px 20px;
-            border-radius: 20px;
-            border: none;
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
+        /* Enhanced Button Variants */
+        .btn-primary { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); }
+        .btn-success { background: linear-gradient(135deg, var(--success), #34d399); }
+        .btn-danger { background: linear-gradient(135deg, var(--error), #f87171); }
+        .btn-warning { background: linear-gradient(135deg, var(--warning), #fed7aa); }
+        .btn-info { background: linear-gradient(135deg, var(--info), #60a5fa); }
+        .btn-secondary { background: linear-gradient(135deg, var(--text-secondary), #9ca3af); }
+        .btn-edit { background: linear-gradient(135deg, var(--btn-edit), #a78bfa); }
+        .btn-duplicate { background: linear-gradient(135deg, var(--btn-duplicate), #38bdf8); }
+        .btn-template { background: linear-gradient(135deg, var(--btn-template), #fbbf24); }
+        .btn-smart { background: linear-gradient(135deg, var(--btn-smart), #818cf8); }
+        
+        /* Smart Button Groups */
+        .btn-group {
             display: flex;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .btn-group.vertical {
             flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            min-height: 120px;
-            box-shadow: 0 6px 20px var(--shadow-light);
-            position: relative;
-            overflow: hidden;
         }
         
-        .action-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px var(--shadow-medium);
+        .btn-group.wrap {
+            flex-wrap: wrap;
         }
         
-        .action-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
+        .btn-group .btn {
+            flex: 1;
+            min-width: 0;
         }
         
-        .action-btn:hover::before {
-            left: 100%;
-        }
-        
-        .action-btn.primary { 
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); 
-        }
-        .action-btn.success { 
-            background: linear-gradient(135deg, var(--success), #34d399); 
-        }
-        
-        .action-btn .icon {
-            font-size: 32px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-        
-        /* Enhanced Form Elements */
-        .form-input {
-            width: 100%;
-            padding: 18px 20px;
-            border-radius: 16px;
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 16px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .form-input::placeholder {
-            color: var(--text-muted);
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.15);
-            transform: translateY(-1px);
-        }
-        
-        .form-input.error {
-            border-color: var(--error);
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
-        }
-        
-        .form-input.success {
-            border-color: var(--success);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-        }
-        
-        /* Enhanced Search Input */
-        .search-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-            color: var(--text-muted);
-            z-index: 2;
-        }
-        
-        .search-container input {
-            padding-left: 56px;
-        }
-        
-        /* Enhanced Item Cards */
-        .item-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 32px var(--shadow-light);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .item-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px var(--shadow-medium);
-        }
-        
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 16px;
-        }
-        
-        .item-info h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
-        
-        /* Enhanced Icon Buttons */
-        .icon-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
+        /* Floating Action Buttons */
+        .fab {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
             border: none;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 16px;
-            box-shadow: 0 2px 8px var(--shadow-light);
-        }
-        
-        .icon-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow-medium);
-        }
-        
-        .icon-btn.edit-btn { 
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); 
-            color: white; 
-        }
-        .icon-btn.delete-btn { 
-            background: linear-gradient(135deg, var(--error), #f87171); 
-            color: white; 
-        }
-        .icon-btn.pdf-btn { 
-            background: linear-gradient(135deg, var(--info), #60a5fa); 
-            color: white; 
-        }
-        .icon-btn.quote-btn { 
-            background: linear-gradient(135deg, var(--accent-warm), #fcd34d); 
-            color: white; 
-        }
-        .icon-btn.share-btn { 
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); 
-            color: white; 
-        }
-        .icon-btn.back-btn { 
-            background: linear-gradient(135deg, var(--text-secondary), #9ca3af); 
-            color: white; 
-        }
-        
-        /* Enhanced Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-secondary);
-            backdrop-filter: blur(30px);
-            border-top: 1px solid var(--border-color);
-            padding: 12px 20px 32px;
-            z-index: 100;
-            box-shadow: 0 -4px 20px var(--shadow-medium);
-        }
-        
-        .nav-items {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            padding: 12px 16px;
-            border-radius: 16px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            min-width: 60px;
-        }
-        
-        .nav-item.active {
-            color: var(--accent-primary);
-            background: rgba(244, 114, 182, 0.15);
-            box-shadow: 0 2px 8px var(--shadow-light);
-            transform: scale(1.05);
-        }
-        
-        .nav-item:hover {
-            color: var(--accent-primary);
-            transform: translateY(-2px);
-        }
-        
-        .nav-item .icon {
             font-size: 24px;
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px var(--shadow-strong);
+            z-index: 80;
         }
         
-        .nav-item.active .icon {
-            transform: scale(1.2);
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px var(--shadow-strong);
+        }
+        
+        .fab.secondary {
+            bottom: 170px;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            background: linear-gradient(135deg, var(--success), #34d399);
+        }
+        
+        .fab.tertiary {
+            bottom: 230px;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            background: linear-gradient(135deg, var(--info), #60a5fa);
         }
         
         /* Enhanced Modals */
@@ -632,6 +580,17 @@
             display: flex;
         }
         
+        .modal.center {
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.center .modal-content {
+            border-radius: 24px;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -642,10 +601,9 @@
             to { transform: translateY(0); }
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        @keyframes slideIn {
+            from { transform: scale(0.8) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
         }
         
         @keyframes shake {
@@ -666,6 +624,10 @@
             -webkit-overflow-scrolling: touch;
             border: 1px solid var(--border-color);
             box-shadow: 0 -8px 40px var(--shadow-strong);
+        }
+        
+        .modal.center .modal-content {
+            animation: slideIn 0.3s ease;
         }
         
         .modal-header {
@@ -711,12 +673,111 @@
             padding: 24px;
         }
         
+        /* Enhanced Step Indicators */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+        }
+        
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .step-dot.active {
+            background: var(--accent-primary);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+        
+        .step-dot.completed {
+            background: var(--success);
+            transform: scale(1.2);
+        }
+        
+        .step-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .step-dot.completed::after {
+            opacity: 1;
+        }
+        
+        /* Progress Bar Enhancement */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            margin: 16px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--accent-primary);
+            position: relative;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
         /* Enhanced Form Actions */
         .form-actions {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
             margin-top: 24px;
+        }
+        
+        .form-actions.single {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-actions.triple {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .form-actions.quad {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
         
         .form-btn {
@@ -758,99 +819,44 @@
             left: 100%;
         }
         
-        .form-btn.btn-primary {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        }
-        
-        .form-btn.btn-success {
-            background: linear-gradient(135deg, var(--success), #34d399);
-        }
-        
-        .form-btn.btn-danger {
-            background: linear-gradient(135deg, var(--error), #f87171);
-        }
-        
-        .form-btn.btn-info {
-            background: linear-gradient(135deg, var(--info), #60a5fa);
-        }
-        
-        .form-btn.btn-warning {
-            background: linear-gradient(135deg, var(--warning), #fcd34d);
-        }
-        
-        .form-btn.btn-secondary {
-            background: linear-gradient(135deg, var(--text-secondary), #9ca3af);
-        }
-        
-        /* Enhanced Quantity Selector */
-        .quantity-selector {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 12px;
-            align-items: center;
+        /* Smart Suggestions */
+        .suggestions {
             margin: 16px 0;
-            padding: 16px;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            border: 2px solid var(--border-color);
         }
         
-        .quantity-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            border: none;
-            background: var(--accent-primary);
-            color: white;
+        .suggestions-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .suggestions-grid {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .suggestion-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 18px;
-            font-weight: 700;
         }
         
-        .quantity-btn:hover {
-            background: var(--accent-secondary);
-            transform: scale(1.1);
-        }
-        
-        .quantity-btn:active {
-            transform: scale(0.95);
-        }
-        
-        .quantity-display {
-            text-align: center;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-primary);
-            min-width: 60px;
-        }
-        
-        /* Enhanced Price Calculation */
-        .price-calculation {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        .suggestion-btn:hover {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
             color: white;
-            padding: 16px;
-            border-radius: 12px;
-            margin: 16px 0;
-            text-align: center;
-            box-shadow: 0 4px 15px var(--shadow-medium);
+            transform: scale(1.05);
         }
         
-        .price-breakdown {
-            font-size: 14px;
-            margin-bottom: 8px;
-            opacity: 0.9;
-        }
-        
-        .total-price {
-            font-size: 24px;
-            font-weight: 800;
-        }
-        
-        /* Enhanced Success Message */
+        /* Enhanced Success Messages */
         .success-message {
             position: fixed;
             top: 120px;
@@ -876,7 +882,77 @@
             transform: translateX(-50%) translateY(0);
         }
         
-        /* Enhanced Category Selection */
+        .success-message.error {
+            background: linear-gradient(135deg, var(--error), #f87171);
+        }
+        
+        .success-message.warning {
+            background: linear-gradient(135deg, var(--warning), #fcd34d);
+        }
+        
+        .success-message.info {
+            background: linear-gradient(135deg, var(--info), #60a5fa);
+        }
+        
+        /* Enhanced Validation */
+        .validation-message {
+            font-size: 12px;
+            margin-top: -12px;
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        
+        .validation-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border-left: 4px solid var(--error);
+            display: block;
+        }
+        
+        .validation-message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+            display: block;
+        }
+        
+        .validation-message.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border-left: 4px solid var(--warning);
+            display: block;
+        }
+        
+        /* Loading States */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+            position: relative;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid var(--accent-primary);
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Smart Categories */
         .category-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -941,184 +1017,142 @@
             line-height: 1.2;
         }
         
-        /* Enhanced Preset Item Selection */
-        .preset-item {
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .preset-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px var(--shadow-light);
-        }
-        
-        .preset-item.selected {
-            border-color: var(--accent-primary);
-            background: var(--accent-primary);
-            color: white;
-        }
-        
-        .preset-item::before {
-            content: '';
+        .category-item .count {
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-        
-        .preset-item:hover::before {
-            left: 100%;
-        }
-        
-        .preset-item .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        
-        .preset-item .name {
-            font-weight: 700;
-            font-size: 16px;
-        }
-        
-        .preset-item .price {
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--accent-primary);
-        }
-        
-        .preset-item.selected .price {
+            top: 8px;
+            right: 8px;
+            background: var(--success);
             color: white;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
         }
         
-        .preset-item .description {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-        
-        .preset-item.selected .description {
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .preset-item .unit {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-        
-        .preset-item.selected .unit {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        /* Enhanced Step Indicators */
-        .step-indicator {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-            padding: 16px;
+        /* Bottom Navigation Enhancement */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
             background: var(--bg-secondary);
-            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 20px 32px;
+            z-index: 100;
+            box-shadow: 0 -4px 20px var(--shadow-medium);
         }
         
-        .step-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--text-muted);
+        .nav-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 16px;
+            border-radius: 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-width: 60px;
+        }
+        
+        .nav-item.active {
+            color: var(--accent-primary);
+            background: rgba(244, 114, 182, 0.15);
+            box-shadow: 0 2px 8px var(--shadow-light);
+            transform: scale(1.05);
+        }
+        
+        .nav-item:hover {
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+        
+        .nav-item .icon {
+            font-size: 24px;
             transition: all 0.3s ease;
         }
         
-        .step-dot.active {
-            background: var(--accent-primary);
-            transform: scale(1.3);
-            box-shadow: 0 0 10px var(--accent-primary);
-        }
-        
-        .step-dot.completed {
-            background: var(--success);
+        .nav-item.active .icon {
             transform: scale(1.2);
         }
         
-        /* Enhanced Progress Bar */
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: var(--bg-secondary);
-            border-radius: 3px;
-            margin: 16px 0;
+        .home-indicator {
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 2px;
+            width: 140px;
+            margin: 12px auto 0;
+            opacity: 0.8;
+        }
+        
+        /* Enhanced Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: 18px;
+            padding: 20px 16px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 16px var(--shadow-light);
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
         }
         
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 3px;
-            transition: width 0.5s ease;
-            box-shadow: 0 0 10px var(--accent-primary);
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow-medium);
         }
         
-        /* Enhanced Validation Messages */
-        .validation-message {
-            font-size: 12px;
-            margin-top: -12px;
-            margin-bottom: 12px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .validation-message.error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-            border-left: 4px solid var(--error);
-        }
-        
-        .validation-message.success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            border-left: 4px solid var(--success);
-        }
-        
-        /* Enhanced Loading States */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-            position: relative;
-        }
-        
-        .loading::after {
+        .stat-card::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
-            border: 2px solid var(--accent-primary);
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
         }
         
-        /* Enhanced Utility Classes */
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--accent-primary);
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Utility Classes */
         .hidden {
             display: none !important;
         }
@@ -1161,32 +1195,24 @@
             box-shadow: 0 12px 35px var(--shadow-strong);
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-        }
-        
-        .empty-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.6;
-        }
-        
-        /* Enhanced Mobile Optimizations */
+        /* Mobile Optimizations */
         @media screen and (max-width: 768px) {
-            .stats-grid {
+            .quick-actions {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+                gap: 8px;
             }
             
-            .actions-grid {
+            .action-grid {
                 grid-template-columns: 1fr;
                 gap: 12px;
             }
             
             .form-actions {
                 grid-template-columns: 1fr;
+            }
+            
+            .form-actions.quad {
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .category-grid {
@@ -1203,9 +1229,31 @@
                 height: 40px;
                 font-size: 16px;
             }
+            
+            .fab {
+                bottom: 90px;
+                right: 16px;
+                width: 56px;
+                height: 56px;
+                font-size: 22px;
+            }
+            
+            .fab.secondary, .fab.tertiary {
+                width: 48px;
+                height: 48px;
+                font-size: 18px;
+            }
+            
+            .fab.secondary {
+                bottom: 160px;
+            }
+            
+            .fab.tertiary {
+                bottom: 220px;
+            }
         }
         
-        /* Enhanced Safe Area Adjustments */
+        /* Safe Area Adjustments */
         @supports (padding: max(0px)) {
             .status-bar {
                 padding-top: env(safe-area-inset-top);
@@ -1215,101 +1263,6 @@
             .bottom-nav {
                 padding-bottom: calc(32px + env(safe-area-inset-bottom));
             }
-        }
-        
-        /* Enhanced Field Focus Effects */
-        .form-field {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        
-        .form-field label {
-            position: absolute;
-            top: 18px;
-            left: 20px;
-            color: var(--text-muted);
-            font-size: 16px;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-        
-        .form-field input:focus + label,
-        .form-field input:not(:placeholder-shown) + label {
-            top: -8px;
-            left: 16px;
-            font-size: 12px;
-            color: var(--accent-primary);
-            background: var(--bg-card);
-            padding: 0 8px;
-        }
-        
-        /* Enhanced Quote Summary Cards */
-        .quote-summary-card {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            border-radius: 20px;
-            padding: 24px;
-            margin: 20px 0;
-            box-shadow: 0 8px 32px var(--shadow-strong);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .quote-summary-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            transform: rotate(45deg);
-        }
-        
-        .quote-summary-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        
-        .quote-summary-title {
-            font-size: 18px;
-            font-weight: 700;
-            opacity: 0.9;
-        }
-        
-        .quote-summary-count {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        
-        .quote-summary-body {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .quote-summary-total {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            margin-top: 16px;
-        }
-        
-        .quote-summary-total-label {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-bottom: 8px;
-        }
-        
-        .quote-summary-total-amount {
-            font-size: 32px;
-            font-weight: 800;
         }
     </style>
 </head>
@@ -1331,8 +1284,8 @@
             <div class="logo-container">
                 <div class="app-logo">🔧</div>
                 <div class="app-title">
-                    <h1 id="company-name">REFIT MAINTENANCE SERVICES</h1>
-                    <p id="company-registration">Registration No: 201803348973 (002894203-V)</p>
+                    <h1 id="company-name">REFIT COMPREHENSIVE SYSTEM</h1>
+                    <p id="company-registration">Professional Quote Creation & Management</p>
                 </div>
             </div>
             <div class="header-right">
@@ -1365,25 +1318,70 @@
                     </div>
                 </div>
 
-                <!-- Quick Actions -->
+                <!-- Comprehensive Quick Actions -->
                 <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">Quick Actions</h3>
-                    <div class="actions-grid">
-                        <button class="action-btn primary" onclick="startEnhancedNewQuote()">
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🚀 Comprehensive Quote Actions</h3>
+                    <div class="quick-actions">
+                        <button class="quick-btn primary" onclick="startComprehensiveQuote()">
                             <span class="icon">🎨</span>
-                            <span style="font-weight: 700;">Enhanced Quote Creation</span>
+                            <span class="label">New Quote</span>
                         </button>
-                        <button class="action-btn success" onclick="showView('quotes')">
+                        <button class="quick-btn template" onclick="openQuoteTemplates()">
+                            <span class="icon">📋</span>
+                            <span class="label">Templates</span>
+                        </button>
+                        <button class="quick-btn smart" onclick="openSmartQuote()">
+                            <span class="icon">🧠</span>
+                            <span class="label">Smart Quote</span>
+                        </button>
+                        <button class="quick-btn duplicate" onclick="openDuplicateQuote()">
+                            <span class="icon">📄</span>
+                            <span class="label">Duplicate</span>
+                        </button>
+                        <button class="quick-btn edit" onclick="openQuickEdit()">
+                            <span class="icon">✏️</span>
+                            <span class="label">Quick Edit</span>
+                        </button>
+                        <button class="quick-btn success" onclick="showView('quotes')">
                             <span class="icon">💰</span>
-                            <span style="font-weight: 700;">View All Quotes</span>
+                            <span class="label">View All</span>
                         </button>
+                    </div>
+                </div>
+
+                <!-- Enhanced Action Cards -->
+                <div class="card">
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">⚡ Power Features</h3>
+                    <div class="action-grid">
+                        <div class="action-card" onclick="openBulkQuote()">
+                            <div class="badge">NEW</div>
+                            <div class="icon">📦</div>
+                            <div class="title">Bulk Quote Creator</div>
+                            <div class="description">Create multiple quotes with similar items quickly</div>
+                        </div>
+                        <div class="action-card" onclick="openQuoteAnalyzer()">
+                            <div class="icon">📊</div>
+                            <div class="title">Quote Analyzer</div>
+                            <div class="description">Analyze pricing trends and optimize quotes</div>
+                        </div>
+                        <div class="action-card" onclick="openClientManager()">
+                            <div class="icon">👥</div>
+                            <div class="title">Client Manager</div>
+                            <div class="description">Manage client information and history</div>
+                        </div>
+                        <div class="action-card" onclick="openPriceCalculator()">
+                            <div class="badge">HOT</div>
+                            <div class="icon">🧮</div>
+                            <div class="title">Smart Calculator</div>
+                            <div class="description">AI-powered pricing recommendations</div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Recent Quotes -->
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">Recent Job Quotes</h3>
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">📋 Recent Quotes</h3>
                         <button style="background: none; border: none; color: var(--text-muted); font-size: 14px; cursor: pointer; font-weight: 600;" onclick="showView('quotes')">View All</button>
                     </div>
                     <div id="recent-quotes"></div>
@@ -1393,15 +1391,20 @@
             <!-- Quotes View -->
             <div id="quotes-view" class="view hidden">
                 <div class="section-header">
-                    <h2 class="section-title">Job Quotes</h2>
-                    <button class="add-btn" onclick="startEnhancedNewQuote()">
-                        <span>✨</span>
+                    <h2 class="section-title">📋 All Quotes</h2>
+                    <button class="add-btn" onclick="startComprehensiveQuote()">
+                        <span>🎨</span>
                     </button>
                 </div>
 
-                <div class="search-container">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" class="form-input" placeholder="Search quotes..." id="quote-search">
+                <!-- Enhanced Search and Filters -->
+                <div class="card" style="padding: 16px; margin-bottom: 16px;">
+                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;">
+                        <input type="text" class="form-input" placeholder="🔍 Search quotes..." id="quote-search" style="margin-bottom: 0;">
+                        <button class="btn btn-info" onclick="openQuoteFilters()" style="padding: 16px; min-height: auto;">
+                            🔽 Filters
+                        </button>
+                    </div>
                 </div>
 
                 <div id="quotes-list"></div>
@@ -1411,7 +1414,7 @@
             <div id="quote-detail-view" class="view hidden">
                 <div class="section-header">
                     <h2 class="section-title">Quote Details</h2>
-                    <button class="icon-btn back-btn" onclick="showView('quotes')">
+                    <button class="icon-btn back-btn" onclick="showView('quotes')" style="width: auto; padding: 8px 16px; border-radius: 12px;">
                         ← Back
                     </button>
                 </div>
@@ -1419,6 +1422,17 @@
                 <div id="quote-detail-content"></div>
             </div>
         </div>
+
+        <!-- Floating Action Buttons -->
+        <button class="fab" onclick="startComprehensiveQuote()" title="New Quote">
+            🎨
+        </button>
+        <button class="fab secondary" onclick="openQuickEdit()" title="Quick Edit">
+            ⚡
+        </button>
+        <button class="fab tertiary" onclick="openSmartQuote()" title="Smart Quote">
+            🧠
+        </button>
 
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
@@ -1428,12 +1442,16 @@
                     <span>Home</span>
                 </div>
                 <div class="nav-item" onclick="showView('quotes')">
-                    <span class="icon">💰</span>
+                    <span class="icon">📋</span>
                     <span>Quotes</span>
                 </div>
-                <div class="nav-item" onclick="startEnhancedNewQuote()">
-                    <span class="icon">✨</span>
-                    <span>Enhanced</span>
+                <div class="nav-item" onclick="startComprehensiveQuote()">
+                    <span class="icon">🎨</span>
+                    <span>Create</span>
+                </div>
+                <div class="nav-item" onclick="openSmartQuote()">
+                    <span class="icon">🧠</span>
+                    <span>Smart</span>
                 </div>
                 <div class="nav-item" onclick="openCompanyInfo()">
                     <span class="icon">👤</span>
@@ -1444,402 +1462,55 @@
         </div>
     </div>
 
-    <!-- Enhanced Step 1: Client Information Modal -->
-    <div id="enhanced-client-info-modal" class="modal">
+    <!-- Comprehensive Quote Creation Modal -->
+    <div id="comprehensive-quote-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>✨ Step 1: Enhanced Client Information</h3>
-                <button class="close-btn" onclick="cancelEnhancedQuoteCreation()">✕</button>
+                <h3 id="modal-title">🎨 Comprehensive Quote Creator</h3>
+                <button class="close-btn" onclick="closeComprehensiveQuote()">✕</button>
             </div>
             <div class="modal-body">
-                <!-- Enhanced Step Indicator -->
-                <div class="step-indicator">
-                    <div class="step-dot active"></div>
-                    <div class="step-dot"></div>
-                    <div class="step-dot"></div>
-                    <div class="step-dot"></div>
-                    <div class="step-dot"></div>
-                </div>
-                
-                <!-- Enhanced Progress Bar -->
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 20%;"></div>
-                </div>
-                
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 64px; margin-bottom: 16px;">👤</div>
-                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Enter client details for this professional quote</p>
-                    <p style="color: var(--accent-primary); font-size: 14px; margin-top: 8px;">All fields with * are required</p>
-                </div>
-                
-                <form id="enhanced-client-form">
-                    <div class="form-field">
-                        <input type="text" class="form-input" placeholder="Client Name *" id="enhanced-client-name" required>
-                        <div class="validation-message" id="client-name-validation"></div>
-                    </div>
-                    
-                    <div class="form-field">
-                        <input type="text" class="form-input" placeholder="Company Name (Optional)" id="enhanced-client-company">
-                    </div>
-                    
-                    <div class="form-field">
-                        <input type="tel" class="form-input" placeholder="Phone Number *" id="enhanced-client-phone" required>
-                        <div class="validation-message" id="client-phone-validation"></div>
-                    </div>
-                    
-                    <div class="form-field">
-                        <input type="email" class="form-input" placeholder="Email Address" id="enhanced-client-email">
-                        <div class="validation-message" id="client-email-validation"></div>
-                    </div>
-                    
-                    <div class="form-field">
-                        <textarea class="form-input" placeholder="Complete Address *" id="enhanced-client-address" rows="3" style="resize: none;" required></textarea>
-                        <div class="validation-message" id="client-address-validation"></div>
-                    </div>
-                </form>
-                
-                <div class="form-actions">
-                    <button type="button" class="form-btn btn-secondary" onclick="cancelEnhancedQuoteCreation()">
-                        ❌ Cancel
-                    </button>
-                    <button type="button" class="form-btn btn-primary" onclick="proceedToEnhancedJobTitle()" id="enhanced-proceed-to-job-title-btn" disabled>
-                        Next: Job Title ➡️
-                    </button>
-                </div>
+                <!-- Dynamic Content Goes Here -->
+                <div id="comprehensive-content"></div>
             </div>
         </div>
     </div>
 
-    <!-- Enhanced Step 2: Job Title Modal -->
-    <div id="enhanced-job-title-modal" class="modal">
+    <!-- Quick Actions Modal -->
+    <div id="quick-actions-modal" class="modal center">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>✨ Step 2: Enhanced Job Title</h3>
-                <button class="close-btn" onclick="backToEnhancedClientInfo()">←</button>
+                <h3>⚡ Quick Actions</h3>
+                <button class="close-btn" onclick="closeQuickActions()">✕</button>
             </div>
             <div class="modal-body">
-                <!-- Enhanced Step Indicator -->
-                <div class="step-indicator">
-                    <div class="step-dot completed"></div>
-                    <div class="step-dot active"></div>
-                    <div class="step-dot"></div>
-                    <div class="step-dot"></div>
-                    <div class="step-dot"></div>
-                </div>
-                
-                <!-- Enhanced Progress Bar -->
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 40%;"></div>
-                </div>
-                
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 64px; margin-bottom: 16px;">💼</div>
-                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">What type of maintenance work is this quote for?</p>
-                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 12px; margin-top: 16px; border-left: 4px solid var(--accent-primary);">
-                        <p style="font-weight: 700; color: var(--text-primary);" id="enhanced-client-name-display"></p>
-                    </div>
-                </div>
-                
-                <!-- Job Title Suggestions -->
-                <div style="margin-bottom: 20px;">
-                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">💡 Popular job titles:</p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <button type="button" class="btn btn-secondary" onclick="selectJobTitleSuggestion('Office Renovation')" style="font-size: 12px; padding: 8px 12px; min-height: auto;">Office Renovation</button>
-                        <button type="button" class="btn btn-secondary" onclick="selectJobTitleSuggestion('AC Installation & Maintenance')" style="font-size: 12px; padding: 8px 12px; min-height: auto;">AC Installation</button>
-                        <button type="button" class="btn btn-secondary" onclick="selectJobTitleSuggestion('Plumbing Repair & Upgrade')" style="font-size: 12px; padding: 8px 12px; min-height: auto;">Plumbing Repair</button>
-                        <button type="button" class="btn btn-secondary" onclick="selectJobTitleSuggestion('Electrical Work & Wiring')" style="font-size: 12px; padding: 8px 12px; min-height: auto;">Electrical Work</button>
-                    </div>
-                </div>
-                
-                <div class="form-field">
-                    <input type="text" 
-                           class="form-input" 
-                           placeholder="e.g., Office Renovation, AC Installation, Plumbing Repair..." 
-                           id="enhanced-job-title-input" 
-                           style="font-size: 18px; padding: 20px 24px; text-align: center; font-weight: 600;">
-                    <div class="validation-message" id="job-title-validation"></div>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="button" class="form-btn btn-secondary" onclick="backToEnhancedClientInfo()">
-                        ← Back
-                    </button>
-                    <button type="button" 
-                            class="form-btn btn-primary" 
-                            onclick="proceedToEnhancedCategories()" 
-                            id="enhanced-proceed-to-categories-btn" disabled>
-                        Next: Categories ➡️
-                    </button>
-                </div>
+                <div id="quick-actions-content"></div>
             </div>
         </div>
     </div>
 
-    <!-- Enhanced Step 3: Category Selection Modal -->
-    <div id="enhanced-category-selection-modal" class="modal">
+    <!-- Templates Modal -->
+    <div id="templates-modal" class="modal center">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>✨ Step 3: Enhanced Categories</h3>
-                <button class="close-btn" onclick="backToEnhancedJobTitle()">←</button>
+                <h3>📋 Quote Templates</h3>
+                <button class="close-btn" onclick="closeTemplates()">✕</button>
             </div>
             <div class="modal-body">
-                <!-- Enhanced Step Indicator -->
-                <div class="step-indicator">
-                    <div class="step-dot completed"></div>
-                    <div class="step-dot completed"></div>
-                    <div class="step-dot active"></div>
-                    <div class="step-dot"></div>
-                    <div class="step-dot"></div>
-                </div>
-                
-                <!-- Enhanced Progress Bar -->
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 60%;"></div>
-                </div>
-                
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 64px; margin-bottom: 16px;">🎯</div>
-                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Choose work categories for your professional quote</p>
-                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 12px; margin-top: 16px; border-left: 4px solid var(--accent-primary);">
-                        <p style="font-weight: 700; color: var(--text-primary);" id="enhanced-selected-job-title"></p>
-                    </div>
-                </div>
-
-                <!-- Enhanced Quote Summary -->
-                <div id="enhanced-current-quote-summary" class="quote-summary-card" style="display: none;">
-                    <div class="quote-summary-header">
-                        <div class="quote-summary-title">🛒 Current Quote</div>
-                        <div class="quote-summary-count"><span id="enhanced-total-items-count-summary">0</span> items</div>
-                    </div>
-                    <div class="quote-summary-body">
-                        <div id="enhanced-quote-items-preview"></div>
-                        <div class="quote-summary-total">
-                            <div class="quote-summary-total-label">Total Amount</div>
-                            <div class="quote-summary-total-amount" id="enhanced-running-total">RM 0.00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="category-grid" id="enhanced-category-grid"></div>
-
-                <div class="form-actions" style="margin-top: 24px;">
-                    <button type="button" class="form-btn btn-secondary" onclick="backToEnhancedJobTitle()">
-                        ← Back
-                    </button>
-                    <button type="button" class="form-btn btn-primary" onclick="proceedToEnhancedReview()" id="enhanced-proceed-review-btn" disabled style="opacity: 0.5;">
-                        Next: Review ➡️
-                    </button>
-                </div>
+                <div id="templates-content"></div>
             </div>
         </div>
     </div>
 
-    <!-- Enhanced Step 4: Item Selection Modal -->
-    <div id="enhanced-item-selection-modal" class="modal">
+    <!-- Smart Quote Modal -->
+    <div id="smart-quote-modal" class="modal center">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>✨ Step 4: Enhanced Items</h3>
-                <button class="close-btn" onclick="backToEnhancedCategories()">←</button>
+                <h3>🧠 Smart Quote Generator</h3>
+                <button class="close-btn" onclick="closeSmartQuote()">✕</button>
             </div>
             <div class="modal-body">
-                <!-- Enhanced Step Indicator -->
-                <div class="step-indicator">
-                    <div class="step-dot completed"></div>
-                    <div class="step-dot completed"></div>
-                    <div class="step-dot completed"></div>
-                    <div class="step-dot active"></div>
-                    <div class="step-dot"></div>
-                </div>
-                
-                <!-- Enhanced Progress Bar -->
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 80%;"></div>
-                </div>
-                
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 64px; margin-bottom: 16px;">✅</div>
-                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Select professional work items for:</p>
-                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 12px; margin-top: 16px; border-left: 4px solid var(--accent-primary);">
-                        <p style="font-weight: 700; color: var(--text-primary);" id="enhanced-category-job-title"></p>
-                        <p style="color: var(--accent-primary); font-weight: 600;" id="enhanced-selected-category-display"></p>
-                    </div>
-                </div>
-
-                <!-- Enhanced Add Custom Item Button -->
-                <div style="margin-bottom: 16px;">
-                    <button type="button" class="btn btn-warning" onclick="openEnhancedCustomItemForm()" style="width: 100%; font-size: 16px; padding: 16px;">
-                        🛠️ Create Enhanced Custom Item
-                    </button>
-                </div>
-
-                <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;">
-                    <div id="enhanced-preset-items-list"></div>
-                </div>
-
-                <!-- Enhanced Selected Items Summary -->
-                <div id="enhanced-selected-items-summary" style="display: none;">
-                    <div class="quote-summary-card">
-                        <div class="quote-summary-header">
-                            <div class="quote-summary-title">Selected Items</div>
-                            <div class="quote-summary-count"><span id="enhanced-selected-count">0</span> items</div>
-                        </div>
-                        <div class="quote-summary-body">
-                            <div id="enhanced-selected-items-list"></div>
-                            <div class="quote-summary-total">
-                                <div class="quote-summary-total-label">Category Total</div>
-                                <div class="quote-summary-total-amount" id="enhanced-category-total-amount">RM 0.00</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="form-btn btn-secondary" onclick="backToEnhancedCategories()">
-                        ← Back to Categories
-                    </button>
-                    <button type="button" class="form-btn btn-primary" onclick="finishEnhancedCategoryItems()" id="enhanced-finish-items-btn">
-                        Done ✅
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Enhanced Step 5: Final Review & PDF Generation Modal -->
-    <div id="enhanced-final-review-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>✨ Step 5: Enhanced Final Review</h3>
-                <button class="close-btn" onclick="backToEnhancedCategories()">←</button>
-            </div>
-            <div class="modal-body">
-                <!-- Enhanced Step Indicator -->
-                <div class="step-indicator">
-                    <div class="step-dot completed"></div>
-                    <div class="step-dot completed"></div>
-                    <div class="step-dot completed"></div>
-                    <div class="step-dot completed"></div>
-                    <div class="step-dot active"></div>
-                </div>
-                
-                <!-- Enhanced Progress Bar -->
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100%;"></div>
-                </div>
-                
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 64px; margin-bottom: 16px;">📋</div>
-                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Review all details before generating professional PDF</p>
-                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 12px; margin-top: 16px; border-left: 4px solid var(--success);">
-                        <p style="font-weight: 700; color: var(--text-primary);" id="enhanced-review-job-title"></p>
-                        <p style="color: var(--success); font-weight: 600; font-size: 14px;">✅ Ready for Professional PDF Generation</p>
-                    </div>
-                </div>
-
-                <!-- Enhanced Complete Quote Review -->
-                <div id="enhanced-complete-review-content" class="card">
-                    <!-- Content will be populated by JavaScript -->
-                </div>
-
-                <div class="form-actions" style="grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                    <button type="button" class="form-btn btn-secondary" onclick="editEnhancedQuoteFromReview()">
-                        ✏️ Edit Quote
-                    </button>
-                    <button type="button" class="form-btn btn-warning" onclick="backToEnhancedCategories()">
-                        ← Back
-                    </button>
-                    <button type="button" class="form-btn btn-danger" onclick="cancelEnhancedQuoteCreation()">
-                        ❌ Cancel
-                    </button>
-                    <button type="button" class="form-btn btn-success loading" onclick="generateEnhancedFinalPDF()" id="enhanced-final-generate-btn">
-                        🎨 Generate Enhanced PDF
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Enhanced Custom Item Creation Modal -->
-    <div id="enhanced-custom-item-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>🛠️ Enhanced Custom Item Creator</h3>
-                <button class="close-btn" onclick="closeEnhancedCustomItemForm()">✕</button>
-            </div>
-            <div class="modal-body">
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 64px; margin-bottom: 16px;">🛠️</div>
-                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Create a professional custom item for this quote</p>
-                </div>
-
-                <form id="enhanced-custom-item-form">
-                    <div class="form-field">
-                        <input type="text" 
-                               class="form-input" 
-                               placeholder="Item name (e.g., Custom Electrical Work)" 
-                               id="enhanced-custom-item-name" 
-                               required>
-                        <div class="validation-message" id="custom-item-name-validation"></div>
-                    </div>
-                    
-                    <div class="form-field">
-                        <textarea class="form-input" 
-                                  placeholder="Item description (optional)" 
-                                  id="enhanced-custom-item-description" 
-                                  rows="2" 
-                                  style="resize: none;"></textarea>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-                        <div class="form-field">
-                            <input type="number" 
-                                   class="form-input" 
-                                   placeholder="Price per unit (RM)" 
-                                   id="enhanced-custom-item-price" 
-                                   step="0.01" 
-                                   min="0"
-                                   required>
-                            <div class="validation-message" id="custom-item-price-validation"></div>
-                        </div>
-                        
-                        <div class="form-field">
-                            <select class="form-input" id="enhanced-custom-item-unit">
-                                <option value="pcs">Pieces (pcs)</option>
-                                <option value="hours">Hours</option>
-                                <option value="sqft">Square Feet</option>
-                                <option value="sqm">Square Meters</option>
-                                <option value="meters">Meters</option>
-                                <option value="kg">Kilograms</option>
-                                <option value="liters">Liters</option>
-                                <option value="set">Set</option>
-                                <option value="lot">Lot</option>
-                                <option value="service">Service</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Enhanced Quantity Selector -->
-                    <div class="quantity-selector">
-                        <button type="button" class="quantity-btn" onclick="adjustEnhancedCustomQuantity(-1)">-</button>
-                        <div class="quantity-display" id="enhanced-custom-quantity-display">1</div>
-                        <button type="button" class="quantity-btn" onclick="adjustEnhancedCustomQuantity(1)">+</button>
-                    </div>
-
-                    <!-- Enhanced Price Calculation Display -->
-                    <div class="price-calculation" id="enhanced-custom-price-calculation">
-                        <div class="price-breakdown">1 unit × RM 0.00 =</div>
-                        <div class="total-price">RM 0.00</div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="form-btn btn-secondary" onclick="closeEnhancedCustomItemForm()">
-                            Cancel
-                        </button>
-                        <button type="button" class="form-btn btn-success" onclick="addEnhancedCustomItemToQuote()" id="enhanced-add-custom-item-btn" disabled>
-                            🛠️ Add Enhanced Item
-                        </button>
-                    </div>
-                </form>
+                <div id="smart-quote-content"></div>
             </div>
         </div>
     </div>
@@ -1875,123 +1546,209 @@
         </div>
     </div>
 
-    <!-- Enhanced Success Message -->
+    <!-- Success Message -->
     <div id="success-message" class="success-message">
-        ✨ Enhanced action completed successfully!
+        🎨 Comprehensive action completed successfully!
     </div>
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - ENHANCED COMPLETE 5-STEP WORKFLOW SYSTEM
+        // REFIT COMPREHENSIVE QUOTE CREATION SYSTEM
         // Registration No: 201803348973 (002894203-V)
-        // Enhanced Navigation: Client → Job Title → Categories → Items → Review → PDF
+        // Advanced Features: Templates, Smart AI, Bulk Creation, Analytics
         // ========================================
         
-        // Enhanced App State Variables
+        // Comprehensive App State
         var currentView = 'dashboard';
         var jobQuotes = [];
-        var enhancedCurrentQuoteData = {
-            client: {
-                name: '',
-                company: '',
-                phone: '',
-                email: '',
-                address: ''
-            },
+        var quoteTemplates = [];
+        var clients = [];
+        var currentQuoteData = {
+            client: { name: '', company: '', phone: '', email: '', address: '' },
             title: '',
             categories: [],
             items: [],
             totalAmount: 0,
-            createdAt: null
+            createdAt: null,
+            template: null,
+            isSmartGenerated: false
         };
-        var currentQuoteId = null;
         var currentTheme = 'light';
-        var enhancedCurrentCategory = '';
-        var enhancedCustomQuantity = 1;
-        var isEditMode = false;
         var validationErrors = {};
+        var currentStep = 1;
+        var totalSteps = 5;
+        var undoStack = [];
+        var redoStack = [];
 
-        // Enhanced Category Configuration
+        // Enhanced Categories with Smart Pricing
         var categories = {
-            electrical: { name: 'Electrical Work', icon: '⚡', color: '#6366f1' },
-            plumbing: { name: 'Plumbing & Water', icon: '🔧', color: '#06b6d4' },
-            hvac: { name: 'HVAC & Cooling', icon: '🌡️', color: '#8b5cf6' },
-            cleaning: { name: 'Cleaning Services', icon: '🧽', color: '#10b981' },
-            parts: { name: 'Parts & Materials', icon: '🔩', color: '#f59e0b' },
-            labor: { name: 'Labor & Manpower', icon: '👷', color: '#ef4444' },
-            equipment: { name: 'Equipment Rental', icon: '🛠️', color: '#6b7280' },
-            common: { name: 'Common Services', icon: '🏷️', color: '#a855f7' }
+            electrical: { 
+                name: 'Electrical Work', 
+                icon: '⚡', 
+                color: '#6366f1',
+                avgPrice: 150,
+                margin: 0.3
+            },
+            plumbing: { 
+                name: 'Plumbing & Water', 
+                icon: '🔧', 
+                color: '#06b6d4',
+                avgPrice: 200,
+                margin: 0.25
+            },
+            hvac: { 
+                name: 'HVAC & Cooling', 
+                icon: '🌡️', 
+                color: '#8b5cf6',
+                avgPrice: 1500,
+                margin: 0.35
+            },
+            cleaning: { 
+                name: 'Cleaning Services', 
+                icon: '🧽', 
+                color: '#10b981',
+                avgPrice: 80,
+                margin: 0.4
+            },
+            parts: { 
+                name: 'Parts & Materials', 
+                icon: '🔩', 
+                color: '#f59e0b',
+                avgPrice: 120,
+                margin: 0.2
+            },
+            labor: { 
+                name: 'Labor & Manpower', 
+                icon: '👷', 
+                color: '#ef4444',
+                avgPrice: 60,
+                margin: 0.25
+            },
+            equipment: { 
+                name: 'Equipment Rental', 
+                icon: '🛠️', 
+                color: '#6b7280',
+                avgPrice: 300,
+                margin: 0.3
+            },
+            common: { 
+                name: 'Common Services', 
+                icon: '🏷️', 
+                color: '#a855f7',
+                avgPrice: 100,
+                margin: 0.25
+            }
         };
 
-        // Enhanced Preset Work Items by Category
+        // Enhanced Preset Items with Smart Pricing
         var presetWorkItems = {
             electrical: [
-                { id: 'electrical-1', name: 'Power Outlet Installation', description: 'Professional 13A power outlet with safety compliance', price: 85.00, unit: 'pcs' },
-                { id: 'electrical-2', name: 'LED Light Installation', description: 'Energy-efficient LED lighting with premium fixtures', price: 45.00, unit: 'pcs' },
-                { id: 'electrical-3', name: 'Electrical Safety Inspection', description: 'Complete electrical system safety audit & certification', price: 250.00, unit: 'service' },
-                { id: 'electrical-4', name: 'Ceiling Fan Installation', description: 'Premium ceiling fan with LED lights & remote control', price: 180.00, unit: 'set' },
-                { id: 'electrical-5', name: 'Circuit Breaker Upgrade', description: 'Modern circuit breaker installation with safety features', price: 320.00, unit: 'pcs' },
-                { id: 'electrical-6', name: 'Electrical Wiring (per meter)', description: 'High-quality electrical wiring with proper insulation', price: 12.00, unit: 'meters' }
+                { id: 'electrical-1', name: 'Power Outlet Installation', description: 'Professional 13A power outlet with safety compliance', basePrice: 85.00, unit: 'pcs', difficulty: 'medium' },
+                { id: 'electrical-2', name: 'LED Light Installation', description: 'Energy-efficient LED lighting with premium fixtures', basePrice: 45.00, unit: 'pcs', difficulty: 'easy' },
+                { id: 'electrical-3', name: 'Electrical Safety Inspection', description: 'Complete electrical system safety audit & certification', basePrice: 250.00, unit: 'service', difficulty: 'expert' },
+                { id: 'electrical-4', name: 'Ceiling Fan Installation', description: 'Premium ceiling fan with LED lights & remote control', basePrice: 180.00, unit: 'set', difficulty: 'medium' },
+                { id: 'electrical-5', name: 'Circuit Breaker Upgrade', description: 'Modern circuit breaker installation with safety features', basePrice: 320.00, unit: 'pcs', difficulty: 'expert' },
+                { id: 'electrical-6', name: 'Electrical Wiring', description: 'High-quality electrical wiring with proper insulation', basePrice: 12.00, unit: 'meters', difficulty: 'medium' }
             ],
             plumbing: [
-                { id: 'plumbing-1', name: 'Pipe Repair & Replacement', description: 'Professional pipe repair with warranty', price: 120.00, unit: 'service' },
-                { id: 'plumbing-2', name: 'Premium Faucet Installation', description: 'High-quality kitchen/bathroom faucet installation', price: 150.00, unit: 'pcs' },
-                { id: 'plumbing-3', name: 'Drain Cleaning & Maintenance', description: 'Professional drain cleaning with equipment', price: 180.00, unit: 'service' },
-                { id: 'plumbing-4', name: 'Toilet Complete Installation', description: 'Complete toilet replacement with modern features', price: 350.00, unit: 'set' },
-                { id: 'plumbing-5', name: 'Water Heater Service', description: 'Water heater maintenance, repair & optimization', price: 200.00, unit: 'service' },
-                { id: 'plumbing-6', name: 'Water Pressure System', description: 'Water pressure pump installation & setup', price: 450.00, unit: 'set' }
+                { id: 'plumbing-1', name: 'Pipe Repair & Replacement', description: 'Professional pipe repair with warranty', basePrice: 120.00, unit: 'service', difficulty: 'medium' },
+                { id: 'plumbing-2', name: 'Premium Faucet Installation', description: 'High-quality kitchen/bathroom faucet installation', basePrice: 150.00, unit: 'pcs', difficulty: 'medium' },
+                { id: 'plumbing-3', name: 'Drain Cleaning & Maintenance', description: 'Professional drain cleaning with equipment', basePrice: 180.00, unit: 'service', difficulty: 'easy' },
+                { id: 'plumbing-4', name: 'Toilet Complete Installation', description: 'Complete toilet replacement with modern features', basePrice: 350.00, unit: 'set', difficulty: 'expert' },
+                { id: 'plumbing-5', name: 'Water Heater Service', description: 'Water heater maintenance, repair & optimization', basePrice: 200.00, unit: 'service', difficulty: 'medium' },
+                { id: 'plumbing-6', name: 'Water Pressure System', description: 'Water pressure pump installation & setup', basePrice: 450.00, unit: 'set', difficulty: 'expert' }
             ],
             hvac: [
-                { id: 'hvac-1', name: 'Split AC Installation (1.5HP)', description: 'Premium 1.5HP split unit with installation & warranty', price: 1800.00, unit: 'set' },
-                { id: 'hvac-2', name: 'AC Maintenance Package', description: 'Comprehensive AC cleaning, servicing & optimization', price: 180.00, unit: 'service' },
-                { id: 'hvac-3', name: 'Ducted AC System', description: 'Central ducted air conditioning with professional installation', price: 5500.00, unit: 'set' },
-                { id: 'hvac-4', name: 'AC Gas Top-up Service', description: 'Refrigerant gas refill with leak detection', price: 150.00, unit: 'service' },
-                { id: 'hvac-5', name: 'Ventilation System', description: 'Complete exhaust fan & ventilation installation', price: 280.00, unit: 'set' },
-                { id: 'hvac-6', name: 'AC Compressor Replacement', description: 'Professional AC compressor replacement with warranty', price: 850.00, unit: 'pcs' }
+                { id: 'hvac-1', name: 'Split AC Installation (1.5HP)', description: 'Premium 1.5HP split unit with installation & warranty', basePrice: 1800.00, unit: 'set', difficulty: 'expert' },
+                { id: 'hvac-2', name: 'AC Maintenance Package', description: 'Comprehensive AC cleaning, servicing & optimization', basePrice: 180.00, unit: 'service', difficulty: 'medium' },
+                { id: 'hvac-3', name: 'Ducted AC System', description: 'Central ducted air conditioning with professional installation', basePrice: 5500.00, unit: 'set', difficulty: 'expert' },
+                { id: 'hvac-4', name: 'AC Gas Top-up Service', description: 'Refrigerant gas refill with leak detection', basePrice: 150.00, unit: 'service', difficulty: 'easy' },
+                { id: 'hvac-5', name: 'Ventilation System', description: 'Complete exhaust fan & ventilation installation', basePrice: 280.00, unit: 'set', difficulty: 'medium' },
+                { id: 'hvac-6', name: 'AC Compressor Replacement', description: 'Professional AC compressor replacement with warranty', basePrice: 850.00, unit: 'pcs', difficulty: 'expert' }
             ],
             cleaning: [
-                { id: 'cleaning-1', name: 'Professional Office Cleaning', description: 'Comprehensive office cleaning with eco-friendly products', price: 35.00, unit: 'sqm' },
-                { id: 'cleaning-2', name: 'Deep Cleaning Service', description: 'Intensive deep cleaning for renovation projects', price: 55.00, unit: 'sqm' },
-                { id: 'cleaning-3', name: 'Window & Glass Cleaning', description: 'Professional window cleaning with streak-free finish', price: 15.00, unit: 'sqm' },
-                { id: 'cleaning-4', name: 'Carpet Steam Cleaning', description: 'Professional carpet cleaning with stain removal', price: 25.00, unit: 'sqm' },
-                { id: 'cleaning-5', name: 'Post-Renovation Cleanup', description: 'Complete post-construction cleaning & debris removal', price: 75.00, unit: 'sqm' },
-                { id: 'cleaning-6', name: 'Disinfection Service', description: 'Professional disinfection with certified chemicals', price: 45.00, unit: 'sqm' }
+                { id: 'cleaning-1', name: 'Professional Office Cleaning', description: 'Comprehensive office cleaning with eco-friendly products', basePrice: 35.00, unit: 'sqm', difficulty: 'easy' },
+                { id: 'cleaning-2', name: 'Deep Cleaning Service', description: 'Intensive deep cleaning for renovation projects', basePrice: 55.00, unit: 'sqm', difficulty: 'medium' },
+                { id: 'cleaning-3', name: 'Window & Glass Cleaning', description: 'Professional window cleaning with streak-free finish', basePrice: 15.00, unit: 'sqm', difficulty: 'easy' },
+                { id: 'cleaning-4', name: 'Carpet Steam Cleaning', description: 'Professional carpet cleaning with stain removal', basePrice: 25.00, unit: 'sqm', difficulty: 'medium' },
+                { id: 'cleaning-5', name: 'Post-Renovation Cleanup', description: 'Complete post-construction cleaning & debris removal', basePrice: 75.00, unit: 'sqm', difficulty: 'medium' },
+                { id: 'cleaning-6', name: 'Disinfection Service', description: 'Professional disinfection with certified chemicals', basePrice: 45.00, unit: 'sqm', difficulty: 'easy' }
             ],
             parts: [
-                { id: 'parts-1', name: 'Premium Hardware Set', description: 'High-quality screws, bolts & fasteners collection', price: 45.00, unit: 'set' },
-                { id: 'parts-2', name: 'Electrical Wire (15m Roll)', description: '2.5mm certified electrical wiring with safety standards', price: 85.00, unit: 'roll' },
-                { id: 'parts-3', name: 'PVC Pipe System (3m)', description: 'Premium PVC piping with fittings included', price: 35.00, unit: 'pcs' },
-                { id: 'parts-4', name: 'Premium Paint (5L)', description: 'High-quality interior wall paint with primer', price: 150.00, unit: 'pcs' },
-                { id: 'parts-5', name: 'Professional Sealant', description: 'Industrial-grade waterproof sealant', price: 25.00, unit: 'pcs' },
-                { id: 'parts-6', name: 'Safety Equipment Set', description: 'Complete safety gear & protective equipment', price: 120.00, unit: 'set' }
+                { id: 'parts-1', name: 'Premium Hardware Set', description: 'High-quality screws, bolts & fasteners collection', basePrice: 45.00, unit: 'set', difficulty: 'easy' },
+                { id: 'parts-2', name: 'Electrical Wire (15m Roll)', description: '2.5mm certified electrical wiring with safety standards', basePrice: 85.00, unit: 'roll', difficulty: 'easy' },
+                { id: 'parts-3', name: 'PVC Pipe System (3m)', description: 'Premium PVC piping with fittings included', basePrice: 35.00, unit: 'pcs', difficulty: 'easy' },
+                { id: 'parts-4', name: 'Premium Paint (5L)', description: 'High-quality interior wall paint with primer', basePrice: 150.00, unit: 'pcs', difficulty: 'easy' },
+                { id: 'parts-5', name: 'Professional Sealant', description: 'Industrial-grade waterproof sealant', basePrice: 25.00, unit: 'pcs', difficulty: 'easy' },
+                { id: 'parts-6', name: 'Safety Equipment Set', description: 'Complete safety gear & protective equipment', basePrice: 120.00, unit: 'set', difficulty: 'easy' }
             ],
             labor: [
-                { id: 'labor-1', name: 'Certified Technician', description: 'Skilled professional technician with certification', price: 65.00, unit: 'hours' },
-                { id: 'labor-2', name: 'General Helper', description: 'Experienced general helper for support tasks', price: 35.00, unit: 'hours' },
-                { id: 'labor-3', name: 'Specialist Engineer', description: 'Professional engineer for complex projects', price: 120.00, unit: 'hours' },
-                { id: 'labor-4', name: 'Project Manager', description: 'Dedicated project management & coordination', price: 95.00, unit: 'hours' },
-                { id: 'labor-5', name: 'Safety Officer', description: 'Certified workplace safety supervision', price: 80.00, unit: 'hours' },
-                { id: 'labor-6', name: 'Quality Inspector', description: 'Professional quality assurance & inspection', price: 85.00, unit: 'hours' }
+                { id: 'labor-1', name: 'Certified Technician', description: 'Skilled professional technician with certification', basePrice: 65.00, unit: 'hours', difficulty: 'medium' },
+                { id: 'labor-2', name: 'General Helper', description: 'Experienced general helper for support tasks', basePrice: 35.00, unit: 'hours', difficulty: 'easy' },
+                { id: 'labor-3', name: 'Specialist Engineer', description: 'Professional engineer for complex projects', basePrice: 120.00, unit: 'hours', difficulty: 'expert' },
+                { id: 'labor-4', name: 'Project Manager', description: 'Dedicated project management & coordination', basePrice: 95.00, unit: 'hours', difficulty: 'medium' },
+                { id: 'labor-5', name: 'Safety Officer', description: 'Certified workplace safety supervision', basePrice: 80.00, unit: 'hours', difficulty: 'medium' },
+                { id: 'labor-6', name: 'Quality Inspector', description: 'Professional quality assurance & inspection', basePrice: 85.00, unit: 'hours', difficulty: 'medium' }
             ],
             equipment: [
-                { id: 'equipment-1', name: 'Professional Power Tools', description: 'Industrial power drill & tools daily rental', price: 55.00, unit: 'days' },
-                { id: 'equipment-2', name: 'Extension Ladder Rental', description: 'Professional extension ladder with safety features', price: 45.00, unit: 'days' },
-                { id: 'equipment-3', name: 'Generator Rental', description: 'Portable generator with fuel for power supply', price: 125.00, unit: 'days' },
-                { id: 'equipment-4', name: 'Pressure Washer', description: 'Industrial pressure washing equipment rental', price: 95.00, unit: 'days' },
-                { id: 'equipment-5', name: 'Scaffolding System', description: 'Professional scaffolding setup with safety compliance', price: 250.00, unit: 'set' },
-                { id: 'equipment-6', name: 'Lifting Equipment', description: 'Professional lifting equipment & crane services', price: 350.00, unit: 'days' }
+                { id: 'equipment-1', name: 'Professional Power Tools', description: 'Industrial power drill & tools daily rental', basePrice: 55.00, unit: 'days', difficulty: 'easy' },
+                { id: 'equipment-2', name: 'Extension Ladder Rental', description: 'Professional extension ladder with safety features', basePrice: 45.00, unit: 'days', difficulty: 'easy' },
+                { id: 'equipment-3', name: 'Generator Rental', description: 'Portable generator with fuel for power supply', basePrice: 125.00, unit: 'days', difficulty: 'medium' },
+                { id: 'equipment-4', name: 'Pressure Washer', description: 'Industrial pressure washing equipment rental', basePrice: 95.00, unit: 'days', difficulty: 'easy' },
+                { id: 'equipment-5', name: 'Scaffolding System', description: 'Professional scaffolding setup with safety compliance', basePrice: 250.00, unit: 'set', difficulty: 'expert' },
+                { id: 'equipment-6', name: 'Lifting Equipment', description: 'Professional lifting equipment & crane services', basePrice: 350.00, unit: 'days', difficulty: 'expert' }
             ],
             common: [
-                { id: 'common-1', name: 'Professional Site Visit', description: 'Comprehensive consultation & detailed quote preparation', price: 85.00, unit: 'service' },
-                { id: 'common-2', name: 'Transportation & Logistics', description: 'Professional transport for materials & equipment', price: 65.00, unit: 'trip' },
-                { id: 'common-3', name: 'Emergency Response', description: '24/7 emergency call-out service with rapid response', price: 180.00, unit: 'service' },
-                { id: 'common-4', name: 'Permit & Documentation', description: 'Government permits, approvals & documentation', price: 350.00, unit: 'service' },
-                { id: 'common-5', name: 'Extended Warranty', description: '24-month extended warranty coverage', price: 250.00, unit: 'service' },
-                { id: 'common-6', name: 'Quality Assurance', description: 'Professional quality testing & certification', price: 120.00, unit: 'service' }
+                { id: 'common-1', name: 'Professional Site Visit', description: 'Comprehensive consultation & detailed quote preparation', basePrice: 85.00, unit: 'service', difficulty: 'easy' },
+                { id: 'common-2', name: 'Transportation & Logistics', description: 'Professional transport for materials & equipment', basePrice: 65.00, unit: 'trip', difficulty: 'easy' },
+                { id: 'common-3', name: 'Emergency Response', description: '24/7 emergency call-out service with rapid response', basePrice: 180.00, unit: 'service', difficulty: 'medium' },
+                { id: 'common-4', name: 'Permit & Documentation', description: 'Government permits, approvals & documentation', basePrice: 350.00, unit: 'service', difficulty: 'medium' },
+                { id: 'common-5', name: 'Extended Warranty', description: '24-month extended warranty coverage', basePrice: 250.00, unit: 'service', difficulty: 'easy' },
+                { id: 'common-6', name: 'Quality Assurance', description: 'Professional quality testing & certification', basePrice: 120.00, unit: 'service', difficulty: 'medium' }
             ]
         };
 
-        // Enhanced Company Settings
+        // Predefined Quote Templates
+        var defaultTemplates = [
+            {
+                id: 'office-renovation',
+                name: 'Office Renovation Package',
+                description: 'Complete office renovation with electrical, cleaning, and HVAC',
+                categories: ['electrical', 'cleaning', 'hvac'],
+                estimatedTotal: 15000,
+                items: [
+                    { categoryId: 'electrical', itemIds: ['electrical-1', 'electrical-2', 'electrical-4'] },
+                    { categoryId: 'cleaning', itemIds: ['cleaning-1', 'cleaning-5'] },
+                    { categoryId: 'hvac', itemIds: ['hvac-2'] }
+                ]
+            },
+            {
+                id: 'home-maintenance',
+                name: 'Home Maintenance Package',
+                description: 'Regular home maintenance including plumbing and electrical',
+                categories: ['plumbing', 'electrical', 'common'],
+                estimatedTotal: 8500,
+                items: [
+                    { categoryId: 'plumbing', itemIds: ['plumbing-1', 'plumbing-5'] },
+                    { categoryId: 'electrical', itemIds: ['electrical-3'] },
+                    { categoryId: 'common', itemIds: ['common-1'] }
+                ]
+            },
+            {
+                id: 'emergency-repair',
+                name: 'Emergency Repair Service',
+                description: 'Urgent repair services with emergency response',
+                categories: ['common', 'plumbing', 'electrical'],
+                estimatedTotal: 1200,
+                items: [
+                    { categoryId: 'common', itemIds: ['common-3'] },
+                    { categoryId: 'plumbing', itemIds: ['plumbing-1'] },
+                    { categoryId: 'electrical', itemIds: ['electrical-1'] }
+                ]
+            }
+        ];
+
+        // Company Settings
         var companyInfo = {
             name: 'REFIT MAINTENANCE SERVICES',
             registration: '201803348973 (002894203-V)',
@@ -2002,807 +1759,1166 @@
 
         // Storage Keys
         var STORAGE_KEYS = {
-            JOB_QUOTES: 'refit_enhanced_quotes_v6',
+            JOB_QUOTES: 'refit_comprehensive_quotes_v7',
+            QUOTE_TEMPLATES: 'refit_quote_templates',
+            CLIENTS: 'refit_clients',
             THEME_PREFERENCE: 'refit_theme_preference',
             COMPANY_INFO: 'refit_company_info'
         };
 
         // ========================================
-        // ENHANCED 5-STEP WORKFLOW IMPLEMENTATION
+        // COMPREHENSIVE QUOTE CREATION SYSTEM
         // ========================================
 
-        // Enhanced Step 1: Start New Quote - Client Information with Validation
-        function startEnhancedNewQuote() {
-            resetEnhancedQuoteData();
-            isEditMode = false;
+        // Main Comprehensive Quote Function
+        function startComprehensiveQuote(template = null) {
+            resetCurrentQuote();
+            currentStep = 1;
             clearValidationErrors();
             
-            document.getElementById('enhanced-client-info-modal').classList.add('show');
-            showEnhancedSuccessMessage('🎨✨ Enhanced 5-step professional quote workflow started!');
+            if (template) {
+                applyTemplate(template);
+                showComprehensiveMessage('📋 Template applied: ' + template.name);
+            }
             
-            // Setup real-time validation
-            setupEnhancedClientValidation();
+            renderComprehensiveStep(1);
+            document.getElementById('comprehensive-quote-modal').classList.add('show');
+            showComprehensiveMessage('🎨 Comprehensive quote creation started!');
         }
 
-        function resetEnhancedQuoteData() {
-            enhancedCurrentQuoteData = {
-                client: {
-                    name: '',
-                    company: '',
-                    phone: '',
-                    email: '',
-                    address: ''
-                },
+        function resetCurrentQuote() {
+            currentQuoteData = {
+                client: { name: '', company: '', phone: '', email: '', address: '' },
                 title: '',
                 categories: [],
                 items: [],
                 totalAmount: 0,
-                createdAt: null
+                createdAt: null,
+                template: null,
+                isSmartGenerated: false
             };
-            enhancedCurrentCategory = '';
-            enhancedCustomQuantity = 1;
             validationErrors = {};
+            undoStack = [];
+            redoStack = [];
         }
 
-        function cancelEnhancedQuoteCreation() {
-            closeAllModals();
-            resetEnhancedQuoteData();
-            showEnhancedSuccessMessage('❌ Enhanced quote creation cancelled');
-        }
-
-        function setupEnhancedClientValidation() {
-            var inputs = [
-                { id: 'enhanced-client-name', validator: validateClientName },
-                { id: 'enhanced-client-phone', validator: validateClientPhone },
-                { id: 'enhanced-client-email', validator: validateClientEmail },
-                { id: 'enhanced-client-address', validator: validateClientAddress }
-            ];
-
-            inputs.forEach(function(input) {
-                var element = document.getElementById(input.id);
-                if (element) {
-                    element.addEventListener('input', function() {
-                        input.validator(this.value, input.id);
-                        updateEnhancedProceedButton();
-                    });
-                    element.addEventListener('blur', function() {
-                        input.validator(this.value, input.id);
-                    });
-                }
-            });
-        }
-
-        function validateClientName(value, fieldId) {
-            var isValid = value.trim().length >= 2;
-            updateValidationState(fieldId, isValid, isValid ? '✅ Valid client name' : '❌ Name must be at least 2 characters');
-            return isValid;
-        }
-
-        function validateClientPhone(value, fieldId) {
-            var phoneRegex = /^[\+]?[0-9\s\-\(\)]{8,15}$/;
-            var isValid = phoneRegex.test(value.trim());
-            updateValidationState(fieldId, isValid, isValid ? '✅ Valid phone number' : '❌ Please enter a valid phone number');
-            return isValid;
-        }
-
-        function validateClientEmail(value, fieldId) {
-            if (!value.trim()) {
-                updateValidationState(fieldId, true, ''); // Email is optional
-                return true;
-            }
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            var isValid = emailRegex.test(value.trim());
-            updateValidationState(fieldId, isValid, isValid ? '✅ Valid email address' : '❌ Please enter a valid email address');
-            return isValid;
-        }
-
-        function validateClientAddress(value, fieldId) {
-            var isValid = value.trim().length >= 10;
-            updateValidationState(fieldId, isValid, isValid ? '✅ Valid address' : '❌ Address must be at least 10 characters');
-            return isValid;
-        }
-
-        function updateValidationState(fieldId, isValid, message) {
-            var input = document.getElementById(fieldId);
-            var validationDiv = document.getElementById(fieldId.replace('enhanced-', '').replace('-', '-') + '-validation');
+        function renderComprehensiveStep(step) {
+            currentStep = step;
+            var content = document.getElementById('comprehensive-content');
+            var title = document.getElementById('modal-title');
             
-            if (input) {
-                input.classList.remove('error', 'success');
-                if (message) {
-                    input.classList.add(isValid ? 'success' : 'error');
-                }
+            switch(step) {
+                case 1:
+                    title.textContent = '👤 Step 1: Client Information';
+                    content.innerHTML = renderClientStep();
+                    break;
+                case 2:
+                    title.textContent = '📝 Step 2: Project Details';
+                    content.innerHTML = renderProjectStep();
+                    break;
+                case 3:
+                    title.textContent = '🏷️ Step 3: Categories & Services';
+                    content.innerHTML = renderCategoriesStep();
+                    break;
+                case 4:
+                    title.textContent = '📋 Step 4: Items & Pricing';
+                    content.innerHTML = renderItemsStep();
+                    break;
+                case 5:
+                    title.textContent = '👁️ Step 5: Review & Generate';
+                    content.innerHTML = renderReviewStep();
+                    break;
             }
             
-            if (validationDiv) {
-                validationDiv.textContent = message;
-                validationDiv.className = 'validation-message ' + (isValid ? 'success' : 'error');
-                validationDiv.style.display = message ? 'block' : 'none';
-            }
-            
-            validationErrors[fieldId] = !isValid && message;
+            setupStepEventListeners(step);
         }
 
-        function updateEnhancedProceedButton() {
-            var nameValid = validateClientName(document.getElementById('enhanced-client-name').value, 'enhanced-client-name');
-            var phoneValid = validateClientPhone(document.getElementById('enhanced-client-phone').value, 'enhanced-client-phone');
-            var emailValid = validateClientEmail(document.getElementById('enhanced-client-email').value, 'enhanced-client-email');
-            var addressValid = validateClientAddress(document.getElementById('enhanced-client-address').value, 'enhanced-client-address');
-            
-            var allValid = nameValid && phoneValid && emailValid && addressValid;
-            
-            var proceedBtn = document.getElementById('enhanced-proceed-to-job-title-btn');
-            if (proceedBtn) {
-                proceedBtn.disabled = !allValid;
-                proceedBtn.style.opacity = allValid ? '1' : '0.5';
-                proceedBtn.style.background = allValid ? 
-                    'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))' : 
-                    'linear-gradient(135deg, var(--text-secondary), #9ca3af)';
-            }
+        function renderClientStep() {
+            return `
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">👤</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Professional client information collection</p>
+                </div>
+                
+                <!-- Progress Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot active"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 20%;"></div>
+                </div>
+                
+                <!-- Client Form with Smart Suggestions -->
+                <div class="suggestions">
+                    <div class="suggestions-label">💡 Recent Clients:</div>
+                    <div class="suggestions-grid" id="client-suggestions">
+                        ${renderRecentClients()}
+                    </div>
+                </div>
+                
+                <form id="client-form">
+                    <input type="text" class="form-input" placeholder="Client Name *" id="client-name" required>
+                    <div class="validation-message" id="client-name-validation"></div>
+                    
+                    <input type="text" class="form-input" placeholder="Company Name (Optional)" id="client-company">
+                    
+                    <input type="tel" class="form-input" placeholder="Phone Number *" id="client-phone" required>
+                    <div class="validation-message" id="client-phone-validation"></div>
+                    
+                    <input type="email" class="form-input" placeholder="Email Address" id="client-email">
+                    <div class="validation-message" id="client-email-validation"></div>
+                    
+                    <textarea class="form-input" placeholder="Complete Address *" id="client-address" rows="3" style="resize: none;" required></textarea>
+                    <div class="validation-message" id="client-address-validation"></div>
+                </form>
+                
+                <!-- Enhanced Action Buttons -->
+                <div class="form-actions">
+                    <button type="button" class="form-btn btn-secondary" onclick="closeComprehensiveQuote()">
+                        ❌ Cancel
+                    </button>
+                    <button type="button" class="form-btn btn-primary" onclick="proceedToStep(2)" id="proceed-step-2" disabled>
+                        Next: Project ➡️
+                    </button>
+                </div>
+                
+                <!-- Quick Action Buttons -->
+                <div class="btn-group" style="margin-top: 16px;">
+                    <button type="button" class="btn btn-info" onclick="saveClientDraft()">💾 Save Draft</button>
+                    <button type="button" class="btn btn-template" onclick="loadClientTemplate()">📋 Load Template</button>
+                    <button type="button" class="btn btn-smart" onclick="smartClientFill()">🧠 Smart Fill</button>
+                </div>
+            `;
         }
 
-        function clearValidationErrors() {
-            var validationMessages = document.querySelectorAll('.validation-message');
-            validationMessages.forEach(function(msg) {
-                msg.style.display = 'none';
-            });
-            
-            var inputs = document.querySelectorAll('.form-input');
-            inputs.forEach(function(input) {
-                input.classList.remove('error', 'success');
-            });
-            
-            validationErrors = {};
+        function renderProjectStep() {
+            return `
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">📝</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Define your project scope and requirements</p>
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 12px; margin-top: 16px; border-left: 4px solid var(--accent-primary);">
+                        <p style="font-weight: 700; color: var(--text-primary);" id="client-name-display">${currentQuoteData.client.name || 'Client'}</p>
+                    </div>
+                </div>
+                
+                <!-- Progress Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot active"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 40%;"></div>
+                </div>
+                
+                <!-- Project Title Suggestions -->
+                <div class="suggestions">
+                    <div class="suggestions-label">💡 Popular Project Types:</div>
+                    <div class="suggestions-grid">
+                        <div class="suggestion-btn" onclick="selectProjectSuggestion('Office Renovation & Upgrade')">Office Renovation</div>
+                        <div class="suggestion-btn" onclick="selectProjectSuggestion('AC Installation & Maintenance')">AC Installation</div>
+                        <div class="suggestion-btn" onclick="selectProjectSuggestion('Plumbing Repair & Upgrade')">Plumbing Repair</div>
+                        <div class="suggestion-btn" onclick="selectProjectSuggestion('Electrical Work & Wiring')">Electrical Work</div>
+                        <div class="suggestion-btn" onclick="selectProjectSuggestion('Commercial Cleaning Service')">Cleaning Service</div>
+                        <div class="suggestion-btn" onclick="selectProjectSuggestion('Emergency Repair Service')">Emergency Repair</div>
+                    </div>
+                </div>
+                
+                <form id="project-form">
+                    <input type="text" class="form-input" placeholder="Project Title *" id="project-title" required style="font-size: 18px; font-weight: 600; text-align: center;">
+                    <div class="validation-message" id="project-title-validation"></div>
+                    
+                    <textarea class="form-input" placeholder="Project Description (Optional)" id="project-description" rows="3" style="resize: none;"></textarea>
+                    
+                    <!-- Priority and Urgency -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <select class="form-input" id="project-priority" style="margin-bottom: 0;">
+                            <option value="normal">Normal Priority</option>
+                            <option value="high">High Priority</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                        
+                        <select class="form-input" id="project-timeline" style="margin-bottom: 0;">
+                            <option value="flexible">Flexible Timeline</option>
+                            <option value="1week">Within 1 Week</option>
+                            <option value="3days">Within 3 Days</option>
+                            <option value="asap">ASAP</option>
+                        </select>
+                    </div>
+                </form>
+                
+                <!-- Enhanced Action Buttons -->
+                <div class="form-actions">
+                    <button type="button" class="form-btn btn-secondary" onclick="proceedToStep(1)">
+                        ← Back
+                    </button>
+                    <button type="button" class="form-btn btn-primary" onclick="proceedToStep(3)" id="proceed-step-3" disabled>
+                        Next: Categories ➡️
+                    </button>
+                </div>
+                
+                <!-- Quick Action Buttons -->
+                <div class="btn-group" style="margin-top: 16px;">
+                    <button type="button" class="btn btn-template" onclick="applyProjectTemplate()">📋 Apply Template</button>
+                    <button type="button" class="btn btn-smart" onclick="smartProjectSuggestion()">🧠 Smart Suggest</button>
+                    <button type="button" class="btn btn-duplicate" onclick="duplicateFromRecent()">📄 From Recent</button>
+                </div>
+            `;
         }
 
-        function proceedToEnhancedJobTitle() {
-            // Save client information
-            enhancedCurrentQuoteData.client = {
-                name: document.getElementById('enhanced-client-name').value.trim(),
-                company: document.getElementById('enhanced-client-company').value.trim(),
-                phone: document.getElementById('enhanced-client-phone').value.trim(),
-                email: document.getElementById('enhanced-client-email').value.trim(),
-                address: document.getElementById('enhanced-client-address').value.trim()
-            };
-            
-            // Show client name in next step
-            document.getElementById('enhanced-client-name-display').textContent = 'Client: ' + enhancedCurrentQuoteData.client.name;
-            
-            // Close Step 1, Show Step 2
-            document.getElementById('enhanced-client-info-modal').classList.remove('show');
-            document.getElementById('enhanced-job-title-modal').classList.add('show');
-            
-            // Setup job title validation
-            setupEnhancedJobTitleValidation();
-            
-            showEnhancedSuccessMessage('✅ Step 2: Enhanced job title for ' + enhancedCurrentQuoteData.client.name);
+        function renderCategoriesStep() {
+            return `
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">🏷️</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Select service categories for your project</p>
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 12px; margin-top: 16px; border-left: 4px solid var(--accent-primary);">
+                        <p style="font-weight: 700; color: var(--text-primary);">${currentQuoteData.title || 'Project'}</p>
+                    </div>
+                </div>
+                
+                <!-- Progress Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot active"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%;"></div>
+                </div>
+                
+                <!-- Smart Recommendations -->
+                <div class="suggestions">
+                    <div class="suggestions-label">🧠 Smart Recommendations:</div>
+                    <div class="suggestions-grid" id="smart-category-suggestions">
+                        ${renderSmartCategorySuggestions()}
+                    </div>
+                </div>
+                
+                <!-- Live Quote Summary -->
+                <div id="live-quote-summary" style="display: none;" class="card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; margin: 20px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h4 style="font-weight: 700;">🛒 Current Selection</h4>
+                        <div style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-weight: 700;">
+                            <span id="selected-categories-count">0</span> categories
+                        </div>
+                    </div>
+                    <div id="selected-categories-preview"></div>
+                    <div style="text-align: center; padding: 16px; background: rgba(255,255,255,0.1); border-radius: 12px; margin-top: 16px;">
+                        <div style="font-size: 14px; opacity: 0.9;">Estimated Total</div>
+                        <div style="font-size: 28px; font-weight: 800;" id="estimated-total">RM 0</div>
+                    </div>
+                </div>
+                
+                <!-- Category Grid -->
+                <div class="category-grid" id="categories-grid">
+                    ${renderCategoryGrid()}
+                </div>
+                
+                <!-- Enhanced Action Buttons -->
+                <div class="form-actions">
+                    <button type="button" class="form-btn btn-secondary" onclick="proceedToStep(2)">
+                        ← Back
+                    </button>
+                    <button type="button" class="form-btn btn-primary" onclick="proceedToStep(4)" id="proceed-step-4" disabled>
+                        Next: Items ➡️
+                    </button>
+                </div>
+                
+                <!-- Quick Action Buttons -->
+                <div class="btn-group" style="margin-top: 16px;">
+                    <button type="button" class="btn btn-success" onclick="selectAllRecommended()">✅ Select Recommended</button>
+                    <button type="button" class="btn btn-warning" onclick="clearAllCategories()">🗑️ Clear All</button>
+                    <button type="button" class="btn btn-smart" onclick="optimizeCategories()">🧠 Optimize</button>
+                </div>
+            `;
         }
 
-        function backToEnhancedClientInfo() {
-            document.getElementById('enhanced-job-title-modal').classList.remove('show');
-            document.getElementById('enhanced-client-info-modal').classList.add('show');
-            showEnhancedSuccessMessage('⬅️ Back to Step 1: Enhanced Client Information');
+        function renderItemsStep() {
+            return `
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">📋</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Select and customize items for each category</p>
+                </div>
+                
+                <!-- Progress Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot active"></div>
+                    <div class="step-dot"></div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%;"></div>
+                </div>
+                
+                <!-- Category Tabs -->
+                <div id="category-tabs" style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto;">
+                    ${renderCategoryTabs()}
+                </div>
+                
+                <!-- Items for Selected Category -->
+                <div id="items-content">
+                    ${renderCategoryItems()}
+                </div>
+                
+                <!-- Live Quote Summary -->
+                <div class="card" style="background: linear-gradient(135deg, var(--success), #34d399); color: white;">
+                    <h4 style="font-weight: 700; margin-bottom: 12px;">💰 Quote Summary</h4>
+                    <div id="quote-breakdown"></div>
+                    <div style="text-align: center; padding: 16px; background: rgba(255,255,255,0.1); border-radius: 12px; margin-top: 16px;">
+                        <div style="font-size: 16px; opacity: 0.9;">Total Quote Amount</div>
+                        <div style="font-size: 32px; font-weight: 800;" id="total-quote-amount">RM 0</div>
+                    </div>
+                </div>
+                
+                <!-- Enhanced Action Buttons -->
+                <div class="form-actions">
+                    <button type="button" class="form-btn btn-secondary" onclick="proceedToStep(3)">
+                        ← Back
+                    </button>
+                    <button type="button" class="form-btn btn-primary" onclick="proceedToStep(5)" id="proceed-step-5" disabled>
+                        Next: Review ➡️
+                    </button>
+                </div>
+                
+                <!-- Quick Action Buttons -->
+                <div class="btn-group" style="margin-top: 16px;">
+                    <button type="button" class="btn btn-success" onclick="addCustomItem()">➕ Custom Item</button>
+                    <button type="button" class="btn btn-duplicate" onclick="duplicateItem()">📄 Duplicate</button>
+                    <button type="button" class="btn btn-smart" onclick="optimizePricing()">🧠 Optimize Pricing</button>
+                </div>
+            `;
         }
 
-        // Enhanced Step 2: Job Title with Suggestions
-        function setupEnhancedJobTitleValidation() {
-            var jobTitleInput = document.getElementById('enhanced-job-title-input');
-            if (jobTitleInput) {
-                jobTitleInput.addEventListener('input', function() {
-                    validateJobTitle(this.value);
-                    updateEnhancedJobTitleButton();
-                });
-            }
+        function renderReviewStep() {
+            return `
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">👁️</div>
+                    <p style="color: var(--text-muted); font-size: 16px; font-weight: 600;">Review and finalize your professional quote</p>
+                </div>
+                
+                <!-- Progress Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot active"></div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+                
+                <!-- Complete Quote Review -->
+                <div id="final-quote-review">
+                    ${renderFinalQuoteReview()}
+                </div>
+                
+                <!-- Enhanced Action Buttons -->
+                <div class="form-actions quad">
+                    <button type="button" class="form-btn btn-secondary" onclick="proceedToStep(4)">
+                        ← Back
+                    </button>
+                    <button type="button" class="form-btn btn-edit" onclick="quickEditQuote()">
+                        ✏️ Quick Edit
+                    </button>
+                    <button type="button" class="form-btn btn-template" onclick="saveAsTemplate()">
+                        📋 Save Template
+                    </button>
+                    <button type="button" class="form-btn btn-success" onclick="generateFinalQuote()">
+                        🎨 Generate Quote
+                    </button>
+                </div>
+                
+                <!-- Final Action Buttons -->
+                <div class="btn-group" style="margin-top: 16px;">
+                    <button type="button" class="btn btn-info" onclick="previewPDF()">👁️ Preview PDF</button>
+                    <button type="button" class="btn btn-warning" onclick="sendQuoteEmail()">📧 Send Email</button>
+                    <button type="button" class="btn btn-duplicate" onclick="duplicateQuote()">📄 Duplicate</button>
+                </div>
+            `;
         }
 
-        function validateJobTitle(value) {
-            var isValid = value.trim().length >= 5;
-            var validationDiv = document.getElementById('job-title-validation');
-            var input = document.getElementById('enhanced-job-title-input');
+        // Helper Render Functions
+        function renderRecentClients() {
+            var recentClients = getRecentClients();
+            if (recentClients.length === 0) return '<div style="color: var(--text-muted); font-size: 12px;">No recent clients</div>';
             
-            if (input) {
-                input.classList.remove('error', 'success');
-                input.classList.add(isValid ? 'success' : 'error');
-            }
-            
-            if (validationDiv) {
-                var message = isValid ? '✅ Great job title!' : '❌ Job title must be at least 5 characters';
-                validationDiv.textContent = message;
-                validationDiv.className = 'validation-message ' + (isValid ? 'success' : 'error');
-                validationDiv.style.display = 'block';
-            }
-            
-            return isValid;
+            return recentClients.map(function(client) {
+                return `<div class="suggestion-btn" onclick="selectRecentClient('${client.name}')">${client.name}</div>`;
+            }).join('');
         }
 
-        function selectJobTitleSuggestion(suggestion) {
-            document.getElementById('enhanced-job-title-input').value = suggestion;
-            validateJobTitle(suggestion);
-            updateEnhancedJobTitleButton();
-            showEnhancedSuccessMessage('💡 Job title suggestion selected: ' + suggestion);
+        function renderSmartCategorySuggestions() {
+            var suggestions = getSmartCategorySuggestions();
+            return suggestions.map(function(category) {
+                return `<div class="suggestion-btn" onclick="selectCategorySuggestion('${category}')">${categories[category] ? categories[category].icon + ' ' + categories[category].name : category}</div>`;
+            }).join('');
         }
 
-        function updateEnhancedJobTitleButton() {
-            var isValid = validateJobTitle(document.getElementById('enhanced-job-title-input').value);
-            var proceedBtn = document.getElementById('enhanced-proceed-to-categories-btn');
-            
-            if (proceedBtn) {
-                proceedBtn.disabled = !isValid;
-                proceedBtn.style.opacity = isValid ? '1' : '0.5';
-                proceedBtn.style.background = isValid ? 
-                    'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))' : 
-                    'linear-gradient(135deg, var(--text-secondary), #9ca3af)';
-            }
-        }
-
-        function proceedToEnhancedCategories() {
-            var title = document.getElementById('enhanced-job-title-input').value.trim();
-            
-            if (!validateJobTitle(title)) {
-                showEnhancedSuccessMessage('⚠️ Please enter a valid job title');
-                return;
-            }
-            
-            enhancedCurrentQuoteData.title = title;
-            document.getElementById('enhanced-selected-job-title').textContent = title;
-            
-            // Close Step 2, Show Step 3
-            document.getElementById('enhanced-job-title-modal').classList.remove('show');
-            
-            renderEnhancedCategories();
-            updateEnhancedQuoteSummaryDisplay();
-            
-            document.getElementById('enhanced-category-selection-modal').classList.add('show');
-            showEnhancedSuccessMessage('✅ Step 3: Enhanced categories for "' + title + '"');
-        }
-
-        function backToEnhancedJobTitle() {
-            document.getElementById('enhanced-category-selection-modal').classList.remove('show');
-            document.getElementById('enhanced-job-title-modal').classList.add('show');
-            showEnhancedSuccessMessage('⬅️ Back to Step 2: Enhanced Job Title');
-        }
-
-        // Enhanced Step 3: Category Selection with Visual Improvements
-        function renderEnhancedCategories() {
-            var container = document.getElementById('enhanced-category-grid');
-            if (!container) return;
-            
+        function renderCategoryGrid() {
             var html = '';
-            
             for (var categoryKey in categories) {
                 var category = categories[categoryKey];
-                var hasItems = enhancedCurrentQuoteData.items.some(function(item) { 
-                    return item.category === categoryKey; 
+                var isSelected = currentQuoteData.categories.includes(categoryKey);
+                var itemCount = currentQuoteData.items.filter(function(item) { return item.category === categoryKey; }).length;
+                
+                html += `
+                    <div class="category-item ${isSelected ? 'selected' : ''}" onclick="toggleCategory('${categoryKey}')" data-category="${categoryKey}">
+                        <div class="icon">${category.icon}</div>
+                        <div class="name">${category.name}</div>
+                        ${itemCount > 0 ? `<div class="count">${itemCount}</div>` : ''}
+                    </div>
+                `;
+            }
+            return html;
+        }
+
+        function renderCategoryTabs() {
+            if (currentQuoteData.categories.length === 0) {
+                return '<div style="text-align: center; color: var(--text-muted);">No categories selected</div>';
+            }
+            
+            return currentQuoteData.categories.map(function(categoryKey, index) {
+                var category = categories[categoryKey];
+                var isActive = index === 0; // First tab is active by default
+                return `
+                    <button class="btn ${isActive ? 'btn-primary' : 'btn-secondary'}" onclick="switchCategoryTab('${categoryKey}')" id="tab-${categoryKey}">
+                        ${category.icon} ${category.name}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderCategoryItems() {
+            if (currentQuoteData.categories.length === 0) {
+                return '<div style="text-align: center; padding: 40px; color: var(--text-muted);">Select categories first</div>';
+            }
+            
+            var activeCategory = currentQuoteData.categories[0];
+            var categoryItems = presetWorkItems[activeCategory] || [];
+            var selectedItems = currentQuoteData.items.filter(function(item) { return item.category === activeCategory; });
+            
+            var html = `<div id="category-items-${activeCategory}">`;
+            
+            // Custom items first
+            var customItems = selectedItems.filter(function(item) { return item.isCustom; });
+            if (customItems.length > 0) {
+                html += '<h4 style="margin-bottom: 12px;">🛠️ Custom Items</h4>';
+                customItems.forEach(function(item) {
+                    html += renderItemCard(item, true);
                 });
-                
-                var itemCount = enhancedCurrentQuoteData.items.filter(function(item) {
-                    return item.category === categoryKey;
-                }).length;
-                
-                html += '<div class="category-item' + (hasItems ? ' selected' : '') + '" onclick="selectEnhancedCategoryForItems(\'' + categoryKey + '\')" data-category="' + categoryKey + '">' +
-                    '<div class="icon">' + category.icon + '</div>' +
-                    '<div class="name">' + category.name + '</div>' +
-                    (hasItems ? '<div style="font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 4px;">✓ ' + itemCount + ' items added</div>' : '') +
-                    '</div>';
             }
             
-            container.innerHTML = html;
-        }
-
-        function selectEnhancedCategoryForItems(categoryKey) {
-            enhancedCurrentCategory = categoryKey;
-            
-            document.getElementById('enhanced-category-job-title').textContent = enhancedCurrentQuoteData.title;
-            document.getElementById('enhanced-selected-category-display').textContent = categories[categoryKey].name;
-            
-            // Close Step 3, Show Step 4
-            document.getElementById('enhanced-category-selection-modal').classList.remove('show');
-            
-            renderEnhancedPresetItems();
-            
-            document.getElementById('enhanced-item-selection-modal').classList.add('show');
-            showEnhancedSuccessMessage('✅ Step 4: Enhanced items for ' + categories[categoryKey].name);
-        }
-
-        function backToEnhancedCategories() {
-            document.getElementById('enhanced-item-selection-modal').classList.remove('show');
-            document.getElementById('enhanced-final-review-modal').classList.remove('show');
-            
-            renderEnhancedCategories();
-            updateEnhancedQuoteSummaryDisplay();
-            updateEnhancedProceedButton();
-            
-            document.getElementById('enhanced-category-selection-modal').classList.add('show');
-            showEnhancedSuccessMessage('⬅️ Back to Step 3: Enhanced category selection');
-        }
-
-        function proceedToEnhancedReview() {
-            if (enhancedCurrentQuoteData.items.length === 0) {
-                showEnhancedSuccessMessage('⚠️ Please add at least one item to proceed');
-                return;
+            // Preset items
+            if (categoryItems.length > 0) {
+                html += '<h4 style="margin-bottom: 12px;">📋 Available Items</h4>';
+                categoryItems.forEach(function(item) {
+                    var isSelected = selectedItems.some(function(selected) { return selected.id === item.id; });
+                    html += renderItemCard(item, isSelected);
+                });
             }
             
-            // Close Step 3, Show Step 5 (Final Review)
-            document.getElementById('enhanced-category-selection-modal').classList.remove('show');
-            
-            renderEnhancedFinalReview();
-            
-            document.getElementById('enhanced-final-review-modal').classList.add('show');
-            showEnhancedSuccessMessage('✅ Step 5: Enhanced final review - professional PDF ready');
+            html += '</div>';
+            return html;
         }
 
-        function updateEnhancedProceedButton() {
-            var proceedBtn = document.getElementById('enhanced-proceed-review-btn');
-            if (proceedBtn) {
-                if (enhancedCurrentQuoteData.items.length > 0) {
-                    proceedBtn.disabled = false;
-                    proceedBtn.style.opacity = '1';
-                    proceedBtn.style.background = 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))';
-                } else {
-                    proceedBtn.disabled = true;
-                    proceedBtn.style.opacity = '0.5';
-                    proceedBtn.style.background = 'linear-gradient(135deg, var(--text-secondary), #9ca3af)';
-                }
-            }
+        function renderItemCard(item, isSelected) {
+            var price = calculateSmartPrice(item);
+            return `
+                <div class="preset-item ${isSelected ? 'selected' : ''}" onclick="toggleItem('${item.id}')" data-item-id="${item.id}">
+                    <div class="header">
+                        <div class="name">${item.isCustom ? '🛠️ ' : ''}${item.name}</div>
+                        <div class="price">RM ${price.toFixed(2)}</div>
+                    </div>
+                    <div class="description">${item.description}</div>
+                    <div class="unit">Per ${item.unit}${item.difficulty ? ' • ' + item.difficulty : ''}</div>
+                    ${isSelected ? '<div style="margin-top: 8px;"><button class="btn btn-edit" onclick="editItemQuantity(\'' + item.id + '\', event)" style="padding: 4px 8px; font-size: 12px;">✏️ Edit Qty</button></div>' : ''}
+                </div>
+            `;
         }
 
-        // Enhanced Step 4: Item Selection with Better UX
-        function renderEnhancedPresetItems() {
-            var container = document.getElementById('enhanced-preset-items-list');
-            if (!container) return;
-            
-            var categoryItems = presetWorkItems[enhancedCurrentCategory] || [];
+        function renderFinalQuoteReview() {
             var html = '';
             
-            // Show custom items for this category first
-            var customItems = enhancedCurrentQuoteData.items.filter(function(item) { 
-                return item.isCustom && item.category === enhancedCurrentCategory; 
+            // Client Information
+            html += `
+                <div class="card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white;">
+                    <h4 style="font-weight: 700; margin-bottom: 16px;">👤 Client Information</h4>
+                    <div style="display: grid; gap: 8px; font-size: 14px;">
+                        <div><strong>Name:</strong> ${currentQuoteData.client.name}</div>
+                        ${currentQuoteData.client.company ? `<div><strong>Company:</strong> ${currentQuoteData.client.company}</div>` : ''}
+                        <div><strong>Phone:</strong> ${currentQuoteData.client.phone}</div>
+                        ${currentQuoteData.client.email ? `<div><strong>Email:</strong> ${currentQuoteData.client.email}</div>` : ''}
+                        <div><strong>Address:</strong> ${currentQuoteData.client.address}</div>
+                    </div>
+                </div>
+            `;
+            
+            // Project Information
+            html += `
+                <div class="card">
+                    <h4 style="font-weight: 700; margin-bottom: 16px;">📝 Project Details</h4>
+                    <div style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">${currentQuoteData.title}</div>
+                    ${currentQuoteData.description ? `<div style="color: var(--text-muted); margin-bottom: 8px;">${currentQuoteData.description}</div>` : ''}
+                    <div style="font-size: 12px; color: var(--text-muted);">
+                        Priority: ${currentQuoteData.priority || 'Normal'} • Timeline: ${currentQuoteData.timeline || 'Flexible'}
+                    </div>
+                </div>
+            `;
+            
+            // Items by Category
+            var totalAmount = 0;
+            currentQuoteData.categories.forEach(function(categoryKey) {
+                var category = categories[categoryKey];
+                var categoryItems = currentQuoteData.items.filter(function(item) { return item.category === categoryKey; });
+                var categoryTotal = categoryItems.reduce(function(sum, item) { return sum + item.total; }, 0);
+                totalAmount += categoryTotal;
+                
+                html += `
+                    <div class="card" style="border-left: 4px solid ${category.color};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h4 style="font-weight: 700;">${category.icon} ${category.name}</h4>
+                            <div style="font-weight: 700; color: ${category.color}; font-size: 18px;">RM ${categoryTotal.toFixed(2)}</div>
+                        </div>
+                        ${categoryItems.map(function(item) {
+                            return `
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-secondary); border-radius: 8px; margin-bottom: 8px;">
+                                    <div>
+                                        <div style="font-weight: 600;">${item.isCustom ? '🛠️ ' : ''}${item.name}</div>
+                                        <div style="font-size: 12px; color: var(--text-muted);">${item.quantity} ${item.unit} × RM ${item.price.toFixed(2)}</div>
+                                    </div>
+                                    <div style="font-weight: 700;">RM ${item.total.toFixed(2)}</div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
             });
             
-            if (customItems.length > 0) {
-                html += '<div style="margin-bottom: 20px;">' +
-                    '<div style="font-weight: 700; color: var(--accent-warning); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
-                    '<span style="font-size: 20px;">🛠️</span>' +
-                    '<span>Custom Items (' + customItems.length + ')</span>' +
-                    '</div>';
-                
-                for (var i = 0; i < customItems.length; i++) {
-                    var item = customItems[i];
-                    html += '<div class="preset-item selected" onclick="toggleEnhancedPresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
-                        '<div class="header">' +
-                        '<div class="name">🛠️ ' + item.name + '</div>' +
-                        '<div class="price">RM ' + parseFloat(item.total).toFixed(2) + '</div>' +
-                        '</div>' +
-                        '<div class="description">' + item.description + '</div>' +
-                        '<div class="unit">Qty: ' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + '</div>' +
-                        '</div>';
-                }
-                html += '</div>';
-            }
+            // Grand Total
+            currentQuoteData.totalAmount = totalAmount;
+            html += `
+                <div class="card" style="background: linear-gradient(135deg, var(--success), #34d399); color: white; text-align: center;">
+                    <div style="font-size: 18px; opacity: 0.9; margin-bottom: 8px;">TOTAL QUOTE AMOUNT</div>
+                    <div style="font-size: 42px; font-weight: 800;">RM ${totalAmount.toFixed(2)}</div>
+                    <div style="font-size: 12px; opacity: 0.8; margin-top: 8px;">${currentQuoteData.items.length} items • ${currentQuoteData.categories.length} categories</div>
+                </div>
+            `;
             
-            if (categoryItems.length === 0) {
-                if (customItems.length === 0) {
-                    container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">' +
-                        '<div style="font-size: 48px; margin-bottom: 16px;">📦</div>' +
-                        '<p style="font-weight: 600;">No preset items available</p>' +
-                        '<p style="font-size: 14px; margin-top: 8px;">Create enhanced custom items for this category</p>' +
-                        '</div>';
-                } else {
-                    container.innerHTML = html;
-                }
-                updateEnhancedSelectedItemsSummary();
-                return;
-            }
-            
-            if (categoryItems.length > 0) {
-                html += '<div style="margin-bottom: 12px;">' +
-                    '<div style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">' +
-                    '<span style="font-size: 20px;">' + categories[enhancedCurrentCategory].icon + '</span>' +
-                    '<span>Enhanced Preset Items (' + categoryItems.length + ')</span>' +
-                    '</div>';
-            }
-            
-            for (var i = 0; i < categoryItems.length; i++) {
-                var item = categoryItems[i];
-                var isSelected = enhancedCurrentQuoteData.items.some(function(selectedItem) {
-                    return selectedItem.id === item.id && selectedItem.category === enhancedCurrentCategory && !selectedItem.isCustom;
-                });
-                
-                html += '<div class="preset-item' + (isSelected ? ' selected' : '') + '" onclick="toggleEnhancedPresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
-                    '<div class="header">' +
-                    '<div class="name">' + item.name + '</div>' +
-                    '<div class="price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
-                    '</div>' +
-                    '<div class="description">' + item.description + '</div>' +
-                    '<div class="unit">Per ' + item.unit + '</div>' +
-                    '</div>';
-            }
-            
-            if (categoryItems.length > 0) {
-                html += '</div>';
-            }
-            
-            container.innerHTML = html;
-            updateEnhancedSelectedItemsSummary();
+            return html;
         }
 
-        function toggleEnhancedPresetItem(itemId) {
-            var existingIndex = enhancedCurrentQuoteData.items.findIndex(function(selectedItem) {
-                return selectedItem.id === itemId && selectedItem.category === enhancedCurrentCategory;
+        // Step Navigation Functions
+        function proceedToStep(step) {
+            if (validateCurrentStep()) {
+                saveCurrentStepData();
+                renderComprehensiveStep(step);
+            }
+        }
+
+        function validateCurrentStep() {
+            switch(currentStep) {
+                case 1:
+                    return validateClientInfo();
+                case 2:
+                    return validateProjectInfo();
+                case 3:
+                    return validateCategories();
+                case 4:
+                    return validateItems();
+                case 5:
+                    return true;
+                default:
+                    return true;
+            }
+        }
+
+        function saveCurrentStepData() {
+            // Save undo state
+            undoStack.push(JSON.parse(JSON.stringify(currentQuoteData)));
+            if (undoStack.length > 10) undoStack.shift(); // Keep only last 10 states
+            redoStack = []; // Clear redo stack
+            
+            switch(currentStep) {
+                case 1:
+                    saveClientData();
+                    break;
+                case 2:
+                    saveProjectData();
+                    break;
+                case 3:
+                    saveCategoriesData();
+                    break;
+                case 4:
+                    saveItemsData();
+                    break;
+            }
+        }
+
+        function saveClientData() {
+            currentQuoteData.client = {
+                name: document.getElementById('client-name').value.trim(),
+                company: document.getElementById('client-company').value.trim(),
+                phone: document.getElementById('client-phone').value.trim(),
+                email: document.getElementById('client-email').value.trim(),
+                address: document.getElementById('client-address').value.trim()
+            };
+        }
+
+        function saveProjectData() {
+            currentQuoteData.title = document.getElementById('project-title').value.trim();
+            currentQuoteData.description = document.getElementById('project-description').value.trim();
+            currentQuoteData.priority = document.getElementById('project-priority').value;
+            currentQuoteData.timeline = document.getElementById('project-timeline').value;
+        }
+
+        function saveCategoriesData() {
+            // Categories are saved in real-time via toggleCategory function
+        }
+
+        function saveItemsData() {
+            // Items are saved in real-time via toggleItem function
+        }
+
+        // Validation Functions
+        function validateClientInfo() {
+            var name = document.getElementById('client-name').value.trim();
+            var phone = document.getElementById('client-phone').value.trim();
+            var address = document.getElementById('client-address').value.trim();
+            
+            var isValid = name.length >= 2 && phone.length >= 8 && address.length >= 10;
+            
+            if (!isValid) {
+                showComprehensiveMessage('⚠️ Please complete all required client information', 'warning');
+            }
+            
+            return isValid;
+        }
+
+        function validateProjectInfo() {
+            var title = document.getElementById('project-title').value.trim();
+            var isValid = title.length >= 5;
+            
+            if (!isValid) {
+                showComprehensiveMessage('⚠️ Please enter a project title (at least 5 characters)', 'warning');
+            }
+            
+            return isValid;
+        }
+
+        function validateCategories() {
+            var isValid = currentQuoteData.categories.length > 0;
+            
+            if (!isValid) {
+                showComprehensiveMessage('⚠️ Please select at least one service category', 'warning');
+            }
+            
+            return isValid;
+        }
+
+        function validateItems() {
+            var isValid = currentQuoteData.items.length > 0;
+            
+            if (!isValid) {
+                showComprehensiveMessage('⚠️ Please select at least one item from the categories', 'warning');
+            }
+            
+            return isValid;
+        }
+
+        // Event Listener Setup
+        function setupStepEventListeners(step) {
+            switch(step) {
+                case 1:
+                    setupClientListeners();
+                    break;
+                case 2:
+                    setupProjectListeners();
+                    break;
+                case 3:
+                    setupCategoriesListeners();
+                    break;
+                case 4:
+                    setupItemsListeners();
+                    break;
+                case 5:
+                    setupReviewListeners();
+                    break;
+            }
+        }
+
+        function setupClientListeners() {
+            var inputs = ['client-name', 'client-phone', 'client-email', 'client-address'];
+            inputs.forEach(function(inputId) {
+                var input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('input', function() {
+                        validateClientField(inputId);
+                        updateProceedButton(2);
+                    });
+                }
             });
+        }
+
+        function setupProjectListeners() {
+            var projectTitle = document.getElementById('project-title');
+            if (projectTitle) {
+                projectTitle.addEventListener('input', function() {
+                    validateProjectField('project-title');
+                    updateProceedButton(3);
+                });
+            }
+        }
+
+        function setupCategoriesListeners() {
+            updateLiveQuoteSummary();
+        }
+
+        function setupItemsListeners() {
+            updateQuoteBreakdown();
+        }
+
+        function setupReviewListeners() {
+            // Review step listeners
+        }
+
+        // Smart Helper Functions
+        function getRecentClients() {
+            return jobQuotes.slice(-5).map(function(quote) { return quote.client; }).filter(function(client, index, self) {
+                return self.findIndex(function(c) { return c.name === client.name; }) === index;
+            });
+        }
+
+        function getSmartCategorySuggestions() {
+            var title = currentQuoteData.title.toLowerCase();
+            var suggestions = [];
+            
+            if (title.includes('office') || title.includes('renovation')) {
+                suggestions = ['electrical', 'cleaning', 'hvac'];
+            } else if (title.includes('plumbing') || title.includes('water')) {
+                suggestions = ['plumbing', 'parts', 'labor'];
+            } else if (title.includes('electrical') || title.includes('wiring')) {
+                suggestions = ['electrical', 'parts', 'labor'];
+            } else if (title.includes('ac') || title.includes('cooling')) {
+                suggestions = ['hvac', 'electrical', 'labor'];
+            } else if (title.includes('cleaning')) {
+                suggestions = ['cleaning', 'equipment', 'labor'];
+            } else if (title.includes('emergency')) {
+                suggestions = ['common', 'plumbing', 'electrical'];
+            } else {
+                suggestions = ['common', 'labor'];
+            }
+            
+            return suggestions;
+        }
+
+        function calculateSmartPrice(item) {
+            var basePrice = item.basePrice || item.price || 0;
+            var difficulty = item.difficulty || 'medium';
+            var multipliers = { easy: 0.9, medium: 1.0, expert: 1.3 };
+            return basePrice * (multipliers[difficulty] || 1.0);
+        }
+
+        // Category and Item Functions
+        function toggleCategory(categoryKey) {
+            var index = currentQuoteData.categories.indexOf(categoryKey);
+            if (index === -1) {
+                currentQuoteData.categories.push(categoryKey);
+                showComprehensiveMessage('✅ Added: ' + categories[categoryKey].name);
+            } else {
+                currentQuoteData.categories.splice(index, 1);
+                // Remove all items from this category
+                currentQuoteData.items = currentQuoteData.items.filter(function(item) { return item.category !== categoryKey; });
+                showComprehensiveMessage('➖ Removed: ' + categories[categoryKey].name);
+            }
+            
+            updateCategoryDisplay();
+            updateLiveQuoteSummary();
+            updateProceedButton(4);
+        }
+
+        function toggleItem(itemId) {
+            var existingIndex = currentQuoteData.items.findIndex(function(item) { return item.id === itemId; });
             
             if (existingIndex !== -1) {
-                var removedItem = enhancedCurrentQuoteData.items[existingIndex];
-                enhancedCurrentQuoteData.items.splice(existingIndex, 1);
-                showEnhancedSuccessMessage('➖ Removed: ' + removedItem.name);
-                renderEnhancedPresetItems();
-                updateEnhancedQuoteSummaryDisplay();
-                updateEnhancedProceedButton();
+                var removed = currentQuoteData.items.splice(existingIndex, 1)[0];
+                showComprehensiveMessage('➖ Removed: ' + removed.name);
+            } else {
+                var item = findItemById(itemId);
+                if (item) {
+                    var selectedItem = {
+                        id: item.id,
+                        name: item.name,
+                        description: item.description,
+                        price: calculateSmartPrice(item),
+                        unit: item.unit,
+                        quantity: 1,
+                        total: calculateSmartPrice(item),
+                        category: getCurrentActiveCategory(),
+                        isCustom: item.isCustom || false
+                    };
+                    currentQuoteData.items.push(selectedItem);
+                    showComprehensiveMessage('✅ Added: ' + item.name);
+                }
+            }
+            
+            updateItemDisplay();
+            updateQuoteBreakdown();
+            updateProceedButton(5);
+        }
+
+        function findItemById(itemId) {
+            for (var categoryKey in presetWorkItems) {
+                var item = presetWorkItems[categoryKey].find(function(i) { return i.id === itemId; });
+                if (item) return item;
+            }
+            return null;
+        }
+
+        function getCurrentActiveCategory() {
+            return currentQuoteData.categories[0] || 'common';
+        }
+
+        // Update Functions
+        function updateProceedButton(step) {
+            var button = document.getElementById('proceed-step-' + step);
+            if (button) {
+                var isValid = validateCurrentStep();
+                button.disabled = !isValid;
+                button.style.opacity = isValid ? '1' : '0.5';
+            }
+        }
+
+        function updateCategoryDisplay() {
+            var container = document.getElementById('categories-grid');
+            if (container) {
+                container.innerHTML = renderCategoryGrid();
+            }
+        }
+
+        function updateItemDisplay() {
+            var container = document.getElementById('items-content');
+            if (container) {
+                container.innerHTML = renderCategoryItems();
+            }
+        }
+
+        function updateLiveQuoteSummary() {
+            var summary = document.getElementById('live-quote-summary');
+            var count = document.getElementById('selected-categories-count');
+            var preview = document.getElementById('selected-categories-preview');
+            var total = document.getElementById('estimated-total');
+            
+            if (!summary) return;
+            
+            if (currentQuoteData.categories.length === 0) {
+                summary.style.display = 'none';
                 return;
             }
             
-            var categoryItems = presetWorkItems[enhancedCurrentCategory] || [];
-            var item = categoryItems.find(function(item) { return item.id === itemId; });
+            summary.style.display = 'block';
+            count.textContent = currentQuoteData.categories.length;
             
-            if (!item) return;
+            var html = '';
+            var estimatedTotal = 0;
             
-            var selectedItem = {
-                id: item.id,
-                name: item.name,
-                description: item.description,
-                price: item.price,
-                unit: item.unit,
-                quantity: 1,
-                total: item.price,
-                category: enhancedCurrentCategory,
-                isCustom: false
-            };
-            
-            enhancedCurrentQuoteData.items.push(selectedItem);
-            showEnhancedSuccessMessage('✅ Added: ' + item.name + ' (RM ' + item.price.toFixed(2) + ')');
-            
-            renderEnhancedPresetItems();
-            updateEnhancedQuoteSummaryDisplay();
-            updateEnhancedProceedButton();
-        }
-
-        function finishEnhancedCategoryItems() {
-            backToEnhancedCategories();
-            showEnhancedSuccessMessage('✅ Enhanced category completed. Add more or proceed to review.');
-        }
-
-        function updateEnhancedSelectedItemsSummary() {
-            var summaryContainer = document.getElementById('enhanced-selected-items-summary');
-            var countElement = document.getElementById('enhanced-selected-count');
-            var listElement = document.getElementById('enhanced-selected-items-list');
-            var totalElement = document.getElementById('enhanced-category-total-amount');
-            
-            var categoryItems = enhancedCurrentQuoteData.items.filter(function(item) {
-                return item.category === enhancedCurrentCategory;
+            currentQuoteData.categories.forEach(function(categoryKey) {
+                var category = categories[categoryKey];
+                var estimate = category.avgPrice || 100;
+                estimatedTotal += estimate;
+                
+                html += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,255,255,0.1); border-radius: 8px; margin-bottom: 8px;">
+                        <div>${category.icon} ${category.name}</div>
+                        <div>~RM ${estimate}</div>
+                    </div>
+                `;
             });
             
-            if (categoryItems.length === 0) {
-                summaryContainer.style.display = 'none';
-                return;
-            }
-            
-            summaryContainer.style.display = 'block';
-            countElement.textContent = categoryItems.length;
-            
-            var categoryTotal = 0;
-            var html = '';
-            
-            for (var i = 0; i < categoryItems.length; i++) {
-                var item = categoryItems[i];
-                categoryTotal += item.total;
-                
-                html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; margin-bottom: 8px;">' +
-                    '<div>' +
-                    '<div style="font-weight: 600; color: white; font-size: 14px;">' + 
-                    (item.isCustom ? '🛠️ ' : '') + item.name + 
-                    (item.isCustom ? ' (Custom)' : '') + '</div>' +
-                    '<div style="font-size: 12px; color: rgba(255,255,255,0.8);">' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + '</div>' +
-                    '</div>' +
-                    '<div style="font-weight: 700; color: white; font-size: 16px;">RM ' + item.total.toFixed(2) + '</div>' +
-                    '</div>';
-            }
-            
-            listElement.innerHTML = html;
-            totalElement.textContent = 'RM ' + categoryTotal.toFixed(2);
+            preview.innerHTML = html;
+            total.textContent = 'RM ' + estimatedTotal.toFixed(0);
         }
 
-        // Enhanced Custom Item Creation
-        function openEnhancedCustomItemForm() {
-            enhancedCustomQuantity = 1;
+        function updateQuoteBreakdown() {
+            var breakdown = document.getElementById('quote-breakdown');
+            var totalElement = document.getElementById('total-quote-amount');
             
-            document.getElementById('enhanced-custom-item-modal').classList.add('show');
-            
-            setTimeout(function() {
-                resetEnhancedCustomItemForm();
-                setupEnhancedCustomItemListeners();
-            }, 100);
-            
-            showEnhancedSuccessMessage('🛠️ Enhanced custom item creator for: ' + categories[enhancedCurrentCategory].name);
-        }
-
-        function resetEnhancedCustomItemForm() {
-            var nameInput = document.getElementById('enhanced-custom-item-name');
-            var descInput = document.getElementById('enhanced-custom-item-description');
-            var priceInput = document.getElementById('enhanced-custom-item-price');
-            var unitSelect = document.getElementById('enhanced-custom-item-unit');
-            var quantityDisplay = document.getElementById('enhanced-custom-quantity-display');
-            var addBtn = document.getElementById('enhanced-add-custom-item-btn');
-            
-            if (nameInput) nameInput.value = '';
-            if (descInput) descInput.value = '';
-            if (priceInput) priceInput.value = '';
-            if (unitSelect) unitSelect.value = 'pcs';
-            if (quantityDisplay) quantityDisplay.textContent = '1';
-            
-            if (addBtn) {
-                addBtn.disabled = true;
-                addBtn.style.opacity = '0.5';
-                addBtn.style.background = 'linear-gradient(135deg, var(--text-secondary), #9ca3af)';
-            }
-            
-            calculateEnhancedCustomTotal();
-            clearValidationErrors();
-        }
-
-        function setupEnhancedCustomItemListeners() {
-            var nameInput = document.getElementById('enhanced-custom-item-name');
-            var priceInput = document.getElementById('enhanced-custom-item-price');
-            var unitSelect = document.getElementById('enhanced-custom-item-unit');
-            
-            if (nameInput) {
-                nameInput.addEventListener('input', function() {
-                    validateCustomItemName(this.value);
-                    calculateEnhancedCustomTotal();
-                });
-            }
-            
-            if (priceInput) {
-                priceInput.addEventListener('input', function() {
-                    validateCustomItemPrice(this.value);
-                    calculateEnhancedCustomTotal();
-                });
-            }
-            
-            if (unitSelect) {
-                unitSelect.addEventListener('change', function() {
-                    calculateEnhancedCustomTotal();
-                });
-            }
-        }
-
-        function validateCustomItemName(value) {
-            var isValid = value.trim().length >= 3;
-            updateValidationState('enhanced-custom-item-name', isValid, isValid ? '✅ Valid item name' : '❌ Name must be at least 3 characters');
-            return isValid;
-        }
-
-        function validateCustomItemPrice(value) {
-            var price = parseFloat(value);
-            var isValid = !isNaN(price) && price > 0;
-            updateValidationState('enhanced-custom-item-price', isValid, isValid ? '✅ Valid price' : '❌ Price must be greater than 0');
-            return isValid;
-        }
-
-        function closeEnhancedCustomItemForm() {
-            document.getElementById('enhanced-custom-item-modal').classList.remove('show');
-        }
-
-        function adjustEnhancedCustomQuantity(change) {
-            enhancedCustomQuantity = Math.max(1, enhancedCustomQuantity + change);
-            document.getElementById('enhanced-custom-quantity-display').textContent = enhancedCustomQuantity;
-            calculateEnhancedCustomTotal();
-        }
-
-        function calculateEnhancedCustomTotal() {
-            var priceInput = document.getElementById('enhanced-custom-item-price');
-            var unitSelect = document.getElementById('enhanced-custom-item-unit');
-            var addBtn = document.getElementById('enhanced-add-custom-item-btn');
-            var calculationDiv = document.getElementById('enhanced-custom-price-calculation');
-            var nameInput = document.getElementById('enhanced-custom-item-name');
-            
-            if (!priceInput || !unitSelect || !addBtn || !calculationDiv || !nameInput) return;
-            
-            var unitPrice = parseFloat(priceInput.value) || 0;
-            var selectedOption = unitSelect.options[unitSelect.selectedIndex];
-            var unitName = selectedOption ? selectedOption.text : 'pcs';
-            var totalPrice = unitPrice * enhancedCustomQuantity;
-            var name = nameInput.value.trim();
-            
-            // Update price calculation display
-            var breakdownEl = calculationDiv.querySelector('.price-breakdown');
-            var totalEl = calculationDiv.querySelector('.total-price');
-            
-            if (breakdownEl && totalEl) {
-                breakdownEl.textContent = enhancedCustomQuantity + ' ' + unitName + ' × RM ' + unitPrice.toFixed(2) + ' =';
-                totalEl.textContent = 'RM ' + totalPrice.toFixed(2);
-            }
-            
-            // Enhanced validation
-            var nameValid = validateCustomItemName(name);
-            var priceValid = validateCustomItemPrice(unitPrice.toString());
-            var isValid = nameValid && priceValid;
-            
-            addBtn.disabled = !isValid;
-            addBtn.style.opacity = isValid ? '1' : '0.5';
-            addBtn.style.background = isValid ? 
-                'linear-gradient(135deg, var(--success), #34d399)' : 
-                'linear-gradient(135deg, var(--text-secondary), #9ca3af)';
-        }
-
-        function addEnhancedCustomItemToQuote() {
-            var nameInput = document.getElementById('enhanced-custom-item-name');
-            var descriptionInput = document.getElementById('enhanced-custom-item-description');
-            var priceInput = document.getElementById('enhanced-custom-item-price');
-            var unitSelect = document.getElementById('enhanced-custom-item-unit');
-            
-            if (!nameInput || !priceInput || !unitSelect) {
-                showEnhancedSuccessMessage('⚠️ Form elements not found - please try again');
-                return;
-            }
-            
-            var name = nameInput.value.trim();
-            var description = descriptionInput ? descriptionInput.value.trim() : '';
-            var price = parseFloat(priceInput.value);
-            var unit = unitSelect.value;
-            
-            // Final validation
-            if (!validateCustomItemName(name) || !validateCustomItemPrice(price.toString())) {
-                showEnhancedSuccessMessage('⚠️ Please fix validation errors first');
-                return;
-            }
-            
-            var customItem = {
-                id: 'enhanced-custom-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
-                name: name,
-                description: description || 'Enhanced custom item for ' + enhancedCurrentQuoteData.title,
-                price: price,
-                unit: unit,
-                quantity: enhancedCustomQuantity,
-                total: price * enhancedCustomQuantity,
-                category: enhancedCurrentCategory,
-                isCustom: true
-            };
-            
-            enhancedCurrentQuoteData.items.push(customItem);
-            
-            closeEnhancedCustomItemForm();
-            
-            renderEnhancedPresetItems();
-            updateEnhancedSelectedItemsSummary();
-            updateEnhancedQuoteSummaryDisplay();
-            updateEnhancedProceedButton();
-            
-            showEnhancedSuccessMessage('✅ Enhanced custom item added: ' + name + ' (Total: RM ' + customItem.total.toFixed(2) + ')');
-        }
-
-        // Enhanced Step 5: Final Review & PDF Generation
-        function renderEnhancedFinalReview() {
-            var container = document.getElementById('enhanced-complete-review-content');
-            var titleElement = document.getElementById('enhanced-review-job-title');
-            
-            if (!container || !titleElement) return;
-            
-            titleElement.textContent = enhancedCurrentQuoteData.title;
+            if (!breakdown) return;
             
             var html = '';
+            var total = 0;
             
-            // Enhanced Client Information Section
-            html += '<div style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; border-radius: 16px; padding: 20px; margin-bottom: 20px;">' +
-                '<h4 style="font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">' +
-                '<span style="font-size: 20px;">👤</span> Enhanced Client Information' +
-                '</h4>' +
-                '<div style="display: grid; gap: 8px; font-size: 14px;">' +
-                '<div><strong>Name:</strong> ' + enhancedCurrentQuoteData.client.name + '</div>' +
-                (enhancedCurrentQuoteData.client.company ? '<div><strong>Company:</strong> ' + enhancedCurrentQuoteData.client.company + '</div>' : '') +
-                '<div><strong>Phone:</strong> ' + enhancedCurrentQuoteData.client.phone + '</div>' +
-                (enhancedCurrentQuoteData.client.email ? '<div><strong>Email:</strong> ' + enhancedCurrentQuoteData.client.email + '</div>' : '') +
-                '<div><strong>Address:</strong> ' + enhancedCurrentQuoteData.client.address + '</div>' +
-                '</div>' +
-                '</div>';
-            
-            // Enhanced Quote Summary Header
-            html += '<div style="text-align: center; margin-bottom: 24px; padding: 20px; background: var(--bg-secondary); border-radius: 16px; border: 2px solid var(--accent-primary);">' +
-                '<h3 style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">🎨 ' + enhancedCurrentQuoteData.title + '</h3>' +
-                '<p style="color: var(--text-muted); font-size: 14px;">Enhanced Professional Quote • ' + enhancedCurrentQuoteData.items.length + ' items • ' + enhancedCurrentQuoteData.categories.length + ' categories</p>' +
-                '</div>';
-            
-            // Calculate total
-            var grandTotal = 0;
-            for (var i = 0; i < enhancedCurrentQuoteData.items.length; i++) {
-                grandTotal += enhancedCurrentQuoteData.items[i].total;
-            }
-            enhancedCurrentQuoteData.totalAmount = grandTotal;
-            
-            // Group items by category
-            var itemsByCategory = {};
-            for (var i = 0; i < enhancedCurrentQuoteData.items.length; i++) {
-                var item = enhancedCurrentQuoteData.items[i];
-                if (!itemsByCategory[item.category]) {
-                    itemsByCategory[item.category] = [];
+            currentQuoteData.categories.forEach(function(categoryKey) {
+                var category = categories[categoryKey];
+                var categoryItems = currentQuoteData.items.filter(function(item) { return item.category === categoryKey; });
+                var categoryTotal = categoryItems.reduce(function(sum, item) { return sum + item.total; }, 0);
+                total += categoryTotal;
+                
+                if (categoryItems.length > 0) {
+                    html += `
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,255,255,0.1); border-radius: 8px; margin-bottom: 8px;">
+                            <div>${category.icon} ${category.name} (${categoryItems.length})</div>
+                            <div>RM ${categoryTotal.toFixed(2)}</div>
+                        </div>
+                    `;
                 }
-                itemsByCategory[item.category].push(item);
-            }
+            });
             
-            // Enhanced render items by category
-            for (var catKey in itemsByCategory) {
-                var catItems = itemsByCategory[catKey];
-                var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
-                var categoryInfo = categories[catKey] || { icon: '📋', name: catKey, color: 'var(--accent-primary)' };
-                
-                html += '<div style="margin-bottom: 20px; background: var(--bg-card); border-radius: 16px; padding: 20px; border-left: 4px solid ' + categoryInfo.color + '; box-shadow: 0 4px 16px var(--shadow-light);">' +
-                    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">' +
-                    '<div style="font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">' +
-                    '<span style="font-size: 20px;">' + categoryInfo.icon + '</span>' +
-                    '<span>' + categoryInfo.name + '</span>' +
-                    '<span style="font-size: 12px; background: ' + categoryInfo.color + '; color: white; padding: 4px 8px; border-radius: 8px;">' + catItems.length + '</span>' +
-                    '</div>' +
-                    '<div style="font-weight: 700; color: ' + categoryInfo.color + '; font-size: 18px;">RM ' + catTotal.toFixed(2) + '</div>' +
-                    '</div>';
-                
-                for (var j = 0; j < catItems.length; j++) {
-                    var item = catItems[j];
-                    html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg-secondary); border-radius: 12px; margin-bottom: 8px;">' +
-                        '<div>' +
-                        '<div style="font-weight: 600; color: var(--text-primary); font-size: 15px;">' +
-                        (item.isCustom ? '🛠️ ' : '') + item.name + (item.isCustom ? ' (Enhanced Custom)' : '') + '</div>' +
-                        '<div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">' + item.description + '</div>' +
-                        '<div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + '</div>' +
-                        '</div>' +
-                        '<div style="font-weight: 700; color: ' + categoryInfo.color + '; font-size: 16px;">RM ' + item.total.toFixed(2) + '</div>' +
-                        '</div>';
-                }
-                
-                html += '</div>';
-            }
-            
-            // Enhanced Grand Total
-            html += '<div class="quote-summary-card" style="margin-top: 24px;">' +
-                '<div class="quote-summary-total">' +
-                '<div class="quote-summary-total-label">🎨 ENHANCED TOTAL QUOTE AMOUNT</div>' +
-                '<div class="quote-summary-total-amount" style="font-size: 40px;">RM ' + grandTotal.toFixed(2) + '</div>' +
-                '</div>' +
-                '</div>';
-            
-            container.innerHTML = html;
+            breakdown.innerHTML = html;
+            if (totalElement) totalElement.textContent = 'RM ' + total.toFixed(2);
+            currentQuoteData.totalAmount = total;
         }
 
-        function editEnhancedQuoteFromReview() {
-            backToEnhancedCategories();
-            showEnhancedSuccessMessage('✏️ Enhanced editing mode - modify categories and items');
+        // Quick Action Functions
+        function selectRecentClient(clientName) {
+            var client = getRecentClients().find(function(c) { return c.name === clientName; });
+            if (client) {
+                document.getElementById('client-name').value = client.name;
+                document.getElementById('client-company').value = client.company || '';
+                document.getElementById('client-phone').value = client.phone;
+                document.getElementById('client-email').value = client.email || '';
+                document.getElementById('client-address').value = client.address;
+                showComprehensiveMessage('✅ Recent client loaded: ' + clientName);
+                updateProceedButton(2);
+            }
         }
 
-        function generateEnhancedFinalPDF() {
-            if (enhancedCurrentQuoteData.items.length === 0) {
-                showEnhancedSuccessMessage('⚠️ Cannot generate PDF - no items in quote');
-                return;
+        function selectProjectSuggestion(suggestion) {
+            document.getElementById('project-title').value = suggestion;
+            showComprehensiveMessage('💡 Project suggestion applied: ' + suggestion);
+            updateProceedButton(3);
+        }
+
+        function selectCategorySuggestion(categoryKey) {
+            if (!currentQuoteData.categories.includes(categoryKey)) {
+                toggleCategory(categoryKey);
             }
+        }
+
+        function selectAllRecommended() {
+            var suggestions = getSmartCategorySuggestions();
+            suggestions.forEach(function(categoryKey) {
+                if (!currentQuoteData.categories.includes(categoryKey)) {
+                    currentQuoteData.categories.push(categoryKey);
+                }
+            });
+            updateCategoryDisplay();
+            updateLiveQuoteSummary();
+            updateProceedButton(4);
+            showComprehensiveMessage('✅ All recommended categories selected');
+        }
+
+        function clearAllCategories() {
+            currentQuoteData.categories = [];
+            currentQuoteData.items = [];
+            updateCategoryDisplay();
+            updateLiveQuoteSummary();
+            updateProceedButton(4);
+            showComprehensiveMessage('🗑️ All categories cleared');
+        }
+
+        // Final Generation Functions
+        function generateFinalQuote() {
+            if (!validateCurrentStep()) return;
             
-            // Add loading state
-            var generateBtn = document.getElementById('enhanced-final-generate-btn');
-            if (generateBtn) {
-                generateBtn.classList.add('loading');
-                generateBtn.textContent = '🎨 Generating Enhanced PDF...';
-            }
+            saveCurrentStepData();
+            currentQuoteData.createdAt = new Date().toISOString();
             
-            // Set creation date
-            enhancedCurrentQuoteData.createdAt = new Date().toISOString();
-            
-            // Create final quote object
             var quote = {
                 id: Date.now(),
-                client: Object.assign({}, enhancedCurrentQuoteData.client),
-                title: '🎨 ' + enhancedCurrentQuoteData.title,
-                categories: [...enhancedCurrentQuoteData.categories],
-                items: [...enhancedCurrentQuoteData.items],
-                totalAmount: enhancedCurrentQuoteData.totalAmount,
-                createdAt: enhancedCurrentQuoteData.createdAt,
-                isEnhanced: true
+                ...currentQuoteData
             };
             
-            // Add to quotes list
             jobQuotes.push(quote);
-            currentQuoteId = quote.i
+            saveDataToStorage();
+            
+            generateComprehensivePDF(quote);
+            closeComprehensiveQuote();
+            
+            updateStats();
+            renderViews();
+            showView('dashboard');
+            
+            showComprehensiveMessage('🎉 Comprehensive quote generated successfully!');
+        }
+
+        function generateComprehensivePDF(quote) {
+            showComprehensiveMessage('📄 Generating comprehensive PDF...');
+            
+            var { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+            
+            try {
+                // Enhanced PDF header
+                doc.setFillColor(244, 114, 182);
+                doc.rect(0, 0, 210, 45, 'F');
+                
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(24);
+                doc.setFont(undefined, 'bold');
+                doc.text(companyInfo.name, 20, 25);
+                
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text('Registration: ' + companyInfo.registration, 20, 33);
+                doc.text('Phone: ' + companyInfo.phone + ' • Email: ' + companyInfo.email, 20, 40);
+                
+                doc.setTextColor(0, 0, 0);
+                
+                // Quote header
+                doc.setFontSize(20);
+                doc.setFont(undefined, 'bold');
+                doc.text('COMPREHENSIVE MAINTENANCE QUOTE', 20, 60);
+                
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Quote #: ' + quote.id, 20, 75);
+                doc.text('Date: ' + formatDate(quote.createdAt), 20, 85);
+                doc.text('Project: ' + quote.title, 20, 95);
+                if (quote.priority !== 'normal') {
+                    doc.text('Priority: ' + quote.priority.toUpperCase(), 20, 105);
+                }
+                
+                var yPos = 120;
+                
+                // Client Information
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.text('CLIENT INFORMATION', 20, yPos);
+                yPos += 15;
+                
+                doc.setFontSize(11);
+                doc.setFont(undefined, 'normal');
+                doc.text('Client Name: ' + quote.client.name, 20, yPos); yPos += 10;
+                if (quote.client.company) {
+                    doc.text('Company: ' + quote.client.company, 20, yPos); yPos += 10;
+                }
+                doc.text('Phone: ' + quote.client.phone, 20, yPos); yPos += 10;
+                if (quote.client.email) {
+                    doc.text('Email: ' + quote.client.email, 20, yPos); yPos += 10;
+                }
+                doc.text('Address: ' + quote.client.address, 20, yPos); yPos += 20;
+                
+                // Quote items by category
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.text('QUOTE BREAKDOWN', 20, yPos); yPos += 15;
+                
+                quote.categories.forEach(function(categoryKey) {
+                    var category = categories[categoryKey];
+                    var categoryItems = quote.items.filter(function(item) { return item.category === categoryKey; });
+                    var categoryTotal = categoryItems.reduce(function(sum, item) { return sum + item.total; }, 0);
+                    
+                    if (yPos > 250) {
+                        doc.addPage();
+                        yPos = 30;
+                    }
+                    
+                    doc.setFontSize(14);
+                    doc.setFont(undefined, 'bold');
+                    doc.text(category.icon + ' ' + category.name + ' - RM ' + categoryTotal.toFixed(2), 20, yPos);
+                    yPos += 12;
+                    
+                    doc.setFontSize(10);
+                    doc.setFont(undefined, 'normal');
+                    categoryItems.forEach(function(item) {
+                        if (yPos > 270) {
+                            doc.addPage();
+                            yPos = 30;
+                        }
+                        doc.text('• ' + item.name + ' - ' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + ' = RM ' + item.total.toFixed(2), 25, yPos);
+                        yPos += 8;
+                    });
+                    yPos += 5;
+                });
+                
+                // Total
+                yPos += 10;
+                doc.setFillColor(244, 114, 182);
+                doc.rect(20, yPos - 5, 170, 25, 'F');
+                
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(18);
+                doc.setFont(undefined, 'bold');
+                doc.text('TOTAL AMOUNT: RM ' + quote.totalAmount.toFixed(2), 25, yPos + 10);
+                
+                // Footer
+                doc.setTextColor(0, 0, 0);
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text('Thank you for choosing ' + companyInfo.name, 20, yPos + 35);
+                doc.text('We look forward to serving you!', 20, yPos + 45);
+                
+                var fileName = 'REFIT_Comprehensive_Quote_' + quote.id + '_' + quote.client.name.replace(/[^a-z0-9]/gi, '_') + '.pdf';
+                
+                if (navigator.share && navigator.canShare) {
+                    var pdfBlob = doc.output('blob');
+                    var file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+                    
+                    navigator.share({
+                        title: 'Comprehensive Quote - ' + quote.title,
+                        text: 'Professional quote from ' + companyInfo.name,
+                        files: [file]
+                    }).then(function() {
+                        showComprehensiveMessage('📤 PDF shared successfully!');
+                    }).catch(function(error) {
+                        doc.save(fileName);
+                        showComprehensiveMessage('💾 PDF downloaded successfully!');
+                    });
+                } else {
+                    doc.save(fileName);
+                    showComprehensiveMessage('💾 PDF downloaded successfully!');
+                }
+                
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                showComprehensiveMessage('❌ Error generating PDF. Please try again.', 'error');
+            }
+        }
+
+        // Template Functions
+        function openQuoteTemplates() {
+            renderTemplatesModal();
+            document.getElementById('templates-modal').classList.add('show');
+        }
+
+        function renderTemplatesModal() {
+            var content = document.getElementById('templates-content');
+            var html = `
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">📋</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Choose from pre-built quote templates</p>
+                </div>
+                
+                <div class="action-grid">
+                    ${defaultTemplates.map(function(template) {
+                        return `
+                            <div class="action-card" onclick="applyTemplate('${template.id}')">
+                                <div class="icon">📋</div>
+                                <div class="title">${template.name}</div>
+                                <div class="description">${template.description}</div>
+                                <div style="margin-top: 8px; font-size: 12px; color: var(--accent-primary); font-weight: 700;">
+                                    ~RM ${template.estimatedTotal.toLocaleString()}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="create
