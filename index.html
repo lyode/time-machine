@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#f472b6">
     <meta name="msapplication-navbutton-color" content="#f472b6">
     
-    <title>REFIT MAINTENANCE SERVICES - Enhanced Branding System</title>
+    <title>REFIT MAINTENANCE SERVICES - Complete Workflow System</title>
     
     <!-- Enhanced PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -470,8 +470,8 @@
             box-shadow: 0 4px 15px var(--shadow-medium);
         }
         .btn-success { 
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); 
-            box-shadow: 0 4px 15px var(--shadow-medium);
+            background: linear-gradient(135deg, var(--success), #34d399); 
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
         .btn-danger { 
             background: linear-gradient(135deg, var(--error), #f87171); 
@@ -903,10 +903,6 @@
             margin-top: 24px;
         }
         
-        .form-actions.three-col {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        
         .form-btn {
             padding: 18px 24px;
             border-radius: 16px;
@@ -935,7 +931,7 @@
         }
         
         .form-btn.btn-success {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: linear-gradient(135deg, var(--success), #34d399);
         }
         
         .form-btn.btn-danger {
@@ -952,6 +948,72 @@
         
         .form-btn.btn-secondary {
             background: linear-gradient(135deg, var(--text-secondary), #9ca3af);
+        }
+        
+        /* Enhanced Custom Item Form */
+        .quantity-selector {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: center;
+            margin: 16px 0;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+        
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: none;
+            background: var(--accent-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .quantity-btn:hover {
+            background: var(--accent-secondary);
+            transform: scale(1.1);
+        }
+        
+        .quantity-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .quantity-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            min-width: 60px;
+        }
+        
+        .price-calculation {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 16px 0;
+            text-align: center;
+        }
+        
+        .price-breakdown {
+            font-size: 14px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+        
+        .total-price {
+            font-size: 24px;
+            font-weight: 800;
         }
         
         /* Success Message */
@@ -1091,168 +1153,6 @@
             color: rgba(255, 255, 255, 0.7);
         }
         
-        /* Enhanced Branding Styles */
-        .branding-section {
-            background: linear-gradient(135deg, #ff6b9d, #c44569);
-            border-radius: 20px;
-            padding: 24px;
-            margin: 20px 0;
-            color: white;
-            box-shadow: 0 8px 32px rgba(255, 107, 157, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .branding-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-top: 20px;
-        }
-        
-        .branding-item {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 20px 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(10px);
-        }
-        
-        .branding-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .branding-item .icon {
-            font-size: 32px;
-            margin-bottom: 12px;
-            display: block;
-        }
-        
-        .branding-item .name {
-            font-size: 14px;
-            font-weight: 600;
-            color: white;
-        }
-        
-        .color-picker-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin: 16px 0;
-        }
-        
-        .color-option {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            border: 3px solid transparent;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        
-        .color-option:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        
-        .color-option.selected {
-            border-color: white;
-            transform: scale(1.15);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-        }
-        
-        .color-option::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-        
-        .color-option.selected::after {
-            opacity: 1;
-        }
-        
-        .file-upload {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-        }
-        
-        .file-upload input[type="file"] {
-            position: absolute;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-        
-        .file-upload-label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 20px;
-            background: var(--bg-secondary);
-            border: 2px dashed var(--border-color);
-            border-radius: 16px;
-            color: var(--text-primary);
-            font-weight: 600;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-        
-        .file-upload:hover .file-upload-label {
-            background: var(--accent-primary);
-            color: white;
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow-medium);
-        }
-        
-        .brand-preview {
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 16px 0;
-            text-align: center;
-            border: 2px solid var(--border-color);
-        }
-        
-        .brand-preview .logo-preview {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 16px;
-            border-radius: 16px;
-            background: var(--accent-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .brand-preview .company-preview {
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-        
-        .brand-preview .tagline-preview {
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
         /* Quote Detail Page */
         .quote-detail-header {
             background: var(--bg-card);
@@ -1371,6 +1271,39 @@
             grid-template-columns: repeat(3, 1fr);
         }
         
+        .pdf-actions.four-col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        /* Workflow Step Indicators */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+        }
+        
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+        
+        .step-dot.active {
+            background: var(--accent-primary);
+            transform: scale(1.3);
+        }
+        
+        .step-dot.completed {
+            background: var(--success);
+        }
+        
         /* Utility Classes */
         .hidden {
             display: none !important;
@@ -1442,11 +1375,6 @@
                 gap: 12px;
             }
             
-            .branding-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
             .form-actions {
                 grid-template-columns: 1fr;
             }
@@ -1485,8 +1413,12 @@
                 grid-template-columns: 1fr;
             }
             
-            .color-picker-container {
-                grid-template-columns: repeat(3, 1fr);
+            .pdf-actions.four-col {
+                grid-template-columns: 1fr;
+            }
+            
+            .quantity-selector {
+                grid-template-columns: auto 1fr auto;
             }
         }
         
@@ -1569,36 +1501,6 @@
         <div class="main-content" id="main-content">
             <!-- Dashboard View -->
             <div id="dashboard-view" class="view">
-                <!-- Enhanced Branding Section -->
-                <div class="branding-section">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                        <span style="font-size: 32px;">🎨</span>
-                        <div>
-                            <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 4px;">Professional Branding</h3>
-                            <p style="font-size: 14px; opacity: 0.9;">Complete branding customization for your quotes</p>
-                        </div>
-                    </div>
-                    
-                    <div class="branding-grid">
-                        <div class="branding-item" onclick="openBrandingInsert()">
-                            <span class="icon">🎨</span>
-                            <div class="name">Full Branding Suite</div>
-                        </div>
-                        <div class="branding-item" onclick="openLogoUpload()">
-                            <span class="icon">📷</span>
-                            <div class="name">Logo Upload</div>
-                        </div>
-                        <div class="branding-item" onclick="openColorTheme()">
-                            <span class="icon">🎭</span>
-                            <div class="name">Color Themes</div>
-                        </div>
-                        <div class="branding-item" onclick="openCompanyBranding()">
-                            <span class="icon">🏢</span>
-                            <div class="name">Company Info</div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Stats -->
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -1630,14 +1532,6 @@
                         <button class="action-btn success" onclick="showView('quotes')">
                             <span class="icon">💰</span>
                             <span style="font-weight: 700;">View All Quotes</span>
-                        </button>
-                        <button class="action-btn branding" onclick="openBrandingInsert()">
-                            <span class="icon">🎨</span>
-                            <span style="font-weight: 700;">Branding Suite</span>
-                        </button>
-                        <button class="action-btn info" onclick="previewBranding()">
-                            <span class="icon">👁️</span>
-                            <span style="font-weight: 700;">Preview Branding</span>
                         </button>
                     </div>
                 </div>
@@ -1711,9 +1605,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>📝 Step 1: Enter Job Title</h3>
-                <button class="close-btn" onclick="closeCreateQuote()">✕</button>
+                <button class="close-btn" onclick="cancelCreateQuote()">✕</button>
             </div>
             <div class="modal-body">
+                <!-- Step Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot active"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                </div>
+                
                 <div style="text-align: center; margin-bottom: 24px;">
                     <div style="font-size: 48px; margin-bottom: 16px;">💼</div>
                     <p style="color: var(--text-muted); font-size: 16px;">What type of maintenance work is this quote for?</p>
@@ -1725,13 +1627,17 @@
                        id="job-title-input" 
                        style="font-size: 18px; padding: 20px 24px; text-align: center; font-weight: 600; margin-bottom: 24px;">
                 
-                <button type="button" 
-                        class="btn btn-primary" 
-                        onclick="proceedToCategory()" 
-                        id="proceed-to-category-btn"
-                        style="font-size: 18px; padding: 20px 32px; width: 100%;">
-                    Next: Select Category ➡️
-                </button>
+                <div class="form-actions">
+                    <button type="button" class="form-btn btn-secondary" onclick="cancelCreateQuote()">
+                        ❌ Cancel
+                    </button>
+                    <button type="button" 
+                            class="form-btn btn-primary" 
+                            onclick="proceedToCategory()" 
+                            id="proceed-to-category-btn">
+                        Next: Categories ➡️
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -1740,20 +1646,28 @@
     <div id="category-selection-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>🏷️ Step 2: Select Categories & Items</h3>
+                <h3>🏷️ Step 2: Select Categories</h3>
                 <button class="close-btn" onclick="backToJobTitle()">←</button>
             </div>
             <div class="modal-body">
+                <!-- Step Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot active"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                </div>
+                
                 <div style="text-align: center; margin-bottom: 24px;">
                     <div style="font-size: 48px; margin-bottom: 16px;">🎯</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Choose categories and add items:</p>
+                    <p style="color: var(--text-muted); font-size: 16px;">Choose categories for your quote:</p>
                     <p style="font-weight: 700; color: var(--text-primary); margin-top: 8px;" id="selected-job-title"></p>
                 </div>
 
                 <!-- Current Quote Summary -->
                 <div id="current-quote-summary" style="display: none; background: var(--bg-secondary); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 2px solid var(--accent-primary);">
                     <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                        <span>🛒</span> Current Quote (<span id="total-items-count">0</span> items)
+                        <span>🛒</span> Current Quote (<span id="total-items-count-summary">0</span> items)
                     </h4>
                     <div id="quote-items-preview" style="margin-bottom: 12px;"></div>
                     <div style="background: var(--accent-primary); border-radius: 12px; padding: 16px; text-align: center;">
@@ -1765,11 +1679,11 @@
                 <div class="category-grid" id="category-grid"></div>
 
                 <div class="form-actions" style="margin-top: 24px;">
-                    <button type="button" class="form-btn btn-primary" onclick="finalizeQuote()" id="finalize-quote-btn" disabled style="opacity: 0.5;">
-                        ✅ Create Quote
+                    <button type="button" class="form-btn btn-secondary" onclick="backToJobTitle()">
+                        ← Back
                     </button>
-                    <button type="button" class="form-btn btn-secondary" onclick="closeCreateQuote()">
-                        Cancel
+                    <button type="button" class="form-btn btn-primary" onclick="proceedToOverview()" id="proceed-overview-btn" disabled style="opacity: 0.5;">
+                        Next: Review ➡️
                     </button>
                 </div>
             </div>
@@ -1784,6 +1698,14 @@
                 <button class="close-btn" onclick="backToCategories()">←</button>
             </div>
             <div class="modal-body">
+                <!-- Step Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot active"></div>
+                    <div class="step-dot"></div>
+                </div>
+                
                 <div style="text-align: center; margin-bottom: 24px;">
                     <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
                     <p style="color: var(--text-muted); font-size: 16px;">Select work items for:</p>
@@ -1814,112 +1736,142 @@
                     </div>
                 </div>
 
-                <!-- Enhanced Navigation Controls -->
                 <div class="form-actions">
                     <button type="button" class="form-btn btn-secondary" onclick="backToCategories()">
-                        ← Back
+                        ← Back to Categories
                     </button>
-                    <button type="button" class="form-btn btn-primary" onclick="finishItemSelection()" id="finish-items-btn">
-                        ✅ Done
+                    <button type="button" class="form-btn btn-primary" onclick="finishCategoryItems()" id="finish-items-btn">
+                        Done ✅
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Enhanced Branding Insert Modal -->
-    <div id="branding-insert-modal" class="modal">
+    <!-- Step 4: Overview & Final Review Modal -->
+    <div id="overview-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>🎨 Complete Branding Suite</h3>
-                <button class="close-btn" onclick="closeBrandingInsert()">✕</button>
+                <h3>👁️ Step 4: Final Review</h3>
+                <button class="close-btn" onclick="backToCategories()">←</button>
+            </div>
+            <div class="modal-body">
+                <!-- Step Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot completed"></div>
+                    <div class="step-dot active"></div>
+                </div>
+                
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">📋</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Review all details before generating PDF</p>
+                    <p style="font-weight: 700; color: var(--text-primary); margin-top: 8px;" id="overview-job-title"></p>
+                </div>
+
+                <!-- Complete Quote Overview -->
+                <div id="complete-overview" style="background: var(--bg-card); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 16px var(--shadow-light);">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+
+                <div class="form-actions pdf-actions four-col">
+                    <button type="button" class="form-btn btn-secondary" onclick="editQuoteFromOverview()">
+                        ✏️ Edit Quote
+                    </button>
+                    <button type="button" class="form-btn btn-warning" onclick="backToCategories()">
+                        ← Back
+                    </button>
+                    <button type="button" class="form-btn btn-danger" onclick="cancelCreateQuote()">
+                        ❌ Cancel
+                    </button>
+                    <button type="button" class="form-btn btn-success" onclick="finalizeAndGeneratePDF()" id="final-ok-btn">
+                        📄 OK - Generate PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Custom Item Creation Modal -->
+    <div id="custom-item-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>➕ Create Custom Item</h3>
+                <button class="close-btn" onclick="closeCustomItemForm()">✕</button>
             </div>
             <div class="modal-body">
                 <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">🎨</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Professional branding customization for your quotes</p>
+                    <div style="font-size: 48px; margin-bottom: 16px;">🛠️</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Add a custom item to this quote</p>
                 </div>
 
-                <!-- Branding Preview -->
-                <div class="brand-preview" id="brand-preview">
-                    <div class="logo-preview" id="logo-preview">
-                        <!-- Logo preview will be shown here -->
+                <form id="custom-item-form">
+                    <input type="text" 
+                           class="form-input" 
+                           placeholder="Item name (e.g., Custom Electrical Work)" 
+                           id="custom-item-name" 
+                           required
+                           style="margin-bottom: 16px;">
+                    
+                    <textarea class="form-input" 
+                              placeholder="Item description (optional)" 
+                              id="custom-item-description" 
+                              rows="2" 
+                              style="resize: none; margin-bottom: 16px;"></textarea>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        <input type="number" 
+                               class="form-input" 
+                               placeholder="Price per unit (RM)" 
+                               id="custom-item-price" 
+                               step="0.01" 
+                               min="0"
+                               required
+                               oninput="calculateCustomTotal()"
+                               style="margin-bottom: 0;">
+                        
+                        <select class="form-input" id="custom-item-unit" style="margin-bottom: 0;">
+                            <option value="pcs">Pieces (pcs)</option>
+                            <option value="hours">Hours</option>
+                            <option value="sqft">Square Feet</option>
+                            <option value="sqm">Square Meters</option>
+                            <option value="meters">Meters</option>
+                            <option value="kg">Kilograms</option>
+                            <option value="liters">Liters</option>
+                            <option value="set">Set</option>
+                            <option value="lot">Lot</option>
+                            <option value="service">Service</option>
+                        </select>
                     </div>
-                    <div class="company-preview" id="company-preview">REFIT MAINTENANCE SERVICES</div>
-                    <div class="tagline-preview" id="tagline-preview">Professional Assistant • Ready to help</div>
-                </div>
 
-                <!-- Logo Upload Section -->
-                <div style="margin-bottom: 24px;">
-                    <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                        <span>📷</span> Company Logo
-                    </h4>
-                    <div class="file-upload" style="width: 100%;">
-                        <input type="file" id="branding-logo-input" accept="image/*" onchange="handleBrandingLogoUpload(event)">
-                        <label for="branding-logo-input" class="file-upload-label" style="width: 100%; justify-content: center;">
-                            <span>📁</span>
-                            <span>Upload Company Logo</span>
-                        </label>
+                    <!-- Quantity Selector -->
+                    <div class="quantity-selector">
+                        <button type="button" class="quantity-btn" onclick="adjustCustomQuantity(-1)">-</button>
+                        <div class="quantity-display" id="custom-quantity-display">1</div>
+                        <button type="button" class="quantity-btn" onclick="adjustCustomQuantity(1)">+</button>
                     </div>
-                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Recommended: Square format, Max 2MB</p>
-                </div>
 
-                <!-- Color Theme Selection -->
-                <div style="margin-bottom: 24px;">
-                    <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                        <span>🎭</span> Brand Colors
-                    </h4>
-                    <div class="color-picker-container" id="color-picker">
-                        <!-- Color options will be generated here -->
+                    <!-- Price Calculation Display -->
+                    <div class="price-calculation" id="custom-price-calculation">
+                        <div class="price-breakdown">1 unit × RM 0.00 =</div>
+                        <div class="total-price">RM 0.00</div>
                     </div>
-                </div>
 
-                <!-- Company Tagline -->
-                <div style="margin-bottom: 24px;">
-                    <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                        <span>✨</span> Company Tagline
-                    </h4>
-                    <input type="text" class="form-input" placeholder="e.g., Professional Assistant • Ready to help" id="company-tagline-input">
-                </div>
-
-                <!-- Quick Insert Buttons -->
-                <div style="margin-bottom: 24px;">
-                    <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                        <span>⚡</span> Quick Insert
-                    </h4>
-                    <div class="branding-grid">
-                        <div class="branding-item" onclick="insertBrandingToQuote()">
-                            <span class="icon">📄</span>
-                            <div class="name">Insert to Current Quote</div>
-                        </div>
-                        <div class="branding-item" onclick="saveBrandingTemplate()">
-                            <span class="icon">💾</span>
-                            <div class="name">Save as Template</div>
-                        </div>
-                        <div class="branding-item" onclick="previewBrandedQuote()">
-                            <span class="icon">👁️</span>
-                            <div class="name">Preview Quote</div>
-                        </div>
-                        <div class="branding-item" onclick="exportBrandingPackage()">
-                            <span class="icon">📦</span>
-                            <div class="name">Export Package</div>
-                        </div>
+                    <div class="form-actions">
+                        <button type="button" class="form-btn btn-secondary" onclick="closeCustomItemForm()">
+                            Cancel
+                        </button>
+                        <button type="button" class="form-btn btn-success" onclick="addCustomItemToQuote()" id="add-custom-item-btn" disabled>
+                            ➕ Add to Quote
+                        </button>
                     </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="form-btn btn-primary" onclick="applyBranding()">
-                        ✅ Apply Branding
-                    </button>
-                    <button type="button" class="form-btn btn-secondary" onclick="closeBrandingInsert()">
-                        Cancel
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Simple Company Info Modal -->
+    <!-- Company Info Modal -->
     <div id="company-info-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1939,197 +1891,58 @@
                 <textarea class="form-input" placeholder="Company Address" id="company-address-input" rows="3" style="resize: none;"></textarea>
 
                 <div class="form-actions">
-                    <button type="button" class="form-btn btn-primary" onclick="saveCompanyInfo()">
-                        ✅ Save Details
-                    </button>
                     <button type="button" class="form-btn btn-secondary" onclick="closeCompanyInfo()">
                         Cancel
                     </button>
+                    <button type="button" class="form-btn btn-primary" onclick="saveCompanyInfo()">
+                        ✅ Save Details
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Enhanced Custom Item Creation Modal -->
-    <div id="custom-item-modal" class="modal">
+    <!-- Enhanced Branding Insert Modal -->
+    <div id="branding-insert-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>➕ Create Custom Item</h3>
-                <button class="close-btn" onclick="closeCustomItemForm()">✕</button>
+                <h3>🎨 Professional Branding</h3>
+                <button class="close-btn" onclick="closeBrandingInsert()">✕</button>
             </div>
             <div class="modal-body">
                 <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">🛠️</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Add a custom item with pricing details</p>
-                    <p style="font-weight: 700; color: var(--accent-primary); margin-top: 8px;" id="custom-item-category-display"></p>
+                    <div style="font-size: 48px; margin-bottom: 16px;">🎨</div>
+                    <p style="color: var(--text-muted); font-size: 16px;">Professional branding customization for your quotes</p>
                 </div>
 
-                <form id="custom-item-form">
-                    <input type="text" 
-                           class="form-input" 
-                           placeholder="Item name (e.g., Custom Electrical Work)" 
-                           id="custom-item-name" 
-                           required
-                           style="margin-bottom: 16px;">
-                    
-                    <textarea class="form-input" 
-                              placeholder="Item description (optional)" 
-                              id="custom-item-description" 
-                              rows="2" 
-                              style="resize: none; margin-bottom: 16px;"></textarea>
-                    
-                    <!-- Enhanced Pricing Section -->
-                    <div style="background: var(--bg-secondary); border-radius: 16px; padding: 20px; margin-bottom: 16px;">
-                        <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                            <span>💰</span> Pricing Details
-                        </h4>
-                        
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
-                            <input type="number" 
-                                   class="form-input" 
-                                   placeholder="Unit Price (RM)" 
-                                   id="custom-item-unit-price" 
-                                   step="0.01" 
-                                   min="0"
-                                   required
-                                   oninput="calculateCustomItemTotal()"
-                                   style="margin-bottom: 0;">
-                            
-                            <select class="form-input" id="custom-item-unit" style="margin-bottom: 0;">
-                                <option value="pcs">Pieces (pcs)</option>
-                                <option value="hours">Hours</option>
-                                <option value="sqft">Square Feet</option>
-                                <option value="sqm">Square Meters</option>
-                                <option value="meters">Meters</option>
-                                <option value="kg">Kilograms</option>
-                                <option value="liters">Liters</option>
-                                <option value="set">Set</option>
-                                <option value="lot">Lot</option>
-                                <option value="service">Service</option>
-                            </select>
+                <!-- Logo Upload Section -->
+                <div style="margin-bottom: 24px;">
+                    <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">📷 Company Logo</h4>
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--bg-secondary); border-radius: 12px;">
+                        <div id="logo-preview-small" style="width: 60px; height: 60px; border-radius: 12px; background: var(--accent-primary); display: flex; align-items: center; justify-content: center; color: white;">
+                            🏢
                         </div>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-                            <div>
-                                <label style="font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: block;">Quantity</label>
-                                <input type="number" 
-                                       class="form-input" 
-                                       placeholder="Quantity" 
-                                       id="custom-item-quantity" 
-                                       min="1"
-                                       value="1"
-                                       required
-                                       oninput="calculateCustomItemTotal()"
-                                       style="margin-bottom: 0;">
-                            </div>
-                            
-                            <div>
-                                <label style="font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: block;">Total Price</label>
-                                <div style="background: var(--accent-primary); color: white; border-radius: 12px; padding: 18px 20px; font-weight: 700; font-size: 18px; text-align: center;" id="custom-item-total-display">
-                                    RM 0.00
-                                </div>
-                            </div>
+                        <div style="flex: 1;">
+                            <input type="file" id="branding-logo-input" accept="image/*" onchange="handleBrandingLogoUpload(event)" style="display: none;">
+                            <button type="button" class="btn btn-primary" onclick="document.getElementById('branding-logo-input').click()" style="width: 100%;">
+                                📁 Upload Logo
+                            </button>
                         </div>
                     </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="form-btn btn-secondary" onclick="closeCustomItemForm()">
-                            ← Cancel
-                        </button>
-                        <button type="submit" class="form-btn btn-primary" id="add-custom-item-btn" disabled>
-                            ➕ Add Item
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Final Review Modal -->
-    <div id="final-review-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>📋 Final Review</h3>
-                <button class="close-btn" onclick="closeFinalReview()">✕</button>
-            </div>
-            <div class="modal-body">
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📋</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Review your complete quote before generating PDF</p>
                 </div>
 
-                <!-- Quote Summary -->
-                <div id="final-review-content">
-                    <!-- Content will be populated by JavaScript -->
-                </div>
-
-                <!-- Navigation Actions -->
-                <div class="form-actions three-col">
-                    <button type="button" class="form-btn btn-secondary" onclick="editQuoteFromReview()">
-                        ✏️ Edit
-                    </button>
-                    <button type="button" class="form-btn btn-warning" onclick="closeFinalReview()">
-                        ← Back
-                    </button>
-                    <button type="button" class="form-btn btn-success" onclick="confirmAndCreateQuote()">
-                        ✅ Create Quote
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PDF Share Modal -->
-    <div id="pdf-share-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>📄 Share Quote</h3>
-                <button class="close-btn" onclick="closePdfShare()">✕</button>
-            </div>
-            <div class="modal-body">
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📤</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Generate and share your professional quote</p>
-                </div>
-
-                <div class="pdf-actions three-col">
-                    <button type="button" class="form-btn btn-success" onclick="generateAndSharePDF()">
-                        📱 Share PDF
-                    </button>
-                    <button type="button" class="form-btn btn-info" onclick="downloadPDF()">
-                        💾 Download PDF
-                    </button>
-                    <button type="button" class="form-btn btn-secondary" onclick="closePdfShare()">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Branding Preview Modal -->
-    <div id="branding-preview-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>👁️ Branding Preview</h3>
-                <button class="close-btn" onclick="closeBrandingPreview()">✕</button>
-            </div>
-            <div class="modal-body">
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Preview how your branding will appear on quotes</p>
-                </div>
-
-                <div id="branding-preview-content">
-                    <!-- Preview content will be generated here -->
+                <!-- Company Tagline -->
+                <div style="margin-bottom: 24px;">
+                    <h4 style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">✨ Company Tagline</h4>
+                    <input type="text" class="form-input" placeholder="e.g., Professional Assistant • Ready to help" id="company-tagline-input" value="Professional Assistant • Ready to help">
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="form-btn btn-primary" onclick="generatePreviewPDF()">
-                        📄 Generate PDF Preview
+                    <button type="button" class="form-btn btn-secondary" onclick="closeBrandingInsert()">
+                        Cancel
                     </button>
-                    <button type="button" class="form-btn btn-secondary" onclick="closeBrandingPreview()">
-                        Close
+                    <button type="button" class="form-btn btn-primary" onclick="applyBranding()">
+                        ✅ Apply Branding
                     </button>
                 </div>
             </div>
@@ -2143,9 +1956,9 @@
 
     <script>
         // ========================================
-        // REFIT MAINTENANCE SERVICES - ENHANCED BRANDING SYSTEM
+        // REFIT MAINTENANCE SERVICES - COMPLETE WORKFLOW SYSTEM
         // Registration No: 201803348973 (002894203-V)
-        // Complete Branding Insert Suite with Professional Features
+        // Complete 4-Step Quote Creation with Enhanced Custom Items & PDF Generation
         // ========================================
         
         // App State Variables
@@ -2161,234 +1974,53 @@
         var currentTheme = 'light';
         var currentCategory = '';
         var customLogo = null;
+        var customQuantity = 1;
 
         // Enhanced Branding System
         var brandingData = {
             logo: null,
-            primaryColor: '#f472b6',
-            secondaryColor: '#f9a8d4',
-            accentColor: '#fbbf24',
-            tagline: 'Professional Assistant • Ready to help',
-            template: 'default'
+            tagline: 'Professional Assistant • Ready to help'
         };
-
-        // Brand Color Themes
-        var colorThemes = [
-            { name: 'Pink Professional', primary: '#f472b6', secondary: '#f9a8d4', accent: '#fbbf24' },
-            { name: 'Blue Corporate', primary: '#3b82f6', secondary: '#60a5fa', accent: '#fbbf24' },
-            { name: 'Green Energy', primary: '#10b981', secondary: '#34d399', accent: '#f59e0b' },
-            { name: 'Purple Luxury', primary: '#8b5cf6', secondary: '#a78bfa', accent: '#f59e0b' },
-            { name: 'Orange Dynamic', primary: '#f97316', secondary: '#fb923c', accent: '#06b6d4' },
-            { name: 'Red Bold', primary: '#ef4444', secondary: '#f87171', accent: '#10b981' },
-            { name: 'Teal Modern', primary: '#14b8a6', secondary: '#5eead4', accent: '#f59e0b' },
-            { name: 'Indigo Tech', primary: '#6366f1', secondary: '#818cf8', accent: '#fbbf24' }
-        ];
 
         // Enhanced Category Configuration
         var categories = {
-            // Construction Categories
-            preliminary: {
-                name: 'Preliminary Work',
-                icon: '🏗️',
-                color: 'var(--cat-preliminary)',
-                description: 'Site preparation and preliminary construction work'
-            },
-            wall: {
-                name: 'Wall Work',
-                icon: '🧱',
-                color: 'var(--cat-wall)',
-                description: 'Wall construction, renovation and finishing'
-            },
-            floor: {
-                name: 'Floor Work',
-                icon: '🏢',
-                color: 'var(--cat-floor)',
-                description: 'Flooring installation and finishing'
-            },
-            ceiling: {
-                name: 'Ceiling Work',
-                icon: '🏠',
-                color: 'var(--cat-ceiling)',
-                description: 'Ceiling installation and finishing'
-            },
-            roofing: {
-                name: 'Roofing',
-                icon: '🏘️',
-                color: 'var(--cat-roofing)',
-                description: 'Roof installation and maintenance'
-            },
-            wetwork: {
-                name: 'Wet Work',
-                icon: '💧',
-                color: 'var(--cat-wetwork)',
-                description: 'Bathroom, kitchen and wet area work'
-            },
-            // M&E Categories
-            'me-work': {
-                name: 'M&E Work',
-                icon: '⚙️',
-                color: 'var(--cat-me-work)',
-                description: 'Mechanical and electrical systems'
-            },
-            exhaust: {
-                name: 'Exhaust Systems',
-                icon: '🌪️',
-                color: 'var(--cat-exhaust)',
-                description: 'Ventilation and exhaust systems'
-            },
-            'lights-fan': {
-                name: 'Lights & Fan',
-                icon: '💡',
-                color: 'var(--cat-lights-fan)',
-                description: 'Lighting and fan installations'
-            },
-            ac: {
-                name: 'AC Systems',
-                icon: '❄️',
-                color: 'var(--cat-ac)',
-                description: 'Air conditioning systems'
-            },
-            // Finishing Categories
-            paint: {
-                name: 'Paint Works',
-                icon: '🎨',
-                color: 'var(--cat-paint)',
-                description: 'Painting and finishing work'
-            },
-            curtain: {
-                name: 'Curtain & Blind',
-                icon: '🪟',
-                color: 'var(--cat-curtain)',
-                description: 'Window treatments and coverings'
-            },
-            // Furniture Categories
-            builtin: {
-                name: 'Built-in Furniture',
-                icon: '🔨',
-                color: 'var(--cat-builtin)',
-                description: 'Custom built-in furniture and storage'
-            },
-            loose: {
-                name: 'Loose Furniture',
-                icon: '🪑',
-                color: 'var(--cat-loose)',
-                description: 'Movable furniture and furnishings'
-            },
-            // Service Categories
-            sanitary: {
-                name: 'Sanitary & Water Pump',
-                icon: '🚿',
-                color: 'var(--cat-sanitary)',
-                description: 'Sanitary installations and water pump systems'
-            },
-            appliances: {
-                name: 'Electrical Appliances',
-                icon: '📺',
-                color: 'var(--cat-appliances)',
-                description: 'Electrical appliances and equipment'
-            },
-            // Legacy Categories
-            electrical: {
-                name: 'Electrical',
-                icon: '⚡',
-                color: 'var(--cat-electrical)',
-                description: 'Electrical systems, wiring, and components'
-            },
-            plumbing: {
-                name: 'Plumbing',
-                icon: '🔧',
-                color: 'var(--cat-plumbing)',
-                description: 'Water systems, pipes, and fixtures'
-            },
-            hvac: {
-                name: 'HVAC',
-                icon: '🌡️',
-                color: 'var(--cat-hvac)',
-                description: 'Heating, ventilation, and air conditioning'
-            },
-            cleaning: {
-                name: 'Cleaning',
-                icon: '🧽',
-                color: 'var(--cat-cleaning)',
-                description: 'Cleaning services and maintenance'
-            },
-            parts: {
-                name: 'Parts & Materials',
-                icon: '🔩',
-                color: 'var(--cat-parts)',
-                description: 'Replacement parts and materials'
-            },
-            labor: {
-                name: 'Labor',
-                icon: '👷',
-                color: 'var(--cat-labor)',
-                description: 'Labor charges and work hours'
-            },
-            equipment: {
-                name: 'Equipment',
-                icon: '🛠️',
-                color: 'var(--cat-equipment)',
-                description: 'Tools and equipment'
-            },
-            common: {
-                name: 'Common Items',
-                icon: '🏷️',
-                color: 'var(--cat-common)',
-                description: 'Frequently used items'
-            }
+            preliminary: { name: 'Preliminary Work', icon: '🏗️', color: 'var(--cat-preliminary)' },
+            wall: { name: 'Wall Work', icon: '🧱', color: 'var(--cat-wall)' },
+            floor: { name: 'Floor Work', icon: '🏢', color: 'var(--cat-floor)' },
+            ceiling: { name: 'Ceiling Work', icon: '🏠', color: 'var(--cat-ceiling)' },
+            roofing: { name: 'Roofing', icon: '🏘️', color: 'var(--cat-roofing)' },
+            wetwork: { name: 'Wet Work', icon: '💧', color: 'var(--cat-wetwork)' },
+            'me-work': { name: 'M&E Work', icon: '⚙️', color: 'var(--cat-me-work)' },
+            exhaust: { name: 'Exhaust Systems', icon: '🌪️', color: 'var(--cat-exhaust)' },
+            'lights-fan': { name: 'Lights & Fan', icon: '💡', color: 'var(--cat-lights-fan)' },
+            ac: { name: 'AC Systems', icon: '❄️', color: 'var(--cat-ac)' },
+            paint: { name: 'Paint Works', icon: '🎨', color: 'var(--cat-paint)' },
+            curtain: { name: 'Curtain & Blind', icon: '🪟', color: 'var(--cat-curtain)' },
+            builtin: { name: 'Built-in Furniture', icon: '🔨', color: 'var(--cat-builtin)' },
+            loose: { name: 'Loose Furniture', icon: '🪑', color: 'var(--cat-loose)' },
+            sanitary: { name: 'Sanitary & Water Pump', icon: '🚿', color: 'var(--cat-sanitary)' },
+            appliances: { name: 'Electrical Appliances', icon: '📺', color: 'var(--cat-appliances)' },
+            electrical: { name: 'Electrical', icon: '⚡', color: 'var(--cat-electrical)' },
+            plumbing: { name: 'Plumbing', icon: '🔧', color: 'var(--cat-plumbing)' },
+            hvac: { name: 'HVAC', icon: '🌡️', color: 'var(--cat-hvac)' },
+            cleaning: { name: 'Cleaning', icon: '🧽', color: 'var(--cat-cleaning)' },
+            parts: { name: 'Parts & Materials', icon: '🔩', color: 'var(--cat-parts)' },
+            labor: { name: 'Labor', icon: '👷', color: 'var(--cat-labor)' },
+            equipment: { name: 'Equipment', icon: '🛠️', color: 'var(--cat-equipment)' },
+            common: { name: 'Common Items', icon: '🏷️', color: 'var(--cat-common)' }
         };
 
-        // Preset Work Items by Category
+        // Preset Work Items by Category (shortened for demo)
         var presetWorkItems = {
-            preliminary: [
-                { id: 'prelim-1', name: 'Insurance Coverage (Min 1Mil Public Liability)', description: 'Public liability insurance minimum RM1,000,000 coverage', price: 500.00, unit: 'service' },
-                { id: 'prelim-2', name: 'ID Drawing Submission to Management', description: 'Interior design drawing submission to building management', price: 300.00, unit: 'service' },
-                { id: 'prelim-3', name: 'Architect Professional Endorsement', description: 'Professional architect appointment with endorsed drawings', price: 2500.00, unit: 'service' },
-                { id: 'prelim-4', name: 'Local Authority Submission', description: 'Submission to local council authorities for approval', price: 800.00, unit: 'service' },
-                { id: 'prelim-5', name: 'Signage License Application', description: 'Application for signage license and approval', price: 400.00, unit: 'service' }
+            electrical: [
+                { id: 'electrical-1', name: 'Power Outlet Installation', description: 'Standard 13A power outlet', price: 45.00, unit: 'pcs' },
+                { id: 'electrical-2', name: 'Light Switch Installation', description: 'Standard wall switch installation', price: 35.00, unit: 'pcs' },
+                { id: 'electrical-3', name: 'Electrical Safety Inspection', description: 'Complete electrical system safety check', price: 150.00, unit: 'service' }
             ],
-            wall: [
-                { id: 'wall-1', name: 'Drywall Installation', description: 'Standard drywall installation with finishing', price: 35.00, unit: 'sqm' },
-                { id: 'wall-2', name: 'Partition Wall Construction', description: 'Metal stud partition wall with drywall', price: 65.00, unit: 'sqm' },
-                { id: 'wall-3', name: 'Wall Patching & Repair', description: 'Minor wall damage repair and patching', price: 25.00, unit: 'sqm' },
-                { id: 'wall-4', name: 'Wall Insulation', description: 'Thermal and sound insulation installation', price: 45.00, unit: 'sqm' }
-            ],
-            floor: [
-                { id: 'floor-1', name: 'Vinyl Flooring Installation', description: 'Commercial grade vinyl flooring', price: 45.00, unit: 'sqm' },
-                { id: 'floor-2', name: 'Carpet Installation', description: 'Commercial carpet with padding', price: 55.00, unit: 'sqm' },
-                { id: 'floor-3', name: 'Ceramic Tile Installation', description: 'Floor tile installation with grouting', price: 68.00, unit: 'sqm' },
-                { id: 'floor-4', name: 'Laminate Flooring', description: 'High-quality laminate flooring installation', price: 52.00, unit: 'sqm' }
-            ],
-            ceiling: [
-                { id: 'ceiling-1', name: 'Suspended Ceiling Installation', description: 'Mineral fiber suspended ceiling system', price: 42.00, unit: 'sqm' },
-                { id: 'ceiling-2', name: 'Drywall Ceiling', description: 'Drywall ceiling installation and finishing', price: 38.00, unit: 'sqm' },
-                { id: 'ceiling-3', name: 'Acoustic Ceiling Tiles', description: 'Sound-absorbing ceiling tile installation', price: 48.00, unit: 'sqm' }
-            ],
-            roofing: [
-                { id: 'roofing-1', name: 'Shingle Roof Repair', description: 'Asphalt shingle replacement and repair', price: 85.00, unit: 'sqm' },
-                { id: 'roofing-2', name: 'Roof Membrane Installation', description: 'Waterproof membrane application', price: 125.00, unit: 'sqm' },
-                { id: 'roofing-3', name: 'Gutter Installation', description: 'Aluminum gutter system installation', price: 55.00, unit: 'meters' }
-            ],
-            wetwork: [
-                { id: 'wetwork-1', name: 'Waterproofing Application', description: 'Bathroom and wet area waterproofing', price: 75.00, unit: 'sqm' },
-                { id: 'wetwork-2', name: 'Wall Tile Installation', description: 'Ceramic wall tiles with waterproof backing', price: 85.00, unit: 'sqm' },
-                { id: 'wetwork-3', name: 'Shower Cubicle Installation', description: 'Glass shower enclosure with hardware', price: 850.00, unit: 'set' }
-            ],
-            'me-work': [
-                { id: 'me-1', name: 'Electrical Panel Installation', description: 'Main electrical distribution panel', price: 450.00, unit: 'pcs' },
-                { id: 'me-2', name: 'Conduit Installation', description: 'Electrical conduit and cable management', price: 15.00, unit: 'meters' },
-                { id: 'me-3', name: 'Cable Tray System', description: 'Heavy-duty cable tray installation', price: 85.00, unit: 'meters' }
-            ],
-            exhaust: [
-                { id: 'exhaust-1', name: 'Kitchen Exhaust Installation', description: 'Commercial kitchen exhaust system', price: 850.00, unit: 'set' },
-                { id: 'exhaust-2', name: 'Bathroom Exhaust Fan', description: 'Silent bathroom exhaust fan with timer', price: 165.00, unit: 'pcs' },
-                { id: 'exhaust-3', name: 'Industrial Exhaust System', description: 'Heavy-duty industrial ventilation', price: 1200.00, unit: 'set' }
-            ],
-            'lights-fan': [
-                { id: 'lights-1', name: 'LED Panel Light', description: '40W LED panel light with driver', price: 85.00, unit: 'pcs' },
-                { id: 'lights-2', name: 'LED Downlight', description: '12W recessed LED downlight', price: 45.00, unit: 'pcs' },
-                { id: 'lights-3', name: 'Ceiling Fan', description: '52" ceiling fan with remote control', price: 220.00, unit: 'pcs' },
-                { id: 'lights-4', name: 'Track Lighting', description: 'Adjustable track lighting system', price: 180.00, unit: 'set' }
+            plumbing: [
+                { id: 'plumbing-1', name: 'Pipe Repair Service', description: 'Water pipe leak repair', price: 65.00, unit: 'service' },
+                { id: 'plumbing-2', name: 'Faucet Installation', description: 'Kitchen or bathroom faucet setup', price: 85.00, unit: 'pcs' },
+                { id: 'plumbing-3', name: 'Drain Cleaning', description: 'Professional drain cleaning service', price: 95.00, unit: 'service' }
             ],
             ac: [
                 { id: 'ac-1', name: 'Split AC Installation', description: '1.5HP split unit air conditioner', price: 1200.00, unit: 'set' },
@@ -2400,74 +2032,14 @@
                 { id: 'paint-2', name: 'Exterior Wall Painting', description: 'Weather-resistant exterior paint', price: 18.00, unit: 'sqm' },
                 { id: 'paint-3', name: 'Ceiling Painting', description: 'Specialized ceiling paint application', price: 14.00, unit: 'sqm' }
             ],
-            curtain: [
-                { id: 'curtain-1', name: 'Fabric Curtain Installation', description: 'Custom fabric curtains with hardware', price: 85.00, unit: 'sqm' },
-                { id: 'curtain-2', name: 'Vertical Blind Installation', description: 'PVC vertical blinds for offices', price: 65.00, unit: 'sqm' },
-                { id: 'curtain-3', name: 'Roller Blind System', description: 'Motorized roller blind installation', price: 120.00, unit: 'sqm' }
-            ],
-            builtin: [
-                { id: 'builtin-1', name: 'Built-in Wardrobe', description: 'Custom melamine wardrobe with drawers', price: 450.00, unit: 'sqm' },
-                { id: 'builtin-2', name: 'Kitchen Cabinet', description: 'Modular kitchen cabinet system', price: 650.00, unit: 'sqm' },
-                { id: 'builtin-3', name: 'Office Storage Unit', description: 'Built-in office storage solution', price: 380.00, unit: 'sqm' }
-            ],
-            loose: [
-                { id: 'loose-1', name: 'Office Chair', description: 'Ergonomic mesh office chair', price: 250.00, unit: 'pcs' },
-                { id: 'loose-2', name: 'Office Desk', description: 'Modern office desk with drawers', price: 450.00, unit: 'pcs' },
-                { id: 'loose-3', name: 'Meeting Table', description: 'Conference table for 8 people', price: 850.00, unit: 'pcs' }
-            ],
-            sanitary: [
-                { id: 'sanitary-1', name: 'Toilet Suite Installation', description: 'Complete toilet suite with accessories', price: 350.00, unit: 'set' },
-                { id: 'sanitary-2', name: 'Wash Basin Installation', description: 'Wall-hung basin with mixer tap', price: 280.00, unit: 'set' },
-                { id: 'sanitary-3', name: 'Water Pump System', description: 'Automatic water pump installation', price: 680.00, unit: 'set' }
-            ],
-            appliances: [
-                { id: 'appliances-1', name: 'Electric Water Heater', description: '30L instant electric water heater', price: 380.00, unit: 'pcs' },
-                { id: 'appliances-2', name: 'Range Hood Installation', description: 'Kitchen range hood with ducting', price: 450.00, unit: 'pcs' },
-                { id: 'appliances-3', name: 'Dishwasher Installation', description: 'Built-in dishwasher setup', price: 320.00, unit: 'pcs' }
-            ],
-            electrical: [
-                { id: 'electrical-1', name: 'Power Outlet Installation', description: 'Standard 13A power outlet', price: 45.00, unit: 'pcs' },
-                { id: 'electrical-2', name: 'Light Switch Installation', description: 'Standard wall switch installation', price: 35.00, unit: 'pcs' },
-                { id: 'electrical-3', name: 'Electrical Safety Inspection', description: 'Complete electrical system safety check', price: 150.00, unit: 'service' }
-            ],
-            plumbing: [
-                { id: 'plumbing-1', name: 'Pipe Repair Service', description: 'Water pipe leak repair', price: 65.00, unit: 'service' },
-                { id: 'plumbing-2', name: 'Faucet Installation', description: 'Kitchen or bathroom faucet setup', price: 85.00, unit: 'pcs' },
-                { id: 'plumbing-3', name: 'Drain Cleaning', description: 'Professional drain cleaning service', price: 95.00, unit: 'service' }
-            ],
-            hvac: [
-                { id: 'hvac-1', name: 'HVAC Filter Replacement', description: 'Air filter replacement service', price: 35.00, unit: 'pcs' },
-                { id: 'hvac-2', name: 'Duct Cleaning', description: 'Professional ductwork cleaning', price: 180.00, unit: 'service' },
-                { id: 'hvac-3', name: 'Thermostat Installation', description: 'Digital thermostat setup', price: 125.00, unit: 'pcs' }
-            ],
             cleaning: [
                 { id: 'cleaning-1', name: 'Office Cleaning Service', description: 'Standard office cleaning', price: 25.00, unit: 'sqm' },
                 { id: 'cleaning-2', name: 'Deep Cleaning Service', description: 'Comprehensive deep cleaning', price: 35.00, unit: 'sqm' },
                 { id: 'cleaning-3', name: 'Window Cleaning', description: 'Professional window cleaning', price: 8.00, unit: 'sqm' }
-            ],
-            parts: [
-                { id: 'parts-1', name: 'Electrical Wire', description: 'Standard electrical wiring cable', price: 8.50, unit: 'meters' },
-                { id: 'parts-2', name: 'PVC Pipe', description: 'Standard PVC water pipe', price: 12.00, unit: 'meters' },
-                { id: 'parts-3', name: 'Hardware Kit', description: 'Assorted screws and fasteners', price: 25.00, unit: 'set' }
-            ],
-            labor: [
-                { id: 'labor-1', name: 'Skilled Technician', description: 'Certified technician work hour', price: 45.00, unit: 'hours' },
-                { id: 'labor-2', name: 'Helper Labor', description: 'General helper work hour', price: 25.00, unit: 'hours' },
-                { id: 'labor-3', name: 'Specialist Labor', description: 'Specialized technician work hour', price: 65.00, unit: 'hours' }
-            ],
-            equipment: [
-                { id: 'equipment-1', name: 'Power Drill Rental', description: 'Professional power drill rental', price: 35.00, unit: 'hours' },
-                { id: 'equipment-2', name: 'Scaffolding Rental', description: 'Mobile scaffolding system rental', price: 85.00, unit: 'days' },
-                { id: 'equipment-3', name: 'Generator Rental', description: 'Portable generator rental', price: 120.00, unit: 'days' }
-            ],
-            common: [
-                { id: 'common-1', name: 'Service Call Fee', description: 'Basic service call charge', price: 75.00, unit: 'service' },
-                { id: 'common-2', name: 'Material Transport', description: 'Material delivery and transport', price: 50.00, unit: 'trip' },
-                { id: 'common-3', name: 'Site Survey', description: 'Professional site assessment', price: 150.00, unit: 'service' }
             ]
         };
 
-        // Company Settings (simplified)
+        // Company Settings
         var companyInfo = {
             name: 'REFIT MAINTENANCE SERVICES',
             registration: '201803348973 (002894203-V)',
@@ -2478,7 +2050,7 @@
 
         // Storage Keys
         var STORAGE_KEYS = {
-            JOB_QUOTES: 'refit_enhanced_quotes',
+            JOB_QUOTES: 'refit_complete_quotes',
             THEME_PREFERENCE: 'refit_theme_preference',
             COMPANY_INFO: 'refit_company_info',
             CUSTOM_LOGO: 'refit_custom_logo',
@@ -2495,33 +2067,18 @@
                 toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '🌸 Light';
             }
             
-            var metaTheme = document.querySelector('meta[name="theme-color"]');
-            if (metaTheme) {
-                metaTheme.content = currentTheme === 'light' ? '#f472b6' : '#1f1726';
-            }
-            
             saveDataToStorage();
             showSuccessMessage(currentTheme === 'light' ? '🌸 Beautiful Pink Light Mode!' : '🌙 Dark Pink Mode Activated!');
         }
 
         function loadThemePreference() {
             var savedTheme = JSON.parse(localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) || 'light';
-            
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) {
-                savedTheme = 'dark';
-            }
-            
             currentTheme = savedTheme;
             document.body.setAttribute('data-theme', currentTheme);
             
             var toggleBtn = document.getElementById('theme-toggle');
             if (toggleBtn) {
                 toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '🌸 Light';
-            }
-            
-            var metaTheme = document.querySelector('meta[name="theme-color"]');
-            if (metaTheme) {
-                metaTheme.content = currentTheme === 'light' ? '#f472b6' : '#1f1726';
             }
         }
 
@@ -2534,8 +2091,6 @@
                 localStorage.setItem(STORAGE_KEYS.BRANDING_DATA, JSON.stringify(brandingData));
                 if (customLogo) {
                     localStorage.setItem(STORAGE_KEYS.CUSTOM_LOGO, customLogo);
-                } else {
-                    localStorage.removeItem(STORAGE_KEYS.CUSTOM_LOGO);
                 }
             } catch (e) {
                 console.warn('Storage error:', e);
@@ -2559,7 +2114,6 @@
                 var savedBrandingData = localStorage.getItem(STORAGE_KEYS.BRANDING_DATA);
                 if (savedBrandingData) {
                     brandingData = Object.assign(brandingData, JSON.parse(savedBrandingData));
-                    updateBrandingDisplay();
                 }
                 
                 var savedLogo = localStorage.getItem(STORAGE_KEYS.CUSTOM_LOGO);
@@ -2581,396 +2135,7 @@
                 (companyInfo.registration.includes('(') ? companyInfo.registration.split('(')[1] : ')');
         }
 
-        function updateBrandingDisplay() {
-            // Update brand preview if modal is open
-            if (document.getElementById('branding-insert-modal').classList.contains('show')) {
-                updateBrandPreview();
-            }
-        }
-
-        // Enhanced Branding Insert Functions
-        function openBrandingInsert() {
-            renderColorPicker();
-            updateBrandPreview();
-            
-            // Load current values
-            document.getElementById('company-tagline-input').value = brandingData.tagline;
-            
-            document.getElementById('branding-insert-modal').classList.add('show');
-            showSuccessMessage('🎨 Professional branding suite opened');
-        }
-
-        function closeBrandingInsert() {
-            document.getElementById('branding-insert-modal').classList.remove('show');
-        }
-
-        function renderColorPicker() {
-            var container = document.getElementById('color-picker');
-            if (!container) return;
-            
-            var html = '';
-            for (var i = 0; i < colorThemes.length; i++) {
-                var theme = colorThemes[i];
-                var isSelected = brandingData.primaryColor === theme.primary;
-                
-                html += '<div class="color-option' + (isSelected ? ' selected' : '') + '" ' +
-                    'onclick="selectColorTheme(\'' + theme.primary + '\', \'' + theme.secondary + '\', \'' + theme.accent + '\')" ' +
-                    'style="background: linear-gradient(135deg, ' + theme.primary + ', ' + theme.secondary + ');" ' +
-                    'title="' + theme.name + '">' +
-                    '</div>';
-            }
-            
-            container.innerHTML = html;
-        }
-
-        function selectColorTheme(primary, secondary, accent) {
-            brandingData.primaryColor = primary;
-            brandingData.secondaryColor = secondary;
-            brandingData.accentColor = accent;
-            
-            renderColorPicker();
-            updateBrandPreview();
-            saveDataToStorage();
-            
-            showSuccessMessage('🎭 Color theme applied: ' + getThemeName(primary));
-        }
-
-        function getThemeName(primaryColor) {
-            for (var i = 0; i < colorThemes.length; i++) {
-                if (colorThemes[i].primary === primaryColor) {
-                    return colorThemes[i].name;
-                }
-            }
-            return 'Custom';
-        }
-
-        function updateBrandPreview() {
-            var logoPreview = document.getElementById('logo-preview');
-            var companyPreview = document.getElementById('company-preview');
-            var taglinePreview = document.getElementById('tagline-preview');
-            
-            if (!logoPreview || !companyPreview || !taglinePreview) return;
-            
-            // Update logo
-            if (brandingData.logo) {
-                logoPreview.innerHTML = '<img src="' + brandingData.logo + '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;" alt="Company Logo">';
-            } else {
-                logoPreview.innerHTML = '<svg style="width: 40px; height: 40px; color: white;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
-                    '<path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor"/>' +
-                    '<path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor"/>' +
-                    '</svg>';
-            }
-            
-            // Update colors
-            logoPreview.style.background = 'linear-gradient(135deg, ' + brandingData.primaryColor + ', ' + brandingData.secondaryColor + ')';
-            companyPreview.textContent = companyInfo.name;
-            taglinePreview.textContent = brandingData.tagline;
-        }
-
-        function handleBrandingLogoUpload(event) {
-            var file = event.target.files[0];
-            if (!file) return;
-            
-            if (file.size > 2 * 1024 * 1024) {
-                showSuccessMessage('⚠️ File too large! Please choose an image under 2MB');
-                return;
-            }
-            
-            if (!file.type.startsWith('image/')) {
-                showSuccessMessage('⚠️ Please select a valid image file');
-                return;
-            }
-            
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                brandingData.logo = e.target.result;
-                customLogo = e.target.result;
-                updateBrandPreview();
-                updateHeaderLogo();
-                saveDataToStorage();
-                showSuccessMessage('✅ Logo uploaded and applied to branding!');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function updateHeaderLogo() {
-            var logoContainer = document.querySelector('.app-logo');
-            if (!logoContainer) return;
-            
-            if (customLogo) {
-                logoContainer.innerHTML = '<img src="' + customLogo + '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" alt="Company Logo">';
-            } else {
-                logoContainer.innerHTML = '<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
-                    '<path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>' +
-                    '<path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>' +
-                    '<circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.8)" stroke="currentColor" stroke-width="2"/>' +
-                    '<circle cx="50" cy="50" r="3" fill="currentColor"/>' +
-                    '</svg>';
-            }
-        }
-
-        function applyBranding() {
-            // Update tagline
-            brandingData.tagline = document.getElementById('company-tagline-input').value.trim() || brandingData.tagline;
-            
-            // Save branding data
-            saveDataToStorage();
-            
-            // Update brand preview
-            updateBrandPreview();
-            
-            closeBrandingInsert();
-            showSuccessMessage('✅ Professional branding applied successfully!');
-        }
-
-        // Quick Branding Action Functions
-        function openLogoUpload() {
-            document.getElementById('branding-logo-input').click();
-        }
-
-        function openColorTheme() {
-            openBrandingInsert();
-            // Auto-scroll to color section
-            setTimeout(function() {
-                var colorSection = document.getElementById('color-picker');
-                if (colorSection) {
-                    colorSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 300);
-        }
-
-        function openCompanyBranding() {
-            openCompanyInfo();
-        }
-
-        function insertBrandingToQuote() {
-            if (!currentQuoteId) {
-                showSuccessMessage('⚠️ Please create or select a quote first');
-                return;
-            }
-            
-            var quote = jobQuotes.find(function(q) { return q.id === currentQuoteId; });
-            if (!quote) {
-                showSuccessMessage('⚠️ Quote not found');
-                return;
-            }
-            
-            // Apply branding to current quote
-            quote.branding = Object.assign({}, brandingData);
-            saveDataToStorage();
-            
-            showSuccessMessage('✅ Branding inserted to current quote');
-        }
-
-        function saveBrandingTemplate() {
-            brandingData.template = 'custom_' + Date.now();
-            saveDataToStorage();
-            showSuccessMessage('💾 Branding template saved');
-        }
-
-        function previewBrandedQuote() {
-            closeBrandingInsert();
-            setTimeout(function() {
-                previewBranding();
-            }, 300);
-        }
-
-        function exportBrandingPackage() {
-            var brandingPackage = {
-                branding: brandingData,
-                company: companyInfo,
-                logo: customLogo,
-                timestamp: new Date().toISOString(),
-                version: 'Enhanced Branding Suite 1.0'
-            };
-            
-            var dataStr = JSON.stringify(brandingPackage, null, 2);
-            var dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Branding_Package_' + new Date().toISOString().split('T')[0] + '.json';
-            link.click();
-            
-            showSuccessMessage('📦 Branding package exported successfully!');
-        }
-
-        function previewBranding() {
-            document.getElementById('branding-preview-modal').classList.add('show');
-            
-            var content = document.getElementById('branding-preview-content');
-            if (!content) return;
-            
-            var html = '<div style="background: white; border-radius: 16px; padding: 24px; border: 1px solid #e5e7eb; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">' +
-                // Header with branding
-                '<div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid ' + brandingData.primaryColor + ';">' +
-                '<div style="width: 60px; height: 60px; border-radius: 12px; background: linear-gradient(135deg, ' + brandingData.primaryColor + ', ' + brandingData.secondaryColor + '); display: flex; align-items: center; justify-content: center; color: white;">';
-            
-            if (brandingData.logo) {
-                html += '<img src="' + brandingData.logo + '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" alt="Logo">';
-            } else {
-                html += '<svg style="width: 30px; height: 30px;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
-                    '<path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor"/>' +
-                    '<path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor"/>' +
-                    '</svg>';
-            }
-            
-            html += '</div>' +
-                '<div>' +
-                '<h2 style="font-size: 20px; font-weight: 800; color: #1f2937; margin: 0;">' + companyInfo.name + '</h2>' +
-                '<p style="font-size: 14px; color: #6b7280; margin: 4px 0 0 0;">' + companyInfo.registration + '</p>' +
-                '<p style="font-size: 12px; color: ' + brandingData.primaryColor + '; font-weight: 600; margin: 4px 0 0 0;">' + brandingData.tagline + '</p>' +
-                '</div>' +
-                '</div>' +
-                
-                // Sample quote content
-                '<div style="margin-bottom: 20px;">' +
-                '<h3 style="font-size: 18px; font-weight: 700; color: #1f2937; margin-bottom: 8px;">JOB QUOTE PREVIEW</h3>' +
-                '<p style="font-size: 14px; color: #6b7280;">Quote #12345 • Date: ' + new Date().toLocaleDateString() + '</p>' +
-                '<p style="font-size: 16px; font-weight: 600; color: #1f2937; margin-top: 8px;">Office Renovation Project</p>' +
-                '</div>' +
-                
-                // Sample items
-                '<div style="background: #f9fafb; border-radius: 12px; padding: 16px; margin-bottom: 20px;">' +
-                '<h4 style="font-size: 16px; font-weight: 700; color: #1f2937; margin-bottom: 12px;">Quote Items</h4>' +
-                '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">' +
-                '<span style="font-size: 14px; color: #374151;">Wall Painting (Interior)</span>' +
-                '<span style="font-size: 14px; font-weight: 600; color: ' + brandingData.primaryColor + ';">RM 1,200.00</span>' +
-                '</div>' +
-                '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">' +
-                '<span style="font-size: 14px; color: #374151;">Electrical Installation</span>' +
-                '<span style="font-size: 14px; font-weight: 600; color: ' + brandingData.primaryColor + ';">RM 850.00</span>' +
-                '</div>' +
-                '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">' +
-                '<span style="font-size: 14px; color: #374151;">AC System Installation</span>' +
-                '<span style="font-size: 14px; font-weight: 600; color: ' + brandingData.primaryColor + ';">RM 3,500.00</span>' +
-                '</div>' +
-                '</div>' +
-                
-                // Total section
-                '<div style="background: linear-gradient(135deg, ' + brandingData.primaryColor + ', ' + brandingData.secondaryColor + '); color: white; border-radius: 12px; padding: 20px; text-align: center;">' +
-                '<p style="font-size: 14px; margin: 0; opacity: 0.9;">Total Quote Amount</p>' +
-                '<p style="font-size: 28px; font-weight: 800; margin: 8px 0 0 0;">RM 5,550.00</p>' +
-                '</div>' +
-                
-                // Footer
-                '<div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb; text-align: center;">' +
-                '<p style="font-size: 12px; color: #6b7280; margin: 0;">Thank you for choosing ' + companyInfo.name + '</p>' +
-                '<p style="font-size: 12px; color: #6b7280; margin: 4px 0 0 0;">Contact: ' + companyInfo.phone + ' • ' + companyInfo.email + '</p>' +
-                '</div>' +
-                '</div>';
-            
-            content.innerHTML = html;
-            showSuccessMessage('👁️ Branding preview generated');
-        }
-
-        function closeBrandingPreview() {
-            document.getElementById('branding-preview-modal').classList.remove('show');
-        }
-
-        function generatePreviewPDF() {
-            showSuccessMessage('📄 Generating branded PDF preview...');
-            
-            var { jsPDF } = window.jspdf;
-            var doc = new jsPDF();
-            
-            try {
-                // Header with custom branding
-                doc.setFillColor(hexToRgb(brandingData.primaryColor).r, hexToRgb(brandingData.primaryColor).g, hexToRgb(brandingData.primaryColor).b);
-                doc.rect(0, 0, 210, 35, 'F');
-                
-                // Logo
-                if (brandingData.logo) {
-                    try {
-                        doc.addImage(brandingData.logo, 'JPEG', 15, 8, 20, 20);
-                    } catch (logoError) {
-                        console.warn('Logo embedding failed:', logoError);
-                    }
-                }
-                
-                // Company info in white
-                doc.setTextColor(255, 255, 255);
-                doc.setFontSize(18);
-                doc.setFont(undefined, 'bold');
-                doc.text(companyInfo.name, 45, 18);
-                
-                doc.setFontSize(10);
-                doc.setFont(undefined, 'normal');
-                doc.text(companyInfo.registration, 45, 25);
-                doc.text(brandingData.tagline, 45, 30);
-                
-                // Reset text color
-                doc.setTextColor(0, 0, 0);
-                
-                // Quote content
-                doc.setFontSize(16);
-                doc.setFont(undefined, 'bold');
-                doc.text('PROFESSIONAL QUOTE PREVIEW', 20, 50);
-                
-                doc.setFontSize(12);
-                doc.setFont(undefined, 'normal');
-                doc.text('Quote #: PREVIEW-' + Date.now(), 20, 65);
-                doc.text('Date: ' + new Date().toLocaleDateString(), 20, 75);
-                doc.text('Project: Office Renovation with Custom Branding', 20, 85);
-                
-                // Items
-                doc.setFontSize(14);
-                doc.setFont(undefined, 'bold');
-                doc.text('QUOTE ITEMS', 20, 105);
-                
-                var items = [
-                    { name: 'Wall Painting (Interior)', price: 1200.00 },
-                    { name: 'Electrical Installation', price: 850.00 },
-                    { name: 'AC System Installation', price: 3500.00 }
-                ];
-                
-                var yPos = 120;
-                doc.setFontSize(10);
-                doc.setFont(undefined, 'normal');
-                
-                for (var i = 0; i < items.length; i++) {
-                    doc.text(items[i].name, 20, yPos);
-                    doc.text('RM ' + items[i].price.toFixed(2), 150, yPos);
-                    yPos += 10;
-                }
-                
-                // Total with brand color
-                yPos += 10;
-                doc.setFillColor(hexToRgb(brandingData.primaryColor).r, hexToRgb(brandingData.primaryColor).g, hexToRgb(brandingData.primaryColor).b);
-                doc.rect(20, yPos - 5, 170, 20, 'F');
-                
-                doc.setTextColor(255, 255, 255);
-                doc.setFontSize(14);
-                doc.setFont(undefined, 'bold');
-                doc.text('TOTAL AMOUNT: RM 5,550.00', 25, yPos + 7);
-                
-                // Footer
-                doc.setTextColor(0, 0, 0);
-                doc.setFontSize(10);
-                doc.setFont(undefined, 'normal');
-                doc.text('Thank you for choosing ' + companyInfo.name, 20, yPos + 35);
-                doc.text('Contact: ' + companyInfo.phone + ' • ' + companyInfo.email, 20, yPos + 45);
-                
-                // Download
-                doc.save('REFIT_Branded_Quote_Preview.pdf');
-                showSuccessMessage('📄 Branded PDF preview downloaded!');
-                
-            } catch (error) {
-                console.error('PDF generation error:', error);
-                showSuccessMessage('❌ Error generating PDF preview');
-            }
-        }
-
-        function hexToRgb(hex) {
-            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? {
-                r: parseInt(result[1], 16),
-                g: parseInt(result[2], 16),
-                b: parseInt(result[3], 16)
-            } : { r: 244, g: 114, b: 182 }; // fallback to pink
-        }
-
-        // Enhanced Create Quote Flow Functions
+        // Complete Workflow Functions - Step 1: Job Title
         function openCreateQuote() {
             currentQuoteData = {
                 title: '',
@@ -2981,14 +2146,14 @@
             
             document.getElementById('job-title-input').value = '';
             document.getElementById('job-title-modal').classList.add('show');
-            showSuccessMessage('📝 Starting enhanced quote creation');
+            showSuccessMessage('📝 Step 1: Starting complete quote workflow');
         }
 
-        function closeCreateQuote() {
-            document.getElementById('job-title-modal').classList.remove('show');
-            document.getElementById('category-selection-modal').classList.remove('show');
-            document.getElementById('item-selection-modal').classList.remove('show');
+        function cancelCreateQuote() {
+            // Close all modals
+            closeAllModals();
             
+            // Reset data
             currentQuoteData = {
                 title: '',
                 categories: [],
@@ -2996,6 +2161,16 @@
                 totalAmount: 0
             };
             currentCategory = '';
+            customQuantity = 1;
+            
+            showSuccessMessage('❌ Quote creation cancelled');
+        }
+
+        function closeAllModals() {
+            var modals = document.querySelectorAll('.modal');
+            for (var i = 0; i < modals.length; i++) {
+                modals[i].classList.remove('show');
+            }
         }
 
         function proceedToCategory() {
@@ -3009,20 +2184,23 @@
             currentQuoteData.title = title;
             document.getElementById('selected-job-title').textContent = title;
             
+            // Close Step 1, Show Step 2
             document.getElementById('job-title-modal').classList.remove('show');
             
             renderCategories();
             updateQuoteSummaryDisplay();
             
             document.getElementById('category-selection-modal').classList.add('show');
-            showSuccessMessage('✅ Job title saved: ' + title);
+            showSuccessMessage('✅ Step 2: Select categories for ' + title);
         }
 
         function backToJobTitle() {
             document.getElementById('category-selection-modal').classList.remove('show');
             document.getElementById('job-title-modal').classList.add('show');
+            showSuccessMessage('⬅️ Back to Step 1');
         }
 
+        // Step 2: Category Selection
         function renderCategories() {
             var container = document.getElementById('category-grid');
             if (!container) return;
@@ -3051,106 +2229,56 @@
             document.getElementById('category-job-title').textContent = currentQuoteData.title;
             document.getElementById('selected-category-display').textContent = categories[categoryKey].name;
             
+            // Close Step 2, Show Step 3
             document.getElementById('category-selection-modal').classList.remove('show');
             
             renderPresetItems();
             
             document.getElementById('item-selection-modal').classList.add('show');
-            showSuccessMessage('✅ Selecting items for: ' + categories[categoryKey].name);
+            showSuccessMessage('✅ Step 3: Selecting items for ' + categories[categoryKey].name);
         }
 
         function backToCategories() {
             document.getElementById('item-selection-modal').classList.remove('show');
+            document.getElementById('overview-modal').classList.remove('show');
             
             renderCategories();
             updateQuoteSummaryDisplay();
+            updateProceedButton();
             
             document.getElementById('category-selection-modal').classList.add('show');
-            showSuccessMessage('⬅️ Back to category selection');
+            showSuccessMessage('⬅️ Back to Step 2: Category selection');
         }
 
-        function updateQuoteSummaryDisplay() {
-            var summaryContainer = document.getElementById('current-quote-summary');
-            var itemsCountElement = document.getElementById('total-items-count');
-            var previewElement = document.getElementById('quote-items-preview');
-            var totalElement = document.getElementById('running-total');
-            var finalizeBtn = document.getElementById('finalize-quote-btn');
-            
+        function proceedToOverview() {
             if (currentQuoteData.items.length === 0) {
-                summaryContainer.style.display = 'none';
-                finalizeBtn.disabled = true;
-                finalizeBtn.style.opacity = '0.5';
+                showSuccessMessage('⚠️ Please add at least one item to proceed');
                 return;
             }
             
-            summaryContainer.style.display = 'block';
-            finalizeBtn.disabled = false;
-            finalizeBtn.style.opacity = '1';
+            // Close Step 2, Show Step 4 (Overview)
+            document.getElementById('category-selection-modal').classList.remove('show');
             
-            itemsCountElement.textContent = currentQuoteData.items.length;
+            renderCompleteOverview();
             
-            var categoryGroups = {};
-            var totalAmount = 0;
-            
-            for (var i = 0; i < currentQuoteData.items.length; i++) {
-                var item = currentQuoteData.items[i];
-                var itemCategory = item.category || 'common';
-                totalAmount += item.total;
-                
-                if (!categoryGroups[itemCategory]) {
-                    categoryGroups[itemCategory] = [];
+            document.getElementById('overview-modal').classList.add('show');
+            showSuccessMessage('✅ Step 4: Final review - check all details');
+        }
+
+        function updateProceedButton() {
+            var proceedBtn = document.getElementById('proceed-overview-btn');
+            if (proceedBtn) {
+                if (currentQuoteData.items.length > 0) {
+                    proceedBtn.disabled = false;
+                    proceedBtn.style.opacity = '1';
+                } else {
+                    proceedBtn.disabled = true;
+                    proceedBtn.style.opacity = '0.5';
                 }
-                categoryGroups[itemCategory].push(item);
             }
-            
-            var html = '';
-            for (var catKey in categoryGroups) {
-                var catItems = categoryGroups[catKey];
-                var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
-                
-                html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 6px; border-left: 4px solid var(--accent-primary);">' +
-                    '<div>' +
-                    '<div style="font-weight: 600; color: var(--text-primary); font-size: 13px;">' + categories[catKey].icon + ' ' + categories[catKey].name + '</div>' +
-                    '<div style="font-size: 11px; color: var(--text-muted);">' + catItems.length + ' items</div>' +
-                    '</div>' +
-                    '<div style="font-weight: 700; color: var(--accent-primary); font-size: 14px;">RM ' + catTotal.toFixed(2) + '</div>' +
-                    '</div>';
-            }
-            
-            previewElement.innerHTML = html;
-            totalElement.textContent = 'RM ' + totalAmount.toFixed(2);
-            currentQuoteData.totalAmount = totalAmount;
-            
-            var uniqueCategories = Object.keys(categoryGroups);
-            currentQuoteData.categories = uniqueCategories;
         }
 
-        function finalizeQuote() {
-            if (currentQuoteData.items.length === 0) {
-                showSuccessMessage('⚠️ Please add at least one item to the quote');
-                return;
-            }
-            
-            var quote = {
-                id: Date.now(),
-                title: currentQuoteData.title,
-                categories: [...currentQuoteData.categories],
-                items: [...currentQuoteData.items],
-                totalAmount: currentQuoteData.totalAmount,
-                branding: Object.assign({}, brandingData),
-                createdAt: new Date().toISOString()
-            };
-            
-            jobQuotes.push(quote);
-            currentQuoteId = quote.id;
-            
-            saveDataToStorage();
-            closeCreateQuote();
-            showQuoteDetail(quote.id);
-            
-            showSuccessMessage('✅ Multi-category quote with branding created!');
-        }
-
+        // Step 3: Item Selection
         function renderPresetItems() {
             var container = document.getElementById('preset-items-list');
             if (!container) return;
@@ -3175,10 +2303,10 @@
                     html += '<div class="preset-item selected" onclick="togglePresetItem(\'' + item.id + '\')" data-item-id="' + item.id + '">' +
                         '<div class="header">' +
                         '<div class="name">🛠️ ' + item.name + '</div>' +
-                        '<div class="price">RM ' + parseFloat(item.price).toFixed(2) + '</div>' +
+                        '<div class="price">RM ' + parseFloat(item.total).toFixed(2) + '</div>' +
                         '</div>' +
                         '<div class="description">' + item.description + '</div>' +
-                        '<div class="unit">Per ' + item.unit + ' • Custom Item</div>' +
+                        '<div class="unit">Qty: ' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + '</div>' +
                         '</div>';
                 }
                 html += '</div>';
@@ -3240,6 +2368,8 @@
                 currentQuoteData.items.splice(existingIndex, 1);
                 showSuccessMessage('➖ Removed: ' + removedItem.name);
                 renderPresetItems();
+                updateQuoteSummaryDisplay();
+                updateProceedButton();
                 return;
             }
             
@@ -3264,6 +2394,13 @@
             showSuccessMessage('✅ Added: ' + item.name);
             
             renderPresetItems();
+            updateQuoteSummaryDisplay();
+            updateProceedButton();
+        }
+
+        function finishCategoryItems() {
+            backToCategories();
+            showSuccessMessage('✅ Category items completed. Add more categories or proceed to review.');
         }
 
         function updateSelectedItemsSummary() {
@@ -3296,7 +2433,7 @@
                     '<div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">' + 
                     (item.isCustom ? '🛠️ ' : '') + item.name + 
                     (item.isCustom ? ' (Custom)' : '') + '</div>' +
-                    '<div style="font-size: 12px; color: var(--text-muted);">1 ' + item.unit + '</div>' +
+                    '<div style="font-size: 12px; color: var(--text-muted);">' + item.quantity + ' ' + item.unit + '</div>' +
                     '</div>' +
                     '<div style="font-weight: 700; color: var(--accent-primary);">RM ' + item.total.toFixed(2) + '</div>' +
                     '</div>';
@@ -3306,14 +2443,13 @@
             totalElement.textContent = 'RM ' + categoryTotal.toFixed(2);
         }
 
-        function finishItemSelection() {
-            backToCategories();
-            showSuccessMessage('✅ Items added to quote. Select another category or finalize quote.');
-        }
-
-        // Custom Item Creation Functions
+        // Enhanced Custom Item Creation
         function openCustomItemForm() {
+            customQuantity = 1;
             document.getElementById('custom-item-form').reset();
+            document.getElementById('custom-quantity-display').textContent = '1';
+            calculateCustomTotal();
+            
             document.getElementById('custom-item-modal').classList.add('show');
             showSuccessMessage('➕ Creating custom item for: ' + categories[currentCategory].name);
         }
@@ -3322,9 +2458,38 @@
             document.getElementById('custom-item-modal').classList.remove('show');
         }
 
-        function handleCustomItemSubmit(e) {
-            e.preventDefault();
+        function adjustCustomQuantity(change) {
+            customQuantity = Math.max(1, customQuantity + change);
+            document.getElementById('custom-quantity-display').textContent = customQuantity;
+            calculateCustomTotal();
+        }
+
+        function calculateCustomTotal() {
+            var priceInput = document.getElementById('custom-item-price');
+            var unitSelect = document.getElementById('custom-item-unit');
+            var addBtn = document.getElementById('add-custom-item-btn');
+            var calculationDiv = document.getElementById('custom-price-calculation');
             
+            var unitPrice = parseFloat(priceInput.value) || 0;
+            var unitName = unitSelect.options[unitSelect.selectedIndex].text;
+            var totalPrice = unitPrice * customQuantity;
+            
+            calculationDiv.querySelector('.price-breakdown').textContent = 
+                customQuantity + ' ' + unitName + ' × RM ' + unitPrice.toFixed(2) + ' =';
+            calculationDiv.querySelector('.total-price').textContent = 'RM ' + totalPrice.toFixed(2);
+            
+            var name = document.getElementById('custom-item-name').value.trim();
+            
+            if (name && unitPrice > 0) {
+                addBtn.disabled = false;
+                addBtn.style.opacity = '1';
+            } else {
+                addBtn.disabled = true;
+                addBtn.style.opacity = '0.5';
+            }
+        }
+
+        function addCustomItemToQuote() {
             var name = document.getElementById('custom-item-name').value.trim();
             var description = document.getElementById('custom-item-description').value.trim();
             var price = parseFloat(document.getElementById('custom-item-price').value);
@@ -3341,8 +2506,8 @@
                 description: description || 'Custom item for ' + currentQuoteData.title,
                 price: price,
                 unit: unit,
-                quantity: 1,
-                total: price,
+                quantity: customQuantity,
+                total: price * customQuantity,
                 category: currentCategory,
                 isCustom: true
             };
@@ -3352,8 +2517,417 @@
             closeCustomItemForm();
             renderPresetItems();
             updateSelectedItemsSummary();
+            updateQuoteSummaryDisplay();
+            updateProceedButton();
             
-            showSuccessMessage('✅ Custom item added: ' + name);
+            showSuccessMessage('✅ Custom item added: ' + name + ' (Qty: ' + customQuantity + ')');
+        }
+
+        // Step 4: Complete Overview
+        function renderCompleteOverview() {
+            var container = document.getElementById('complete-overview');
+            var titleElement = document.getElementById('overview-job-title');
+            
+            if (!container || !titleElement) return;
+            
+            titleElement.textContent = currentQuoteData.title;
+            
+            var html = '';
+            
+            // Quote Summary Header
+            html += '<div style="text-align: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--accent-primary);">' +
+                '<h3 style="font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">' + currentQuoteData.title + '</h3>' +
+                '<p style="color: var(--text-muted); font-size: 14px;">Complete Quote Review • ' + currentQuoteData.items.length + ' items • ' + currentQuoteData.categories.length + ' categories</p>' +
+                '</div>';
+            
+            // Calculate total
+            var grandTotal = 0;
+            for (var i = 0; i < currentQuoteData.items.length; i++) {
+                grandTotal += currentQuoteData.items[i].total;
+            }
+            currentQuoteData.totalAmount = grandTotal;
+            
+            // Group items by category
+            var itemsByCategory = {};
+            for (var i = 0; i < currentQuoteData.items.length; i++) {
+                var item = currentQuoteData.items[i];
+                if (!itemsByCategory[item.category]) {
+                    itemsByCategory[item.category] = [];
+                }
+                itemsByCategory[item.category].push(item);
+            }
+            
+            // Render items by category
+            for (var catKey in itemsByCategory) {
+                var catItems = itemsByCategory[catKey];
+                var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
+                
+                html += '<div style="margin-bottom: 16px; background: var(--bg-secondary); border-radius: 12px; padding: 16px; border-left: 4px solid ' + (categories[catKey] ? categories[catKey].color : 'var(--accent-primary)') + ';">' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">' +
+                    '<div style="font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">' +
+                    '<span style="font-size: 18px;">' + (categories[catKey] ? categories[catKey].icon : '📋') + '</span>' +
+                    '<span>' + (categories[catKey] ? categories[catKey].name : catKey) + '</span>' +
+                    '<span style="font-size: 12px; background: var(--accent-primary); color: white; padding: 2px 8px; border-radius: 8px;">' + catItems.length + '</span>' +
+                    '</div>' +
+                    '<div style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ' + catTotal.toFixed(2) + '</div>' +
+                    '</div>';
+                
+                for (var j = 0; j < catItems.length; j++) {
+                    var item = catItems[j];
+                    html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 8px;">' +
+                        '<div>' +
+                        '<div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">' +
+                        (item.isCustom ? '🛠️ ' : '') + item.name + (item.isCustom ? ' (Custom)' : '') + '</div>' +
+                        '<div style="font-size: 12px; color: var(--text-muted);">' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + '</div>' +
+                        '</div>' +
+                        '<div style="font-weight: 700; color: var(--text-secondary);">RM ' + item.total.toFixed(2) + '</div>' +
+                        '</div>';
+                }
+                
+                html += '</div>';
+            }
+            
+            // Grand Total
+            html += '<div style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; padding: 20px; border-radius: 16px; text-align: center; margin-top: 20px; box-shadow: 0 8px 25px var(--shadow-medium);">' +
+                '<div style="font-size: 16px; font-weight: 600; margin-bottom: 8px; opacity: 0.9;">TOTAL QUOTE AMOUNT</div>' +
+                '<div style="font-size: 36px; font-weight: 800;">RM ' + grandTotal.toFixed(2) + '</div>' +
+                '</div>';
+            
+            container.innerHTML = html;
+        }
+
+        function editQuoteFromOverview() {
+            // Go back to categories to allow editing
+            backToCategories();
+            showSuccessMessage('✏️ Editing quote - modify categories and items');
+        }
+
+        function finalizeAndGeneratePDF() {
+            if (currentQuoteData.items.length === 0) {
+                showSuccessMessage('⚠️ Cannot generate PDF - no items in quote');
+                return;
+            }
+            
+            // Create final quote object
+            var quote = {
+                id: Date.now(),
+                title: currentQuoteData.title,
+                categories: [...currentQuoteData.categories],
+                items: [...currentQuoteData.items],
+                totalAmount: currentQuoteData.totalAmount,
+                branding: Object.assign({}, brandingData),
+                createdAt: new Date().toISOString()
+            };
+            
+            // Add to quotes list
+            jobQuotes.push(quote);
+            currentQuoteId = quote.id;
+            
+            // Save to storage
+            saveDataToStorage();
+            
+            // Close all modals
+            closeAllModals();
+            
+            // Generate PDF immediately
+            generateFinalPDF(quote);
+            
+            // Update stats and show dashboard
+            updateStats();
+            renderViews();
+            showView('dashboard');
+            
+            showSuccessMessage('🎉 Quote completed! PDF generated and ready to send!');
+        }
+
+        // Enhanced PDF Generation
+        function generateFinalPDF(quote) {
+            showSuccessMessage('📄 Generating professional PDF...');
+            
+            var { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+            
+            try {
+                var quoteBranding = quote.branding || brandingData;
+                
+                // Professional header with branding
+                doc.setFillColor(244, 114, 182); // Pink header
+                doc.rect(0, 0, 210, 40, 'F');
+                
+                // Logo if available
+                if (quoteBranding.logo) {
+                    try {
+                        doc.addImage(quoteBranding.logo, 'JPEG', 15, 8, 25, 25);
+                    } catch (logoError) {
+                        console.warn('Logo embedding failed:', logoError);
+                    }
+                }
+                
+                // Company info in white
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(20);
+                doc.setFont(undefined, 'bold');
+                doc.text(companyInfo.name, 50, 20);
+                
+                doc.setFontSize(11);
+                doc.setFont(undefined, 'normal');
+                doc.text('Registration: ' + companyInfo.registration, 50, 28);
+                doc.text(quoteBranding.tagline, 50, 35);
+                
+                // Reset text color
+                doc.setTextColor(0, 0, 0);
+                
+                // Quote details
+                doc.setFontSize(18);
+                doc.setFont(undefined, 'bold');
+                doc.text('PROFESSIONAL QUOTE', 20, 55);
+                
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                doc.text('Quote #: ' + quote.id, 20, 70);
+                doc.text('Date: ' + formatDate(quote.createdAt), 20, 80);
+                doc.text('Project: ' + quote.title, 20, 90);
+                
+                var categoriesText = quote.categories.map(function(cat) { 
+                    return categories[cat] ? categories[cat].name : cat; 
+                }).join(', ');
+                doc.text('Categories: ' + categoriesText, 20, 100);
+                
+                // Items table
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('QUOTE ITEMS', 20, 120);
+                
+                var yPosition = 135;
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'bold');
+                doc.text('No.', 20, yPosition);
+                doc.text('Description', 35, yPosition);
+                doc.text('Qty', 140, yPosition);
+                doc.text('Unit', 155, yPosition);
+                doc.text('Rate', 170, yPosition);
+                doc.text('Amount', 185, yPosition);
+                
+                doc.setFont(undefined, 'normal');
+                for (var i = 0; i < quote.items.length; i++) {
+                    var item = quote.items[i];
+                    yPosition += 12;
+                    
+                    doc.text((i + 1).toString(), 20, yPosition);
+                    var itemName = item.name + (item.isCustom ? ' (Custom)' : '');
+                    doc.text(itemName.substring(0, 30), 35, yPosition);
+                    doc.text(item.quantity.toString(), 140, yPosition);
+                    doc.text(item.unit.substring(0, 8), 155, yPosition);
+                    doc.text(item.price.toFixed(2), 170, yPosition);
+                    doc.text(item.total.toFixed(2), 185, yPosition);
+                    
+                    if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 30;
+                    }
+                }
+                
+                // Total with pink background
+                yPosition += 15;
+                doc.setFillColor(244, 114, 182);
+                doc.rect(20, yPosition - 5, 170, 20, 'F');
+                
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.text('TOTAL AMOUNT: RM ' + quote.totalAmount.toFixed(2), 25, yPosition + 7);
+                
+                // Footer
+                doc.setTextColor(0, 0, 0);
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text('Thank you for choosing ' + companyInfo.name, 20, yPosition + 35);
+                doc.text('Contact: ' + companyInfo.phone + ' • ' + companyInfo.email, 20, yPosition + 45);
+                
+                // Save/Share PDF
+                var fileName = 'REFIT_Quote_' + quote.id + '_' + quote.title.replace(/[^a-z0-9]/gi, '_') + '.pdf';
+                
+                if (navigator.share && navigator.canShare) {
+                    var pdfBlob = doc.output('blob');
+                    var file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+                    
+                    navigator.share({
+                        title: 'Professional Quote - ' + quote.title,
+                        text: 'Quote from ' + companyInfo.name,
+                        files: [file]
+                    }).then(function() {
+                        showSuccessMessage('📤 PDF shared successfully!');
+                    }).catch(function(error) {
+                        console.log('Share failed, downloading instead:', error);
+                        doc.save(fileName);
+                        showSuccessMessage('💾 PDF downloaded successfully!');
+                    });
+                } else {
+                    doc.save(fileName);
+                    showSuccessMessage('💾 PDF downloaded successfully!');
+                }
+                
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                showSuccessMessage('❌ Error generating PDF. Please try again.');
+            }
+        }
+
+        // Quote Summary Update Functions
+        function updateQuoteSummaryDisplay() {
+            var summaryContainer = document.getElementById('current-quote-summary');
+            var itemsCountElement = document.getElementById('total-items-count-summary');
+            var previewElement = document.getElementById('quote-items-preview');
+            var totalElement = document.getElementById('running-total');
+            
+            if (currentQuoteData.items.length === 0) {
+                summaryContainer.style.display = 'none';
+                return;
+            }
+            
+            summaryContainer.style.display = 'block';
+            itemsCountElement.textContent = currentQuoteData.items.length;
+            
+            var categoryGroups = {};
+            var totalAmount = 0;
+            
+            for (var i = 0; i < currentQuoteData.items.length; i++) {
+                var item = currentQuoteData.items[i];
+                var itemCategory = item.category || 'common';
+                totalAmount += item.total;
+                
+                if (!categoryGroups[itemCategory]) {
+                    categoryGroups[itemCategory] = [];
+                }
+                categoryGroups[itemCategory].push(item);
+            }
+            
+            var html = '';
+            for (var catKey in categoryGroups) {
+                var catItems = categoryGroups[catKey];
+                var catTotal = catItems.reduce(function(sum, item) { return sum + item.total; }, 0);
+                
+                html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 6px; border-left: 4px solid var(--accent-primary);">' +
+                    '<div>' +
+                    '<div style="font-weight: 600; color: var(--text-primary); font-size: 13px;">' + categories[catKey].icon + ' ' + categories[catKey].name + '</div>' +
+                    '<div style="font-size: 11px; color: var(--text-muted);">' + catItems.length + ' items</div>' +
+                    '</div>' +
+                    '<div style="font-weight: 700; color: var(--accent-primary); font-size: 14px;">RM ' + catTotal.toFixed(2) + '</div>' +
+                    '</div>';
+            }
+            
+            previewElement.innerHTML = html;
+            totalElement.textContent = 'RM ' + totalAmount.toFixed(2);
+            currentQuoteData.totalAmount = totalAmount;
+            
+            var uniqueCategories = Object.keys(categoryGroups);
+            currentQuoteData.categories = uniqueCategories;
+        }
+
+        // Branding Functions
+        function openBrandingInsert() {
+            updateLogoPreview();
+            document.getElementById('branding-insert-modal').classList.add('show');
+            showSuccessMessage('🎨 Professional branding opened');
+        }
+
+        function closeBrandingInsert() {
+            document.getElementById('branding-insert-modal').classList.remove('show');
+        }
+
+        function updateLogoPreview() {
+            var logoPreview = document.getElementById('logo-preview-small');
+            if (!logoPreview) return;
+            
+            if (customLogo) {
+                logoPreview.innerHTML = '<img src="' + customLogo + '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" alt="Logo">';
+            } else {
+                logoPreview.innerHTML = '🏢';
+                logoPreview.style.background = 'var(--accent-primary)';
+                logoPreview.style.color = 'white';
+                logoPreview.style.display = 'flex';
+                logoPreview.style.alignItems = 'center';
+                logoPreview.style.justifyContent = 'center';
+                logoPreview.style.fontSize = '24px';
+            }
+        }
+
+        function handleBrandingLogoUpload(event) {
+            var file = event.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 2 * 1024 * 1024) {
+                showSuccessMessage('⚠️ File too large! Please choose an image under 2MB');
+                return;
+            }
+            
+            if (!file.type.startsWith('image/')) {
+                showSuccessMessage('⚠️ Please select a valid image file');
+                return;
+            }
+            
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                customLogo = e.target.result;
+                brandingData.logo = e.target.result;
+                updateLogoPreview();
+                updateHeaderLogo();
+                saveDataToStorage();
+                showSuccessMessage('✅ Logo uploaded successfully!');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function applyBranding() {
+            brandingData.tagline = document.getElementById('company-tagline-input').value.trim() || brandingData.tagline;
+            saveDataToStorage();
+            closeBrandingInsert();
+            showSuccessMessage('✅ Professional branding applied!');
+        }
+
+        function updateHeaderLogo() {
+            var logoContainer = document.querySelector('.app-logo');
+            if (!logoContainer) return;
+            
+            if (customLogo) {
+                logoContainer.innerHTML = '<img src="' + customLogo + '" style="width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" alt="Company Logo">';
+            } else {
+                logoContainer.innerHTML = '<svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+                    '<path d="M20 65L35 50L30 45L45 30C50 25 60 25 65 30C70 35 70 45 65 50L50 65L45 60L30 75C25 80 15 80 10 75C5 70 5 60 10 55L20 65Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>' +
+                    '<path d="M70 20L80 30L75 35L85 45C87 47 87 51 85 53L75 63L70 58L60 68C58 70 54 70 52 68L42 58L47 53L37 43C35 41 35 37 37 35L47 25L52 30L62 20C64 18 68 18 70 20Z" fill="currentColor" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>' +
+                    '<circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.8)" stroke="currentColor" stroke-width="2"/>' +
+                    '<circle cx="50" cy="50" r="3" fill="currentColor"/>' +
+                    '</svg>';
+            }
+        }
+
+        // Company Info Management
+        function openCompanyInfo() {
+            document.getElementById('company-name-input').value = companyInfo.name;
+            document.getElementById('company-reg-input').value = companyInfo.registration;
+            document.getElementById('company-phone-input').value = companyInfo.phone;
+            document.getElementById('company-email-input').value = companyInfo.email;
+            document.getElementById('company-address-input').value = companyInfo.address;
+            
+            document.getElementById('company-info-modal').classList.add('show');
+            showSuccessMessage('🏢 Company info opened');
+        }
+
+        function closeCompanyInfo() {
+            document.getElementById('company-info-modal').classList.remove('show');
+        }
+
+        function saveCompanyInfo() {
+            companyInfo.name = document.getElementById('company-name-input').value.trim() || companyInfo.name;
+            companyInfo.registration = document.getElementById('company-reg-input').value.trim() || companyInfo.registration;
+            companyInfo.phone = document.getElementById('company-phone-input').value.trim() || companyInfo.phone;
+            companyInfo.email = document.getElementById('company-email-input').value.trim() || companyInfo.email;
+            companyInfo.address = document.getElementById('company-address-input').value.trim() || companyInfo.address;
+            
+            updateHeaderDisplay();
+            saveDataToStorage();
+            closeCompanyInfo();
+            showSuccessMessage('✅ Company details saved!');
         }
 
         // Quote Detail and Management Functions
@@ -3423,7 +2997,7 @@
                         '</div>' +
                         '<div class="item-details">' + item.description + '</div>' +
                         '<div class="item-pricing">' +
-                        '<span class="quantity">Quantity: ' + item.quantity + ' ' + item.unit + '</span>' +
+                        '<span class="quantity">Quantity: ' + item.quantity + ' ' + item.unit + ' × RM ' + item.price.toFixed(2) + '</span>' +
                         '<span class="price">RM ' + item.total.toFixed(2) + '</span>' +
                         '</div>' +
                         '</div>';
@@ -3435,18 +3009,23 @@
             html += '</div>';
             
             html += '<div class="card">' +
-                '<div class="pdf-actions">' +
-                '<button class="form-btn btn-success" onclick="openPdfShare()">' +
-                '<span>📤</span> Share Quote' +
+                '<div class="pdf-actions four-col">' +
+                '<button class="form-btn btn-success" onclick="shareExistingQuotePDF(' + quote.id + ')">' +
+                '<span>📤</span> Share PDF' +
                 '</button>' +
-                '<button class="form-btn btn-info" onclick="editQuote(' + quote.id + ')">' +
+                '<button class="form-btn btn-info" onclick="downloadExistingQuotePDF(' + quote.id + ')">' +
+                '<span>💾</span> Download PDF' +
+                '</button>' +
+                '<button class="form-btn btn-warning" onclick="editQuote(' + quote.id + ')">' +
                 '<span>✏️</span> Edit Quote' +
                 '</button>' +
                 '<button class="form-btn btn-danger" onclick="deleteQuote(' + quote.id + ')">' +
                 '<span>🗑️</span> Delete Quote' +
                 '</button>' +
-                '<button class="form-btn btn-secondary" onclick="showView(\'quotes\')">' +
-                '<span>←</span> Back to Quotes' +
+                '</div>' +
+                '<div style="margin-top: 16px;">' +
+                '<button class="form-btn btn-secondary" onclick="showView(\'quotes\')" style="width: 100%;">' +
+                '<span>←</span> Back to All Quotes' +
                 '</button>' +
                 '</div>' +
                 '</div>';
@@ -3472,6 +3051,7 @@
             
             renderCategories();
             updateQuoteSummaryDisplay();
+            updateProceedButton();
             
             document.getElementById('category-selection-modal').classList.add('show');
             showSuccessMessage('✏️ Editing quote: ' + quote.title);
@@ -3491,23 +3071,19 @@
             }
         }
 
-        // PDF Generation with Enhanced Branding
-        function openPdfShare() {
-            document.getElementById('pdf-share-modal').classList.add('show');
-            showSuccessMessage('📄 PDF sharing options opened');
-        }
-
-        function closePdfShare() {
-            document.getElementById('pdf-share-modal').classList.remove('show');
-        }
-
-        function generateAndSharePDF() {
-            if (!currentQuoteId) return;
-            
-            var quote = jobQuotes.find(function(q) { return q.id === currentQuoteId; });
+        function shareExistingQuotePDF(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
             if (!quote) return;
             
-            showSuccessMessage('📄 Generating enhanced branded PDF...');
+            currentQuoteId = quoteId;
+            generateFinalPDF(quote);
+        }
+
+        function downloadExistingQuotePDF(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            showSuccessMessage('💾 Downloading PDF...');
             
             var { jsPDF } = window.jspdf;
             var doc = new jsPDF();
@@ -3515,156 +3091,7 @@
             try {
                 var quoteBranding = quote.branding || brandingData;
                 
-                // Enhanced header with custom branding
-                var primaryRgb = hexToRgb(quoteBranding.primaryColor);
-                doc.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
-                doc.rect(0, 0, 210, 40, 'F');
-                
-                // Logo
-                if (quoteBranding.logo) {
-                    try {
-                        doc.addImage(quoteBranding.logo, 'JPEG', 15, 8, 25, 25);
-                    } catch (logoError) {
-                        console.warn('Logo embedding failed:', logoError);
-                    }
-                }
-                
-                // Company info in white
-                doc.setTextColor(255, 255, 255);
-                doc.setFontSize(20);
-                doc.setFont(undefined, 'bold');
-                doc.text(companyInfo.name, 50, 20);
-                
-                doc.setFontSize(11);
-                doc.setFont(undefined, 'normal');
-                doc.text('Registration: ' + companyInfo.registration, 50, 28);
-                doc.text(quoteBranding.tagline, 50, 35);
-                
-                // Reset text color
-                doc.setTextColor(0, 0, 0);
-                
-                // Quote details
-                doc.setFontSize(18);
-                doc.setFont(undefined, 'bold');
-                doc.text('PROFESSIONAL QUOTE', 20, 55);
-                
-                doc.setFontSize(12);
-                doc.setFont(undefined, 'normal');
-                doc.text('Quote #: ' + quote.id, 20, 70);
-                doc.text('Date: ' + formatDate(quote.createdAt), 20, 80);
-                doc.text('Project: ' + quote.title, 20, 90);
-                
-                var categoriesText = quote.categories ? quote.categories.map(function(cat) { 
-                    return categories[cat] ? categories[cat].name : cat; 
-                }).join(', ') : 'Multiple Categories';
-                doc.text('Categories: ' + categoriesText, 20, 100);
-                
-                // Items table
-                doc.setFontSize(14);
-                doc.setFont(undefined, 'bold');
-                doc.text('QUOTE ITEMS', 20, 120);
-                
-                var yPosition = 135;
-                doc.setFontSize(10);
-                doc.setFont(undefined, 'bold');
-                doc.text('No.', 20, yPosition);
-                doc.text('Description', 35, yPosition);
-                doc.text('Category', 110, yPosition);
-                doc.text('Qty', 140, yPosition);
-                doc.text('Unit', 155, yPosition);
-                doc.text('Amount (RM)', 175, yPosition);
-                
-                doc.setFont(undefined, 'normal');
-                for (var i = 0; i < quote.items.length; i++) {
-                    var item = quote.items[i];
-                    yPosition += 12;
-                    
-                    doc.text((i + 1).toString(), 20, yPosition);
-                    var itemName = item.name + (item.isCustom ? ' (Custom)' : '');
-                    doc.text(itemName.substring(0, 25), 35, yPosition);
-                    
-                    var itemCategory = item.category || 'common';
-                    var catName = categories[itemCategory] ? categories[itemCategory].name : itemCategory;
-                    doc.text(catName.substring(0, 10), 110, yPosition);
-                    
-                    doc.text(item.quantity.toString(), 140, yPosition);
-                    doc.text(item.unit.substring(0, 8), 155, yPosition);
-                    doc.text(item.total.toFixed(2), 175, yPosition);
-                    
-                    if (item.description && yPosition < 240) {
-                        yPosition += 8;
-                        doc.setFontSize(8);
-                        doc.text(item.description.substring(0, 60), 35, yPosition);
-                        doc.setFontSize(10);
-                    }
-                    
-                    if (yPosition > 250) {
-                        doc.addPage();
-                        yPosition = 30;
-                    }
-                }
-                
-                // Total with brand color
-                yPosition += 15;
-                doc.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
-                doc.rect(20, yPosition - 5, 170, 20, 'F');
-                
-                doc.setTextColor(255, 255, 255);
-                doc.setFontSize(16);
-                doc.setFont(undefined, 'bold');
-                doc.text('TOTAL AMOUNT: RM ' + quote.totalAmount.toFixed(2), 25, yPosition + 7);
-                
-                // Footer
-                doc.setTextColor(0, 0, 0);
-                doc.setFontSize(10);
-                doc.setFont(undefined, 'normal');
-                doc.text('Thank you for choosing ' + companyInfo.name, 20, yPosition + 35);
-                doc.text('Contact: ' + companyInfo.phone + ' • ' + companyInfo.email, 20, yPosition + 45);
-                
-                var pdfBlob = doc.output('blob');
-                var fileName = 'REFIT_Enhanced_Quote_' + quote.id + '_' + quote.title.replace(/[^a-z0-9]/gi, '_') + '.pdf';
-                
-                if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([pdfBlob], fileName, { type: 'application/pdf' })] })) {
-                    var file = new File([pdfBlob], fileName, { type: 'application/pdf' });
-                    
-                    navigator.share({
-                        title: 'Enhanced Quote - ' + quote.title,
-                        text: 'Professional quote with custom branding from REFIT MAINTENANCE SERVICES',
-                        files: [file]
-                    }).then(function() {
-                        showSuccessMessage('📤 Enhanced quote shared successfully!');
-                        closePdfShare();
-                    }).catch(function(error) {
-                        console.log('Share failed:', error);
-                        downloadPDF();
-                    });
-                } else {
-                    downloadPDF();
-                }
-                
-            } catch (error) {
-                console.error('PDF generation error:', error);
-                showSuccessMessage('❌ Error generating PDF. Please try again.');
-            }
-        }
-
-        function downloadPDF() {
-            if (!currentQuoteId) return;
-            
-            var quote = jobQuotes.find(function(q) { return q.id === currentQuoteId; });
-            if (!quote) return;
-            
-            showSuccessMessage('💾 Downloading enhanced PDF...');
-            
-            var { jsPDF } = window.jspdf;
-            var doc = new jsPDF();
-            
-            try {
-                var quoteBranding = quote.branding || brandingData;
-                
-                // Same PDF generation code as generateAndSharePDF
-                var primaryRgb = hexToRgb(quoteBranding.primaryColor);
-                doc.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
+                doc.setFillColor(244, 114, 182);
                 doc.rect(0, 0, 210, 40, 'F');
                 
                 if (quoteBranding.logo) {
@@ -3696,9 +3123,9 @@
                 doc.text('Date: ' + formatDate(quote.createdAt), 20, 80);
                 doc.text('Project: ' + quote.title, 20, 90);
                 
-                var categoriesText = quote.categories ? quote.categories.map(function(cat) { 
+                var categoriesText = quote.categories.map(function(cat) { 
                     return categories[cat] ? categories[cat].name : cat; 
-                }).join(', ') : 'Multiple Categories';
+                }).join(', ');
                 doc.text('Categories: ' + categoriesText, 20, 100);
                 
                 doc.setFontSize(14);
@@ -3710,10 +3137,10 @@
                 doc.setFont(undefined, 'bold');
                 doc.text('No.', 20, yPosition);
                 doc.text('Description', 35, yPosition);
-                doc.text('Category', 110, yPosition);
                 doc.text('Qty', 140, yPosition);
                 doc.text('Unit', 155, yPosition);
-                doc.text('Amount (RM)', 175, yPosition);
+                doc.text('Rate', 170, yPosition);
+                doc.text('Amount', 185, yPosition);
                 
                 doc.setFont(undefined, 'normal');
                 for (var i = 0; i < quote.items.length; i++) {
@@ -3722,22 +3149,11 @@
                     
                     doc.text((i + 1).toString(), 20, yPosition);
                     var itemName = item.name + (item.isCustom ? ' (Custom)' : '');
-                    doc.text(itemName.substring(0, 25), 35, yPosition);
-                    
-                    var itemCategory = item.category || 'common';
-                    var catName = categories[itemCategory] ? categories[itemCategory].name : itemCategory;
-                    doc.text(catName.substring(0, 10), 110, yPosition);
-                    
+                    doc.text(itemName.substring(0, 30), 35, yPosition);
                     doc.text(item.quantity.toString(), 140, yPosition);
                     doc.text(item.unit.substring(0, 8), 155, yPosition);
-                    doc.text(item.total.toFixed(2), 175, yPosition);
-                    
-                    if (item.description && yPosition < 240) {
-                        yPosition += 8;
-                        doc.setFontSize(8);
-                        doc.text(item.description.substring(0, 60), 35, yPosition);
-                        doc.setFontSize(10);
-                    }
+                    doc.text(item.price.toFixed(2), 170, yPosition);
+                    doc.text(item.total.toFixed(2), 185, yPosition);
                     
                     if (yPosition > 250) {
                         doc.addPage();
@@ -3746,7 +3162,7 @@
                 }
                 
                 yPosition += 15;
-                doc.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
+                doc.setFillColor(244, 114, 182);
                 doc.rect(20, yPosition - 5, 170, 20, 'F');
                 
                 doc.setTextColor(255, 255, 255);
@@ -3760,11 +3176,10 @@
                 doc.text('Thank you for choosing ' + companyInfo.name, 20, yPosition + 35);
                 doc.text('Contact: ' + companyInfo.phone + ' • ' + companyInfo.email, 20, yPosition + 45);
                 
-                var fileName = 'REFIT_Enhanced_Quote_' + quote.id + '_' + quote.title.replace(/[^a-z0-9]/gi, '_') + '.pdf';
+                var fileName = 'REFIT_Quote_' + quote.id + '_' + quote.title.replace(/[^a-z0-9]/gi, '_') + '.pdf';
                 doc.save(fileName);
                 
-                showSuccessMessage('💾 Enhanced PDF downloaded successfully!');
-                closePdfShare();
+                showSuccessMessage('💾 PDF downloaded successfully!');
                 
             } catch (error) {
                 console.error('PDF download error:', error);
@@ -3821,7 +3236,7 @@
                 container.innerHTML = '<div style="text-align: center; padding: 30px 20px; color: var(--text-muted);">' +
                     '<div style="font-size: 32px; margin-bottom: 8px;">💰</div>' +
                     '<p style="font-weight: 600;">No job quotes yet</p>' +
-                    '<p style="font-size: 12px; margin-top: 4px;">Create your first job quote</p>' +
+                    '<p style="font-size: 12px; margin-top: 4px;">Create your first job quote with the complete workflow</p>' +
                     '</div>';
                 return;
             }
@@ -3867,7 +3282,7 @@
                 container.innerHTML = '<div class="empty-state">' +
                     '<div class="empty-icon">💰</div>' +
                     '<p style="font-weight: 600;">No job quotes found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first job quote</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first quote using the complete 4-step workflow</p>' +
                     '</div>';
                 return;
             }
@@ -3902,7 +3317,7 @@
                     '</div>' +
                     '<div class="item-actions">' +
                     '<button class="icon-btn quote-btn" onclick="showQuoteDetail(' + quote.id + ')" title="View Quote">👁️</button>' +
-                    '<button class="icon-btn share-btn" onclick="currentQuoteId=' + quote.id + '; openPdfShare()" title="Share Quote">📤</button>' +
+                    '<button class="icon-btn share-btn" onclick="shareExistingQuotePDF(' + quote.id + ')" title="Share PDF">📤</button>' +
                     '<button class="icon-btn edit-btn" onclick="editQuote(' + quote.id + ')" title="Edit Quote">✏️</button>' +
                     '<button class="icon-btn delete-btn" onclick="deleteQuote(' + quote.id + ')" title="Delete Quote">🗑️</button>' +
                     '</div>' +
@@ -3913,35 +3328,6 @@
                     '</div>';
             }
             container.innerHTML = html;
-        }
-
-        // Company Info Management
-        function openCompanyInfo() {
-            document.getElementById('company-name-input').value = companyInfo.name;
-            document.getElementById('company-reg-input').value = companyInfo.registration;
-            document.getElementById('company-phone-input').value = companyInfo.phone;
-            document.getElementById('company-email-input').value = companyInfo.email;
-            document.getElementById('company-address-input').value = companyInfo.address;
-            
-            document.getElementById('company-info-modal').classList.add('show');
-            showSuccessMessage('🏢 Company info opened');
-        }
-
-        function closeCompanyInfo() {
-            document.getElementById('company-info-modal').classList.remove('show');
-        }
-
-        function saveCompanyInfo() {
-            companyInfo.name = document.getElementById('company-name-input').value.trim() || companyInfo.name;
-            companyInfo.registration = document.getElementById('company-reg-input').value.trim() || companyInfo.registration;
-            companyInfo.phone = document.getElementById('company-phone-input').value.trim() || companyInfo.phone;
-            companyInfo.email = document.getElementById('company-email-input').value.trim() || companyInfo.email;
-            companyInfo.address = document.getElementById('company-address-input').value.trim() || companyInfo.address;
-            
-            updateHeaderDisplay();
-            saveDataToStorage();
-            closeCompanyInfo();
-            showSuccessMessage('✅ Company details saved!');
         }
 
         // Utility Functions
@@ -4008,7 +3394,7 @@
                 customLogo: customLogo,
                 themePreference: currentTheme,
                 exportDate: new Date().toISOString(),
-                version: 'Enhanced Branding Suite 2.0'
+                version: 'Complete Workflow System 3.0'
             };
             
             var dataStr = JSON.stringify(allData, null, 2);
@@ -4016,10 +3402,10 @@
             
             var link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Enhanced_Branding_' + new Date().toISOString().split('T')[0] + '.json';
+            link.download = 'REFIT_Complete_Workflow_' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             
-            showSuccessMessage('🎨📤 Enhanced branding data exported successfully! 💕');
+            showSuccessMessage('🎉📤 Complete workflow data exported successfully! 💕');
         }
 
         // Setup and initialization functions
@@ -4033,25 +3419,12 @@
                 });
             }
             
-            var customItemForm = document.getElementById('custom-item-form');
-            if (customItemForm) {
-                customItemForm.addEventListener('submit', handleCustomItemSubmit);
-            }
-            
-            // Enhanced custom item form listeners
-            var customItemName = document.getElementById('custom-item-name');
-            if (customItemName) {
-                customItemName.addEventListener('input', calculateCustomItemTotal);
-            }
-            
-            var customItemUnitPrice = document.getElementById('custom-item-unit-price');
-            if (customItemUnitPrice) {
-                customItemUnitPrice.addEventListener('input', calculateCustomItemTotal);
-            }
-            
-            var customItemQuantity = document.getElementById('custom-item-quantity');
-            if (customItemQuantity) {
-                customItemQuantity.addEventListener('input', calculateCustomItemTotal);
+            var customItemInputs = ['custom-item-name', 'custom-item-price'];
+            for (var i = 0; i < customItemInputs.length; i++) {
+                var input = document.getElementById(customItemInputs[i]);
+                if (input) {
+                    input.addEventListener('input', calculateCustomTotal);
+                }
             }
         }
 
@@ -4095,26 +3468,31 @@
             updateStats();
             renderViews();
             
-            showSuccessMessage('🎨✨ REFIT Enhanced Branding Suite Ready! Complete professional customization! 💕');
-            console.log('🔧 REFIT MAINTENANCE SERVICES - Enhanced Branding System');
-            console.log('🎨 Complete Branding Insert Suite with Professional Features');
-            console.log('📄 Custom Branded PDF Generation');
-            console.log('👁️ Professional Quote Preview System');
-            console.log('🌈 8 Color Themes with Custom Logo Support');
+            showSuccessMessage('🎉✨ REFIT Complete Workflow System Ready! 4-Step Quote Creation! 💕');
+            console.log('🔧 REFIT MAINTENANCE SERVICES - Complete Workflow System');
+            console.log('📝 4-Step Process: Title → Categories → Items → Review → PDF');
+            console.log('🛠️ Enhanced Custom Items with Quantity & Total Price');
+            console.log('📋 Complete Navigation: OK, Next, Back, Edit, Cancel');
+            console.log('📄 Professional PDF Generation Ready to Send');
         }
 
-        console.log('🎨💕 REFIT ENHANCED BRANDING SUITE - Complete Professional System!');
-        console.log('📝 Enhanced Quote Creation: Title → Multi-Category → Items → Branding');
-        console.log('🎨 Complete Branding Insert: Logo + Colors + Tagline + Templates');
-        console.log('🌈 8 Professional Color Themes: Pink, Blue, Green, Purple, Orange, Red, Teal, Indigo');
-        console.log('📄 Custom Branded PDFs: Professional headers with logo and brand colors');
-        console.log('👁️ Live Branding Preview: See exactly how quotes will look');
-        console.log('💾 Branding Templates: Save and reuse professional branding setups');
-        console.log('📤 Enhanced Sharing: Mobile-optimized branded PDF sharing');
-        console.log('🛠️ Custom Items: Create items on-the-fly during quote creation');
-        console.log('🏢 Company Branding: Full company info integration with branding');
-        console.log('📦 Export Package: Complete branding and data export system');
-        console.log('🌸💕 Beautiful Enhanced UI: Professional gradients, animations, and pink aesthetics!');
+        console.log('🎉💕 REFIT COMPLETE WORKFLOW SYSTEM - Professional 4-Step Quote Creation!');
+        console.log('📝 Step 1: Job Title Entry with Cancel/Next Navigation');
+        console.log('🏷️ Step 2: Multi-Category Selection with Live Quote Summary');
+        console.log('📋 Step 3: Enhanced Item Selection:');
+        console.log('   • Preset Items with Toggle Selection');
+        console.log('   • Custom Items with Per Unit Price & Quantity Controls');
+        console.log('   • Add Button to Confirm Custom Items');
+        console.log('   • Done Button to Complete Category');
+        console.log('👁️ Step 4: Complete Overview & Final Review:');
+        console.log('   • Full Quote Details by Category');
+        console.log('   • Edit, Back, Cancel, OK Options');
+        console.log('   • OK Button Generates PDF Ready to Send');
+        console.log('📤 Professional PDF: Branded headers, detailed items, totals');
+        console.log('🔄 Complete Navigation: Back/Forward through all steps');
+        console.log('✏️ Edit Mode: Modify existing quotes through same workflow');
+        console.log('🗑️ Delete Option: Remove quotes with confirmation');
+        console.log('🌸💕 Beautiful Pink UI: Professional gradients and animations throughout!');
     </script>
 </body>
 </html>
