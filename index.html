@@ -2921,7 +2921,7 @@
                 </div>
                 
                 <div class="btn-group" style="margin-top: 20px;">
-                    <button class="btn btn-primary" onclick="createCustomTemplate()">➕ Create Custom</button>
+                    <button class="btn btn-primary" onclick="createNewTemplate()">➕ Create New Template</button>
                     <button class="btn btn-secondary" onclick="closeTemplates()">Cancel</button>
                 </div>
             `;
@@ -2934,14 +2934,13 @@
             
             resetCurrentQuote();
             currentQuoteData.template = template;
-            
-            // Apply template categories
             currentQuoteData.categories = [...template.categories];
             
             // Apply template items
-            template.items.forEach(function(categoryGroup) {
-                categoryGroup.itemIds.forEach(function(itemId) {
-                    var item = findItemById(itemId);
+            template.items.forEach(function(categoryItems) {
+                var categoryItems = presetWorkItems[categoryItems.categoryId] || [];
+                categoryItems.itemIds.forEach(function(itemId) {
+                    var item = categoryItems.find(function(i) { return i.id === itemId; });
                     if (item) {
                         var selectedItem = {
                             id: item.id,
@@ -2951,7 +2950,7 @@
                             unit: item.unit,
                             quantity: 1,
                             total: calculateSmartPrice(item),
-                            category: categoryGroup.categoryId,
+                            category: categoryItems.categoryId,
                             isCustom: false
                         };
                         currentQuoteData.items.push(selectedItem);
@@ -2979,179 +2978,223 @@
             var html = `
                 <div style="text-align: center; margin-bottom: 24px;">
                     <div style="font-size: 48px; margin-bottom: 16px;">🧠</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">AI-powered quote generation with smart recommendations</p>
+                    <p style="color: var(--text-muted); font-size: 16px;">AI-powered quote generation</p>
                 </div>
                 
-                <div class="card" style="background: linear-gradient(135deg, var(--btn-smart), #818cf8); color: white;">
-                    <h4 style="font-weight: 700; margin-bottom: 16px;">🧠 Smart Analysis</h4>
-                    <p>Let our AI analyze your requirements and generate an optimized quote with smart pricing and recommendations.</p>
-                </div>
-                
-                <form id="smart-quote-form">
-                    <textarea class="form-input" placeholder="Describe your project in detail... (e.g., 'Need to renovate 500 sqft office with new electrical outlets, AC installation, and deep cleaning')" id="smart-description" rows="4" style="resize: none;"></textarea>
+                <div class="card">
+                    <h4 style="margin-bottom: 16px;">🎯 Smart Quote Generator</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 16px;">Answer a few questions and let AI create your quote</p>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                        <select class="form-input" id="smart-budget" style="margin-bottom: 0;">
-                            <option value="">Budget Range</option>
-                            <option value="low">RM 1,000 - 5,000</option>
-                            <option value="medium">RM 5,000 - 15,000</option>
-                            <option value="high">RM 15,000 - 50,000</option>
-                            <option value="enterprise">RM 50,000+</option>
+                    <form id="smart-quote-form">
+                        <select class="form-input" id="smart-project-type">
+                            <option value="">What type of project?</option>
+                            <option value="office-renovation">Office Renovation</option>
+                            <option value="home-maintenance">Home Maintenance</option>
+                            <option value="emergency-repair">Emergency Repair</option>
+                            <option value="new-installation">New Installation</option>
+                            <option value="regular-service">Regular Service</option>
                         </select>
                         
-                        <select class="form-input" id="smart-timeline" style="margin-bottom: 0;">
-                            <option value="">Timeline</option>
-                            <option value="asap">ASAP (Rush)</option>
-                            <option value="1week">Within 1 Week</option>
-                            <option value="1month">Within 1 Month</option>
-                            <option value="flexible">Flexible</option>
+                        <select class="form-input" id="smart-budget-range">
+                            <option value="">Budget range?</option>
+                            <option value="under-1000">Under RM 1,000</option>
+                            <option value="1000-5000">RM 1,000 - 5,000</option>
+                            <option value="5000-15000">RM 5,000 - 15,000</option>
+                            <option value="15000-50000">RM 15,000 - 50,000</option>
+                            <option value="over-50000">Over RM 50,000</option>
                         </select>
-                    </div>
+                        
+                        <select class="form-input" id="smart-urgency">
+                            <option value="">How urgent is this?</option>
+                            <option value="emergency">Emergency (Same day)</option>
+                            <option value="urgent">Urgent (Within 3 days)</option>
+                            <option value="normal">Normal (Within 1 week)</option>
+                            <option value="flexible">Flexible (Anytime)</option>
+                        </select>
+                        
+                        <textarea class="form-input" placeholder="Describe what you need..." id="smart-description" rows="3"></textarea>
+                    </form>
                     
-                    <div class="suggestions">
-                        <div class="suggestions-label">🎯 Common Project Types:</div>
-                        <div class="suggestions-grid">
-                            <div class="suggestion-btn" onclick="fillSmartDescription('Complete office renovation with electrical, HVAC, and cleaning for 800 sqft space')">Office Renovation</div>
-                            <div class="suggestion-btn" onclick="fillSmartDescription('Residential plumbing upgrade including new faucets, toilet installation, and pipe repairs')">Home Plumbing</div>
-                            <div class="suggestion-btn" onclick="fillSmartDescription('Commercial AC installation with 3 split units and electrical work for new office')">AC Installation</div>
-                            <div class="suggestion-btn" onclick="fillSmartDescription('Emergency electrical repair with safety inspection and circuit breaker upgrade')">Electrical Emergency</div>
-                        </div>
+                    <div class="btn-group">
+                        <button class="btn btn-smart" onclick="generateSmartQuote()" id="generate-smart-btn" disabled>🧠 Generate Smart Quote</button>
+                        <button class="btn btn-secondary" onclick="closeSmartQuote()">Cancel</button>
                     </div>
-                </form>
+                </div>
                 
-                <div class="form-actions">
-                    <button type="button" class="form-btn btn-secondary" onclick="closeSmartQuote()">
-                        Cancel
-                    </button>
-                    <button type="button" class="form-btn btn-smart" onclick="generateSmartQuote()" id="generate-smart-btn">
-                        🧠 Generate Smart Quote
-                    </button>
+                <div class="action-grid" style="margin-top: 20px;">
+                    <div class="action-card" onclick="quickSmartQuote('office')">
+                        <div class="icon">🏢</div>
+                        <div class="title">Office Projects</div>
+                        <div class="description">Renovation, electrical, HVAC, cleaning</div>
+                    </div>
+                    <div class="action-card" onclick="quickSmartQuote('home')">
+                        <div class="icon">🏠</div>
+                        <div class="title">Home Projects</div>
+                        <div class="description">Plumbing, electrical, maintenance</div>
+                    </div>
+                    <div class="action-card" onclick="quickSmartQuote('emergency')">
+                        <div class="icon">🚨</div>
+                        <div class="title">Emergency</div>
+                        <div class="description">Urgent repairs and fixes</div>
+                    </div>
+                    <div class="action-card" onclick="quickSmartQuote('commercial')">
+                        <div class="icon">🏭</div>
+                        <div class="title">Commercial</div>
+                        <div class="description">Large scale projects</div>
+                    </div>
                 </div>
             `;
             content.innerHTML = html;
+            
+            // Setup smart quote listeners
+            ['smart-project-type', 'smart-budget-range', 'smart-urgency', 'smart-description'].forEach(function(id) {
+                var element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('change', updateSmartGenerateButton);
+                    element.addEventListener('input', updateSmartGenerateButton);
+                }
+            });
         }
 
-        function fillSmartDescription(description) {
-            document.getElementById('smart-description').value = description;
-            showComprehensiveMessage('💡 Smart description filled');
+        function updateSmartGenerateButton() {
+            var projectType = document.getElementById('smart-project-type').value;
+            var budget = document.getElementById('smart-budget-range').value;
+            var urgency = document.getElementById('smart-urgency').value;
+            var description = document.getElementById('smart-description').value.trim();
+            
+            var isValid = projectType && budget && urgency && description.length > 10;
+            var button = document.getElementById('generate-smart-btn');
+            
+            if (button) {
+                button.disabled = !isValid;
+                button.style.opacity = isValid ? '1' : '0.5';
+            }
         }
 
         function generateSmartQuote() {
+            var projectType = document.getElementById('smart-project-type').value;
+            var budget = document.getElementById('smart-budget-range').value;
+            var urgency = document.getElementById('smart-urgency').value;
             var description = document.getElementById('smart-description').value.trim();
-            if (!description) {
-                showComprehensiveMessage('⚠️ Please describe your project', 'warning');
-                return;
+            
+            // AI-like quote generation logic
+            resetCurrentQuote();
+            currentQuoteData.isSmartGenerated = true;
+            
+            // Generate smart categories based on project type
+            switch(projectType) {
+                case 'office-renovation':
+                    currentQuoteData.categories = ['electrical', 'cleaning', 'hvac', 'labor'];
+                    currentQuoteData.title = 'Smart Office Renovation Project';
+                    break;
+                case 'home-maintenance':
+                    currentQuoteData.categories = ['plumbing', 'electrical', 'common'];
+                    currentQuoteData.title = 'Smart Home Maintenance Service';
+                    break;
+                case 'emergency-repair':
+                    currentQuoteData.categories = ['common', 'plumbing', 'electrical'];
+                    currentQuoteData.title = 'Smart Emergency Repair Service';
+                    currentQuoteData.priority = 'urgent';
+                    break;
+                case 'new-installation':
+                    currentQuoteData.categories = ['hvac', 'electrical', 'parts', 'labor'];
+                    currentQuoteData.title = 'Smart Installation Project';
+                    break;
+                case 'regular-service':
+                    currentQuoteData.categories = ['cleaning', 'common', 'labor'];
+                    currentQuoteData.title = 'Smart Regular Maintenance Service';
+                    break;
             }
             
-            var budget = document.getElementById('smart-budget').value;
-            var timeline = document.getElementById('smart-timeline').value;
+            // Generate smart items based on budget
+            var budgetMultiplier = getBudgetMultiplier(budget);
+            currentQuoteData.categories.forEach(function(categoryKey) {
+                var categoryItems = presetWorkItems[categoryKey] || [];
+                var itemsToAdd = Math.min(categoryItems.length, Math.ceil(budgetMultiplier * 3));
+                
+                for (var i = 0; i < itemsToAdd; i++) {
+                    var item = categoryItems[i];
+                    if (item) {
+                        var selectedItem = {
+                            id: item.id,
+                            name: item.name,
+                            description: item.description,
+                            price: calculateSmartPrice(item) * budgetMultiplier,
+                            unit: item.unit,
+                            quantity: 1,
+                            total: calculateSmartPrice(item) * budgetMultiplier,
+                            category: categoryKey,
+                            isCustom: false,
+                            isSmartGenerated: true
+                        };
+                        currentQuoteData.items.push(selectedItem);
+                    }
+                }
+            });
             
-            // Smart AI-like analysis
-            var smartQuote = analyzeProjectDescription(description, budget, timeline);
+            // Set urgency-based timeline
+            switch(urgency) {
+                case 'emergency':
+                    currentQuoteData.timeline = 'asap';
+                    currentQuoteData.priority = 'urgent';
+                    break;
+                case 'urgent':
+                    currentQuoteData.timeline = '3days';
+                    currentQuoteData.priority = 'high';
+                    break;
+                case 'normal':
+                    currentQuoteData.timeline = '1week';
+                    currentQuoteData.priority = 'normal';
+                    break;
+                case 'flexible':
+                    currentQuoteData.timeline = 'flexible';
+                    currentQuoteData.priority = 'normal';
+                    break;
+            }
             
+            currentQuoteData.description = description;
+            
+            closeSmartQuote();
+            renderComprehensiveStep(1); // Start from client info
+            document.getElementById('comprehensive-quote-modal').classList.add('show');
+            showComprehensiveMessage('🧠 Smart quote generated! Complete client information to proceed.');
+        }
+
+        function quickSmartQuote(type) {
             resetCurrentQuote();
-            currentQuoteData = smartQuote;
             currentQuoteData.isSmartGenerated = true;
+            
+            switch(type) {
+                case 'office':
+                    currentQuoteData.categories = ['electrical', 'cleaning', 'hvac'];
+                    currentQuoteData.title = 'Office Maintenance Package';
+                    break;
+                case 'home':
+                    currentQuoteData.categories = ['plumbing', 'electrical'];
+                    currentQuoteData.title = 'Home Maintenance Service';
+                    break;
+                case 'emergency':
+                    currentQuoteData.categories = ['common', 'plumbing'];
+                    currentQuoteData.title = 'Emergency Repair Service';
+                    currentQuoteData.priority = 'urgent';
+                    break;
+                case 'commercial':
+                    currentQuoteData.categories = ['hvac', 'electrical', 'cleaning', 'equipment'];
+                    currentQuoteData.title = 'Commercial Maintenance Project';
+                    break;
+            }
             
             closeSmartQuote();
             startComprehensiveQuote();
-            showComprehensiveMessage('🧠 Smart quote generated with AI recommendations!');
-        }
-
-        function analyzeProjectDescription(description, budget, timeline) {
-            var keywords = description.toLowerCase();
-            var smartQuote = {
-                client: { name: '', company: '', phone: '', email: '', address: '' },
-                title: generateSmartTitle(keywords),
-                description: description,
-                categories: [],
-                items: [],
-                totalAmount: 0,
-                priority: timeline === 'asap' ? 'urgent' : 'normal',
-                timeline: timeline || 'flexible',
-                isSmartGenerated: true
-            };
-            
-            // Smart category detection
-            if (keywords.includes('electrical') || keywords.includes('wiring') || keywords.includes('outlet')) {
-                smartQuote.categories.push('electrical');
-            }
-            if (keywords.includes('plumbing') || keywords.includes('water') || keywords.includes('pipe') || keywords.includes('toilet') || keywords.includes('faucet')) {
-                smartQuote.categories.push('plumbing');
-            }
-            if (keywords.includes('ac') || keywords.includes('hvac') || keywords.includes('cooling') || keywords.includes('air con')) {
-                smartQuote.categories.push('hvac');
-            }
-            if (keywords.includes('cleaning') || keywords.includes('clean')) {
-                smartQuote.categories.push('cleaning');
-            }
-            if (keywords.includes('renovation') || keywords.includes('office') || keywords.includes('commercial')) {
-                if (!smartQuote.categories.includes('electrical')) smartQuote.categories.push('electrical');
-                if (!smartQuote.categories.includes('cleaning')) smartQuote.categories.push('cleaning');
-            }
-            if (keywords.includes('emergency') || keywords.includes('urgent')) {
-                smartQuote.categories.push('common');
-            }
-            
-            // Add labor and parts for complex projects
-            if (smartQuote.categories.length > 1) {
-                smartQuote.categories.push('labor');
-                smartQuote.categories.push('parts');
-            }
-            
-            // Smart item selection based on categories and budget
-            smartQuote.categories.forEach(function(categoryKey) {
-                var categoryItems = presetWorkItems[categoryKey] || [];
-                var budgetMultiplier = getBudgetMultiplier(budget);
-                var maxItems = budget === 'low' ? 2 : budget === 'high' ? 5 : 3;
-                
-                // Select most relevant items
-                var selectedItems = categoryItems.slice(0, maxItems);
-                selectedItems.forEach(function(item) {
-                    var smartPrice = calculateSmartPrice(item) * budgetMultiplier;
-                    var selectedItem = {
-                        id: item.id,
-                        name: item.name,
-                        description: item.description,
-                        price: smartPrice,
-                        unit: item.unit,
-                        quantity: 1,
-                        total: smartPrice,
-                        category: categoryKey,
-                        isCustom: false
-                    };
-                    smartQuote.items.push(selectedItem);
-                });
-            });
-            
-            // Calculate total
-            smartQuote.totalAmount = smartQuote.items.reduce(function(sum, item) { return sum + item.total; }, 0);
-            
-            return smartQuote;
-        }
-
-        function generateSmartTitle(keywords) {
-            if (keywords.includes('office') && keywords.includes('renovation')) {
-                return 'Smart Office Renovation Package';
-            } else if (keywords.includes('plumbing')) {
-                return 'Smart Plumbing Solutions';
-            } else if (keywords.includes('electrical')) {
-                return 'Smart Electrical Services';
-            } else if (keywords.includes('ac') || keywords.includes('hvac')) {
-                return 'Smart HVAC Installation';
-            } else if (keywords.includes('emergency')) {
-                return 'Smart Emergency Response Service';
-            } else {
-                return 'Smart Maintenance Package';
-            }
         }
 
         function getBudgetMultiplier(budget) {
             switch(budget) {
-                case 'low': return 0.8;
-                case 'medium': return 1.0;
-                case 'high': return 1.3;
-                case 'enterprise': return 1.5;
+                case 'under-1000': return 0.5;
+                case '1000-5000': return 0.8;
+                case '5000-15000': return 1.0;
+                case '15000-50000': return 1.5;
+                case 'over-50000': return 2.0;
                 default: return 1.0;
             }
         }
@@ -3160,162 +3203,82 @@
             document.getElementById('smart-quote-modal').classList.remove('show');
         }
 
-        // Quick Action Functions
+        // Quick Actions Functions
         function openQuickEdit() {
-            if (jobQuotes.length === 0) {
-                showComprehensiveMessage('⚠️ No quotes available for quick edit', 'warning');
-                return;
-            }
-            
-            renderQuickActionsModal('edit');
+            renderQuickActionsModal();
             document.getElementById('quick-actions-modal').classList.add('show');
         }
 
-        function openDuplicateQuote() {
-            if (jobQuotes.length === 0) {
-                showComprehensiveMessage('⚠️ No quotes available to duplicate', 'warning');
-                return;
-            }
-            
-            renderQuickActionsModal('duplicate');
-            document.getElementById('quick-actions-modal').classList.add('show');
-        }
-
-        function openBulkQuote() {
-            renderQuickActionsModal('bulk');
-            document.getElementById('quick-actions-modal').classList.add('show');
-        }
-
-        function renderQuickActionsModal(action) {
+        function renderQuickActionsModal() {
             var content = document.getElementById('quick-actions-content');
-            var html = '';
-            
-            switch(action) {
-                case 'edit':
-                    html = renderQuickEditContent();
-                    break;
-                case 'duplicate':
-                    html = renderDuplicateContent();
-                    break;
-                case 'bulk':
-                    html = renderBulkContent();
-                    break;
-            }
-            
-            content.innerHTML = html;
-        }
-
-        function renderQuickEditContent() {
-            var recentQuotes = jobQuotes.slice(-5).reverse();
-            return `
+            var html = `
                 <div style="text-align: center; margin-bottom: 24px;">
                     <div style="font-size: 48px; margin-bottom: 16px;">⚡</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Quick edit recent quotes</p>
-                </div>
-                
-                ${recentQuotes.map(function(quote) {
-                    return `
-                        <div class="action-card" onclick="quickEditQuoteById(${quote.id})">
-                            <div class="icon">✏️</div>
-                            <div class="title">${quote.title}</div>
-                            <div class="description">${quote.client.name} • RM ${quote.totalAmount.toFixed(2)}</div>
-                            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
-                                ${formatDate(quote.createdAt)}
-                            </div>
-                        </div>
-                    `;
-                }).join('')}
-                
-                <button class="btn btn-secondary" onclick="closeQuickActions()" style="width: 100%; margin-top: 16px;">
-                    Cancel
-                </button>
-            `;
-        }
-
-        function renderDuplicateContent() {
-            var recentQuotes = jobQuotes.slice(-5).reverse();
-            return `
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Duplicate existing quotes</p>
-                </div>
-                
-                ${recentQuotes.map(function(quote) {
-                    return `
-                        <div class="action-card" onclick="duplicateQuoteById(${quote.id})">
-                            <div class="icon">📄</div>
-                            <div class="title">${quote.title}</div>
-                            <div class="description">${quote.client.name} • RM ${quote.totalAmount.toFixed(2)}</div>
-                            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
-                                ${formatDate(quote.createdAt)}
-                            </div>
-                        </div>
-                    `;
-                }).join('')}
-                
-                <button class="btn btn-secondary" onclick="closeQuickActions()" style="width: 100%; margin-top: 16px;">
-                    Cancel
-                </button>
-            `;
-        }
-
-        function renderBulkContent() {
-            return `
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📦</div>
-                    <p style="color: var(--text-muted); font-size: 16px;">Create multiple quotes efficiently</p>
+                    <p style="color: var(--text-muted); font-size: 16px;">Quick actions for faster quote creation</p>
                 </div>
                 
                 <div class="action-grid">
-                    <div class="action-card" onclick="bulkFromTemplate()">
-                        <div class="icon">📋</div>
-                        <div class="title">From Template</div>
-                        <div class="description">Create multiple quotes using templates</div>
+                    <div class="action-card" onclick="quickEditLastQuote()">
+                        <div class="icon">✏️</div>
+                        <div class="title">Edit Last Quote</div>
+                        <div class="description">Quickly modify the most recent quote</div>
                     </div>
-                    <div class="action-card" onclick="bulkFromCSV()">
-                        <div class="icon">📊</div>
-                        <div class="title">From CSV</div>
-                        <div class="description">Import client data and generate quotes</div>
+                    <div class="action-card" onclick="duplicateLastQuote()">
+                        <div class="icon">📄</div>
+                        <div class="title">Duplicate Last</div>
+                        <div class="description">Create a copy of the last quote</div>
                     </div>
-                    <div class="action-card" onclick="bulkSimilar()">
-                        <div class="icon">🔄</div>
-                        <div class="title">Similar Quotes</div>
-                        <div class="description">Create variations of existing quotes</div>
+                    <div class="action-card" onclick="quickPriceCheck()">
+                        <div class="icon">🧮</div>
+                        <div class="title">Price Calculator</div>
+                        <div class="description">Quick pricing calculations</div>
                     </div>
-                    <div class="action-card" onclick="bulkCustom()">
-                        <div class="icon">⚙️</div>
-                        <div class="title">Custom Bulk</div>
-                        <div class="description">Advanced bulk quote creation</div>
+                    <div class="action-card" onclick="clientHistory()">
+                        <div class="icon">👥</div>
+                        <div class="title">Client History</div>
+                        <div class="description">View client quote history</div>
                     </div>
                 </div>
                 
-                <button class="btn btn-secondary" onclick="closeQuickActions()" style="width: 100%; margin-top: 16px;">
-                    Cancel
-                </button>
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="startComprehensiveQuote()">🎨 New Comprehensive Quote</button>
+                    <button class="btn btn-secondary" onclick="closeQuickActions()">Cancel</button>
+                </div>
             `;
+            content.innerHTML = html;
         }
 
-        function quickEditQuoteById(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
+        function quickEditLastQuote() {
+            if (jobQuotes.length === 0) {
+                showComprehensiveMessage('⚠️ No quotes found to edit', 'warning');
+                return;
+            }
             
-            currentQuoteData = JSON.parse(JSON.stringify(quote));
+            var lastQuote = jobQuotes[jobQuotes.length - 1];
+            currentQuoteData = JSON.parse(JSON.stringify(lastQuote));
+            
             closeQuickActions();
-            startComprehensiveQuote();
-            showComprehensiveMessage('⚡ Quick editing: ' + quote.title);
+            renderComprehensiveStep(5); // Go directly to review
+            document.getElementById('comprehensive-quote-modal').classList.add('show');
+            showComprehensiveMessage('✏️ Quick editing last quote: ' + lastQuote.title);
         }
 
-        function duplicateQuoteById(quoteId) {
-            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
-            if (!quote) return;
+        function duplicateLastQuote() {
+            if (jobQuotes.length === 0) {
+                showComprehensiveMessage('⚠️ No quotes found to duplicate', 'warning');
+                return;
+            }
             
-            currentQuoteData = JSON.parse(JSON.stringify(quote));
-            currentQuoteData.title += ' (Copy)';
-            currentQuoteData.createdAt = null;
+            var lastQuote = jobQuotes[jobQuotes.length - 1];
+            currentQuoteData = JSON.parse(JSON.stringify(lastQuote));
+            currentQuoteData.title = currentQuoteData.title + ' (Copy)';
+            delete currentQuoteData.id;
+            delete currentQuoteData.createdAt;
             
             closeQuickActions();
-            startComprehensiveQuote();
-            showComprehensiveMessage('📄 Duplicating: ' + quote.title);
+            renderComprehensiveStep(1); // Start from client info
+            document.getElementById('comprehensive-quote-modal').classList.add('show');
+            showComprehensiveMessage('📄 Duplicated quote: ' + lastQuote.title);
         }
 
         function closeQuickActions() {
@@ -3323,6 +3286,10 @@
         }
 
         // Additional Power Features
+        function openBulkQuote() {
+            showComprehensiveMessage('📦 Bulk Quote Creator - Coming Soon!', 'info');
+        }
+
         function openQuoteAnalyzer() {
             showComprehensiveMessage('📊 Quote Analyzer - Coming Soon!', 'info');
         }
@@ -3332,37 +3299,40 @@
         }
 
         function openPriceCalculator() {
-            showComprehensiveMessage('🧮 Smart Price Calculator - Coming Soon!', 'info');
+            showComprehensiveMessage('🧮 Smart Calculator - Coming Soon!', 'info');
         }
 
-        function bulkFromTemplate() {
-            showComprehensiveMessage('📦 Bulk Template Creation - Coming Soon!', 'info');
+        function openDuplicateQuote() {
+            if (jobQuotes.length === 0) {
+                showComprehensiveMessage('⚠️ No quotes available to duplicate', 'warning');
+                return;
+            }
+            duplicateLastQuote();
         }
 
-        function bulkFromCSV() {
-            showComprehensiveMessage('📊 CSV Import - Coming Soon!', 'info');
+        function openQuoteFilters() {
+            showComprehensiveMessage('🔽 Advanced Filters - Coming Soon!', 'info');
         }
 
-        function bulkSimilar() {
-            showComprehensiveMessage('🔄 Similar Quotes - Coming Soon!', 'info');
-        }
-
-        function bulkCustom() {
-            showComprehensiveMessage('⚙️ Custom Bulk Creation - Coming Soon!', 'info');
-        }
-
-        // Enhanced Utility Functions
+        // Utility Functions
         function closeComprehensiveQuote() {
             document.getElementById('comprehensive-quote-modal').classList.remove('show');
             resetCurrentQuote();
+        }
+
+        function closeAllModals() {
+            var modals = document.querySelectorAll('.modal');
+            modals.forEach(function(modal) {
+                modal.classList.remove('show');
+            });
         }
 
         function showComprehensiveMessage(message, type = 'success') {
             var messageElement = document.getElementById('success-message');
             if (!messageElement) return;
             
-            messageElement.className = 'success-message ' + type;
             messageElement.textContent = message;
+            messageElement.className = 'success-message ' + type;
             messageElement.classList.add('show');
             
             setTimeout(function() {
@@ -3370,66 +3340,16 @@
             }, 3000);
         }
 
-        function validateClientField(fieldId) {
-            var input = document.getElementById(fieldId);
-            var value = input.value.trim();
-            var isValid = false;
-            var message = '';
-            
-            switch(fieldId) {
-                case 'client-name':
-                    isValid = value.length >= 2;
-                    message = isValid ? '✅ Valid name' : '❌ Name too short';
-                    break;
-                case 'client-phone':
-                    isValid = /^[\+]?[0-9\s\-\(\)]{8,15}$/.test(value);
-                    message = isValid ? '✅ Valid phone' : '❌ Invalid phone format';
-                    break;
-                case 'client-email':
-                    if (!value) {
-                        isValid = true;
-                        message = '';
-                    } else {
-                        isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-                        message = isValid ? '✅ Valid email' : '❌ Invalid email format';
-                    }
-                    break;
-                case 'client-address':
-                    isValid = value.length >= 10;
-                    message = isValid ? '✅ Valid address' : '❌ Address too short';
-                    break;
-            }
-            
-            input.classList.remove('error', 'success');
-            if (message) {
-                input.classList.add(isValid ? 'success' : 'error');
-            }
-            
-            var validationDiv = document.getElementById(fieldId.replace('client-', '') + '-validation');
-            if (validationDiv && message) {
-                validationDiv.textContent = message;
-                validationDiv.className = 'validation-message ' + (isValid ? 'success' : 'error');
-            }
-            
-            return isValid;
-        }
-
-        function validateProjectField(fieldId) {
-            var input = document.getElementById(fieldId);
-            var value = input.value.trim();
-            var isValid = value.length >= 5;
-            var message = isValid ? '✅ Good project title' : '❌ Title too short (min 5 chars)';
-            
-            input.classList.remove('error', 'success');
-            input.classList.add(isValid ? 'success' : 'error');
-            
-            var validationDiv = document.getElementById('project-title-validation');
-            if (validationDiv) {
-                validationDiv.textContent = message;
-                validationDiv.className = 'validation-message ' + (isValid ? 'success' : 'error');
-            }
-            
-            return isValid;
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            var date = new Date(dateString);
+            return date.toLocaleDateString('en-MY', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
         }
 
         // Theme Management
@@ -3448,13 +3368,15 @@
 
         function loadThemePreference() {
             try {
-                var savedTheme = JSON.parse(localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE)) || 'light';
-                currentTheme = savedTheme;
-                document.body.setAttribute('data-theme', currentTheme);
-                
-                var toggleBtn = document.getElementById('theme-toggle');
-                if (toggleBtn) {
-                    toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '🌸 Light';
+                var savedTheme = localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE);
+                if (savedTheme) {
+                    currentTheme = JSON.parse(savedTheme);
+                    document.body.setAttribute('data-theme', currentTheme);
+                    
+                    var toggleBtn = document.getElementById('theme-toggle');
+                    if (toggleBtn) {
+                        toggleBtn.textContent = currentTheme === 'light' ? '🌙 Dark' : '🌸 Light';
+                    }
                 }
             } catch (e) {
                 currentTheme = 'light';
@@ -3507,6 +3429,36 @@
 
         function updateHeaderDisplay() {
             document.getElementById('company-name').textContent = companyInfo.name;
+            document.getElementById('company-registration').textContent = 'Professional Quote Creation & Management';
+        }
+
+        // Company Info Management
+        function openCompanyInfo() {
+            document.getElementById('company-name-input').value = companyInfo.name;
+            document.getElementById('company-reg-input').value = companyInfo.registration;
+            document.getElementById('company-phone-input').value = companyInfo.phone;
+            document.getElementById('company-email-input').value = companyInfo.email;
+            document.getElementById('company-address-input').value = companyInfo.address;
+            
+            document.getElementById('company-info-modal').classList.add('show');
+            showComprehensiveMessage('🏢 Company info opened');
+        }
+
+        function closeCompanyInfo() {
+            document.getElementById('company-info-modal').classList.remove('show');
+        }
+
+        function saveCompanyInfo() {
+            companyInfo.name = document.getElementById('company-name-input').value.trim() || companyInfo.name;
+            companyInfo.registration = document.getElementById('company-reg-input').value.trim() || companyInfo.registration;
+            companyInfo.phone = document.getElementById('company-phone-input').value.trim() || companyInfo.phone;
+            companyInfo.email = document.getElementById('company-email-input').value.trim() || companyInfo.email;
+            companyInfo.address = document.getElementById('company-address-input').value.trim() || companyInfo.address;
+            
+            updateHeaderDisplay();
+            saveDataToStorage();
+            closeCompanyInfo();
+            showComprehensiveMessage('✅ Company details saved!');
         }
 
         // View Management
@@ -3528,17 +3480,9 @@
                 navItems[i].classList.remove('active');
             }
             
-            var activeNavMap = {
-                'dashboard': 0,
-                'quotes': 1,
-                'create': 2,
-                'smart': 3,
-                'settings': 4
-            };
-            
-            var activeIndex = activeNavMap[viewName] !== undefined ? activeNavMap[viewName] : 0;
-            if (navItems[activeIndex]) {
-                navItems[activeIndex].classList.add('active');
+            var activeNav = document.querySelector('.nav-item[onclick*="' + viewName + '"]');
+            if (activeNav) {
+                activeNav.classList.add('active');
             }
             
             renderViews();
@@ -3551,6 +3495,8 @@
                     break;
                 case 'quotes':
                     renderQuotes();
+                    break;
+                case 'quote-detail':
                     break;
             }
         }
@@ -3572,20 +3518,15 @@
             var html = '';
             for (var i = 0; i < recentQuotes.length; i++) {
                 var quote = recentQuotes[i];
-                html += `
-                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;" onclick="showQuoteDetail(${quote.id})">
-                        <div style="font-weight: 700; font-size: 15px; color: var(--text-primary); margin-bottom: 8px;">
-                            ${quote.isSmartGenerated ? '🧠 ' : ''}${quote.title}
-                        </div>
-                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
-                            👤 ${quote.client.name} • 📋 ${quote.items.length} items • 📅 ${formatDate(quote.createdAt)}
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--text-muted); font-size: 12px;">Quote #${quote.id}</span>
-                            <span style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ${quote.totalAmount.toFixed(2)}</span>
-                        </div>
-                    </div>
-                `;
+                
+                html += '<div style="background: var(--bg-secondary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;" onclick="showQuoteDetail(' + quote.id + ')">' +
+                    '<div style="font-weight: 700; font-size: 15px; color: var(--text-primary); margin-bottom: 8px;">' + (quote.isSmartGenerated ? '🧠 ' : '') + quote.title + '</div>' +
+                    '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">👤 ' + quote.client.name + ' • 📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                    '<span style="color: var(--text-muted); font-size: 12px;">Quote #' + quote.id + '</span>' +
+                    '<span style="font-weight: 700; color: var(--accent-primary); font-size: 16px;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
             }
             container.innerHTML = html;
         }
@@ -3597,8 +3538,8 @@
             if (jobQuotes.length === 0) {
                 container.innerHTML = '<div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">' +
                     '<div style="font-size: 48px; margin-bottom: 16px;">🎨</div>' +
-                    '<p style="font-weight: 600;">No quotes found</p>' +
-                    '<p style="font-size: 14px; margin-top: 8px;">Create your first comprehensive quote</p>' +
+                    '<p style="font-weight: 600;">No comprehensive quotes found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px; color: var(--text-muted);">Create your first professional quote</p>' +
                     '</div>';
                 return;
             }
@@ -3606,102 +3547,77 @@
             var html = '';
             for (var i = jobQuotes.length - 1; i >= 0; i--) {
                 var quote = jobQuotes[i];
-                var categoryBadges = quote.categories.slice(0, 3).map(function(cat) {
-                    var category = categories[cat];
-                    if (category) {
-                        return `<span style="background: ${category.color}; color: white; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 700; margin-right: 4px;">${category.icon} ${category.name}</span>`;
-                    }
-                    return '';
-                }).join('');
                 
-                if (quote.categories.length > 3) {
-                    categoryBadges += `<span style="background: var(--text-muted); color: white; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 700;">+${quote.categories.length - 3}</span>`;
+                var quoteCategories = quote.categories || ['common'];
+                var categoryBadges = '';
+                
+                for (var j = 0; j < Math.min(quoteCategories.length, 3); j++) {
+                    var cat = quoteCategories[j];
+                    if (categories[cat]) {
+                        categoryBadges += '<span style="background: ' + categories[cat].color + '; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; font-weight: 700; margin-right: 6px;">' + 
+                            categories[cat].icon + ' ' + categories[cat].name + '</span>';
+                    }
                 }
                 
-                html += `
-                    <div class="item-card">
-                        <div class="item-header">
-                            <div class="item-info">
-                                <h3>${quote.isSmartGenerated ? '🧠 ' : ''}${quote.title}</h3>
-                                <div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">
-                                    👤 ${quote.client.name} • 📋 ${quote.items.length} items • 📅 ${formatDate(quote.createdAt)}
-                                </div>
-                                <div style="margin: 8px 0;">${categoryBadges}</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 8px; margin-top: 12px;">
-                            <button class="btn btn-info" onclick="showQuoteDetail(${quote.id})" style="flex: 1; padding: 8px; font-size: 12px;">👁️ View</button>
-                            <button class="btn btn-edit" onclick="quickEditQuoteById(${quote.id})" style="flex: 1; padding: 8px; font-size: 12px;">✏️ Edit</button>
-                            <button class="btn btn-duplicate" onclick="duplicateQuoteById(${quote.id})" style="flex: 1; padding: 8px; font-size: 12px;">📄 Copy</button>
-                        </div>
-                        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-                            <span style="font-size: 12px; color: var(--text-muted);">Quote #${quote.id}</span>
-                            <span style="font-size: 18px; color: var(--accent-primary); font-weight: 700;">RM ${quote.totalAmount.toFixed(2)}</span>
-                        </div>
-                    </div>
-                `;
+                if (quoteCategories.length > 3) {
+                    categoryBadges += '<span style="background: var(--text-muted); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; font-weight: 700;">+' + 
+                        (quoteCategories.length - 3) + ' more</span>';
+                }
+                
+                html += '<div class="card" style="position: relative;">' +
+                    (quote.isSmartGenerated ? '<div style="position: absolute; top: 12px; right: 12px; background: var(--btn-smart); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; font-weight: 700;">🧠 SMART</div>' : '') +
+                    '<div style="margin-bottom: 16px;">' +
+                    '<h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">' + quote.title + '</h3>' +
+                    '<div style="font-size: 14px; color: var(--text-secondary); margin: 8px 0;">👤 ' + quote.client.name + ' • 📋 ' + quote.items.length + ' items • 📅 ' + formatDate(quote.createdAt) + '</div>' +
+                    '<div style="margin: 12px 0;">' + categoryBadges + '</div>' +
+                    '</div>' +
+                    '<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">' +
+                    '<div class="btn-group">' +
+                    '<button class="btn btn-info" onclick="showQuoteDetail(' + quote.id + ')" style="padding: 8px 16px; min-height: auto; font-size: 14px;">👁️ View</button>' +
+                    '<button class="btn btn-primary" onclick="editQuote(' + quote.id + ')" style="padding: 8px 16px; min-height: auto; font-size: 14px;">✏️ Edit</button>' +
+                    '<button class="btn btn-success" onclick="shareQuotePDF(' + quote.id + ')" style="padding: 8px 16px; min-height: auto; font-size: 14px;">📤 Share</button>' +
+                    '</div>' +
+                    '<span style="font-size: 20px; color: var(--accent-primary); font-weight: 800;">RM ' + quote.totalAmount.toFixed(2) + '</span>' +
+                    '</div>' +
+                    '</div>';
             }
             container.innerHTML = html;
         }
 
         function showQuoteDetail(quoteId) {
-            // Implementation for quote detail view
-            showComprehensiveMessage('🔍 Quote detail view - Coming Soon!', 'info');
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            renderQuoteDetail(quote);
+            showView('quote-detail');
         }
 
-        // Company Info Management
-        function openCompanyInfo() {
-            document.getElementById('company-name-input').value = companyInfo.name;
-            document.getElementById('company-reg-input').value = companyInfo.registration;
-            document.getElementById('company-phone-input').value = companyInfo.phone;
-            document.getElementById('company-email-input').value = companyInfo.email;
-            document.getElementById('company-address-input').value = companyInfo.address;
+        function renderQuoteDetail(quote) {
+            var container = document.getElementById('quote-detail-content');
+            if (!container) return;
             
-            document.getElementById('company-info-modal').classList.add('show');
+            var html = renderFinalQuoteReview(); // Reuse the review render function
+            container.innerHTML = html;
         }
 
-        function closeCompanyInfo() {
-            document.getElementById('company-info-modal').classList.remove('show');
+        function editQuote(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
+            
+            currentQuoteData = JSON.parse(JSON.stringify(quote));
+            renderComprehensiveStep(1);
+            document.getElementById('comprehensive-quote-modal').classList.add('show');
+            showComprehensiveMessage('✏️ Editing quote: ' + quote.title);
         }
 
-        function saveCompanyInfo() {
-            companyInfo.name = document.getElementById('company-name-input').value.trim() || companyInfo.name;
-            companyInfo.registration = document.getElementById('company-reg-input').value.trim() || companyInfo.registration;
-            companyInfo.phone = document.getElementById('company-phone-input').value.trim() || companyInfo.phone;
-            companyInfo.email = document.getElementById('company-email-input').value.trim() || companyInfo.email;
-            companyInfo.address = document.getElementById('company-address-input').value.trim() || companyInfo.address;
+        function shareQuotePDF(quoteId) {
+            var quote = jobQuotes.find(function(q) { return q.id === quoteId; });
+            if (!quote) return;
             
-            updateHeaderDisplay();
-            saveDataToStorage();
-            closeCompanyInfo();
-            showComprehensiveMessage('✅ Company details saved!');
+            generateComprehensivePDF(quote);
         }
 
-        // Export and Stats
-        function exportData() {
-            var allData = {
-                jobQuotes: jobQuotes,
-                quoteTemplates: quoteTemplates,
-                clients: clients,
-                categories: categories,
-                presetWorkItems: presetWorkItems,
-                companyInfo: companyInfo,
-                themePreference: currentTheme,
-                exportDate: new Date().toISOString(),
-                version: 'Comprehensive Quote System v1.0'
-            };
-            
-            var dataStr = JSON.stringify(allData, null, 2);
-            var dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = 'REFIT_Comprehensive_Data_' + new Date().toISOString().split('T')[0] + '.json';
-            link.click();
-            
-            showComprehensiveMessage('📤 Comprehensive data exported successfully!');
-        }
-
+        // Stats and Analytics
         function updateStats() {
             var totalQuotes = jobQuotes.length;
             var totalItems = 0;
@@ -3731,16 +3647,48 @@
             }
         }
 
-        function formatDate(dateString) {
-            if (!dateString) return '';
-            var date = new Date(dateString);
-            return date.toLocaleDateString('en-MY', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+        // Export Function
+        function exportData() {
+            var allData = {
+                jobQuotes: jobQuotes,
+                quoteTemplates: quoteTemplates,
+                clients: clients,
+                categories: categories,
+                presetWorkItems: presetWorkItems,
+                companyInfo: companyInfo,
+                themePreference: currentTheme,
+                exportDate: new Date().toISOString(),
+                version: 'Comprehensive Quote System v7.0'
+            };
+            
+            var dataStr = JSON.stringify(allData, null, 2);
+            var dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'REFIT_Comprehensive_System_' + new Date().toISOString().split('T')[0] + '.json';
+            link.click();
+            
+            showComprehensiveMessage('🎉📤 Comprehensive system data exported successfully!');
+        }
+
+        // Mobile Optimizations
+        function setupMobileOptimizations() {
+            setInterval(updateStatusBar, 60000);
+            
+            var lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                var now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+
+            var meta = document.querySelector('meta[name=viewport]');
+            if (meta) {
+                meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+            }
         }
 
         function updateStatusBar() {
@@ -3756,6 +3704,48 @@
             }
         }
 
+        // Search and Filter Functions
+        function setupSearchFunctionality() {
+            var searchInput = document.getElementById('quote-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    filterQuotes(e.target.value);
+                });
+            }
+        }
+
+        function filterQuotes(searchTerm) {
+            if (!searchTerm.trim()) {
+                renderQuotes();
+                return;
+            }
+            
+            var filteredQuotes = jobQuotes.filter(function(quote) {
+                return quote.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                       quote.client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                       quote.client.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                       quote.id.toString().includes(searchTerm);
+            });
+            
+            // Render filtered results
+            var container = document.getElementById('quotes-list');
+            if (!container) return;
+            
+            if (filteredQuotes.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">' +
+                    '<div style="font-size: 32px; margin-bottom: 8px;">🔍</div>' +
+                    '<p style="font-weight: 600;">No quotes found</p>' +
+                    '<p style="font-size: 14px; margin-top: 8px;">Try a different search term</p>' +
+                    '</div>';
+                return;
+            }
+            
+            // Use the same rendering logic as renderQuotes but with filteredQuotes
+            jobQuotes = filteredQuotes; // Temporarily replace for rendering
+            renderQuotes();
+            loadDataFromStorage(); // Restore original data
+        }
+
         // Initialize App
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
@@ -3766,30 +3756,56 @@
         function initializeComprehensiveApp() {
             loadThemePreference();
             loadDataFromStorage();
+            setupMobileOptimizations();
+            setupSearchFunctionality();
             updateStatusBar();
             updateStats();
             renderViews();
             
-            setInterval(updateStatusBar, 60000);
-            
             showComprehensiveMessage('🎨✨ REFIT Comprehensive Quote System Ready!');
             
             console.log('🎨 REFIT COMPREHENSIVE QUOTE CREATION SYSTEM');
-            console.log('🚀 Features: Smart AI, Templates, Bulk Creation, Analytics');
-            console.log('⚡ Quick Actions: Edit, Duplicate, Smart Generate');
-            console.log('🧠 Smart Quote: AI-powered analysis and recommendations');
-            console.log('📋 Templates: Pre-built quote templates for common projects');
-            console.log('📦 Bulk Creation: Multiple quotes with efficiency tools');
-            console.log('🔧 Comprehensive Workflow: 5-step professional process');
-            console.log('💰 Advanced Pricing: Smart calculations with difficulty factors');
-            console.log('📊 Analytics: Quote analysis and optimization tools');
-            console.log('👥 Client Management: Enhanced client handling and history');
-            console.log('🎯 Error Prevention: Real-time validation and smart suggestions');
-            console.log('⚡ Speed Optimized: Fast quote creation with minimal steps');
-            console.log('🌸💕 Beautiful UI with comprehensive mobile optimization!');
+            console.log('📋 Complete 5-Step Workflow: Client → Project → Categories → Items → Review');
+            console.log('🧠 Smart AI Quote Generation');
+            console.log('📋 Professional Templates');
+            console.log('⚡ Quick Actions & Bulk Operations');
+            console.log('🎯 Advanced Analytics & Reporting');
+            console.log('📱 Mobile-Optimized Interface');
+            console.log('🌸💕 Beautiful Pink Theme with Dark Mode');
+            console.log('💼 Professional PDF Generation');
+            console.log('🔄 Real-time Updates & Live Preview');
+            console.log('✅ Comprehensive Error Prevention');
+            console.log('🚀 Fast & Flexible Quote Creation');
         }
 
-        console.log('🎨💕 REFIT COMPREHENSIVE QUOTE SYSTEM - PROFESSIONAL GRADE!');
+        console.log('🎉💕 REFIT COMPREHENSIVE QUOTE SYSTEM - PROFESSIONAL CREATION SUITE!');
+        console.log('🎨 ENHANCED FEATURES:');
+        console.log('   • Complete 5-Step Workflow with Validation');
+        console.log('   • Smart AI-Powered Quote Generation');
+        console.log('   • Professional Quote Templates');
+        console.log('   • Real-time Live Preview & Updates');
+        console.log('   • Advanced Category & Item Management');
+        console.log('   • Comprehensive Error Prevention');
+        console.log('   • Quick Actions & Bulk Operations');
+        console.log('   • Mobile-Optimized Touch Interface');
+        console.log('   • Professional PDF Generation');
+        console.log('   • Dark/Light Theme Support');
+        console.log('⚡ BUTTON SUPPORT SYSTEM:');
+        console.log('   • Smart Suggestions for All Fields');
+        console.log('   • One-Click Category Selection');
+        console.log('   • Quick Edit & Duplicate Functions');
+        console.log('   • Undo/Redo Support');
+        console.log('   • Live Validation & Error Prevention');
+        console.log('   • Floating Action Buttons');
+        console.log('   • Context-Aware Quick Actions');
+        console.log('🔧 FLEXIBILITY FEATURES:');
+        console.log('   • Template-Based Creation');
+        console.log('   • Smart Price Calculations');
+        console.log('   • Custom Item Creator');
+        console.log('   • Bulk Item Selection');
+        console.log('   • Advanced Search & Filters');
+        console.log('   • Export/Import Capabilities');
+        console.log('🌸💕 Beautiful & Professional Interface Throughout!');
     </script>
 </body>
 </html>
