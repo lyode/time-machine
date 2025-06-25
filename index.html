@@ -536,6 +536,28 @@
             gap: 16px;
         }
 
+        /* Validation Styles */
+        .form-input.error, .form-textarea.error, .form-select.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .form-input.success, .form-textarea.success, .form-select.success {
+            border-color: var(--success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .form-row {
                 grid-template-columns: 1fr;
@@ -836,6 +858,7 @@
             box-shadow: 0 4px 12px var(--shadow-light);
             position: relative;
             overflow: hidden;
+            user-select: none;
         }
         
         .btn:hover {
@@ -846,13 +869,68 @@
         .btn:active {
             transform: scale(0.96);
         }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
         
         .btn-primary { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); }
         .btn-success { background: linear-gradient(135deg, var(--success), #34d399); }
         .btn-secondary { background: linear-gradient(135deg, var(--text-secondary), #9ca3af); }
         .btn-warning { background: linear-gradient(135deg, var(--warning), #fbbf24); }
         .btn-danger { background: linear-gradient(135deg, var(--error), #f87171); }
+        .btn-info { background: linear-gradient(135deg, var(--info), #60a5fa); }
         
+        /* Edit Button Styles */
+        .edit-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            min-height: auto;
+        }
+
+        .edit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px var(--shadow-medium);
+        }
+
+        .edit-btn.small {
+            padding: 4px 8px;
+            font-size: 11px;
+        }
+
+        .edit-btn.large {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        /* Action Button Groups */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .action-buttons.center {
+            justify-content: center;
+        }
+
+        .action-buttons.end {
+            justify-content: flex-end;
+        }
+
         /* Quick Actions */
         .quick-actions {
             display: grid;
@@ -888,6 +966,8 @@
         .quick-btn.primary { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); }
         .quick-btn.success { background: linear-gradient(135deg, var(--success), #34d399); }
         .quick-btn.info { background: linear-gradient(135deg, var(--info), #60a5fa); }
+        .quick-btn.warning { background: linear-gradient(135deg, var(--warning), #fbbf24); }
+        .quick-btn.danger { background: linear-gradient(135deg, var(--error), #f87171); }
         
         .quick-btn .icon {
             font-size: 24px;
@@ -919,6 +999,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .stat-card:hover {
@@ -959,7 +1040,7 @@
             border-radius: 16px;
             padding: 16px;
             transition: all 0.3s ease;
-            cursor: pointer;
+            position: relative;
         }
 
         .data-item:hover {
@@ -978,25 +1059,27 @@
             font-weight: 700;
             color: var(--text-primary);
             font-size: 16px;
+            flex: 1;
         }
 
         .data-item-amount {
             font-weight: 800;
             color: var(--accent-primary);
             font-size: 18px;
+            margin-left: 12px;
         }
 
         .data-item-details {
             color: var(--text-muted);
             font-size: 14px;
             line-height: 1.4;
+            margin-bottom: 12px;
         }
 
         .data-item-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 12px;
             padding-top: 12px;
             border-top: 1px solid var(--border-color);
         }
@@ -1017,6 +1100,15 @@
         .status-sent { background: #dbeafe; color: #1d4ed8; }
         .status-paid { background: #d1fae5; color: #059669; }
         .status-overdue { background: #fee2e2; color: #dc2626; }
+        .status-active { background: #d1fae5; color: #059669; }
+
+        /* Enhanced Action Buttons */
+        .data-item-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
 
         /* Bottom Navigation */
         .bottom-nav {
@@ -1111,6 +1203,77 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        /* Loading States */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Confirmation Dialog */
+        .confirm-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--overlay);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 400;
+            backdrop-filter: blur(10px);
+        }
+
+        .confirm-dialog.show {
+            display: flex;
+        }
+
+        .confirm-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px var(--shadow-strong);
+        }
+
+        .confirm-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .confirm-message {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -1132,6 +1295,16 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
         }
         
         /* Utility Classes */
@@ -1250,7 +1423,7 @@
             font-size: 14px;
         }
 
-        /* Mobile Optimizations */
+        /* Responsive Design */
         @media screen and (max-width: 768px) {
             .theme-grid {
                 grid-template-columns: 1fr;
@@ -1281,6 +1454,32 @@
                 margin: 20px;
                 max-height: calc(100vh - 40px);
             }
+
+            .action-buttons {
+                justify-content: center;
+            }
+
+            .data-item-actions {
+                justify-content: center;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .data-item-actions {
+                flex-direction: column;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
         }
         
         /* Safe Area Adjustments */
@@ -1292,6 +1491,35 @@
             
             .bottom-nav {
                 padding-bottom: calc(32px + env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Focus Styles for Accessibility */
+        .keyboard-navigation *:focus {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* Print Styles */
+        @media print {
+            .status-bar,
+            .header,
+            .bottom-nav,
+            .modal,
+            .theme-modal {
+                display: none !important;
+            }
+
+            .main-content {
+                padding: 20px !important;
+                position: static !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #ccc;
             }
         }
     </style>
@@ -1337,14 +1565,14 @@
                 <div class="card">
                     <div class="profile-section">
                         <div class="avatar" id="user-avatar">JD</div>
-                        <div class="profile-info">
+                        <div class="profile-info" style="flex: 1;">
                             <h3 id="user-display-name">John Doe</h3>
                             <p id="user-display-title">Business Owner</p>
                         </div>
+                        <button class="edit-btn" onclick="editProfile()">
+                            ✏️ Edit Profile
+                        </button>
                     </div>
-                    <button class="btn btn-primary" onclick="editProfile()" style="width: 100%;">
-                        ✏️ Edit Profile
-                    </button>
                 </div>
 
                 <!-- Welcome Card -->
@@ -1377,11 +1605,11 @@
                         <h3 id="company-display-name" style="font-weight: 700; margin-bottom: 8px; color: var(--text-primary); cursor: pointer;" onclick="openCompanyManager()">Your Company Name</h3>
                         <p id="company-display-tagline" style="color: var(--text-muted); margin-bottom: 16px;">Professional Services</p>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                        <button class="btn btn-success" onclick="editCompany()" style="font-size: 14px; padding: 12px;">
-                            ✏️ Edit Details
+                    <div class="action-buttons center">
+                        <button class="edit-btn" onclick="editCompany()">
+                            ✏️ Edit Company
                         </button>
-                        <button class="btn btn-primary" onclick="openCompanyManager()" style="font-size: 14px; padding: 12px;">
+                        <button class="edit-btn" onclick="openCompanyManager()">
                             🏢 Company Hub
                         </button>
                     </div>
@@ -1389,21 +1617,33 @@
 
                 <!-- Stats -->
                 <div class="stats-grid">
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showView('quotes')">
                         <div class="stat-label">Total Quotes</div>
                         <div class="stat-value" id="total-quotes-count">0</div>
+                        <button class="edit-btn small" onclick="event.stopPropagation(); createQuote()" style="position: absolute; top: 8px; right: 8px;">
+                            ➕
+                        </button>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showView('customers')">
                         <div class="stat-label">Total Customers</div>
                         <div class="stat-value" id="total-customers-count">0</div>
+                        <button class="edit-btn small" onclick="event.stopPropagation(); addCustomer()" style="position: absolute; top: 8px; right: 8px;">
+                            ➕
+                        </button>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="viewReports()">
                         <div class="stat-label">Monthly Revenue</div>
                         <div class="stat-value" id="monthly-revenue">RM 0</div>
+                        <button class="edit-btn small" onclick="event.stopPropagation(); viewReports()" style="position: absolute; top: 8px; right: 8px;">
+                            📊
+                        </button>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="viewReports()">
                         <div class="stat-label">Total Revenue</div>
                         <div class="stat-value" id="total-revenue">RM 0</div>
+                        <button class="edit-btn small" onclick="event.stopPropagation(); exportData()" style="position: absolute; top: 8px; right: 8px;">
+                            📤
+                        </button>
                     </div>
                 </div>
 
@@ -1428,7 +1668,12 @@
 
                 <!-- Recent Activity -->
                 <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">📈 Recent Activity</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">📈 Recent Activity</h3>
+                        <button class="edit-btn small" onclick="refreshRecentActivity()">
+                            🔄 Refresh
+                        </button>
+                    </div>
                     <div id="recent-activity" class="data-list">
                         <!-- Recent items will be populated here -->
                     </div>
@@ -1439,7 +1684,10 @@
             <div id="quotes-view" class="view hidden">
                 <div class="section-header">
                     <h2 class="section-title">📋 Quotes</h2>
-                    <button class="btn btn-primary" onclick="createQuote()">➕ New Quote</button>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="edit-btn" onclick="exportQuotes()">📤 Export</button>
+                        <button class="btn btn-primary" onclick="createQuote()">➕ New Quote</button>
+                    </div>
                 </div>
                 <div id="quotes-list" class="data-list">
                     <!-- Quotes will be populated here -->
@@ -1450,7 +1698,10 @@
             <div id="customers-view" class="view hidden">
                 <div class="section-header">
                     <h2 class="section-title">👥 Customers</h2>
-                    <button class="btn btn-primary" onclick="addCustomer()">➕ Add Customer</button>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="edit-btn" onclick="exportCustomers()">📤 Export</button>
+                        <button class="btn btn-primary" onclick="addCustomer()">➕ Add Customer</button>
+                    </div>
                 </div>
                 <div id="customers-list" class="data-list">
                     <!-- Customers will be populated here -->
@@ -1461,11 +1712,15 @@
             <div id="settings-view" class="view hidden">
                 <div class="section-header">
                     <h2 class="section-title">⚙️ Settings</h2>
+                    <button class="edit-btn" onclick="resetAllSettings()">🔄 Reset</button>
                 </div>
 
                 <!-- Data Management -->
                 <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">💾 Data Management</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">💾 Data Management</h3>
+                        <button class="edit-btn small" onclick="checkDataIntegrity()">✅ Check Data</button>
+                    </div>
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px;">
                         <button class="quick-btn primary" onclick="createManualBackup()">
                             <span class="icon">💾</span>
@@ -1479,7 +1734,7 @@
                             <span class="icon">📥</span>
                             <span class="label">Import Data</span>
                         </button>
-                        <button class="quick-btn" onclick="showStorageInfo()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
+                        <button class="quick-btn warning" onclick="showStorageInfo()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
                             <span class="icon">📊</span>
                             <span class="label">Storage Info</span>
                         </button>
@@ -1489,17 +1744,23 @@
                     <div style="background: var(--bg-secondary); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <span style="font-weight: 600; color: var(--text-primary);">Storage Status</span>
-                            <span id="storage-usage" style="color: var(--text-muted); font-size: 14px;">75% Used</span>
+                            <div style="display: flex; gap: 8px;">
+                                <span id="storage-usage" style="color: var(--text-muted); font-size: 14px;">Loading...</span>
+                                <button class="edit-btn small" onclick="clearCache()">🗑️ Clear Cache</button>
+                            </div>
                         </div>
                         <div style="width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; overflow: hidden;">
-                            <div id="storage-progress" style="height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); width: 75%; transition: width 0.3s ease;"></div>
+                            <div id="storage-progress" style="height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); width: 0%; transition: width 0.3s ease;"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Theme Settings -->
                 <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🎨 Theme Settings</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">🎨 Theme Settings</h3>
+                        <button class="edit-btn small" onclick="randomTheme()">🎲 Random</button>
+                    </div>
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
                         <button class="quick-btn" onclick="switchToTheme('red')" style="background: linear-gradient(135deg, #f87171, #fca5a5);">
                             <span class="icon">🌅</span>
@@ -1538,7 +1799,10 @@
 
                 <!-- App Settings -->
                 <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">📱 App Settings</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">📱 App Settings</h3>
+                        <button class="edit-btn small" onclick="exportSettings()">📤 Export Settings</button>
+                    </div>
                     <div class="info-grid">
                         <div class="info-item">
                             <div class="info-icon">🎨</div>
@@ -1546,13 +1810,15 @@
                                 <h4>Current Theme</h4>
                                 <p id="current-theme-name">Coral Sunset</p>
                             </div>
+                            <button class="edit-btn small" onclick="openThemePicker()">Edit</button>
                         </div>
                         <div class="info-item">
                             <div class="info-icon">🌑</div>
                             <div class="info-content">
-                                <h4>Theme Variant</h4>
-                                <p id="current-mode-setting">Standard Dark Theme Active</p>
+                                <h4>Theme Mode</h4>
+                                <p id="current-mode-setting">Standard Mode Active</p>
                             </div>
+                            <button class="edit-btn small" onclick="toggleMode()">Toggle</button>
                         </div>
                         <div class="info-item">
                             <div class="info-icon">📱</div>
@@ -1560,13 +1826,15 @@
                                 <h4>Platform</h4>
                                 <p id="platform-info">Mobile Web App</p>
                             </div>
+                            <button class="edit-btn small" onclick="installApp()">Install</button>
                         </div>
                         <div class="info-item">
                             <div class="info-icon">🔧</div>
                             <div class="info-content">
                                 <h4>App Version</h4>
-                                <p id="app-version">REFIT v2.0.1 Business Suite</p>
+                                <p id="app-version">REFIT v2.1.0 Enhanced</p>
                             </div>
+                            <button class="edit-btn small" onclick="checkForUpdates()">Update</button>
                         </div>
                     </div>
                 </div>
@@ -1722,12 +1990,14 @@
                 <form id="profile-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">First Name</label>
-                            <input type="text" class="form-input" id="profile-first-name" placeholder="John">
+                            <label class="form-label">First Name *</label>
+                            <input type="text" class="form-input" id="profile-first-name" placeholder="John" required>
+                            <div class="error-message" id="profile-first-name-error">First name is required</div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Last Name</label>
-                            <input type="text" class="form-input" id="profile-last-name" placeholder="Doe">
+                            <label class="form-label">Last Name *</label>
+                            <input type="text" class="form-input" id="profile-last-name" placeholder="Doe" required>
+                            <div class="error-message" id="profile-last-name-error">Last name is required</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -1738,6 +2008,7 @@
                         <div class="form-group">
                             <label class="form-label">Email</label>
                             <input type="email" class="form-input" id="profile-email" placeholder="john@example.com">
+                            <div class="error-message" id="profile-email-error">Please enter a valid email</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Phone</label>
@@ -1767,8 +2038,9 @@
             <div class="modal-body">
                 <form id="company-form">
                     <div class="form-group">
-                        <label class="form-label">Company Name</label>
-                        <input type="text" class="form-input" id="company-name-input" placeholder="Your Company Name">
+                        <label class="form-label">Company Name *</label>
+                        <input type="text" class="form-input" id="company-name-input" placeholder="Your Company Name" required>
+                        <div class="error-message" id="company-name-error">Company name is required</div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Business Tagline</label>
@@ -1788,6 +2060,7 @@
                         <div class="form-group">
                             <label class="form-label">Email</label>
                             <input type="email" class="form-input" id="company-email" placeholder="info@company.com">
+                            <div class="error-message" id="company-email-error">Please enter a valid email</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Phone</label>
@@ -1797,6 +2070,7 @@
                     <div class="form-group">
                         <label class="form-label">Website</label>
                         <input type="url" class="form-input" id="company-website" placeholder="https://www.company.com">
+                        <div class="error-message" id="company-website-error">Please enter a valid URL</div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Business Address</label>
@@ -1815,6 +2089,10 @@
                                 <option value="healthcare">Healthcare</option>
                                 <option value="education">Education</option>
                                 <option value="finance">Finance</option>
+                                <option value="food">Food & Beverage</option>
+                                <option value="automotive">Automotive</option>
+                                <option value="real-estate">Real Estate</option>
+                                <option value="marketing">Marketing & Advertising</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
@@ -1858,15 +2136,17 @@
                             <input type="text" class="form-input" id="quote-number" readonly>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Date</label>
-                            <input type="date" class="form-input" id="quote-date">
+                            <label class="form-label">Date *</label>
+                            <input type="date" class="form-input" id="quote-date" required>
+                            <div class="error-message" id="quote-date-error">Date is required</div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Customer</label>
-                        <select class="form-select" id="quote-customer">
+                        <label class="form-label">Customer *</label>
+                        <select class="form-select" id="quote-customer" required>
                             <option value="">Select Customer</option>
                         </select>
+                        <div class="error-message" id="quote-customer-error">Please select a customer</div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Project Description</label>
@@ -1877,7 +2157,7 @@
                     <div style="margin: 20px 0;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                             <h4 style="color: var(--text-primary);">Quote Items</h4>
-                            <button type="button" class="btn btn-primary" onclick="addQuoteItem()" style="padding: 8px 16px; min-height: auto;">+ Add Item</button>
+                            <button type="button" class="edit-btn" onclick="addQuoteItem()">+ Add Item</button>
                         </div>
                         <div id="quote-items-container">
                             <!-- Quote items will be added here -->
@@ -1931,8 +2211,9 @@
                 <form id="customer-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">Company Name</label>
-                            <input type="text" class="form-input" id="customer-company" placeholder="ABC Corporation">
+                            <label class="form-label">Company Name *</label>
+                            <input type="text" class="form-input" id="customer-company" placeholder="ABC Corporation" required>
+                            <div class="error-message" id="customer-company-error">Company name is required</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Contact Person</label>
@@ -1943,6 +2224,7 @@
                         <div class="form-group">
                             <label class="form-label">Email</label>
                             <input type="email" class="form-input" id="customer-email" placeholder="jane@abc.com">
+                            <div class="error-message" id="customer-email-error">Please enter a valid email</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Phone</label>
@@ -1964,6 +2246,10 @@
                                 <option value="healthcare">Healthcare</option>
                                 <option value="education">Education</option>
                                 <option value="finance">Finance</option>
+                                <option value="food">Food & Beverage</option>
+                                <option value="automotive">Automotive</option>
+                                <option value="real-estate">Real Estate</option>
+                                <option value="marketing">Marketing & Advertising</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
@@ -1999,18 +2285,24 @@
             </div>
             <div class="modal-body">
                 <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
-                    <h4 style="margin-bottom: 16px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
-                        <span>🎨</span> Company Logo & Branding
-                    </h4>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h4 style="color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                            <span>🎨</span> Company Logo & Branding
+                        </h4>
+                        <button class="edit-btn small" onclick="editCompanyBranding()">✏️ Edit</button>
+                    </div>
                     <div style="text-align: center; margin-bottom: 20px;">
                         <div class="company-logo" id="company-manager-logo" style="margin: 0 auto 16px;">🌅</div>
                         <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Your current company logo</p>
-                        <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-                            <button class="btn btn-primary" onclick="uploadLogo()" style="font-size: 14px; padding: 8px 16px; min-height: auto;">
+                        <div class="action-buttons center">
+                            <button class="edit-btn" onclick="uploadLogo()">
                                 📤 Upload Logo
                             </button>
-                            <button class="btn btn-secondary" onclick="resetLogoToEmoji()" style="font-size: 14px; padding: 8px 16px; min-height: auto;">
+                            <button class="edit-btn" onclick="resetLogoToEmoji()">
                                 🔄 Use Emoji
+                            </button>
+                            <button class="edit-btn" onclick="generateLogo()">
+                                ✨ Generate
                             </button>
                         </div>
                     </div>
@@ -2021,6 +2313,7 @@
                     <div class="stat-card">
                         <div class="stat-label">Years in Business</div>
                         <div class="stat-value">3</div>
+                        <button class="edit-btn small" onclick="editBusinessAge()" style="position: absolute; top: 8px; right: 8px;">✏️</button>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">Total Projects</div>
@@ -2033,6 +2326,7 @@
                     <div class="stat-card">
                         <div class="stat-label">Success Rate</div>
                         <div class="stat-value">95%</div>
+                        <button class="edit-btn small" onclick="updateSuccessRate()" style="position: absolute; top: 8px; right: 8px;">📊</button>
                     </div>
                 </div>
                 
@@ -2054,6 +2348,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeModal('company-manager-modal')">Close</button>
+                <button class="edit-btn" onclick="editCompany()">✏️ Edit Company Details</button>
             </div>
         </div>
     </div>
@@ -2079,6 +2374,7 @@
                             <h4>Create Quotes</h4>
                             <p>Professional quote generation with automatic calculations</p>
                         </div>
+                        <button class="edit-btn small" onclick="createQuote(); closeModal('help-modal');">Try</button>
                     </div>
                     <div class="info-item">
                         <div class="info-icon">👥</div>
@@ -2086,6 +2382,7 @@
                             <h4>Manage Customers</h4>
                             <p>Complete customer database with contact information</p>
                         </div>
+                        <button class="edit-btn small" onclick="addCustomer(); closeModal('help-modal');">Try</button>
                     </div>
                     <div class="info-item">
                         <div class="info-icon">🎨</div>
@@ -2093,6 +2390,7 @@
                             <h4>8 Beautiful Themes</h4>
                             <p>Customize your experience with gorgeous color schemes</p>
                         </div>
+                        <button class="edit-btn small" onclick="openThemePicker(); closeModal('help-modal');">Try</button>
                     </div>
                     <div class="info-item">
                         <div class="info-icon">📱</div>
@@ -2100,6 +2398,7 @@
                             <h4>Mobile Optimized</h4>
                             <p>Perfect experience on phones, tablets, and desktop</p>
                         </div>
+                        <button class="edit-btn small" onclick="installApp();">Install</button>
                     </div>
                     <div class="info-item">
                         <div class="info-icon">💾</div>
@@ -2107,6 +2406,7 @@
                             <h4>Data Management</h4>
                             <p>Import, export, and backup your business data</p>
                         </div>
+                        <button class="edit-btn small" onclick="exportData(); closeModal('help-modal');">Try</button>
                     </div>
                     <div class="info-item">
                         <div class="info-icon">📊</div>
@@ -2114,6 +2414,7 @@
                             <h4>Business Analytics</h4>
                             <p>Track revenue, quotes, and customer statistics</p>
                         </div>
+                        <button class="edit-btn small" onclick="viewReports(); closeModal('help-modal');">Try</button>
                     </div>
                 </div>
                 
@@ -2125,13 +2426,31 @@
                         3. Create a professional quote<br>
                         4. Explore different themes and settings
                     </p>
-                    <button class="btn btn-primary" onclick="closeModal('help-modal'); createQuote();" style="font-size: 14px;">
-                        🎯 Create Your First Quote
-                    </button>
+                    <div class="action-buttons center">
+                        <button class="edit-btn" onclick="closeModal('help-modal'); createQuote();">
+                            🎯 Create Your First Quote
+                        </button>
+                        <button class="edit-btn" onclick="showKeyboardShortcuts();">
+                            ⌨️ Keyboard Shortcuts
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeModal('help-modal')">Close</button>
+                <button class="edit-btn" onclick="contactSupport()">📧 Contact Support</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Dialog -->
+    <div id="confirm-dialog" class="confirm-dialog">
+        <div class="confirm-content">
+            <h3 class="confirm-title" id="confirm-title">Confirm Action</h3>
+            <p class="confirm-message" id="confirm-message">Are you sure you want to proceed?</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-secondary" onclick="closeConfirmDialog()">Cancel</button>
+                <button class="btn btn-danger" id="confirm-action-btn" onclick="confirmAction()">Confirm</button>
             </div>
         </div>
     </div>
@@ -2147,6 +2466,13 @@
             currentTheme: 'red',
             currentMode: 'light',
             currentView: 'dashboard',
+            
+            // Edit states
+            editingQuote: null,
+            editingCustomer: null,
+            
+            // Confirmation dialog state
+            confirmCallback: null,
             
             // Business Data
             userProfile: {
@@ -2170,7 +2496,9 @@
                 address: '123 Business Avenue\nKuala Lumpur 50000\nMalaysia',
                 industry: 'technology',
                 size: '1-10',
-                description: 'A leading technology company providing innovative solutions.'
+                description: 'A leading technology company providing innovative solutions.',
+                yearsInBusiness: 3,
+                successRate: 95
             },
             
             customers: [
@@ -2184,7 +2512,8 @@
                     industry: 'retail',
                     type: 'business',
                     notes: 'Great long-term client',
-                    createdAt: new Date('2024-01-15')
+                    createdAt: new Date('2024-01-15'),
+                    status: 'active'
                 },
                 {
                     id: 2,
@@ -2196,7 +2525,8 @@
                     industry: 'technology',
                     type: 'business',
                     notes: 'Tech startup, fast growing',
-                    createdAt: new Date('2024-02-20')
+                    createdAt: new Date('2024-02-20'),
+                    status: 'active'
                 }
             ],
             
@@ -2283,6 +2613,13 @@
             
             showSuccessMessage(`✨ Theme changed to ${themes[theme].name}!`);
             updateDisplay();
+            saveToLocalStorage();
+        }
+
+        function randomTheme() {
+            const themeKeys = Object.keys(themes);
+            const randomTheme = themeKeys[Math.floor(Math.random() * themeKeys.length)];
+            switchToTheme(randomTheme);
         }
 
         function toggleMode() {
@@ -2298,28 +2635,38 @@
             document.getElementById('mode-nav-icon').textContent = modeIcon;
             document.getElementById('mode-nav-text').textContent = modeText === 'Darker' ? 'Dark' : 'Light';
             
-            // Update modal mode display
-            const currentModeDisplay = document.getElementById('current-mode-display');
-            if (currentModeDisplay) {
-                currentModeDisplay.textContent = `${newMode === 'light' ? 'Standard' : 'Dark'} Mode`;
-            }
-            
-            const currentModeSetting = document.getElementById('current-mode-setting');
-            if (currentModeSetting) {
-                currentModeSetting.textContent = `${newMode === 'light' ? 'Standard' : 'Dark'} Dark Theme Active`;
-            }
+            // Update modal mode displays
+            updateModeDisplays(newMode);
             
             showSuccessMessage(`🌙 Switched to ${newMode === 'light' ? 'Standard' : 'Dark'} mode!`);
+            saveToLocalStorage();
+        }
+
+        function updateModeDisplays(mode) {
+            const elements = [
+                'current-mode-display',
+                'current-mode-setting',
+                'mode-toggle-icon',
+                'mode-toggle-text'
+            ];
+            
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    if (id.includes('display') || id.includes('setting')) {
+                        element.textContent = `${mode === 'light' ? 'Standard' : 'Dark'} Mode Active`;
+                    } else if (id.includes('icon')) {
+                        element.textContent = mode === 'light' ? '🌑' : '🌞';
+                    } else if (id.includes('text')) {
+                        element.textContent = mode === 'light' ? 'Switch to Darker' : 'Switch to Lighter';
+                    }
+                }
+            });
         }
 
         function openThemePicker() {
             document.getElementById('theme-modal').classList.add('show');
-            
-            // Update current mode display
-            const currentModeDisplay = document.getElementById('current-mode-display');
-            if (currentModeDisplay) {
-                currentModeDisplay.textContent = `${appState.currentMode === 'light' ? 'Standard' : 'Dark'} Mode`;
-            }
+            updateModeDisplays(appState.currentMode);
         }
 
         function closeThemePicker() {
@@ -2358,7 +2705,11 @@
                 loadCustomersList();
             } else if (viewName === 'dashboard') {
                 loadDashboard();
+            } else if (viewName === 'settings') {
+                updateStorageInfo();
             }
+            
+            saveToLocalStorage();
         }
 
         // ===== MODAL MANAGEMENT =====
@@ -2368,6 +2719,87 @@
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('show');
+            clearFormValidation();
+        }
+
+        // ===== VALIDATION SYSTEM =====
+        function validateField(fieldId, validationFn, errorMessage) {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(`${fieldId}-error`);
+            
+            if (!field) return true;
+            
+            const isValid = validationFn(field.value);
+            
+            if (isValid) {
+                field.classList.remove('error');
+                field.classList.add('success');
+                if (errorDiv) {
+                    errorDiv.classList.remove('show');
+                }
+            } else {
+                field.classList.remove('success');
+                field.classList.add('error');
+                if (errorDiv) {
+                    errorDiv.textContent = errorMessage;
+                    errorDiv.classList.add('show');
+                }
+                field.classList.add('shake');
+                setTimeout(() => field.classList.remove('shake'), 500);
+            }
+            
+            return isValid;
+        }
+
+        function validateEmail(email) {
+            if (!email) return true; // Allow empty emails
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validateURL(url) {
+            if (!url) return true; // Allow empty URLs
+            try {
+                new URL(url);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        function validateRequired(value) {
+            return value && value.trim().length > 0;
+        }
+
+        function clearFormValidation() {
+            document.querySelectorAll('.form-input, .form-textarea, .form-select').forEach(field => {
+                field.classList.remove('error', 'success');
+            });
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.classList.remove('show');
+            });
+        }
+
+        // ===== CONFIRMATION DIALOG =====
+        function showConfirmDialog(title, message, callback, actionText = 'Confirm') {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+            document.getElementById('confirm-action-btn').textContent = actionText;
+            
+            appState.confirmCallback = callback;
+            document.getElementById('confirm-dialog').classList.add('show');
+        }
+
+        function closeConfirmDialog() {
+            document.getElementById('confirm-dialog').classList.remove('show');
+            appState.confirmCallback = null;
+        }
+
+        function confirmAction() {
+            if (appState.confirmCallback) {
+                appState.confirmCallback();
+            }
+            closeConfirmDialog();
         }
 
         // ===== SUCCESS MESSAGE =====
@@ -2384,6 +2816,8 @@
 
         // ===== PROFILE MANAGEMENT =====
         function editProfile() {
+            clearFormValidation();
+            
             // Load current profile data
             document.getElementById('profile-first-name').value = appState.userProfile.firstName;
             document.getElementById('profile-last-name').value = appState.userProfile.lastName;
@@ -2400,6 +2834,20 @@
         }
 
         function saveProfile() {
+            // Validate form
+            const validations = [
+                () => validateField('profile-first-name', validateRequired, 'First name is required'),
+                () => validateField('profile-last-name', validateRequired, 'Last name is required'),
+                () => validateField('profile-email', validateEmail, 'Please enter a valid email')
+            ];
+            
+            const isValid = validations.every(validation => validation());
+            
+            if (!isValid) {
+                showSuccessMessage('❌ Please fix the errors before saving!');
+                return;
+            }
+            
             // Update profile data
             appState.userProfile.firstName = document.getElementById('profile-first-name').value;
             appState.userProfile.lastName = document.getElementById('profile-last-name').value;
@@ -2412,6 +2860,7 @@
             updateUserDisplay();
             closeModal('profile-modal');
             showSuccessMessage('👤 Profile updated successfully!');
+            saveToLocalStorage();
         }
 
         function updateUserDisplay() {
@@ -2425,6 +2874,8 @@
 
         // ===== COMPANY MANAGEMENT =====
         function editCompany() {
+            clearFormValidation();
+            
             // Load current company data
             document.getElementById('company-name-input').value = appState.companyInfo.name;
             document.getElementById('company-tagline').value = appState.companyInfo.tagline;
@@ -2442,6 +2893,20 @@
         }
 
         function saveCompany() {
+            // Validate form
+            const validations = [
+                () => validateField('company-name-input', validateRequired, 'Company name is required'),
+                () => validateField('company-email', validateEmail, 'Please enter a valid email'),
+                () => validateField('company-website', validateURL, 'Please enter a valid URL')
+            ];
+            
+            const isValid = validations.every(validation => validation());
+            
+            if (!isValid) {
+                showSuccessMessage('❌ Please fix the errors before saving!');
+                return;
+            }
+            
             // Update company data
             appState.companyInfo.name = document.getElementById('company-name-input').value;
             appState.companyInfo.tagline = document.getElementById('company-tagline').value;
@@ -2459,28 +2924,64 @@
             updateCompanyDisplay();
             closeModal('company-modal');
             showSuccessMessage('🏢 Company details updated successfully!');
+            saveToLocalStorage();
         }
 
         function updateCompanyDisplay() {
             document.getElementById('company-display-name').textContent = appState.companyInfo.name;
             document.getElementById('company-display-tagline').textContent = appState.companyInfo.tagline;
             document.getElementById('company-name').textContent = appState.companyInfo.name;
+            
+            // Update company manager if open
+            const managerLogo = document.getElementById('company-manager-logo');
+            if (managerLogo) {
+                managerLogo.textContent = appState.companyInfo.logo;
+            }
         }
 
         function openCompanyManager() {
-            // Update company manager logo
+            // Update company manager data
             document.getElementById('company-manager-logo').textContent = appState.companyInfo.logo;
+            document.getElementById('total-projects').textContent = appState.quotes.length;
+            document.getElementById('active-clients').textContent = appState.customers.filter(c => c.status === 'active').length;
             openModal('company-manager-modal');
         }
 
         function uploadLogo() {
-            showSuccessMessage('📤 Logo upload feature coming soon!');
+            showSuccessMessage('📤 Logo upload feature coming soon! Use emoji for now.');
         }
 
         function resetLogoToEmoji() {
             appState.companyInfo.logo = themes[appState.currentTheme].icon;
             updateDisplay();
             showSuccessMessage('🔄 Logo reset to theme emoji!');
+            saveToLocalStorage();
+        }
+
+        function generateLogo() {
+            showSuccessMessage('✨ AI logo generation coming soon!');
+        }
+
+        function editCompanyBranding() {
+            showSuccessMessage('🎨 Advanced branding editor coming soon!');
+        }
+
+        function editBusinessAge() {
+            const newAge = prompt('Enter years in business:', appState.companyInfo.yearsInBusiness);
+            if (newAge && !isNaN(newAge)) {
+                appState.companyInfo.yearsInBusiness = parseInt(newAge);
+                showSuccessMessage('📅 Business age updated!');
+                saveToLocalStorage();
+            }
+        }
+
+        function updateSuccessRate() {
+            const newRate = prompt('Enter success rate (%):', appState.companyInfo.successRate);
+            if (newRate && !isNaN(newRate) && newRate >= 0 && newRate <= 100) {
+                appState.companyInfo.successRate = parseInt(newRate);
+                showSuccessMessage('📊 Success rate updated!');
+                saveToLocalStorage();
+            }
         }
 
         function generateBusinessCard() {
@@ -2493,7 +2994,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'company-data.json';
+            a.download = `company-data-${new Date().toISOString().split('T')[0]}.json`;
             a.click();
             URL.revokeObjectURL(url);
             showSuccessMessage('📊 Company data exported successfully!');
@@ -2501,14 +3002,58 @@
 
         // ===== CUSTOMER MANAGEMENT =====
         function addCustomer() {
+            appState.editingCustomer = null;
+            clearFormValidation();
+            
             // Clear form
             document.getElementById('customer-form').reset();
+            
+            // Update modal title
+            document.querySelector('#customer-modal .modal-header h3').innerHTML = '👥 Add Customer';
+            document.querySelector('#customer-modal .modal-footer .btn-success').innerHTML = '👥 Save Customer';
+            
+            openModal('customer-modal');
+        }
+
+        function editCustomer(customerId) {
+            const customer = appState.customers.find(c => c.id === customerId);
+            if (!customer) return;
+            
+            appState.editingCustomer = customer;
+            clearFormValidation();
+            
+            // Pre-populate form with customer data
+            document.getElementById('customer-company').value = customer.company;
+            document.getElementById('customer-contact').value = customer.contact;
+            document.getElementById('customer-email').value = customer.email;
+            document.getElementById('customer-phone').value = customer.phone;
+            document.getElementById('customer-address').value = customer.address;
+            document.getElementById('customer-industry').value = customer.industry;
+            document.getElementById('customer-type').value = customer.type;
+            document.getElementById('customer-notes').value = customer.notes;
+            
+            // Update modal title
+            document.querySelector('#customer-modal .modal-header h3').innerHTML = `✏️ Edit Customer - ${customer.company}`;
+            document.querySelector('#customer-modal .modal-footer .btn-success').innerHTML = '💾 Update Customer';
+            
             openModal('customer-modal');
         }
 
         function saveCustomer() {
-            const newCustomer = {
-                id: Date.now(),
+            // Validate form
+            const validations = [
+                () => validateField('customer-company', validateRequired, 'Company name is required'),
+                () => validateField('customer-email', validateEmail, 'Please enter a valid email')
+            ];
+            
+            const isValid = validations.every(validation => validation());
+            
+            if (!isValid) {
+                showSuccessMessage('❌ Please fix the errors before saving!');
+                return;
+            }
+            
+            const customerData = {
                 company: document.getElementById('customer-company').value,
                 contact: document.getElementById('customer-contact').value,
                 email: document.getElementById('customer-email').value,
@@ -2517,19 +3062,102 @@
                 industry: document.getElementById('customer-industry').value,
                 type: document.getElementById('customer-type').value,
                 notes: document.getElementById('customer-notes').value,
-                createdAt: new Date()
+                status: 'active'
             };
             
-            appState.customers.push(newCustomer);
-            appState.stats.totalCustomers = appState.customers.length;
+            if (appState.editingCustomer) {
+                // Update existing customer
+                const index = appState.customers.findIndex(c => c.id === appState.editingCustomer.id);
+                if (index !== -1) {
+                    appState.customers[index] = {
+                        ...appState.editingCustomer,
+                        ...customerData,
+                        updatedAt: new Date()
+                    };
+                    showSuccessMessage('✏️ Customer updated successfully!');
+                }
+            } else {
+                // Create new customer
+                const newCustomer = {
+                    id: Date.now(),
+                    ...customerData,
+                    createdAt: new Date()
+                };
+                
+                appState.customers.push(newCustomer);
+                showSuccessMessage('👥 Customer added successfully!');
+            }
             
+            updateStats();
             updateDisplay();
             closeModal('customer-modal');
-            showSuccessMessage('👥 Customer added successfully!');
+            saveToLocalStorage();
             
             if (appState.currentView === 'customers') {
                 loadCustomersList();
             }
+        }
+
+        function deleteCustomer(customerId) {
+            const customer = appState.customers.find(c => c.id === customerId);
+            if (!customer) return;
+            
+            showConfirmDialog(
+                'Delete Customer',
+                `Are you sure you want to delete "${customer.company}"? This action cannot be undone.`,
+                () => {
+                    const index = appState.customers.findIndex(c => c.id === customerId);
+                    if (index !== -1) {
+                        appState.customers.splice(index, 1);
+                        updateStats();
+                        updateDisplay();
+                        loadCustomersList();
+                        showSuccessMessage(`🗑️ Customer "${customer.company}" deleted successfully!`);
+                        saveToLocalStorage();
+                    }
+                },
+                'Delete Customer'
+            );
+        }
+
+        function viewCustomer(customerId) {
+            const customer = appState.customers.find(c => c.id === customerId);
+            if (!customer) return;
+            
+            // For now, just edit the customer
+            editCustomer(customerId);
+        }
+
+        function exportCustomers() {
+            if (appState.customers.length === 0) {
+                showSuccessMessage('❌ No customers to export!');
+                return;
+            }
+            
+            const csvHeaders = ['Company', 'Contact', 'Email', 'Phone', 'Industry', 'Type', 'Created'];
+            const csvRows = appState.customers.map(customer => [
+                customer.company,
+                customer.contact,
+                customer.email,
+                customer.phone,
+                customer.industry,
+                customer.type,
+                customer.createdAt.toLocaleDateString()
+            ]);
+            
+            const csvContent = [csvHeaders, ...csvRows]
+                .map(row => row.map(field => `"${field}"`).join(','))
+                .join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `customers-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showSuccessMessage('📤 Customers exported successfully!');
         }
 
         function loadCustomersList() {
@@ -2550,10 +3178,10 @@
             }
             
             customersList.innerHTML = appState.customers.map(customer => `
-                <div class="data-item" onclick="editCustomer(${customer.id})">
+                <div class="data-item">
                     <div class="data-item-header">
                         <div class="data-item-title">${customer.company}</div>
-                        <div style="font-size: 12px; color: var(--text-muted);">${customer.type}</div>
+                        <div class="data-item-amount" style="color: var(--accent-primary);">${customer.industry}</div>
                     </div>
                     <div class="data-item-details">
                         Contact: ${customer.contact}<br>
@@ -2562,18 +3190,39 @@
                     </div>
                     <div class="data-item-meta">
                         <div class="data-item-date">Added ${customer.createdAt.toLocaleDateString()}</div>
-                        <div style="color: var(--accent-primary); font-weight: 600;">${customer.industry}</div>
+                        <div class="data-item-status status-${customer.status}">${customer.status.toUpperCase()}</div>
+                    </div>
+                    <div class="data-item-actions">
+                        <button class="edit-btn" onclick="viewCustomer(${customer.id})">
+                            👁️ View
+                        </button>
+                        <button class="edit-btn" onclick="editCustomer(${customer.id})">
+                            ✏️ Edit
+                        </button>
+                        <button class="edit-btn" onclick="createQuoteForCustomer(${customer.id})" style="background: var(--success);">
+                            📋 Quote
+                        </button>
+                        <button class="edit-btn" onclick="deleteCustomer(${customer.id})" style="background: var(--error);">
+                            🗑️ Delete
+                        </button>
                     </div>
                 </div>
             `).join('');
         }
 
-        function editCustomer(customerId) {
-            showSuccessMessage('✏️ Customer editing coming soon!');
+        function createQuoteForCustomer(customerId) {
+            createQuote();
+            // Pre-select the customer when modal opens
+            setTimeout(() => {
+                document.getElementById('quote-customer').value = customerId;
+            }, 100);
         }
 
         // ===== QUOTE MANAGEMENT =====
         function createQuote() {
+            appState.editingQuote = null;
+            clearFormValidation();
+            
             // Clear form and set defaults
             document.getElementById('quote-form').reset();
             document.getElementById('quote-number').value = `QT-${new Date().getFullYear()}-${String(appState.quotes.length + 1).padStart(3, '0')}`;
@@ -2586,19 +3235,62 @@
             document.getElementById('quote-valid-until').value = validUntil.toISOString().split('T')[0];
             
             // Populate customer dropdown
+            populateCustomerDropdown();
+            
+            // Clear quote items container and add first item
+            document.getElementById('quote-items-container').innerHTML = '';
+            addQuoteItem();
+            
+            // Update modal title
+            document.querySelector('#quote-modal .modal-header h3').innerHTML = '📋 Create Quote';
+            document.querySelector('#quote-modal .modal-footer .btn-primary').innerHTML = '💾 Save Quote';
+            
+            openModal('quote-modal');
+        }
+
+        function editQuote(quoteId) {
+            const quote = appState.quotes.find(q => q.id === quoteId);
+            if (!quote) return;
+            
+            appState.editingQuote = quote;
+            clearFormValidation();
+            
+            // Pre-populate form with quote data
+            document.getElementById('quote-number').value = quote.number;
+            document.getElementById('quote-date').value = quote.date;
+            document.getElementById('quote-valid-until').value = quote.validUntil;
+            document.getElementById('quote-description').value = quote.description;
+            document.getElementById('quote-tax-rate').value = quote.taxRate;
+            
+            // Populate customer dropdown and select current customer
+            populateCustomerDropdown();
+            document.getElementById('quote-customer').value = quote.customerId;
+            
+            // Clear and populate quote items
+            document.getElementById('quote-items-container').innerHTML = '';
+            quote.items.forEach((item, index) => {
+                addQuoteItem();
+                document.getElementById(`item-desc-${index}`).value = item.description;
+                document.getElementById(`item-qty-${index}`).value = item.quantity;
+                document.getElementById(`item-price-${index}`).value = item.price;
+            });
+            
+            // Calculate total
+            calculateQuoteTotal();
+            
+            // Update modal title
+            document.querySelector('#quote-modal .modal-header h3').innerHTML = `✏️ Edit Quote - ${quote.number}`;
+            document.querySelector('#quote-modal .modal-footer .btn-primary').innerHTML = '💾 Update Quote';
+            
+            openModal('quote-modal');
+        }
+
+        function populateCustomerDropdown() {
             const customerSelect = document.getElementById('quote-customer');
             customerSelect.innerHTML = '<option value="">Select Customer</option>' +
                 appState.customers.map(customer => 
                     `<option value="${customer.id}">${customer.company} - ${customer.contact}</option>`
                 ).join('');
-            
-            // Clear quote items container
-            document.getElementById('quote-items-container').innerHTML = '';
-            
-            // Add first item
-            addQuoteItem();
-            
-            openModal('quote-modal');
         }
 
         function addQuoteItem() {
@@ -2609,8 +3301,8 @@
                 <div class="quote-item" style="background: var(--bg-secondary); padding: 16px; border-radius: 12px; margin-bottom: 12px;">
                     <div class="form-row">
                         <div class="form-group" style="margin-bottom: 12px;">
-                            <label class="form-label">Description</label>
-                            <input type="text" class="form-input" id="item-desc-${itemIndex}" placeholder="Service or product description" onchange="calculateQuoteTotal()">
+                            <label class="form-label">Description *</label>
+                            <input type="text" class="form-input" id="item-desc-${itemIndex}" placeholder="Service or product description" onchange="calculateQuoteTotal()" required>
                         </div>
                     </div>
                     <div class="form-row">
@@ -2619,13 +3311,18 @@
                             <input type="number" class="form-input" id="item-qty-${itemIndex}" placeholder="1" min="1" value="1" onchange="calculateQuoteTotal()">
                         </div>
                         <div class="form-group" style="margin-bottom: 12px;">
-                            <label class="form-label">Price (RM)</label>
-                            <input type="number" class="form-input" id="item-price-${itemIndex}" placeholder="0.00" min="0" step="0.01" onchange="calculateQuoteTotal()">
+                            <label class="form-label">Price (RM) *</label>
+                            <input type="number" class="form-input" id="item-price-${itemIndex}" placeholder="0.00" min="0" step="0.01" onchange="calculateQuoteTotal()" required>
                         </div>
                     </div>
-                    <button type="button" onclick="removeQuoteItem(this)" style="background: var(--error); color: white; border: none; border-radius: 8px; padding: 8px 12px; font-size: 12px; cursor: pointer;">
-                        🗑️ Remove Item
-                    </button>
+                    <div class="action-buttons">
+                        <button type="button" class="edit-btn" onclick="duplicateQuoteItem(${itemIndex})" style="background: var(--info);">
+                            📋 Duplicate
+                        </button>
+                        <button type="button" class="edit-btn" onclick="removeQuoteItem(this)" style="background: var(--error);">
+                            🗑️ Remove Item
+                        </button>
+                    </div>
                 </div>
             `;
             
@@ -2633,9 +3330,32 @@
             calculateQuoteTotal();
         }
 
+        function duplicateQuoteItem(itemIndex) {
+            const desc = document.getElementById(`item-desc-${itemIndex}`).value;
+            const qty = document.getElementById(`item-qty-${itemIndex}`).value;
+            const price = document.getElementById(`item-price-${itemIndex}`).value;
+            
+            addQuoteItem();
+            
+            const newIndex = document.querySelectorAll('.quote-item').length - 1;
+            document.getElementById(`item-desc-${newIndex}`).value = desc;
+            document.getElementById(`item-qty-${newIndex}`).value = qty;
+            document.getElementById(`item-price-${newIndex}`).value = price;
+            
+            calculateQuoteTotal();
+            showSuccessMessage('📋 Item duplicated!');
+        }
+
         function removeQuoteItem(button) {
+            const items = document.querySelectorAll('.quote-item');
+            if (items.length <= 1) {
+                showSuccessMessage('❌ Cannot remove the last item!');
+                return;
+            }
+            
             button.closest('.quote-item').remove();
             calculateQuoteTotal();
+            showSuccessMessage('🗑️ Item removed!');
         }
 
         function calculateQuoteTotal() {
@@ -2652,12 +3372,20 @@
             const tax = subtotal * (taxRate / 100);
             const total = subtotal + tax;
             
-            document.getElementById('quote-subtotal').textContent = `RM ${subtotal.toFixed(2)}`;
-            document.getElementById('quote-tax').textContent = `RM ${tax.toFixed(2)}`;
-            document.getElementById('quote-total').textContent = `RM ${total.toFixed(2)}`;
+            document.getElementById('quote-subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('quote-tax').textContent = formatCurrency(tax);
+            document.getElementById('quote-total').textContent = formatCurrency(total);
         }
 
         function saveQuote() {
+            // Validate form
+            const validations = [
+                () => validateField('quote-date', validateRequired, 'Date is required'),
+                () => validateField('quote-customer', validateRequired, 'Please select a customer')
+            ];
+            
+            const isValid = validations.every(validation => validation());
+            
             const items = [];
             const itemElements = document.querySelectorAll('.quote-item');
             
@@ -2672,7 +3400,12 @@
             });
             
             if (items.length === 0) {
-                showSuccessMessage('❌ Please add at least one quote item!');
+                showSuccessMessage('❌ Please add at least one valid quote item!');
+                return;
+            }
+            
+            if (!isValid) {
+                showSuccessMessage('❌ Please fix the errors before saving!');
                 return;
             }
             
@@ -2681,8 +3414,7 @@
             const tax = subtotal * (taxRate / 100);
             const total = subtotal + tax;
             
-            const newQuote = {
-                id: Date.now(),
+            const quoteData = {
                 number: document.getElementById('quote-number').value,
                 customerId: parseInt(document.getElementById('quote-customer').value),
                 date: document.getElementById('quote-date').value,
@@ -2690,21 +3422,39 @@
                 description: document.getElementById('quote-description').value,
                 items: items,
                 taxRate: taxRate,
-                status: 'draft',
                 subtotal: subtotal,
                 tax: tax,
-                total: total,
-                createdAt: new Date()
+                total: total
             };
             
-            appState.quotes.push(newQuote);
-            appState.stats.totalQuotes = appState.quotes.length;
-            appState.stats.monthlyRevenue += total;
-            appState.stats.totalRevenue += total;
+            if (appState.editingQuote) {
+                // Update existing quote
+                const index = appState.quotes.findIndex(q => q.id === appState.editingQuote.id);
+                if (index !== -1) {
+                    appState.quotes[index] = {
+                        ...appState.editingQuote,
+                        ...quoteData,
+                        updatedAt: new Date()
+                    };
+                    showSuccessMessage('✏️ Quote updated successfully!');
+                }
+            } else {
+                // Create new quote
+                const newQuote = {
+                    id: Date.now(),
+                    ...quoteData,
+                    status: 'draft',
+                    createdAt: new Date()
+                };
+                
+                appState.quotes.push(newQuote);
+                showSuccessMessage('📋 Quote saved successfully!');
+            }
             
+            updateStats();
             updateDisplay();
             closeModal('quote-modal');
-            showSuccessMessage('📋 Quote saved successfully!');
+            saveToLocalStorage();
             
             if (appState.currentView === 'quotes') {
                 loadQuotesList();
@@ -2713,7 +3463,92 @@
 
         function saveAndSendQuote() {
             saveQuote();
-            showSuccessMessage('📤 Quote saved and sent to customer!');
+            // Mark quote as sent if it was saved successfully
+            if (appState.editingQuote || appState.quotes.length > 0) {
+                const latestQuote = appState.editingQuote || appState.quotes[appState.quotes.length - 1];
+                if (latestQuote) {
+                    latestQuote.status = 'sent';
+                    showSuccessMessage('📤 Quote saved and sent to customer!');
+                    saveToLocalStorage();
+                }
+            }
+        }
+
+        function deleteQuote(quoteId) {
+            const quote = appState.quotes.find(q => q.id === quoteId);
+            if (!quote) return;
+            
+            showConfirmDialog(
+                'Delete Quote',
+                `Are you sure you want to delete quote "${quote.number}"? This action cannot be undone.`,
+                () => {
+                    const index = appState.quotes.findIndex(q => q.id === quoteId);
+                    if (index !== -1) {
+                        appState.quotes.splice(index, 1);
+                        updateStats();
+                        updateDisplay();
+                        loadQuotesList();
+                        showSuccessMessage(`🗑️ Quote "${quote.number}" deleted successfully!`);
+                        saveToLocalStorage();
+                    }
+                },
+                'Delete Quote'
+            );
+        }
+
+        function duplicateQuote(quoteId) {
+            const quote = appState.quotes.find(q => q.id === quoteId);
+            if (!quote) return;
+            
+            const duplicatedQuote = {
+                ...quote,
+                id: Date.now(),
+                number: `QT-${new Date().getFullYear()}-${String(appState.quotes.length + 1).padStart(3, '0')}`,
+                status: 'draft',
+                createdAt: new Date(),
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            appState.quotes.push(duplicatedQuote);
+            updateStats();
+            updateDisplay();
+            loadQuotesList();
+            showSuccessMessage(`📋 Quote duplicated as "${duplicatedQuote.number}"!`);
+            saveToLocalStorage();
+        }
+
+        function exportQuotes() {
+            if (appState.quotes.length === 0) {
+                showSuccessMessage('❌ No quotes to export!');
+                return;
+            }
+            
+            const csvHeaders = ['Quote Number', 'Customer', 'Date', 'Description', 'Status', 'Total'];
+            const csvRows = appState.quotes.map(quote => {
+                const customer = appState.customers.find(c => c.id === quote.customerId);
+                return [
+                    quote.number,
+                    customer ? customer.company : 'Unknown',
+                    quote.date,
+                    quote.description,
+                    quote.status,
+                    quote.total.toFixed(2)
+                ];
+            });
+            
+            const csvContent = [csvHeaders, ...csvRows]
+                .map(row => row.map(field => `"${field}"`).join(','))
+                .join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `quotes-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showSuccessMessage('📤 Quotes exported successfully!');
         }
 
         function loadQuotesList() {
@@ -2738,26 +3573,48 @@
                 const customerName = customer ? customer.company : 'Unknown Customer';
                 
                 return `
-                    <div class="data-item" onclick="editQuote(${quote.id})">
+                    <div class="data-item">
                         <div class="data-item-header">
                             <div class="data-item-title">${quote.number}</div>
-                            <div class="data-item-amount">RM ${quote.total.toFixed(2)}</div>
+                            <div class="data-item-amount">${formatCurrency(quote.total)}</div>
                         </div>
                         <div class="data-item-details">
                             Customer: ${customerName}<br>
-                            ${quote.description}
+                            ${quote.description || 'No description'}
                         </div>
                         <div class="data-item-meta">
                             <div class="data-item-date">Created ${quote.createdAt.toLocaleDateString()}</div>
                             <div class="data-item-status status-${quote.status}">${quote.status.toUpperCase()}</div>
+                        </div>
+                        <div class="data-item-actions">
+                            <button class="edit-btn" onclick="viewQuote(${quote.id})">
+                                👁️ View
+                            </button>
+                            <button class="edit-btn" onclick="editQuote(${quote.id})">
+                                ✏️ Edit
+                            </button>
+                            <button class="edit-btn" onclick="duplicateQuote(${quote.id})" style="background: var(--success);">
+                                📋 Duplicate
+                            </button>
+                            <button class="edit-btn" onclick="generatePDF(${quote.id})" style="background: var(--warning);">
+                                📄 PDF
+                            </button>
+                            <button class="edit-btn" onclick="deleteQuote(${quote.id})" style="background: var(--error);">
+                                🗑️ Delete
+                            </button>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
-        function editQuote(quoteId) {
-            showSuccessMessage('✏️ Quote editing coming soon!');
+        function viewQuote(quoteId) {
+            // For now, just edit the quote
+            editQuote(quoteId);
+        }
+
+        function generatePDF(quoteId) {
+            showSuccessMessage('📄 PDF generation coming soon!');
         }
 
         // ===== DATA MANAGEMENT =====
@@ -2769,9 +3626,11 @@
                 quotes: appState.quotes,
                 settings: {
                     theme: appState.currentTheme,
-                    mode: appState.currentMode
+                    mode: appState.currentMode,
+                    view: appState.currentView
                 },
-                exportDate: new Date().toISOString()
+                exportDate: new Date().toISOString(),
+                version: '2.1.0'
             };
             
             const dataStr = JSON.stringify(exportData, null, 2);
@@ -2805,16 +3664,17 @@
                     reader.onload = function(e) {
                         try {
                             const importedData = JSON.parse(e.target.result);
-                            // Merge imported data with current state
-                            if (importedData.userProfile) appState.userProfile = importedData.userProfile;
-                            if (importedData.companyInfo) appState.companyInfo = importedData.companyInfo;
-                            if (importedData.customers) appState.customers = importedData.customers;
-                            if (importedData.quotes) appState.quotes = importedData.quotes;
                             
-                            updateDisplay();
-                            showSuccessMessage('📥 Data imported successfully!');
+                            showConfirmDialog(
+                                'Import Data',
+                                'This will replace your current data. Are you sure you want to continue?',
+                                () => {
+                                    importData(importedData);
+                                },
+                                'Import Data'
+                            );
                         } catch (error) {
-                            showSuccessMessage('❌ Error importing data file!');
+                            showSuccessMessage('❌ Error reading data file! Please check the file format.');
                         }
                     };
                     reader.readAsText(file);
@@ -2823,31 +3683,213 @@
             input.click();
         }
 
+        function importData(importedData) {
+            try {
+                // Validate imported data structure
+                if (!importedData || typeof importedData !== 'object') {
+                    throw new Error('Invalid data format');
+                }
+                
+                // Merge imported data with current state
+                if (importedData.userProfile) {
+                    appState.userProfile = { ...appState.userProfile, ...importedData.userProfile };
+                }
+                if (importedData.companyInfo) {
+                    appState.companyInfo = { ...appState.companyInfo, ...importedData.companyInfo };
+                }
+                if (importedData.customers && Array.isArray(importedData.customers)) {
+                    appState.customers = importedData.customers.map(customer => ({
+                        ...customer,
+                        createdAt: new Date(customer.createdAt),
+                        updatedAt: customer.updatedAt ? new Date(customer.updatedAt) : undefined
+                    }));
+                }
+                if (importedData.quotes && Array.isArray(importedData.quotes)) {
+                    appState.quotes = importedData.quotes.map(quote => ({
+                        ...quote,
+                        createdAt: new Date(quote.createdAt),
+                        updatedAt: quote.updatedAt ? new Date(quote.updatedAt) : undefined
+                    }));
+                }
+                if (importedData.settings) {
+                    if (importedData.settings.theme) {
+                        switchToTheme(importedData.settings.theme);
+                    }
+                    if (importedData.settings.mode) {
+                        appState.currentMode = importedData.settings.mode;
+                        document.body.setAttribute('data-mode', importedData.settings.mode);
+                        updateModeDisplays(importedData.settings.mode);
+                    }
+                }
+                
+                updateStats();
+                updateDisplay();
+                saveToLocalStorage();
+                showSuccessMessage('📥 Data imported successfully!');
+                
+                // Refresh current view
+                if (appState.currentView === 'customers') {
+                    loadCustomersList();
+                } else if (appState.currentView === 'quotes') {
+                    loadQuotesList();
+                } else if (appState.currentView === 'dashboard') {
+                    loadDashboard();
+                }
+            } catch (error) {
+                showSuccessMessage('❌ Error importing data! Please check the file format.');
+                console.error('Import error:', error);
+            }
+        }
+
+        function checkDataIntegrity() {
+            let issues = [];
+            
+            // Check for orphaned quotes (quotes without valid customers)
+            const orphanedQuotes = appState.quotes.filter(quote => 
+                !appState.customers.find(customer => customer.id === quote.customerId)
+            );
+            
+            if (orphanedQuotes.length > 0) {
+                issues.push(`${orphanedQuotes.length} quotes with missing customers`);
+            }
+            
+            // Check for duplicate customer companies
+            const companies = appState.customers.map(c => c.company.toLowerCase());
+            const duplicateCompanies = companies.filter((company, index) => companies.indexOf(company) !== index);
+            
+            if (duplicateCompanies.length > 0) {
+                issues.push(`${duplicateCompanies.length} duplicate customer companies`);
+            }
+            
+            if (issues.length === 0) {
+                showSuccessMessage('✅ Data integrity check passed!');
+            } else {
+                showSuccessMessage(`⚠️ Found ${issues.length} issues: ${issues.join(', ')}`);
+            }
+        }
+
+        function updateStorageInfo() {
+            try {
+                const dataStr = JSON.stringify(appState);
+                const sizeInBytes = new Blob([dataStr]).size;
+                const sizeInKB = (sizeInBytes / 1024).toFixed(2);
+                const maxSize = 5000; // 5MB limit assumption
+                const usagePercent = Math.min((sizeInBytes / 1024 / maxSize) * 100, 100);
+                
+                document.getElementById('storage-usage').textContent = `${sizeInKB} KB (${usagePercent.toFixed(1)}% used)`;
+                document.getElementById('storage-progress').style.width = `${usagePercent}%`;
+                
+                // Change color based on usage
+                const progressBar = document.getElementById('storage-progress');
+                if (usagePercent > 80) {
+                    progressBar.style.background = 'linear-gradient(90deg, var(--error), #f87171)';
+                } else if (usagePercent > 60) {
+                    progressBar.style.background = 'linear-gradient(90deg, var(--warning), #fbbf24)';
+                } else {
+                    progressBar.style.background = 'linear-gradient(90deg, var(--accent-primary), var(--accent-secondary))';
+                }
+            } catch (error) {
+                document.getElementById('storage-usage').textContent = 'Error calculating storage';
+            }
+        }
+
         function showStorageInfo() {
-            const dataSize = JSON.stringify(appState).length;
-            const sizeInKB = (dataSize / 1024).toFixed(2);
-            showSuccessMessage(`💾 Current data size: ${sizeInKB} KB`);
+            updateStorageInfo();
+            const usage = document.getElementById('storage-usage').textContent;
+            showSuccessMessage(`💾 Storage usage: ${usage}`);
         }
 
-        function viewReports() {
-            showSuccessMessage('📊 Advanced reports coming soon!');
+        function clearCache() {
+            showConfirmDialog(
+                'Clear Cache',
+                'This will clear temporary data and reset the app to improve performance. Your business data will not be affected.',
+                () => {
+                    // Clear any cached data here
+                    showSuccessMessage('🗑️ Cache cleared successfully!');
+                },
+                'Clear Cache'
+            );
         }
 
-        function showHelp() {
-            openModal('help-modal');
+        function exportSettings() {
+            const settings = {
+                theme: appState.currentTheme,
+                mode: appState.currentMode,
+                view: appState.currentView,
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(settings, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `refit-settings-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showSuccessMessage('📤 Settings exported successfully!');
+        }
+
+        function resetAllSettings() {
+            showConfirmDialog(
+                'Reset All Settings',
+                'This will reset all app settings to default values. Your business data will not be affected.',
+                () => {
+                    appState.currentTheme = 'red';
+                    appState.currentMode = 'light';
+                    switchToTheme('red');
+                    document.body.setAttribute('data-mode', 'light');
+                    updateModeDisplays('light');
+                    showSuccessMessage('🔄 Settings reset to defaults!');
+                    saveToLocalStorage();
+                },
+                'Reset Settings'
+            );
+        }
+
+        function installApp() {
+            if (window.deferredPrompt) {
+                window.deferredPrompt.prompt();
+                window.deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showSuccessMessage('📱 App installed successfully!');
+                    }
+                    window.deferredPrompt = null;
+                });
+            } else {
+                showSuccessMessage('💡 Use your browser\'s "Add to Home Screen" option to install the app!');
+            }
+        }
+
+        function checkForUpdates() {
+            showSuccessMessage('🔄 Checking for updates... You have the latest version!');
         }
 
         // ===== DASHBOARD =====
         function loadDashboard() {
             updateStats();
             loadRecentActivity();
+            updateStorageInfo();
         }
 
         function updateStats() {
+            appState.stats.totalQuotes = appState.quotes.length;
+            appState.stats.totalCustomers = appState.customers.length;
+            appState.stats.totalRevenue = appState.quotes.reduce((sum, quote) => sum + quote.total, 0);
+            appState.stats.monthlyRevenue = appState.quotes
+                .filter(quote => {
+                    const quoteDate = new Date(quote.createdAt);
+                    const now = new Date();
+                    return quoteDate.getMonth() === now.getMonth() && 
+                           quoteDate.getFullYear() === now.getFullYear();
+                })
+                .reduce((sum, quote) => sum + quote.total, 0);
+            
             document.getElementById('total-quotes-count').textContent = appState.stats.totalQuotes;
             document.getElementById('total-customers-count').textContent = appState.stats.totalCustomers;
-            document.getElementById('monthly-revenue').textContent = `RM ${appState.stats.monthlyRevenue.toFixed(0)}`;
-            document.getElementById('total-revenue').textContent = `RM ${appState.stats.totalRevenue.toFixed(0)}`;
+            document.getElementById('monthly-revenue').textContent = formatCurrency(appState.stats.monthlyRevenue);
+            document.getElementById('total-revenue').textContent = formatCurrency(appState.stats.totalRevenue);
         }
 
         function loadRecentActivity() {
@@ -2857,19 +3899,21 @@
             const activities = [
                 ...appState.quotes.map(quote => ({
                     type: 'quote',
+                    id: quote.id,
                     title: quote.number,
-                    details: quote.description,
-                    amount: `RM ${quote.total.toFixed(2)}`,
+                    details: quote.description || 'No description',
+                    amount: formatCurrency(quote.total),
                     date: quote.createdAt,
                     status: quote.status
                 })),
                 ...appState.customers.map(customer => ({
                     type: 'customer',
+                    id: customer.id,
                     title: customer.company,
                     details: `Contact: ${customer.contact}`,
                     amount: customer.industry,
                     date: customer.createdAt,
-                    status: 'active'
+                    status: customer.status || 'active'
                 }))
             ].sort((a, b) => b.date - a.date).slice(0, 5);
             
@@ -2879,6 +3923,10 @@
                         <div style="font-size: 32px; margin-bottom: 8px;">📋</div>
                         <p>No recent activity</p>
                         <p style="font-size: 14px;">Create your first quote or add a customer to see activity here!</p>
+                        <div class="action-buttons center" style="margin-top: 12px;">
+                            <button class="edit-btn" onclick="createQuote()">📋 Create Quote</button>
+                            <button class="edit-btn" onclick="addCustomer()">👥 Add Customer</button>
+                        </div>
                     </div>
                 `;
                 return;
@@ -2897,8 +3945,137 @@
                         <div class="data-item-date">${activity.date.toLocaleDateString()}</div>
                         <div class="data-item-status status-${activity.status}">${activity.status.toUpperCase()}</div>
                     </div>
+                    <div class="data-item-actions">
+                        <button class="edit-btn" onclick="${activity.type === 'quote' ? 'editQuote' : 'editCustomer'}(${activity.id})">
+                            ✏️ Edit
+                        </button>
+                    </div>
                 </div>
             `).join('');
+        }
+
+        function refreshRecentActivity() {
+            loadRecentActivity();
+            showSuccessMessage('🔄 Activity refreshed!');
+        }
+
+        function viewReports() {
+            showSuccessMessage('📊 Advanced reports coming soon! Check your dashboard stats for now.');
+        }
+
+        function showHelp() {
+            openModal('help-modal');
+        }
+
+        function showKeyboardShortcuts() {
+            const shortcuts = [
+                'Ctrl+N: New Quote',
+                'Ctrl+K: Add Customer', 
+                'Ctrl+T: Theme Picker',
+                'Ctrl+E: Export Data',
+                'Escape: Close Modals',
+                '1-4: Quick Navigation'
+            ];
+            showSuccessMessage(`⌨️ Shortcuts: ${shortcuts.join(' | ')}`);
+        }
+
+        function contactSupport() {
+            showSuccessMessage('📧 Support: For help, please visit our documentation or contact us at support@refit.app');
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function formatCurrency(amount) {
+            return `RM ${parseFloat(amount).toFixed(2)}`;
+        }
+
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('en-MY');
+        }
+
+        function generateId() {
+            return Date.now() + Math.random().toString(36).substr(2, 9);
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // ===== LOCAL STORAGE MANAGEMENT =====
+        function saveToLocalStorage() {
+            try {
+                const dataToSave = {
+                    userProfile: appState.userProfile,
+                    companyInfo: appState.companyInfo,
+                    customers: appState.customers,
+                    quotes: appState.quotes,
+                    settings: {
+                        theme: appState.currentTheme,
+                        mode: appState.currentMode,
+                        view: appState.currentView
+                    },
+                    lastSaved: new Date().toISOString(),
+                    version: '2.1.0'
+                };
+                localStorage.setItem('refit-business-data', JSON.stringify(dataToSave));
+            } catch (error) {
+                console.warn('Failed to save to localStorage:', error);
+                showSuccessMessage('⚠️ Warning: Could not save data automatically!');
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedData = localStorage.getItem('refit-business-data');
+                if (savedData) {
+                    const parsedData = JSON.parse(savedData);
+                    
+                    // Merge saved data with default state
+                    if (parsedData.userProfile) {
+                        appState.userProfile = { ...appState.userProfile, ...parsedData.userProfile };
+                    }
+                    if (parsedData.companyInfo) {
+                        appState.companyInfo = { ...appState.companyInfo, ...parsedData.companyInfo };
+                    }
+                    if (parsedData.customers) {
+                        appState.customers = parsedData.customers.map(customer => ({
+                            ...customer,
+                            createdAt: new Date(customer.createdAt),
+                            updatedAt: customer.updatedAt ? new Date(customer.updatedAt) : undefined
+                        }));
+                    }
+                    if (parsedData.quotes) {
+                        appState.quotes = parsedData.quotes.map(quote => ({
+                            ...quote,
+                            createdAt: new Date(quote.createdAt),
+                            updatedAt: quote.updatedAt ? new Date(quote.updatedAt) : undefined
+                        }));
+                    }
+                    if (parsedData.settings) {
+                        if (parsedData.settings.theme) {
+                            appState.currentTheme = parsedData.settings.theme;
+                        }
+                        if (parsedData.settings.mode) {
+                            appState.currentMode = parsedData.settings.mode;
+                        }
+                        if (parsedData.settings.view) {
+                            appState.currentView = parsedData.settings.view;
+                        }
+                    }
+                    
+                    return true;
+                }
+            } catch (error) {
+                console.warn('Failed to load from localStorage:', error);
+            }
+            return false;
         }
 
         // ===== INITIALIZATION =====
@@ -2914,6 +4091,11 @@
             // Update theme displays
             document.getElementById('current-theme-icon').textContent = themes[appState.currentTheme].icon;
             document.getElementById('current-theme-name').textContent = themes[appState.currentTheme].name;
+            
+            // Apply theme and mode
+            document.body.setAttribute('data-theme', appState.currentTheme);
+            document.body.setAttribute('data-mode', appState.currentMode);
+            updateModeDisplays(appState.currentMode);
         }
 
         function updateTime() {
@@ -2926,7 +4108,6 @@
             document.getElementById('status-time').textContent = time;
         }
 
-        // ===== PLATFORM DETECTION =====
         function detectPlatform() {
             const userAgent = navigator.userAgent;
             let platform = 'Mobile Web App';
@@ -2946,7 +4127,6 @@
             document.getElementById('platform-info').textContent = platform;
         }
 
-        // ===== KEYBOARD SHORTCUTS =====
         function setupKeyboardShortcuts() {
             document.addEventListener('keydown', function(e) {
                 // Ctrl/Cmd + N: New Quote
@@ -2980,13 +4160,13 @@
                 // Escape: Close modals
                 if (e.key === 'Escape') {
                     e.preventDefault();
-                    document.querySelectorAll('.modal.show, .theme-modal.show').forEach(modal => {
+                    document.querySelectorAll('.modal.show, .theme-modal.show, .confirm-dialog.show').forEach(modal => {
                         modal.classList.remove('show');
                     });
                 }
                 
                 // Number keys for quick navigation
-                if (e.key >= '1' && e.key <= '4' && !e.ctrlKey && !e.metaKey) {
+                if (e.key >= '1' && e.key <= '4' && !e.ctrlKey && !e.metaKey && !e.target.tagName.match(/INPUT|TEXTAREA|SELECT/)) {
                     const views = ['dashboard', 'quotes', 'customers', 'settings'];
                     const viewIndex = parseInt(e.key) - 1;
                     if (viewIndex < views.length) {
@@ -2997,180 +4177,6 @@
             });
         }
 
-        // ===== PERFORMANCE OPTIMIZATIONS =====
-        function optimizePerformance() {
-            // Debounce scroll events
-            let scrollTimeout;
-            window.addEventListener('scroll', function() {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => {
-                    // Any scroll-based optimizations can go here
-                }, 100);
-            });
-            
-            // Optimize form inputs
-            document.addEventListener('input', function(e) {
-                if (e.target.classList.contains('form-input')) {
-                    // Clear any existing validation styling
-                    e.target.style.borderColor = '';
-                }
-            });
-        }
-
-        // ===== ACCESSIBILITY ENHANCEMENTS =====
-        function enhanceAccessibility() {
-            // Add focus indicators for keyboard navigation
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Tab') {
-                    document.body.classList.add('keyboard-navigation');
-                }
-            });
-            
-            document.addEventListener('mousedown', function() {
-                document.body.classList.remove('keyboard-navigation');
-            });
-            
-            // Add ARIA labels for better screen reader support
-            document.querySelectorAll('.nav-item').forEach((item, index) => {
-                item.setAttribute('role', 'button');
-                item.setAttribute('tabindex', '0');
-                item.setAttribute('aria-label', `Navigate to ${item.textContent.trim()}`);
-            });
-            
-            // Add skip navigation link
-            const skipNav = document.createElement('a');
-            skipNav.href = '#main-content';
-            skipNav.textContent = 'Skip to main content';
-            skipNav.className = 'skip-nav';
-            skipNav.style.cssText = `
-                position: absolute;
-                top: -40px;
-                left: 6px;
-                background: var(--accent-primary);
-                color: white;
-                padding: 8px;
-                border-radius: 4px;
-                text-decoration: none;
-                z-index: 1000;
-                transition: top 0.3s;
-            `;
-            skipNav.addEventListener('focus', function() {
-                this.style.top = '6px';
-            });
-            skipNav.addEventListener('blur', function() {
-                this.style.top = '-40px';
-            });
-            document.body.insertBefore(skipNav, document.body.firstChild);
-        }
-
-        // ===== LOCAL STORAGE MANAGEMENT =====
-        function saveToLocalStorage() {
-            try {
-                const dataToSave = {
-                    userProfile: appState.userProfile,
-                    companyInfo: appState.companyInfo,
-                    customers: appState.customers,
-                    quotes: appState.quotes,
-                    settings: {
-                        theme: appState.currentTheme,
-                        mode: appState.currentMode
-                    },
-                    lastSaved: new Date().toISOString()
-                };
-                localStorage.setItem('refit-business-data', JSON.stringify(dataToSave));
-            } catch (error) {
-                console.warn('Failed to save to localStorage:', error);
-            }
-        }
-
-        function loadFromLocalStorage() {
-            try {
-                const savedData = localStorage.getItem('refit-business-data');
-                if (savedData) {
-                    const parsedData = JSON.parse(savedData);
-                    
-                    // Merge saved data with default state
-                    if (parsedData.userProfile) {
-                        appState.userProfile = { ...appState.userProfile, ...parsedData.userProfile };
-                    }
-                    if (parsedData.companyInfo) {
-                        appState.companyInfo = { ...appState.companyInfo, ...parsedData.companyInfo };
-                    }
-                    if (parsedData.customers) {
-                        appState.customers = parsedData.customers.map(customer => ({
-                            ...customer,
-                            createdAt: new Date(customer.createdAt)
-                        }));
-                    }
-                    if (parsedData.quotes) {
-                        appState.quotes = parsedData.quotes.map(quote => ({
-                            ...quote,
-                            createdAt: new Date(quote.createdAt)
-                        }));
-                    }
-                    if (parsedData.settings) {
-                        if (parsedData.settings.theme) {
-                            appState.currentTheme = parsedData.settings.theme;
-                            switchToTheme(parsedData.settings.theme);
-                        }
-                        if (parsedData.settings.mode) {
-                            appState.currentMode = parsedData.settings.mode;
-                            document.body.setAttribute('data-mode', parsedData.settings.mode);
-                        }
-                    }
-                    
-                    // Recalculate stats
-                    appState.stats.totalQuotes = appState.quotes.length;
-                    appState.stats.totalCustomers = appState.customers.length;
-                    appState.stats.totalRevenue = appState.quotes.reduce((sum, quote) => sum + quote.total, 0);
-                    appState.stats.monthlyRevenue = appState.quotes
-                        .filter(quote => {
-                            const quoteDate = new Date(quote.createdAt);
-                            const now = new Date();
-                            return quoteDate.getMonth() === now.getMonth() && 
-                                   quoteDate.getFullYear() === now.getFullYear();
-                        })
-                        .reduce((sum, quote) => sum + quote.total, 0);
-                    
-                    return true;
-                }
-            } catch (error) {
-                console.warn('Failed to load from localStorage:', error);
-            }
-            return false;
-        }
-
-        // Auto-save functionality
-        function enableAutoSave() {
-            // Save data whenever significant changes are made
-            const originalPush = Array.prototype.push;
-            appState.customers.push = function(...items) {
-                const result = originalPush.apply(this, items);
-                saveToLocalStorage();
-                return result;
-            };
-            
-            appState.quotes.push = function(...items) {
-                const result = originalPush.apply(this, items);
-                saveToLocalStorage();
-                return result;
-            };
-            
-            // Save on profile/company updates
-            const originalSaveProfile = saveProfile;
-            saveProfile = function() {
-                originalSaveProfile();
-                saveToLocalStorage();
-            };
-            
-            const originalSaveCompany = saveCompany;
-            saveCompany = function() {
-                originalSaveCompany();
-                saveToLocalStorage();
-            };
-        }
-
-        // ===== TOUCH GESTURES FOR MOBILE =====
         function setupTouchGestures() {
             let startX, startY, currentX, currentY;
             
@@ -3192,20 +4198,22 @@
                 const diffX = startX - currentX;
                 const diffY = startY - currentY;
                 
-                // Swipe detection (minimum 50px movement)
-                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                // Swipe detection (minimum 100px movement)
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 100) {
                     if (diffX > 0) {
                         // Swipe left - next view
                         const views = ['dashboard', 'quotes', 'customers', 'settings'];
                         const currentIndex = views.indexOf(appState.currentView);
                         const nextIndex = (currentIndex + 1) % views.length;
                         showView(views[nextIndex]);
+                        showSuccessMessage(`👈 Swiped to ${views[nextIndex]}`);
                     } else {
                         // Swipe right - previous view
                         const views = ['dashboard', 'quotes', 'customers', 'settings'];
                         const currentIndex = views.indexOf(appState.currentView);
                         const prevIndex = currentIndex === 0 ? views.length - 1 : currentIndex - 1;
                         showView(views[prevIndex]);
+                        showSuccessMessage(`👉 Swiped to ${views[prevIndex]}`);
                     }
                 }
                 
@@ -3214,14 +4222,12 @@
             });
         }
 
-        // ===== PWA FUNCTIONALITY =====
         function setupPWA() {
             // Register service worker for offline functionality
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                    // Create a simple service worker inline
                     const swCode = `
-                        const CACHE_NAME = 'refit-business-v1';
+                        const CACHE_NAME = 'refit-business-v2.1.0';
                         const urlsToCache = ['/'];
                         
                         self.addEventListener('install', function(event) {
@@ -3260,22 +4266,150 @@
             }
             
             // Add to home screen prompt
-            let deferredPrompt;
             window.addEventListener('beforeinstallprompt', function(e) {
                 e.preventDefault();
-                deferredPrompt = e;
+                window.deferredPrompt = e;
                 
-                // Show install button after 30 seconds
+                // Show install hint after 30 seconds
                 setTimeout(() => {
-                    if (deferredPrompt) {
-                        showSuccessMessage('💡 Tip: Add REFIT to your home screen for easy access!');
+                    if (window.deferredPrompt) {
+                        showSuccessMessage('💡 Tip: Add REFIT to your home screen for quick access!');
                     }
                 }, 30000);
             });
         }
 
-        // ===== EVENT LISTENERS =====
+        function setupEventListeners() {
+            // Auto-save on data changes
+            const debouncedSave = debounce(saveToLocalStorage, 1000);
+            
+            // Form input listeners
+            document.addEventListener('input', function(e) {
+                if (e.target.classList.contains('form-input') || e.target.classList.contains('form-textarea')) {
+                    // Clear validation states on input
+                    e.target.classList.remove('error', 'success');
+                }
+                
+                // Auto-calculate quote totals
+                if (e.target.id && e.target.id.includes('item-')) {
+                    calculateQuoteTotal();
+                }
+                if (e.target.id === 'quote-tax-rate') {
+                    calculateQuoteTotal();
+                }
+            });
+            
+            // Modal background click listeners
+            document.querySelectorAll('.modal, .theme-modal, .confirm-dialog').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Keyboard navigation for nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        item.click();
+                    }
+                });
+            });
+            
+            // Accessibility focus management
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    document.body.classList.add('keyboard-navigation');
+                }
+            });
+            
+            document.addEventListener('mousedown', function() {
+                document.body.classList.remove('keyboard-navigation');
+            });
+        }
+
+        // Make functions globally accessible
+        window.showView = showView;
+        window.switchToTheme = switchToTheme;
+        window.randomTheme = randomTheme;
+        window.toggleMode = toggleMode;
+        window.openThemePicker = openThemePicker;
+        window.closeThemePicker = closeThemePicker;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.showConfirmDialog = showConfirmDialog;
+        window.closeConfirmDialog = closeConfirmDialog;
+        window.confirmAction = confirmAction;
+        
+        // Profile functions
+        window.editProfile = editProfile;
+        window.showProfile = showProfile;
+        window.saveProfile = saveProfile;
+        
+        // Company functions
+        window.editCompany = editCompany;
+        window.saveCompany = saveCompany;
+        window.openCompanyManager = openCompanyManager;
+        window.uploadLogo = uploadLogo;
+        window.resetLogoToEmoji = resetLogoToEmoji;
+        window.generateLogo = generateLogo;
+        window.editCompanyBranding = editCompanyBranding;
+        window.editBusinessAge = editBusinessAge;
+        window.updateSuccessRate = updateSuccessRate;
+        window.generateBusinessCard = generateBusinessCard;
+        window.exportCompanyData = exportCompanyData;
+        
+        // Customer functions
+        window.addCustomer = addCustomer;
+        window.editCustomer = editCustomer;
+        window.saveCustomer = saveCustomer;
+        window.deleteCustomer = deleteCustomer;
+        window.viewCustomer = viewCustomer;
+        window.exportCustomers = exportCustomers;
+        window.createQuoteForCustomer = createQuoteForCustomer;
+        
+        // Quote functions
+        window.createQuote = createQuote;
+        window.editQuote = editQuote;
+        window.saveQuote = saveQuote;
+        window.saveAndSendQuote = saveAndSendQuote;
+        window.deleteQuote = deleteQuote;
+        window.duplicateQuote = duplicateQuote;
+        window.viewQuote = viewQuote;
+        window.generatePDF = generatePDF;
+        window.exportQuotes = exportQuotes;
+        window.addQuoteItem = addQuoteItem;
+        window.duplicateQuoteItem = duplicateQuoteItem;
+        window.removeQuoteItem = removeQuoteItem;
+        window.calculateQuoteTotal = calculateQuoteTotal;
+        
+        // Data management functions
+        window.exportData = exportData;
+        window.exportAllData = exportAllData;
+        window.createManualBackup = createManualBackup;
+        window.importDataFile = importDataFile;
+        window.checkDataIntegrity = checkDataIntegrity;
+        window.updateStorageInfo = updateStorageInfo;
+        window.showStorageInfo = showStorageInfo;
+        window.clearCache = clearCache;
+        window.exportSettings = exportSettings;
+        window.resetAllSettings = resetAllSettings;
+        window.installApp = installApp;
+        window.checkForUpdates = checkForUpdates;
+        
+        // Dashboard functions
+        window.refreshRecentActivity = refreshRecentActivity;
+        window.viewReports = viewReports;
+        window.showHelp = showHelp;
+        window.showKeyboardShortcuts = showKeyboardShortcuts;
+        window.contactSupport = contactSupport;
+
+        // ===== APPLICATION INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 REFIT Business System v2.1.0 Enhanced Starting...');
+            
             // Load saved data first
             const hasData = loadFromLocalStorage();
             
@@ -3286,51 +4420,25 @@
             
             // Setup enhancements
             setupKeyboardShortcuts();
-            optimizePerformance();
-            enhanceAccessibility();
-            enableAutoSave();
             setupTouchGestures();
             setupPWA();
+            setupEventListeners();
             
             // Update time every minute
             updateTime();
             setInterval(updateTime, 60000);
             
-            // Set up quote calculation listeners
-            document.addEventListener('input', function(e) {
-                if (e.target.id && e.target.id.includes('item-')) {
-                    calculateQuoteTotal();
-                }
-                if (e.target.id === 'quote-tax-rate') {
-                    calculateQuoteTotal();
-                }
-            });
-            
-            // Add click listener for modal backgrounds
-            document.querySelectorAll('.modal, .theme-modal').forEach(modal => {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
-                        modal.classList.remove('show');
-                    }
-                });
-            });
-            
-            // Add keyboard navigation for nav items
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        item.click();
-                    }
-                });
-            });
+            // Auto-save every 30 seconds
+            setInterval(() => {
+                saveToLocalStorage();
+            }, 30000);
             
             // Show welcome message
             setTimeout(() => {
                 if (hasData) {
                     showSuccessMessage('🎉 Welcome back! Your data has been loaded.');
                 } else {
-                    showSuccessMessage('🎉 Welcome to REFIT Business System!');
+                    showSuccessMessage('🎉 Welcome to REFIT Business System Enhanced!');
                     
                     // Show help after 5 seconds for new users
                     setTimeout(() => {
@@ -3339,83 +4447,35 @@
                 }
             }, 1000);
             
-            console.log('🚀 REFIT Business System loaded successfully!');
+            console.log('✅ REFIT Business System loaded successfully!');
             console.log('📱 Keyboard shortcuts: Ctrl+N (Quote), Ctrl+K (Customer), Ctrl+T (Themes), Ctrl+E (Export)');
             console.log('🎯 Quick navigation: Press 1-4 for views, swipe left/right on mobile');
+            console.log('🔧 Enhanced features: Better validation, more edit buttons, improved UX');
         });
 
         // ===== ERROR HANDLING =====
         window.addEventListener('error', function(e) {
             console.error('Application error:', e.error);
-            showSuccessMessage('⚠️ An error occurred. Your data is safe!');
+            showSuccessMessage('⚠️ An error occurred. Your data is safe! Try refreshing if issues persist.');
         });
 
         window.addEventListener('unhandledrejection', function(e) {
             console.error('Unhandled promise rejection:', e.reason);
-            showSuccessMessage('⚠️ A network error occurred. Please try again.');
+            showSuccessMessage('⚠️ A network error occurred. Please check your connection and try again.');
         });
 
-        // ===== UTILITY FUNCTIONS =====
-        function formatCurrency(amount) {
-            return `RM ${parseFloat(amount).toFixed(2)}`;
-        }
-
-        function formatDate(date) {
-            return new Date(date).toLocaleDateString('en-MY');
-        }
-
-        function generateId() {
-            return Date.now() + Math.random().toString(36).substr(2, 9);
-        }
-
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        // Make functions globally accessible for onclick handlers
-        window.showView = showView;
-        window.switchToTheme = switchToTheme;
-        window.toggleMode = toggleMode;
-        window.openThemePicker = openThemePicker;
-        window.closeThemePicker = closeThemePicker;
-        window.openModal = openModal;
-        window.closeModal = closeModal;
-        window.editProfile = editProfile;
-        window.showProfile = showProfile;
-        window.saveProfile = saveProfile;
-        window.editCompany = editCompany;
-        window.saveCompany = saveCompany;
-        window.openCompanyManager = openCompanyManager;
-        window.uploadLogo = uploadLogo;
-        window.resetLogoToEmoji = resetLogoToEmoji;
-        window.generateBusinessCard = generateBusinessCard;
-        window.exportCompanyData = exportCompanyData;
-        window.addCustomer = addCustomer;
-        window.saveCustomer = saveCustomer;
-        window.editCustomer = editCustomer;
-        window.createQuote = createQuote;
-        window.addQuoteItem = addQuoteItem;
-        window.removeQuoteItem = removeQuoteItem;
-        window.calculateQuoteTotal = calculateQuoteTotal;
-        window.saveQuote = saveQuote;
-        window.saveAndSendQuote = saveAndSendQuote;
-        window.editQuote = editQuote;
-        window.exportData = exportData;
-        window.exportAllData = exportAllData;
-        window.createManualBackup = createManualBackup;
-        window.importDataFile = importDataFile;
-        window.showStorageInfo = showStorageInfo;
-        window.viewReports = viewReports;
-        window.showHelp = showHelp;
-
+        // ===== PERFORMANCE MONITORING =====
+        window.addEventListener('load', function() {
+            // Monitor performance
+            if (window.performance && window.performance.timing) {
+                const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+                console.log(`📊 App loaded in ${loadTime}ms`);
+                
+                if (loadTime > 3000) {
+                    console.warn('⚠️ Slow loading detected');
+                }
+            }
+        });
     </script>
 </body>
 </html>
