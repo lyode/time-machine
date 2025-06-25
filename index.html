@@ -1018,314 +1018,6 @@
         .status-paid { background: #d1fae5; color: #059669; }
         .status-overdue { background: #fee2e2; color: #dc2626; }
 
-        /* Voice Assistant Styles */
-        .voice-assistant {
-            position: fixed;
-            bottom: 120px;
-            right: 20px;
-            width: 380px;
-            max-width: calc(100vw - 40px);
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            border-radius: 24px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 60px var(--shadow-strong);
-            z-index: 200;
-            transition: all 0.3s ease;
-            transform: translateY(100px);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .voice-assistant:not(.hidden) {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .voice-assistant-content {
-            padding: 20px;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .voice-assistant-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .ai-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            animation: pulse 2s infinite;
-        }
-
-        .ai-info {
-            flex: 1;
-        }
-
-        .ai-info h4 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .ai-info p {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .ai-controls {
-            display: flex;
-            gap: 8px;
-        }
-
-        .voice-personality-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 18px;
-            border: none;
-            background: var(--accent-primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-
-        .voice-personality-btn:hover {
-            background: var(--accent-secondary);
-            transform: scale(1.1);
-        }
-
-        .voice-close-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 18px;
-            border: none;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-
-        .voice-close-btn:hover {
-            background: var(--error);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .voice-conversation {
-            max-height: 250px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            padding-right: 8px;
-        }
-
-        .voice-conversation::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .voice-conversation::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-            border-radius: 2px;
-        }
-
-        .voice-conversation::-webkit-scrollbar-thumb {
-            background: var(--accent-primary);
-            border-radius: 2px;
-        }
-
-        .ai-message, .user-message {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-            animation: slideIn 0.3s ease;
-        }
-
-        .user-message {
-            flex-direction: row-reverse;
-        }
-
-        .message-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .user-message .message-avatar {
-            background: linear-gradient(135deg, var(--success), #34d399);
-        }
-
-        .message-content {
-            flex: 1;
-            background: var(--bg-secondary);
-            padding: 12px 16px;
-            border-radius: 16px;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .user-message .message-content {
-            background: var(--accent-primary);
-            color: white;
-        }
-
-        .message-content p {
-            margin-bottom: 8px;
-        }
-
-        .message-content p:last-child {
-            margin-bottom: 0;
-        }
-
-        .voice-controls {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .voice-btn {
-            flex: 1;
-            min-width: 100px;
-            padding: 12px 16px;
-            border-radius: 16px;
-            border: none;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .voice-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--shadow-medium);
-        }
-
-        .voice-btn.secondary {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-
-        .voice-btn.listening {
-            animation: pulse 1s infinite;
-            background: linear-gradient(135deg, var(--error), #f87171);
-        }
-
-        .voice-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* Personality Picker Styles */
-        .personality-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
-
-        .personality-option {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .personality-option:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--shadow-medium);
-        }
-
-        .personality-option.active {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 20px var(--shadow-strong);
-        }
-
-        .personality-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .personality-info {
-            flex: 1;
-        }
-
-        .personality-info h4 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .personality-age {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .personality-trait {
-            font-size: 14px;
-            color: var(--accent-primary);
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .personality-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
-
         /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
@@ -1589,20 +1281,6 @@
                 margin: 20px;
                 max-height: calc(100vh - 40px);
             }
-
-            .voice-assistant {
-                right: 10px;
-                width: calc(100vw - 20px);
-                bottom: 110px;
-            }
-            
-            .voice-controls {
-                flex-direction: column;
-            }
-            
-            .voice-btn {
-                min-width: auto;
-            }
         }
         
         /* Safe Area Adjustments */
@@ -1640,14 +1318,14 @@
                 <div class="app-logo" id="app-logo">🌅</div>
                 <div class="app-title">
                     <h1 id="company-name">REFIT BUSINESS SYSTEM</h1>
-                    <p id="company-subtitle">Complete Quote & Invoice Solution with Enhanced AI</p>
+                    <p id="company-subtitle">Complete Quote & Invoice Solution</p>
                 </div>
             </div>
             <div class="header-right">
-                <button class="header-btn" onclick="toggleVoiceAssistant()" title="AI Voice Assistant" id="voice-toggle-btn">🎙️</button>
                 <button class="header-btn" onclick="openThemePicker()" title="Change Theme">🎨</button>
                 <button class="header-btn" onclick="showProfile()" title="Profile">👤</button>
                 <button class="header-btn" onclick="exportData()" title="Export">📤</button>
+                <button class="header-btn" onclick="showHelp()" title="Help">❓</button>
             </div>
         </div>
 
@@ -1669,44 +1347,26 @@
                     </button>
                 </div>
 
-                <!-- AI Assistant Introduction -->
+                <!-- Welcome Card -->
                 <div class="card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; text-align: center;">
-                    <h3 style="margin-bottom: 16px; font-size: 20px;">🤖 Meet Your AI Team!</h3>
-                    <p style="margin-bottom: 16px; opacity: 0.9;">6 Amazing AI Personalities Ready to Help:</p>
+                    <h3 style="margin-bottom: 16px; font-size: 20px;">📊 Business Management Made Simple</h3>
+                    <p style="margin-bottom: 16px; opacity: 0.9;">Professional quote creation, customer management, and business analytics all in one beautiful interface.</p>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px; cursor: pointer;" onclick="toggleVoiceAssistant()">
-                            <div style="font-size: 24px; margin-bottom: 4px;">👩‍💼</div>
-                            <div style="font-size: 12px; font-weight: 600;">Sofia (24)</div>
-                            <div style="font-size: 10px; opacity: 0.8;">Friendly</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
+                            <div style="font-size: 24px; margin-bottom: 4px;">📋</div>
+                            <div style="font-size: 12px; font-weight: 600;">Smart Quotes</div>
                         </div>
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px; cursor: pointer;" onclick="toggleVoiceAssistant()">
-                            <div style="font-size: 24px; margin-bottom: 4px;">😊</div>
-                            <div style="font-size: 12px; font-weight: 600;">Emma (22)</div>
-                            <div style="font-size: 10px; opacity: 0.8;">Energetic</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
+                            <div style="font-size: 24px; margin-bottom: 4px;">👥</div>
+                            <div style="font-size: 12px; font-weight: 600;">CRM System</div>
                         </div>
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px; cursor: pointer;" onclick="toggleVoiceAssistant()">
-                            <div style="font-size: 24px; margin-bottom: 4px;">🌟</div>
-                            <div style="font-size: 12px; font-weight: 600;">Maya (26)</div>
-                            <div style="font-size: 10px; opacity: 0.8;">Smart</div>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px; cursor: pointer;" onclick="toggleVoiceAssistant()">
-                            <div style="font-size: 24px; margin-bottom: 4px;">💫</div>
-                            <div style="font-size: 12px; font-weight: 600;">Zoe (23)</div>
-                            <div style="font-size: 10px; opacity: 0.8;">Creative</div>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px; cursor: pointer;" onclick="toggleVoiceAssistant()">
-                            <div style="font-size: 24px; margin-bottom: 4px;">🎵</div>
-                            <div style="font-size: 12px; font-weight: 600;">Aria (25)</div>
-                            <div style="font-size: 10px; opacity: 0.8;">Supportive</div>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px; cursor: pointer;" onclick="toggleVoiceAssistant()">
-                            <div style="font-size: 24px; margin-bottom: 4px;">🚀</div>
-                            <div style="font-size: 12px; font-weight: 600;">Nova (21)</div>
-                            <div style="font-size: 10px; opacity: 0.8;">Tech-Savvy</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
+                            <div style="font-size: 24px; margin-bottom: 4px;">📈</div>
+                            <div style="font-size: 12px; font-weight: 600;">Analytics</div>
                         </div>
                     </div>
-                    <button class="btn" onclick="toggleVoiceAssistant()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                        🎙️ Start Chatting with AI
+                    <button class="btn" onclick="createQuote()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
+                        🚀 Get Started - Create Your First Quote
                     </button>
                 </div>
 
@@ -1803,40 +1463,6 @@
                     <h2 class="section-title">⚙️ Settings</h2>
                 </div>
 
-                <!-- AI Assistant Settings -->
-                <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🤖 AI Assistant Settings</h3>
-                    <div style="background: var(--bg-secondary); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Current AI Personality</div>
-                                <div style="font-size: 12px; color: var(--text-muted);" id="current-ai-display">Sofia - Friendly & Professional</div>
-                            </div>
-                            <button class="btn btn-primary" onclick="showPersonalityPicker()" style="font-size: 14px; padding: 8px 16px; min-height: auto;">
-                                👤 Change AI
-                            </button>
-                        </div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                        <button class="quick-btn primary" onclick="toggleVoiceAssistant()">
-                            <span class="icon">🎙️</span>
-                            <span class="label">Open AI Chat</span>
-                        </button>
-                        <button class="quick-btn success" onclick="showPersonalityPicker()">
-                            <span class="icon">👤</span>
-                            <span class="label">Change AI</span>
-                        </button>
-                        <button class="quick-btn info" onclick="toggleMute()">
-                            <span class="icon">🔊</span>
-                            <span class="label">Sound Toggle</span>
-                        </button>
-                        <button class="quick-btn" onclick="clearConversation()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
-                            <span class="icon">🗑️</span>
-                            <span class="label">Clear Chat</span>
-                        </button>
-                    </div>
-                </div>
-
                 <!-- Data Management -->
                 <div class="card">
                     <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">💾 Data Management</h3>
@@ -1915,17 +1541,10 @@
                     <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">📱 App Settings</h3>
                     <div class="info-grid">
                         <div class="info-item">
-                            <div class="info-icon">🤖</div>
+                            <div class="info-icon">🎨</div>
                             <div class="info-content">
-                                <h4>AI Personalities</h4>
-                                <p id="ai-personality-count">6 Available</p>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-icon">🎙️</div>
-                            <div class="info-content">
-                                <h4>Voice Recognition</h4>
-                                <p id="voice-status">Enabled</p>
+                                <h4>Current Theme</h4>
+                                <p id="current-theme-name">Coral Sunset</p>
                             </div>
                         </div>
                         <div class="info-item">
@@ -1936,70 +1555,19 @@
                             </div>
                         </div>
                         <div class="info-item">
+                            <div class="info-icon">📱</div>
+                            <div class="info-content">
+                                <h4>Platform</h4>
+                                <p id="platform-info">Mobile Web App</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
                             <div class="info-icon">🔧</div>
                             <div class="info-content">
                                 <h4>App Version</h4>
-                                <p id="app-version">REFIT v2.0.1 AI Enhanced</p>
+                                <p id="app-version">REFIT v2.0.1 Business Suite</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Enhanced AI Voice Assistant Interface -->
-        <div id="voice-assistant" class="voice-assistant hidden">
-            <div class="voice-assistant-content">
-                <div class="voice-assistant-header">
-                    <div class="ai-avatar" id="ai-avatar">👩‍💼</div>
-                    <div class="ai-info">
-                        <h4 id="ai-name">Sofia - REFIT AI</h4>
-                        <p id="ai-status">Ready to chat! 😊</p>
-                    </div>
-                    <div class="ai-controls">
-                        <button class="voice-personality-btn" onclick="showPersonalityPicker()" title="Change AI Personality">👤</button>
-                        <button class="voice-close-btn" onclick="toggleVoiceAssistant()">✕</button>
-                    </div>
-                </div>
-                
-                <div class="voice-conversation" id="voice-conversation">
-                    <div class="ai-message">
-                        <div class="message-avatar">👩‍💼</div>
-                        <div class="message-content">
-                            <p>Hey there! I'm Sofia, your friendly REFIT assistant! 😊 I'm here to make managing your business super easy and fun!</p>
-                            <p><strong>🎙️ Real Voice Features:</strong></p>
-                            <p>• <strong>Click the microphone</strong> and speak naturally<br>
-                            • <strong>Press Space</strong> for quick voice activation<br>
-                            • <strong>Press Escape</strong> to stop listening<br>
-                            • I'll speak back to you with realistic voice!</p>
-                            <p><strong>Try saying:</strong><br>
-                            "Show me my revenue" • "Create a new quote" • "Add a customer" • "Change theme to blue" • "How's my business doing?"</p>
-                            <p>🎙️ <em>Works best in Chrome/Edge browsers!</em></p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="voice-controls">
-                    <button class="voice-btn" id="voice-listen-btn" onclick="startListening()">
-                        <span class="voice-icon" id="voice-icon">🎙️</span>
-                        <span class="voice-text" id="voice-btn-text">Start Chatting</span>
-                    </button>
-                    <button class="voice-btn secondary" onclick="clearConversation()">🗑️ Clear Chat</button>
-                    <button class="voice-btn secondary" onclick="toggleMute()" id="mute-btn">🔊 Sound On</button>
-                    <button class="voice-btn secondary" onclick="showPersonalityPicker()">👤 Change AI</button>
-                </div>
-                
-                <div class="voice-status" id="voice-status-display">
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                        <span style="font-size: 12px; color: var(--text-muted);">🎙️ Microphone:</span>
-                        <span id="mic-status" style="font-size: 12px; color: var(--accent-primary);">Ready</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                        <span style="font-size: 12px; color: var(--text-muted);">🔊 Voice Output:</span>
-                        <span id="tts-status" style="font-size: 12px; color: var(--accent-primary);">Ready</span>
-                    </div>
-                    <div style="font-size: 12px; color: var(--text-muted);" id="status-text">
-                        Ready to chat with you! Press the mic or Space bar to start.
                     </div>
                 </div>
             </div>
@@ -2139,87 +1707,6 @@
                         Apply Theme
                     </button>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- AI Personality Picker Modal -->
-    <div id="personality-modal" class="modal">
-        <div class="modal-content" style="max-width: 500px;">
-            <div class="modal-header">
-                <h3>🎭 Choose Your AI Assistant</h3>
-                <button class="modal-close-btn" onclick="closeModal('personality-modal')">✕</button>
-            </div>
-            <div class="modal-body">
-                <p style="text-align: center; color: var(--text-muted); margin-bottom: 24px;">
-                    Select the perfect AI personality for your business needs! Each AI has their own unique voice and style.
-                </p>
-                
-                <div class="personality-grid">
-                    <div class="personality-option active" onclick="selectPersonality('sofia')" data-personality="sofia">
-                        <div class="personality-avatar">👩‍💼</div>
-                        <div class="personality-info">
-                            <h4>Sofia</h4>
-                            <p class="personality-age">24 years old</p>
-                            <p class="personality-trait">Friendly & Professional</p>
-                            <p class="personality-desc">Warm, caring, and always excited to help with your business!</p>
-                        </div>
-                    </div>
-                    
-                    <div class="personality-option" onclick="selectPersonality('emma')" data-personality="emma">
-                        <div class="personality-avatar">😊</div>
-                        <div class="personality-info">
-                            <h4>Emma</h4>
-                            <p class="personality-age">22 years old</p>
-                            <p class="personality-trait">Cheerful & Energetic</p>
-                            <p class="personality-desc">Bubbly, optimistic, and makes every task feel like fun!</p>
-                        </div>
-                    </div>
-                    
-                    <div class="personality-option" onclick="selectPersonality('maya')" data-personality="maya">
-                        <div class="personality-avatar">🌟</div>
-                        <div class="personality-info">
-                            <h4>Maya</h4>
-                            <p class="personality-age">26 years old</p>
-                            <p class="personality-trait">Smart & Sophisticated</p>
-                            <p class="personality-desc">Intelligent, efficient, with a touch of elegance and wisdom.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="personality-option" onclick="selectPersonality('zoe')" data-personality="zoe">
-                        <div class="personality-avatar">💫</div>
-                        <div class="personality-info">
-                            <h4>Zoe</h4>
-                            <p class="personality-age">23 years old</p>
-                            <p class="personality-trait">Creative & Inspiring</p>
-                            <p class="personality-desc">Artistic, innovative, and loves helping you think outside the box!</p>
-                        </div>
-                    </div>
-                    
-                    <div class="personality-option" onclick="selectPersonality('aria')" data-personality="aria">
-                        <div class="personality-avatar">🎵</div>
-                        <div class="personality-info">
-                            <h4>Aria</h4>
-                            <p class="personality-age">25 years old</p>
-                            <p class="personality-trait">Calm & Supportive</p>
-                            <p class="personality-desc">Gentle, understanding, and always there when you need support.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="personality-option" onclick="selectPersonality('nova')" data-personality="nova">
-                        <div class="personality-avatar">🚀</div>
-                        <div class="personality-info">
-                            <h4>Nova</h4>
-                            <p class="personality-age">21 years old</p>
-                            <p class="personality-trait">Tech-Savvy & Modern</p>
-                            <p class="personality-desc">Tech genius, future-focused, and loves automation!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal('personality-modal')">Cancel</button>
-                <button class="btn btn-primary" onclick="applyPersonality()">💫 Apply Personality</button>
             </div>
         </div>
     </div>
@@ -2571,6 +2058,84 @@
         </div>
     </div>
 
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>❓ Help & Support</h3>
+                <button class="modal-close-btn" onclick="closeModal('help-modal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">📚</div>
+                    <h4 style="color: var(--text-primary); margin-bottom: 8px;">REFIT Business System</h4>
+                    <p style="color: var(--text-muted);">Complete mobile business management solution</p>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon">📋</div>
+                        <div class="info-content">
+                            <h4>Create Quotes</h4>
+                            <p>Professional quote generation with automatic calculations</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">👥</div>
+                        <div class="info-content">
+                            <h4>Manage Customers</h4>
+                            <p>Complete customer database with contact information</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🎨</div>
+                        <div class="info-content">
+                            <h4>8 Beautiful Themes</h4>
+                            <p>Customize your experience with gorgeous color schemes</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📱</div>
+                        <div class="info-content">
+                            <h4>Mobile Optimized</h4>
+                            <p>Perfect experience on phones, tablets, and desktop</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">💾</div>
+                        <div class="info-content">
+                            <h4>Data Management</h4>
+                            <p>Import, export, and backup your business data</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📊</div>
+                        <div class="info-content">
+                            <h4>Business Analytics</h4>
+                            <p>Track revenue, quotes, and customer statistics</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: var(--bg-secondary); padding: 20px; border-radius: 12px; margin-top: 20px; text-align: center;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 12px;">🚀 Quick Start Guide</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 14px;">
+                        1. Edit your profile and company details<br>
+                        2. Add your first customer<br>
+                        3. Create a professional quote<br>
+                        4. Explore different themes and settings
+                    </p>
+                    <button class="btn btn-primary" onclick="closeModal('help-modal'); createQuote();" style="font-size: 14px;">
+                        🎯 Create Your First Quote
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('help-modal')">Close</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Success Message -->
     <div id="success-message" class="success-message">
         <span id="success-text">Action completed successfully!</span>
@@ -2582,9 +2147,6 @@
             currentTheme: 'red',
             currentMode: 'light',
             currentView: 'dashboard',
-            currentPersonality: 'sofia',
-            isMuted: false,
-            isListening: false,
             
             // Business Data
             userProfile: {
@@ -2677,109 +2239,12 @@
                 }
             ],
             
-            // AI Conversation
-            conversation: [],
-            
             // Statistics
             stats: {
                 totalQuotes: 2,
                 totalCustomers: 2,
                 monthlyRevenue: 16430,
                 totalRevenue: 22790
-            }
-        };
-
-        // ===== AI PERSONALITIES =====
-        const aiPersonalities = {
-            sofia: {
-                name: 'Sofia',
-                age: 24,
-                emoji: '👩‍💼',
-                trait: 'Friendly & Professional',
-                description: 'Warm, caring, and always excited to help with your business!',
-                responses: {
-                    greeting: "Hey there! I'm Sofia, your friendly REFIT assistant! 😊 I'm here to make managing your business super easy and fun!",
-                    help: "I'd love to help you with that! What specifically would you like to do?",
-                    quotes: "Great! Let's create an amazing quote together! I'll help you make it look professional and impressive! ✨",
-                    customers: "Adding customers is one of my favorite things to help with! Let's get their info organized perfectly! 👥",
-                    theme: "Ooh, I love theme changes! It's like redecorating your digital office! Which beautiful theme caught your eye? 🎨",
-                    revenue: "Let me check your financial summary! You're doing amazing - I'm so proud of your business growth! 📈"
-                }
-            },
-            emma: {
-                name: 'Emma',
-                age: 22,
-                emoji: '😊',
-                trait: 'Cheerful & Energetic',
-                description: 'Bubbly, optimistic, and makes every task feel like fun!',
-                responses: {
-                    greeting: "OMG hiiii! 🌟 I'm Emma and I'm SO excited to help you today! Your business is going to be absolutely amazing with me by your side!",
-                    help: "YES! I'm totally here for this! What awesome thing are we going to accomplish together? 🚀",
-                    quotes: "Quote time! This is going to be EPIC! Let's make this quote so good your client will be dancing with joy! 💃",
-                    customers: "New customer alert! 🎉 I just LOVE meeting new people! Let's get them set up and make them feel super welcome!",
-                    theme: "Theme party! 🎊 Oh my gosh, changing themes is like giving your app a whole new personality! Show me what you're thinking!",
-                    revenue: "Money talk! 💰 Let me pull up those numbers - I bet they're going to make you smile SO big!"
-                }
-            },
-            maya: {
-                name: 'Maya',
-                age: 26,
-                emoji: '🌟',
-                trait: 'Smart & Sophisticated',
-                description: 'Intelligent, efficient, with a touch of elegance and wisdom.',
-                responses: {
-                    greeting: "Good day. I'm Maya, your sophisticated business assistant. I'm here to provide you with intelligent, efficient solutions. ✨",
-                    help: "Certainly. I'll analyze your request and provide you with the most optimal approach. What would you like to accomplish?",
-                    quotes: "Excellent choice. I'll help you craft a professional, detailed quote that reflects the quality of your services. 📋",
-                    customers: "A wise business decision. Proper customer management is crucial for growth. Let's organize their information systematically. 📊",
-                    theme: "Aesthetic choices reflect professionalism. Let me help you select a theme that aligns with your brand identity. 🎯",
-                    revenue: "Let me provide you with a comprehensive financial analysis. Understanding your metrics is key to strategic planning. 📈"
-                }
-            },
-            zoe: {
-                name: 'Zoe',
-                age: 23,
-                emoji: '💫',
-                trait: 'Creative & Inspiring',
-                description: 'Artistic, innovative, and loves helping you think outside the box!',
-                responses: {
-                    greeting: "Hey creative soul! ✨ I'm Zoe, and I'm here to add some magic and innovation to your business journey! Let's create something beautiful together! 🎨",
-                    help: "Ooh, I can feel the creative energy! What amazing project are we bringing to life today? I'm bursting with ideas! 💡",
-                    quotes: "Quote creation is like painting a masterpiece! Let's craft something that not only shows your value but tells your story beautifully! 🎭",
-                    customers: "New relationships are like blank canvases! Let's capture their essence and build something meaningful together! 🌈",
-                    theme: "Colors and themes are my love language! Each theme tells a story - which vibe speaks to your soul today? 🎨✨",
-                    revenue: "Numbers can be poetry too! Let me weave your financial story into something inspiring that shows how far you've come! 📚"
-                }
-            },
-            aria: {
-                name: 'Aria',
-                age: 25,
-                emoji: '🎵',
-                trait: 'Calm & Supportive',
-                description: 'Gentle, understanding, and always there when you need support.',
-                responses: {
-                    greeting: "Hello there, friend. 🌸 I'm Aria, and I'm here to support you with gentle guidance and calm energy. Take a deep breath - we've got this together.",
-                    help: "I'm here to support you, whatever you need. There's no rush - let's take this one step at a time. What's on your mind? 🤗",
-                    quotes: "Creating quotes can feel overwhelming sometimes, but I'm here to guide you through it peacefully. We'll make it simple and stress-free. 🌿",
-                    customers: "Building relationships is beautiful work. Let's take care of this new connection with the attention they deserve. 💝",
-                    theme: "Sometimes a change of scenery helps our mood. Which theme feels right for you today? I'll support whatever choice feels good. 🌺",
-                    revenue: "Let's look at your progress together. Remember, every number represents your hard work and dedication. You should be proud. 🌟"
-                }
-            },
-            nova: {
-                name: 'Nova',
-                age: 21,
-                emoji: '🚀',
-                trait: 'Tech-Savvy & Modern',
-                description: 'Tech genius, future-focused, and loves automation!',
-                responses: {
-                    greeting: "Yo! 🚀 Nova here - your tech-savvy business buddy! Ready to automate, optimize, and totally revolutionize your workflow? Let's hack this business thing! 💻",
-                    help: "Alright, let's debug this situation! What process are we optimizing today? I've got algorithms for everything! ⚡",
-                    quotes: "Quote generation activated! 📋 Let's automate this baby and make it so smooth your clients will think you've got AI superpowers! (Which you do - me! 😎)",
-                    customers: "Database update time! 💾 Let's get this customer info synced and organized like a boss. CRM optimization is my jam!",
-                    theme: "UI/UX modification incoming! 🎨 These themes are coded to perfection - each one optimized for maximum user engagement! Which interface speaks to you?",
-                    revenue: "Data analytics time! 📊 Let me crunch these numbers and show you some insights that'll blow your mind! Your growth metrics are looking solid! 🔥"
-                }
             }
         };
 
@@ -2803,6 +2268,7 @@
             document.getElementById('current-theme-icon').textContent = themes[theme].icon;
             document.getElementById('app-logo').textContent = themes[theme].icon;
             document.getElementById('company-logo').textContent = themes[theme].icon;
+            document.getElementById('current-theme-name').textContent = themes[theme].name;
             
             // Update active theme option
             document.querySelectorAll('.theme-option').forEach(option => {
@@ -2836,6 +2302,11 @@
             const currentModeDisplay = document.getElementById('current-mode-display');
             if (currentModeDisplay) {
                 currentModeDisplay.textContent = `${newMode === 'light' ? 'Standard' : 'Dark'} Mode`;
+            }
+            
+            const currentModeSetting = document.getElementById('current-mode-setting');
+            if (currentModeSetting) {
+                currentModeSetting.textContent = `${newMode === 'light' ? 'Standard' : 'Dark'} Dark Theme Active`;
             }
             
             showSuccessMessage(`🌙 Switched to ${newMode === 'light' ? 'Standard' : 'Dark'} mode!`);
@@ -3289,487 +2760,6 @@
             showSuccessMessage('✏️ Quote editing coming soon!');
         }
 
-        // ===== AI VOICE ASSISTANT WITH REAL SPEECH API =====
-        let speechRecognition = null;
-        let speechSynthesis = window.speechSynthesis;
-        let currentVoice = null;
-
-        // Initialize Speech Recognition
-        function initializeSpeechRecognition() {
-            if ('webkitSpeechRecognition' in window) {
-                speechRecognition = new webkitSpeechRecognition();
-            } else if ('SpeechRecognition' in window) {
-                speechRecognition = new SpeechRecognition();
-            } else {
-                console.warn('Speech recognition not supported');
-                return false;
-            }
-
-            speechRecognition.continuous = false;
-            speechRecognition.interimResults = true;
-            speechRecognition.lang = 'en-US';
-
-            speechRecognition.onstart = function() {
-                updateVoiceStatus('🎤 Listening...', 'listening');
-                document.getElementById('voice-listen-btn').classList.add('listening');
-                document.getElementById('voice-btn-text').textContent = 'Listening...';
-                document.getElementById('voice-icon').textContent = '🎤';
-            };
-
-            speechRecognition.onresult = function(event) {
-                let interimTranscript = '';
-                let finalTranscript = '';
-
-                for (let i = event.resultIndex; i < event.results.length; i++) {
-                    const transcript = event.results[i][0].transcript;
-                    if (event.results[i].isFinal) {
-                        finalTranscript += transcript;
-                    } else {
-                        interimTranscript += transcript;
-                    }
-                }
-
-                if (interimTranscript) {
-                    updateVoiceStatus(`🎤 "${interimTranscript.trim()}"`, 'listening');
-                }
-
-                if (finalTranscript) {
-                    stopListening();
-                    addUserMessage(finalTranscript.trim());
-                    processAIResponse(finalTranscript.trim());
-                }
-            };
-
-            speechRecognition.onerror = function(event) {
-                console.error('Speech recognition error:', event.error);
-                stopListening();
-                
-                let errorMessage = 'Voice recognition error. ';
-                switch(event.error) {
-                    case 'no-speech':
-                        errorMessage += 'No speech detected. Please try again.';
-                        break;
-                    case 'audio-capture':
-                        errorMessage += 'Microphone not available.';
-                        break;
-                    case 'not-allowed':
-                        errorMessage += 'Microphone permission denied.';
-                        break;
-                    case 'network':
-                        errorMessage += 'Network error occurred.';
-                        break;
-                    default:
-                        errorMessage += 'Please try again.';
-                }
-                
-                addAIMessage(`😅 ${errorMessage}`);
-                updateVoiceStatus('❌ Error occurred. Try again!', 'error');
-            };
-
-            speechRecognition.onend = function() {
-                stopListening();
-            };
-
-            return true;
-        }
-
-        // Initialize Text-to-Speech
-        function initializeTextToSpeech() {
-            if ('speechSynthesis' in window) {
-                // Wait for voices to load
-                speechSynthesis.onvoiceschanged = function() {
-                    const voices = speechSynthesis.getVoices();
-                    
-                    // Prefer female voices for better AI personality
-                    currentVoice = voices.find(voice => 
-                        voice.name.includes('Female') || 
-                        voice.name.includes('Samantha') ||
-                        voice.name.includes('Victoria') ||
-                        voice.name.includes('Karen') ||
-                        voice.name.includes('Moira')
-                    ) || voices.find(voice => voice.gender === 'female') || voices[0];
-                    
-                    console.log('Selected voice:', currentVoice?.name || 'Default');
-                };
-                return true;
-            }
-            return false;
-        }
-
-        function toggleVoiceAssistant() {
-            const assistant = document.getElementById('voice-assistant');
-            assistant.classList.toggle('hidden');
-            
-            if (!assistant.classList.contains('hidden')) {
-                // Initialize speech features if not done
-                if (!speechRecognition) {
-                    const speechSupported = initializeSpeechRecognition();
-                    const ttsSupported = initializeTextToSpeech();
-                    
-                    if (!speechSupported || !ttsSupported) {
-                        addAIMessage("🔧 Note: Some voice features may not be available in this browser. Voice recognition works best in Chrome/Edge.");
-                    }
-                }
-                
-                // Auto scroll to bottom of conversation
-                const conversation = document.getElementById('voice-conversation');
-                conversation.scrollTop = conversation.scrollHeight;
-                
-                // Welcome message if first time
-                if (!appState.conversation.length) {
-                    setTimeout(() => {
-                        const personality = aiPersonalities[appState.currentPersonality];
-                        speakMessage(personality.responses.greeting);
-                    }, 500);
-                }
-            }
-        }
-
-        function showPersonalityPicker() {
-            // Update current personality selection
-            document.querySelectorAll('.personality-option').forEach(option => {
-                option.classList.remove('active');
-                if (option.getAttribute('data-personality') === appState.currentPersonality) {
-                    option.classList.add('active');
-                }
-            });
-            
-            openModal('personality-modal');
-        }
-
-        function selectPersonality(personality) {
-            // Update selection
-            document.querySelectorAll('.personality-option').forEach(option => {
-                option.classList.remove('active');
-                if (option.getAttribute('data-personality') === personality) {
-                    option.classList.add('active');
-                }
-            });
-        }
-
-        function applyPersonality() {
-            const selectedOption = document.querySelector('.personality-option.active');
-            const personality = selectedOption.getAttribute('data-personality');
-            
-            appState.currentPersonality = personality;
-            updateAIDisplay();
-            closeModal('personality-modal');
-            
-            // Add personality change message to conversation
-            const personalityData = aiPersonalities[personality];
-            const message = `Hi! I'm ${personalityData.name} now! ${personalityData.responses.greeting}`;
-            addAIMessage(message);
-            speakMessage(message);
-            
-            showSuccessMessage(`✨ AI personality changed to ${personalityData.name}!`);
-        }
-
-        function updateAIDisplay() {
-            const personality = aiPersonalities[appState.currentPersonality];
-            document.getElementById('ai-name').textContent = `${personality.name} - REFIT AI`;
-            document.getElementById('ai-avatar').textContent = personality.emoji;
-            document.getElementById('current-ai-display').textContent = `${personality.name} - ${personality.trait}`;
-            
-            // Update message avatars in conversation
-            document.querySelectorAll('.ai-message .message-avatar').forEach(avatar => {
-                avatar.textContent = personality.emoji;
-            });
-        }
-
-        function startListening() {
-            if (!speechRecognition) {
-                addAIMessage("🔧 Speech recognition not available in this browser. Please use Chrome or Edge for voice features.");
-                return;
-            }
-
-            if (!appState.isListening) {
-                // Request microphone permission first
-                navigator.mediaDevices?.getUserMedia({ audio: true })
-                    .then(() => {
-                        appState.isListening = true;
-                        updateVoiceStatus('🎤 Starting microphone...', 'starting');
-                        speechRecognition.start();
-                    })
-                    .catch((error) => {
-                        console.error('Microphone access denied:', error);
-                        addAIMessage("🎤 Microphone access is required for voice chat. Please allow microphone permission and try again.");
-                        updateVoiceStatus('❌ Microphone access denied', 'error');
-                    });
-            } else {
-                stopListening();
-            }
-        }
-
-        function stopListening() {
-            appState.isListening = false;
-            
-            if (speechRecognition) {
-                speechRecognition.stop();
-            }
-            
-            document.getElementById('voice-listen-btn').classList.remove('listening');
-            document.getElementById('voice-btn-text').textContent = 'Start Chatting';
-            document.getElementById('voice-icon').textContent = '🎙️';
-            updateVoiceStatus('Ready to chat with you!', 'ready');
-        }
-
-        function updateVoiceStatus(message, status) {
-            document.getElementById('status-text').textContent = message;
-            document.getElementById('ai-status').textContent = message;
-            
-            // Update microphone status display
-            const micStatus = document.getElementById('mic-status');
-            if (micStatus) {
-                if (status === 'listening' || status === 'starting') {
-                    micStatus.textContent = 'Active 🔴';
-                    micStatus.style.color = 'var(--error)';
-                } else if (status === 'error') {
-                    micStatus.textContent = 'Error ❌';
-                    micStatus.style.color = 'var(--error)';
-                } else {
-                    micStatus.textContent = 'Ready ✅';
-                    micStatus.style.color = 'var(--success)';
-                }
-            }
-            
-            // Update TTS status display
-            const ttsStatus = document.getElementById('tts-status');
-            if (ttsStatus && status === 'speaking') {
-                ttsStatus.textContent = 'Speaking 🔵';
-                ttsStatus.style.color = 'var(--info)';
-            } else if (ttsStatus && status !== 'speaking') {
-                ttsStatus.textContent = appState.isMuted ? 'Muted 🔇' : 'Ready ✅';
-                ttsStatus.style.color = appState.isMuted ? 'var(--warning)' : 'var(--success)';
-            }
-            
-            console.log(`Voice Status: ${status} - ${message}`);
-        }
-
-        function addUserMessage(message) {
-            const conversation = document.getElementById('voice-conversation');
-            const messageHtml = `
-                <div class="user-message">
-                    <div class="message-avatar">👤</div>
-                    <div class="message-content">
-                        <p>${message}</p>
-                    </div>
-                </div>
-            `;
-            conversation.insertAdjacentHTML('beforeend', messageHtml);
-            conversation.scrollTop = conversation.scrollHeight;
-            
-            // Store in conversation history
-            appState.conversation.push({
-                type: 'user',
-                message: message,
-                timestamp: new Date()
-            });
-        }
-
-        function addAIMessage(message) {
-            const conversation = document.getElementById('voice-conversation');
-            const personality = aiPersonalities[appState.currentPersonality];
-            const messageHtml = `
-                <div class="ai-message">
-                    <div class="message-avatar">${personality.emoji}</div>
-                    <div class="message-content">
-                        <p>${message}</p>
-                    </div>
-                </div>
-            `;
-            conversation.insertAdjacentHTML('beforeend', messageHtml);
-            conversation.scrollTop = conversation.scrollHeight;
-            
-            // Store in conversation history
-            appState.conversation.push({
-                type: 'ai',
-                message: message,
-                personality: appState.currentPersonality,
-                timestamp: new Date()
-            });
-        }
-
-        function speakMessage(message) {
-            if (appState.isMuted || !speechSynthesis) {
-                return;
-            }
-
-            // Cancel any ongoing speech
-            speechSynthesis.cancel();
-
-            // Clean message for speech (remove emojis and special characters)
-            const cleanMessage = message.replace(/[^\w\s.,!?-]/g, '').trim();
-            
-            if (cleanMessage.length === 0) {
-                return;
-            }
-
-            updateVoiceStatus('🗣️ Speaking...', 'speaking');
-
-            const utterance = new SpeechSynthesisUtterance(cleanMessage);
-            
-            // Set voice properties based on personality
-            const personality = aiPersonalities[appState.currentPersonality];
-            
-            utterance.voice = currentVoice;
-            utterance.rate = personality.name === 'Emma' ? 1.1 : personality.name === 'Aria' ? 0.9 : 1.0;
-            utterance.pitch = personality.name === 'Nova' ? 1.2 : personality.name === 'Maya' ? 0.9 : 1.0;
-            utterance.volume = 0.8;
-
-            utterance.onstart = function() {
-                updateVoiceStatus('🗣️ Speaking...', 'speaking');
-            };
-
-            utterance.onend = function() {
-                updateVoiceStatus('Ready to chat with you!', 'ready');
-            };
-
-            utterance.onerror = function(event) {
-                console.error('Speech synthesis error:', event.error);
-                updateVoiceStatus('Ready to chat with you!', 'ready');
-            };
-
-            speechSynthesis.speak(utterance);
-        }
-
-        function processAIResponse(userInput) {
-            updateVoiceStatus('🤔 Thinking...', 'processing');
-            
-            const personality = aiPersonalities[appState.currentPersonality];
-            let response = '';
-            let followUpAction = null;
-            
-            const input = userInput.toLowerCase();
-            
-            // Enhanced command processing
-            if (input.includes('business') || input.includes('doing') || input.includes('revenue') || input.includes('numbers') || input.includes('stats') || input.includes('performance')) {
-                response = personality.responses.revenue;
-                followUpAction = () => {
-                    const detailsMessage = `Your total revenue is RM ${appState.stats.totalRevenue.toFixed(2)}, with ${appState.stats.totalQuotes} quotes created and ${appState.stats.totalCustomers} customers! You're doing amazing! 📈`;
-                    setTimeout(() => {
-                        addAIMessage(detailsMessage);
-                        speakMessage(detailsMessage);
-                    }, 1000);
-                };
-            } else if (input.includes('quote') || input.includes('create') || input.includes('new quote') || input.includes('quotation')) {
-                response = personality.responses.quotes;
-                followUpAction = () => {
-                    setTimeout(() => {
-                        const confirmMessage = "Would you like me to open the quote creation form for you?";
-                        addAIMessage(confirmMessage);
-                        speakMessage(confirmMessage);
-                        setTimeout(() => createQuote(), 2000);
-                    }, 1000);
-                };
-            } else if (input.includes('customer') || input.includes('add') || input.includes('client') || input.includes('new customer')) {
-                response = personality.responses.customers;
-                followUpAction = () => {
-                    setTimeout(() => {
-                        const confirmMessage = "Let me open the customer form so you can add their details!";
-                        addAIMessage(confirmMessage);
-                        speakMessage(confirmMessage);
-                        setTimeout(() => addCustomer(), 2000);
-                    }, 1000);
-                };
-            } else if (input.includes('theme') || input.includes('blue') || input.includes('color') || input.includes('mint') || input.includes('change theme')) {
-                response = personality.responses.theme;
-                followUpAction = () => {
-                    setTimeout(() => {
-                        const themeMessage = "I love the blue themes! Let me switch you to Mint Breeze - it's gorgeous! 🌊";
-                        addAIMessage(themeMessage);
-                        speakMessage(themeMessage);
-                        setTimeout(() => switchToTheme('bluegreen'), 2000);
-                    }, 1000);
-                };
-            } else if (input.includes('help') || input.includes('what can you do') || input.includes('commands')) {
-                response = `${personality.responses.help} I can help you create quotes, add customers, check your revenue, change themes, and much more! Just speak naturally to me!`;
-            } else if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
-                response = personality.responses.greeting;
-            } else if (input.includes('thank') || input.includes('thanks')) {
-                response = personality.name === 'Sofia' ? "You're so welcome! I love helping you! 😊" : 
-                         personality.name === 'Emma' ? "Aww, you're the best! Happy to help! 🌟" :
-                         personality.name === 'Maya' ? "It was my pleasure to assist you efficiently." :
-                         personality.name === 'Zoe' ? "Thank you! Creating solutions together is beautiful! ✨" :
-                         personality.name === 'Aria' ? "You're very welcome. I'm always here for you. 🌸" :
-                         "No problem! That's what I'm here for! 🚀";
-            } else {
-                response = `${personality.responses.help} I heard you say "${userInput}" - could you clarify what you'd like me to help you with?`;
-            }
-            
-            setTimeout(() => {
-                addAIMessage(response);
-                speakMessage(response);
-                
-                if (followUpAction) {
-                    followUpAction();
-                }
-            }, 500);
-        }
-
-        function clearConversation() {
-            // Stop any ongoing speech
-            if (speechSynthesis) {
-                speechSynthesis.cancel();
-            }
-            
-            const conversation = document.getElementById('voice-conversation');
-            const personality = aiPersonalities[appState.currentPersonality];
-            
-            conversation.innerHTML = `
-                <div class="ai-message">
-                    <div class="message-avatar">${personality.emoji}</div>
-                    <div class="message-content">
-                        <p>${personality.responses.greeting}</p>
-                    </div>
-                </div>
-            `;
-            
-            // Clear conversation history
-            appState.conversation = [];
-            
-            showSuccessMessage('🗑️ Conversation cleared!');
-            
-            // Speak the greeting
-            setTimeout(() => {
-                speakMessage(personality.responses.greeting);
-            }, 500);
-        }
-
-        function toggleMute() {
-            appState.isMuted = !appState.isMuted;
-            const muteBtn = document.getElementById('mute-btn');
-            muteBtn.innerHTML = appState.isMuted ? '🔇 Sound Off' : '🔊 Sound On';
-            
-            // Stop any ongoing speech if muting
-            if (appState.isMuted && speechSynthesis) {
-                speechSynthesis.cancel();
-                updateVoiceStatus('🔇 Sound muted', 'ready');
-            }
-            
-            showSuccessMessage(appState.isMuted ? '🔇 Sound muted' : '🔊 Sound enabled');
-        }
-
-        // Voice command shortcuts
-        function processVoiceShortcuts() {
-            // Add keyboard shortcut for voice activation
-            document.addEventListener('keydown', function(e) {
-                // Press Space bar to start/stop voice recognition (when voice assistant is open)
-                if (e.code === 'Space' && !document.getElementById('voice-assistant').classList.contains('hidden')) {
-                    const isTyping = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
-                    if (!isTyping) {
-                        e.preventDefault();
-                        startListening();
-                    }
-                }
-                
-                // Press Escape to stop listening
-                if (e.code === 'Escape' && appState.isListening) {
-                    e.preventDefault();
-                    stopListening();
-                }
-            });
-        }
-
         // ===== DATA MANAGEMENT =====
         function exportData() {
             const exportData = {
@@ -3779,9 +2769,7 @@
                 quotes: appState.quotes,
                 settings: {
                     theme: appState.currentTheme,
-                    mode: appState.currentMode,
-                    personality: appState.currentPersonality,
-                    isMuted: appState.isMuted
+                    mode: appState.currentMode
                 },
                 exportDate: new Date().toISOString()
             };
@@ -3843,6 +2831,10 @@
 
         function viewReports() {
             showSuccessMessage('📊 Advanced reports coming soon!');
+        }
+
+        function showHelp() {
+            openModal('help-modal');
         }
 
         // ===== DASHBOARD =====
@@ -3913,7 +2905,6 @@
         function updateDisplay() {
             updateUserDisplay();
             updateCompanyDisplay();
-            updateAIDisplay();
             updateStats();
             
             // Update all logo displays
@@ -3922,6 +2913,7 @@
             
             // Update theme displays
             document.getElementById('current-theme-icon').textContent = themes[appState.currentTheme].icon;
+            document.getElementById('current-theme-name').textContent = themes[appState.currentTheme].name;
         }
 
         function updateTime() {
@@ -3934,16 +2926,371 @@
             document.getElementById('status-time').textContent = time;
         }
 
+        // ===== PLATFORM DETECTION =====
+        function detectPlatform() {
+            const userAgent = navigator.userAgent;
+            let platform = 'Mobile Web App';
+            
+            if (userAgent.includes('iPhone')) {
+                platform = 'iPhone Web App';
+            } else if (userAgent.includes('iPad')) {
+                platform = 'iPad Web App';
+            } else if (userAgent.includes('Android')) {
+                platform = 'Android Web App';
+            } else if (userAgent.includes('Windows')) {
+                platform = 'Windows Web App';
+            } else if (userAgent.includes('Mac')) {
+                platform = 'Mac Web App';
+            }
+            
+            document.getElementById('platform-info').textContent = platform;
+        }
+
+        // ===== KEYBOARD SHORTCUTS =====
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', function(e) {
+                // Ctrl/Cmd + N: New Quote
+                if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                    e.preventDefault();
+                    createQuote();
+                    showSuccessMessage('⌨️ Keyboard shortcut: New Quote');
+                }
+                
+                // Ctrl/Cmd + K: Add Customer
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    addCustomer();
+                    showSuccessMessage('⌨️ Keyboard shortcut: Add Customer');
+                }
+                
+                // Ctrl/Cmd + T: Theme Picker
+                if ((e.ctrlKey || e.metaKey) && e.key === 't') {
+                    e.preventDefault();
+                    openThemePicker();
+                    showSuccessMessage('⌨️ Keyboard shortcut: Theme Picker');
+                }
+                
+                // Ctrl/Cmd + E: Export Data
+                if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+                    e.preventDefault();
+                    exportData();
+                    showSuccessMessage('⌨️ Keyboard shortcut: Export Data');
+                }
+                
+                // Escape: Close modals
+                if (e.key === 'Escape') {
+                    e.preventDefault();
+                    document.querySelectorAll('.modal.show, .theme-modal.show').forEach(modal => {
+                        modal.classList.remove('show');
+                    });
+                }
+                
+                // Number keys for quick navigation
+                if (e.key >= '1' && e.key <= '4' && !e.ctrlKey && !e.metaKey) {
+                    const views = ['dashboard', 'quotes', 'customers', 'settings'];
+                    const viewIndex = parseInt(e.key) - 1;
+                    if (viewIndex < views.length) {
+                        showView(views[viewIndex]);
+                        showSuccessMessage(`⌨️ Quick nav: ${views[viewIndex].charAt(0).toUpperCase() + views[viewIndex].slice(1)}`);
+                    }
+                }
+            });
+        }
+
+        // ===== PERFORMANCE OPTIMIZATIONS =====
+        function optimizePerformance() {
+            // Debounce scroll events
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    // Any scroll-based optimizations can go here
+                }, 100);
+            });
+            
+            // Optimize form inputs
+            document.addEventListener('input', function(e) {
+                if (e.target.classList.contains('form-input')) {
+                    // Clear any existing validation styling
+                    e.target.style.borderColor = '';
+                }
+            });
+        }
+
+        // ===== ACCESSIBILITY ENHANCEMENTS =====
+        function enhanceAccessibility() {
+            // Add focus indicators for keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    document.body.classList.add('keyboard-navigation');
+                }
+            });
+            
+            document.addEventListener('mousedown', function() {
+                document.body.classList.remove('keyboard-navigation');
+            });
+            
+            // Add ARIA labels for better screen reader support
+            document.querySelectorAll('.nav-item').forEach((item, index) => {
+                item.setAttribute('role', 'button');
+                item.setAttribute('tabindex', '0');
+                item.setAttribute('aria-label', `Navigate to ${item.textContent.trim()}`);
+            });
+            
+            // Add skip navigation link
+            const skipNav = document.createElement('a');
+            skipNav.href = '#main-content';
+            skipNav.textContent = 'Skip to main content';
+            skipNav.className = 'skip-nav';
+            skipNav.style.cssText = `
+                position: absolute;
+                top: -40px;
+                left: 6px;
+                background: var(--accent-primary);
+                color: white;
+                padding: 8px;
+                border-radius: 4px;
+                text-decoration: none;
+                z-index: 1000;
+                transition: top 0.3s;
+            `;
+            skipNav.addEventListener('focus', function() {
+                this.style.top = '6px';
+            });
+            skipNav.addEventListener('blur', function() {
+                this.style.top = '-40px';
+            });
+            document.body.insertBefore(skipNav, document.body.firstChild);
+        }
+
+        // ===== LOCAL STORAGE MANAGEMENT =====
+        function saveToLocalStorage() {
+            try {
+                const dataToSave = {
+                    userProfile: appState.userProfile,
+                    companyInfo: appState.companyInfo,
+                    customers: appState.customers,
+                    quotes: appState.quotes,
+                    settings: {
+                        theme: appState.currentTheme,
+                        mode: appState.currentMode
+                    },
+                    lastSaved: new Date().toISOString()
+                };
+                localStorage.setItem('refit-business-data', JSON.stringify(dataToSave));
+            } catch (error) {
+                console.warn('Failed to save to localStorage:', error);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedData = localStorage.getItem('refit-business-data');
+                if (savedData) {
+                    const parsedData = JSON.parse(savedData);
+                    
+                    // Merge saved data with default state
+                    if (parsedData.userProfile) {
+                        appState.userProfile = { ...appState.userProfile, ...parsedData.userProfile };
+                    }
+                    if (parsedData.companyInfo) {
+                        appState.companyInfo = { ...appState.companyInfo, ...parsedData.companyInfo };
+                    }
+                    if (parsedData.customers) {
+                        appState.customers = parsedData.customers.map(customer => ({
+                            ...customer,
+                            createdAt: new Date(customer.createdAt)
+                        }));
+                    }
+                    if (parsedData.quotes) {
+                        appState.quotes = parsedData.quotes.map(quote => ({
+                            ...quote,
+                            createdAt: new Date(quote.createdAt)
+                        }));
+                    }
+                    if (parsedData.settings) {
+                        if (parsedData.settings.theme) {
+                            appState.currentTheme = parsedData.settings.theme;
+                            switchToTheme(parsedData.settings.theme);
+                        }
+                        if (parsedData.settings.mode) {
+                            appState.currentMode = parsedData.settings.mode;
+                            document.body.setAttribute('data-mode', parsedData.settings.mode);
+                        }
+                    }
+                    
+                    // Recalculate stats
+                    appState.stats.totalQuotes = appState.quotes.length;
+                    appState.stats.totalCustomers = appState.customers.length;
+                    appState.stats.totalRevenue = appState.quotes.reduce((sum, quote) => sum + quote.total, 0);
+                    appState.stats.monthlyRevenue = appState.quotes
+                        .filter(quote => {
+                            const quoteDate = new Date(quote.createdAt);
+                            const now = new Date();
+                            return quoteDate.getMonth() === now.getMonth() && 
+                                   quoteDate.getFullYear() === now.getFullYear();
+                        })
+                        .reduce((sum, quote) => sum + quote.total, 0);
+                    
+                    return true;
+                }
+            } catch (error) {
+                console.warn('Failed to load from localStorage:', error);
+            }
+            return false;
+        }
+
+        // Auto-save functionality
+        function enableAutoSave() {
+            // Save data whenever significant changes are made
+            const originalPush = Array.prototype.push;
+            appState.customers.push = function(...items) {
+                const result = originalPush.apply(this, items);
+                saveToLocalStorage();
+                return result;
+            };
+            
+            appState.quotes.push = function(...items) {
+                const result = originalPush.apply(this, items);
+                saveToLocalStorage();
+                return result;
+            };
+            
+            // Save on profile/company updates
+            const originalSaveProfile = saveProfile;
+            saveProfile = function() {
+                originalSaveProfile();
+                saveToLocalStorage();
+            };
+            
+            const originalSaveCompany = saveCompany;
+            saveCompany = function() {
+                originalSaveCompany();
+                saveToLocalStorage();
+            };
+        }
+
+        // ===== TOUCH GESTURES FOR MOBILE =====
+        function setupTouchGestures() {
+            let startX, startY, currentX, currentY;
+            
+            document.addEventListener('touchstart', function(e) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (!startX || !startY) return;
+                
+                currentX = e.touches[0].clientX;
+                currentY = e.touches[0].clientY;
+            });
+            
+            document.addEventListener('touchend', function(e) {
+                if (!startX || !startY || !currentX || !currentY) return;
+                
+                const diffX = startX - currentX;
+                const diffY = startY - currentY;
+                
+                // Swipe detection (minimum 50px movement)
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                    if (diffX > 0) {
+                        // Swipe left - next view
+                        const views = ['dashboard', 'quotes', 'customers', 'settings'];
+                        const currentIndex = views.indexOf(appState.currentView);
+                        const nextIndex = (currentIndex + 1) % views.length;
+                        showView(views[nextIndex]);
+                    } else {
+                        // Swipe right - previous view
+                        const views = ['dashboard', 'quotes', 'customers', 'settings'];
+                        const currentIndex = views.indexOf(appState.currentView);
+                        const prevIndex = currentIndex === 0 ? views.length - 1 : currentIndex - 1;
+                        showView(views[prevIndex]);
+                    }
+                }
+                
+                // Reset values
+                startX = startY = currentX = currentY = null;
+            });
+        }
+
+        // ===== PWA FUNCTIONALITY =====
+        function setupPWA() {
+            // Register service worker for offline functionality
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    // Create a simple service worker inline
+                    const swCode = `
+                        const CACHE_NAME = 'refit-business-v1';
+                        const urlsToCache = ['/'];
+                        
+                        self.addEventListener('install', function(event) {
+                            event.waitUntil(
+                                caches.open(CACHE_NAME)
+                                    .then(function(cache) {
+                                        return cache.addAll(urlsToCache);
+                                    })
+                            );
+                        });
+                        
+                        self.addEventListener('fetch', function(event) {
+                            event.respondWith(
+                                caches.match(event.request)
+                                    .then(function(response) {
+                                        if (response) {
+                                            return response;
+                                        }
+                                        return fetch(event.request);
+                                    })
+                            );
+                        });
+                    `;
+                    
+                    const blob = new Blob([swCode], { type: 'application/javascript' });
+                    const swUrl = URL.createObjectURL(blob);
+                    
+                    navigator.serviceWorker.register(swUrl)
+                        .then(function(registration) {
+                            console.log('ServiceWorker registration successful');
+                        })
+                        .catch(function(error) {
+                            console.log('ServiceWorker registration failed');
+                        });
+                });
+            }
+            
+            // Add to home screen prompt
+            let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', function(e) {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                // Show install button after 30 seconds
+                setTimeout(() => {
+                    if (deferredPrompt) {
+                        showSuccessMessage('💡 Tip: Add REFIT to your home screen for easy access!');
+                    }
+                }, 30000);
+            });
+        }
+
         // ===== EVENT LISTENERS =====
         document.addEventListener('DOMContentLoaded', function() {
+            // Load saved data first
+            const hasData = loadFromLocalStorage();
+            
             // Initialize the app
             updateDisplay();
             loadDashboard();
+            detectPlatform();
             
-            // Initialize voice features
-            initializeSpeechRecognition();
-            initializeTextToSpeech();
-            processVoiceShortcuts();
+            // Setup enhancements
+            setupKeyboardShortcuts();
+            optimizePerformance();
+            enhanceAccessibility();
+            enableAutoSave();
+            setupTouchGestures();
+            setupPWA();
             
             // Update time every minute
             updateTime();
@@ -3968,39 +3315,106 @@
                 });
             });
             
-            // Check for voice support and notify user
+            // Add keyboard navigation for nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        item.click();
+                    }
+                });
+            });
+            
+            // Show welcome message
             setTimeout(() => {
-                const hasVoiceSupport = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
-                const hasTTSSupport = 'speechSynthesis' in window;
-                
-                // Update status displays
-                const micStatus = document.getElementById('mic-status');
-                const ttsStatus = document.getElementById('tts-status');
-                
-                if (micStatus) {
-                    micStatus.textContent = hasVoiceSupport ? 'Available ✅' : 'Limited ⚠️';
-                    micStatus.style.color = hasVoiceSupport ? 'var(--success)' : 'var(--warning)';
-                }
-                
-                if (ttsStatus) {
-                    ttsStatus.textContent = hasTTSSupport ? 'Available ✅' : 'Limited ⚠️';
-                    ttsStatus.style.color = hasTTSSupport ? 'var(--success)' : 'var(--warning)';
-                }
-                
-                if (hasVoiceSupport && hasTTSSupport) {
-                    console.log('🎙️ Full voice support available!');
-                    showSuccessMessage('🎉 Voice Assistant ready! Click the mic to start talking!');
-                } else if (hasVoiceSupport) {
-                    console.log('🎙️ Voice recognition available, TTS limited');
-                    showSuccessMessage('🎙️ Voice recognition ready! (Limited text-to-speech)');
+                if (hasData) {
+                    showSuccessMessage('🎉 Welcome back! Your data has been loaded.');
                 } else {
-                    console.log('🔧 Limited voice support');
-                    showSuccessMessage('📱 App loaded! Voice features work best in Chrome/Edge.');
+                    showSuccessMessage('🎉 Welcome to REFIT Business System!');
+                    
+                    // Show help after 5 seconds for new users
+                    setTimeout(() => {
+                        showSuccessMessage('💡 Tip: Click the ❓ button for a quick start guide!');
+                    }, 5000);
                 }
             }, 1000);
             
             console.log('🚀 REFIT Business System loaded successfully!');
+            console.log('📱 Keyboard shortcuts: Ctrl+N (Quote), Ctrl+K (Customer), Ctrl+T (Themes), Ctrl+E (Export)');
+            console.log('🎯 Quick navigation: Press 1-4 for views, swipe left/right on mobile');
         });
+
+        // ===== ERROR HANDLING =====
+        window.addEventListener('error', function(e) {
+            console.error('Application error:', e.error);
+            showSuccessMessage('⚠️ An error occurred. Your data is safe!');
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+            showSuccessMessage('⚠️ A network error occurred. Please try again.');
+        });
+
+        // ===== UTILITY FUNCTIONS =====
+        function formatCurrency(amount) {
+            return `RM ${parseFloat(amount).toFixed(2)}`;
+        }
+
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('en-MY');
+        }
+
+        function generateId() {
+            return Date.now() + Math.random().toString(36).substr(2, 9);
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Make functions globally accessible for onclick handlers
+        window.showView = showView;
+        window.switchToTheme = switchToTheme;
+        window.toggleMode = toggleMode;
+        window.openThemePicker = openThemePicker;
+        window.closeThemePicker = closeThemePicker;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.editProfile = editProfile;
+        window.showProfile = showProfile;
+        window.saveProfile = saveProfile;
+        window.editCompany = editCompany;
+        window.saveCompany = saveCompany;
+        window.openCompanyManager = openCompanyManager;
+        window.uploadLogo = uploadLogo;
+        window.resetLogoToEmoji = resetLogoToEmoji;
+        window.generateBusinessCard = generateBusinessCard;
+        window.exportCompanyData = exportCompanyData;
+        window.addCustomer = addCustomer;
+        window.saveCustomer = saveCustomer;
+        window.editCustomer = editCustomer;
+        window.createQuote = createQuote;
+        window.addQuoteItem = addQuoteItem;
+        window.removeQuoteItem = removeQuoteItem;
+        window.calculateQuoteTotal = calculateQuoteTotal;
+        window.saveQuote = saveQuote;
+        window.saveAndSendQuote = saveAndSendQuote;
+        window.editQuote = editQuote;
+        window.exportData = exportData;
+        window.exportAllData = exportAllData;
+        window.createManualBackup = createManualBackup;
+        window.importDataFile = importDataFile;
+        window.showStorageInfo = showStorageInfo;
+        window.viewReports = viewReports;
+        window.showHelp = showHelp;
 
     </script>
 </body>
