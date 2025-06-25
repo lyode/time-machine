@@ -1967,9 +1967,14 @@
                         <div class="message-avatar">👩‍💼</div>
                         <div class="message-content">
                             <p>Hey there! I'm Sofia, your friendly REFIT assistant! 😊 I'm here to make managing your business super easy and fun!</p>
-                            <p>Just talk to me naturally - no need for formal commands! Try things like:</p>
-                            <p>"Can you help me create a quote?" • "How's my business doing today?" • "I love the blue theme!" • "Let's add a new customer" • "Show me my revenue, please"</p>
-                            <p>Click the mic and let's chat! I'm excited to help! 🎙️✨</p>
+                            <p><strong>🎙️ Real Voice Features:</strong></p>
+                            <p>• <strong>Click the microphone</strong> and speak naturally<br>
+                            • <strong>Press Space</strong> for quick voice activation<br>
+                            • <strong>Press Escape</strong> to stop listening<br>
+                            • I'll speak back to you with realistic voice!</p>
+                            <p><strong>Try saying:</strong><br>
+                            "Show me my revenue" • "Create a new quote" • "Add a customer" • "Change theme to blue" • "How's my business doing?"</p>
+                            <p>🎙️ <em>Works best in Chrome/Edge browsers!</em></p>
                         </div>
                     </div>
                 </div>
@@ -1985,7 +1990,17 @@
                 </div>
                 
                 <div class="voice-status" id="voice-status-display">
-                    <span id="status-text">Ready to chat with you!</span>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <span style="font-size: 12px; color: var(--text-muted);">🎙️ Microphone:</span>
+                        <span id="mic-status" style="font-size: 12px; color: var(--accent-primary);">Ready</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <span style="font-size: 12px; color: var(--text-muted);">🔊 Voice Output:</span>
+                        <span id="tts-status" style="font-size: 12px; color: var(--accent-primary);">Ready</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted);" id="status-text">
+                        Ready to chat with you! Press the mic or Space bar to start.
+                    </div>
                 </div>
             </div>
         </div>
@@ -3274,96 +3289,111 @@
             showSuccessMessage('✏️ Quote editing coming soon!');
         }
 
-        // ===== AI VOICE ASSISTANT WITH REAL SPEECH =====
+        // ===== AI VOICE ASSISTANT WITH REAL SPEECH API =====
         let speechRecognition = null;
         let speechSynthesis = window.speechSynthesis;
-        let voices = [];
-        let currentUtterance = null;
+        let currentVoice = null;
 
-        // Voice settings for each personality
-        const personalityVoices = {
-            sofia: { rate: 0.9, pitch: 1.1, lang: 'en-US', voiceIndex: 0 },
-            emma: { rate: 1.2, pitch: 1.3, lang: 'en-US', voiceIndex: 1 },
-            maya: { rate: 0.8, pitch: 0.9, lang: 'en-GB', voiceIndex: 2 },
-            zoe: { rate: 1.0, pitch: 1.2, lang: 'en-AU', voiceIndex: 3 },
-            aria: { rate: 0.7, pitch: 0.8, lang: 'en-US', voiceIndex: 4 },
-            nova: { rate: 1.1, pitch: 1.0, lang: 'en-US', voiceIndex: 5 }
-        };
-
-        function initializeVoiceAssistant() {
-            // Initialize Speech Recognition
+        // Initialize Speech Recognition
+        function initializeSpeechRecognition() {
             if ('webkitSpeechRecognition' in window) {
                 speechRecognition = new webkitSpeechRecognition();
             } else if ('SpeechRecognition' in window) {
                 speechRecognition = new SpeechRecognition();
+            } else {
+                console.warn('Speech recognition not supported');
+                return false;
             }
 
-            if (speechRecognition) {
-                speechRecognition.continuous = false;
-                speechRecognition.interimResults = false;
-                speechRecognition.lang = 'en-US';
-                speechRecognition.maxAlternatives = 1;
+            speechRecognition.continuous = false;
+            speechRecognition.interimResults = true;
+            speechRecognition.lang = 'en-US';
 
-                speechRecognition.onstart = function() {
-                    console.log('🎙️ Voice recognition started');
-                    appState.isListening = true;
-                    updateVoiceUI(true);
-                };
+            speechRecognition.onstart = function() {
+                updateVoiceStatus('🎤 Listening...', 'listening');
+                document.getElementById('voice-listen-btn').classList.add('listening');
+                document.getElementById('voice-btn-text').textContent = 'Listening...';
+                document.getElementById('voice-icon').textContent = '🎤';
+            };
 
-                speechRecognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    console.log('🗣️ User said:', transcript);
-                    addUserMessage(transcript);
-                    processAIResponse(transcript);
-                };
+            speechRecognition.onresult = function(event) {
+                let interimTranscript = '';
+                let finalTranscript = '';
 
-                speechRecognition.onerror = function(event) {
-                    console.error('❌ Speech recognition error:', event.error);
-                    stopListening();
-                    
-                    let errorMessage = 'Voice recognition error';
-                    switch(event.error) {
-                        case 'no-speech':
-                            errorMessage = 'No speech detected. Please try again.';
-                            break;
-                        case 'audio-capture':
-                            errorMessage = 'Microphone not available. Please check permissions.';
-                            break;
-                        case 'not-allowed':
-                            errorMessage = 'Microphone access denied. Please allow microphone access.';
-                            break;
-                        case 'network':
-                            errorMessage = 'Network error. Please check your connection.';
-                            break;
-                        default:
-                            errorMessage = `Speech recognition error: ${event.error}`;
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        finalTranscript += transcript;
+                    } else {
+                        interimTranscript += transcript;
                     }
-                    
-                    addAIMessage(`Sorry! ${errorMessage} 😅`);
-                    showSuccessMessage(`❌ ${errorMessage}`);
-                };
+                }
 
-                speechRecognition.onend = function() {
-                    console.log('🎙️ Voice recognition ended');
+                if (interimTranscript) {
+                    updateVoiceStatus(`🎤 "${interimTranscript.trim()}"`, 'listening');
+                }
+
+                if (finalTranscript) {
                     stopListening();
-                };
-            }
+                    addUserMessage(finalTranscript.trim());
+                    processAIResponse(finalTranscript.trim());
+                }
+            };
 
-            // Load available voices
-            loadVoices();
-            if (speechSynthesis.onvoiceschanged !== undefined) {
-                speechSynthesis.onvoiceschanged = loadVoices;
-            }
+            speechRecognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+                stopListening();
+                
+                let errorMessage = 'Voice recognition error. ';
+                switch(event.error) {
+                    case 'no-speech':
+                        errorMessage += 'No speech detected. Please try again.';
+                        break;
+                    case 'audio-capture':
+                        errorMessage += 'Microphone not available.';
+                        break;
+                    case 'not-allowed':
+                        errorMessage += 'Microphone permission denied.';
+                        break;
+                    case 'network':
+                        errorMessage += 'Network error occurred.';
+                        break;
+                    default:
+                        errorMessage += 'Please try again.';
+                }
+                
+                addAIMessage(`😅 ${errorMessage}`);
+                updateVoiceStatus('❌ Error occurred. Try again!', 'error');
+            };
+
+            speechRecognition.onend = function() {
+                stopListening();
+            };
+
+            return true;
         }
 
-        function loadVoices() {
-            voices = speechSynthesis.getVoices();
-            console.log('🔊 Available voices loaded:', voices.length);
-            
-            // Log available voices for debugging
-            voices.forEach((voice, index) => {
-                console.log(`Voice ${index}: ${voice.name} (${voice.lang})`);
-            });
+        // Initialize Text-to-Speech
+        function initializeTextToSpeech() {
+            if ('speechSynthesis' in window) {
+                // Wait for voices to load
+                speechSynthesis.onvoiceschanged = function() {
+                    const voices = speechSynthesis.getVoices();
+                    
+                    // Prefer female voices for better AI personality
+                    currentVoice = voices.find(voice => 
+                        voice.name.includes('Female') || 
+                        voice.name.includes('Samantha') ||
+                        voice.name.includes('Victoria') ||
+                        voice.name.includes('Karen') ||
+                        voice.name.includes('Moira')
+                    ) || voices.find(voice => voice.gender === 'female') || voices[0];
+                    
+                    console.log('Selected voice:', currentVoice?.name || 'Default');
+                };
+                return true;
+            }
+            return false;
         }
 
         function toggleVoiceAssistant() {
@@ -3371,282 +3401,28 @@
             assistant.classList.toggle('hidden');
             
             if (!assistant.classList.contains('hidden')) {
-                // Initialize voice assistant if not already done
+                // Initialize speech features if not done
                 if (!speechRecognition) {
-                    initializeVoiceAssistant();
+                    const speechSupported = initializeSpeechRecognition();
+                    const ttsSupported = initializeTextToSpeech();
+                    
+                    if (!speechSupported || !ttsSupported) {
+                        addAIMessage("🔧 Note: Some voice features may not be available in this browser. Voice recognition works best in Chrome/Edge.");
+                    }
                 }
                 
                 // Auto scroll to bottom of conversation
                 const conversation = document.getElementById('voice-conversation');
                 conversation.scrollTop = conversation.scrollHeight;
                 
-                // Welcome message with voice
-                if (!appState.conversationStarted) {
-                    const personality = aiPersonalities[appState.currentPersonality];
+                // Welcome message if first time
+                if (!appState.conversation.length) {
                     setTimeout(() => {
-                        speakText(personality.responses.greeting);
+                        const personality = aiPersonalities[appState.currentPersonality];
+                        speakMessage(personality.responses.greeting);
                     }, 500);
-                    appState.conversationStarted = true;
                 }
-            } else {
-                // Stop any ongoing speech
-                stopSpeaking();
-                stopListening();
             }
-        }
-
-        function startListening() {
-            if (!speechRecognition) {
-                addAIMessage("Sorry, voice recognition is not supported in your browser. Please try Chrome, Safari, or Edge! 😅");
-                showSuccessMessage('❌ Voice recognition not supported');
-                return;
-            }
-
-            if (appState.isListening) {
-                stopListening();
-                return;
-            }
-
-            // Stop any current speech before listening
-            stopSpeaking();
-
-            try {
-                speechRecognition.start();
-                console.log('🎙️ Starting voice recognition...');
-            } catch (error) {
-                console.error('❌ Error starting speech recognition:', error);
-                addAIMessage("Oops! I couldn't start listening. Please try again! 😅");
-                showSuccessMessage('❌ Could not start voice recognition');
-            }
-        }
-
-        function stopListening() {
-            if (speechRecognition && appState.isListening) {
-                speechRecognition.stop();
-            }
-            appState.isListening = false;
-            updateVoiceUI(false);
-        }
-
-        function updateVoiceUI(isListening) {
-            const listenBtn = document.getElementById('voice-listen-btn');
-            const voiceIcon = document.getElementById('voice-icon');
-            const voiceBtnText = document.getElementById('voice-btn-text');
-            const statusText = document.getElementById('status-text');
-
-            if (isListening) {
-                listenBtn.classList.add('listening');
-                voiceBtnText.textContent = 'Listening...';
-                voiceIcon.textContent = '🎤';
-                statusText.textContent = 'Listening for your voice...';
-            } else {
-                listenBtn.classList.remove('listening');
-                voiceBtnText.textContent = 'Start Chatting';
-                voiceIcon.textContent = '🎙️';
-                statusText.textContent = 'Ready to chat with you!';
-            }
-        }
-
-        function speakText(text) {
-            if (appState.isMuted || !text) return;
-
-            // Stop any current speech
-            stopSpeaking();
-
-            // Clean text for speech (remove emojis and special characters)
-            const cleanText = text.replace(/[^\w\s.,!?-]/g, '').trim();
-            if (!cleanText) return;
-
-            try {
-                currentUtterance = new SpeechSynthesisUtterance(cleanText);
-                
-                // Get personality voice settings
-                const personality = appState.currentPersonality;
-                const voiceSettings = personalityVoices[personality];
-                
-                // Set voice properties
-                currentUtterance.rate = voiceSettings.rate;
-                currentUtterance.pitch = voiceSettings.pitch;
-                currentUtterance.volume = 1.0;
-                currentUtterance.lang = voiceSettings.lang;
-                
-                // Try to set a specific voice
-                if (voices.length > 0) {
-                    // Find a female voice for most personalities, male for Nova
-                    let preferredVoice = null;
-                    
-                    if (personality === 'nova') {
-                        // Find a male voice for Nova
-                        preferredVoice = voices.find(voice => 
-                            voice.lang.startsWith('en') && 
-                            (voice.name.toLowerCase().includes('male') || 
-                             voice.name.toLowerCase().includes('david') ||
-                             voice.name.toLowerCase().includes('alex'))
-                        );
-                    } else {
-                        // Find a female voice for other personalities
-                        preferredVoice = voices.find(voice => 
-                            voice.lang.startsWith(voiceSettings.lang.substring(0, 2)) && 
-                            (voice.name.toLowerCase().includes('female') || 
-                             voice.name.toLowerCase().includes('samantha') ||
-                             voice.name.toLowerCase().includes('susan') ||
-                             voice.name.toLowerCase().includes('karen') ||
-                             voice.name.toLowerCase().includes('moira'))
-                        );
-                    }
-                    
-                    // Fallback to any English voice
-                    if (!preferredVoice) {
-                        preferredVoice = voices.find(voice => voice.lang.startsWith('en'));
-                    }
-                    
-                    if (preferredVoice) {
-                        currentUtterance.voice = preferredVoice;
-                        console.log(`🔊 Using voice: ${preferredVoice.name} for ${personality}`);
-                    }
-                }
-
-                currentUtterance.onstart = function() {
-                    console.log('🔊 Speech started');
-                    document.getElementById('ai-status').textContent = 'Speaking... 🗣️';
-                };
-
-                currentUtterance.onend = function() {
-                    console.log('🔊 Speech ended');
-                    document.getElementById('ai-status').textContent = 'Ready to chat! 😊';
-                    currentUtterance = null;
-                };
-
-                currentUtterance.onerror = function(event) {
-                    console.error('❌ Speech synthesis error:', event.error);
-                    document.getElementById('ai-status').textContent = 'Ready to chat! 😊';
-                    currentUtterance = null;
-                };
-
-                // Speak the text
-                speechSynthesis.speak(currentUtterance);
-                console.log(`🔊 Speaking: "${cleanText}"`);
-
-            } catch (error) {
-                console.error('❌ Error with text-to-speech:', error);
-                document.getElementById('ai-status').textContent = 'Ready to chat! 😊';
-            }
-        }
-
-        function stopSpeaking() {
-            if (speechSynthesis.speaking) {
-                speechSynthesis.cancel();
-                console.log('🔇 Speech stopped');
-            }
-            if (currentUtterance) {
-                currentUtterance = null;
-            }
-            document.getElementById('ai-status').textContent = 'Ready to chat! 😊';
-        }
-
-        function addUserMessage(message) {
-            const conversation = document.getElementById('voice-conversation');
-            const messageHtml = `
-                <div class="user-message">
-                    <div class="message-avatar">👤</div>
-                    <div class="message-content">
-                        <p>${message}</p>
-                    </div>
-                </div>
-            `;
-            conversation.insertAdjacentHTML('beforeend', messageHtml);
-            conversation.scrollTop = conversation.scrollHeight;
-        }
-
-        function addAIMessage(message, shouldSpeak = true) {
-            const conversation = document.getElementById('voice-conversation');
-            const personality = aiPersonalities[appState.currentPersonality];
-            const messageHtml = `
-                <div class="ai-message">
-                    <div class="message-avatar">${personality.emoji}</div>
-                    <div class="message-content">
-                        <p>${message}</p>
-                    </div>
-                </div>
-            `;
-            conversation.insertAdjacentHTML('beforeend', messageHtml);
-            conversation.scrollTop = conversation.scrollHeight;
-            
-            // Speak the message if enabled
-            if (shouldSpeak && !appState.isMuted) {
-                setTimeout(() => {
-                    speakText(message);
-                }, 300);
-            }
-        }
-
-        function processAIResponse(userInput) {
-            const personality = aiPersonalities[appState.currentPersonality];
-            let response = '';
-            let followUpAction = null;
-            
-            const input = userInput.toLowerCase();
-            
-            // Enhanced natural language processing
-            if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
-                response = personality.responses.greeting;
-            } else if (input.includes('business') || input.includes('doing') || input.includes('revenue') || input.includes('numbers') || input.includes('money')) {
-                response = personality.responses.revenue;
-                followUpAction = () => {
-                    setTimeout(() => {
-                        addAIMessage(`Your total revenue is RM ${appState.stats.totalRevenue.toFixed(2)}, with ${appState.stats.totalQuotes} quotes created and ${appState.stats.totalCustomers} customers! You're doing amazing!`);
-                    }, 2000);
-                };
-            } else if (input.includes('quote') || input.includes('create') || input.includes('new quote')) {
-                response = personality.responses.quotes;
-                followUpAction = () => {
-                    setTimeout(() => {
-                        addAIMessage("Perfect! Let me open the quote creation form for you right now!");
-                        setTimeout(() => createQuote(), 1500);
-                    }, 1000);
-                };
-            } else if (input.includes('customer') || input.includes('add') || input.includes('new customer')) {
-                response = personality.responses.customers;
-                followUpAction = () => {
-                    setTimeout(() => {
-                        addAIMessage("Excellent! Let me open the customer form so you can add their details!");
-                        setTimeout(() => addCustomer(), 1500);
-                    }, 1000);
-                };
-            } else if (input.includes('theme') || input.includes('blue') || input.includes('color') || input.includes('change theme')) {
-                response = personality.responses.theme;
-                followUpAction = () => {
-                    setTimeout(() => {
-                        if (input.includes('blue') || input.includes('mint') || input.includes('teal')) {
-                            addAIMessage("I love the blue themes! Let me switch you to Mint Breeze - it's gorgeous!");
-                            setTimeout(() => switchToTheme('bluegreen'), 1500);
-                        } else if (input.includes('pink') || input.includes('rose')) {
-                            addAIMessage("Pink is so beautiful! Switching to Rose Blush theme!");
-                            setTimeout(() => switchToTheme('pink'), 1500);
-                        } else if (input.includes('orange') || input.includes('peach')) {
-                            addAIMessage("Orange is so warm and inviting! Switching to Peach Glow!");
-                            setTimeout(() => switchToTheme('orange'), 1500);
-                        } else {
-                            addAIMessage("Let me show you the theme picker so you can choose your favorite!");
-                            setTimeout(() => openThemePicker(), 1500);
-                        }
-                    }, 1000);
-                };
-            } else if (input.includes('thank') || input.includes('thanks')) {
-                response = "You're so welcome! I'm always happy to help you succeed! 😊";
-            } else if (input.includes('help') || input.includes('what can you do')) {
-                response = `I can help you with so many things! I can create quotes, add customers, show your revenue, change themes, and chat with you about your business. Just ask me naturally - like "create a new quote" or "how's my business doing?" What would you like to try?`;
-            } else {
-                response = personality.responses.help;
-            }
-            
-            // Add response with a slight delay for natural conversation flow
-            setTimeout(() => {
-                addAIMessage(response);
-                if (followUpAction) {
-                    followUpAction();
-                }
-            }, 500);
         }
 
         function showPersonalityPicker() {
@@ -3675,18 +3451,15 @@
             const selectedOption = document.querySelector('.personality-option.active');
             const personality = selectedOption.getAttribute('data-personality');
             
-            const oldPersonality = appState.currentPersonality;
             appState.currentPersonality = personality;
             updateAIDisplay();
             closeModal('personality-modal');
-            
-            // Stop any current speech
-            stopSpeaking();
             
             // Add personality change message to conversation
             const personalityData = aiPersonalities[personality];
             const message = `Hi! I'm ${personalityData.name} now! ${personalityData.responses.greeting}`;
             addAIMessage(message);
+            speakMessage(message);
             
             showSuccessMessage(`✨ AI personality changed to ${personalityData.name}!`);
         }
@@ -3703,10 +3476,245 @@
             });
         }
 
-        function clearConversation() {
-            stopSpeaking();
+        function startListening() {
+            if (!speechRecognition) {
+                addAIMessage("🔧 Speech recognition not available in this browser. Please use Chrome or Edge for voice features.");
+                return;
+            }
+
+            if (!appState.isListening) {
+                // Request microphone permission first
+                navigator.mediaDevices?.getUserMedia({ audio: true })
+                    .then(() => {
+                        appState.isListening = true;
+                        updateVoiceStatus('🎤 Starting microphone...', 'starting');
+                        speechRecognition.start();
+                    })
+                    .catch((error) => {
+                        console.error('Microphone access denied:', error);
+                        addAIMessage("🎤 Microphone access is required for voice chat. Please allow microphone permission and try again.");
+                        updateVoiceStatus('❌ Microphone access denied', 'error');
+                    });
+            } else {
+                stopListening();
+            }
+        }
+
+        function stopListening() {
+            appState.isListening = false;
+            
+            if (speechRecognition) {
+                speechRecognition.stop();
+            }
+            
+            document.getElementById('voice-listen-btn').classList.remove('listening');
+            document.getElementById('voice-btn-text').textContent = 'Start Chatting';
+            document.getElementById('voice-icon').textContent = '🎙️';
+            updateVoiceStatus('Ready to chat with you!', 'ready');
+        }
+
+        function updateVoiceStatus(message, status) {
+            document.getElementById('status-text').textContent = message;
+            document.getElementById('ai-status').textContent = message;
+            
+            // Update microphone status display
+            const micStatus = document.getElementById('mic-status');
+            if (micStatus) {
+                if (status === 'listening' || status === 'starting') {
+                    micStatus.textContent = 'Active 🔴';
+                    micStatus.style.color = 'var(--error)';
+                } else if (status === 'error') {
+                    micStatus.textContent = 'Error ❌';
+                    micStatus.style.color = 'var(--error)';
+                } else {
+                    micStatus.textContent = 'Ready ✅';
+                    micStatus.style.color = 'var(--success)';
+                }
+            }
+            
+            // Update TTS status display
+            const ttsStatus = document.getElementById('tts-status');
+            if (ttsStatus && status === 'speaking') {
+                ttsStatus.textContent = 'Speaking 🔵';
+                ttsStatus.style.color = 'var(--info)';
+            } else if (ttsStatus && status !== 'speaking') {
+                ttsStatus.textContent = appState.isMuted ? 'Muted 🔇' : 'Ready ✅';
+                ttsStatus.style.color = appState.isMuted ? 'var(--warning)' : 'var(--success)';
+            }
+            
+            console.log(`Voice Status: ${status} - ${message}`);
+        }
+
+        function addUserMessage(message) {
+            const conversation = document.getElementById('voice-conversation');
+            const messageHtml = `
+                <div class="user-message">
+                    <div class="message-avatar">👤</div>
+                    <div class="message-content">
+                        <p>${message}</p>
+                    </div>
+                </div>
+            `;
+            conversation.insertAdjacentHTML('beforeend', messageHtml);
+            conversation.scrollTop = conversation.scrollHeight;
+            
+            // Store in conversation history
+            appState.conversation.push({
+                type: 'user',
+                message: message,
+                timestamp: new Date()
+            });
+        }
+
+        function addAIMessage(message) {
             const conversation = document.getElementById('voice-conversation');
             const personality = aiPersonalities[appState.currentPersonality];
+            const messageHtml = `
+                <div class="ai-message">
+                    <div class="message-avatar">${personality.emoji}</div>
+                    <div class="message-content">
+                        <p>${message}</p>
+                    </div>
+                </div>
+            `;
+            conversation.insertAdjacentHTML('beforeend', messageHtml);
+            conversation.scrollTop = conversation.scrollHeight;
+            
+            // Store in conversation history
+            appState.conversation.push({
+                type: 'ai',
+                message: message,
+                personality: appState.currentPersonality,
+                timestamp: new Date()
+            });
+        }
+
+        function speakMessage(message) {
+            if (appState.isMuted || !speechSynthesis) {
+                return;
+            }
+
+            // Cancel any ongoing speech
+            speechSynthesis.cancel();
+
+            // Clean message for speech (remove emojis and special characters)
+            const cleanMessage = message.replace(/[^\w\s.,!?-]/g, '').trim();
+            
+            if (cleanMessage.length === 0) {
+                return;
+            }
+
+            updateVoiceStatus('🗣️ Speaking...', 'speaking');
+
+            const utterance = new SpeechSynthesisUtterance(cleanMessage);
+            
+            // Set voice properties based on personality
+            const personality = aiPersonalities[appState.currentPersonality];
+            
+            utterance.voice = currentVoice;
+            utterance.rate = personality.name === 'Emma' ? 1.1 : personality.name === 'Aria' ? 0.9 : 1.0;
+            utterance.pitch = personality.name === 'Nova' ? 1.2 : personality.name === 'Maya' ? 0.9 : 1.0;
+            utterance.volume = 0.8;
+
+            utterance.onstart = function() {
+                updateVoiceStatus('🗣️ Speaking...', 'speaking');
+            };
+
+            utterance.onend = function() {
+                updateVoiceStatus('Ready to chat with you!', 'ready');
+            };
+
+            utterance.onerror = function(event) {
+                console.error('Speech synthesis error:', event.error);
+                updateVoiceStatus('Ready to chat with you!', 'ready');
+            };
+
+            speechSynthesis.speak(utterance);
+        }
+
+        function processAIResponse(userInput) {
+            updateVoiceStatus('🤔 Thinking...', 'processing');
+            
+            const personality = aiPersonalities[appState.currentPersonality];
+            let response = '';
+            let followUpAction = null;
+            
+            const input = userInput.toLowerCase();
+            
+            // Enhanced command processing
+            if (input.includes('business') || input.includes('doing') || input.includes('revenue') || input.includes('numbers') || input.includes('stats') || input.includes('performance')) {
+                response = personality.responses.revenue;
+                followUpAction = () => {
+                    const detailsMessage = `Your total revenue is RM ${appState.stats.totalRevenue.toFixed(2)}, with ${appState.stats.totalQuotes} quotes created and ${appState.stats.totalCustomers} customers! You're doing amazing! 📈`;
+                    setTimeout(() => {
+                        addAIMessage(detailsMessage);
+                        speakMessage(detailsMessage);
+                    }, 1000);
+                };
+            } else if (input.includes('quote') || input.includes('create') || input.includes('new quote') || input.includes('quotation')) {
+                response = personality.responses.quotes;
+                followUpAction = () => {
+                    setTimeout(() => {
+                        const confirmMessage = "Would you like me to open the quote creation form for you?";
+                        addAIMessage(confirmMessage);
+                        speakMessage(confirmMessage);
+                        setTimeout(() => createQuote(), 2000);
+                    }, 1000);
+                };
+            } else if (input.includes('customer') || input.includes('add') || input.includes('client') || input.includes('new customer')) {
+                response = personality.responses.customers;
+                followUpAction = () => {
+                    setTimeout(() => {
+                        const confirmMessage = "Let me open the customer form so you can add their details!";
+                        addAIMessage(confirmMessage);
+                        speakMessage(confirmMessage);
+                        setTimeout(() => addCustomer(), 2000);
+                    }, 1000);
+                };
+            } else if (input.includes('theme') || input.includes('blue') || input.includes('color') || input.includes('mint') || input.includes('change theme')) {
+                response = personality.responses.theme;
+                followUpAction = () => {
+                    setTimeout(() => {
+                        const themeMessage = "I love the blue themes! Let me switch you to Mint Breeze - it's gorgeous! 🌊";
+                        addAIMessage(themeMessage);
+                        speakMessage(themeMessage);
+                        setTimeout(() => switchToTheme('bluegreen'), 2000);
+                    }, 1000);
+                };
+            } else if (input.includes('help') || input.includes('what can you do') || input.includes('commands')) {
+                response = `${personality.responses.help} I can help you create quotes, add customers, check your revenue, change themes, and much more! Just speak naturally to me!`;
+            } else if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
+                response = personality.responses.greeting;
+            } else if (input.includes('thank') || input.includes('thanks')) {
+                response = personality.name === 'Sofia' ? "You're so welcome! I love helping you! 😊" : 
+                         personality.name === 'Emma' ? "Aww, you're the best! Happy to help! 🌟" :
+                         personality.name === 'Maya' ? "It was my pleasure to assist you efficiently." :
+                         personality.name === 'Zoe' ? "Thank you! Creating solutions together is beautiful! ✨" :
+                         personality.name === 'Aria' ? "You're very welcome. I'm always here for you. 🌸" :
+                         "No problem! That's what I'm here for! 🚀";
+            } else {
+                response = `${personality.responses.help} I heard you say "${userInput}" - could you clarify what you'd like me to help you with?`;
+            }
+            
+            setTimeout(() => {
+                addAIMessage(response);
+                speakMessage(response);
+                
+                if (followUpAction) {
+                    followUpAction();
+                }
+            }, 500);
+        }
+
+        function clearConversation() {
+            // Stop any ongoing speech
+            if (speechSynthesis) {
+                speechSynthesis.cancel();
+            }
+            
+            const conversation = document.getElementById('voice-conversation');
+            const personality = aiPersonalities[appState.currentPersonality];
+            
             conversation.innerHTML = `
                 <div class="ai-message">
                     <div class="message-avatar">${personality.emoji}</div>
@@ -3715,8 +3723,16 @@
                     </div>
                 </div>
             `;
+            
+            // Clear conversation history
+            appState.conversation = [];
+            
             showSuccessMessage('🗑️ Conversation cleared!');
-            appState.conversationStarted = false;
+            
+            // Speak the greeting
+            setTimeout(() => {
+                speakMessage(personality.responses.greeting);
+            }, 500);
         }
 
         function toggleMute() {
@@ -3724,18 +3740,34 @@
             const muteBtn = document.getElementById('mute-btn');
             muteBtn.innerHTML = appState.isMuted ? '🔇 Sound Off' : '🔊 Sound On';
             
-            if (appState.isMuted) {
-                stopSpeaking();
+            // Stop any ongoing speech if muting
+            if (appState.isMuted && speechSynthesis) {
+                speechSynthesis.cancel();
+                updateVoiceStatus('🔇 Sound muted', 'ready');
             }
             
-            showSuccessMessage(appState.isMuted ? '🔇 Voice responses muted' : '🔊 Voice responses enabled');
+            showSuccessMessage(appState.isMuted ? '🔇 Sound muted' : '🔊 Sound enabled');
         }
 
-        // Test voice functionality
-        function testVoice() {
-            const personality = aiPersonalities[appState.currentPersonality];
-            speakText("Hello! This is a voice test. Can you hear me speaking?");
-            addAIMessage("Testing voice output! Can you hear me? 🔊");
+        // Voice command shortcuts
+        function processVoiceShortcuts() {
+            // Add keyboard shortcut for voice activation
+            document.addEventListener('keydown', function(e) {
+                // Press Space bar to start/stop voice recognition (when voice assistant is open)
+                if (e.code === 'Space' && !document.getElementById('voice-assistant').classList.contains('hidden')) {
+                    const isTyping = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+                    if (!isTyping) {
+                        e.preventDefault();
+                        startListening();
+                    }
+                }
+                
+                // Press Escape to stop listening
+                if (e.code === 'Escape' && appState.isListening) {
+                    e.preventDefault();
+                    stopListening();
+                }
+            });
         }
 
         // ===== DATA MANAGEMENT =====
@@ -3908,6 +3940,11 @@
             updateDisplay();
             loadDashboard();
             
+            // Initialize voice features
+            initializeSpeechRecognition();
+            initializeTextToSpeech();
+            processVoiceShortcuts();
+            
             // Update time every minute
             updateTime();
             setInterval(updateTime, 60000);
@@ -3931,8 +3968,38 @@
                 });
             });
             
+            // Check for voice support and notify user
+            setTimeout(() => {
+                const hasVoiceSupport = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
+                const hasTTSSupport = 'speechSynthesis' in window;
+                
+                // Update status displays
+                const micStatus = document.getElementById('mic-status');
+                const ttsStatus = document.getElementById('tts-status');
+                
+                if (micStatus) {
+                    micStatus.textContent = hasVoiceSupport ? 'Available ✅' : 'Limited ⚠️';
+                    micStatus.style.color = hasVoiceSupport ? 'var(--success)' : 'var(--warning)';
+                }
+                
+                if (ttsStatus) {
+                    ttsStatus.textContent = hasTTSSupport ? 'Available ✅' : 'Limited ⚠️';
+                    ttsStatus.style.color = hasTTSSupport ? 'var(--success)' : 'var(--warning)';
+                }
+                
+                if (hasVoiceSupport && hasTTSSupport) {
+                    console.log('🎙️ Full voice support available!');
+                    showSuccessMessage('🎉 Voice Assistant ready! Click the mic to start talking!');
+                } else if (hasVoiceSupport) {
+                    console.log('🎙️ Voice recognition available, TTS limited');
+                    showSuccessMessage('🎙️ Voice recognition ready! (Limited text-to-speech)');
+                } else {
+                    console.log('🔧 Limited voice support');
+                    showSuccessMessage('📱 App loaded! Voice features work best in Chrome/Edge.');
+                }
+            }, 1000);
+            
             console.log('🚀 REFIT Business System loaded successfully!');
-            showSuccessMessage('🎉 Welcome to REFIT Business System!');
         });
 
     </script>
