@@ -2865,18 +2865,18 @@
             
             appState.currentView = viewName;
             
-            // Load data for specific views
+            // Load view-specific data
             if (viewName === 'quotes') {
-                loadQuotes();
+                loadQuotesList();
             } else if (viewName === 'customers') {
-                loadCustomers();
+                loadCustomersList();
             } else if (viewName === 'dashboard') {
                 loadDashboard();
             }
         }
 
         // ===== MODAL MANAGEMENT =====
-        function showModal(modalId) {
+        function openModal(modalId) {
             document.getElementById(modalId).classList.add('show');
         }
 
@@ -2884,283 +2884,62 @@
             document.getElementById(modalId).classList.remove('show');
         }
 
-        // ===== VOICE ASSISTANT FUNCTIONALITY =====
-        let recognition;
-        let speechSynthesis = window.speechSynthesis;
-
-        function initVoiceRecognition() {
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-                recognition.continuous = false;
-                recognition.interimResults = false;
-                recognition.lang = 'en-US';
-                
-                recognition.onstart = function() {
-                    appState.isListening = true;
-                    updateVoiceUI();
-                };
-                
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    processVoiceInput(transcript);
-                };
-                
-                recognition.onend = function() {
-                    appState.isListening = false;
-                    updateVoiceUI();
-                };
-                
-                recognition.onerror = function(event) {
-                    console.log('Speech recognition error:', event.error);
-                    appState.isListening = false;
-                    updateVoiceUI();
-                    showSuccessMessage('🎙️ Voice recognition error. Please try again!');
-                };
-            }
-        }
-
-        function toggleVoiceAssistant() {
-            const voiceAssistant = document.getElementById('voice-assistant');
-            voiceAssistant.classList.toggle('hidden');
+        // ===== SUCCESS MESSAGE =====
+        function showSuccessMessage(message) {
+            const successMsg = document.getElementById('success-message');
+            const successText = document.getElementById('success-text');
+            successText.textContent = message;
+            successMsg.classList.add('show');
             
-            if (!voiceAssistant.classList.contains('hidden')) {
-                // Initialize voice recognition when opening
-                if (!recognition) {
-                    initVoiceRecognition();
-                }
-            }
-        }
-
-        function startListening() {
-            if (!recognition) {
-                showSuccessMessage('🎙️ Voice recognition not supported in this browser');
-                return;
-            }
-            
-            if (appState.isListening) {
-                recognition.stop();
-            } else {
-                recognition.start();
-            }
-        }
-
-        function updateVoiceUI() {
-            const listenBtn = document.getElementById('voice-listen-btn');
-            const voiceIcon = document.getElementById('voice-icon');
-            const voiceBtnText = document.getElementById('voice-btn-text');
-            const statusText = document.getElementById('status-text');
-            
-            if (appState.isListening) {
-                listenBtn.classList.add('listening');
-                voiceIcon.textContent = '🔴';
-                voiceBtnText.textContent = 'Listening...';
-                statusText.textContent = 'Listening to you...';
-            } else {
-                listenBtn.classList.remove('listening');
-                voiceIcon.textContent = '🎙️';
-                voiceBtnText.textContent = 'Start Chatting';
-                statusText.textContent = 'Ready to chat with you!';
-            }
-        }
-
-        function processVoiceInput(input) {
-            const currentPersonality = aiPersonalities[appState.currentPersonality];
-            
-            // Add user message to conversation
-            addMessage('user', input);
-            
-            // Process the input and generate AI response
-            const response = generateAIResponse(input, currentPersonality);
-            
-            // Add AI response to conversation with slight delay for realism
             setTimeout(() => {
-                addMessage('ai', response);
-                if (!appState.isMuted) {
-                    speakText(response);
-                }
-            }, 500);
-        }
-
-        function generateAIResponse(input, personality) {
-            const lowerInput = input.toLowerCase();
-            
-            // Intent recognition based on keywords
-            if (lowerInput.includes('quote') || lowerInput.includes('quotation')) {
-                setTimeout(() => createQuote(), 1000);
-                return personality.responses.quotes;
-            } else if (lowerInput.includes('customer') || lowerInput.includes('client')) {
-                setTimeout(() => addCustomer(), 1000);
-                return personality.responses.customers;
-            } else if (lowerInput.includes('theme') || lowerInput.includes('color') || lowerInput.includes('design')) {
-                setTimeout(() => openThemePicker(), 1000);
-                return personality.responses.theme;
-            } else if (lowerInput.includes('revenue') || lowerInput.includes('money') || lowerInput.includes('financial') || lowerInput.includes('earning')) {
-                return `${personality.responses.revenue} Your total revenue is RM ${appState.stats.totalRevenue.toLocaleString()}! This month you've earned RM ${appState.stats.monthlyRevenue.toLocaleString()}. You have ${appState.stats.totalQuotes} quotes and ${appState.stats.totalCustomers} customers! 📊`;
-            } else if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('hey')) {
-                return personality.responses.greeting;
-            } else if (lowerInput.includes('help') || lowerInput.includes('assist') || lowerInput.includes('support')) {
-                return personality.responses.help;
-            } else {
-                // Default helpful response
-                return `${personality.responses.help} I can help you create quotes, manage customers, change themes, check your revenue, and much more! Just tell me what you'd like to do! 😊`;
-            }
-        }
-
-        function addMessage(sender, message) {
-            const conversation = document.getElementById('voice-conversation');
-            const messageDiv = document.createElement('div');
-            const currentPersonality = aiPersonalities[appState.currentPersonality];
-            
-            messageDiv.className = sender === 'user' ? 'user-message' : 'ai-message';
-            messageDiv.innerHTML = `
-                <div class="message-avatar">${sender === 'user' ? '🧑‍💼' : currentPersonality.emoji}</div>
-                <div class="message-content">
-                    <p>${message}</p>
-                </div>
-            `;
-            
-            conversation.appendChild(messageDiv);
-            conversation.scrollTop = conversation.scrollHeight;
-            
-            // Store in conversation history
-            appState.conversation.push({
-                sender,
-                message,
-                timestamp: new Date()
-            });
-        }
-
-        function speakText(text) {
-            if (appState.isMuted || !speechSynthesis) return;
-            
-            // Cancel any ongoing speech
-            speechSynthesis.cancel();
-            
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = 0.9;
-            utterance.pitch = 1.1;
-            utterance.volume = 0.8;
-            
-            // Try to use a female voice if available
-            const voices = speechSynthesis.getVoices();
-            const femaleVoice = voices.find(voice => 
-                voice.name.includes('Female') || 
-                voice.name.includes('Google UK English Female') ||
-                voice.name.includes('Karen') ||
-                voice.name.includes('Samantha')
-            );
-            
-            if (femaleVoice) {
-                utterance.voice = femaleVoice;
-            }
-            
-            speechSynthesis.speak(utterance);
-        }
-
-        function clearConversation() {
-            document.getElementById('voice-conversation').innerHTML = `
-                <div class="ai-message">
-                    <div class="message-avatar">${aiPersonalities[appState.currentPersonality].emoji}</div>
-                    <div class="message-content">
-                        <p>${aiPersonalities[appState.currentPersonality].responses.greeting}</p>
-                    </div>
-                </div>
-            `;
-            appState.conversation = [];
-            showSuccessMessage('🗑️ Conversation cleared!');
-        }
-
-        function toggleMute() {
-            appState.isMuted = !appState.isMuted;
-            const muteBtn = document.getElementById('mute-btn');
-            muteBtn.innerHTML = appState.isMuted ? '🔇 Sound Off' : '🔊 Sound On';
-            showSuccessMessage(appState.isMuted ? '🔇 Sound muted' : '🔊 Sound enabled');
-        }
-
-        // ===== AI PERSONALITY MANAGEMENT =====
-        function showPersonalityPicker() {
-            showModal('personality-modal');
-            
-            // Update active personality
-            document.querySelectorAll('.personality-option').forEach(option => {
-                option.classList.remove('active');
-                if (option.getAttribute('data-personality') === appState.currentPersonality) {
-                    option.classList.add('active');
-                }
-            });
-        }
-
-        function selectPersonality(personalityId) {
-            // Update active selection
-            document.querySelectorAll('.personality-option').forEach(option => {
-                option.classList.remove('active');
-                if (option.getAttribute('data-personality') === personalityId) {
-                    option.classList.add('active');
-                }
-            });
-        }
-
-        function applyPersonality() {
-            const selectedOption = document.querySelector('.personality-option.active');
-            if (!selectedOption) return;
-            
-            const personalityId = selectedOption.getAttribute('data-personality');
-            const personality = aiPersonalities[personalityId];
-            
-            appState.currentPersonality = personalityId;
-            
-            // Update AI display
-            document.getElementById('ai-avatar').textContent = personality.emoji;
-            document.getElementById('ai-name').textContent = `${personality.name} - REFIT AI`;
-            document.getElementById('current-ai-display').textContent = `${personality.name} - ${personality.trait}`;
-            
-            // Add personality change message
-            setTimeout(() => {
-                addMessage('ai', `Hi there! I'm ${personality.name}! ${personality.responses.greeting}`);
-            }, 300);
-            
-            closeModal('personality-modal');
-            showSuccessMessage(`✨ AI personality changed to ${personality.name}!`);
+                successMsg.classList.remove('show');
+            }, 3000);
         }
 
         // ===== PROFILE MANAGEMENT =====
-        function showProfile() {
-            showModal('profile-modal');
-            
-            // Populate form with current data
+        function editProfile() {
+            // Load current profile data
             document.getElementById('profile-first-name').value = appState.userProfile.firstName;
             document.getElementById('profile-last-name').value = appState.userProfile.lastName;
             document.getElementById('profile-title').value = appState.userProfile.title;
             document.getElementById('profile-email').value = appState.userProfile.email;
             document.getElementById('profile-phone').value = appState.userProfile.phone;
             document.getElementById('profile-address').value = appState.userProfile.address;
+            
+            openModal('profile-modal');
         }
 
-        function editProfile() {
-            showProfile();
+        function showProfile() {
+            editProfile();
         }
 
         function saveProfile() {
-            // Get form data
-            appState.userProfile = {
-                firstName: document.getElementById('profile-first-name').value,
-                lastName: document.getElementById('profile-last-name').value,
-                title: document.getElementById('profile-title').value,
-                email: document.getElementById('profile-email').value,
-                phone: document.getElementById('profile-phone').value,
-                address: document.getElementById('profile-address').value
-            };
+            // Update profile data
+            appState.userProfile.firstName = document.getElementById('profile-first-name').value;
+            appState.userProfile.lastName = document.getElementById('profile-last-name').value;
+            appState.userProfile.title = document.getElementById('profile-title').value;
+            appState.userProfile.email = document.getElementById('profile-email').value;
+            appState.userProfile.phone = document.getElementById('profile-phone').value;
+            appState.userProfile.address = document.getElementById('profile-address').value;
             
-            updateDisplay();
+            // Update display
+            updateUserDisplay();
             closeModal('profile-modal');
             showSuccessMessage('👤 Profile updated successfully!');
         }
 
+        function updateUserDisplay() {
+            const fullName = `${appState.userProfile.firstName} ${appState.userProfile.lastName}`;
+            const initials = `${appState.userProfile.firstName.charAt(0)}${appState.userProfile.lastName.charAt(0)}`;
+            
+            document.getElementById('user-display-name').textContent = fullName;
+            document.getElementById('user-display-title').textContent = appState.userProfile.title;
+            document.getElementById('user-avatar').textContent = initials;
+        }
+
         // ===== COMPANY MANAGEMENT =====
         function editCompany() {
-            showModal('company-modal');
-            
-            // Populate form with current data
+            // Load current company data
             document.getElementById('company-name-input').value = appState.companyInfo.name;
             document.getElementById('company-tagline').value = appState.companyInfo.tagline;
             document.getElementById('company-registration').value = appState.companyInfo.registration;
@@ -3172,35 +2951,40 @@
             document.getElementById('company-industry').value = appState.companyInfo.industry;
             document.getElementById('company-size').value = appState.companyInfo.size;
             document.getElementById('company-description').value = appState.companyInfo.description;
+            
+            openModal('company-modal');
         }
 
         function saveCompany() {
-            // Get form data
-            appState.companyInfo = {
-                ...appState.companyInfo,
-                name: document.getElementById('company-name-input').value,
-                tagline: document.getElementById('company-tagline').value,
-                registration: document.getElementById('company-registration').value,
-                taxId: document.getElementById('company-tax-id').value,
-                email: document.getElementById('company-email').value,
-                phone: document.getElementById('company-phone').value,
-                website: document.getElementById('company-website').value,
-                address: document.getElementById('company-address').value,
-                industry: document.getElementById('company-industry').value,
-                size: document.getElementById('company-size').value,
-                description: document.getElementById('company-description').value
-            };
+            // Update company data
+            appState.companyInfo.name = document.getElementById('company-name-input').value;
+            appState.companyInfo.tagline = document.getElementById('company-tagline').value;
+            appState.companyInfo.registration = document.getElementById('company-registration').value;
+            appState.companyInfo.taxId = document.getElementById('company-tax-id').value;
+            appState.companyInfo.email = document.getElementById('company-email').value;
+            appState.companyInfo.phone = document.getElementById('company-phone').value;
+            appState.companyInfo.website = document.getElementById('company-website').value;
+            appState.companyInfo.address = document.getElementById('company-address').value;
+            appState.companyInfo.industry = document.getElementById('company-industry').value;
+            appState.companyInfo.size = document.getElementById('company-size').value;
+            appState.companyInfo.description = document.getElementById('company-description').value;
             
-            updateDisplay();
+            // Update display
+            updateCompanyDisplay();
             closeModal('company-modal');
-            showSuccessMessage('🏢 Company information updated!');
+            showSuccessMessage('🏢 Company details updated successfully!');
+        }
+
+        function updateCompanyDisplay() {
+            document.getElementById('company-display-name').textContent = appState.companyInfo.name;
+            document.getElementById('company-display-tagline').textContent = appState.companyInfo.tagline;
+            document.getElementById('company-name').textContent = appState.companyInfo.name;
         }
 
         function openCompanyManager() {
-            showModal('company-manager-modal');
-            
-            // Update company logo in modal
+            // Update company manager logo
             document.getElementById('company-manager-logo').textContent = appState.companyInfo.logo;
+            openModal('company-manager-modal');
         }
 
         function uploadLogo() {
@@ -3209,44 +2993,31 @@
 
         function resetLogoToEmoji() {
             appState.companyInfo.logo = themes[appState.currentTheme].icon;
-            document.getElementById('company-manager-logo').textContent = appState.companyInfo.logo;
             updateDisplay();
             showSuccessMessage('🔄 Logo reset to theme emoji!');
         }
 
         function generateBusinessCard() {
-            showSuccessMessage('💳 Business card generator coming soon!');
+            showSuccessMessage('💳 Business card generation coming soon!');
         }
 
         function exportCompanyData() {
-            const companyData = {
-                company: appState.companyInfo,
-                customers: appState.customers,
-                quotes: appState.quotes,
-                stats: appState.stats
-            };
-            
-            const dataStr = JSON.stringify(companyData, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
+            const companyData = JSON.stringify(appState.companyInfo, null, 2);
+            const blob = new Blob([companyData], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
-            
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `${appState.companyInfo.name.replace(/\s+/g, '_')}_data.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'company-data.json';
+            a.click();
             URL.revokeObjectURL(url);
-            
             showSuccessMessage('📊 Company data exported successfully!');
         }
 
         // ===== CUSTOMER MANAGEMENT =====
         function addCustomer() {
-            showModal('customer-modal');
-            
             // Clear form
             document.getElementById('customer-form').reset();
+            openModal('customer-modal');
         }
 
         function saveCustomer() {
@@ -3267,32 +3038,36 @@
             appState.stats.totalCustomers = appState.customers.length;
             
             updateDisplay();
-            loadCustomers();
             closeModal('customer-modal');
             showSuccessMessage('👥 Customer added successfully!');
+            
+            if (appState.currentView === 'customers') {
+                loadCustomersList();
+            }
         }
 
-        function loadCustomers() {
+        function loadCustomersList() {
             const customersList = document.getElementById('customers-list');
-            customersList.innerHTML = '';
             
             if (appState.customers.length === 0) {
                 customersList.innerHTML = `
-                    <div class="data-item" style="text-align: center; padding: 40px;">
-                        <h3 style="color: var(--text-muted); margin-bottom: 8px;">No customers yet</h3>
-                        <p style="color: var(--text-muted);">Add your first customer to get started!</p>
+                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        <div style="font-size: 48px; margin-bottom: 16px;">👥</div>
+                        <h3>No customers yet</h3>
+                        <p>Add your first customer to get started!</p>
+                        <button class="btn btn-primary" onclick="addCustomer()" style="margin-top: 16px;">
+                            ➕ Add First Customer
+                        </button>
                     </div>
                 `;
                 return;
             }
             
-            appState.customers.forEach(customer => {
-                const customerItem = document.createElement('div');
-                customerItem.className = 'data-item';
-                customerItem.innerHTML = `
+            customersList.innerHTML = appState.customers.map(customer => `
+                <div class="data-item" onclick="editCustomer(${customer.id})">
                     <div class="data-item-header">
                         <div class="data-item-title">${customer.company}</div>
-                        <div style="font-size: 14px; color: var(--text-muted);">${customer.type}</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">${customer.type}</div>
                     </div>
                     <div class="data-item-details">
                         Contact: ${customer.contact}<br>
@@ -3301,21 +3076,23 @@
                     </div>
                     <div class="data-item-meta">
                         <div class="data-item-date">Added ${customer.createdAt.toLocaleDateString()}</div>
-                        <div class="data-item-status status-${customer.industry}">${customer.industry}</div>
+                        <div style="color: var(--accent-primary); font-weight: 600;">${customer.industry}</div>
                     </div>
-                `;
-                customersList.appendChild(customerItem);
-            });
+                </div>
+            `).join('');
+        }
+
+        function editCustomer(customerId) {
+            showSuccessMessage('✏️ Customer editing coming soon!');
         }
 
         // ===== QUOTE MANAGEMENT =====
         function createQuote() {
-            showModal('quote-modal');
-            
-            // Generate quote number
-            const quoteNumber = `QT-${new Date().getFullYear()}-${String(appState.quotes.length + 1).padStart(3, '0')}`;
-            document.getElementById('quote-number').value = quoteNumber;
+            // Clear form and set defaults
+            document.getElementById('quote-form').reset();
+            document.getElementById('quote-number').value = `QT-${new Date().getFullYear()}-${String(appState.quotes.length + 1).padStart(3, '0')}`;
             document.getElementById('quote-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('quote-tax-rate').value = '6';
             
             // Set valid until date (30 days from now)
             const validUntil = new Date();
@@ -3324,72 +3101,65 @@
             
             // Populate customer dropdown
             const customerSelect = document.getElementById('quote-customer');
-            customerSelect.innerHTML = '<option value="">Select Customer</option>';
-            appState.customers.forEach(customer => {
-                const option = document.createElement('option');
-                option.value = customer.id;
-                option.textContent = `${customer.company} - ${customer.contact}`;
-                customerSelect.appendChild(option);
-            });
+            customerSelect.innerHTML = '<option value="">Select Customer</option>' +
+                appState.customers.map(customer => 
+                    `<option value="${customer.id}">${customer.company} - ${customer.contact}</option>`
+                ).join('');
             
-            // Clear items container
+            // Clear quote items container
             document.getElementById('quote-items-container').innerHTML = '';
-            addQuoteItem(); // Add first item
             
-            // Clear totals
-            updateQuoteTotals();
+            // Add first item
+            addQuoteItem();
+            
+            openModal('quote-modal');
         }
 
         function addQuoteItem() {
             const container = document.getElementById('quote-items-container');
             const itemIndex = container.children.length;
             
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'quote-item';
-            itemDiv.style.cssText = 'background: var(--bg-secondary); padding: 16px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border-color);';
-            itemDiv.innerHTML = `
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Description</label>
-                        <input type="text" class="form-input quote-item-description" placeholder="Service or product description" onchange="updateQuoteTotals()">
+            const itemHtml = `
+                <div class="quote-item" style="background: var(--bg-secondary); padding: 16px; border-radius: 12px; margin-bottom: 12px;">
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom: 12px;">
+                            <label class="form-label">Description</label>
+                            <input type="text" class="form-input" id="item-desc-${itemIndex}" placeholder="Service or product description" onchange="calculateQuoteTotal()">
+                        </div>
                     </div>
-                    <div class="form-group" style="grid-template-columns: 1fr 1fr; display: grid; gap: 12px;">
-                        <div>
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom: 12px;">
                             <label class="form-label">Quantity</label>
-                            <input type="number" class="form-input quote-item-quantity" value="1" min="1" onchange="updateQuoteTotals()">
+                            <input type="number" class="form-input" id="item-qty-${itemIndex}" placeholder="1" min="1" value="1" onchange="calculateQuoteTotal()">
                         </div>
-                        <div>
+                        <div class="form-group" style="margin-bottom: 12px;">
                             <label class="form-label">Price (RM)</label>
-                            <input type="number" class="form-input quote-item-price" placeholder="0.00" step="0.01" min="0" onchange="updateQuoteTotals()">
+                            <input type="number" class="form-input" id="item-price-${itemIndex}" placeholder="0.00" min="0" step="0.01" onchange="calculateQuoteTotal()">
                         </div>
                     </div>
-                </div>
-                <div style="text-align: right; margin-top: 12px;">
-                    <button type="button" class="btn btn-danger" onclick="removeQuoteItem(this)" style="padding: 8px 12px; min-height: auto; font-size: 12px;">Remove</button>
+                    <button type="button" onclick="removeQuoteItem(this)" style="background: var(--error); color: white; border: none; border-radius: 8px; padding: 8px 12px; font-size: 12px; cursor: pointer;">
+                        🗑️ Remove Item
+                    </button>
                 </div>
             `;
             
-            container.appendChild(itemDiv);
+            container.insertAdjacentHTML('beforeend', itemHtml);
+            calculateQuoteTotal();
         }
 
         function removeQuoteItem(button) {
-            const container = document.getElementById('quote-items-container');
-            if (container.children.length > 1) {
-                button.closest('.quote-item').remove();
-                updateQuoteTotals();
-            } else {
-                showSuccessMessage('⚠️ At least one item is required');
-            }
+            button.closest('.quote-item').remove();
+            calculateQuoteTotal();
         }
 
-        function updateQuoteTotals() {
+        function calculateQuoteTotal() {
             const items = document.querySelectorAll('.quote-item');
             let subtotal = 0;
             
-            items.forEach(item => {
-                const quantity = parseFloat(item.querySelector('.quote-item-quantity').value) || 0;
-                const price = parseFloat(item.querySelector('.quote-item-price').value) || 0;
-                subtotal += quantity * price;
+            items.forEach((item, index) => {
+                const qty = parseFloat(document.getElementById(`item-qty-${index}`).value) || 0;
+                const price = parseFloat(document.getElementById(`item-price-${index}`).value) || 0;
+                subtotal += qty * price;
             });
             
             const taxRate = parseFloat(document.getElementById('quote-tax-rate').value) || 0;
@@ -3403,10 +3173,12 @@
 
         function saveQuote() {
             const items = [];
-            document.querySelectorAll('.quote-item').forEach(item => {
-                const description = item.querySelector('.quote-item-description').value;
-                const quantity = parseFloat(item.querySelector('.quote-item-quantity').value) || 0;
-                const price = parseFloat(item.querySelector('.quote-item-price').value) || 0;
+            const itemElements = document.querySelectorAll('.quote-item');
+            
+            itemElements.forEach((item, index) => {
+                const description = document.getElementById(`item-desc-${index}`).value;
+                const quantity = parseFloat(document.getElementById(`item-qty-${index}`).value) || 0;
+                const price = parseFloat(document.getElementById(`item-price-${index}`).value) || 0;
                 
                 if (description && quantity > 0 && price > 0) {
                     items.push({ description, quantity, price });
@@ -3414,7 +3186,7 @@
             });
             
             if (items.length === 0) {
-                showSuccessMessage('⚠️ Please add at least one valid item');
+                showSuccessMessage('❌ Please add at least one quote item!');
                 return;
             }
             
@@ -3441,12 +3213,16 @@
             
             appState.quotes.push(newQuote);
             appState.stats.totalQuotes = appState.quotes.length;
+            appState.stats.monthlyRevenue += total;
             appState.stats.totalRevenue += total;
             
             updateDisplay();
-            loadQuotes();
             closeModal('quote-modal');
             showSuccessMessage('📋 Quote saved successfully!');
+            
+            if (appState.currentView === 'quotes') {
+                loadQuotesList();
+            }
         }
 
         function saveAndSendQuote() {
@@ -3454,155 +3230,537 @@
             showSuccessMessage('📤 Quote saved and sent to customer!');
         }
 
-        function loadQuotes() {
+        function loadQuotesList() {
             const quotesList = document.getElementById('quotes-list');
-            quotesList.innerHTML = '';
             
             if (appState.quotes.length === 0) {
                 quotesList.innerHTML = `
-                    <div class="data-item" style="text-align: center; padding: 40px;">
-                        <h3 style="color: var(--text-muted); margin-bottom: 8px;">No quotes yet</h3>
-                        <p style="color: var(--text-muted);">Create your first quote to get started!</p>
+                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📋</div>
+                        <h3>No quotes yet</h3>
+                        <p>Create your first quote to get started!</p>
+                        <button class="btn btn-primary" onclick="createQuote()" style="margin-top: 16px;">
+                            ➕ Create First Quote
+                        </button>
                     </div>
                 `;
                 return;
             }
             
-            appState.quotes.forEach(quote => {
+            quotesList.innerHTML = appState.quotes.map(quote => {
                 const customer = appState.customers.find(c => c.id === quote.customerId);
                 const customerName = customer ? customer.company : 'Unknown Customer';
                 
-                const quoteItem = document.createElement('div');
-                quoteItem.className = 'data-item';
-                quoteItem.innerHTML = `
-                    <div class="data-item-header">
-                        <div class="data-item-title">${quote.number}</div>
-                        <div class="data-item-amount">RM ${quote.total.toLocaleString()}</div>
-                    </div>
-                    <div class="data-item-details">
-                        Customer: ${customerName}<br>
-                        Description: ${quote.description}<br>
-                        Items: ${quote.items.length}
-                    </div>
-                    <div class="data-item-meta">
-                        <div class="data-item-date">Created ${quote.createdAt.toLocaleDateString()}</div>
-                        <div class="data-item-status status-${quote.status}">${quote.status}</div>
+                return `
+                    <div class="data-item" onclick="editQuote(${quote.id})">
+                        <div class="data-item-header">
+                            <div class="data-item-title">${quote.number}</div>
+                            <div class="data-item-amount">RM ${quote.total.toFixed(2)}</div>
+                        </div>
+                        <div class="data-item-details">
+                            Customer: ${customerName}<br>
+                            ${quote.description}
+                        </div>
+                        <div class="data-item-meta">
+                            <div class="data-item-date">Created ${quote.createdAt.toLocaleDateString()}</div>
+                            <div class="data-item-status status-${quote.status}">${quote.status.toUpperCase()}</div>
+                        </div>
                     </div>
                 `;
-                quotesList.appendChild(quoteItem);
+            }).join('');
+        }
+
+        function editQuote(quoteId) {
+            showSuccessMessage('✏️ Quote editing coming soon!');
+        }
+
+        // ===== AI VOICE ASSISTANT WITH REAL SPEECH =====
+        let speechRecognition = null;
+        let speechSynthesis = window.speechSynthesis;
+        let voices = [];
+        let currentUtterance = null;
+
+        // Voice settings for each personality
+        const personalityVoices = {
+            sofia: { rate: 0.9, pitch: 1.1, lang: 'en-US', voiceIndex: 0 },
+            emma: { rate: 1.2, pitch: 1.3, lang: 'en-US', voiceIndex: 1 },
+            maya: { rate: 0.8, pitch: 0.9, lang: 'en-GB', voiceIndex: 2 },
+            zoe: { rate: 1.0, pitch: 1.2, lang: 'en-AU', voiceIndex: 3 },
+            aria: { rate: 0.7, pitch: 0.8, lang: 'en-US', voiceIndex: 4 },
+            nova: { rate: 1.1, pitch: 1.0, lang: 'en-US', voiceIndex: 5 }
+        };
+
+        function initializeVoiceAssistant() {
+            // Initialize Speech Recognition
+            if ('webkitSpeechRecognition' in window) {
+                speechRecognition = new webkitSpeechRecognition();
+            } else if ('SpeechRecognition' in window) {
+                speechRecognition = new SpeechRecognition();
+            }
+
+            if (speechRecognition) {
+                speechRecognition.continuous = false;
+                speechRecognition.interimResults = false;
+                speechRecognition.lang = 'en-US';
+                speechRecognition.maxAlternatives = 1;
+
+                speechRecognition.onstart = function() {
+                    console.log('🎙️ Voice recognition started');
+                    appState.isListening = true;
+                    updateVoiceUI(true);
+                };
+
+                speechRecognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    console.log('🗣️ User said:', transcript);
+                    addUserMessage(transcript);
+                    processAIResponse(transcript);
+                };
+
+                speechRecognition.onerror = function(event) {
+                    console.error('❌ Speech recognition error:', event.error);
+                    stopListening();
+                    
+                    let errorMessage = 'Voice recognition error';
+                    switch(event.error) {
+                        case 'no-speech':
+                            errorMessage = 'No speech detected. Please try again.';
+                            break;
+                        case 'audio-capture':
+                            errorMessage = 'Microphone not available. Please check permissions.';
+                            break;
+                        case 'not-allowed':
+                            errorMessage = 'Microphone access denied. Please allow microphone access.';
+                            break;
+                        case 'network':
+                            errorMessage = 'Network error. Please check your connection.';
+                            break;
+                        default:
+                            errorMessage = `Speech recognition error: ${event.error}`;
+                    }
+                    
+                    addAIMessage(`Sorry! ${errorMessage} 😅`);
+                    showSuccessMessage(`❌ ${errorMessage}`);
+                };
+
+                speechRecognition.onend = function() {
+                    console.log('🎙️ Voice recognition ended');
+                    stopListening();
+                };
+            }
+
+            // Load available voices
+            loadVoices();
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = loadVoices;
+            }
+        }
+
+        function loadVoices() {
+            voices = speechSynthesis.getVoices();
+            console.log('🔊 Available voices loaded:', voices.length);
+            
+            // Log available voices for debugging
+            voices.forEach((voice, index) => {
+                console.log(`Voice ${index}: ${voice.name} (${voice.lang})`);
             });
         }
 
-        // ===== DASHBOARD MANAGEMENT =====
-        function loadDashboard() {
-            loadRecentActivity();
-            updateStats();
+        function toggleVoiceAssistant() {
+            const assistant = document.getElementById('voice-assistant');
+            assistant.classList.toggle('hidden');
+            
+            if (!assistant.classList.contains('hidden')) {
+                // Initialize voice assistant if not already done
+                if (!speechRecognition) {
+                    initializeVoiceAssistant();
+                }
+                
+                // Auto scroll to bottom of conversation
+                const conversation = document.getElementById('voice-conversation');
+                conversation.scrollTop = conversation.scrollHeight;
+                
+                // Welcome message with voice
+                if (!appState.conversationStarted) {
+                    const personality = aiPersonalities[appState.currentPersonality];
+                    setTimeout(() => {
+                        speakText(personality.responses.greeting);
+                    }, 500);
+                    appState.conversationStarted = true;
+                }
+            } else {
+                // Stop any ongoing speech
+                stopSpeaking();
+                stopListening();
+            }
         }
 
-        function loadRecentActivity() {
-            const recentActivity = document.getElementById('recent-activity');
-            const allActivity = [
-                ...appState.quotes.map(quote => ({
-                    type: 'quote',
-                    title: `Quote ${quote.number}`,
-                    description: `Created for ${appState.customers.find(c => c.id === quote.customerId)?.company || 'Unknown Customer'}`,
-                    amount: `RM ${quote.total.toLocaleString()}`,
-                    date: quote.createdAt,
-                    status: quote.status
-                })),
-                ...appState.customers.map(customer => ({
-                    type: 'customer',
-                    title: customer.company,
-                    description: `Added new customer: ${customer.contact}`,
-                    amount: '',
-                    date: customer.createdAt,
-                    status: 'active'
-                }))
-            ];
-            
-            // Sort by date (most recent first)
-            allActivity.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            recentActivity.innerHTML = '';
-            
-            if (allActivity.length === 0) {
-                recentActivity.innerHTML = `
-                    <div class="data-item" style="text-align: center; padding: 40px;">
-                        <h3 style="color: var(--text-muted); margin-bottom: 8px;">No recent activity</h3>
-                        <p style="color: var(--text-muted);">Start by creating a quote or adding a customer!</p>
-                    </div>
-                `;
+        function startListening() {
+            if (!speechRecognition) {
+                addAIMessage("Sorry, voice recognition is not supported in your browser. Please try Chrome, Safari, or Edge! 😅");
+                showSuccessMessage('❌ Voice recognition not supported');
                 return;
             }
+
+            if (appState.isListening) {
+                stopListening();
+                return;
+            }
+
+            // Stop any current speech before listening
+            stopSpeaking();
+
+            try {
+                speechRecognition.start();
+                console.log('🎙️ Starting voice recognition...');
+            } catch (error) {
+                console.error('❌ Error starting speech recognition:', error);
+                addAIMessage("Oops! I couldn't start listening. Please try again! 😅");
+                showSuccessMessage('❌ Could not start voice recognition');
+            }
+        }
+
+        function stopListening() {
+            if (speechRecognition && appState.isListening) {
+                speechRecognition.stop();
+            }
+            appState.isListening = false;
+            updateVoiceUI(false);
+        }
+
+        function updateVoiceUI(isListening) {
+            const listenBtn = document.getElementById('voice-listen-btn');
+            const voiceIcon = document.getElementById('voice-icon');
+            const voiceBtnText = document.getElementById('voice-btn-text');
+            const statusText = document.getElementById('status-text');
+
+            if (isListening) {
+                listenBtn.classList.add('listening');
+                voiceBtnText.textContent = 'Listening...';
+                voiceIcon.textContent = '🎤';
+                statusText.textContent = 'Listening for your voice...';
+            } else {
+                listenBtn.classList.remove('listening');
+                voiceBtnText.textContent = 'Start Chatting';
+                voiceIcon.textContent = '🎙️';
+                statusText.textContent = 'Ready to chat with you!';
+            }
+        }
+
+        function speakText(text) {
+            if (appState.isMuted || !text) return;
+
+            // Stop any current speech
+            stopSpeaking();
+
+            // Clean text for speech (remove emojis and special characters)
+            const cleanText = text.replace(/[^\w\s.,!?-]/g, '').trim();
+            if (!cleanText) return;
+
+            try {
+                currentUtterance = new SpeechSynthesisUtterance(cleanText);
+                
+                // Get personality voice settings
+                const personality = appState.currentPersonality;
+                const voiceSettings = personalityVoices[personality];
+                
+                // Set voice properties
+                currentUtterance.rate = voiceSettings.rate;
+                currentUtterance.pitch = voiceSettings.pitch;
+                currentUtterance.volume = 1.0;
+                currentUtterance.lang = voiceSettings.lang;
+                
+                // Try to set a specific voice
+                if (voices.length > 0) {
+                    // Find a female voice for most personalities, male for Nova
+                    let preferredVoice = null;
+                    
+                    if (personality === 'nova') {
+                        // Find a male voice for Nova
+                        preferredVoice = voices.find(voice => 
+                            voice.lang.startsWith('en') && 
+                            (voice.name.toLowerCase().includes('male') || 
+                             voice.name.toLowerCase().includes('david') ||
+                             voice.name.toLowerCase().includes('alex'))
+                        );
+                    } else {
+                        // Find a female voice for other personalities
+                        preferredVoice = voices.find(voice => 
+                            voice.lang.startsWith(voiceSettings.lang.substring(0, 2)) && 
+                            (voice.name.toLowerCase().includes('female') || 
+                             voice.name.toLowerCase().includes('samantha') ||
+                             voice.name.toLowerCase().includes('susan') ||
+                             voice.name.toLowerCase().includes('karen') ||
+                             voice.name.toLowerCase().includes('moira'))
+                        );
+                    }
+                    
+                    // Fallback to any English voice
+                    if (!preferredVoice) {
+                        preferredVoice = voices.find(voice => voice.lang.startsWith('en'));
+                    }
+                    
+                    if (preferredVoice) {
+                        currentUtterance.voice = preferredVoice;
+                        console.log(`🔊 Using voice: ${preferredVoice.name} for ${personality}`);
+                    }
+                }
+
+                currentUtterance.onstart = function() {
+                    console.log('🔊 Speech started');
+                    document.getElementById('ai-status').textContent = 'Speaking... 🗣️';
+                };
+
+                currentUtterance.onend = function() {
+                    console.log('🔊 Speech ended');
+                    document.getElementById('ai-status').textContent = 'Ready to chat! 😊';
+                    currentUtterance = null;
+                };
+
+                currentUtterance.onerror = function(event) {
+                    console.error('❌ Speech synthesis error:', event.error);
+                    document.getElementById('ai-status').textContent = 'Ready to chat! 😊';
+                    currentUtterance = null;
+                };
+
+                // Speak the text
+                speechSynthesis.speak(currentUtterance);
+                console.log(`🔊 Speaking: "${cleanText}"`);
+
+            } catch (error) {
+                console.error('❌ Error with text-to-speech:', error);
+                document.getElementById('ai-status').textContent = 'Ready to chat! 😊';
+            }
+        }
+
+        function stopSpeaking() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+                console.log('🔇 Speech stopped');
+            }
+            if (currentUtterance) {
+                currentUtterance = null;
+            }
+            document.getElementById('ai-status').textContent = 'Ready to chat! 😊';
+        }
+
+        function addUserMessage(message) {
+            const conversation = document.getElementById('voice-conversation');
+            const messageHtml = `
+                <div class="user-message">
+                    <div class="message-avatar">👤</div>
+                    <div class="message-content">
+                        <p>${message}</p>
+                    </div>
+                </div>
+            `;
+            conversation.insertAdjacentHTML('beforeend', messageHtml);
+            conversation.scrollTop = conversation.scrollHeight;
+        }
+
+        function addAIMessage(message, shouldSpeak = true) {
+            const conversation = document.getElementById('voice-conversation');
+            const personality = aiPersonalities[appState.currentPersonality];
+            const messageHtml = `
+                <div class="ai-message">
+                    <div class="message-avatar">${personality.emoji}</div>
+                    <div class="message-content">
+                        <p>${message}</p>
+                    </div>
+                </div>
+            `;
+            conversation.insertAdjacentHTML('beforeend', messageHtml);
+            conversation.scrollTop = conversation.scrollHeight;
             
-            // Show only the 5 most recent activities
-            allActivity.slice(0, 5).forEach(activity => {
-                const activityItem = document.createElement('div');
-                activityItem.className = 'data-item';
-                activityItem.innerHTML = `
-                    <div class="data-item-header">
-                        <div class="data-item-title">${activity.title}</div>
-                        ${activity.amount ? `<div class="data-item-amount">${activity.amount}</div>` : ''}
-                    </div>
-                    <div class="data-item-details">${activity.description}</div>
-                    <div class="data-item-meta">
-                        <div class="data-item-date">${activity.date.toLocaleDateString()}</div>
-                        <div class="data-item-status status-${activity.status}">${activity.status}</div>
-                    </div>
-                `;
-                recentActivity.appendChild(activityItem);
+            // Speak the message if enabled
+            if (shouldSpeak && !appState.isMuted) {
+                setTimeout(() => {
+                    speakText(message);
+                }, 300);
+            }
+        }
+
+        function processAIResponse(userInput) {
+            const personality = aiPersonalities[appState.currentPersonality];
+            let response = '';
+            let followUpAction = null;
+            
+            const input = userInput.toLowerCase();
+            
+            // Enhanced natural language processing
+            if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
+                response = personality.responses.greeting;
+            } else if (input.includes('business') || input.includes('doing') || input.includes('revenue') || input.includes('numbers') || input.includes('money')) {
+                response = personality.responses.revenue;
+                followUpAction = () => {
+                    setTimeout(() => {
+                        addAIMessage(`Your total revenue is RM ${appState.stats.totalRevenue.toFixed(2)}, with ${appState.stats.totalQuotes} quotes created and ${appState.stats.totalCustomers} customers! You're doing amazing!`);
+                    }, 2000);
+                };
+            } else if (input.includes('quote') || input.includes('create') || input.includes('new quote')) {
+                response = personality.responses.quotes;
+                followUpAction = () => {
+                    setTimeout(() => {
+                        addAIMessage("Perfect! Let me open the quote creation form for you right now!");
+                        setTimeout(() => createQuote(), 1500);
+                    }, 1000);
+                };
+            } else if (input.includes('customer') || input.includes('add') || input.includes('new customer')) {
+                response = personality.responses.customers;
+                followUpAction = () => {
+                    setTimeout(() => {
+                        addAIMessage("Excellent! Let me open the customer form so you can add their details!");
+                        setTimeout(() => addCustomer(), 1500);
+                    }, 1000);
+                };
+            } else if (input.includes('theme') || input.includes('blue') || input.includes('color') || input.includes('change theme')) {
+                response = personality.responses.theme;
+                followUpAction = () => {
+                    setTimeout(() => {
+                        if (input.includes('blue') || input.includes('mint') || input.includes('teal')) {
+                            addAIMessage("I love the blue themes! Let me switch you to Mint Breeze - it's gorgeous!");
+                            setTimeout(() => switchToTheme('bluegreen'), 1500);
+                        } else if (input.includes('pink') || input.includes('rose')) {
+                            addAIMessage("Pink is so beautiful! Switching to Rose Blush theme!");
+                            setTimeout(() => switchToTheme('pink'), 1500);
+                        } else if (input.includes('orange') || input.includes('peach')) {
+                            addAIMessage("Orange is so warm and inviting! Switching to Peach Glow!");
+                            setTimeout(() => switchToTheme('orange'), 1500);
+                        } else {
+                            addAIMessage("Let me show you the theme picker so you can choose your favorite!");
+                            setTimeout(() => openThemePicker(), 1500);
+                        }
+                    }, 1000);
+                };
+            } else if (input.includes('thank') || input.includes('thanks')) {
+                response = "You're so welcome! I'm always happy to help you succeed! 😊";
+            } else if (input.includes('help') || input.includes('what can you do')) {
+                response = `I can help you with so many things! I can create quotes, add customers, show your revenue, change themes, and chat with you about your business. Just ask me naturally - like "create a new quote" or "how's my business doing?" What would you like to try?`;
+            } else {
+                response = personality.responses.help;
+            }
+            
+            // Add response with a slight delay for natural conversation flow
+            setTimeout(() => {
+                addAIMessage(response);
+                if (followUpAction) {
+                    followUpAction();
+                }
+            }, 500);
+        }
+
+        function showPersonalityPicker() {
+            // Update current personality selection
+            document.querySelectorAll('.personality-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-personality') === appState.currentPersonality) {
+                    option.classList.add('active');
+                }
+            });
+            
+            openModal('personality-modal');
+        }
+
+        function selectPersonality(personality) {
+            // Update selection
+            document.querySelectorAll('.personality-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-personality') === personality) {
+                    option.classList.add('active');
+                }
             });
         }
 
-        function updateStats() {
-            appState.stats.totalQuotes = appState.quotes.length;
-            appState.stats.totalCustomers = appState.customers.length;
-            appState.stats.totalRevenue = appState.quotes.reduce((sum, quote) => sum + quote.total, 0);
+        function applyPersonality() {
+            const selectedOption = document.querySelector('.personality-option.active');
+            const personality = selectedOption.getAttribute('data-personality');
             
-            // Calculate monthly revenue (current month)
-            const currentMonth = new Date().getMonth();
-            const currentYear = new Date().getFullYear();
-            appState.stats.monthlyRevenue = appState.quotes
-                .filter(quote => {
-                    const quoteDate = new Date(quote.createdAt);
-                    return quoteDate.getMonth() === currentMonth && quoteDate.getFullYear() === currentYear;
-                })
-                .reduce((sum, quote) => sum + quote.total, 0);
+            const oldPersonality = appState.currentPersonality;
+            appState.currentPersonality = personality;
+            updateAIDisplay();
+            closeModal('personality-modal');
+            
+            // Stop any current speech
+            stopSpeaking();
+            
+            // Add personality change message to conversation
+            const personalityData = aiPersonalities[personality];
+            const message = `Hi! I'm ${personalityData.name} now! ${personalityData.responses.greeting}`;
+            addAIMessage(message);
+            
+            showSuccessMessage(`✨ AI personality changed to ${personalityData.name}!`);
         }
 
-        // ===== REPORTS =====
-        function viewReports() {
-            showSuccessMessage('📊 Advanced reporting features coming soon!');
+        function updateAIDisplay() {
+            const personality = aiPersonalities[appState.currentPersonality];
+            document.getElementById('ai-name').textContent = `${personality.name} - REFIT AI`;
+            document.getElementById('ai-avatar').textContent = personality.emoji;
+            document.getElementById('current-ai-display').textContent = `${personality.name} - ${personality.trait}`;
+            
+            // Update message avatars in conversation
+            document.querySelectorAll('.ai-message .message-avatar').forEach(avatar => {
+                avatar.textContent = personality.emoji;
+            });
+        }
+
+        function clearConversation() {
+            stopSpeaking();
+            const conversation = document.getElementById('voice-conversation');
+            const personality = aiPersonalities[appState.currentPersonality];
+            conversation.innerHTML = `
+                <div class="ai-message">
+                    <div class="message-avatar">${personality.emoji}</div>
+                    <div class="message-content">
+                        <p>${personality.responses.greeting}</p>
+                    </div>
+                </div>
+            `;
+            showSuccessMessage('🗑️ Conversation cleared!');
+            appState.conversationStarted = false;
+        }
+
+        function toggleMute() {
+            appState.isMuted = !appState.isMuted;
+            const muteBtn = document.getElementById('mute-btn');
+            muteBtn.innerHTML = appState.isMuted ? '🔇 Sound Off' : '🔊 Sound On';
+            
+            if (appState.isMuted) {
+                stopSpeaking();
+            }
+            
+            showSuccessMessage(appState.isMuted ? '🔇 Voice responses muted' : '🔊 Voice responses enabled');
+        }
+
+        // Test voice functionality
+        function testVoice() {
+            const personality = aiPersonalities[appState.currentPersonality];
+            speakText("Hello! This is a voice test. Can you hear me speaking?");
+            addAIMessage("Testing voice output! Can you hear me? 🔊");
         }
 
         // ===== DATA MANAGEMENT =====
         function exportData() {
-            const data = {
-                version: '2.0.1',
-                exportDate: new Date().toISOString(),
+            const exportData = {
                 userProfile: appState.userProfile,
                 companyInfo: appState.companyInfo,
                 customers: appState.customers,
                 quotes: appState.quotes,
-                stats: appState.stats,
                 settings: {
                     theme: appState.currentTheme,
                     mode: appState.currentMode,
                     personality: appState.currentPersonality,
                     isMuted: appState.isMuted
-                }
+                },
+                exportDate: new Date().toISOString()
             };
             
-            const dataStr = JSON.stringify(data, null, 2);
+            const dataStr = JSON.stringify(exportData, null, 2);
             const blob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
-            
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `REFIT_backup_${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `refit-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
             URL.revokeObjectURL(url);
             
             showSuccessMessage('📤 Data exported successfully!');
@@ -3626,32 +3784,17 @@
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         try {
-                            const data = JSON.parse(e.target.result);
-                            if (data.version && data.userProfile && data.companyInfo) {
-                                // Import data
-                                appState.userProfile = data.userProfile;
-                                appState.companyInfo = data.companyInfo;
-                                appState.customers = data.customers || [];
-                                appState.quotes = data.quotes || [];
-                                appState.stats = data.stats || appState.stats;
-                                
-                                if (data.settings) {
-                                    switchToTheme(data.settings.theme || 'red');
-                                    if (data.settings.mode !== appState.currentMode) {
-                                        toggleMode();
-                                    }
-                                    appState.currentPersonality = data.settings.personality || 'sofia';
-                                    appState.isMuted = data.settings.isMuted || false;
-                                }
-                                
-                                updateDisplay();
-                                loadDashboard();
-                                showSuccessMessage('📥 Data imported successfully!');
-                            } else {
-                                showSuccessMessage('❌ Invalid backup file format');
-                            }
+                            const importedData = JSON.parse(e.target.result);
+                            // Merge imported data with current state
+                            if (importedData.userProfile) appState.userProfile = importedData.userProfile;
+                            if (importedData.companyInfo) appState.companyInfo = importedData.companyInfo;
+                            if (importedData.customers) appState.customers = importedData.customers;
+                            if (importedData.quotes) appState.quotes = importedData.quotes;
+                            
+                            updateDisplay();
+                            showSuccessMessage('📥 Data imported successfully!');
                         } catch (error) {
-                            showSuccessMessage('❌ Error reading backup file');
+                            showSuccessMessage('❌ Error importing data file!');
                         }
                     };
                     reader.readAsText(file);
@@ -3662,92 +3805,136 @@
 
         function showStorageInfo() {
             const dataSize = JSON.stringify(appState).length;
-            const maxSize = 5 * 1024 * 1024; // 5MB estimate
-            const usagePercent = Math.round((dataSize / maxSize) * 100);
-            
-            showSuccessMessage(`📊 Storage: ${usagePercent}% used (${(dataSize/1024).toFixed(1)}KB)`);
+            const sizeInKB = (dataSize / 1024).toFixed(2);
+            showSuccessMessage(`💾 Current data size: ${sizeInKB} KB`);
         }
 
-        // ===== DISPLAY UPDATES =====
-        function updateDisplay() {
-            // Update user profile display
-            const fullName = `${appState.userProfile.firstName} ${appState.userProfile.lastName}`;
-            document.getElementById('user-display-name').textContent = fullName;
-            document.getElementById('user-display-title').textContent = appState.userProfile.title;
-            document.getElementById('user-avatar').textContent = `${appState.userProfile.firstName[0]}${appState.userProfile.lastName[0]}`;
-            
-            // Update company display
-            document.getElementById('company-name').textContent = appState.companyInfo.name;
-            document.getElementById('company-subtitle').textContent = appState.companyInfo.tagline;
-            document.getElementById('company-display-name').textContent = appState.companyInfo.name;
-            document.getElementById('company-display-tagline').textContent = appState.companyInfo.tagline;
-            document.getElementById('company-logo').textContent = appState.companyInfo.logo;
-            
-            // Update stats
+        function viewReports() {
+            showSuccessMessage('📊 Advanced reports coming soon!');
+        }
+
+        // ===== DASHBOARD =====
+        function loadDashboard() {
+            updateStats();
+            loadRecentActivity();
+        }
+
+        function updateStats() {
             document.getElementById('total-quotes-count').textContent = appState.stats.totalQuotes;
             document.getElementById('total-customers-count').textContent = appState.stats.totalCustomers;
-            document.getElementById('monthly-revenue').textContent = `RM ${appState.stats.monthlyRevenue.toLocaleString()}`;
-            document.getElementById('total-revenue').textContent = `RM ${appState.stats.totalRevenue.toLocaleString()}`;
+            document.getElementById('monthly-revenue').textContent = `RM ${appState.stats.monthlyRevenue.toFixed(0)}`;
+            document.getElementById('total-revenue').textContent = `RM ${appState.stats.totalRevenue.toFixed(0)}`;
         }
 
-        // ===== SUCCESS MESSAGES =====
-        function showSuccessMessage(message) {
-            const successDiv = document.getElementById('success-message');
-            const successText = document.getElementById('success-text');
+        function loadRecentActivity() {
+            const recentActivity = document.getElementById('recent-activity');
             
-            successText.textContent = message;
-            successDiv.classList.add('show');
+            // Combine quotes and customers for recent activity
+            const activities = [
+                ...appState.quotes.map(quote => ({
+                    type: 'quote',
+                    title: quote.number,
+                    details: quote.description,
+                    amount: `RM ${quote.total.toFixed(2)}`,
+                    date: quote.createdAt,
+                    status: quote.status
+                })),
+                ...appState.customers.map(customer => ({
+                    type: 'customer',
+                    title: customer.company,
+                    details: `Contact: ${customer.contact}`,
+                    amount: customer.industry,
+                    date: customer.createdAt,
+                    status: 'active'
+                }))
+            ].sort((a, b) => b.date - a.date).slice(0, 5);
             
-            setTimeout(() => {
-                successDiv.classList.remove('show');
-            }, 3000);
-        }
-
-        // ===== TIME UPDATE =====
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', { 
-                hour: 'numeric', 
-                minute: '2-digit', 
-                hour12: false 
-            });
-            document.getElementById('status-time').textContent = timeString;
+            if (activities.length === 0) {
+                recentActivity.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+                        <div style="font-size: 32px; margin-bottom: 8px;">📋</div>
+                        <p>No recent activity</p>
+                        <p style="font-size: 14px;">Create your first quote or add a customer to see activity here!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            recentActivity.innerHTML = activities.map(activity => `
+                <div class="data-item">
+                    <div class="data-item-header">
+                        <div class="data-item-title">
+                            ${activity.type === 'quote' ? '📋' : '👥'} ${activity.title}
+                        </div>
+                        <div class="data-item-amount">${activity.amount}</div>
+                    </div>
+                    <div class="data-item-details">${activity.details}</div>
+                    <div class="data-item-meta">
+                        <div class="data-item-date">${activity.date.toLocaleDateString()}</div>
+                        <div class="data-item-status status-${activity.status}">${activity.status.toUpperCase()}</div>
+                    </div>
+                </div>
+            `).join('');
         }
 
         // ===== INITIALIZATION =====
-        function initializeApp() {
+        function updateDisplay() {
+            updateUserDisplay();
+            updateCompanyDisplay();
+            updateAIDisplay();
+            updateStats();
+            
+            // Update all logo displays
+            document.getElementById('app-logo').textContent = appState.companyInfo.logo;
+            document.getElementById('company-logo').textContent = appState.companyInfo.logo;
+            
+            // Update theme displays
+            document.getElementById('current-theme-icon').textContent = themes[appState.currentTheme].icon;
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false 
+            });
+            document.getElementById('status-time').textContent = time;
+        }
+
+        // ===== EVENT LISTENERS =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the app
+            updateDisplay();
+            loadDashboard();
+            
             // Update time every minute
             updateTime();
             setInterval(updateTime, 60000);
             
-            // Initialize voice recognition
-            initVoiceRecognition();
+            // Set up quote calculation listeners
+            document.addEventListener('input', function(e) {
+                if (e.target.id && e.target.id.includes('item-')) {
+                    calculateQuoteTotal();
+                }
+                if (e.target.id === 'quote-tax-rate') {
+                    calculateQuoteTotal();
+                }
+            });
             
-            // Load initial data
-            updateDisplay();
-            loadDashboard();
+            // Add click listener for modal backgrounds
+            document.querySelectorAll('.modal, .theme-modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
             
-            // Set default tax rate
-            const taxRateInput = document.getElementById('quote-tax-rate');
-            if (taxRateInput) {
-                taxRateInput.value = '6';
-            }
-            
-            // Show welcome message
-            setTimeout(() => {
-                showSuccessMessage('🎉 Welcome to REFIT Business System!');
-            }, 1000);
-        }
+            console.log('🚀 REFIT Business System loaded successfully!');
+            showSuccessMessage('🎉 Welcome to REFIT Business System!');
+        });
 
-        // Start the app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initializeApp);
-
-        // Handle voice synthesis voices loading
-        if (speechSynthesis) {
-            speechSynthesis.onvoiceschanged = function() {
-                // Voices are now loaded
-            };
-        }
     </script>
 </body>
 </html>
