@@ -2556,7 +2556,7 @@
     <!-- [All other modals would go here - User Profile Modal, Company Details Modal, etc.] -->
 
     <script>
-        // ===== ENHANCED MAIYA AI SYSTEM WITH IMPROVED RESPONSES =====
+        // ===== ENHANCED MAIYA AI SYSTEM WITH WORKING VOICE =====
         class EnhancedMaiyaAI {
             constructor() {
                 this.isListening = false;
@@ -2567,12 +2567,15 @@
                 this.voices = [];
                 this.chatHistory = [];
                 this.currentDocumentType = null;
-                this.voiceEnabled = this.checkVoiceSupport();
-                this.speechEnabled = this.checkSpeechSupport();
+                this.voiceEnabled = false;
+                this.speechEnabled = false;
+                this.microphonePermission = false;
+                this.audioPermission = false;
                 this.wakeWordDetection = false;
                 this.continuousListening = false;
                 this.conversationContext = [];
                 this.lastResponseType = null;
+                this.userHasInteracted = false;
                 
                 // Enhanced Settings
                 this.settings = {
@@ -2585,7 +2588,7 @@
                     sensitivity: 'medium',
                     autoSend: true,
                     autoSpeak: true,
-                    wakeWord: true,
+                    wakeWord: false, // Start disabled until permissions granted
                     communicationStyle: 'professional',
                     detailLevel: 'normal',
                     contextMemory: true,
@@ -2633,32 +2636,73 @@
                     'show help': () => this.executeCommand('help')
                 };
                 
-                this.initializeVoiceRecognition();
-                this.initializeSpeechSynthesis();
+                // Initialize after user interaction
+                this.setupUserInteractionHandler();
                 this.loadSettings();
                 this.setupVoiceInterface();
             }
 
-            checkVoiceSupport() {
-                const hasRecognition = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
-                console.log('Voice Recognition Support:', hasRecognition);
-                return hasRecognition;
+            async setupUserInteractionHandler() {
+                // Wait for first user interaction to initialize voice features
+                const handleFirstInteraction = async () => {
+                    if (!this.userHasInteracted) {
+                        this.userHasInteracted = true;
+                        console.log('🎤 User interaction detected, initializing voice features...');
+                        
+                        await this.initializeVoiceFeatures();
+                        
+                        // Remove listener after first interaction
+                        document.removeEventListener('click', handleFirstInteraction);
+                        document.removeEventListener('touchstart', handleFirstInteraction);
+                        document.removeEventListener('keydown', handleFirstInteraction);
+                    }
+                };
+
+                document.addEventListener('click', handleFirstInteraction);
+                document.addEventListener('touchstart', handleFirstInteraction);
+                document.addEventListener('keydown', handleFirstInteraction);
             }
 
-            checkSpeechSupport() {
-                const hasSynthesis = 'speechSynthesis' in window;
-                console.log('Speech Synthesis Support:', hasSynthesis);
-                return hasSynthesis;
+            async initializeVoiceFeatures() {
+                console.log('🎤 Initializing voice features...');
+                
+                // Initialize speech synthesis first (doesn't require permissions)
+                await this.initializeSpeechSynthesis();
+                
+                // Then initialize voice recognition (requires microphone permission)
+                await this.initializeVoiceRecognition();
+                
+                // Update UI with current status
+                this.updateVoiceStatus('Voice features initialized');
+                this.updateStatusDisplays();
             }
 
-            initializeVoiceRecognition() {
-                if (!this.voiceEnabled) {
-                    console.warn('Voice recognition not supported');
-                    this.updateVoiceStatus('Voice recognition not supported in this browser');
-                    return;
+            async initializeVoiceRecognition() {
+                if (!this.checkVoiceSupport()) {
+                    console.warn('🎤 Voice recognition not supported in this browser');
+                    this.updateVoiceStatus('Voice recognition not supported');
+                    return false;
                 }
 
                 try {
+                    console.log('🎤 Requesting microphone permission...');
+                    
+                    // Request microphone permission explicitly
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true
+                        } 
+                    });
+                    
+                    // Stop the stream immediately - we just needed permission
+                    stream.getTracks().forEach(track => track.stop());
+                    
+                    this.microphonePermission = true;
+                    console.log('✅ Microphone permission granted');
+                    
+                    // Now initialize speech recognition
                     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                     this.recognition = new SpeechRecognition();
                     
@@ -2668,8 +2712,9 @@
                     this.recognition.lang = this.settings.language;
                     this.recognition.maxAlternatives = this.settings.sensitivity === 'high' ? 5 : 3;
 
+                    // Event handlers
                     this.recognition.onstart = () => {
-                        console.log('Voice recognition started');
+                        console.log('🎤 Voice recognition started');
                         this.isListening = true;
                         this.updateVoiceUI();
                         this.updateVoiceStatus('🎤 Listening...');
@@ -2677,7 +2722,7 @@
                     };
 
                     this.recognition.onend = () => {
-                        console.log('Voice recognition ended');
+                        console.log('🎤 Voice recognition ended');
                         this.isListening = false;
                         this.updateVoiceUI();
                         this.updateVoiceStatus('Ready to help');
@@ -2696,15 +2741,15 @@
                     };
 
                     this.recognition.onerror = (event) => {
-                        console.error('Voice recognition error:', event.error);
+                        console.error('🎤 Voice recognition error:', event.error);
                         this.isListening = false;
                         this.updateVoiceUI();
                         this.hideVoiceIndicator();
                         
                         const errorMessages = {
-                            'not-allowed': 'Microphone access denied. Please allow microphone access.',
-                            'no-speech': 'No speech detected. Try speaking louder.',
-                            'audio-capture': 'Microphone not found. Check your microphone connection.',
+                            'not-allowed': 'Microphone access denied. Please allow microphone access and try again.',
+                            'no-speech': 'No speech detected. Please speak clearly.',
+                            'audio-capture': 'Microphone error. Check your microphone connection.',
                             'network': 'Network error. Check your internet connection.',
                             'not-supported': 'Voice recognition not supported in this browser.',
                             'language-not-supported': `Language ${this.settings.language} not supported.`
@@ -2712,9 +2757,12 @@
                         
                         const errorMessage = errorMessages[event.error] || `Voice error: ${event.error}`;
                         this.updateVoiceStatus(errorMessage);
+                        showSuccessMessage(`🎤 ${errorMessage}`);
                         
-                        if (event.error !== 'no-speech') {
-                            showSuccessMessage(`🎤 ${errorMessage}`);
+                        // Handle permission denial
+                        if (event.error === 'not-allowed') {
+                            this.microphonePermission = false;
+                            this.voiceEnabled = false;
                         }
                         
                         // Try to restart if it's a temporary error
@@ -2725,53 +2773,136 @@
                         }
                     };
 
-                    console.log('Voice recognition initialized successfully');
+                    this.voiceEnabled = true;
+                    console.log('✅ Voice recognition initialized successfully');
                     this.updateVoiceStatus('Voice recognition ready');
+                    
+                    // Enable wake word if setting is on
+                    if (this.settings.wakeWord) {
+                        setTimeout(() => {
+                            this.startContinuousListening();
+                        }, 2000);
+                    }
+                    
+                    return true;
+                    
                 } catch (error) {
-                    console.error('Failed to initialize voice recognition:', error);
-                    this.updateVoiceStatus('Voice recognition failed to initialize');
+                    console.error('🎤 Failed to initialize voice recognition:', error);
+                    this.microphonePermission = false;
+                    this.voiceEnabled = false;
+                    
+                    if (error.name === 'NotAllowedError') {
+                        this.updateVoiceStatus('Microphone access denied');
+                        showSuccessMessage('🎤 Please allow microphone access to use voice features');
+                    } else if (error.name === 'NotFoundError') {
+                        this.updateVoiceStatus('No microphone found');
+                        showSuccessMessage('🎤 No microphone detected. Please connect a microphone.');
+                    } else {
+                        this.updateVoiceStatus('Voice setup failed');
+                        showSuccessMessage('🎤 Voice recognition setup failed. Please try again.');
+                    }
+                    
+                    return false;
                 }
             }
 
-            initializeSpeechSynthesis() {
-                if (!this.speechEnabled) {
-                    console.warn('Speech synthesis not supported');
-                    return;
+            async initializeSpeechSynthesis() {
+                if (!this.checkSpeechSupport()) {
+                    console.warn('🔊 Speech synthesis not supported');
+                    return false;
                 }
 
                 this.synthesis = window.speechSynthesis;
                 
-                // Load available voices
-                this.loadVoices();
+                // Wait for voices to load
+                await this.loadVoices();
                 
-                // Voice loading might be async
-                if (speechSynthesis.onvoiceschanged !== undefined) {
-                    speechSynthesis.onvoiceschanged = () => {
-                        this.loadVoices();
-                    };
+                // Test audio permissions with a silent utterance
+                try {
+                    const testUtterance = new SpeechSynthesisUtterance('');
+                    testUtterance.volume = 0;
+                    this.synthesis.speak(testUtterance);
+                    
+                    this.speechEnabled = true;
+                    this.audioPermission = true;
+                    console.log('✅ Speech synthesis ready');
+                    
+                    return true;
+                } catch (error) {
+                    console.error('🔊 Speech synthesis test failed:', error);
+                    this.speechEnabled = false;
+                    this.audioPermission = false;
+                    return false;
                 }
-
-                console.log('Speech synthesis initialized successfully');
             }
 
-            loadVoices() {
-                if (!this.synthesis) return;
+            async loadVoices() {
+                return new Promise((resolve) => {
+                    // Voices might not be immediately available
+                    const loadVoicesInterval = setInterval(() => {
+                        this.voices = this.synthesis.getVoices();
+                        
+                        if (this.voices.length > 0) {
+                            clearInterval(loadVoicesInterval);
+                            console.log('🔊 Loaded', this.voices.length, 'voices');
+                            
+                            // Log available voices for debugging
+                            this.voices.forEach((voice, index) => {
+                                console.log(`Voice ${index}: ${voice.name} (${voice.lang})`);
+                            });
+                            
+                            this.selectBestVoice();
+                            resolve();
+                        }
+                    }, 100);
+                    
+                    // Timeout after 5 seconds
+                    setTimeout(() => {
+                        clearInterval(loadVoicesInterval);
+                        console.warn('🔊 Voice loading timeout');
+                        resolve();
+                    }, 5000);
+                    
+                    // Also listen for the voices changed event
+                    if (speechSynthesis.onvoiceschanged !== undefined) {
+                        speechSynthesis.onvoiceschanged = () => {
+                            clearInterval(loadVoicesInterval);
+                            this.voices = this.synthesis.getVoices();
+                            console.log('🔊 Voices changed event:', this.voices.length, 'voices');
+                            this.selectBestVoice();
+                            resolve();
+                        };
+                    }
+                });
+            }
 
-                this.voices = this.synthesis.getVoices();
-                console.log('Available voices:', this.voices.length);
-                
-                // Find preferred voice
-                this.selectBestVoice();
+            checkVoiceSupport() {
+                const hasRecognition = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
+                const hasMediaDevices = 'mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices;
+                console.log('🎤 Voice support check:', { hasRecognition, hasMediaDevices });
+                return hasRecognition && hasMediaDevices;
+            }
+
+            checkSpeechSupport() {
+                const hasSynthesis = 'speechSynthesis' in window;
+                console.log('🔊 Speech support check:', hasSynthesis);
+                return hasSynthesis;
             }
 
             selectBestVoice() {
-                if (this.voices.length === 0) return null;
+                if (this.voices.length === 0) {
+                    console.warn('🔊 No voices available');
+                    return null;
+                }
+
+                console.log('🔊 Selecting best voice for language:', this.settings.language);
 
                 // Try to find voice matching language and gender preference
-                let preferredVoice = this.voices.find(voice => 
-                    voice.lang.startsWith(this.settings.language.split('-')[0]) && 
-                    voice.name.toLowerCase().includes(this.settings.voiceGender)
-                );
+                let preferredVoice = this.voices.find(voice => {
+                    const matchesLang = voice.lang.startsWith(this.settings.language.split('-')[0]);
+                    const matchesGender = voice.name.toLowerCase().includes(this.settings.voiceGender);
+                    return matchesLang && matchesGender;
+                });
 
                 // Fallback to any voice matching language
                 if (!preferredVoice) {
@@ -2783,6 +2914,12 @@
                 // Final fallback to first available voice
                 if (!preferredVoice) {
                     preferredVoice = this.voices[0];
+                }
+
+                if (preferredVoice) {
+                    console.log('🔊 Selected voice:', preferredVoice.name, '(' + preferredVoice.lang + ')');
+                } else {
+                    console.warn('🔊 No suitable voice found');
                 }
 
                 return preferredVoice;
@@ -2930,50 +3067,90 @@
             }
 
             speak(text) {
-                if (!this.speechEnabled || !this.settings.autoSpeak) {
+                if (!this.speechEnabled || !this.settings.autoSpeak || !text) {
+                    console.log('🔊 Speech skipped:', { 
+                        enabled: this.speechEnabled, 
+                        autoSpeak: this.settings.autoSpeak, 
+                        hasText: !!text 
+                    });
                     return;
                 }
+
+                console.log('🔊 Speaking:', text);
 
                 // Stop any current speech
                 this.stopSpeaking();
 
-                const utterance = new SpeechSynthesisUtterance(text);
-                const voice = this.selectBestVoice();
-                
-                if (voice) {
-                    utterance.voice = voice;
+                try {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    const voice = this.selectBestVoice();
+                    
+                    if (voice) {
+                        utterance.voice = voice;
+                        console.log('🔊 Using voice:', voice.name);
+                    } else {
+                        console.warn('🔊 No voice selected, using default');
+                    }
+                    
+                    // Apply voice settings
+                    utterance.rate = this.settings.voiceRate;
+                    utterance.pitch = this.settings.voicePitch;
+                    utterance.volume = this.settings.voiceVolume;
+                    utterance.lang = this.settings.language;
+
+                    // Event handlers
+                    utterance.onstart = () => {
+                        console.log('🔊 Speech started');
+                        this.isSpeaking = true;
+                        this.updateVoiceUI();
+                        this.updateVoiceStatus(`🗣️ Speaking...`);
+                    };
+
+                    utterance.onend = () => {
+                        console.log('🔊 Speech ended');
+                        this.isSpeaking = false;
+                        this.updateVoiceUI();
+                        this.updateVoiceStatus('Ready to help');
+                    };
+
+                    utterance.onerror = (event) => {
+                        console.error('🔊 Speech synthesis error:', event.error);
+                        this.isSpeaking = false;
+                        this.updateVoiceUI();
+                        this.updateVoiceStatus('Speech error occurred');
+                        
+                        // Show user-friendly error message
+                        if (event.error === 'not-allowed') {
+                            showSuccessMessage('🔊 Audio playback blocked. Please enable audio and try again.');
+                        } else {
+                            showSuccessMessage('🔊 Speech error. Please check your audio settings.');
+                        }
+                    };
+
+                    utterance.onpause = () => {
+                        console.log('🔊 Speech paused');
+                    };
+
+                    utterance.onresume = () => {
+                        console.log('🔊 Speech resumed');
+                    };
+
+                    // Speak the utterance
+                    this.synthesis.speak(utterance);
+                    console.log('🔊 Speech synthesis command sent');
+                    
+                } catch (error) {
+                    console.error('🔊 Speech synthesis failed:', error);
+                    this.isSpeaking = false;
+                    this.updateVoiceUI();
+                    this.updateVoiceStatus('Speech failed');
+                    showSuccessMessage('🔊 Unable to speak. Please check your audio settings.');
                 }
-                
-                utterance.rate = this.settings.voiceRate;
-                utterance.pitch = this.settings.voicePitch;
-                utterance.volume = this.settings.voiceVolume;
-                utterance.lang = this.settings.language;
-
-                utterance.onstart = () => {
-                    this.isSpeaking = true;
-                    this.updateVoiceUI();
-                    this.updateVoiceStatus(`🗣️ Speaking...`);
-                };
-
-                utterance.onend = () => {
-                    this.isSpeaking = false;
-                    this.updateVoiceUI();
-                    this.updateVoiceStatus('Ready to help');
-                };
-
-                utterance.onerror = (event) => {
-                    console.error('Speech synthesis error:', event.error);
-                    this.isSpeaking = false;
-                    this.updateVoiceUI();
-                    this.updateVoiceStatus('Speech error occurred');
-                };
-
-                this.synthesis.speak(utterance);
-                console.log('Maiya speaking:', text);
             }
 
             stopSpeaking() {
                 if (this.synthesis && this.synthesis.speaking) {
+                    console.log('🔊 Stopping speech');
                     this.synthesis.cancel();
                     this.isSpeaking = false;
                     this.updateVoiceUI();
@@ -2981,16 +3158,228 @@
                 }
             }
 
+            async requestPermissions() {
+                console.log('🎤 Requesting voice permissions...');
+                
+                try {
+                    // Request microphone permission
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true
+                        } 
+                    });
+                    
+                    console.log('✅ Microphone permission granted');
+                    
+                    // Stop the stream - we just needed permission
+                    stream.getTracks().forEach(track => track.stop());
+                    
+                    this.microphonePermission = true;
+                    
+                    // Test speech synthesis
+                    if (this.speechEnabled) {
+                        console.log('🔊 Testing speech synthesis...');
+                        const testUtterance = new SpeechSynthesisUtterance('Voice test');
+                        testUtterance.volume = 0.1;
+                        testUtterance.rate = 2;
+                        
+                        testUtterance.onend = () => {
+                            console.log('✅ Speech synthesis test successful');
+                            this.audioPermission = true;
+                        };
+                        
+                        testUtterance.onerror = (event) => {
+                            console.error('🔊 Speech synthesis test failed:', event.error);
+                            this.audioPermission = false;
+                        };
+                        
+                        this.synthesis.speak(testUtterance);
+                    }
+                    
+                    // Initialize voice recognition
+                    await this.initializeVoiceRecognition();
+                    
+                    this.updateStatusDisplays();
+                    showSuccessMessage('✅ Voice permissions granted! Voice features are now available.');
+                    
+                    return true;
+                    
+                } catch (error) {
+                    console.error('🎤 Permission request failed:', error);
+                    
+                    if (error.name === 'NotAllowedError') {
+                        showSuccessMessage('🎤 Microphone access denied. Voice features will be limited.');
+                    } else if (error.name === 'NotFoundError') {
+                        showSuccessMessage('🎤 No microphone found. Please connect a microphone.');
+                    } else {
+                        showSuccessMessage('🎤 Voice setup failed. Please try again.');
+                    }
+                    
+                    this.microphonePermission = false;
+                    this.voiceEnabled = false;
+                    this.updateStatusDisplays();
+                    
+                    return false;
+                }
+            }
+
+            startVoiceInput() {
+                console.log('🎤 Starting voice input...');
+                
+                if (!this.voiceEnabled || !this.microphonePermission) {
+                    console.log('🎤 Voice not enabled or no permission, requesting...');
+                    this.requestPermissions();
+                    return;
+                }
+
+                if (!this.recognition) {
+                    console.log('🎤 No recognition object, initializing...');
+                    this.initializeVoiceRecognition();
+                    return;
+                }
+
+                if (this.isListening) {
+                    console.log('🎤 Already listening, stopping...');
+                    this.stopVoiceInput();
+                    return;
+                }
+
+                try {
+                    console.log('🎤 Starting recognition...');
+                    this.recognition.start();
+                } catch (error) {
+                    console.error('🎤 Error starting voice recognition:', error);
+                    
+                    if (error.name === 'InvalidStateError') {
+                        // Recognition is already running, stop and restart
+                        try {
+                            this.recognition.stop();
+                            setTimeout(() => {
+                                this.recognition.start();
+                            }, 100);
+                        } catch (restartError) {
+                            console.error('🎤 Failed to restart recognition:', restartError);
+                            showSuccessMessage('🎤 Voice input error. Please try again.');
+                        }
+                    } else {
+                        showSuccessMessage('🎤 Unable to start voice input. Please check your microphone.');
+                    }
+                }
+            }
+
+            stopVoiceInput() {
+                if (this.recognition && this.isListening) {
+                    console.log('🎤 Stopping voice input...');
+                    this.recognition.stop();
+                    this.continuousListening = false;
+                }
+            }
+
+            toggleVoiceInput() {
+                if (this.isListening) {
+                    this.stopVoiceInput();
+                } else {
+                    this.startVoiceInput();
+                }
+            }
+
+            startContinuousListening() {
+                if (!this.settings.wakeWord || !this.voiceEnabled || !this.microphonePermission) {
+                    console.log('🎤 Continuous listening not available');
+                    return;
+                }
+                
+                console.log('🎤 Starting continuous listening for wake words...');
+                this.continuousListening = true;
+                this.startVoiceInput();
+            }
+
+            stopContinuousListening() {
+                console.log('🎤 Stopping continuous listening...');
+                this.continuousListening = false;
+                this.stopVoiceInput();
+            }
+
+            updateStatusDisplays() {
+                const voiceSupported = this.checkVoiceSupport();
+                const speechSupported = this.checkSpeechSupport();
+                
+                const statusElements = {
+                    'voice-status': voiceSupported ? 
+                        (this.microphonePermission ? 
+                            `✅ Ready (${this.settings.language}, ${this.settings.sensitivity})` : 
+                            '🎤 Click to enable microphone access') :
+                        '❌ Not supported in this browser',
+                    'context-memory-status': this.settings.contextMemory ? 'Advanced (Remembers conversation)' : 'Basic (Session only)',
+                    'data-access-status': this.settings.dataAccess === 'full' ? 'Full Access (All business data)' : 'Limited Access',
+                    'auto-learning-status': this.settings.autoLearning ? 'Enabled (Learns from interactions)' : 'Disabled',
+                    'proactive-status': this.settings.proactiveSuggestions ? 'Active (Offers insights)' : 'Passive'
+                };
+                
+                Object.entries(statusElements).forEach(([id, text]) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.textContent = text;
+                    }
+                });
+
+                // Update voice button status
+                const voiceBtn = document.getElementById('voice-btn');
+                if (voiceBtn) {
+                    if (!voiceSupported) {
+                        voiceBtn.title = 'Voice not supported in this browser';
+                        voiceBtn.style.opacity = '0.5';
+                    } else if (!this.microphonePermission) {
+                        voiceBtn.title = 'Click to enable microphone access';
+                        voiceBtn.style.opacity = '0.7';
+                    } else {
+                        voiceBtn.title = this.isListening ? 'Stop Voice Input' : 'Start Voice Input';
+                        voiceBtn.style.opacity = '1';
+                    }
+                }
+            }
+
+            // Test voice functionality
+            async testVoice() {
+                console.log('🧪 Testing voice functionality...');
+                
+                try {
+                    // Test speech synthesis first
+                    if (this.speechEnabled) {
+                        console.log('🔊 Testing speech synthesis...');
+                        this.speak('Voice test successful. Microphone and speaker are working.');
+                    } else {
+                        console.log('🔊 Speech synthesis not available');
+                        showSuccessMessage('🔊 Speech synthesis not available in this browser');
+                    }
+                    
+                    // Test voice recognition
+                    if (this.voiceEnabled && this.microphonePermission) {
+                        console.log('🎤 Testing voice recognition...');
+                        showSuccessMessage('🎤 Say something to test voice recognition...');
+                        this.startVoiceInput();
+                    } else if (this.voiceEnabled && !this.microphonePermission) {
+                        console.log('🎤 Requesting microphone permission for test...');
+                        await this.requestPermissions();
+                    } else {
+                        console.log('🎤 Voice recognition not available');
+                        showSuccessMessage('🎤 Voice recognition not available in this browser');
+                    }
+                    
+                } catch (error) {
+                    console.error('🧪 Voice test failed:', error);
+                    showSuccessMessage('❌ Voice test failed. Please check your audio settings.');
+                }
+            }
+
             setupVoiceInterface() {
                 // Create voice status indicator
                 this.createVoiceIndicator();
                 
-                // Setup continuous listening if enabled
-                if (this.settings.wakeWord && this.settings.contextMemory) {
-                    setTimeout(() => {
-                        this.startContinuousListening();
-                    }, 2000);
-                }
+                // Initialize UI
+                this.updateStatusDisplays();
             }
 
             createVoiceIndicator() {
@@ -3034,18 +3423,6 @@
                 }
             }
 
-            startContinuousListening() {
-                if (!this.settings.wakeWord || this.isListening) return;
-                
-                this.continuousListening = true;
-                this.startVoiceInput();
-            }
-
-            stopContinuousListening() {
-                this.continuousListening = false;
-                this.stopVoiceInput();
-            }
-
             updateVoiceUI() {
                 const voiceBtn = document.getElementById('voice-btn');
                 const maiyaBtn = document.getElementById('maiya-toggle');
@@ -3054,10 +3431,10 @@
                 if (voiceBtn) {
                     if (this.isListening) {
                         voiceBtn.classList.add('listening');
-                        voiceBtn.title = 'Stop Voice Input';
+                        voiceBtn.innerHTML = '🔴'; // Red dot when listening
                     } else {
                         voiceBtn.classList.remove('listening');
-                        voiceBtn.title = 'Start Voice Input';
+                        voiceBtn.innerHTML = '🎤'; // Microphone when not listening
                     }
                 }
 
@@ -3083,45 +3460,6 @@
                     statusText.textContent = status;
                 }
                 console.log('Voice Status:', status);
-            }
-
-            startVoiceInput() {
-                if (!this.voiceEnabled) {
-                    showSuccessMessage('🎤 Voice recognition not supported in your browser');
-                    return;
-                }
-
-                if (!this.recognition) {
-                    this.initializeVoiceRecognition();
-                }
-
-                if (this.recognition && !this.isListening) {
-                    try {
-                        this.recognition.start();
-                        console.log('Starting voice input...');
-                    } catch (error) {
-                        console.error('Error starting voice recognition:', error);
-                        showSuccessMessage('🎤 Error starting voice input. Please try again.');
-                    }
-                } else if (this.isListening) {
-                    this.stopVoiceInput();
-                }
-            }
-
-            stopVoiceInput() {
-                if (this.recognition && this.isListening) {
-                    this.recognition.stop();
-                    this.continuousListening = false;
-                    console.log('Stopping voice input...');
-                }
-            }
-
-            toggleVoiceInput() {
-                if (this.isListening) {
-                    this.stopVoiceInput();
-                } else {
-                    this.startVoiceInput();
-                }
             }
 
             sendMessage(message) {
