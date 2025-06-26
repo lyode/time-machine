@@ -683,6 +683,45 @@
             border-radius: 3px;
         }
 
+        /* Compact Mode */
+        .compact-mode .app-container {
+            padding: 15px;
+        }
+
+        .compact-mode .chat-container {
+            margin-bottom: 15px;
+            padding: 15px;
+        }
+
+        .compact-mode .quick-actions {
+            margin-bottom: 15px;
+            gap: 8px;
+        }
+
+        .compact-mode .quick-btn {
+            padding: 8px 15px;
+            min-width: 100px;
+        }
+
+        .compact-mode .voice-controls {
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .compact-mode .voice-btn {
+            width: 50px;
+            height: 50px;
+        }
+
+        .compact-mode .setting-item {
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .compact-mode .settings-content {
+            padding: 20px;
+        }
+
         /* Voice Status */
         .voice-status {
             text-align: center;
@@ -889,12 +928,12 @@
                             <label class="setting-label">App Theme</label>
                             <div class="setting-description">Choose your preferred color scheme</div>
                             <div class="color-picker-wrapper">
-                                <div class="color-option selected" style="background: linear-gradient(45deg, #667eea, #764ba2)" onclick="setTheme('default')"></div>
-                                <div class="color-option" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24)" onclick="setTheme('sunset')"></div>
-                                <div class="color-option" style="background: linear-gradient(45deg, #4ecdc4, #00b894)" onclick="setTheme('ocean')"></div>
-                                <div class="color-option" style="background: linear-gradient(45deg, #a29bfe, #6c5ce7)" onclick="setTheme('purple')"></div>
-                                <div class="color-option" style="background: linear-gradient(45deg, #fd79a8, #e84393)" onclick="setTheme('pink')"></div>
-                                <div class="color-option" style="background: linear-gradient(45deg, #2d3436, #636e72)" onclick="setTheme('dark')"></div>
+                                <div class="color-option selected" style="background: linear-gradient(45deg, #667eea, #764ba2)" onclick="setTheme('default', this)"></div>
+                                <div class="color-option" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24)" onclick="setTheme('sunset', this)"></div>
+                                <div class="color-option" style="background: linear-gradient(45deg, #4ecdc4, #00b894)" onclick="setTheme('ocean', this)"></div>
+                                <div class="color-option" style="background: linear-gradient(45deg, #a29bfe, #6c5ce7)" onclick="setTheme('purple', this)"></div>
+                                <div class="color-option" style="background: linear-gradient(45deg, #fd79a8, #e84393)" onclick="setTheme('pink', this)"></div>
+                                <div class="color-option" style="background: linear-gradient(45deg, #2d3436, #636e72)" onclick="setTheme('dark', this)"></div>
                             </div>
                             <div class="theme-preview" id="themePreview">Current Theme Preview</div>
                         </div>
@@ -1228,15 +1267,74 @@
 
         // Settings Management
         function loadSettings() {
-            const saved = localStorage.getItem('aiAdvisorSettings');
-            if (saved) {
-                try {
+            try {
+                const saved = localStorage.getItem('aiAdvisorSettings');
+                if (saved) {
                     const savedSettings = JSON.parse(saved);
-                    appSettings = { ...appSettings, ...savedSettings };
-                } catch (e) {
-                    console.error('Error loading settings:', e);
+                    // Deep merge saved settings with defaults
+                    appSettings = mergeSettings(appSettings, savedSettings);
+                }
+            } catch (e) {
+                console.error('Error loading settings:', e);
+                // Reset to defaults if loading fails
+                resetSettingsToDefaults();
+            }
+        }
+
+        function mergeSettings(defaults, saved) {
+            const result = { ...defaults };
+            for (const key in saved) {
+                if (saved.hasOwnProperty(key)) {
+                    if (typeof saved[key] === 'object' && saved[key] !== null && !Array.isArray(saved[key])) {
+                        result[key] = { ...defaults[key], ...saved[key] };
+                    } else {
+                        result[key] = saved[key];
+                    }
                 }
             }
+            return result;
+        }
+
+        function resetSettingsToDefaults() {
+            appSettings = {
+                voice: {
+                    selectedVoice: 0,
+                    rate: 1.0,
+                    volume: 0.8,
+                    pitch: 1.0,
+                    autoSpeak: true,
+                    wakeWord: false,
+                    continuousListening: false,
+                    language: 'en-US'
+                },
+                appearance: {
+                    theme: 'default',
+                    animationSpeed: 1.0,
+                    floatingEffects: true,
+                    glassEffect: true,
+                    fontSize: 1.0,
+                    compactMode: false
+                },
+                ai: {
+                    responseStyle: 'balanced',
+                    personality: 'friendly',
+                    responseDelay: 1.5,
+                    typingIndicator: true,
+                    suggestions: true,
+                    contextMemory: false,
+                    proactiveHelp: false
+                },
+                privacy: {
+                    saveConversations: false,
+                    voiceRecording: true,
+                    analytics: false
+                },
+                advanced: {
+                    maxMessages: 50,
+                    reducedMotion: false,
+                    debugMode: false
+                }
+            };
         }
 
         function saveAllSettings() {
@@ -1259,18 +1357,45 @@
         }
 
         function applyTheme() {
-            const theme = themes[appSettings.appearance.theme];
-            if (theme) {
-                document.documentElement.style.setProperty('--primary-color', theme.primary);
-                document.documentElement.style.setProperty('--secondary-color', theme.secondary);
-                
-                // Update CSS gradients
-                const style = document.createElement('style');
-                style.textContent = `
-                    body { background: linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 100%) !important; }
-                    .logo, .send-btn, .save-settings { background: linear-gradient(45deg, ${theme.primary}, ${theme.secondary}) !important; }
-                `;
-                document.head.appendChild(style);
+            try {
+                const theme = themes[appSettings.appearance.theme];
+                if (theme) {
+                    // Remove existing theme style if any
+                    const existingStyle = document.getElementById('dynamic-theme-style');
+                    if (existingStyle) {
+                        existingStyle.remove();
+                    }
+                    
+                    // Create new theme style
+                    const style = document.createElement('style');
+                    style.id = 'dynamic-theme-style';
+                    style.textContent = `
+                        body { 
+                            background: linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 100%) !important; 
+                        }
+                        .logo, .send-btn, .save-settings { 
+                            background: linear-gradient(45deg, ${theme.primary}, ${theme.secondary}) !important; 
+                        }
+                        .voice-btn.mic {
+                            background: linear-gradient(45deg, ${theme.primary}, ${theme.secondary}) !important;
+                        }
+                        .voice-btn.speaker {
+                            background: linear-gradient(45deg, ${theme.secondary}, ${theme.primary}) !important;
+                        }
+                        .nav-tab.active::after {
+                            background: linear-gradient(45deg, ${theme.primary}, ${theme.secondary}) !important;
+                        }
+                        .custom-checkbox.checked {
+                            background: linear-gradient(45deg, ${theme.primary}, ${theme.secondary}) !important;
+                        }
+                        .slider::-webkit-slider-thumb {
+                            background: linear-gradient(45deg, ${theme.primary}, ${theme.secondary}) !important;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            } catch (error) {
+                console.error('Error applying theme:', error);
             }
         }
 
@@ -1323,114 +1448,206 @@
         }
 
         function switchTab(tabName) {
-            // Remove active class from all tabs and panels
-            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
-            
-            // Add active class to selected tab and panel
-            event.target.classList.add('active');
-            document.getElementById(tabName + '-tab').classList.add('active');
+            try {
+                // Remove active class from all tabs and panels
+                document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+                
+                // Add active class to selected tab
+                const clickedTab = event ? event.target : document.querySelector(`[onclick*="${tabName}"]`);
+                if (clickedTab) {
+                    clickedTab.classList.add('active');
+                }
+                
+                // Add active class to corresponding panel
+                const panel = document.getElementById(tabName + '-tab');
+                if (panel) {
+                    panel.classList.add('active');
+                }
+            } catch (error) {
+                console.error('Error switching tab:', error);
+            }
         }
 
         function updateSettingsUI() {
-            // Update all form controls with current settings
-            updateSliderValue('speechRate', 'rateValue', appSettings.voice.rate, 'x');
-            updateSliderValue('speechVolume', 'volumeValue', appSettings.voice.volume, '%', 100);
-            updateSliderValue('speechPitch', 'pitchValue', appSettings.voice.pitch);
-            updateSliderValue('animationSpeed', 'animationSpeedValue', appSettings.appearance.animationSpeed, '', 1, ['Slow', 'Normal', 'Fast']);
-            updateSliderValue('fontSize', 'fontSizeValue', appSettings.appearance.fontSize, '', 1, ['Small', 'Medium', 'Large']);
-            updateSliderValue('responseDelay', 'responseDelayValue', appSettings.ai.responseDelay, 's');
-            updateSliderValue('maxMessages', 'maxMessagesValue', appSettings.advanced.maxMessages);
+            try {
+                // Update all form controls with current settings
+                updateSliderValue('speechRate', 'rateValue', appSettings.voice.rate, 'x');
+                updateSliderValue('speechVolume', 'volumeValue', appSettings.voice.volume, '%', 100);
+                updateSliderValue('speechPitch', 'pitchValue', appSettings.voice.pitch);
+                updateSliderValue('animationSpeed', 'animationSpeedValue', appSettings.appearance.animationSpeed, '', 1, ['Slow', 'Normal', 'Fast']);
+                updateSliderValue('fontSize', 'fontSizeValue', appSettings.appearance.fontSize, '', 1, ['Small', 'Medium', 'Large']);
+                updateSliderValue('responseDelay', 'responseDelayValue', appSettings.ai.responseDelay, 's');
+                updateSliderValue('maxMessages', 'maxMessagesValue', appSettings.advanced.maxMessages);
 
-            // Update checkboxes
-            updateCheckbox('autoSpeakCheck', appSettings.voice.autoSpeak);
-            updateCheckbox('wakeWordCheck', appSettings.voice.wakeWord);
-            updateCheckbox('continuousListeningCheck', appSettings.voice.continuousListening);
-            updateCheckbox('floatingEffectsCheck', appSettings.appearance.floatingEffects);
-            updateCheckbox('glassEffectCheck', appSettings.appearance.glassEffect);
-            updateCheckbox('compactModeCheck', appSettings.appearance.compactMode);
-            updateCheckbox('typingIndicatorCheck', appSettings.ai.typingIndicator);
-            updateCheckbox('suggestionsCheck', appSettings.ai.suggestions);
-            updateCheckbox('contextMemoryCheck', appSettings.ai.contextMemory);
-            updateCheckbox('proactiveHelpCheck', appSettings.ai.proactiveHelp);
-            updateCheckbox('saveConversationsCheck', appSettings.privacy.saveConversations);
-            updateCheckbox('voiceRecordingCheck', appSettings.privacy.voiceRecording);
-            updateCheckbox('analyticsCheck', appSettings.privacy.analytics);
-            updateCheckbox('reducedMotionCheck', appSettings.advanced.reducedMotion);
-            updateCheckbox('debugModeCheck', appSettings.advanced.debugMode);
+                // Update checkboxes
+                updateCheckbox('autoSpeakCheck', appSettings.voice.autoSpeak);
+                updateCheckbox('wakeWordCheck', appSettings.voice.wakeWord);
+                updateCheckbox('continuousListeningCheck', appSettings.voice.continuousListening);
+                updateCheckbox('floatingEffectsCheck', appSettings.appearance.floatingEffects);
+                updateCheckbox('glassEffectCheck', appSettings.appearance.glassEffect);
+                updateCheckbox('compactModeCheck', appSettings.appearance.compactMode);
+                updateCheckbox('typingIndicatorCheck', appSettings.ai.typingIndicator);
+                updateCheckbox('suggestionsCheck', appSettings.ai.suggestions);
+                updateCheckbox('contextMemoryCheck', appSettings.ai.contextMemory);
+                updateCheckbox('proactiveHelpCheck', appSettings.ai.proactiveHelp);
+                updateCheckbox('saveConversationsCheck', appSettings.privacy.saveConversations);
+                updateCheckbox('voiceRecordingCheck', appSettings.privacy.voiceRecording);
+                updateCheckbox('analyticsCheck', appSettings.privacy.analytics);
+                updateCheckbox('reducedMotionCheck', appSettings.advanced.reducedMotion);
+                updateCheckbox('debugModeCheck', appSettings.advanced.debugMode);
 
-            // Update select boxes
-            updateSelect('voiceLanguage', appSettings.voice.language);
-            updateSelect('responseStyle', appSettings.ai.responseStyle);
-            updateSelect('aiPersonality', appSettings.ai.personality);
+                // Update select boxes
+                updateSelect('voiceLanguage', appSettings.voice.language);
+                updateSelect('responseStyle', appSettings.ai.responseStyle);
+                updateSelect('aiPersonality', appSettings.ai.personality);
+                
+                // Update theme selection
+                updateThemeSelection();
+            } catch (error) {
+                console.error('Error updating settings UI:', error);
+            }
         }
 
         function updateSliderValue(sliderId, valueId, value, suffix = '', multiplier = 1, textArray = null) {
-            const slider = document.getElementById(sliderId);
-            const valueSpan = document.getElementById(valueId);
-            if (slider && valueSpan) {
-                slider.value = value;
-                if (textArray) {
-                    const index = Math.round((value - 0.5) / 0.5);
-                    valueSpan.textContent = textArray[index] || textArray[1];
-                } else {
-                    valueSpan.textContent = (value * multiplier).toFixed(multiplier === 100 ? 0 : 1) + suffix;
+            try {
+                const slider = document.getElementById(sliderId);
+                const valueSpan = document.getElementById(valueId);
+                if (slider && valueSpan) {
+                    slider.value = value;
+                    if (textArray) {
+                        const index = Math.round((value - 0.5) / 0.5);
+                        valueSpan.textContent = textArray[Math.max(0, Math.min(index, textArray.length - 1))] || textArray[1];
+                    } else {
+                        valueSpan.textContent = (value * multiplier).toFixed(multiplier === 100 ? 0 : 1) + suffix;
+                    }
                 }
+            } catch (error) {
+                console.error('Error updating slider:', sliderId, error);
             }
         }
 
         function updateCheckbox(checkboxId, isChecked) {
-            const checkbox = document.getElementById(checkboxId);
-            if (checkbox) {
-                if (isChecked) {
-                    checkbox.classList.add('checked');
-                } else {
-                    checkbox.classList.remove('checked');
+            try {
+                const checkbox = document.getElementById(checkboxId);
+                if (checkbox) {
+                    if (isChecked) {
+                        checkbox.classList.add('checked');
+                    } else {
+                        checkbox.classList.remove('checked');
+                    }
                 }
+            } catch (error) {
+                console.error('Error updating checkbox:', checkboxId, error);
             }
         }
 
         function updateSelect(selectId, value) {
-            const select = document.getElementById(selectId);
-            if (select) {
-                select.value = value;
+            try {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    select.value = value;
+                }
+            } catch (error) {
+                console.error('Error updating select:', selectId, error);
+            }
+        }
+
+        function updateThemeSelection() {
+            try {
+                // Remove selected class from all color options
+                document.querySelectorAll('.color-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                // Add selected class to current theme
+                const themes = ['default', 'sunset', 'ocean', 'purple', 'pink', 'dark'];
+                const currentThemeIndex = themes.indexOf(appSettings.appearance.theme);
+                if (currentThemeIndex >= 0) {
+                    const colorOptions = document.querySelectorAll('.color-option');
+                    if (colorOptions[currentThemeIndex]) {
+                        colorOptions[currentThemeIndex].classList.add('selected');
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating theme selection:', error);
             }
         }
 
         function toggleSetting(settingName) {
-            const checkboxMap = {
-                'autoSpeak': () => appSettings.voice.autoSpeak = !appSettings.voice.autoSpeak,
-                'wakeWord': () => appSettings.voice.wakeWord = !appSettings.voice.wakeWord,
-                'continuousListening': () => appSettings.voice.continuousListening = !appSettings.voice.continuousListening,
-                'floatingEffects': () => appSettings.appearance.floatingEffects = !appSettings.appearance.floatingEffects,
-                'glassEffect': () => appSettings.appearance.glassEffect = !appSettings.appearance.glassEffect,
-                'compactMode': () => appSettings.appearance.compactMode = !appSettings.appearance.compactMode,
-                'typingIndicator': () => appSettings.ai.typingIndicator = !appSettings.ai.typingIndicator,
-                'suggestions': () => appSettings.ai.suggestions = !appSettings.ai.suggestions,
-                'contextMemory': () => appSettings.ai.contextMemory = !appSettings.ai.contextMemory,
-                'proactiveHelp': () => appSettings.ai.proactiveHelp = !appSettings.ai.proactiveHelp,
-                'saveConversations': () => appSettings.privacy.saveConversations = !appSettings.privacy.saveConversations,
-                'voiceRecording': () => appSettings.privacy.voiceRecording = !appSettings.privacy.voiceRecording,
-                'analytics': () => appSettings.privacy.analytics = !appSettings.privacy.analytics,
-                'reducedMotion': () => appSettings.advanced.reducedMotion = !appSettings.advanced.reducedMotion,
-                'debugMode': () => appSettings.advanced.debugMode = !appSettings.advanced.debugMode
-            };
+            try {
+                const checkboxMap = {
+                    'autoSpeak': { path: 'voice.autoSpeak', element: 'autoSpeakCheck' },
+                    'wakeWord': { path: 'voice.wakeWord', element: 'wakeWordCheck' },
+                    'continuousListening': { path: 'voice.continuousListening', element: 'continuousListeningCheck' },
+                    'floatingEffects': { path: 'appearance.floatingEffects', element: 'floatingEffectsCheck' },
+                    'glassEffect': { path: 'appearance.glassEffect', element: 'glassEffectCheck' },
+                    'compactMode': { path: 'appearance.compactMode', element: 'compactModeCheck' },
+                    'typingIndicator': { path: 'ai.typingIndicator', element: 'typingIndicatorCheck' },
+                    'suggestions': { path: 'ai.suggestions', element: 'suggestionsCheck' },
+                    'contextMemory': { path: 'ai.contextMemory', element: 'contextMemoryCheck' },
+                    'proactiveHelp': { path: 'ai.proactiveHelp', element: 'proactiveHelpCheck' },
+                    'saveConversations': { path: 'privacy.saveConversations', element: 'saveConversationsCheck' },
+                    'voiceRecording': { path: 'privacy.voiceRecording', element: 'voiceRecordingCheck' },
+                    'analytics': { path: 'privacy.analytics', element: 'analyticsCheck' },
+                    'reducedMotion': { path: 'advanced.reducedMotion', element: 'reducedMotionCheck' },
+                    'debugMode': { path: 'advanced.debugMode', element: 'debugModeCheck' }
+                };
 
-            if (checkboxMap[settingName]) {
-                checkboxMap[settingName]();
-                updateSettingsUI();
+                const setting = checkboxMap[settingName];
+                if (setting) {
+                    // Get current value
+                    const pathParts = setting.path.split('.');
+                    let obj = appSettings;
+                    for (let i = 0; i < pathParts.length - 1; i++) {
+                        obj = obj[pathParts[i]];
+                    }
+                    const currentValue = obj[pathParts[pathParts.length - 1]];
+                    
+                    // Toggle value
+                    obj[pathParts[pathParts.length - 1]] = !currentValue;
+                    
+                    // Update UI
+                    updateCheckbox(setting.element, !currentValue);
+                    
+                    // Handle special cases
+                    if (settingName === 'wakeWord') {
+                        if (!currentValue && !isListening) {
+                            startVoiceInput();
+                            voiceStatus.textContent = '👂 Listening for "Hey Claude"...';
+                        } else if (currentValue) {
+                            stopVoiceInput();
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error toggling setting:', settingName, error);
             }
         }
 
-        function setTheme(themeName) {
-            appSettings.appearance.theme = themeName;
-            
-            // Update UI
-            document.querySelectorAll('.color-option').forEach(option => option.classList.remove('selected'));
-            event.target.classList.add('selected');
-            
-            // Apply theme immediately for preview
-            applyTheme();
+        function setTheme(themeName, element = null) {
+            try {
+                appSettings.appearance.theme = themeName;
+                
+                // Update UI
+                document.querySelectorAll('.color-option').forEach(option => option.classList.remove('selected'));
+                if (element) {
+                    element.classList.add('selected');
+                } else {
+                    // Find the correct theme element if not provided
+                    const themes = ['default', 'sunset', 'ocean', 'purple', 'pink', 'dark'];
+                    const themeIndex = themes.indexOf(themeName);
+                    const colorOptions = document.querySelectorAll('.color-option');
+                    if (colorOptions[themeIndex]) {
+                        colorOptions[themeIndex].classList.add('selected');
+                    }
+                }
+                
+                // Apply theme immediately for preview
+                applyTheme();
+            } catch (error) {
+                console.error('Error setting theme:', error);
+            }
         }
 
         function resetAllSettings() {
@@ -1476,123 +1693,128 @@
         }
 
         function setupEventListeners() {
-            // Slider event listeners
-            const sliders = ['speechRate', 'speechVolume', 'speechPitch', 'animationSpeed', 'fontSize', 'responseDelay', 'maxMessages'];
-            sliders.forEach(sliderId => {
-                const slider = document.getElementById(sliderId);
-                if (slider) {
-                    slider.addEventListener('input', function() {
-                        const value = parseFloat(this.value);
-                        switch(sliderId) {
-                            case 'speechRate':
-                                appSettings.voice.rate = value;
-                                updateSliderValue(sliderId, 'rateValue', value, 'x');
-                                break;
-                            case 'speechVolume':
-                                appSettings.voice.volume = value;
-                                updateSliderValue(sliderId, 'volumeValue', value, '%', 100);
-                                break;
-                            case 'speechPitch':
-                                appSettings.voice.pitch = value;
-                                updateSliderValue(sliderId, 'pitchValue', value);
-                                break;
-                            case 'animationSpeed':
-                                appSettings.appearance.animationSpeed = value;
-                                updateSliderValue(sliderId, 'animationSpeedValue', value, '', 1, ['Slow', 'Normal', 'Fast']);
-                                break;
-                            case 'fontSize':
-                                appSettings.appearance.fontSize = value;
-                                updateSliderValue(sliderId, 'fontSizeValue', value, '', 1, ['Small', 'Medium', 'Large']);
-                                break;
-                            case 'responseDelay':
-                                appSettings.ai.responseDelay = value;
-                                updateSliderValue(sliderId, 'responseDelayValue', value, 's');
-                                break;
-                            case 'maxMessages':
-                                appSettings.advanced.maxMessages = parseInt(value);
-                                updateSliderValue(sliderId, 'maxMessagesValue', value);
-                                break;
+            try {
+                // Slider event listeners
+                const sliders = [
+                    { id: 'speechRate', prop: 'voice.rate', valueId: 'rateValue', suffix: 'x' },
+                    { id: 'speechVolume', prop: 'voice.volume', valueId: 'volumeValue', suffix: '%', multiplier: 100 },
+                    { id: 'speechPitch', prop: 'voice.pitch', valueId: 'pitchValue' },
+                    { id: 'animationSpeed', prop: 'appearance.animationSpeed', valueId: 'animationSpeedValue', textArray: ['Slow', 'Normal', 'Fast'] },
+                    { id: 'fontSize', prop: 'appearance.fontSize', valueId: 'fontSizeValue', textArray: ['Small', 'Medium', 'Large'] },
+                    { id: 'responseDelay', prop: 'ai.responseDelay', valueId: 'responseDelayValue', suffix: 's' },
+                    { id: 'maxMessages', prop: 'advanced.maxMessages', valueId: 'maxMessagesValue', isInt: true }
+                ];
+
+                sliders.forEach(sliderConfig => {
+                    const slider = document.getElementById(sliderConfig.id);
+                    if (slider) {
+                        slider.addEventListener('input', function() {
+                            const value = sliderConfig.isInt ? parseInt(this.value) : parseFloat(this.value);
+                            
+                            // Set nested property
+                            const propPath = sliderConfig.prop.split('.');
+                            let obj = appSettings;
+                            for (let i = 0; i < propPath.length - 1; i++) {
+                                obj = obj[propPath[i]];
+                            }
+                            obj[propPath[propPath.length - 1]] = value;
+                            
+                            // Update display
+                            updateSliderValue(
+                                sliderConfig.id, 
+                                sliderConfig.valueId, 
+                                value, 
+                                sliderConfig.suffix || '', 
+                                sliderConfig.multiplier || 1, 
+                                sliderConfig.textArray
+                            );
+                        });
+                    }
+                });
+
+                // Select event listeners
+                const selects = [
+                    { id: 'voiceLanguage', prop: 'voice.language', callback: (value) => {
+                        if (recognition) recognition.lang = value;
+                    }},
+                    { id: 'voiceSelect', prop: 'voice.selectedVoice', isInt: true },
+                    { id: 'responseStyle', prop: 'ai.responseStyle' },
+                    { id: 'aiPersonality', prop: 'ai.personality' }
+                ];
+
+                selects.forEach(selectConfig => {
+                    const select = document.getElementById(selectConfig.id);
+                    if (select) {
+                        select.addEventListener('change', function() {
+                            const value = selectConfig.isInt ? parseInt(this.value) : this.value;
+                            
+                            // Set nested property
+                            const propPath = selectConfig.prop.split('.');
+                            let obj = appSettings;
+                            for (let i = 0; i < propPath.length - 1; i++) {
+                                obj = obj[propPath[i]];
+                            }
+                            obj[propPath[propPath.length - 1]] = value;
+                            
+                            // Execute callback if provided
+                            if (selectConfig.callback) {
+                                selectConfig.callback(value);
+                            }
+                        });
+                    }
+                });
+
+                // Close modal when clicking outside
+                if (fullSettings) {
+                    fullSettings.addEventListener('click', function(e) {
+                        if (e.target === fullSettings) {
+                            closeFullSettings();
                         }
                     });
                 }
-            });
 
-            // Select event listeners
-            const voiceLanguageSelect = document.getElementById('voiceLanguage');
-            if (voiceLanguageSelect) {
-                voiceLanguageSelect.addEventListener('change', function() {
-                    appSettings.voice.language = this.value;
-                    if (recognition) {
-                        recognition.lang = this.value;
+                // Touch feedback for mobile
+                document.querySelectorAll('.quick-btn, .send-btn, .voice-btn').forEach(btn => {
+                    btn.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(0.95)';
+                    });
+                    
+                    btn.addEventListener('touchend', function() {
+                        this.style.transform = 'scale(1)';
+                    });
+                });
+
+                // Auto-focus input on mobile
+                if (messageInput) {
+                    messageInput.addEventListener('click', function() {
+                        setTimeout(() => {
+                            this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
+                    });
+                }
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', function(event) {
+                    if (event.ctrlKey || event.metaKey) {
+                        switch(event.key) {
+                            case 'm':
+                                event.preventDefault();
+                                toggleVoiceInput();
+                                break;
+                            case 's':
+                                event.preventDefault();
+                                toggleVoiceOutput();
+                                break;
+                            case ',':
+                                event.preventDefault();
+                                openFullSettings();
+                                break;
+                        }
                     }
                 });
+            } catch (error) {
+                console.error('Error setting up event listeners:', error);
             }
-
-            const voiceSelect = document.getElementById('voiceSelect');
-            if (voiceSelect) {
-                voiceSelect.addEventListener('change', function() {
-                    appSettings.voice.selectedVoice = parseInt(this.value);
-                });
-            }
-
-            const responseStyleSelect = document.getElementById('responseStyle');
-            if (responseStyleSelect) {
-                responseStyleSelect.addEventListener('change', function() {
-                    appSettings.ai.responseStyle = this.value;
-                });
-            }
-
-            const aiPersonalitySelect = document.getElementById('aiPersonality');
-            if (aiPersonalitySelect) {
-                aiPersonalitySelect.addEventListener('change', function() {
-                    appSettings.ai.personality = this.value;
-                });
-            }
-
-            // Close modal when clicking outside
-            fullSettings.addEventListener('click', function(e) {
-                if (e.target === fullSettings) {
-                    closeFullSettings();
-                }
-            });
-
-            // Touch feedback for mobile
-            document.querySelectorAll('.quick-btn, .send-btn, .voice-btn').forEach(btn => {
-                btn.addEventListener('touchstart', function() {
-                    this.style.transform = 'scale(0.95)';
-                });
-                
-                btn.addEventListener('touchend', function() {
-                    this.style.transform = 'scale(1)';
-                });
-            });
-
-            // Auto-focus input on mobile
-            messageInput.addEventListener('click', function() {
-                setTimeout(() => {
-                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 300);
-            });
-
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(event) {
-                if (event.ctrlKey || event.metaKey) {
-                    switch(event.key) {
-                        case 'm':
-                            event.preventDefault();
-                            toggleVoiceInput();
-                            break;
-                        case 's':
-                            event.preventDefault();
-                            toggleVoiceOutput();
-                            break;
-                        case ',':
-                            event.preventDefault();
-                            openFullSettings();
-                            break;
-                    }
-                }
-            });
         }
 
         // Initialize voice functionality
