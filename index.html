@@ -415,10 +415,99 @@
             100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
         }
 
-        @keyframes processing {
-            0% { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
-            50% { background: linear-gradient(135deg, #a78bfa, #c4b5fd); }
-            100% { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        /* Voice UI Enhancements */
+        .voice-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            opacity: 0;
+            animation: voiceWave 1.5s infinite;
+        }
+
+        .maiya-btn.listening .voice-wave {
+            opacity: 1;
+        }
+
+        .maiya-btn.speaking {
+            animation: speaking 0.5s infinite alternate;
+        }
+
+        @keyframes voiceWave {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+        }
+
+        @keyframes speaking {
+            0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+            100% { box-shadow: 0 0 0 15px rgba(139, 92, 246, 0); }
+        }
+
+        /* Voice Status Indicator */
+        .voice-status-indicator {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 150;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .voice-status-indicator.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .voice-status-indicator.listening {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            animation: pulse 1s infinite;
+        }
+
+        .voice-status-indicator.speaking {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            animation: speaking 0.8s infinite;
+        }
+
+        .voice-status-indicator.error {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+        }
+
+        /* Audio Visualizer */
+        .audio-visualizer {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-left: 8px;
+        }
+
+        .audio-bar {
+            width: 3px;
+            height: 16px;
+            background: currentColor;
+            border-radius: 2px;
+            animation: audioWave 0.8s infinite ease-in-out;
+        }
+
+        .audio-bar:nth-child(2) { animation-delay: 0.1s; }
+        .audio-bar:nth-child(3) { animation-delay: 0.2s; }
+        .audio-bar:nth-child(4) { animation-delay: 0.3s; }
+        .audio-bar:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes audioWave {
+            0%, 100% { height: 16px; opacity: 0.3; }
+            50% { height: 24px; opacity: 1; }
         }
         
         /* Main Content */
@@ -1602,6 +1691,7 @@
             <div class="header-right">
                 <button class="header-btn maiya-btn" onclick="toggleMaiyaChat()" title="Maiya AI Assistant" id="maiya-toggle">
                     🤖
+                    <div class="voice-wave"></div>
                 </button>
                 <button class="header-btn" onclick="openMaiyaSettings()" title="Maiya Settings" style="background: linear-gradient(135deg, #10b981, #34d399);">
                     ⚙️
@@ -1610,6 +1700,18 @@
                 <button class="header-btn" onclick="showProfile()" title="Profile">👤</button>
                 <button class="header-btn" onclick="exportData()" title="Export">📤</button>
                 <button class="header-btn" onclick="showHelp()" title="Help">❓</button>
+            </div>
+        </div>
+
+        <!-- Voice Status Indicator -->
+        <div id="voice-status-indicator" class="voice-status-indicator">
+            <span id="voice-status-text">🎤 Ready to listen</span>
+            <div class="audio-visualizer" id="audio-visualizer" style="display: none;">
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
             </div>
         </div>
 
@@ -2317,6 +2419,59 @@
                         </div>
                     </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Voice Gender</label>
+                            <select class="form-select" id="voice-gender" onchange="updateVoiceGender()">
+                                <option value="female" selected>Female Voice</option>
+                                <option value="male">Male Voice</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Voice Auto-Speak</label>
+                            <select class="form-select" id="voice-auto-speak" onchange="updateAutoSpeak()">
+                                <option value="true" selected>Yes (Maiya speaks responses)</option>
+                                <option value="false">No (Text only)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Speech Rate</label>
+                            <input type="range" class="form-input" id="voice-rate" min="0.5" max="2" step="0.1" value="1" onchange="updateVoiceRate()">
+                            <div style="font-size: 12px; color: var(--text-muted);">Rate: <span id="rate-value">1.0</span>x</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Speech Pitch</label>
+                            <input type="range" class="form-input" id="voice-pitch" min="0.5" max="2" step="0.1" value="1" onchange="updateVoicePitch()">
+                            <div style="font-size: 12px; color: var(--text-muted);">Pitch: <span id="pitch-value">1.0</span></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Speech Volume</label>
+                        <input type="range" class="form-input" id="voice-volume" min="0" max="1" step="0.1" value="1" onchange="updateVoiceVolume()">
+                        <div style="font-size: 12px; color: var(--text-muted);">Volume: <span id="volume-value">100</span>%</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Audio Feedback</label>
+                            <select class="form-select" id="audio-feedback" onchange="updateAudioFeedback()">
+                                <option value="true" selected>Enabled (Sounds for actions)</option>
+                                <option value="false">Disabled (Silent)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Wake Word Detection</label>
+                            <select class="form-select" id="wake-word" onchange="updateWakeWord()">
+                                <option value="true" selected>Enabled ("Hey Maiya")</option>
+                                <option value="false">Disabled</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="form-label">Voice Commands</label>
                         <div style="background: var(--bg-card); padding: 16px; border-radius: 12px; margin-top: 8px;">
@@ -2521,22 +2676,35 @@
     <!-- [All other modals would go here - User Profile Modal, Company Details Modal, etc.] -->
 
     <script>
-        // ===== ENHANCED MAIYA AI SYSTEM =====
+        // ===== ENHANCED MAIYA AI SYSTEM WITH FULL VOICE =====
         class EnhancedMaiyaAI {
             constructor() {
                 this.isListening = false;
                 this.isProcessing = false;
+                this.isSpeaking = false;
                 this.recognition = null;
+                this.synthesis = null;
                 this.chatHistory = [];
                 this.currentDocumentType = null;
                 this.voiceEnabled = this.checkVoiceSupport();
+                this.speechEnabled = this.checkSpeechSupport();
+                this.audioContext = null;
+                this.mediaStream = null;
+                this.wakeWordActive = false;
                 
                 // Enhanced Settings
                 this.settings = {
                     name: 'Maiya',
                     language: 'en-US',
+                    voiceGender: 'female',
+                    voiceRate: 1.0,
+                    voicePitch: 1.0,
+                    voiceVolume: 1.0,
                     sensitivity: 'medium',
                     autoSend: true,
+                    autoSpeak: true,
+                    wakeWord: true,
+                    audioFeedback: true,
                     communicationStyle: 'professional',
                     detailLevel: 'normal',
                     contextMemory: true,
@@ -2557,22 +2725,171 @@
                 // Voice Commands
                 this.voiceCommands = {
                     'hey maiya': () => this.handleWakeWord(),
+                    'hi maiya': () => this.handleWakeWord(),
                     'analyze business': () => this.executeCommand('analyze'),
                     'create document': () => this.executeCommand('document'),
                     'new presentation': () => this.executeCommand('presentation'),
                     'export data': () => this.executeCommand('export'),
                     'clear chat': () => this.executeCommand('clear'),
                     'open settings': () => this.executeCommand('settings'),
-                    'switch theme': () => this.executeCommand('theme')
+                    'switch theme': () => this.executeCommand('theme'),
+                    'stop listening': () => this.executeCommand('stop'),
+                    'start listening': () => this.executeCommand('listen'),
+                    'repeat that': () => this.executeCommand('repeat'),
+                    'speak slower': () => this.executeCommand('slower'),
+                    'speak faster': () => this.executeCommand('faster')
+                };
+
+                // Audio feedback sounds
+                this.audioFeedback = {
+                    listen: () => this.playTone(800, 100),
+                    stop: () => this.playTone(400, 100),
+                    processing: () => this.playTone(600, 200),
+                    complete: () => this.playTone(1000, 150),
+                    error: () => this.playTone(300, 300)
                 };
                 
                 this.initializeVoiceRecognition();
+                this.initializeSpeechSynthesis();
                 this.loadSettings();
                 this.setupContinuousListening();
+                this.createAudioContext();
             }
 
             checkVoiceSupport() {
                 return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
+            }
+
+            checkSpeechSupport() {
+                return 'speechSynthesis' in window;
+            }
+
+            createAudioContext() {
+                try {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (error) {
+                    console.warn('AudioContext not supported:', error);
+                }
+            }
+
+            playTone(frequency, duration) {
+                if (!this.settings.audioFeedback || !this.audioContext) return;
+                
+                try {
+                    const oscillator = this.audioContext.createOscillator();
+                    const gainNode = this.audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(this.audioContext.destination);
+                    
+                    oscillator.frequency.value = frequency;
+                    oscillator.type = 'sine';
+                    
+                    gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration / 1000);
+                    
+                    oscillator.start(this.audioContext.currentTime);
+                    oscillator.stop(this.audioContext.currentTime + duration / 1000);
+                } catch (error) {
+                    console.warn('Audio feedback error:', error);
+                }
+            }
+
+            initializeSpeechSynthesis() {
+                if (this.speechEnabled) {
+                    this.synthesis = window.speechSynthesis;
+                    
+                    // Wait for voices to load
+                    this.loadVoices();
+                    if (speechSynthesis.onvoiceschanged !== undefined) {
+                        speechSynthesis.onvoiceschanged = () => this.loadVoices();
+                    }
+                }
+            }
+
+            loadVoices() {
+                this.voices = this.synthesis ? this.synthesis.getVoices() : [];
+                this.selectBestVoice();
+            }
+
+            selectBestVoice() {
+                if (!this.voices.length) return;
+                
+                // Try to find a voice that matches the language and gender preference
+                const language = this.settings.language;
+                const preferFemale = this.settings.voiceGender === 'female';
+                
+                // Look for exact language match with preferred gender
+                let selectedVoice = this.voices.find(voice => 
+                    voice.lang.startsWith(language.substring(0, 2)) && 
+                    (preferFemale ? voice.name.toLowerCase().includes('female') || voice.name.toLowerCase().includes('woman') : 
+                     voice.name.toLowerCase().includes('male') || voice.name.toLowerCase().includes('man'))
+                );
+                
+                // Fallback to any voice in the language
+                if (!selectedVoice) {
+                    selectedVoice = this.voices.find(voice => voice.lang.startsWith(language.substring(0, 2)));
+                }
+                
+                // Ultimate fallback to default voice
+                if (!selectedVoice) {
+                    selectedVoice = this.voices[0];
+                }
+                
+                this.selectedVoice = selectedVoice;
+            }
+
+            speak(text, priority = false) {
+                if (!this.speechEnabled || !this.settings.autoSpeak) return;
+                
+                // Stop current speech if priority message
+                if (priority && this.synthesis.speaking) {
+                    this.synthesis.cancel();
+                }
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                if (this.selectedVoice) {
+                    utterance.voice = this.selectedVoice;
+                }
+                
+                utterance.rate = this.settings.voiceRate;
+                utterance.pitch = this.settings.voicePitch;
+                utterance.volume = this.settings.voiceVolume;
+                utterance.lang = this.settings.language;
+                
+                utterance.onstart = () => {
+                    this.isSpeaking = true;
+                    this.updateVoiceUI();
+                    this.showVoiceStatus('🗣️ Speaking...', 'speaking');
+                };
+                
+                utterance.onend = () => {
+                    this.isSpeaking = false;
+                    this.updateVoiceUI();
+                    this.hideVoiceStatus();
+                    if (this.settings.audioFeedback) {
+                        this.audioFeedback.complete();
+                    }
+                };
+                
+                utterance.onerror = (event) => {
+                    this.isSpeaking = false;
+                    this.updateVoiceUI();
+                    this.hideVoiceStatus();
+                    console.warn('Speech synthesis error:', event.error);
+                };
+                
+                this.synthesis.speak(utterance);
+            }
+
+            stopSpeaking() {
+                if (this.synthesis && this.synthesis.speaking) {
+                    this.synthesis.cancel();
+                    this.isSpeaking = false;
+                    this.updateVoiceUI();
+                    this.hideVoiceStatus();
+                }
             }
 
             initializeVoiceRecognition() {
@@ -2595,16 +2912,21 @@
                     this.recognition.onstart = () => {
                         this.isListening = true;
                         this.updateVoiceUI();
-                        this.updateStatus('Listening for voice commands...');
+                        this.updateStatus('🎤 Listening for voice commands...');
+                        this.showVoiceStatus('🎤 Listening...', 'listening');
+                        if (this.settings.audioFeedback) {
+                            this.audioFeedback.listen();
+                        }
                     };
 
                     this.recognition.onend = () => {
                         this.isListening = false;
                         this.updateVoiceUI();
                         this.updateStatus('Ready to help');
+                        this.hideVoiceStatus();
                         
                         // Auto-restart for continuous listening
-                        if (this.settings.contextMemory) {
+                        if (this.settings.contextMemory && this.wakeWordActive) {
                             setTimeout(() => {
                                 if (!this.isListening && this.voiceEnabled) {
                                     this.startContinuousListening();
@@ -2616,13 +2938,19 @@
                     this.recognition.onresult = (event) => {
                         let transcript = '';
                         let isFinal = false;
+                        let confidence = 0;
 
                         for (let i = event.resultIndex; i < event.results.length; i++) {
-                            transcript += event.results[i][0].transcript;
-                            if (event.results[i].isFinal) {
+                            const result = event.results[i];
+                            transcript += result[0].transcript;
+                            confidence = Math.max(confidence, result[0].confidence);
+                            if (result.isFinal) {
                                 isFinal = true;
                             }
                         }
+
+                        // Update real-time transcript display
+                        this.updateTranscriptDisplay(transcript, isFinal, confidence);
 
                         // Handle voice commands
                         const lowerTranscript = transcript.toLowerCase().trim();
@@ -2630,6 +2958,7 @@
                         // Check for wake word
                         if (lowerTranscript.includes('hey maiya') || lowerTranscript.includes('hi maiya')) {
                             this.handleWakeWord();
+                            this.speak("Yes, how can I help you?", true);
                             return;
                         }
 
@@ -2642,7 +2971,7 @@
                         }
 
                         // Regular speech input
-                        if (isFinal && transcript.trim()) {
+                        if (isFinal && transcript.trim() && confidence > 0.7) {
                             document.getElementById('maiya-input').value = transcript;
                             if (this.settings.autoSend) {
                                 this.sendMessage(transcript);
@@ -2653,17 +2982,60 @@
                     this.recognition.onerror = (event) => {
                         this.isListening = false;
                         this.updateVoiceUI();
+                        this.showVoiceStatus(`❌ Voice error: ${event.error}`, 'error');
+                        if (this.settings.audioFeedback) {
+                            this.audioFeedback.error();
+                        }
+                        
                         console.warn('Voice recognition error:', event.error);
                         
-                        if (event.error !== 'no-speech') {
-                            showSuccessMessage(`🎤 Voice error: ${event.error}. Trying to reconnect...`);
+                        // Auto-retry for certain errors
+                        if (event.error === 'network' || event.error === 'audio-capture') {
+                            setTimeout(() => this.startContinuousListening(), 3000);
                         }
                     };
                 }
             }
 
+            updateTranscriptDisplay(transcript, isFinal, confidence) {
+                const input = document.getElementById('maiya-input');
+                if (input) {
+                    if (isFinal) {
+                        input.value = transcript;
+                        input.style.borderColor = confidence > 0.8 ? 'var(--success)' : confidence > 0.6 ? 'var(--warning)' : 'var(--error)';
+                    } else {
+                        input.placeholder = `Listening: "${transcript}"`;
+                    }
+                }
+            }
+
+            showVoiceStatus(message, type = 'default') {
+                const indicator = document.getElementById('voice-status-indicator');
+                const text = document.getElementById('voice-status-text');
+                const visualizer = document.getElementById('audio-visualizer');
+                
+                if (indicator && text) {
+                    text.textContent = message;
+                    indicator.className = `voice-status-indicator show ${type}`;
+                    
+                    if (type === 'listening' || type === 'speaking') {
+                        visualizer.style.display = 'flex';
+                    } else {
+                        visualizer.style.display = 'none';
+                    }
+                }
+            }
+
+            hideVoiceStatus() {
+                const indicator = document.getElementById('voice-status-indicator');
+                if (indicator) {
+                    indicator.classList.remove('show');
+                }
+            }
+
             setupContinuousListening() {
-                if (this.settings.contextMemory && this.voiceEnabled) {
+                if (this.settings.contextMemory && this.settings.wakeWord && this.voiceEnabled) {
+                    this.wakeWordActive = true;
                     this.startContinuousListening();
                 }
             }
@@ -2679,23 +3051,74 @@
             }
 
             handleWakeWord() {
-                showSuccessMessage('👋 Hey there! How can I help you today?');
+                showSuccessMessage(`👋 Hey there! ${this.settings.name} is listening...`);
                 toggleMaiyaChat();
                 document.getElementById('maiya-input').focus();
+                
+                // Ensure chat is visible and ready
+                setTimeout(() => {
+                    const chat = document.getElementById('maiya-chat');
+                    if (!chat.classList.contains('show')) {
+                        chat.classList.add('show');
+                    }
+                }, 100);
             }
 
             executeCommand(command) {
                 const commands = {
                     'analyze': () => {
                         toggleMaiyaChat();
-                        setTimeout(() => this.sendMessage('Please analyze my business performance and provide comprehensive insights'), 500);
+                        this.speak("Analyzing your business performance now.", true);
+                        setTimeout(() => this.sendMessage('Please analyze my business performance and provide comprehensive insights with actionable recommendations'), 1000);
                     },
-                    'document': () => openDocumentGenerator(),
-                    'presentation': () => openPresentationGenerator(),
-                    'export': () => exportData(),
-                    'clear': () => this.clearHistory(),
-                    'settings': () => openMaiyaSettings(),
-                    'theme': () => randomTheme()
+                    'document': () => {
+                        this.speak("Opening document generator.", true);
+                        openDocumentGenerator();
+                    },
+                    'presentation': () => {
+                        this.speak("Opening presentation generator.", true);
+                        openPresentationGenerator();
+                    },
+                    'export': () => {
+                        this.speak("Exporting your data now.", true);
+                        exportData();
+                    },
+                    'clear': () => {
+                        this.speak("Clearing chat history.", true);
+                        this.clearHistory();
+                    },
+                    'settings': () => {
+                        this.speak("Opening my settings.", true);
+                        openMaiyaSettings();
+                    },
+                    'theme': () => {
+                        this.speak("Switching to a random theme.", true);
+                        randomTheme();
+                    },
+                    'stop': () => {
+                        this.speak("Stopping voice recognition.", true);
+                        this.stopVoiceInput();
+                    },
+                    'listen': () => {
+                        this.speak("Starting voice recognition.", true);
+                        this.startVoiceInput();
+                    },
+                    'repeat': () => {
+                        const lastAIMessage = this.chatHistory.slice().reverse().find(msg => msg.sender === 'ai');
+                        if (lastAIMessage) {
+                            this.speak(lastAIMessage.message, true);
+                        }
+                    },
+                    'slower': () => {
+                        this.settings.voiceRate = Math.max(0.5, this.settings.voiceRate - 0.2);
+                        this.speak("Speaking slower now.", true);
+                        this.saveSettings();
+                    },
+                    'faster': () => {
+                        this.settings.voiceRate = Math.min(2.0, this.settings.voiceRate + 0.2);
+                        this.speak("Speaking faster now.", true);
+                        this.saveSettings();
+                    }
                 };
                 
                 if (commands[command]) {
@@ -2721,6 +3144,12 @@
                 } else {
                     maiyaBtn?.classList.remove('processing');
                 }
+
+                if (this.isSpeaking) {
+                    maiyaBtn?.classList.add('speaking');
+                } else {
+                    maiyaBtn?.classList.remove('speaking');
+                }
             }
 
             updateStatus(status) {
@@ -2733,7 +3162,8 @@
             startVoiceInput() {
                 if (this.voiceEnabled && this.recognition && !this.isListening) {
                     this.recognition.start();
-                } else {
+                } else if (!this.voiceEnabled) {
+                    this.speak("Voice input is not available in your browser.", true);
                     showSuccessMessage('🎤 Voice input not available in your browser');
                 }
             }
@@ -2741,17 +3171,23 @@
             stopVoiceInput() {
                 if (this.recognition && this.isListening) {
                     this.recognition.stop();
+                    this.wakeWordActive = false;
                 }
             }
 
             sendMessage(message) {
                 if (!message.trim()) return;
 
+                // Stop speaking if currently speaking
+                this.stopSpeaking();
+
                 // Add user message to chat
                 this.addMessageToChat(message, 'user');
 
                 // Clear input
                 document.getElementById('maiya-input').value = '';
+                document.getElementById('maiya-input').style.borderColor = '';
+                document.getElementById('maiya-input').placeholder = 'Type your message or click 🎤 to speak...';
 
                 // Process message with enhanced AI
                 this.processEnhancedMessage(message);
@@ -2778,7 +3214,8 @@
                     sender: sender,
                     timestamp: new Date(),
                     style: this.settings.communicationStyle,
-                    detailLevel: this.settings.detailLevel
+                    detailLevel: this.settings.detailLevel,
+                    language: this.settings.language
                 });
 
                 this.saveChatHistory();
@@ -2797,7 +3234,12 @@
             async processEnhancedMessage(message) {
                 this.isProcessing = true;
                 this.updateVoiceUI();
-                this.updateStatus('Processing with enhanced AI...');
+                this.updateStatus('🧠 Processing with enhanced AI...');
+                this.showVoiceStatus('🧠 Thinking...', 'processing');
+                
+                if (this.settings.audioFeedback) {
+                    this.audioFeedback.processing();
+                }
 
                 // Simulate enhanced AI processing with variable delay based on complexity
                 const complexity = this.assessMessageComplexity(message);
@@ -2808,21 +3250,40 @@
                 const response = this.generateEnhancedResponse(message);
                 this.addMessageToChat(response, 'ai');
 
+                // Speak the response if auto-speak is enabled
+                if (this.settings.autoSpeak) {
+                    // Clean the response for speech (remove markdown and HTML)
+                    const speechText = response
+                        .replace(/\*\*(.*?)\*\*/g, '$1')
+                        .replace(/\*(.*?)\*/g, '$1')
+                        .replace(/\n/g, ' ')
+                        .replace(/• /g, ' ')
+                        .replace(/<[^>]*>/g, '')
+                        .substring(0, 500); // Limit length for speech
+                    
+                    this.speak(speechText);
+                }
+
                 // Proactive suggestions if enabled
                 if (this.settings.proactiveSuggestions) {
                     setTimeout(() => {
                         const suggestion = this.generateProactiveSuggestion(message);
                         if (suggestion) {
                             this.addMessageToChat(`💡 Suggestion: ${suggestion}`, 'ai');
+                            if (this.settings.autoSpeak) {
+                                setTimeout(() => this.speak(suggestion), 2000);
+                            }
                         }
-                    }, 2000);
+                    }, 3000);
                 }
 
                 this.isProcessing = false;
                 this.updateVoiceUI();
                 this.updateStatus('Ready to help');
+                this.hideVoiceStatus();
             }
 
+            // [Rest of the methods remain the same as in the previous implementation]
             assessMessageComplexity(message) {
                 const lowerMessage = message.toLowerCase();
                 let complexity = 0;
@@ -2928,6 +3389,7 @@
                     if (stats.totalCustomers < 20) {
                         analysis += `• **Customer Expansion:** Target 20+ customers for stability\n`;
                     }
+                    const industries = [...new Set(appState.customers.map(c => c.industry))];
                     if (industries.length < 3) {
                         analysis += `• **Diversification:** Expand into 3+ industry verticals\n`;
                     }
@@ -3011,6 +3473,19 @@
                 return greeting;
             }
 
+            generateDefaultEnhancedResponse(message, style, detail) {
+                let response = this.getStylePrefix(style);
+                response += `I understand you're looking for business assistance. I can help with:\n\n`;
+                response += `📊 Analyzing your business data\n`;
+                response += `📄 Creating professional documents\n`;
+                response += `🎯 Building presentations\n`;
+                response += `📈 Marketing strategies\n`;
+                response += `💰 Financial planning\n\n`;
+                response += `Could you be more specific about what you need help with?`;
+                response += this.getStyleSuffix(style);
+                return response;
+            }
+
             getStylePrefix(style) {
                 const prefixes = {
                     professional: '',
@@ -3059,6 +3534,9 @@
                     this.recognition.lang = this.settings.language;
                 }
                 
+                // Update voice selection
+                this.selectBestVoice();
+                
                 this.saveSettings();
                 this.updateUIFromSettings();
             }
@@ -3090,6 +3568,10 @@
                     'voice-language': this.settings.language,
                     'voice-sensitivity': this.settings.sensitivity,
                     'voice-auto-send': this.settings.autoSend.toString(),
+                    'voice-gender': this.settings.voiceGender,
+                    'voice-auto-speak': this.settings.autoSpeak.toString(),
+                    'audio-feedback': this.settings.audioFeedback.toString(),
+                    'wake-word': this.settings.wakeWord.toString(),
                     'ai-communication-style': this.settings.communicationStyle,
                     'ai-detail-level': this.settings.detailLevel,
                     'ai-name': this.settings.name,
@@ -3100,9 +3582,31 @@
                     const element = document.getElementById(id);
                     if (element) {
                         if (element.type === 'checkbox') {
-                            element.checked = value;
+                            element.checked = value === 'true';
                         } else {
                             element.value = value;
+                        }
+                    }
+                });
+
+                // Update range sliders
+                const ranges = {
+                    'voice-rate': this.settings.voiceRate,
+                    'voice-pitch': this.settings.voicePitch,
+                    'voice-volume': this.settings.voiceVolume
+                };
+
+                Object.entries(ranges).forEach(([id, value]) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.value = value;
+                        // Update display values
+                        if (id === 'voice-rate') {
+                            document.getElementById('rate-value').textContent = value.toFixed(1);
+                        } else if (id === 'voice-pitch') {
+                            document.getElementById('pitch-value').textContent = value.toFixed(1);
+                        } else if (id === 'voice-volume') {
+                            document.getElementById('volume-value').textContent = Math.round(value * 100);
                         }
                     }
                 });
@@ -3191,11 +3695,13 @@
                 `;
                 localStorage.removeItem('maiya-chat-history');
                 this.updateChatStats();
+                this.speak("Chat history cleared. How can I help you today?", true);
                 showSuccessMessage('🗑️ Chat history cleared!');
             }
 
             exportChatHistory() {
                 if (this.chatHistory.length === 0) {
+                    this.speak("No chat history to export.", true);
                     showSuccessMessage('❌ No chat history to export!');
                     return;
                 }
@@ -3217,7 +3723,14 @@
                 a.click();
                 URL.revokeObjectURL(url);
                 
+                this.speak("Chat history exported successfully.", true);
                 showSuccessMessage('📤 Chat history exported successfully!');
+            }
+
+            // Voice test function
+            testVoice() {
+                const testMessage = `Hello! This is ${this.settings.name} testing the voice settings. I'm speaking at rate ${this.settings.voiceRate}, pitch ${this.settings.voicePitch}, and volume ${this.settings.voiceVolume}. How do I sound?`;
+                this.speak(testMessage, true);
             }
         }
 
@@ -4184,6 +4697,13 @@ ${slide.content}
                 language: document.getElementById('voice-language').value,
                 sensitivity: document.getElementById('voice-sensitivity').value,
                 autoSend: document.getElementById('voice-auto-send').value === 'true',
+                voiceGender: document.getElementById('voice-gender').value,
+                autoSpeak: document.getElementById('voice-auto-speak').value === 'true',
+                voiceRate: parseFloat(document.getElementById('voice-rate').value),
+                voicePitch: parseFloat(document.getElementById('voice-pitch').value),
+                voiceVolume: parseFloat(document.getElementById('voice-volume').value),
+                audioFeedback: document.getElementById('audio-feedback').value === 'true',
+                wakeWord: document.getElementById('wake-word').value === 'true',
                 communicationStyle: document.getElementById('ai-communication-style').value,
                 detailLevel: document.getElementById('ai-detail-level').value,
                 customInstructions: document.getElementById('custom-instructions').value,
@@ -4199,6 +4719,11 @@ ${slide.content}
 
             maiyaAI.updateSettings(newSettings);
             closeModal('maiya-settings-modal');
+            
+            // Voice confirmation
+            if (maiyaAI.speechEnabled && newSettings.autoSpeak) {
+                maiyaAI.speak("Settings saved successfully! I'm ready to help with your business.", true);
+            }
             showSuccessMessage('🤖 Maiya settings saved successfully!');
         }
 
@@ -4260,11 +4785,61 @@ ${slide.content}
         }
 
         function testVoiceSettings() {
-            if (maiyaAI.voiceEnabled) {
-                showSuccessMessage('🎤 Say something to test your voice settings...');
-                maiyaAI.startVoiceInput();
+            if (maiyaAI.voiceEnabled || maiyaAI.speechEnabled) {
+                showSuccessMessage('🎤 Testing voice settings...');
+                maiyaAI.testVoice();
             } else {
-                showSuccessMessage('❌ Voice recognition not supported in your browser');
+                showSuccessMessage('❌ Voice features not supported in your browser');
+            }
+        }
+
+        function updateVoiceGender() {
+            const gender = document.getElementById('voice-gender').value;
+            maiyaAI.updateSettings({ voiceGender: gender });
+            showSuccessMessage(`🗣️ Voice gender changed to ${gender}`);
+        }
+
+        function updateAutoSpeak() {
+            const autoSpeak = document.getElementById('voice-auto-speak').value === 'true';
+            maiyaAI.updateSettings({ autoSpeak });
+            showSuccessMessage(`🗣️ Auto-speak ${autoSpeak ? 'enabled' : 'disabled'}`);
+        }
+
+        function updateVoiceRate() {
+            const rate = parseFloat(document.getElementById('voice-rate').value);
+            document.getElementById('rate-value').textContent = rate.toFixed(1);
+            maiyaAI.updateSettings({ voiceRate: rate });
+        }
+
+        function updateVoicePitch() {
+            const pitch = parseFloat(document.getElementById('voice-pitch').value);
+            document.getElementById('pitch-value').textContent = pitch.toFixed(1);
+            maiyaAI.updateSettings({ voicePitch: pitch });
+        }
+
+        function updateVoiceVolume() {
+            const volume = parseFloat(document.getElementById('voice-volume').value);
+            document.getElementById('volume-value').textContent = Math.round(volume * 100);
+            maiyaAI.updateSettings({ voiceVolume: volume });
+        }
+
+        function updateAudioFeedback() {
+            const feedback = document.getElementById('audio-feedback').value === 'true';
+            maiyaAI.updateSettings({ audioFeedback: feedback });
+            showSuccessMessage(`🔊 Audio feedback ${feedback ? 'enabled' : 'disabled'}`);
+        }
+
+        function updateWakeWord() {
+            const wakeWord = document.getElementById('wake-word').value === 'true';
+            maiyaAI.updateSettings({ wakeWord });
+            
+            if (wakeWord) {
+                maiyaAI.setupContinuousListening();
+                showSuccessMessage('👂 Wake word detection enabled - say "Hey Maiya"');
+            } else {
+                maiyaAI.wakeWordActive = false;
+                maiyaAI.stopVoiceInput();
+                showSuccessMessage('🔇 Wake word detection disabled');
             }
         }
 
@@ -5315,31 +5890,43 @@ ${slide.content}
             }, 30000);
             
             // Initialize voice support status
+            const voiceSupport = maiyaAI.voiceEnabled ? 'Enabled' : 'Disabled';
+            const speechSupport = maiyaAI.speechEnabled ? 'Enabled' : 'Disabled';
             document.getElementById('voice-status').textContent = 
-                maiyaAI.voiceEnabled ? 'Enabled (Browser Support)' : 'Disabled (No Browser Support)';
+                `Voice: ${voiceSupport}, Speech: ${speechSupport}`;
             
             // Initialize Maiya settings UI
             maiyaAI.updateUIFromSettings();
             maiyaAI.updateChatStats();
             
-            // Show welcome message
+            // Show welcome message with voice
             setTimeout(() => {
                 if (hasData) {
-                    showSuccessMessage(`🎉 Welcome back! ${maiyaAI.settings.name} and your data are ready.`);
+                    const welcomeMsg = `🎉 Welcome back! ${maiyaAI.settings.name} and your data are ready.`;
+                    showSuccessMessage(welcomeMsg);
+                    if (maiyaAI.speechEnabled && maiyaAI.settings.autoSpeak) {
+                        maiyaAI.speak("Welcome back! I'm ready to help with your business.", true);
+                    }
                 } else {
-                    showSuccessMessage(`🤖 Welcome to REFIT with ${maiyaAI.settings.name} AI! Your intelligent business assistant is ready.`);
+                    const welcomeMsg = `🤖 Welcome to REFIT with ${maiyaAI.settings.name} AI! Your intelligent business assistant is ready.`;
+                    showSuccessMessage(welcomeMsg);
+                    if (maiyaAI.speechEnabled && maiyaAI.settings.autoSpeak) {
+                        maiyaAI.speak(`Hello! I'm ${maiyaAI.settings.name}, your AI business assistant. I can speak and listen to help you grow your business. Try saying "Hey ${maiyaAI.settings.name}" to get started!`, true);
+                    }
                     
                     // Show help after 5 seconds for new users
                     setTimeout(() => {
-                        showSuccessMessage(`💡 Tip: Say "Hey ${maiyaAI.settings.name}" or click 🤖 to start chatting!`);
-                    }, 5000);
+                        showSuccessMessage(`💡 Voice Tip: Say "Hey ${maiyaAI.settings.name}" or click 🤖 to start chatting!`);
+                    }, 8000);
                 }
             }, 1000);
             
             console.log('✅ REFIT Business System with Enhanced Maiya AI loaded successfully!');
-            console.log(`🤖 ${maiyaAI.settings.name} AI Assistant ready with advanced features`);
-            console.log('🗣️ Voice commands: "Hey Maiya", "Analyze business", "Create document"');
-            console.log('⚙️ Advanced settings: Multi-language, AI personality, custom instructions');
+            console.log(`🤖 ${maiyaAI.settings.name} AI Assistant ready with full voice capabilities`);
+            console.log('🗣️ Voice Recognition: ' + (maiyaAI.voiceEnabled ? 'Enabled' : 'Disabled'));
+            console.log('🔊 Speech Synthesis: ' + (maiyaAI.speechEnabled ? 'Enabled' : 'Disabled'));
+            console.log('🎤 Voice commands: "Hey Maiya", "Analyze business", "Create document"');
+            console.log('⚙️ Advanced settings: Multi-language, voice synthesis, wake words');
             console.log('📄 Document generation available');
             console.log('🎯 Presentation creation ready');
             console.log('📊 Enhanced business analysis capabilities enabled');
