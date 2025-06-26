@@ -9,7 +9,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#2d1517">
     
-    <title>REFIT - Complete Mobile Business System with Maiya AI</title>
+    <title>REFIT - Complete Mobile Business System with ClaudeAI Voice</title>
     
     <!-- PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1384,11 +1384,11 @@
                 <div class="app-logo" id="app-logo">🌅</div>
                 <div class="app-title">
                     <h1 id="company-name">REFIT BUSINESS SYSTEM</h1>
-                    <p id="company-subtitle">Complete Solution with Maiya AI</p>
+                    <p id="company-subtitle">Complete Solution with ClaudeAI Voice</p>
                 </div>
             </div>
             <div class="header-right">
-                <button class="header-btn maiya-btn" onclick="toggleMaiyaChat()" title="Maiya AI Assistant" id="maiya-toggle">
+                <button class="header-btn maiya-btn" onclick="toggleClaudeAIChat()" title="ClaudeAI Voice Assistant" id="claudeai-toggle">
                     🤖
                 </button>
                 <button class="header-btn" onclick="testVoiceSystem()" title="Test Voice" style="background: linear-gradient(135deg, #10b981, #34d399);">
@@ -1404,35 +1404,35 @@
             <span>🎤</span>
         </div>
 
-        <!-- Maiya AI Chat Interface -->
-        <div id="maiya-chat" class="maiya-chat">
+        <!-- ClaudeAI Voice Chat Interface -->
+        <div id="claudeai-chat" class="maiya-chat">
             <div class="maiya-header">
                 <div style="display: flex; align-items: center;">
                     <div class="maiya-avatar">🤖</div>
                     <div>
                         <div class="maiya-status">
-                            <span>Maiya AI Assistant</span>
+                            <span>ClaudeAI Voice Assistant</span>
                             <div class="maiya-status-dot"></div>
                         </div>
-                        <div style="font-size: 12px; opacity: 0.8;" id="maiya-status-text">Ready to help</div>
+                        <div style="font-size: 12px; opacity: 0.8;" id="claudeai-status-text">Ready to help</div>
                     </div>
                 </div>
-                <button onclick="closeMaiyaChat()" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">✕</button>
+                <button onclick="closeClaudeAIChat()" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">✕</button>
             </div>
-            <div class="maiya-messages" id="maiya-messages">
+            <div class="maiya-messages" id="claudeai-messages">
                 <div class="maiya-message ai">
-                    Hello! I'm Maiya - essentially Claude.ai with a personal touch. I can help with absolutely anything: creative writing, programming, life advice, philosophical discussions, business strategy, casual conversation, or whatever interests you. What's on your mind?
+                    Hello! I'm Claude with voice capabilities. I can help with absolutely anything: creative writing, programming, life advice, philosophical discussions, business strategy, casual conversation, or whatever interests you. What's on your mind?
                 </div>
             </div>
             <div class="maiya-input-area">
                 <textarea 
                     class="maiya-input" 
-                    id="maiya-input" 
+                    id="claudeai-input" 
                     placeholder="Type your message or click 🎤 to speak..."
                     rows="1"
-                    onkeypress="handleMaiyaKeyPress(event)"
+                    onkeypress="handleClaudeAIKeyPress(event)"
                 ></textarea>
-                <button class="maiya-send-btn" onclick="sendMaiyaMessage()" title="Send Message">
+                <button class="maiya-send-btn" onclick="sendClaudeAIMessage()" title="Send Message">
                     📤
                 </button>
                 <button class="maiya-voice-btn" onclick="toggleVoiceInput()" title="Voice Input" id="voice-btn">
@@ -1494,10 +1494,10 @@
                     </div>
                 </div>
 
-                <!-- Welcome Card with Maiya -->
+                <!-- Welcome Card with ClaudeAI -->
                 <div class="card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; text-align: center;">
-                    <h3 style="margin-bottom: 16px; font-size: 20px;">🧠 Meet Maiya - Claude.ai with Personality</h3>
-                    <p style="margin-bottom: 16px; opacity: 0.9;">Maiya has all of Claude.ai's capabilities with a personal touch. From creative writing to coding, philosophical discussions to practical problem-solving, academic research to casual conversation - there are no limits to what we can explore together.</p>
+                    <h3 style="margin-bottom: 16px; font-size: 20px;">🧠 Meet ClaudeAI Voice - Complete AI Assistant</h3>
+                    <p style="margin-bottom: 16px; opacity: 0.9;">ClaudeAI with full voice capabilities and unlimited potential. From creative writing to coding, philosophical discussions to practical problem-solving, academic research to casual conversation - there are no limits to what we can explore together.</p>
                     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
                         <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
                             <div style="font-size: 24px; margin-bottom: 4px;">✍️</div>
@@ -1517,7 +1517,7 @@
                         </div>
                     </div>
                     <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn" onclick="toggleMaiyaChat()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
+                        <button class="btn" onclick="toggleClaudeAIChat()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
                             💬 Chat About Anything
                         </button>
                         <button class="btn" onclick="startCreativeWriting()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
@@ -1566,9 +1566,9 @@
                     </div>
                 </div>
 
-                <!-- Quick Actions with Maiya -->
+                <!-- Quick Actions with ClaudeAI -->
                 <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🚀 Quick Access to Maiya</h3>
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🚀 Quick Access to ClaudeAI</h3>
                     <div class="quick-actions">
                         <button class="quick-btn primary" onclick="createQuote()">
                             <span class="icon">📋</span>
@@ -1707,9 +1707,9 @@
                     <span class="icon">👥</span>
                     <span>Customers</span>
                 </div>
-                <div class="nav-item" onclick="toggleMaiyaChat()">
+                <div class="nav-item" onclick="toggleClaudeAIChat()">
                     <span class="icon">🤖</span>
-                    <span>Maiya</span>
+                    <span>ClaudeAI</span>
                 </div>
                 <div class="nav-item" onclick="showView('settings')">
                     <span class="icon">⚙️</span>
@@ -1727,7 +1727,7 @@
 
     <script>
         // ===== FIXED VOICE AI SYSTEM =====
-        class FixedVoiceAI {
+        class FixedClaudeAIVoice {
             constructor() {
                 this.isListening = false;
                 this.isSpeaking = false;
@@ -2063,12 +2063,12 @@
                 this.speak(response);
                 
                 // Open chat if not already open
-                if (!document.getElementById('maiya-chat').classList.contains('show')) {
-                    toggleMaiyaChat();
+                if (!document.getElementById('claudeai-chat').classList.contains('show')) {
+                    toggleClaudeAIChat();
                 }
                 
                 this.updateStatus('👋 Wake word detected');
-                showSuccessMessage('👋 Maiya is ready for anything!');
+                showSuccessMessage('👋 ClaudeAI is ready for anything!');
             }
 
             handleVoiceCommands(transcript) {
@@ -2284,7 +2284,7 @@
             }
 
             addMessageToChat(message, sender) {
-                const messagesContainer = document.getElementById('maiya-messages');
+                const messagesContainer = document.getElementById('claudeai-messages');
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `maiya-message ${sender}`;
                 messageDiv.textContent = message;
@@ -2306,9 +2306,9 @@
                 // Greeting responses - Full AI assistant introduction
                 if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
                     const greetings = [
-                        "Hello! I'm Maiya - essentially Claude.ai with a personal touch. I can help with absolutely anything: creative writing, programming, academic research, life advice, philosophical discussions, business strategy, or just casual conversation. What's on your mind?",
-                        "Hi there! I'm Maiya, your complete AI assistant. Think of me as Claude.ai but with a name. I'm here for everything - from solving complex problems to having fun conversations, creative projects to serious analysis. How can I help?",
-                        "Hey! I'm Maiya. I have all of Claude.ai's capabilities - I can code, write stories, solve math problems, give life advice, discuss philosophy, help with business, or chat about anything. What would you like to explore together?"
+                        "Hello! I'm Claude with voice capabilities. I can help with absolutely anything: creative writing, programming, academic research, life advice, philosophical discussions, business strategy, or just casual conversation. What's on your mind?",
+                        "Hi there! I'm Claude, your complete AI assistant with voice. I'm here for everything - from solving complex problems to having fun conversations, creative projects to serious analysis. How can I help?",
+                        "Hey! I'm Claude with voice enabled. I can code, write stories, solve math problems, give life advice, discuss philosophy, help with business, or chat about anything. What would you like to explore together?"
                     ];
                     return greetings[Math.floor(Math.random() * greetings.length)];
                 }
@@ -2370,7 +2370,7 @@
                 
                 // Default comprehensive response - Claude-like
                 const responseTemplates = [
-                    `That's an interesting question about "${message.substring(0, 40)}${message.length > 40 ? '...' : ''}". I'm Maiya, with all of Claude.ai's capabilities, so I can approach this from many angles. Could you tell me more about what you're looking for? Are you interested in a detailed explanation, creative exploration, problem-solving approach, or something else?`,
+                    `That's an interesting question about "${message.substring(0, 40)}${message.length > 40 ? '...' : ''}". I'm Claude with voice capabilities, so I can approach this from many angles. Could you tell me more about what you're looking for? Are you interested in a detailed explanation, creative exploration, problem-solving approach, or something else?`,
                     
                     `I see you're asking about "${message.substring(0, 40)}${message.length > 40 ? '...' : ''}". As your AI assistant, I can help with this in various ways - whether you want analytical thinking, creative approaches, practical solutions, or just an interesting discussion. What perspective would be most helpful?`,
                     
@@ -2395,9 +2395,9 @@
 
             clearHistory() {
                 this.chatHistory = [];
-                document.getElementById('maiya-messages').innerHTML = `
+                document.getElementById('claudeai-messages').innerHTML = `
                     <div class="maiya-message ai">
-                        Hello! I'm Maiya - essentially Claude.ai with a personal touch. I can help with absolutely anything: creative writing, programming, life advice, philosophical discussions, business strategy, casual conversation, or whatever interests you. What's on your mind?
+                        Hello! I'm Claude with voice capabilities. I can help with absolutely anything: creative writing, programming, life advice, philosophical discussions, business strategy, casual conversation, or whatever interests you. What's on your mind?
                     </div>
                 `;
                 showSuccessMessage('🗑️ Chat history cleared!');
@@ -2405,7 +2405,7 @@
 
             updateUI() {
                 const voiceBtn = document.getElementById('voice-btn');
-                const maiyaBtn = document.getElementById('maiya-toggle');
+                const claudeaiBtn = document.getElementById('claudeai-toggle');
                 
                 // Update voice button
                 if (voiceBtn) {
@@ -2425,24 +2425,24 @@
                     }
                 }
 
-                // Update Maiya button
-                if (maiyaBtn) {
+                // Update ClaudeAI button
+                if (claudeaiBtn) {
                     if (this.isListening) {
-                        maiyaBtn.classList.add('listening');
+                        claudeaiBtn.classList.add('listening');
                     } else {
-                        maiyaBtn.classList.remove('listening');
+                        claudeaiBtn.classList.remove('listening');
                     }
 
                     if (this.isSpeaking) {
-                        maiyaBtn.classList.add('processing');
+                        claudeaiBtn.classList.add('processing');
                     } else {
-                        maiyaBtn.classList.remove('processing');
+                        claudeaiBtn.classList.remove('processing');
                     }
                 }
             }
 
             updateStatus(status) {
-                const statusText = document.getElementById('maiya-status-text');
+                const statusText = document.getElementById('claudeai-status-text');
                 if (statusText) {
                     statusText.textContent = status;
                 }
@@ -2637,42 +2637,42 @@
         let voiceAI = new FixedVoiceAI();
 
         // ===== VOICE FUNCTIONS =====
-        function toggleMaiyaChat() {
-            const chat = document.getElementById('maiya-chat');
+        function toggleClaudeAIChat() {
+            const chat = document.getElementById('claudeai-chat');
             const isVisible = chat.classList.contains('show');
             
             if (isVisible) {
                 chat.classList.remove('show');
             } else {
                 chat.classList.add('show');
-                document.getElementById('maiya-input').focus();
+                document.getElementById('claudeai-input').focus();
             }
         }
 
-        function closeMaiyaChat() {
-            document.getElementById('maiya-chat').classList.remove('show');
+        function closeClaudeAIChat() {
+            document.getElementById('claudeai-chat').classList.remove('show');
         }
 
-        function sendMaiyaMessage() {
-            const input = document.getElementById('maiya-input');
+        function sendClaudeAIMessage() {
+            const input = document.getElementById('claudeai-input');
             const message = input.value.trim();
             if (message) {
-                voiceAI.sendMessage(message);
+                claudeAI.sendMessage(message);
             }
         }
 
-        function handleMaiyaKeyPress(event) {
+        function handleClaudeAIKeyPress(event) {
             if (event.key === 'Enter' && !event.shiftKey) {
                 event.preventDefault();
-                sendMaiyaMessage();
+                sendClaudeAIMessage();
             }
         }
 
         function toggleVoiceInput() {
-            if (voiceAI.isListening) {
-                voiceAI.stopVoiceInput();
+            if (claudeAI.isListening) {
+                claudeAI.stopVoiceInput();
             } else {
-                voiceAI.startVoiceInput().catch(error => {
+                claudeAI.startVoiceInput().catch(error => {
                     console.error('Error starting voice input:', error);
                     showSuccessMessage('❌ Error starting voice input: ' + error.message);
                 });
@@ -2681,58 +2681,58 @@
 
         // ===== VOICE TEST FUNCTIONS =====
         function testVoiceSystem() {
-            voiceAI.testFullSystem();
+            claudeAI.testFullSystem();
         }
 
         function testMicrophone() {
-            voiceAI.testMicrophone();
+            claudeAI.testMicrophone();
         }
 
         function testSpeakers() {
-            voiceAI.testSpeakers();
+            claudeAI.testSpeakers();
         }
 
         function testVoiceRecognition() {
-            voiceAI.testVoiceRecognition();
+            claudeAI.testVoiceRecognition();
         }
 
         function testSpeechSynthesis() {
-            voiceAI.testSpeechSynthesis();
+            claudeAI.testSpeechSynthesis();
         }
 
         function testFullVoiceSystem() {
-            voiceAI.testFullSystem();
+            claudeAI.testFullSystem();
         }
 
         function requestMicrophoneAccess() {
-            voiceAI.requestMicrophonePermission().then(() => {
+            claudeAI.requestMicrophonePermission().then(() => {
                 showSuccessMessage('✅ Microphone access granted!');
-                voiceAI.updateVoiceStatus();
+                claudeAI.updateVoiceStatus();
             }).catch(error => {
                 showSuccessMessage('❌ Failed to get microphone access: ' + error.message);
             });
         }
 
         function testSpeechOutput() {
-            voiceAI.speak("Hello! This is a test of the speech output system. If you can hear this message clearly, speech synthesis is working correctly.");
+            claudeAI.speak("Hello! This is a test of the speech output system. If you can hear this message clearly, speech synthesis is working correctly.");
         }
 
         function startListening() {
-            voiceAI.startVoiceInput().catch(error => {
+            claudeAI.startVoiceInput().catch(error => {
                 showSuccessMessage('❌ Error starting voice input: ' + error.message);
             });
         }
 
         function startVoiceConversation() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.speak("Voice conversation mode activated. You can now speak to me!");
-                showSuccessMessage('💬 Voice conversation started! Say "Hey Maiya" to begin.');
+                claudeAI.speak("Voice conversation mode activated. You can now speak to me!");
+                showSuccessMessage('💬 Voice conversation started! Say "Hey Claude" to begin.');
             }, 500);
         }
 
         function sayHelloMaiya() {
-            voiceAI.processVoiceInput("Hey Maiya");
+            claudeAI.processVoiceInput("Hey Claude");
         }
 
         // ===== THEME MANAGEMENT =====
@@ -2922,86 +2922,86 @@
 
         // ===== COMPLETE AI CAPABILITY FUNCTIONS =====
         function startGeneralConversation() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('Let\'s have a casual conversation. I\'d like to chat about whatever is on my mind or just talk like friends.');
+                claudeAI.sendMessage('Let\'s have a casual conversation. I\'d like to chat about whatever is on my mind or just talk like friends.');
             }, 500);
         }
 
         function startCreativeWriting() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I\'m interested in creative writing. Can you help me with stories, poems, scripts, or any creative project I have in mind?');
+                claudeAI.sendMessage('I\'m interested in creative writing. Can you help me with stories, poems, scripts, or any creative project I have in mind?');
             }, 500);
         }
 
         function startProgrammingHelp() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I need programming and technical assistance. Can you help me with coding, debugging, software development, or technical problems?');
+                claudeAI.sendMessage('I need programming and technical assistance. Can you help me with coding, debugging, software development, or technical problems?');
             }, 500);
         }
 
         function startAcademicHelp() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I need academic and learning support. Can you help me with research, studying, explanations, or educational topics?');
+                claudeAI.sendMessage('I need academic and learning support. Can you help me with research, studying, explanations, or educational topics?');
             }, 500);
         }
 
         function startLifeCoaching() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I\'d like personal life coaching and advice. Can you help me with relationships, personal development, life decisions, or general life guidance?');
+                claudeAI.sendMessage('I\'d like personal life coaching and advice. Can you help me with relationships, personal development, life decisions, or general life guidance?');
             }, 500);
         }
 
         function startEntertainment() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I want to have some fun! Can we play games, tell jokes, do creative challenges, or just have an entertaining conversation?');
+                claudeAI.sendMessage('I want to have some fun! Can we play games, tell jokes, do creative challenges, or just have an entertaining conversation?');
             }, 500);
         }
 
         function startHealthFitness() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I\'m interested in health and fitness guidance. Can you help me with wellness, exercise, nutrition, or healthy lifestyle advice?');
+                claudeAI.sendMessage('I\'m interested in health and fitness guidance. Can you help me with wellness, exercise, nutrition, or healthy lifestyle advice?');
             }, 500);
         }
 
         function startTravelLifestyle() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I\'d like help with travel and lifestyle topics. Can you assist with trip planning, cultural insights, or lifestyle recommendations?');
+                claudeAI.sendMessage('I\'d like help with travel and lifestyle topics. Can you assist with trip planning, cultural insights, or lifestyle recommendations?');
             }, 500);
         }
 
         function startArtsCulture() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I\'m interested in arts and culture. Can you discuss art, music, cultural topics, or help with creative artistic projects?');
+                claudeAI.sendMessage('I\'m interested in arts and culture. Can you discuss art, music, cultural topics, or help with creative artistic projects?');
             }, 500);
         }
 
         function startScienceTech() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I want to explore science and technology topics. Can you explain scientific concepts, discuss research, or help with technical analysis?');
+                claudeAI.sendMessage('I want to explore science and technology topics. Can you explain scientific concepts, discuss research, or help with technical analysis?');
             }, 500);
         }
 
         function startPhilosophy() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I\'d like to have deep philosophical discussions. Can we explore ethics, meaning of life, moral questions, or big philosophical ideas?');
+                claudeAI.sendMessage('I\'d like to have deep philosophical discussions. Can we explore ethics, meaning of life, moral questions, or big philosophical ideas?');
             }, 500);
         }
 
         function startBusinessConsulting() {
-            toggleMaiyaChat();
+            toggleClaudeAIChat();
             setTimeout(() => {
-                voiceAI.sendMessage('I need comprehensive business consulting. Can you help me with strategic planning, financial analysis, marketing, operations, or any business challenge?');
+                claudeAI.sendMessage('I need comprehensive business consulting. Can you help me with strategic planning, financial analysis, marketing, operations, or any business challenge?');
             }, 500);
         }
 
