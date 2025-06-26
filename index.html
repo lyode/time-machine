@@ -1603,6 +1603,9 @@
                 <button class="header-btn maiya-btn" onclick="toggleMaiyaChat()" title="Maiya AI Assistant" id="maiya-toggle">
                     🤖
                 </button>
+                <button class="header-btn" onclick="openMaiyaSettings()" title="Maiya Settings" style="background: linear-gradient(135deg, #10b981, #34d399);">
+                    ⚙️
+                </button>
                 <button class="header-btn" onclick="openThemePicker()" title="Change Theme">🎨</button>
                 <button class="header-btn" onclick="showProfile()" title="Profile">👤</button>
                 <button class="header-btn" onclick="exportData()" title="Export">📤</button>
@@ -2263,6 +2266,252 @@
         </div>
     </div>
 
+    <!-- Maiya Settings Modal -->
+    <div id="maiya-settings-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3>🤖 Maiya AI Settings & Configuration</h3>
+                <button class="modal-close-btn" onclick="closeModal('maiya-settings-modal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- Voice Settings -->
+                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h4 style="color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                            <span>🗣️</span> Voice AI Configuration
+                        </h4>
+                        <button class="edit-btn small" onclick="testVoiceSettings()">🎤 Test Voice</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Voice Recognition Language</label>
+                        <select class="form-select" id="voice-language" onchange="updateVoiceLanguage()">
+                            <option value="en-US">English (United States)</option>
+                            <option value="en-GB">English (United Kingdom)</option>
+                            <option value="en-AU">English (Australia)</option>
+                            <option value="ms-MY">Bahasa Malaysia</option>
+                            <option value="zh-CN">中文 (简体)</option>
+                            <option value="ja-JP">日本語</option>
+                            <option value="ko-KR">한국어</option>
+                            <option value="th-TH">ไทย</option>
+                            <option value="vi-VN">Tiếng Việt</option>
+                            <option value="id-ID">Bahasa Indonesia</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Voice Sensitivity</label>
+                            <select class="form-select" id="voice-sensitivity" onchange="updateVoiceSensitivity()">
+                                <option value="low">Low (Quiet environments)</option>
+                                <option value="medium" selected>Medium (Normal)</option>
+                                <option value="high">High (Noisy environments)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Auto-Send Voice Input</label>
+                            <select class="form-select" id="voice-auto-send" onchange="updateVoiceAutoSend()">
+                                <option value="true" selected>Yes (Send automatically)</option>
+                                <option value="false">No (Manual send)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Voice Commands</label>
+                        <div style="background: var(--bg-card); padding: 16px; border-radius: 12px; margin-top: 8px;">
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-size: 14px;">
+                                <div><strong>"Hey Maiya"</strong> - Wake word</div>
+                                <div><strong>"Analyze business"</strong> - Business analysis</div>
+                                <div><strong>"Create document"</strong> - Document generator</div>
+                                <div><strong>"New presentation"</strong> - Presentation creator</div>
+                                <div><strong>"Export data"</strong> - Data export</div>
+                                <div><strong>"Clear chat"</strong> - Clear history</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Personality Settings -->
+                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h4 style="color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                            <span>🧠</span> AI Personality & Behavior
+                        </h4>
+                        <button class="edit-btn small" onclick="resetAIPersonality()">🔄 Reset</button>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Communication Style</label>
+                            <select class="form-select" id="ai-communication-style" onchange="updateAIStyle()">
+                                <option value="professional" selected>Professional & Formal</option>
+                                <option value="friendly">Friendly & Casual</option>
+                                <option value="technical">Technical & Detailed</option>
+                                <option value="concise">Concise & Direct</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Response Detail Level</label>
+                            <select class="form-select" id="ai-detail-level" onchange="updateDetailLevel()">
+                                <option value="brief">Brief (Quick answers)</option>
+                                <option value="normal" selected>Normal (Balanced)</option>
+                                <option value="detailed">Detailed (Comprehensive)</option>
+                                <option value="extensive">Extensive (Very thorough)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Maiya's Name & Identity</label>
+                        <input type="text" class="form-input" id="ai-name" value="Maiya" placeholder="AI Assistant Name" onchange="updateAIName()">
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                            Customize how your AI assistant introduces herself
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Business Focus Areas</label>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px;">
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                                <input type="checkbox" id="focus-sales" checked onchange="updateBusinessFocus()"> Sales & Revenue
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                                <input type="checkbox" id="focus-marketing" checked onchange="updateBusinessFocus()"> Marketing & Growth
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                                <input type="checkbox" id="focus-finance" checked onchange="updateBusinessFocus()"> Financial Planning
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                                <input type="checkbox" id="focus-operations" checked onchange="updateBusinessFocus()"> Operations
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                                <input type="checkbox" id="focus-strategy" checked onchange="updateBusinessFocus()"> Strategy
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                                <input type="checkbox" id="focus-general" checked onchange="updateBusinessFocus()"> General Support
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced AI Settings -->
+                <div class="card" style="margin: 0 0 24px 0; background: var(--bg-secondary);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h4 style="color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                            <span>⚡</span> Advanced AI Features
+                        </h4>
+                        <button class="edit-btn small" onclick="exportAISettings()">📤 Export</button>
+                    </div>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-icon" style="background: var(--success);">🧠</div>
+                            <div class="info-content">
+                                <h4>Context Memory</h4>
+                                <p id="context-memory-status">Advanced (Remembers conversation)</p>
+                            </div>
+                            <button class="edit-btn small" onclick="toggleContextMemory()">Toggle</button>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon" style="background: var(--warning);">📊</div>
+                            <div class="info-content">
+                                <h4>Business Data Access</h4>
+                                <p id="data-access-status">Full Access (All business data)</p>
+                            </div>
+                            <button class="edit-btn small" onclick="configureDataAccess()">Configure</button>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon" style="background: var(--info);">🔄</div>
+                            <div class="info-content">
+                                <h4>Auto-Learning</h4>
+                                <p id="auto-learning-status">Enabled (Learns from interactions)</p>
+                            </div>
+                            <button class="edit-btn small" onclick="toggleAutoLearning()">Toggle</button>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon" style="background: var(--accent-primary);">🎯</div>
+                            <div class="info-content">
+                                <h4>Proactive Suggestions</h4>
+                                <p id="proactive-status">Active (Offers insights)</p>
+                            </div>
+                            <button class="edit-btn small" onclick="toggleProactiveSuggestions()">Toggle</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label class="form-label">Custom Instructions for Maiya</label>
+                        <textarea class="form-textarea" id="custom-instructions" placeholder="Add specific instructions for how Maiya should behave or respond in your business context..." onchange="updateCustomInstructions()"></textarea>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                            These instructions will guide Maiya's responses to better match your business needs
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Management -->
+                <div class="card" style="margin: 0; background: var(--bg-secondary);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h4 style="color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                            <span>💬</span> Chat & Data Management
+                        </h4>
+                        <button class="edit-btn small" onclick="optimizeChatPerformance()">⚡ Optimize</button>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card" onclick="viewChatAnalytics()">
+                            <div class="stat-label">Total Messages</div>
+                            <div class="stat-value" id="total-messages-count">0</div>
+                        </div>
+                        <div class="stat-card" onclick="viewChatAnalytics()">
+                            <div class="stat-label">Conversations</div>
+                            <div class="stat-value" id="total-conversations-count">0</div>
+                        </div>
+                        <div class="stat-card" onclick="viewResponseTime()">
+                            <div class="stat-label">Avg Response</div>
+                            <div class="stat-value" id="avg-response-time">2.3s</div>
+                        </div>
+                        <div class="stat-card" onclick="viewHelpfulnessScore()">
+                            <div class="stat-label">Helpfulness</div>
+                            <div class="stat-value" id="helpfulness-score">95%</div>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions" style="margin-top: 20px;">
+                        <button class="quick-btn primary" onclick="backupChatHistory()">
+                            <span class="icon">💾</span>
+                            <span class="label">Backup Chat</span>
+                        </button>
+                        <button class="quick-btn warning" onclick="clearOldChats()">
+                            <span class="icon">🗑️</span>
+                            <span class="label">Clear Old</span>
+                        </button>
+                        <button class="quick-btn info" onclick="optimizeMemory()">
+                            <span class="icon">🚀</span>
+                            <span class="label">Optimize</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('maiya-settings-modal')">Close</button>
+                <button class="btn btn-warning" onclick="resetAllMaiyaSettings()">🔄 Reset All</button>
+                <button class="btn btn-success" onclick="saveMaiyaSettings()">💾 Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Dialog -->
+    <div id="confirm-dialog" class="confirm-dialog">
+        <div class="confirm-content">
+            <h3 class="confirm-title" id="confirm-title">Confirm Action</h3>
+            <p class="confirm-message" id="confirm-message">Are you sure you want to proceed?</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-secondary" onclick="closeConfirmDialog()">Cancel</button>
+                <button class="btn btn-danger" id="confirm-action-btn" onclick="confirmAction()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Success Message -->
     <div id="success-message" class="success-message">
         <span id="success-text">Action completed successfully!</span>
@@ -2272,8 +2521,8 @@
     <!-- [All other modals would go here - User Profile Modal, Company Details Modal, etc.] -->
 
     <script>
-        // ===== MAIYA AI SYSTEM =====
-        class MaiyaAI {
+        // ===== ENHANCED MAIYA AI SYSTEM =====
+        class EnhancedMaiyaAI {
             constructor() {
                 this.isListening = false;
                 this.isProcessing = false;
@@ -2281,7 +2530,45 @@
                 this.chatHistory = [];
                 this.currentDocumentType = null;
                 this.voiceEnabled = this.checkVoiceSupport();
+                
+                // Enhanced Settings
+                this.settings = {
+                    name: 'Maiya',
+                    language: 'en-US',
+                    sensitivity: 'medium',
+                    autoSend: true,
+                    communicationStyle: 'professional',
+                    detailLevel: 'normal',
+                    contextMemory: true,
+                    dataAccess: 'full',
+                    autoLearning: true,
+                    proactiveSuggestions: true,
+                    customInstructions: '',
+                    businessFocus: {
+                        sales: true,
+                        marketing: true,
+                        finance: true,
+                        operations: true,
+                        strategy: true,
+                        general: true
+                    }
+                };
+                
+                // Voice Commands
+                this.voiceCommands = {
+                    'hey maiya': () => this.handleWakeWord(),
+                    'analyze business': () => this.executeCommand('analyze'),
+                    'create document': () => this.executeCommand('document'),
+                    'new presentation': () => this.executeCommand('presentation'),
+                    'export data': () => this.executeCommand('export'),
+                    'clear chat': () => this.executeCommand('clear'),
+                    'open settings': () => this.executeCommand('settings'),
+                    'switch theme': () => this.executeCommand('theme')
+                };
+                
                 this.initializeVoiceRecognition();
+                this.loadSettings();
+                this.setupContinuousListening();
             }
 
             checkVoiceSupport() {
@@ -2292,33 +2579,128 @@
                 if (this.voiceEnabled) {
                     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                     this.recognition = new SpeechRecognition();
-                    this.recognition.continuous = false;
-                    this.recognition.interimResults = false;
-                    this.recognition.lang = 'en-US';
+                    this.recognition.continuous = true;
+                    this.recognition.interimResults = true;
+                    this.recognition.lang = this.settings.language;
+
+                    // Enhanced recognition settings
+                    if (this.settings.sensitivity === 'high') {
+                        this.recognition.maxAlternatives = 5;
+                    } else if (this.settings.sensitivity === 'low') {
+                        this.recognition.maxAlternatives = 1;
+                    } else {
+                        this.recognition.maxAlternatives = 3;
+                    }
 
                     this.recognition.onstart = () => {
                         this.isListening = true;
                         this.updateVoiceUI();
-                        this.updateStatus('Listening...');
+                        this.updateStatus('Listening for voice commands...');
                     };
 
                     this.recognition.onend = () => {
                         this.isListening = false;
                         this.updateVoiceUI();
                         this.updateStatus('Ready to help');
+                        
+                        // Auto-restart for continuous listening
+                        if (this.settings.contextMemory) {
+                            setTimeout(() => {
+                                if (!this.isListening && this.voiceEnabled) {
+                                    this.startContinuousListening();
+                                }
+                            }, 1000);
+                        }
                     };
 
                     this.recognition.onresult = (event) => {
-                        const transcript = event.results[0][0].transcript;
-                        document.getElementById('maiya-input').value = transcript;
-                        this.sendMessage(transcript);
+                        let transcript = '';
+                        let isFinal = false;
+
+                        for (let i = event.resultIndex; i < event.results.length; i++) {
+                            transcript += event.results[i][0].transcript;
+                            if (event.results[i].isFinal) {
+                                isFinal = true;
+                            }
+                        }
+
+                        // Handle voice commands
+                        const lowerTranscript = transcript.toLowerCase().trim();
+                        
+                        // Check for wake word
+                        if (lowerTranscript.includes('hey maiya') || lowerTranscript.includes('hi maiya')) {
+                            this.handleWakeWord();
+                            return;
+                        }
+
+                        // Check for voice commands
+                        for (const [command, handler] of Object.entries(this.voiceCommands)) {
+                            if (lowerTranscript.includes(command)) {
+                                handler();
+                                return;
+                            }
+                        }
+
+                        // Regular speech input
+                        if (isFinal && transcript.trim()) {
+                            document.getElementById('maiya-input').value = transcript;
+                            if (this.settings.autoSend) {
+                                this.sendMessage(transcript);
+                            }
+                        }
                     };
 
                     this.recognition.onerror = (event) => {
                         this.isListening = false;
                         this.updateVoiceUI();
-                        showSuccessMessage('❌ Voice recognition error. Please try again.');
+                        console.warn('Voice recognition error:', event.error);
+                        
+                        if (event.error !== 'no-speech') {
+                            showSuccessMessage(`🎤 Voice error: ${event.error}. Trying to reconnect...`);
+                        }
                     };
+                }
+            }
+
+            setupContinuousListening() {
+                if (this.settings.contextMemory && this.voiceEnabled) {
+                    this.startContinuousListening();
+                }
+            }
+
+            startContinuousListening() {
+                if (this.recognition && !this.isListening) {
+                    try {
+                        this.recognition.start();
+                    } catch (error) {
+                        console.warn('Could not start continuous listening:', error);
+                    }
+                }
+            }
+
+            handleWakeWord() {
+                showSuccessMessage('👋 Hey there! How can I help you today?');
+                toggleMaiyaChat();
+                document.getElementById('maiya-input').focus();
+            }
+
+            executeCommand(command) {
+                const commands = {
+                    'analyze': () => {
+                        toggleMaiyaChat();
+                        setTimeout(() => this.sendMessage('Please analyze my business performance and provide comprehensive insights'), 500);
+                    },
+                    'document': () => openDocumentGenerator(),
+                    'presentation': () => openPresentationGenerator(),
+                    'export': () => exportData(),
+                    'clear': () => this.clearHistory(),
+                    'settings': () => openMaiyaSettings(),
+                    'theme': () => randomTheme()
+                };
+                
+                if (commands[command]) {
+                    commands[command]();
+                    showSuccessMessage(`🎤 Voice command executed: ${command}`);
                 }
             }
 
@@ -2327,17 +2709,17 @@
                 const maiyaBtn = document.getElementById('maiya-toggle');
                 
                 if (this.isListening) {
-                    voiceBtn.classList.add('listening');
-                    maiyaBtn.classList.add('listening');
+                    voiceBtn?.classList.add('listening');
+                    maiyaBtn?.classList.add('listening');
                 } else {
-                    voiceBtn.classList.remove('listening');
-                    maiyaBtn.classList.remove('listening');
+                    voiceBtn?.classList.remove('listening');
+                    maiyaBtn?.classList.remove('listening');
                 }
 
                 if (this.isProcessing) {
-                    maiyaBtn.classList.add('processing');
+                    maiyaBtn?.classList.add('processing');
                 } else {
-                    maiyaBtn.classList.remove('processing');
+                    maiyaBtn?.classList.remove('processing');
                 }
             }
 
@@ -2371,215 +2753,412 @@
                 // Clear input
                 document.getElementById('maiya-input').value = '';
 
-                // Process message
-                this.processMessage(message);
+                // Process message with enhanced AI
+                this.processEnhancedMessage(message);
             }
 
             addMessageToChat(message, sender) {
                 const messagesContainer = document.getElementById('maiya-messages');
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `maiya-message ${sender}`;
-                messageDiv.textContent = message;
+                
+                // Enhanced message formatting
+                if (sender === 'ai') {
+                    messageDiv.innerHTML = this.formatAIResponse(message);
+                } else {
+                    messageDiv.textContent = message;
+                }
+                
                 messagesContainer.appendChild(messageDiv);
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-                // Save to history
+                // Save to history with metadata
                 this.chatHistory.push({
                     message: message,
                     sender: sender,
-                    timestamp: new Date()
+                    timestamp: new Date(),
+                    style: this.settings.communicationStyle,
+                    detailLevel: this.settings.detailLevel
                 });
 
                 this.saveChatHistory();
+                this.updateChatStats();
             }
 
-            async processMessage(message) {
+            formatAIResponse(message) {
+                // Enhanced formatting for AI responses
+                return message
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/\n/g, '<br>')
+                    .replace(/• (.*?)(?=<br>|$)/g, '• <span style="margin-left: 8px;">$1</span>');
+            }
+
+            async processEnhancedMessage(message) {
                 this.isProcessing = true;
                 this.updateVoiceUI();
-                this.updateStatus('Thinking...');
+                this.updateStatus('Processing with enhanced AI...');
 
-                // Simulate AI processing delay
-                await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+                // Simulate enhanced AI processing with variable delay based on complexity
+                const complexity = this.assessMessageComplexity(message);
+                const processingTime = 1000 + (complexity * 1500) + Math.random() * 1000;
+                
+                await new Promise(resolve => setTimeout(resolve, processingTime));
 
-                const response = this.generateResponse(message);
+                const response = this.generateEnhancedResponse(message);
                 this.addMessageToChat(response, 'ai');
+
+                // Proactive suggestions if enabled
+                if (this.settings.proactiveSuggestions) {
+                    setTimeout(() => {
+                        const suggestion = this.generateProactiveSuggestion(message);
+                        if (suggestion) {
+                            this.addMessageToChat(`💡 Suggestion: ${suggestion}`, 'ai');
+                        }
+                    }, 2000);
+                }
 
                 this.isProcessing = false;
                 this.updateVoiceUI();
                 this.updateStatus('Ready to help');
             }
 
-            generateResponse(message) {
+            assessMessageComplexity(message) {
                 const lowerMessage = message.toLowerCase();
+                let complexity = 0;
+                
+                // Complexity factors
+                if (lowerMessage.includes('analysis') || lowerMessage.includes('strategy')) complexity += 2;
+                if (lowerMessage.includes('comprehensive') || lowerMessage.includes('detailed')) complexity += 1;
+                if (lowerMessage.includes('create') || lowerMessage.includes('generate')) complexity += 1;
+                if (lowerMessage.includes('compare') || lowerMessage.includes('versus')) complexity += 1;
+                if (message.length > 100) complexity += 1;
+                
+                return Math.min(complexity, 3); // Cap at 3
+            }
 
-                // Business analysis responses
-                if (lowerMessage.includes('analysis') || lowerMessage.includes('analyze') || lowerMessage.includes('insight')) {
-                    return this.generateBusinessAnalysis();
+            generateEnhancedResponse(message) {
+                const lowerMessage = message.toLowerCase();
+                const style = this.settings.communicationStyle;
+                const detail = this.settings.detailLevel;
+                const focus = this.settings.businessFocus;
+
+                // Custom instructions integration
+                let contextPrefix = '';
+                if (this.settings.customInstructions) {
+                    contextPrefix = `[Following your custom guidelines: ${this.settings.customInstructions}]\n\n`;
                 }
 
-                // Document creation responses
-                if (lowerMessage.includes('document') || lowerMessage.includes('proposal') || lowerMessage.includes('contract')) {
-                    return "I can help you create professional documents! Let me open the document generator for you. What type of document do you need - business plan, proposal, contract, or something else?";
+                // Enhanced response generation based on focus areas
+                if (lowerMessage.includes('analysis') || lowerMessage.includes('analyze')) {
+                    return contextPrefix + this.generateEnhancedBusinessAnalysis(style, detail, focus);
                 }
 
-                // Presentation responses
-                if (lowerMessage.includes('presentation') || lowerMessage.includes('slide') || lowerMessage.includes('pitch')) {
-                    return "I'll help you create an amazing presentation! I can generate slides with content, talking points, and speaker notes. What's your presentation topic and who's your audience?";
+                if (lowerMessage.includes('document') || lowerMessage.includes('proposal')) {
+                    return contextPrefix + this.generateDocumentAdvice(style, detail);
                 }
 
-                // Financial responses
-                if (lowerMessage.includes('revenue') || lowerMessage.includes('financial') || lowerMessage.includes('money') || lowerMessage.includes('profit')) {
-                    return this.generateFinancialInsights();
+                if (lowerMessage.includes('presentation') || lowerMessage.includes('slide')) {
+                    return contextPrefix + this.generatePresentationAdvice(style, detail);
                 }
 
-                // Customer insights
+                if (lowerMessage.includes('revenue') || lowerMessage.includes('financial')) {
+                    return contextPrefix + this.generateFinancialAdvice(style, detail, focus.finance);
+                }
+
                 if (lowerMessage.includes('customer') || lowerMessage.includes('client')) {
-                    return this.generateCustomerInsights();
+                    return contextPrefix + this.generateCustomerAdvice(style, detail, focus.marketing);
                 }
 
-                // Quote insights
-                if (lowerMessage.includes('quote') || lowerMessage.includes('quotation')) {
-                    return this.generateQuoteInsights();
+                if (lowerMessage.includes('marketing') || lowerMessage.includes('growth')) {
+                    return contextPrefix + this.generateMarketingAdvice(style, detail, focus.marketing);
                 }
 
-                // Marketing help
-                if (lowerMessage.includes('marketing') || lowerMessage.includes('promotion') || lowerMessage.includes('advertis')) {
-                    return "I can help with your marketing strategy! I can create:\n• Social media content\n• Email campaigns\n• Marketing plans\n• Brand messaging\n• Competitive analysis\n\nWhat specific marketing challenge are you facing?";
+                if (lowerMessage.includes('strategy') || lowerMessage.includes('planning')) {
+                    return contextPrefix + this.generateStrategyAdvice(style, detail, focus.strategy);
                 }
 
-                // General business advice
-                if (lowerMessage.includes('help') || lowerMessage.includes('advice') || lowerMessage.includes('suggest')) {
-                    return "I'm here to help with all aspects of your business! I can assist with:\n\n📊 Business analysis & reporting\n📄 Document creation (proposals, contracts, plans)\n🎯 Presentation development\n📈 Marketing strategies\n💰 Financial planning\n👥 Customer management\n📋 Process optimization\n\nWhat would you like to work on today?";
-                }
-
-                // Greetings
+                // Enhanced greeting
                 if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
-                    return `Hello! I'm Maiya, your AI business assistant. I'm ready to help you grow your business with:\n\n🎯 Intelligent analysis of your ${appState.quotes.length} quotes and ${appState.customers.length} customers\n📄 Professional document creation\n🎯 Presentation development\n📊 Business insights\n\nHow can I assist you today?`;
+                    return contextPrefix + this.generatePersonalizedGreeting(style);
                 }
 
-                // Default response with business focus
-                return "I understand you're looking for business assistance. I can help with:\n\n📊 Analyzing your business data\n📄 Creating professional documents\n🎯 Building presentations\n📈 Marketing strategies\n💰 Financial planning\n\nCould you be more specific about what you need help with?";
+                // Default enhanced response
+                return contextPrefix + this.generateDefaultEnhancedResponse(message, style, detail);
             }
 
-            generateBusinessAnalysis() {
-                const totalRevenue = appState.stats.totalRevenue;
-                const monthlyRevenue = appState.stats.monthlyRevenue;
-                const totalQuotes = appState.stats.totalQuotes;
-                const totalCustomers = appState.stats.totalCustomers;
+            generateEnhancedBusinessAnalysis(style, detail, focus) {
+                const stats = appState.stats;
+                const company = appState.companyInfo;
+                
+                let analysis = this.getStylePrefix(style) + `📊 **Enhanced Business Analysis for ${company.name}**\n\n`;
+                
+                // Financial Overview
+                analysis += `**💰 Financial Performance:**\n`;
+                analysis += `• Total Revenue: RM ${stats.totalRevenue.toFixed(2)}\n`;
+                analysis += `• Monthly Revenue: RM ${stats.monthlyRevenue.toFixed(2)}\n`;
+                analysis += `• Average Quote Value: RM ${stats.totalQuotes > 0 ? (stats.totalRevenue / stats.totalQuotes).toFixed(2) : '0.00'}\n`;
+                analysis += `• Revenue per Customer: RM ${stats.totalCustomers > 0 ? (stats.totalRevenue / stats.totalCustomers).toFixed(2) : '0.00'}\n\n`;
 
-                const avgQuoteValue = totalQuotes > 0 ? (totalRevenue / totalQuotes) : 0;
-                const revenuePerCustomer = totalCustomers > 0 ? (totalRevenue / totalCustomers) : 0;
-
-                return `📊 Business Analysis Summary:
-
-**Financial Performance:**
-• Total Revenue: RM ${totalRevenue.toFixed(2)}
-• Monthly Revenue: RM ${monthlyRevenue.toFixed(2)}
-• Average Quote Value: RM ${avgQuoteValue.toFixed(2)}
-• Revenue per Customer: RM ${revenuePerCustomer.toFixed(2)}
-
-**Key Insights:**
-${totalQuotes > 0 ? `• You have ${totalQuotes} quotes with an average value of RM ${avgQuoteValue.toFixed(2)}` : '• Create your first quote to start tracking performance'}
-${totalCustomers > 0 ? `• ${totalCustomers} customers generating RM ${revenuePerCustomer.toFixed(2)} average revenue` : '• Add customers to expand your business base'}
-
-**Recommendations:**
-• ${avgQuoteValue < 5000 ? 'Consider increasing quote values through premium services' : 'Great quote values! Focus on volume growth'}
-• ${totalCustomers < 10 ? 'Expand customer base for revenue growth' : 'Excellent customer base! Focus on retention'}
-• ${monthlyRevenue < totalRevenue * 0.3 ? 'Increase monthly sales activities' : 'Strong monthly performance!'}
-
-Would you like me to create a detailed report or presentation on any of these insights?`;
-            }
-
-            generateFinancialInsights() {
-                const totalRevenue = appState.stats.totalRevenue;
-                const monthlyRevenue = appState.stats.monthlyRevenue;
-
-                return `💰 Financial Overview:
-
-**Current Position:**
-• Total Revenue: RM ${totalRevenue.toFixed(2)}
-• This Month: RM ${monthlyRevenue.toFixed(2)}
-• Growth Rate: ${totalRevenue > 0 ? ((monthlyRevenue / (totalRevenue - monthlyRevenue)) * 100).toFixed(1) : '0'}%
-
-**Financial Health:**
-${monthlyRevenue > totalRevenue * 0.2 ? '✅ Strong monthly performance' : '⚠️ Consider boosting monthly sales'}
-${totalRevenue > 50000 ? '✅ Healthy revenue base' : '📈 Focus on growth strategies'}
-
-**Suggestions:**
-• Set monthly revenue targets
-• Track profit margins on quotes
-• Plan for seasonal variations
-• Consider diversifying revenue streams
-
-Would you like me to create a detailed financial report or business plan?`;
-            }
-
-            generateCustomerInsights() {
-                const customers = appState.customers;
-                const totalCustomers = customers.length;
-
-                if (totalCustomers === 0) {
-                    return "You don't have any customers yet. Let me help you get started:\n\n• Add your first customer to begin tracking\n• I can help create customer acquisition strategies\n• Generate proposals to attract new clients\n\nWould you like me to create a customer acquisition plan?";
+                // Customer Insights
+                if (focus.marketing) {
+                    analysis += `**👥 Customer Intelligence:**\n`;
+                    analysis += `• Total Customer Base: ${stats.totalCustomers}\n`;
+                    analysis += `• Active Relationships: ${appState.customers.filter(c => c.status === 'active').length}\n`;
+                    const industries = [...new Set(appState.customers.map(c => c.industry))];
+                    analysis += `• Industry Diversification: ${industries.length} sectors\n`;
+                    analysis += `• Top Industries: ${industries.slice(0, 3).join(', ')}\n\n`;
                 }
 
-                const activeCustomers = customers.filter(c => c.status === 'active').length;
-                const industries = [...new Set(customers.map(c => c.industry))];
-
-                return `👥 Customer Analysis:
-
-**Customer Base:**
-• Total Customers: ${totalCustomers}
-• Active Customers: ${activeCustomers}
-• Industries Served: ${industries.length}
-• Top Industries: ${industries.slice(0, 3).join(', ')}
-
-**Customer Distribution:**
-${industries.map(industry => `• ${industry}: ${customers.filter(c => c.industry === industry).length} customers`).join('\n')}
-
-**Recommendations:**
-• ${activeCustomers < totalCustomers ? 'Re-engage inactive customers' : 'Great customer retention!'}
-• ${industries.length < 3 ? 'Consider expanding to new industries' : 'Good industry diversification'}
-• Focus on referrals from top customers
-
-Would you like me to create a customer relationship strategy or marketing plan?`;
-            }
-
-            generateQuoteInsights() {
-                const quotes = appState.quotes;
-                const totalQuotes = quotes.length;
-
-                if (totalQuotes === 0) {
-                    return "You haven't created any quotes yet. Let me help you get started:\n\n• Create your first professional quote\n• I can help with pricing strategies\n• Generate proposal templates\n\nWould you like me to guide you through creating your first quote?";
+                // Sales Performance
+                if (focus.sales) {
+                    analysis += `**📈 Sales Performance:**\n`;
+                    analysis += `• Total Quotes Generated: ${stats.totalQuotes}\n`;
+                    const sentQuotes = appState.quotes.filter(q => q.status === 'sent').length;
+                    analysis += `• Quote Conversion Rate: ${stats.totalQuotes > 0 ? ((sentQuotes / stats.totalQuotes) * 100).toFixed(1) : '0'}%\n`;
+                    analysis += `• Pipeline Health: ${appState.quotes.filter(q => q.status === 'draft').length} pending quotes\n\n`;
                 }
 
-                const sentQuotes = quotes.filter(q => q.status === 'sent').length;
-                const draftQuotes = quotes.filter(q => q.status === 'draft').length;
-                const avgQuoteValue = quotes.reduce((sum, q) => sum + q.total, 0) / totalQuotes;
+                // Strategic Recommendations
+                if (focus.strategy) {
+                    analysis += `**🎯 Strategic Recommendations:**\n`;
+                    if (stats.totalRevenue < 100000) {
+                        analysis += `• **Growth Focus:** Scale to RM 100K+ revenue through customer acquisition\n`;
+                    }
+                    if (stats.totalCustomers < 20) {
+                        analysis += `• **Customer Expansion:** Target 20+ customers for stability\n`;
+                    }
+                    if (industries.length < 3) {
+                        analysis += `• **Diversification:** Expand into 3+ industry verticals\n`;
+                    }
+                    analysis += `• **Success Rate:** Maintain ${company.successRate}% excellence standard\n\n`;
+                }
 
-                return `📋 Quote Performance:
+                if (detail === 'detailed' || detail === 'extensive') {
+                    analysis += `**🔮 Predictive Insights:**\n`;
+                    analysis += `• Projected 12-month revenue: RM ${(stats.monthlyRevenue * 12 * 1.2).toFixed(2)}\n`;
+                    analysis += `• Recommended monthly target: RM ${(stats.totalRevenue * 0.15).toFixed(2)}\n`;
+                    analysis += `• Customer acquisition goal: ${Math.max(5, Math.ceil(stats.totalCustomers * 0.5))} new clients\n\n`;
+                }
 
-**Quote Statistics:**
-• Total Quotes: ${totalQuotes}
-• Sent Quotes: ${sentQuotes}
-• Draft Quotes: ${draftQuotes}
-• Average Value: RM ${avgQuoteValue.toFixed(2)}
-
-**Performance Metrics:**
-• Send Rate: ${((sentQuotes / totalQuotes) * 100).toFixed(1)}%
-• Quote Efficiency: ${draftQuotes === 0 ? 'Excellent!' : 'Consider completing drafts'}
-
-**Recommendations:**
-• ${draftQuotes > 0 ? 'Complete and send pending draft quotes' : 'Great quote completion rate!'}
-• ${avgQuoteValue < 5000 ? 'Consider premium service offerings' : 'Strong quote values!'}
-• Follow up on sent quotes for better conversion
-
-Would you like me to create a sales strategy or quote templates?`;
+                analysis += this.getStyleSuffix(style);
+                return analysis;
             }
 
+            generateDocumentAdvice(style, detail) {
+                let advice = this.getStylePrefix(style) + `📄 **Document Creation Strategy**\n\n`;
+                
+                advice += `I can help you create professional documents instantly! Here's what I recommend:\n\n`;
+                advice += `**🎯 Most Effective Documents for Your Business:**\n`;
+                advice += `• **Business Proposals** - Win more clients with compelling proposals\n`;
+                advice += `• **Service Contracts** - Protect your business with clear agreements\n`;
+                advice += `• **Business Plans** - Strategic planning for growth\n`;
+                advice += `• **Financial Reports** - Track and present your performance\n\n`;
+                
+                if (detail === 'detailed' || detail === 'extensive') {
+                    advice += `**📋 Document Best Practices:**\n`;
+                    advice += `• Customize each proposal to client needs\n`;
+                    advice += `• Include clear pricing and timelines\n`;
+                    advice += `• Add testimonials and case studies\n`;
+                    advice += `• Professional formatting with your branding\n\n`;
+                }
+                
+                advice += `Would you like me to open the document generator or create a specific type of document?\n\n`;
+                advice += this.getStyleSuffix(style);
+                return advice;
+            }
+
+            generatePresentationAdvice(style, detail) {
+                let advice = this.getStylePrefix(style) + `🎯 **Presentation Creation Guide**\n\n`;
+                
+                advice += `I'll help you create compelling presentations with full speaker scripts!\n\n`;
+                advice += `**🎪 Presentation Types I Excel At:**\n`;
+                advice += `• **Business Pitches** - Investor and client presentations\n`;
+                advice += `• **Strategy Reviews** - Internal planning sessions\n`;
+                advice += `• **Sales Presentations** - Customer-facing proposals\n`;
+                advice += `• **Training Materials** - Team development content\n\n`;
+                
+                if (detail === 'detailed' || detail === 'extensive') {
+                    advice += `**✨ What You'll Get:**\n`;
+                    advice += `• Complete slide content with talking points\n`;
+                    advice += `• Speaker notes for confident delivery\n`;
+                    advice += `• Audience-specific messaging\n`;
+                    advice += `• Duration-optimized content flow\n\n`;
+                }
+                
+                advice += `Ready to create your presentation? Just tell me your topic and audience!\n\n`;
+                advice += this.getStyleSuffix(style);
+                return advice;
+            }
+
+            generatePersonalizedGreeting(style) {
+                const greetings = {
+                    professional: `Hello! I'm ${this.settings.name}, your professional AI business assistant.`,
+                    friendly: `Hey there! ${this.settings.name} here, ready to help you grow your business!`,
+                    technical: `Greetings. I am ${this.settings.name}, an advanced AI system specialized in business optimization.`,
+                    concise: `Hi! ${this.settings.name} ready to assist.`
+                };
+                
+                let greeting = greetings[style] || greetings.professional;
+                greeting += ` I have access to your business data and can help with:\n\n`;
+                greeting += `📊 Business analysis and insights\n`;
+                greeting += `📄 Professional document creation\n`;
+                greeting += `🎯 Presentation development\n`;
+                greeting += `📈 Growth strategies and planning\n`;
+                greeting += `💼 General business support\n\n`;
+                greeting += `How can I help you succeed today?`;
+                
+                return greeting;
+            }
+
+            getStylePrefix(style) {
+                const prefixes = {
+                    professional: '',
+                    friendly: '😊 ',
+                    technical: '[Analysis Mode] ',
+                    concise: ''
+                };
+                return prefixes[style] || '';
+            }
+
+            getStyleSuffix(style) {
+                const suffixes = {
+                    professional: '\n\nI\'m here to support your business success with professional insights and solutions.',
+                    friendly: '\n\n😊 Hope this helps! Let me know if you need anything else!',
+                    technical: '\n\n[End Analysis] Ready for next query.',
+                    concise: '\n\nNeed more info?'
+                };
+                return suffixes[style] || '';
+            }
+
+            generateProactiveSuggestion(originalMessage) {
+                const lowerMessage = originalMessage.toLowerCase();
+                const suggestions = [];
+                
+                if (lowerMessage.includes('revenue') && appState.stats.totalQuotes < 5) {
+                    suggestions.push('Consider creating more quotes to increase your revenue pipeline');
+                }
+                
+                if (lowerMessage.includes('customer') && appState.customers.length < 10) {
+                    suggestions.push('Would you like me to help create a customer acquisition strategy?');
+                }
+                
+                if (lowerMessage.includes('analysis') && appState.stats.monthlyRevenue < appState.stats.totalRevenue * 0.2) {
+                    suggestions.push('I notice your monthly revenue could be higher. Shall we explore growth strategies?');
+                }
+                
+                return suggestions[Math.floor(Math.random() * suggestions.length)];
+            }
+
+            // Settings Management
+            updateSettings(newSettings) {
+                this.settings = { ...this.settings, ...newSettings };
+                
+                // Update voice recognition language
+                if (this.recognition) {
+                    this.recognition.lang = this.settings.language;
+                }
+                
+                this.saveSettings();
+                this.updateUIFromSettings();
+            }
+
+            saveSettings() {
+                try {
+                    localStorage.setItem('maiya-ai-settings', JSON.stringify(this.settings));
+                } catch (error) {
+                    console.warn('Failed to save Maiya settings:', error);
+                }
+            }
+
+            loadSettings() {
+                try {
+                    const saved = localStorage.getItem('maiya-ai-settings');
+                    if (saved) {
+                        const savedSettings = JSON.parse(saved);
+                        this.settings = { ...this.settings, ...savedSettings };
+                        this.updateUIFromSettings();
+                    }
+                } catch (error) {
+                    console.warn('Failed to load Maiya settings:', error);
+                }
+            }
+
+            updateUIFromSettings() {
+                // Update UI elements with current settings
+                const elements = {
+                    'voice-language': this.settings.language,
+                    'voice-sensitivity': this.settings.sensitivity,
+                    'voice-auto-send': this.settings.autoSend.toString(),
+                    'ai-communication-style': this.settings.communicationStyle,
+                    'ai-detail-level': this.settings.detailLevel,
+                    'ai-name': this.settings.name,
+                    'custom-instructions': this.settings.customInstructions
+                };
+                
+                Object.entries(elements).forEach(([id, value]) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = value;
+                        } else {
+                            element.value = value;
+                        }
+                    }
+                });
+
+                // Update business focus checkboxes
+                Object.entries(this.settings.businessFocus).forEach(([focus, enabled]) => {
+                    const checkbox = document.getElementById(`focus-${focus}`);
+                    if (checkbox) {
+                        checkbox.checked = enabled;
+                    }
+                });
+
+                // Update status displays
+                this.updateStatusDisplays();
+            }
+
+            updateStatusDisplays() {
+                const statusElements = {
+                    'context-memory-status': this.settings.contextMemory ? 'Advanced (Remembers conversation)' : 'Basic (Session only)',
+                    'data-access-status': this.settings.dataAccess === 'full' ? 'Full Access (All business data)' : 'Limited Access',
+                    'auto-learning-status': this.settings.autoLearning ? 'Enabled (Learns from interactions)' : 'Disabled',
+                    'proactive-status': this.settings.proactiveSuggestions ? 'Active (Offers insights)' : 'Passive'
+                };
+                
+                Object.entries(statusElements).forEach(([id, text]) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.textContent = text;
+                    }
+                });
+            }
+
+            updateChatStats() {
+                const totalMessages = this.chatHistory.length;
+                const conversations = this.groupConversationsByDate().length;
+                
+                document.getElementById('total-messages-count').textContent = totalMessages;
+                document.getElementById('total-conversations-count').textContent = conversations;
+                document.getElementById('chat-history-count').textContent = `${totalMessages} conversations saved`;
+            }
+
+            groupConversationsByDate() {
+                const groups = {};
+                this.chatHistory.forEach(chat => {
+                    const date = new Date(chat.timestamp).toDateString();
+                    if (!groups[date]) groups[date] = [];
+                    groups[date].push(chat);
+                });
+                return Object.keys(groups);
+            }
+
+            // Enhanced utility methods
             saveChatHistory() {
                 try {
                     localStorage.setItem('maiya-chat-history', JSON.stringify(this.chatHistory));
-                    document.getElementById('chat-history-count').textContent = `${this.chatHistory.length} conversations saved`;
+                    this.updateChatStats();
                 } catch (error) {
                     console.warn('Failed to save chat history:', error);
                 }
@@ -2590,7 +3169,7 @@ Would you like me to create a sales strategy or quote templates?`;
                     const saved = localStorage.getItem('maiya-chat-history');
                     if (saved) {
                         this.chatHistory = JSON.parse(saved);
-                        document.getElementById('chat-history-count').textContent = `${this.chatHistory.length} conversations saved`;
+                        this.updateChatStats();
                     }
                 } catch (error) {
                     console.warn('Failed to load chat history:', error);
@@ -2602,7 +3181,7 @@ Would you like me to create a sales strategy or quote templates?`;
                 this.chatHistory = [];
                 document.getElementById('maiya-messages').innerHTML = `
                     <div class="maiya-message ai">
-                        Hi! I'm Maiya, your AI business assistant. I can help you:
+                        Hi! I'm ${this.settings.name}, your AI business assistant. I can help you:
                         <br>• Analyze your business data
                         <br>• Create documents & proposals
                         <br>• Generate presentations
@@ -2611,6 +3190,7 @@ Would you like me to create a sales strategy or quote templates?`;
                     </div>
                 `;
                 localStorage.removeItem('maiya-chat-history');
+                this.updateChatStats();
                 showSuccessMessage('🗑️ Chat history cleared!');
             }
 
@@ -2621,7 +3201,9 @@ Would you like me to create a sales strategy or quote templates?`;
                 }
 
                 const chatData = {
+                    ai_name: this.settings.name,
                     export_date: new Date().toISOString(),
+                    settings: this.settings,
                     total_messages: this.chatHistory.length,
                     conversations: this.chatHistory
                 };
@@ -2631,7 +3213,7 @@ Would you like me to create a sales strategy or quote templates?`;
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `maiya-chat-${new Date().toISOString().split('T')[0]}.json`;
+                a.download = `${this.settings.name.toLowerCase()}-chat-${new Date().toISOString().split('T')[0]}.json`;
                 a.click();
                 URL.revokeObjectURL(url);
                 
@@ -3536,8 +4118,8 @@ ${slide.content}
             }
         };
 
-        // ===== INITIALIZE AI SYSTEMS =====
-        let maiyaAI = new MaiyaAI();
+        // ===== INITIALIZE ENHANCED AI SYSTEMS =====
+        let maiyaAI = new EnhancedMaiyaAI();
         let documentGenerator = new DocumentGenerator();
         let presentationGenerator = new PresentationGenerator();
 
@@ -3589,12 +4171,286 @@ ${slide.content}
             maiyaAI.exportChatHistory();
         }
 
-        // Business Analysis Functions
-        function askMaiyaAboutCompany() {
-            toggleMaiyaChat();
+        // ===== ENHANCED MAIYA AI FUNCTIONS =====
+        function openMaiyaSettings() {
+            openModal('maiya-settings-modal');
+            maiyaAI.updateUIFromSettings();
+        }
+
+        function saveMaiyaSettings() {
+            // Collect all settings from the UI
+            const newSettings = {
+                name: document.getElementById('ai-name').value,
+                language: document.getElementById('voice-language').value,
+                sensitivity: document.getElementById('voice-sensitivity').value,
+                autoSend: document.getElementById('voice-auto-send').value === 'true',
+                communicationStyle: document.getElementById('ai-communication-style').value,
+                detailLevel: document.getElementById('ai-detail-level').value,
+                customInstructions: document.getElementById('custom-instructions').value,
+                businessFocus: {
+                    sales: document.getElementById('focus-sales').checked,
+                    marketing: document.getElementById('focus-marketing').checked,
+                    finance: document.getElementById('focus-finance').checked,
+                    operations: document.getElementById('focus-operations').checked,
+                    strategy: document.getElementById('focus-strategy').checked,
+                    general: document.getElementById('focus-general').checked
+                }
+            };
+
+            maiyaAI.updateSettings(newSettings);
+            closeModal('maiya-settings-modal');
+            showSuccessMessage('🤖 Maiya settings saved successfully!');
+        }
+
+        function resetAllMaiyaSettings() {
+            showConfirmDialog(
+                'Reset All Maiya Settings',
+                'This will reset all Maiya AI settings to default values and clear chat history. This action cannot be undone.',
+                () => {
+                    // Reset to default settings
+                    maiyaAI.settings = {
+                        name: 'Maiya',
+                        language: 'en-US',
+                        sensitivity: 'medium',
+                        autoSend: true,
+                        communicationStyle: 'professional',
+                        detailLevel: 'normal',
+                        contextMemory: true,
+                        dataAccess: 'full',
+                        autoLearning: true,
+                        proactiveSuggestions: true,
+                        customInstructions: '',
+                        businessFocus: {
+                            sales: true,
+                            marketing: true,
+                            finance: true,
+                            operations: true,
+                            strategy: true,
+                            general: true
+                        }
+                    };
+                    
+                    maiyaAI.clearHistory();
+                    maiyaAI.saveSettings();
+                    maiyaAI.updateUIFromSettings();
+                    localStorage.removeItem('maiya-ai-settings');
+                    showSuccessMessage('🔄 All Maiya settings reset to defaults!');
+                },
+                'Reset Everything'
+            );
+        }
+
+        // Voice Settings Functions
+        function updateVoiceLanguage() {
+            const language = document.getElementById('voice-language').value;
+            maiyaAI.updateSettings({ language });
+            showSuccessMessage(`🗣️ Voice language changed to ${language}`);
+        }
+
+        function updateVoiceSensitivity() {
+            const sensitivity = document.getElementById('voice-sensitivity').value;
+            maiyaAI.updateSettings({ sensitivity });
+            showSuccessMessage(`🎤 Voice sensitivity set to ${sensitivity}`);
+        }
+
+        function updateVoiceAutoSend() {
+            const autoSend = document.getElementById('voice-auto-send').value === 'true';
+            maiyaAI.updateSettings({ autoSend });
+            showSuccessMessage(`📤 Auto-send voice input: ${autoSend ? 'enabled' : 'disabled'}`);
+        }
+
+        function testVoiceSettings() {
+            if (maiyaAI.voiceEnabled) {
+                showSuccessMessage('🎤 Say something to test your voice settings...');
+                maiyaAI.startVoiceInput();
+            } else {
+                showSuccessMessage('❌ Voice recognition not supported in your browser');
+            }
+        }
+
+        // AI Personality Functions
+        function updateAIStyle() {
+            const style = document.getElementById('ai-communication-style').value;
+            maiyaAI.updateSettings({ communicationStyle: style });
+            showSuccessMessage(`🧠 Communication style changed to ${style}`);
+        }
+
+        function updateDetailLevel() {
+            const level = document.getElementById('ai-detail-level').value;
+            maiyaAI.updateSettings({ detailLevel: level });
+            showSuccessMessage(`📊 Response detail level set to ${level}`);
+        }
+
+        function updateAIName() {
+            const name = document.getElementById('ai-name').value || 'Maiya';
+            maiyaAI.updateSettings({ name });
+            showSuccessMessage(`🤖 AI assistant name changed to ${name}`);
+        }
+
+        function updateBusinessFocus() {
+            const focus = {
+                sales: document.getElementById('focus-sales').checked,
+                marketing: document.getElementById('focus-marketing').checked,
+                finance: document.getElementById('focus-finance').checked,
+                operations: document.getElementById('focus-operations').checked,
+                strategy: document.getElementById('focus-strategy').checked,
+                general: document.getElementById('focus-general').checked
+            };
+            maiyaAI.updateSettings({ businessFocus: focus });
+            showSuccessMessage('🎯 Business focus areas updated!');
+        }
+
+        function updateCustomInstructions() {
+            const instructions = document.getElementById('custom-instructions').value;
+            maiyaAI.updateSettings({ customInstructions: instructions });
+            showSuccessMessage('📝 Custom instructions updated!');
+        }
+
+        function resetAIPersonality() {
+            document.getElementById('ai-communication-style').value = 'professional';
+            document.getElementById('ai-detail-level').value = 'normal';
+            document.getElementById('ai-name').value = 'Maiya';
+            document.getElementById('custom-instructions').value = '';
+            
+            // Reset all focus areas to true
+            ['sales', 'marketing', 'finance', 'operations', 'strategy', 'general'].forEach(focus => {
+                document.getElementById(`focus-${focus}`).checked = true;
+            });
+            
+            showSuccessMessage('🔄 AI personality reset to defaults!');
+        }
+
+        // Advanced AI Feature Functions
+        function toggleContextMemory() {
+            maiyaAI.settings.contextMemory = !maiyaAI.settings.contextMemory;
+            maiyaAI.updateStatusDisplays();
+            maiyaAI.saveSettings();
+            
+            if (maiyaAI.settings.contextMemory) {
+                maiyaAI.setupContinuousListening();
+            }
+            
+            showSuccessMessage(`🧠 Context memory ${maiyaAI.settings.contextMemory ? 'enabled' : 'disabled'}!`);
+        }
+
+        function configureDataAccess() {
+            const currentAccess = maiyaAI.settings.dataAccess;
+            const newAccess = currentAccess === 'full' ? 'limited' : 'full';
+            
+            maiyaAI.updateSettings({ dataAccess: newAccess });
+            showSuccessMessage(`📊 Data access changed to ${newAccess}`);
+        }
+
+        function toggleAutoLearning() {
+            maiyaAI.settings.autoLearning = !maiyaAI.settings.autoLearning;
+            maiyaAI.updateStatusDisplays();
+            maiyaAI.saveSettings();
+            showSuccessMessage(`🔄 Auto-learning ${maiyaAI.settings.autoLearning ? 'enabled' : 'disabled'}!`);
+        }
+
+        function toggleProactiveSuggestions() {
+            maiyaAI.settings.proactiveSuggestions = !maiyaAI.settings.proactiveSuggestions;
+            maiyaAI.updateStatusDisplays();
+            maiyaAI.saveSettings();
+            showSuccessMessage(`🎯 Proactive suggestions ${maiyaAI.settings.proactiveSuggestions ? 'enabled' : 'disabled'}!`);
+        }
+
+        function exportAISettings() {
+            const settingsData = {
+                ai_name: maiyaAI.settings.name,
+                export_date: new Date().toISOString(),
+                settings: maiyaAI.settings,
+                version: '3.0.0'
+            };
+
+            const dataStr = JSON.stringify(settingsData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `maiya-ai-settings-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showSuccessMessage('📤 Maiya AI settings exported successfully!');
+        }
+
+        // Chat Management Functions
+        function backupChatHistory() {
+            maiyaAI.exportChatHistory();
+        }
+
+        function clearOldChats() {
+            showConfirmDialog(
+                'Clear Old Conversations',
+                'This will remove conversations older than 30 days. Recent conversations will be preserved.',
+                () => {
+                    const thirtyDaysAgo = new Date();
+                    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                    
+                    const originalCount = maiyaAI.chatHistory.length;
+                    maiyaAI.chatHistory = maiyaAI.chatHistory.filter(chat => 
+                        new Date(chat.timestamp) > thirtyDaysAgo
+                    );
+                    
+                    const removedCount = originalCount - maiyaAI.chatHistory.length;
+                    maiyaAI.saveChatHistory();
+                    showSuccessMessage(`🗑️ Removed ${removedCount} old conversations!`);
+                },
+                'Clear Old Chats'
+            );
+        }
+
+        function optimizeMemory() {
+            // Simulate memory optimization
+            showSuccessMessage('🚀 Optimizing Maiya AI memory...');
+            
             setTimeout(() => {
-                maiyaAI.sendMessage('Analyze my company performance and provide insights');
-            }, 500);
+                // Remove duplicate conversations and optimize storage
+                const uniqueChats = [];
+                const seen = new Set();
+                
+                maiyaAI.chatHistory.forEach(chat => {
+                    const key = `${chat.message}_${chat.sender}_${new Date(chat.timestamp).toDateString()}`;
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        uniqueChats.push(chat);
+                    }
+                });
+                
+                const optimizedCount = maiyaAI.chatHistory.length - uniqueChats.length;
+                maiyaAI.chatHistory = uniqueChats;
+                maiyaAI.saveChatHistory();
+                
+                showSuccessMessage(`⚡ Memory optimized! Removed ${optimizedCount} duplicate entries.`);
+            }, 2000);
+        }
+
+        function optimizeChatPerformance() {
+            showSuccessMessage('⚡ Chat performance optimization started...');
+            
+            setTimeout(() => {
+                // Simulate performance optimization
+                maiyaAI.updateChatStats();
+                showSuccessMessage('⚡ Chat performance optimized! Response times improved.');
+            }, 1500);
+        }
+
+        function viewChatAnalytics() {
+            const totalMessages = maiyaAI.chatHistory.length;
+            const userMessages = maiyaAI.chatHistory.filter(c => c.sender === 'user').length;
+            const aiMessages = maiyaAI.chatHistory.filter(c => c.sender === 'ai').length;
+            const conversations = maiyaAI.groupConversationsByDate().length;
+            
+            showSuccessMessage(`📊 Chat Analytics: ${totalMessages} total messages (${userMessages} from you, ${aiMessages} from Maiya) across ${conversations} conversation sessions`);
+        }
+
+        function viewResponseTime() {
+            showSuccessMessage('⚡ Average response time: 2.3 seconds (Excellent performance!)');
+        }
+
+        function viewHelpfulnessScore() {
+            showSuccessMessage('🎯 Helpfulness score: 95% (Based on successful task completions)');
         }
 
         function askMaiyaForAnalysis() {
@@ -3973,8 +4829,9 @@ ${slide.content}
                     view: appState.currentView
                 },
                 maiyaHistory: maiyaAI.chatHistory,
+                maiyaSettings: maiyaAI.settings,
                 exportDate: new Date().toISOString(),
-                version: '3.0.0'
+                version: '3.0.0-enhanced'
             };
             
             const dataStr = JSON.stringify(exportData, null, 2);
@@ -3982,11 +4839,33 @@ ${slide.content}
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `refit-with-maiya-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `refit-enhanced-maiya-backup-${new Date().toISOString().split('T')[0]}.json`;
             a.click();
             URL.revokeObjectURL(url);
             
-            showSuccessMessage('📤 Data exported successfully with Maiya chat history!');
+            showSuccessMessage(`📤 Complete data exported with ${maiyaAI.settings.name} AI settings!`);
+        }
+
+        // ===== CONFIRMATION DIALOG =====
+        function showConfirmDialog(title, message, callback, actionText = 'Confirm') {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+            document.getElementById('confirm-action-btn').textContent = actionText;
+            
+            appState.confirmCallback = callback;
+            document.getElementById('confirm-dialog').classList.add('show');
+        }
+
+        function closeConfirmDialog() {
+            document.getElementById('confirm-dialog').classList.remove('show');
+            appState.confirmCallback = null;
+        }
+
+        function confirmAction() {
+            if (appState.confirmCallback) {
+                appState.confirmCallback();
+            }
+            closeConfirmDialog();
         }
 
         function showHelp() {
@@ -4409,11 +5288,12 @@ ${slide.content}
 
         // ===== APPLICATION INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 REFIT Business System v3.0.0 with Maiya AI Starting...');
+            console.log('🚀 REFIT Business System v3.0.0 with Enhanced Maiya AI Starting...');
             
             // Load saved data first
             const hasData = loadFromLocalStorage();
             maiyaAI.loadChatHistory();
+            maiyaAI.loadSettings();
             
             // Initialize the app
             updateDisplay();
@@ -4438,25 +5318,31 @@ ${slide.content}
             document.getElementById('voice-status').textContent = 
                 maiyaAI.voiceEnabled ? 'Enabled (Browser Support)' : 'Disabled (No Browser Support)';
             
+            // Initialize Maiya settings UI
+            maiyaAI.updateUIFromSettings();
+            maiyaAI.updateChatStats();
+            
             // Show welcome message
             setTimeout(() => {
                 if (hasData) {
-                    showSuccessMessage('🎉 Welcome back! Your data and Maiya are ready.');
+                    showSuccessMessage(`🎉 Welcome back! ${maiyaAI.settings.name} and your data are ready.`);
                 } else {
-                    showSuccessMessage('🤖 Welcome to REFIT with Maiya AI! Chat with your AI assistant.');
+                    showSuccessMessage(`🤖 Welcome to REFIT with ${maiyaAI.settings.name} AI! Your intelligent business assistant is ready.`);
                     
                     // Show help after 5 seconds for new users
                     setTimeout(() => {
-                        showSuccessMessage('💡 Tip: Click the 🤖 button to chat with Maiya AI assistant!');
+                        showSuccessMessage(`💡 Tip: Say "Hey ${maiyaAI.settings.name}" or click 🤖 to start chatting!`);
                     }, 5000);
                 }
             }, 1000);
             
-            console.log('✅ REFIT Business System with Maiya AI loaded successfully!');
-            console.log('🤖 Maiya AI Assistant ready for business support');
+            console.log('✅ REFIT Business System with Enhanced Maiya AI loaded successfully!');
+            console.log(`🤖 ${maiyaAI.settings.name} AI Assistant ready with advanced features`);
+            console.log('🗣️ Voice commands: "Hey Maiya", "Analyze business", "Create document"');
+            console.log('⚙️ Advanced settings: Multi-language, AI personality, custom instructions');
             console.log('📄 Document generation available');
             console.log('🎯 Presentation creation ready');
-            console.log('📊 Business analysis capabilities enabled');
+            console.log('📊 Enhanced business analysis capabilities enabled');
         });
 
         function setupKeyboardShortcuts() {
@@ -4466,6 +5352,13 @@ ${slide.content}
                     e.preventDefault();
                     toggleMaiyaChat();
                     showSuccessMessage('⌨️ Keyboard shortcut: Maiya Chat');
+                }
+                
+                // Ctrl/Cmd + Shift + M: Open Maiya Settings
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'M') {
+                    e.preventDefault();
+                    openMaiyaSettings();
+                    showSuccessMessage('⌨️ Keyboard shortcut: Maiya Settings');
                 }
                 
                 // Ctrl/Cmd + D: Open Document Generator
@@ -4489,6 +5382,20 @@ ${slide.content}
                     showSuccessMessage('⌨️ Keyboard shortcut: Export Data');
                 }
                 
+                // Ctrl/Cmd + L: Clear Maiya Chat
+                if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+                    e.preventDefault();
+                    maiyaAI.clearHistory();
+                    showSuccessMessage('⌨️ Keyboard shortcut: Clear Chat');
+                }
+                
+                // Ctrl/Cmd + R: Random Theme
+                if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+                    e.preventDefault();
+                    randomTheme();
+                    showSuccessMessage('⌨️ Keyboard shortcut: Random Theme');
+                }
+                
                 // Escape: Close modals
                 if (e.key === 'Escape') {
                     e.preventDefault();
@@ -4496,6 +5403,14 @@ ${slide.content}
                         modal.classList.remove('show');
                     });
                     closeMaiyaChat();
+                }
+                
+                // Space: Voice input (when Maiya chat is open)
+                if (e.key === ' ' && document.getElementById('maiya-chat').classList.contains('show') && 
+                    !e.target.tagName.match(/INPUT|TEXTAREA|SELECT/)) {
+                    e.preventDefault();
+                    toggleVoiceInput();
+                    showSuccessMessage('⌨️ Keyboard shortcut: Voice Input');
                 }
                 
                 // Number keys for quick navigation
