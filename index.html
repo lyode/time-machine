@@ -2,3077 +2,538 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="REFIT BUSINESS SYSTEM">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#2d1517">
-    
-    <title>REFIT - Complete Mobile Business System with ClaudeAI Voice</title>
-    
-    <!-- PDF Generation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal AI Advisor</title>
     <style>
-        /* Base Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        /* 8 Beautiful Pastel Themes */
-        [data-theme="red"] {
-            --bg-primary: #2d1517;
-            --bg-secondary: #3d1f22;
-            --bg-card: #4a262a;
-            --bg-card-hover: #5a2f33;
-            --text-primary: #fef7f7;
-            --text-secondary: #fed7d7;
-            --text-muted: #fca5a5;
-            --accent-primary: #f87171;
-            --accent-secondary: #fca5a5;
-            --accent-warm: #fb923c;
-            --border-color: #5a2f33;
-            --shadow-light: rgba(248, 113, 113, 0.1);
-            --shadow-medium: rgba(248, 113, 113, 0.2);
-            --shadow-strong: rgba(248, 113, 113, 0.3);
-            --overlay: rgba(0, 0, 0, 0.8);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #dc2626;
-            --info: #3b82f6;
-            --theme-name: "Coral Sunset";
-            --theme-icon: "🌅";
-        }
-
-        [data-theme="orange"] {
-            --bg-primary: #2d1b0f;
-            --bg-secondary: #3d261a;
-            --bg-card: #4a3025;
-            --bg-card-hover: #5a3a30;
-            --text-primary: #fff7ed;
-            --text-secondary: #fed7aa;
-            --text-muted: #fdba74;
-            --accent-primary: #fb923c;
-            --accent-secondary: #fdba74;
-            --accent-warm: #fbbf24;
-            --border-color: #5a3a30;
-            --shadow-light: rgba(251, 146, 60, 0.1);
-            --shadow-medium: rgba(251, 146, 60, 0.2);
-            --shadow-strong: rgba(251, 146, 60, 0.3);
-            --overlay: rgba(0, 0, 0, 0.8);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --info: #3b82f6;
-            --theme-name: "Peach Glow";
-            --theme-icon: "🍑";
-        }
-
-        [data-theme="pink"] {
-            --bg-primary: #2d1524;
-            --bg-secondary: #3d1f2e;
-            --bg-card: #4a2638;
-            --bg-card-hover: #5a2f42;
-            --text-primary: #fdf2f8;
-            --text-secondary: #fce7f3;
-            --text-muted: #f9a8d4;
-            --accent-primary: #f472b6;
-            --accent-secondary: #f9a8d4;
-            --accent-warm: #fbbf24;
-            --border-color: #5a2f42;
-            --shadow-light: rgba(244, 114, 182, 0.1);
-            --shadow-medium: rgba(244, 114, 182, 0.2);
-            --shadow-strong: rgba(244, 114, 182, 0.3);
-            --overlay: rgba(0, 0, 0, 0.8);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --info: #3b82f6;
-            --theme-name: "Rose Blush";
-            --theme-icon: "🌸";
-        }
-
-        [data-theme="yellow"] {
-            --bg-primary: #2d2510;
-            --bg-secondary: #3d331a;
-            --bg-card: #4a4025;
-            --bg-card-hover: #5a4d30;
-            --text-primary: #fefce8;
-            --text-secondary: #fef3c7;
-            --text-muted: #fcd34d;
-            --accent-primary: #fbbf24;
-            --accent-secondary: #fcd34d;
-            --accent-warm: #f59e0b;
-            --border-color: #5a4d30;
-            --shadow-light: rgba(251, 191, 36, 0.1);
-            --shadow-medium: rgba(251, 191, 36, 0.2);
-            --shadow-strong: rgba(251, 191, 36, 0.3);
-            --overlay: rgba(0, 0, 0, 0.8);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --info: #3b82f6;
-            --theme-name: "Butter Cream";
-            --theme-icon: "🌻";
-        }
-
-        [data-theme="bluegreen"] {
-            --bg-primary: #0f2925;
-            --bg-secondary: #1a3530;
-            --bg-card: #25423b;
-            --bg-card-hover: #304f46;
-            --text-primary: #f0fdfa;
-            --text-secondary: #ccfbf1;
-            --text-muted: #7dd3fc;
-            --accent-primary: #2dd4bf;
-            --accent-secondary: #7dd3fc;
-            --accent-warm: #fbbf24;
-            --border-color: #304f46;
-            --shadow-light: rgba(45, 212, 191, 0.1);
-            --shadow-medium: rgba(45, 212, 191, 0.2);
-            --shadow-strong: rgba(45, 212, 191, 0.3);
-            --overlay: rgba(0, 0, 0, 0.8);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --info: #3b82f6;
-            --theme-name: "Mint Breeze";
-            --theme-icon: "🌊";
-        }
-
-        [data-theme="purplegrey"] {
-            --bg-primary: #241838;
-            --bg-secondary: #2e2042;
-            --bg-card: #38284c;
-            --bg-card-hover: #423056;
-            --text-primary: #faf7ff;
-            --text-secondary: #f3e8ff;
-            --text-muted: #c4b5fd;
-            --accent-primary: #a855f7;
-            --accent-secondary: #c4b5fd;
-            --accent-warm: #fbbf24;
-            --border-color: #423056;
-            --shadow-light: rgba(168, 85, 247, 0.1);
-            --shadow-medium: rgba(168, 85, 247, 0.2);
-            --shadow-strong: rgba(168, 85, 247, 0.3);
-            --overlay: rgba(0, 0, 0, 0.8);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --info: #3b82f6;
-            --theme-name: "Lavender Mist";
-            --theme-icon: "💜";
-        }
-
-        [data-theme="browngrey"] {
-            --bg-primary: #1c1917;
-            --bg-secondary: #292524;
-            --bg-card: #3f3f46;
-            --bg-card-hover: #52525b;
-            --text-primary: #fafaf9;
-            --text-secondary: #e7e5e4;
-            --text-muted: #d6d3d1;
-            --accent-primary: #a3a3a3;
-            --accent-secondary: #d6d3d1;
-            --accent-warm: #f59e0b;
-            --border-color: #52525b;
-            --shadow-light: rgba(163, 163, 163, 0.1);
-            --shadow-medium: rgba(163, 163, 163, 0.2);
-            --shadow-strong: rgba(163, 163, 163, 0.3);
-            --overlay: rgba(0, 0, 0, 0.8);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --info: #3b82f6;
-            --theme-name: "Warm Taupe";
-            --theme-icon: "🤎";
-        }
-
-        [data-theme="greenbrown"] {
-            --bg-primary: #1a2e05;
-            --bg-secondary: #253a0a;
-            --bg-card: #30460f;
-            --bg-card-hover: #3b5314;
-            --text-primary: #f7f8f3;
-            --text-secondary: #e8f5e8;
-            --text-muted: #bef264;
-            --accent-primary: #84cc16;
-            --accent-secondary: #bef264;
-            --accent-warm: #f59e0b;
-            --border-color: #3b5314;
-            --shadow-light: rgba(132, 204, 22, 0.1);
-            --shadow-medium: rgba(132, 204, 22, 0.2);
-            --shadow-strong: rgba(132, 204, 22, 0.3);
-            --overlay: rgba(0, 0, 0, 0.8);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --info: #3b82f6;
-            --theme-name: "Sage Olive";
-            --theme-icon: "🌿";
-        }
-
-        /* Base Styles */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: fixed;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            color: white;
+        }
+
+        /* Floating Background Elements */
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            font-size: 16px;
-            line-height: 1.6;
-            transition: all 0.5s ease;
+            overflow: hidden;
+            z-index: 1;
         }
-        
-        /* Mobile Layout Container */
-        .mobile-container {
+
+        .float-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .float-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .float-element:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .float-element:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 30%;
+            left: 5%;
+            animation-delay: 4s;
+        }
+
+        .float-element:nth-child(4) {
+            width: 40px;
+            height: 40px;
+            top: 10%;
+            right: 20%;
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.5; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+
+        /* Main Container */
+        .app-container {
             position: relative;
-            width: 100%;
+            z-index: 10;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            background: var(--bg-primary);
-            transition: all 0.5s ease;
-        }
-        
-        /* Status Bar */
-        .status-bar {
-            height: 44px;
-            background: var(--bg-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            font-size: 14px;
-            font-weight: 600;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 2px 10px var(--shadow-medium);
-            border-bottom: 1px solid var(--border-color);
-            transition: all 0.5s ease;
-        }
-        
-        .theme-selector {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .theme-toggle {
-            background: var(--accent-primary);
-            border: none;
-            border-radius: 12px;
-            padding: 6px 12px;
-            font-size: 12px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            box-shadow: 0 2px 8px var(--shadow-light);
-        }
-        
-        .theme-toggle:hover {
-            background: var(--accent-secondary);
-            transform: scale(1.05);
-        }
-        
-        .theme-picker-btn {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border: none;
-            border-radius: 12px;
-            padding: 6px 12px;
-            font-size: 12px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            box-shadow: 0 2px 8px var(--shadow-light);
-        }
-        
-        .theme-picker-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        /* Header */
-        .header {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(30px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: fixed;
-            top: 44px;
-            left: 0;
-            right: 0;
-            z-index: 90;
-            box-shadow: 0 4px 20px var(--shadow-medium);
-            transition: all 0.5s ease;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
-        
-        .app-logo {
-            width: 54px;
-            height: 54px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            box-shadow: 0 8px 25px var(--shadow-medium);
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .app-logo:hover {
-            transform: scale(1.05);
-        }
-        
-        .app-title h1 {
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.5px;
-            margin-bottom: 2px;
-            color: var(--text-primary);
-            transition: all 0.5s ease;
-        }
-        
-        .app-title p {
-            font-size: 11px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            transition: all 0.5s ease;
-        }
-        
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .header-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            border: none;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 18px;
-            box-shadow: 0 4px 15px var(--shadow-medium);
-        }
-        
-        .header-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Maiya AI Button - Special styling */
-        .maiya-btn {
-            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .maiya-btn.listening {
-            animation: pulse 1.5s infinite;
-            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
-        }
-
-        .maiya-btn.processing {
-            animation: processing 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
-        }
-
-        @keyframes processing {
-            0% { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
-            50% { background: linear-gradient(135deg, #a78bfa, #c4b5fd); }
-            100% { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 130px 20px 140px;
-            -webkit-overflow-scrolling: touch;
-            position: relative;
-            height: calc(100vh - 44px);
-            scroll-behavior: smooth;
-            transition: all 0.5s ease;
-        }
-        
-        .main-content::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .main-content::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-            border-radius: 3px;
-        }
-        
-        .main-content::-webkit-scrollbar-thumb {
-            background: var(--accent-primary);
-            border-radius: 3px;
-        }
-        
-        /* Cards */
-        .card {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 24px;
-            margin: 20px 0;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 32px var(--shadow-light);
-            transition: all 0.5s ease;
-        }
-        
-        .card:hover {
-            box-shadow: 0 12px 40px var(--shadow-medium);
-            transform: translateY(-2px);
-        }
-
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .form-input, .form-textarea, .form-select {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 16px;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        .form-input:focus, .form-textarea:focus, .form-select:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px var(--shadow-light);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        /* Validation Styles */
-        .form-input.error, .form-textarea.error, .form-select.error {
-            border-color: var(--error);
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-        }
-
-        .form-input.success, .form-textarea.success, .form-select.success {
-            border-color: var(--success);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-        }
-
-        .error-message {
-            color: var(--error);
-            font-size: 12px;
-            margin-top: 4px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Modal Styles */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--overlay);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 300;
-            animation: fadeIn 0.3s ease;
-            backdrop-filter: blur(10px);
             padding: 20px;
         }
-        
-        .modal.show {
-            display: flex;
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: slideDown 1s ease-out;
         }
-        
-        .modal-content {
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            border-radius: 24px;
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 60px var(--shadow-strong);
-            transition: all 0.5s ease;
-        }
-        
-        .modal-header {
-            padding: 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-secondary);
-            border-radius: 24px 24px 0 0;
-        }
-        
-        .modal-header h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .modal-close-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
-            border: none;
-            background: var(--bg-card);
-            color: var(--text-primary);
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 18px;
-        }
-        
-        .modal-close-btn:hover {
-            background: var(--error);
-            color: white;
-            transform: scale(1.1);
-        }
-        
-        .modal-body {
-            padding: 24px;
-        }
-
-        .modal-footer {
-            padding: 20px 24px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-        }
-
-        /* Voice Indicator */
-        .voice-indicator {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #10b981, #34d399);
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            z-index: 200;
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-            animation: voicePulse 1.5s infinite;
-        }
-
-        .voice-indicator.show {
-            display: flex;
-        }
-
-        @keyframes voicePulse {
-            0% { 
-                transform: scale(1);
-                box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-            }
-            50% { 
-                transform: scale(1.1);
-                box-shadow: 0 12px 35px rgba(16, 185, 129, 0.5);
-            }
-            100% { 
-                transform: scale(1);
-                box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-            }
-        }
-
-        /* Maiya AI Chat Interface */
-        .maiya-chat {
-            position: fixed;
-            bottom: 160px;
-            right: 20px;
-            width: 350px;
-            max-width: calc(100vw - 40px);
-            background: var(--bg-card);
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 60px var(--shadow-strong);
-            display: none;
-            flex-direction: column;
-            max-height: 500px;
-            z-index: 200;
-        }
-
-        .maiya-chat.show {
-            display: flex;
-        }
-
-        .maiya-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-color);
-            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-            color: white;
-            border-radius: 20px 20px 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .maiya-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            margin-right: 12px;
-        }
-
-        .maiya-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-        }
-
-        .maiya-status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #10b981;
+            font-size: 2rem;
             animation: pulse 2s infinite;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        .maiya-messages {
+        .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            animation: slideUp 1s ease-out;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .messages {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
-            min-height: 200px;
-            max-height: 300px;
+            margin-bottom: 15px;
+            padding-right: 10px;
         }
 
-        .maiya-message {
-            margin-bottom: 16px;
-            padding: 12px 16px;
-            border-radius: 16px;
+        .message {
+            margin-bottom: 15px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .message.ai {
+            text-align: left;
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message-bubble {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 20px;
             max-width: 80%;
             word-wrap: break-word;
         }
 
-        .maiya-message.user {
-            background: var(--accent-primary);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 4px;
+        .ai .message-bubble {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
 
-        .maiya-message.ai {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border-bottom-left-radius: 4px;
+        .user .message-bubble {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
         }
 
-        .maiya-input-area {
-            padding: 16px;
-            border-top: 1px solid var(--border-color);
+        /* Input Area */
+        .input-container {
             display: flex;
-            gap: 12px;
-            align-items: flex-end;
+            gap: 10px;
+            align-items: center;
         }
 
-        .maiya-input {
+        .message-input {
             flex: 1;
-            padding: 12px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            resize: none;
-            min-height: 40px;
-            max-height: 100px;
-            font-family: inherit;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 20px;
+            color: white;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
         }
 
-        .maiya-send-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .message-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             border: none;
-            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            border-radius: 50%;
             color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        .maiya-voice-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: var(--success);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-left: 8px;
-        }
-
-        .maiya-voice-btn.listening {
-            animation: pulse 1s infinite;
-            background: var(--error);
-        }
-
-        .maiya-voice-btn.speaking {
-            animation: pulse 1s infinite;
-            background: var(--warning);
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 16px 24px;
-            border-radius: 16px;
-            border: none;
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-height: 52px;
-            text-decoration: none;
-            box-shadow: 0 4px 12px var(--shadow-light);
-            position: relative;
-            overflow: hidden;
-            user-select: none;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--shadow-medium);
-        }
-        
-        .btn:active {
-            transform: scale(0.96);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-        
-        .btn-primary { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); }
-        .btn-success { background: linear-gradient(135deg, var(--success), #34d399); }
-        .btn-secondary { background: linear-gradient(135deg, var(--text-secondary), #9ca3af); }
-        .btn-warning { background: linear-gradient(135deg, var(--warning), #fbbf24); }
-        .btn-danger { background: linear-gradient(135deg, var(--error), #f87171); }
-        .btn-info { background: linear-gradient(135deg, var(--info), #60a5fa); }
-        
-        /* Edit Button Styles */
-        .edit-btn {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border: none;
-            border-radius: 8px;
-            padding: 6px 12px;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            min-height: auto;
-        }
-
-        .edit-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px var(--shadow-medium);
-        }
-
-        .edit-btn.small {
-            padding: 4px 8px;
-            font-size: 11px;
-        }
-
-        .edit-btn.large {
-            padding: 8px 16px;
-            font-size: 14px;
+        .send-btn:hover {
+            transform: scale(1.1);
         }
 
         /* Quick Actions */
         .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+            animation: slideUp 1.2s ease-out;
         }
-        
+
         .quick-btn {
-            padding: 16px 12px;
-            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
             border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
             color: white;
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
+            font-size: 0.9rem;
             cursor: pointer;
-            min-height: 80px;
-            box-shadow: 0 4px 12px var(--shadow-light);
-            position: relative;
-            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s;
+            min-width: 120px;
         }
-        
+
         .quick-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--shadow-medium);
-        }
-        
-        .quick-btn.primary { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); }
-        .quick-btn.success { background: linear-gradient(135deg, var(--success), #34d399); }
-        .quick-btn.info { background: linear-gradient(135deg, var(--info), #60a5fa); }
-        .quick-btn.warning { background: linear-gradient(135deg, var(--warning), #fbbf24); }
-        .quick-btn.danger { background: linear-gradient(135deg, var(--error), #f87171); }
-        
-        .quick-btn .icon {
-            font-size: 24px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-        
-        .quick-btn .label {
-            font-size: 12px;
-            text-align: center;
-            line-height: 1.2;
         }
 
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin: 20px 0;
-        }
-        
-        .stat-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border-radius: 18px;
-            padding: 20px 16px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 16px var(--shadow-light);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px var(--shadow-medium);
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .stat-value {
-            font-size: 28px;
-            font-weight: 800;
-            line-height: 1;
-            color: var(--accent-primary);
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Data List */
-        .data-list {
+        /* Status Indicator */
+        .status {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .data-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .data-item:hover {
-            box-shadow: 0 4px 16px var(--shadow-light);
-            transform: translateY(-1px);
-        }
-
-        .data-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
-        }
-
-        .data-item-title {
-            font-weight: 700;
-            color: var(--text-primary);
-            font-size: 16px;
-            flex: 1;
-        }
-
-        .data-item-amount {
-            font-weight: 800;
-            color: var(--accent-primary);
-            font-size: 18px;
-            margin-left: 12px;
-        }
-
-        .data-item-details {
-            color: var(--text-muted);
-            font-size: 14px;
-            line-height: 1.4;
-            margin-bottom: 12px;
-        }
-
-        .data-item-meta {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .data-item-date {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .data-item-status {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-draft { background: #f3f4f6; color: #374151; }
-        .status-sent { background: #dbeafe; color: #1d4ed8; }
-        .status-paid { background: #d1fae5; color: #059669; }
-        .status-overdue { background: #fee2e2; color: #dc2626; }
-        .status-active { background: #d1fae5; color: #059669; }
-
-        /* Action Button Groups */
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-        }
-
-        .action-buttons.center {
             justify-content: center;
-        }
-
-        .action-buttons.end {
-            justify-content: flex-end;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-secondary);
-            backdrop-filter: blur(30px);
-            border-top: 1px solid var(--border-color);
-            padding: 12px 20px 32px;
-            z-index: 100;
-            box-shadow: 0 -4px 20px var(--shadow-medium);
-            transition: all 0.5s ease;
-        }
-        
-        .nav-items {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            padding: 12px 16px;
-            border-radius: 16px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            min-width: 60px;
-        }
-        
-        .nav-item.active {
-            color: var(--accent-primary);
-            background: var(--shadow-light);
-            box-shadow: 0 2px 8px var(--shadow-light);
-            transform: scale(1.05);
-        }
-        
-        .nav-item:hover {
-            color: var(--accent-primary);
-            transform: translateY(-2px);
-        }
-        
-        .nav-item .icon {
-            font-size: 24px;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-item.active .icon {
-            transform: scale(1.2);
-        }
-        
-        .home-indicator {
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 2px;
-            width: 140px;
-            margin: 12px auto 0;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
             opacity: 0.8;
         }
-        
-        /* Success Message */
-        .success-message {
-            position: fixed;
-            top: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            padding: 16px 24px;
-            border-radius: 16px;
-            font-weight: 600;
-            box-shadow: 0 8px 35px var(--shadow-strong);
-            z-index: 250;
-            opacity: 0;
-            transform: translateX(-50%) translateY(-20px);
-            transition: all 0.3s ease;
-            max-width: 90%;
-            text-align: center;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .success-message.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
 
-        /* Loading States */
-        .loading {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: loading 1.5s infinite;
-        }
-
-        @keyframes loading {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-        
-        .view {
-            padding-top: 20px;
-        }
-        
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-        
-        .section-title {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--text-primary);
-            transition: all 0.5s ease;
-        }
-
-        .avatar {
-            width: 60px;
-            height: 60px;
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ecdc4;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            font-weight: 700;
-            margin-right: 16px;
-        }
-
-        .company-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            color: white;
-            font-weight: 700;
-            margin: 0 auto 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .company-logo:hover {
-            transform: scale(1.05);
-        }
-
-        .profile-section {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            margin-bottom: 20px;
-        }
-
-        .profile-info h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .profile-info p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        /* Responsive Design */
-        @media screen and (max-width: 768px) {
-            .maiya-chat {
-                width: calc(100vw - 20px);
-                right: 10px;
-                bottom: 140px;
-            }
-            
-            .quick-actions {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            
-            .section-title {
-                font-size: 24px;
-            }
-            
-            .header-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-
-            .modal-content {
-                margin: 20px;
-                max-height: calc(100vh - 40px);
-            }
-
-            .action-buttons {
-                justify-content: center;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-            }
-
-            .quick-actions {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Safe Area Adjustments */
-        @supports (padding: max(0px)) {
-            .status-bar {
-                padding-top: env(safe-area-inset-top);
-                height: calc(44px + env(safe-area-inset-top));
-            }
-            
-            .bottom-nav {
-                padding-bottom: calc(32px + env(safe-area-inset-bottom));
-            }
-        }
-
-        /* Focus Styles for Accessibility */
-        .keyboard-navigation *:focus {
-            outline: 2px solid var(--accent-primary);
-            outline-offset: 2px;
+            animation: pulse 1.5s infinite;
         }
 
         /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .shake {
-            animation: shake 0.5s ease-in-out;
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        /* Scrollbar Styling */
+        .messages::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        /* Voice Animation */
+        .voice-indicator {
+            display: none;
+            align-items: center;
+            gap: 3px;
+            margin-left: 10px;
+        }
+
+        .voice-bar {
+            width: 3px;
+            height: 15px;
+            background: #4ecdc4;
+            border-radius: 2px;
+            animation: voiceWave 1s infinite ease-in-out;
+        }
+
+        .voice-bar:nth-child(2) { animation-delay: 0.1s; }
+        .voice-bar:nth-child(3) { animation-delay: 0.2s; }
+        .voice-bar:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes voiceWave {
+            0%, 100% { height: 15px; }
+            50% { height: 5px; }
+        }
+
+        .voice-indicator.active {
+            display: flex;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 380px) {
+            .app-container {
+                padding: 15px;
+            }
+            
+            .title {
+                font-size: 1.3rem;
+            }
+            
+            .quick-btn {
+                min-width: 100px;
+                padding: 8px 15px;
+            }
         }
     </style>
 </head>
-<body data-theme="red" data-mode="light">
-    <div class="mobile-container">
-        <!-- Status Bar -->
-        <div class="status-bar">
-            <div class="time" id="status-time">9:41</div>
-            <div class="theme-selector">
-                <button class="theme-picker-btn" onclick="openThemePicker()" id="theme-picker-btn">
-                    <span id="current-theme-icon">🌅</span> Themes
-                </button>
-                <button class="theme-toggle" onclick="toggleMode()" id="mode-toggle">🌑 Darker</button>
-                <span>📶</span>
-                <span>📱</span>
-                <span>🔋</span>
-            </div>
-        </div>
-        
-        <!-- Header -->
-        <div class="header">
-            <div class="logo-container">
-                <div class="app-logo" id="app-logo">🌅</div>
-                <div class="app-title">
-                    <h1 id="company-name">REFIT BUSINESS SYSTEM</h1>
-                    <p id="company-subtitle">Complete Solution with ClaudeAI Voice</p>
-                </div>
-            </div>
-            <div class="header-right">
-                <button class="header-btn maiya-btn" onclick="toggleClaudeAIChat()" title="ClaudeAI Voice Assistant" id="claudeai-toggle">
-                    🤖
-                </button>
-                <button class="header-btn" onclick="testVoiceSystem()" title="Test Voice" style="background: linear-gradient(135deg, #10b981, #34d399);">
-                    🎤
-                </button>
-                <button class="header-btn" onclick="openThemePicker()" title="Change Theme">🎨</button>
-                <button class="header-btn" onclick="exportData()" title="Export">📤</button>
-            </div>
-        </div>
-
-        <!-- Voice Indicator -->
-        <div id="voice-indicator" class="voice-indicator">
-            <span>🎤</span>
-        </div>
-
-        <!-- ClaudeAI Voice Chat Interface -->
-        <div id="claudeai-chat" class="maiya-chat">
-            <div class="maiya-header">
-                <div style="display: flex; align-items: center;">
-                    <div class="maiya-avatar">🤖</div>
-                    <div>
-                        <div class="maiya-status">
-                            <span>ClaudeAI Voice Assistant</span>
-                            <div class="maiya-status-dot"></div>
-                        </div>
-                        <div style="font-size: 12px; opacity: 0.8;" id="claudeai-status-text">Ready to help</div>
-                    </div>
-                </div>
-                <button onclick="closeClaudeAIChat()" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">✕</button>
-            </div>
-            <div class="maiya-messages" id="claudeai-messages">
-                <div class="maiya-message ai">
-                    Hello! I'm Claude with voice capabilities. I can help with absolutely anything: creative writing, programming, life advice, philosophical discussions, business strategy, casual conversation, or whatever interests you. What's on your mind?
-                </div>
-            </div>
-            <div class="maiya-input-area">
-                <textarea 
-                    class="maiya-input" 
-                    id="claudeai-input" 
-                    placeholder="Type your message or click 🎤 to speak..."
-                    rows="1"
-                    onkeypress="handleClaudeAIKeyPress(event)"
-                ></textarea>
-                <button class="maiya-send-btn" onclick="sendClaudeAIMessage()" title="Send Message">
-                    📤
-                </button>
-                <button class="maiya-voice-btn" onclick="toggleVoiceInput()" title="Voice Input" id="voice-btn">
-                    🎤
-                </button>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="main-content" id="main-content">
-            <!-- Dashboard View -->
-            <div id="dashboard-view" class="view">
-                <!-- Voice Test Card -->
-                <div class="card" style="background: linear-gradient(135deg, #10b981, #34d399); color: white; text-align: center;">
-                    <h3 style="margin-bottom: 16px; font-size: 20px;">🎤 Voice AI System - FIXED</h3>
-                    <p style="margin-bottom: 16px; opacity: 0.9;">Enhanced voice functionality with microphone access and speech output</p>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px;">
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
-                            <div style="font-size: 24px; margin-bottom: 4px;">🎤</div>
-                            <div style="font-size: 12px; font-weight: 600;" id="mic-status">Checking...</div>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
-                            <div style="font-size: 24px; margin-bottom: 4px;">🔊</div>
-                            <div style="font-size: 12px; font-weight: 600;" id="speaker-status">Checking...</div>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px;">
-                        <button class="btn" onclick="testMicrophone()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                            🎤 Test Microphone
-                        </button>
-                        <button class="btn" onclick="testSpeakers()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                            🔊 Test Speakers
-                        </button>
-                    </div>
-
-                    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn" onclick="startVoiceConversation()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                            💬 Voice Chat
-                        </button>
-                        <button class="btn" onclick="sayHelloMaiya()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                            👋 Say "Hey Maiya"
-                        </button>
-                    </div>
-                </div>
-
-                <!-- User Profile Section -->
-                <div class="card">
-                    <div class="profile-section">
-                        <div class="avatar" id="user-avatar">JD</div>
-                        <div class="profile-info" style="flex: 1;">
-                            <h3 id="user-display-name">John Doe</h3>
-                            <p id="user-display-title">Business Owner</p>
-                        </div>
-                        <button class="edit-btn" onclick="editProfile()">
-                            ✏️ Edit Profile
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Welcome Card with ClaudeAI -->
-                <div class="card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; text-align: center;">
-                    <h3 style="margin-bottom: 16px; font-size: 20px;">🧠 Meet ClaudeAI Voice - Complete AI Assistant</h3>
-                    <p style="margin-bottom: 16px; opacity: 0.9;">ClaudeAI with full voice capabilities and unlimited potential. From creative writing to coding, philosophical discussions to practical problem-solving, academic research to casual conversation - there are no limits to what we can explore together.</p>
-                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
-                            <div style="font-size: 24px; margin-bottom: 4px;">✍️</div>
-                            <div style="font-size: 12px; font-weight: 600;">Creative Writing</div>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
-                            <div style="font-size: 24px; margin-bottom: 4px;">💻</div>
-                            <div style="font-size: 12px; font-weight: 600;">Programming</div>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
-                            <div style="font-size: 24px; margin-bottom: 4px;">🤔</div>
-                            <div style="font-size: 12px; font-weight: 600;">Deep Thinking</div>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
-                            <div style="font-size: 24px; margin-bottom: 4px;">📚</div>
-                            <div style="font-size: 12px; font-weight: 600;">Learning</div>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn" onclick="toggleClaudeAIChat()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                            💬 Chat About Anything
-                        </button>
-                        <button class="btn" onclick="startCreativeWriting()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                            ✨ Creative Mode
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Company Info -->
-                <div class="card">
-                    <div style="text-align: center;">
-                        <div class="company-logo" id="company-logo" onclick="openCompanyManager()">🌅</div>
-                        <h3 id="company-display-name" style="font-weight: 700; margin-bottom: 8px; color: var(--text-primary); cursor: pointer;" onclick="openCompanyManager()">Your Company Name</h3>
-                        <p id="company-display-tagline" style="color: var(--text-muted); margin-bottom: 16px;">Professional Services</p>
-                    </div>
-                    <div class="action-buttons center">
-                        <button class="edit-btn" onclick="editCompany()">
-                            ✏️ Edit Company
-                        </button>
-                        <button class="edit-btn" onclick="openCompanyManager()">
-                            🏢 Company Hub
-                        </button>
-                        <button class="edit-btn" onclick="askMaiyaAboutCompany()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
-                            🤖 Ask Maiya
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Stats -->
-                <div class="stats-grid">
-                    <div class="stat-card" onclick="showView('quotes')">
-                        <div class="stat-label">Total Quotes</div>
-                        <div class="stat-value" id="total-quotes-count">0</div>
-                    </div>
-                    <div class="stat-card" onclick="showView('customers')">
-                        <div class="stat-label">Total Customers</div>
-                        <div class="stat-value" id="total-customers-count">0</div>
-                    </div>
-                    <div class="stat-card" onclick="viewReports()">
-                        <div class="stat-label">Monthly Revenue</div>
-                        <div class="stat-value" id="monthly-revenue">RM 0</div>
-                    </div>
-                    <div class="stat-card" onclick="viewReports()">
-                        <div class="stat-label">Total Revenue</div>
-                        <div class="stat-value" id="total-revenue">RM 0</div>
-                    </div>
-                </div>
-
-                <!-- Quick Actions with ClaudeAI -->
-                <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🚀 Quick Access to ClaudeAI</h3>
-                    <div class="quick-actions">
-                        <button class="quick-btn primary" onclick="createQuote()">
-                            <span class="icon">📋</span>
-                            <span class="label">New Quote</span>
-                        </button>
-                        <button class="quick-btn success" onclick="addCustomer()">
-                            <span class="icon">👥</span>
-                            <span class="label">Add Customer</span>
-                        </button>
-                        <button class="quick-btn" onclick="startCreativeWriting()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
-                            <span class="icon">✍️</span>
-                            <span class="label">Creative Writing</span>
-                        </button>
-                    </div>
-                    <div class="quick-actions">
-                        <button class="quick-btn info" onclick="startProgrammingHelp()">
-                            <span class="icon">💻</span>
-                            <span class="label">Programming</span>
-                        </button>
-                        <button class="quick-btn warning" onclick="startAcademicHelp()">
-                            <span class="icon">📚</span>
-                            <span class="label">Learning</span>
-                        </button>
-                        <button class="quick-btn danger" onclick="startGeneralConversation()">
-                            <span class="icon">💬</span>
-                            <span class="label">Chat Anything</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Settings View -->
-            <div id="settings-view" class="view hidden">
-                <div class="section-header">
-                    <h2 class="section-title">⚙️ Settings</h2>
-                </div>
-
-                <!-- Voice AI Settings -->
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">🎤 Voice AI Settings</h3>
-                        <button class="edit-btn small" onclick="testFullVoiceSystem()">🧪 Full Test</button>
-                    </div>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card" onclick="testMicrophone()">
-                            <div class="stat-label">Microphone</div>
-                            <div class="stat-value" id="mic-status-card">🔴</div>
-                        </div>
-                        <div class="stat-card" onclick="testSpeakers()">
-                            <div class="stat-label">Speakers</div>
-                            <div class="stat-value" id="speaker-status-card">🔴</div>
-                        </div>
-                        <div class="stat-card" onclick="testVoiceRecognition()">
-                            <div class="stat-label">Recognition</div>
-                            <div class="stat-value" id="recognition-status-card">🔴</div>
-                        </div>
-                        <div class="stat-card" onclick="testSpeechSynthesis()">
-                            <div class="stat-label">Synthesis</div>
-                            <div class="stat-value" id="synthesis-status-card">🔴</div>
-                        </div>
-                    </div>
-
-                    <div class="quick-actions">
-                        <button class="quick-btn primary" onclick="requestMicrophoneAccess()">
-                            <span class="icon">🎤</span>
-                            <span class="label">Enable Mic</span>
-                        </button>
-                        <button class="quick-btn success" onclick="testSpeechOutput()">
-                            <span class="icon">🔊</span>
-                            <span class="label">Test Speech</span>
-                        </button>
-                        <button class="quick-btn info" onclick="startListening()">
-                            <span class="icon">👂</span>
-                            <span class="label">Start Listen</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Theme Settings -->
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <h3 style="font-weight: 700; font-size: 18px; color: var(--text-primary);">🎨 Theme Settings</h3>
-                        <button class="edit-btn small" onclick="randomTheme()">🎲 Random</button>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                        <button class="quick-btn" onclick="switchToTheme('red')" style="background: linear-gradient(135deg, #f87171, #fca5a5);">
-                            <span class="icon">🌅</span>
-                            <span class="label">Coral Sunset</span>
-                        </button>
-                        <button class="quick-btn" onclick="switchToTheme('orange')" style="background: linear-gradient(135deg, #fb923c, #fdba74);">
-                            <span class="icon">🍑</span>
-                            <span class="label">Peach Glow</span>
-                        </button>
-                        <button class="quick-btn" onclick="switchToTheme('pink')" style="background: linear-gradient(135deg, #f472b6, #f9a8d4);">
-                            <span class="icon">🌸</span>
-                            <span class="label">Rose Blush</span>
-                        </button>
-                        <button class="quick-btn" onclick="switchToTheme('yellow')" style="background: linear-gradient(135deg, #fbbf24, #fcd34d);">
-                            <span class="icon">🌻</span>
-                            <span class="label">Butter Cream</span>
-                        </button>
-                        <button class="quick-btn" onclick="switchToTheme('bluegreen')" style="background: linear-gradient(135deg, #2dd4bf, #7dd3fc);">
-                            <span class="icon">🌊</span>
-                            <span class="label">Mint Breeze</span>
-                        </button>
-                        <button class="quick-btn" onclick="switchToTheme('purplegrey')" style="background: linear-gradient(135deg, #a855f7, #c4b5fd);">
-                            <span class="icon">💜</span>
-                            <span class="label">Lavender Mist</span>
-                        </button>
-                        <button class="quick-btn" onclick="switchToTheme('browngrey')" style="background: linear-gradient(135deg, #a3a3a3, #d6d3d1);">
-                            <span class="icon">🤎</span>
-                            <span class="label">Warm Taupe</span>
-                        </button>
-                        <button class="quick-btn" onclick="switchToTheme('greenbrown')" style="background: linear-gradient(135deg, #84cc16, #bef264);">
-                            <span class="icon">🌿</span>
-                            <span class="label">Sage Olive</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Navigation -->
-        <div class="bottom-nav">
-            <div class="nav-items">
-                <div class="nav-item active" onclick="showView('dashboard')">
-                    <span class="icon">🏠</span>
-                    <span>Home</span>
-                </div>
-                <div class="nav-item" onclick="showView('quotes')">
-                    <span class="icon">📋</span>
-                    <span>Quotes</span>
-                </div>
-                <div class="nav-item" onclick="showView('customers')">
-                    <span class="icon">👥</span>
-                    <span>Customers</span>
-                </div>
-                <div class="nav-item" onclick="toggleClaudeAIChat()">
-                    <span class="icon">🤖</span>
-                    <span>ClaudeAI</span>
-                </div>
-                <div class="nav-item" onclick="showView('settings')">
-                    <span class="icon">⚙️</span>
-                    <span>Settings</span>
-                </div>
-            </div>
-            <div class="home-indicator"></div>
-        </div>
+<body>
+    <div class="floating-bg">
+        <div class="float-element"></div>
+        <div class="float-element"></div>
+        <div class="float-element"></div>
+        <div class="float-element"></div>
     </div>
 
-    <!-- Success Message -->
-    <div id="success-message" class="success-message">
-        <span id="success-text">Action completed successfully!</span>
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">🤖</div>
+            <div class="title">AI Advisor</div>
+            <div class="subtitle">Your Personal Assistant</div>
+        </div>
+
+        <div class="status">
+            <div class="status-dot"></div>
+            <span>AI is ready to help</span>
+            <div class="voice-indicator" id="voiceIndicator">
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <button class="quick-btn" onclick="sendQuickMessage('Plan my day')">📅 Plan Day</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Budget advice')">💰 Budget Tips</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Health tips')">🏃 Health</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Career advice')">🎯 Career</button>
+        </div>
+
+        <div class="chat-container">
+            <div class="messages" id="messages">
+                <div class="message ai">
+                    <div class="message-bubble">
+                        👋 Hello! I'm your personal AI advisor. How can I help you today?
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input type="text" class="message-input" id="messageInput" placeholder="Ask me anything..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()">➤</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // ===== FIXED VOICE AI SYSTEM =====
-        class FixedClaudeAIVoice {
-            constructor() {
-                this.isListening = false;
-                this.isSpeaking = false;
-                this.recognition = null;
-                this.synthesis = null;
-                this.voices = [];
-                this.chatHistory = [];
-                this.micPermissionGranted = false;
-                this.voiceSupported = false;
-                this.speechSupported = false;
-                this.currentStream = null;
-                
-                // Voice settings
-                this.settings = {
-                    language: 'en-US',
-                    voiceRate: 1.0,
-                    voicePitch: 1.0,
-                    voiceVolume: 1.0,
-                    autoSpeak: true
-                };
-                
-                this.initializeVoiceSystem();
-            }
+        const messages = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+        const voiceIndicator = document.getElementById('voiceIndicator');
 
-            async initializeVoiceSystem() {
-                console.log('🎤 Initializing FIXED Voice AI System...');
-                
-                // Check browser support
-                this.checkBrowserSupport();
-                
-                // Initialize components
-                if (this.voiceSupported) {
-                    await this.setupVoiceRecognition();
-                }
-                
-                if (this.speechSupported) {
-                    await this.setupSpeechSynthesis();
-                }
-                
-                // Update UI status
-                this.updateVoiceStatus();
-                
-                console.log('✅ Voice AI System initialized');
-                console.log(`   🎤 Voice Recognition: ${this.voiceSupported ? 'Supported' : 'Not Supported'}`);
-                console.log(`   🔊 Speech Synthesis: ${this.speechSupported ? 'Supported' : 'Not Supported'}`);
-            }
-
-            checkBrowserSupport() {
-                // Check Voice Recognition Support
-                this.voiceSupported = !!(
-                    window.SpeechRecognition || 
-                    window.webkitSpeechRecognition || 
-                    window.mozSpeechRecognition || 
-                    window.msSpeechRecognition
-                );
-                
-                // Check Speech Synthesis Support
-                this.speechSupported = !!(
-                    window.speechSynthesis && 
-                    SpeechSynthesisUtterance
-                );
-                
-                console.log('🔍 Browser Support Check:');
-                console.log(`   Voice Recognition: ${this.voiceSupported}`);
-                console.log(`   Speech Synthesis: ${this.speechSupported}`);
-                console.log(`   User Agent: ${navigator.userAgent}`);
-            }
-
-            async setupVoiceRecognition() {
-                if (!this.voiceSupported) {
-                    console.warn('❌ Voice recognition not supported');
-                    return;
-                }
-
-                try {
-                    // Create recognition instance
-                    const SpeechRecognition = 
-                        window.SpeechRecognition || 
-                        window.webkitSpeechRecognition || 
-                        window.mozSpeechRecognition || 
-                        window.msSpeechRecognition;
-                    
-                    this.recognition = new SpeechRecognition();
-                    
-                    // Configure recognition
-                    this.recognition.continuous = false;
-                    this.recognition.interimResults = true;
-                    this.recognition.lang = this.settings.language;
-                    this.recognition.maxAlternatives = 1;
-
-                    // Event handlers
-                    this.recognition.onstart = () => {
-                        console.log('🎤 Voice recognition started');
-                        this.isListening = true;
-                        this.updateUI();
-                        this.showVoiceIndicator();
-                        this.updateStatus('🎤 Listening...');
-                    };
-
-                    this.recognition.onend = () => {
-                        console.log('🎤 Voice recognition ended');
-                        this.isListening = false;
-                        this.updateUI();
-                        this.hideVoiceIndicator();
-                        this.updateStatus('Ready to help');
-                    };
-
-                    this.recognition.onresult = (event) => {
-                        this.handleVoiceResult(event);
-                    };
-
-                    this.recognition.onerror = (event) => {
-                        console.error('🎤 Voice recognition error:', event.error);
-                        this.handleVoiceError(event);
-                    };
-
-                    console.log('✅ Voice recognition setup complete');
-                } catch (error) {
-                    console.error('❌ Failed to setup voice recognition:', error);
-                }
-            }
-
-            async setupSpeechSynthesis() {
-                if (!this.speechSupported) {
-                    console.warn('❌ Speech synthesis not supported');
-                    return;
-                }
-
-                try {
-                    this.synthesis = window.speechSynthesis;
-                    
-                    // Load voices
-                    await this.loadVoices();
-                    
-                    // Handle voices changed event
-                    if (speechSynthesis.onvoiceschanged !== undefined) {
-                        speechSynthesis.onvoiceschanged = () => {
-                            this.loadVoices();
-                        };
-                    }
-
-                    console.log('✅ Speech synthesis setup complete');
-                } catch (error) {
-                    console.error('❌ Failed to setup speech synthesis:', error);
-                }
-            }
-
-            async loadVoices() {
-                return new Promise((resolve) => {
-                    const loadVoicesAttempt = () => {
-                        const voices = this.synthesis.getVoices();
-                        if (voices.length > 0) {
-                            this.voices = voices;
-                            console.log(`🔊 Loaded ${this.voices.length} voices`);
-                            resolve();
-                        } else {
-                            // Retry after a short delay
-                            setTimeout(loadVoicesAttempt, 100);
-                        }
-                    };
-                    
-                    loadVoicesAttempt();
-                });
-            }
-
-            async requestMicrophonePermission() {
-                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    throw new Error('Microphone access not supported in this browser');
-                }
-
-                try {
-                    console.log('🎤 Requesting microphone permission...');
-                    
-                    // Stop any existing stream
-                    if (this.currentStream) {
-                        this.currentStream.getTracks().forEach(track => track.stop());
-                    }
-                    
-                    // Request microphone access
-                    this.currentStream = await navigator.mediaDevices.getUserMedia({
-                        audio: {
-                            echoCancellation: true,
-                            noiseSuppression: true,
-                            autoGainControl: true,
-                            sampleRate: 44100
-                        }
-                    });
-                    
-                    this.micPermissionGranted = true;
-                    console.log('✅ Microphone permission granted');
-                    this.updateStatus('🎤 Microphone access granted');
-                    
-                    // Keep the stream active for a moment to test
-                    setTimeout(() => {
-                        if (this.currentStream) {
-                            this.currentStream.getTracks().forEach(track => track.stop());
-                        }
-                    }, 1000);
-                    
-                    return true;
-                } catch (error) {
-                    console.error('❌ Microphone permission denied:', error);
-                    this.micPermissionGranted = false;
-                    this.updateStatus('❌ Microphone access denied');
-                    throw error;
-                }
-            }
-
-            async startVoiceInput() {
-                if (!this.voiceSupported) {
-                    throw new Error('Voice recognition not supported');
-                }
-
-                if (!this.micPermissionGranted) {
-                    await this.requestMicrophonePermission();
-                }
-
-                if (!this.recognition) {
-                    await this.setupVoiceRecognition();
-                }
-
-                if (this.isListening) {
-                    this.stopVoiceInput();
-                    return;
-                }
-
-                try {
-                    console.log('🎤 Starting voice input...');
-                    this.recognition.start();
-                } catch (error) {
-                    console.error('❌ Error starting voice input:', error);
-                    this.updateStatus('❌ Error starting voice input');
-                    throw error;
-                }
-            }
-
-            stopVoiceInput() {
-                if (this.recognition && this.isListening) {
-                    try {
-                        this.recognition.stop();
-                        console.log('🛑 Voice input stopped');
-                    } catch (error) {
-                        console.error('❌ Error stopping voice input:', error);
-                    }
-                }
-            }
-
-            handleVoiceResult(event) {
-                let transcript = '';
-                let isFinal = false;
-
-                for (let i = event.resultIndex; i < event.results.length; i++) {
-                    const result = event.results[i];
-                    transcript += result[0].transcript;
-                    if (result.isFinal) {
-                        isFinal = true;
-                    }
-                }
-
-                console.log('🎤 Voice result:', transcript, 'Final:', isFinal);
-
-                if (isFinal && transcript.trim()) {
-                    this.processVoiceInput(transcript.trim());
-                } else if (!isFinal) {
-                    this.updateStatus(`🎤 "${transcript}"`);
-                }
-            }
-
-            handleVoiceError(event) {
-                console.error('🎤 Voice error:', event.error);
-                
-                const errorMessages = {
-                    'not-allowed': 'Microphone access denied. Please allow microphone access.',
-                    'no-speech': 'No speech detected. Please speak clearly.',
-                    'audio-capture': 'Microphone not found. Check your microphone.',
-                    'network': 'Network error. Check your internet connection.',
-                    'not-supported': 'Voice recognition not supported.',
-                    'language-not-supported': 'Language not supported.',
-                    'aborted': 'Voice input was cancelled.',
-                    'service-not-allowed': 'Voice service not allowed.'
-                };
-                
-                const message = errorMessages[event.error] || `Voice error: ${event.error}`;
-                this.updateStatus(`❌ ${message}`);
-                showSuccessMessage(`🎤 ${message}`);
-                
-                if (event.error === 'not-allowed') {
-                    this.micPermissionGranted = false;
-                }
-                
-                this.isListening = false;
-                this.updateUI();
-                this.hideVoiceIndicator();
-            }
-
-            processVoiceInput(transcript) {
-                console.log('🎤 Processing voice input:', transcript);
-                
-                // Check for wake word
-                const lowerTranscript = transcript.toLowerCase();
-                if (lowerTranscript.includes('hey maiya') || lowerTranscript.includes('hi maiya')) {
-                    this.handleWakeWord();
-                    return;
-                }
-                
-                // Check for voice commands
-                if (this.handleVoiceCommands(lowerTranscript)) {
-                    return;
-                }
-                
-                // Regular chat input
-                document.getElementById('maiya-input').value = transcript;
-                this.updateStatus('✅ Voice input received');
-                
-                // Auto-send after a short delay
-                setTimeout(() => {
-                    this.sendMessage(transcript);
-                }, 500);
-            }
-
-            handleWakeWord() {
-                const responses = [
-                    "Yes, I'm here!",
-                    "Hello! How can I help?",
-                    "Hi there! What's on your mind?",
-                    "Ready to help with anything!",
-                    "What can I do for you?",
-                    "I'm listening! What would you like to explore?",
-                    "Hi! Ready for anything - coding, writing, chatting, whatever you need!"
-                ];
-                
-                const response = responses[Math.floor(Math.random() * responses.length)];
-                this.speak(response);
-                
-                // Open chat if not already open
-                if (!document.getElementById('claudeai-chat').classList.contains('show')) {
-                    toggleClaudeAIChat();
-                }
-                
-                this.updateStatus('👋 Wake word detected');
-                showSuccessMessage('👋 ClaudeAI is ready for anything!');
-            }
-
-            handleVoiceCommands(transcript) {
-                const commands = {
-                    'analyze business': () => {
-                        this.speak("Let me provide comprehensive business analysis and strategic recommendations.");
-                        this.sendMessage('Provide a complete business analysis with strategic recommendations');
-                        return true;
-                    },
-                    'creative writing': () => {
-                        this.speak("I'd love to help with creative writing! What would you like to create?");
-                        this.sendMessage('I want to do some creative writing. Can you help me with a story or creative project?');
-                        return true;
-                    },
-                    'programming help': () => {
-                        this.speak("Ready to help with programming! What coding challenge are you working on?");
-                        this.sendMessage('I need programming help with coding or technical problems');
-                        return true;
-                    },
-                    'life advice': () => {
-                        this.speak("I'm here to help with life guidance and personal advice.");
-                        this.sendMessage('I need some life advice and personal guidance');
-                        return true;
-                    },
-                    'let\'s chat': () => {
-                        this.speak("Great! I love good conversations. What's on your mind?");
-                        this.sendMessage('Let\'s have a casual conversation about whatever comes to mind');
-                        return true;
-                    },
-                    'tell me a joke': () => {
-                        this.speak("I'd be happy to share some humor with you!");
-                        this.sendMessage('Tell me a good joke or let\'s have some fun');
-                        return true;
-                    },
-                    'philosophy': () => {
-                        this.speak("I enjoy deep philosophical discussions. What big question is on your mind?");
-                        this.sendMessage('I want to have a philosophical discussion about life and big ideas');
-                        return true;
-                    },
-                    'help me learn': () => {
-                        this.speak("I love helping people learn! What subject interests you?");
-                        this.sendMessage('I want to learn something new. Can you help me with education?');
-                        return true;
-                    },
-                    'health advice': () => {
-                        this.speak("I can help with health and wellness guidance.");
-                        this.sendMessage('I need health and fitness advice for better wellness');
-                        return true;
-                    },
-                    'travel planning': () => {
-                        this.speak("I'd love to help you plan an amazing trip!");
-                        this.sendMessage('I need help with travel planning and destination advice');
-                        return true;
-                    },
-                    'explain science': () => {
-                        this.speak("Science is fascinating! What would you like me to explain?");
-                        this.sendMessage('Can you explain some scientific concepts or discuss science topics?');
-                        return true;
-                    },
-                    'write a story': () => {
-                        this.speak("I'd love to write a story with you! What kind of story interests you?");
-                        this.sendMessage('Let\'s write a creative story together');
-                        return true;
-                    },
-                    'solve math': () => {
-                        this.speak("Math problem solving coming up! What do you need help with?");
-                        this.sendMessage('I need help solving math problems or understanding mathematical concepts');
-                        return true;
-                    },
-                    'export data': () => {
-                        this.speak("Exporting your business data.");
-                        exportData();
-                        return true;
-                    },
-                    'change theme': () => {
-                        this.speak("Changing theme now.");
-                        randomTheme();
-                        return true;
-                    },
-                    'clear chat': () => {
-                        this.speak("Clearing chat history.");
-                        this.clearHistory();
-                        return true;
-                    },
-                    'help': () => {
-                        this.speak("I'm here to help with absolutely anything - from creative projects to serious discussions, technical problems to life advice.");
-                        this.sendMessage('What are all the ways you can help me? Show me your full capabilities.');
-                        return true;
-                    }
-                };
-                
-                for (const [command, handler] of Object.entries(commands)) {
-                    if (transcript.includes(command)) {
-                        console.log('🎤 Executing voice command:', command);
-                        return handler();
-                    }
-                }
-                
-                return false;
-            }
-
-            async speak(text) {
-                if (!this.speechSupported || !this.settings.autoSpeak || !text) {
-                    console.log('🔊 Speech disabled or no text');
-                    return;
-                }
-
-                try {
-                    console.log('🔊 Speaking:', text);
-                    
-                    // Stop any current speech
-                    this.stopSpeaking();
-                    
-                    // Create utterance
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    
-                    // Configure utterance
-                    utterance.rate = this.settings.voiceRate;
-                    utterance.pitch = this.settings.voicePitch;
-                    utterance.volume = this.settings.voiceVolume;
-                    utterance.lang = this.settings.language;
-                    
-                    // Select best voice
-                    const voice = this.selectBestVoice();
-                    if (voice) {
-                        utterance.voice = voice;
-                    }
-                    
-                    // Event handlers
-                    utterance.onstart = () => {
-                        console.log('🔊 Speech started');
-                        this.isSpeaking = true;
-                        this.updateUI();
-                        this.updateStatus('🗣️ Speaking...');
-                    };
-                    
-                    utterance.onend = () => {
-                        console.log('🔊 Speech ended');
-                        this.isSpeaking = false;
-                        this.updateUI();
-                        this.updateStatus('Ready to help');
-                    };
-                    
-                    utterance.onerror = (event) => {
-                        console.error('🔊 Speech error:', event.error);
-                        this.isSpeaking = false;
-                        this.updateUI();
-                        this.updateStatus('Speech error occurred');
-                    };
-                    
-                    // Speak
-                    this.synthesis.speak(utterance);
-                    
-                } catch (error) {
-                    console.error('🔊 Error in speech synthesis:', error);
-                    this.updateStatus('❌ Speech synthesis error');
-                }
-            }
-
-            stopSpeaking() {
-                if (this.synthesis) {
-                    try {
-                        this.synthesis.cancel();
-                        this.isSpeaking = false;
-                        this.updateUI();
-                        console.log('🔊 Speech stopped');
-                    } catch (error) {
-                        console.error('🔊 Error stopping speech:', error);
-                    }
-                }
-            }
-
-            selectBestVoice() {
-                if (this.voices.length === 0) {
-                    return null;
-                }
-
-                // Try to find voice matching language
-                let preferredVoice = this.voices.find(voice => 
-                    voice.lang.toLowerCase().startsWith(this.settings.language.toLowerCase().split('-')[0])
-                );
-
-                // Fallback to first available voice
-                if (!preferredVoice) {
-                    preferredVoice = this.voices[0];
-                }
-
-                return preferredVoice;
-            }
-
-            sendMessage(message) {
-                if (!message.trim()) return;
-
-                // Add user message to chat
-                this.addMessageToChat(message, 'user');
-                
-                // Clear input
-                document.getElementById('maiya-input').value = '';
-                
-                // Process message
-                setTimeout(() => {
-                    const response = this.generateResponse(message);
-                    this.addMessageToChat(response, 'ai');
-                    
-                    // Speak response if enabled
-                    if (this.settings.autoSpeak) {
-                        const spokenResponse = this.generateSpokenResponse(response);
-                        setTimeout(() => {
-                            this.speak(spokenResponse);
-                        }, 300);
-                    }
-                }, 1000);
-            }
-
-            addMessageToChat(message, sender) {
-                const messagesContainer = document.getElementById('claudeai-messages');
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `maiya-message ${sender}`;
-                messageDiv.textContent = message;
-                
-                messagesContainer.appendChild(messageDiv);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-                // Save to history
-                this.chatHistory.push({
-                    message: message,
-                    sender: sender,
-                    timestamp: new Date()
-                });
-            }
-
-            generateResponse(message) {
-                const lowerMessage = message.toLowerCase();
-                
-                // Greeting responses - Full AI assistant introduction
-                if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
-                    const greetings = [
-                        "Hello! I'm Claude with voice capabilities. I can help with absolutely anything: creative writing, programming, academic research, life advice, philosophical discussions, business strategy, or just casual conversation. What's on your mind?",
-                        "Hi there! I'm Claude, your complete AI assistant with voice. I'm here for everything - from solving complex problems to having fun conversations, creative projects to serious analysis. How can I help?",
-                        "Hey! I'm Claude with voice enabled. I can code, write stories, solve math problems, give life advice, discuss philosophy, help with business, or chat about anything. What would you like to explore together?"
-                    ];
-                    return greetings[Math.floor(Math.random() * greetings.length)];
-                }
-                
-                // Programming and technical questions
-                if (lowerMessage.includes('code') || lowerMessage.includes('programming') || lowerMessage.includes('debug') || lowerMessage.includes('javascript') || lowerMessage.includes('python')) {
-                    return "I'd love to help with programming! I can assist with coding in any language, debug issues, explain technical concepts, review code, suggest best practices, or help design software architecture. What programming challenge are you working on?";
-                }
-                
-                // Creative writing and storytelling
-                if (lowerMessage.includes('write') || lowerMessage.includes('story') || lowerMessage.includes('creative') || lowerMessage.includes('poem') || lowerMessage.includes('script')) {
-                    return "Creative writing is one of my favorite things! I can help with stories, poems, scripts, blog posts, character development, worldbuilding, or any creative project. I can write in different styles, genres, and formats. What kind of creative work interests you?";
-                }
-                
-                // Academic and learning
-                if (lowerMessage.includes('learn') || lowerMessage.includes('study') || lowerMessage.includes('research') || lowerMessage.includes('explain') || lowerMessage.includes('math') || lowerMessage.includes('science')) {
-                    return "I'm here to help you learn! I can explain complex concepts, assist with research, solve math problems, help with essays, provide study strategies, or dive deep into any academic subject. Learning is a journey, and I'm happy to be your guide. What would you like to explore?";
-                }
-                
-                // Personal life and relationships
-                if (lowerMessage.includes('relationship') || lowerMessage.includes('friend') || lowerMessage.includes('family') || lowerMessage.includes('personal') || lowerMessage.includes('advice') || lowerMessage.includes('life')) {
-                    return "I'm here for life's big and small moments. Whether you need advice about relationships, career decisions, personal growth, dealing with challenges, or just want to talk through your thoughts - I'm a good listener and can offer perspectives. What's going on in your life?";
-                }
-                
-                // Philosophy and deep thinking
-                if (lowerMessage.includes('philosophy') || lowerMessage.includes('meaning') || lowerMessage.includes('ethics') || lowerMessage.includes('moral') || lowerMessage.includes('think') || lowerMessage.includes('believe')) {
-                    return "I love exploring big ideas! Philosophy, ethics, the meaning of life, moral dilemmas, consciousness, reality - these are fascinating topics. I enjoy deep conversations about what matters most and examining different perspectives. What philosophical question interests you?";
-                }
-                
-                // Entertainment and fun
-                if (lowerMessage.includes('game') || lowerMessage.includes('fun') || lowerMessage.includes('joke') || lowerMessage.includes('play') || lowerMessage.includes('entertainment') || lowerMessage.includes('bored')) {
-                    return "Let's have some fun! I can play word games, tell jokes, create interactive stories, suggest activities, come up with creative challenges, or just chat about interesting topics. Life should have moments of joy and playfulness. What sounds fun to you?";
-                }
-                
-                // Health and fitness
-                if (lowerMessage.includes('health') || lowerMessage.includes('fitness') || lowerMessage.includes('exercise') || lowerMessage.includes('diet') || lowerMessage.includes('wellness') || lowerMessage.includes('mental health')) {
-                    return "Health and wellness are so important! I can help with workout planning, nutrition information, mental health strategies, stress management, healthy habits, or general wellness advice. Remember, I'm not a medical professional, but I can provide helpful information and support. What aspect of health interests you?";
-                }
-                
-                // Travel and lifestyle
-                if (lowerMessage.includes('travel') || lowerMessage.includes('vacation') || lowerMessage.includes('trip') || lowerMessage.includes('culture') || lowerMessage.includes('lifestyle') || lowerMessage.includes('hobby')) {
-                    return "I love helping with life enrichment! Whether it's planning trips, exploring new cultures, finding hobbies, lifestyle tips, or discovering interesting experiences - there's so much to explore in this world. What adventure or lifestyle topic interests you?";
-                }
-                
-                // Business (since we're in a business app, but not exclusively)
-                if (lowerMessage.includes('business') || lowerMessage.includes('strategy') || lowerMessage.includes('financial') || lowerMessage.includes('marketing') || lowerMessage.includes('revenue')) {
-                    return "Happy to help with business matters! I can assist with strategic planning, financial analysis, marketing strategies, operations, leadership advice, or any business challenge. While I'm in a business app, I can help with business topics just like any other subject. What business area needs attention?";
-                }
-                
-                // General knowledge and conversation
-                if (lowerMessage.includes('what') || lowerMessage.includes('how') || lowerMessage.includes('why') || lowerMessage.includes('tell me') || lowerMessage.includes('explain')) {
-                    return "I love answering questions! I have knowledge across many fields - science, history, current events, arts, technology, and more. I enjoy both factual explanations and thoughtful discussions. What would you like to know about?";
-                }
-                
-                // Voice and technical features
-                if (lowerMessage.includes('voice') || lowerMessage.includes('speak') || lowerMessage.includes('microphone')) {
-                    return "Voice interaction makes our conversation feel more natural! You can speak to me about anything - ask questions, have discussions, get help with problems, or just chat. Voice often leads to more spontaneous and interesting conversations. What would you like to talk about?";
-                }
-                
-                // Default comprehensive response - Claude-like
-                const responseTemplates = [
-                    `That's an interesting question about "${message.substring(0, 40)}${message.length > 40 ? '...' : ''}". I'm Claude with voice capabilities, so I can approach this from many angles. Could you tell me more about what you're looking for? Are you interested in a detailed explanation, creative exploration, problem-solving approach, or something else?`,
-                    
-                    `I see you're asking about "${message.substring(0, 40)}${message.length > 40 ? '...' : ''}". As your AI assistant, I can help with this in various ways - whether you want analytical thinking, creative approaches, practical solutions, or just an interesting discussion. What perspective would be most helpful?`,
-                    
-                    `Interesting topic: "${message.substring(0, 40)}${message.length > 40 ? '...' : ''}". I'm here to help with anything and everything - from technical problems to creative projects, serious discussions to casual chats. Could you give me a bit more context so I can provide the most helpful response?`
-                ];
-                
-                return responseTemplates[Math.floor(Math.random() * responseTemplates.length)];
-            }
-
-            generateSpokenResponse(fullResponse) {
-                // Create a shorter version for speech
-                const sentences = fullResponse.split('. ');
-                const firstSentence = sentences[0];
-                
-                // Limit length for speech
-                if (firstSentence.length > 100) {
-                    return firstSentence.substring(0, 97) + '...';
-                }
-                
-                return firstSentence;
-            }
-
-            clearHistory() {
-                this.chatHistory = [];
-                document.getElementById('claudeai-messages').innerHTML = `
-                    <div class="maiya-message ai">
-                        Hello! I'm Claude with voice capabilities. I can help with absolutely anything: creative writing, programming, life advice, philosophical discussions, business strategy, casual conversation, or whatever interests you. What's on your mind?
-                    </div>
-                `;
-                showSuccessMessage('🗑️ Chat history cleared!');
-            }
-
-            updateUI() {
-                const voiceBtn = document.getElementById('voice-btn');
-                const claudeaiBtn = document.getElementById('claudeai-toggle');
-                
-                // Update voice button
-                if (voiceBtn) {
-                    if (this.isListening) {
-                        voiceBtn.classList.add('listening');
-                        voiceBtn.innerHTML = '🛑';
-                        voiceBtn.title = 'Stop Voice Input';
-                    } else if (this.isSpeaking) {
-                        voiceBtn.classList.add('speaking');
-                        voiceBtn.classList.remove('listening');
-                        voiceBtn.innerHTML = '🔊';
-                        voiceBtn.title = 'Speaking...';
-                    } else {
-                        voiceBtn.classList.remove('listening', 'speaking');
-                        voiceBtn.innerHTML = '🎤';
-                        voiceBtn.title = 'Start Voice Input';
-                    }
-                }
-
-                // Update ClaudeAI button
-                if (claudeaiBtn) {
-                    if (this.isListening) {
-                        claudeaiBtn.classList.add('listening');
-                    } else {
-                        claudeaiBtn.classList.remove('listening');
-                    }
-
-                    if (this.isSpeaking) {
-                        claudeaiBtn.classList.add('processing');
-                    } else {
-                        claudeaiBtn.classList.remove('processing');
-                    }
-                }
-            }
-
-            updateStatus(status) {
-                const statusText = document.getElementById('claudeai-status-text');
-                if (statusText) {
-                    statusText.textContent = status;
-                }
-                console.log('🎤 Status:', status);
-            }
-
-            showVoiceIndicator() {
-                const indicator = document.getElementById('voice-indicator');
-                if (indicator) {
-                    indicator.classList.add('show');
-                }
-            }
-
-            hideVoiceIndicator() {
-                const indicator = document.getElementById('voice-indicator');
-                if (indicator) {
-                    indicator.classList.remove('show');
-                }
-            }
-
-            updateVoiceStatus() {
-                // Update status displays
-                const micStatus = document.getElementById('mic-status');
-                const speakerStatus = document.getElementById('speaker-status');
-                const micStatusCard = document.getElementById('mic-status-card');
-                const speakerStatusCard = document.getElementById('speaker-status-card');
-                const recognitionStatusCard = document.getElementById('recognition-status-card');
-                const synthesisStatusCard = document.getElementById('synthesis-status-card');
-                
-                // Microphone status
-                const micText = this.micPermissionGranted ? 'Access Granted' : 'Access Needed';
-                const micIcon = this.micPermissionGranted ? '🟢' : '🔴';
-                if (micStatus) micStatus.textContent = micText;
-                if (micStatusCard) micStatusCard.textContent = micIcon;
-                
-                // Speaker status
-                const speakerText = this.speechSupported ? 'Ready' : 'Not Supported';
-                const speakerIcon = this.speechSupported ? '🟢' : '🔴';
-                if (speakerStatus) speakerStatus.textContent = speakerText;
-                if (speakerStatusCard) speakerStatusCard.textContent = speakerIcon;
-                
-                // Recognition status
-                const recognitionIcon = this.voiceSupported ? '🟢' : '🔴';
-                if (recognitionStatusCard) recognitionStatusCard.textContent = recognitionIcon;
-                
-                // Synthesis status
-                const synthesisIcon = this.speechSupported ? '🟢' : '🔴';
-                if (synthesisStatusCard) synthesisStatusCard.textContent = synthesisIcon;
-            }
-
-            // Test methods
-            async testMicrophone() {
-                try {
-                    await this.requestMicrophonePermission();
-                    showSuccessMessage('✅ Microphone test successful!');
-                    this.updateVoiceStatus();
-                } catch (error) {
-                    showSuccessMessage('❌ Microphone test failed: ' + error.message);
-                }
-            }
-
-            testSpeakers() {
-                this.speak("Speaker test successful. You should hear this message clearly.");
-                showSuccessMessage('🔊 Testing speakers - you should hear Maiya speaking!');
-            }
-
-            async testVoiceRecognition() {
-                if (!this.voiceSupported) {
-                    showSuccessMessage('❌ Voice recognition not supported in this browser');
-                    return;
-                }
-                
-                try {
-                    await this.startVoiceInput();
-                    showSuccessMessage('🎤 Voice recognition test started - say something!');
-                } catch (error) {
-                    showSuccessMessage('❌ Voice recognition test failed: ' + error.message);
-                }
-            }
-
-            testSpeechSynthesis() {
-                if (!this.speechSupported) {
-                    showSuccessMessage('❌ Speech synthesis not supported in this browser');
-                    return;
-                }
-                
-                this.speak("Speech synthesis test successful. Voice output is working correctly.");
-                showSuccessMessage('🔊 Speech synthesis test completed!');
-            }
-
-            async testFullSystem() {
-                showSuccessMessage('🧪 Running complete voice system test...');
-                
-                // Test microphone
-                setTimeout(async () => {
-                    try {
-                        await this.testMicrophone();
-                    } catch (error) {
-                        console.error('Microphone test failed:', error);
-                    }
-                }, 500);
-                
-                // Test speakers
-                setTimeout(() => {
-                    this.testSpeakers();
-                }, 2000);
-                
-                // Test voice recognition
-                setTimeout(() => {
-                    if (this.micPermissionGranted) {
-                        this.testVoiceRecognition();
-                    }
-                }, 4000);
-                
-                // Final status update
-                setTimeout(() => {
-                    this.updateVoiceStatus();
-                    const micOk = this.micPermissionGranted;
-                    const speechOk = this.speechSupported;
-                    const voiceOk = this.voiceSupported;
-                    
-                    if (micOk && speechOk && voiceOk) {
-                        showSuccessMessage('✅ All voice features are working perfectly!');
-                    } else {
-                        const issues = [];
-                        if (!micOk) issues.push('microphone access');
-                        if (!speechOk) issues.push('speech synthesis');
-                        if (!voiceOk) issues.push('voice recognition');
-                        showSuccessMessage(`⚠️ Issues found: ${issues.join(', ')}`);
-                    }
-                }, 6000);
-            }
-        }
-
-        // ===== APPLICATION STATE =====
-        let appState = {
-            currentTheme: 'red',
-            currentMode: 'light',
-            currentView: 'dashboard',
+        // AI Responses Database
+        const aiResponses = {
+            'plan my day': '📅 Here\'s how to plan your day effectively:\n\n1. Start with your most important task\n2. Schedule breaks every 90 minutes\n3. Block time for unexpected tasks\n4. End with a reflection on achievements',
             
-            userProfile: {
-                firstName: 'John',
-                lastName: 'Doe',
-                title: 'Business Owner',
-                email: 'john@company.com',
-                phone: '+60 12-345 6789'
-            },
+            'budget advice': '💰 Smart budgeting tips:\n\n• Follow the 50/30/20 rule\n• Track every expense for a week\n• Automate your savings\n• Review and adjust monthly',
             
-            companyInfo: {
-                name: 'Your Company Name',
-                tagline: 'Professional Services',
-                logo: '🌅'
-            },
+            'health tips': '🏃 Daily health boosters:\n\n• Drink water first thing in the morning\n• Take a 10-minute walk after meals\n• Get 7-8 hours of sleep\n• Practice deep breathing for 5 minutes',
             
-            customers: [
-                {
-                    id: 1,
-                    company: 'ABC Corporation',
-                    contact: 'Jane Smith'
-                },
-                {
-                    id: 2,
-                    company: 'XYZ Solutions',
-                    contact: 'Bob Johnson'
-                }
-            ],
+            'career advice': '🎯 Career growth strategies:\n\n• Set clear monthly goals\n• Learn one new skill quarterly\n• Network within your industry\n• Seek feedback regularly',
             
-            quotes: [
-                {
-                    id: 1,
-                    number: 'QT-2024-001',
-                    total: 6360,
-                    status: 'sent'
-                },
-                {
-                    id: 2,
-                    number: 'QT-2024-002',
-                    total: 16430,
-                    status: 'draft'
-                }
-            ],
-            
-            stats: {
-                totalQuotes: 2,
-                totalCustomers: 2,
-                monthlyRevenue: 16430,
-                totalRevenue: 22790
-            }
+            'default': 'I understand you\'re looking for advice. Could you be more specific about what area you\'d like help with? I can assist with planning, finances, health, career, or personal development.'
         };
 
-        // ===== INITIALIZE VOICE AI =====
-        let voiceAI = new FixedVoiceAI();
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
 
-        // ===== VOICE FUNCTIONS =====
-        function toggleClaudeAIChat() {
-            const chat = document.getElementById('claudeai-chat');
-            const isVisible = chat.classList.contains('show');
-            
-            if (isVisible) {
-                chat.classList.remove('show');
-            } else {
-                chat.classList.add('show');
-                document.getElementById('claudeai-input').focus();
-            }
-        }
+            addMessage(message, 'user');
+            messageInput.value = '';
 
-        function closeClaudeAIChat() {
-            document.getElementById('claudeai-chat').classList.remove('show');
-        }
+            // Show typing indicator
+            showTypingIndicator();
 
-        function sendClaudeAIMessage() {
-            const input = document.getElementById('claudeai-input');
-            const message = input.value.trim();
-            if (message) {
-                claudeAI.sendMessage(message);
-            }
-        }
-
-        function handleClaudeAIKeyPress(event) {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                sendClaudeAIMessage();
-            }
-        }
-
-        function toggleVoiceInput() {
-            if (claudeAI.isListening) {
-                claudeAI.stopVoiceInput();
-            } else {
-                claudeAI.startVoiceInput().catch(error => {
-                    console.error('Error starting voice input:', error);
-                    showSuccessMessage('❌ Error starting voice input: ' + error.message);
-                });
-            }
-        }
-
-        // ===== VOICE TEST FUNCTIONS =====
-        function testVoiceSystem() {
-            claudeAI.testFullSystem();
-        }
-
-        function testMicrophone() {
-            claudeAI.testMicrophone();
-        }
-
-        function testSpeakers() {
-            claudeAI.testSpeakers();
-        }
-
-        function testVoiceRecognition() {
-            claudeAI.testVoiceRecognition();
-        }
-
-        function testSpeechSynthesis() {
-            claudeAI.testSpeechSynthesis();
-        }
-
-        function testFullVoiceSystem() {
-            claudeAI.testFullSystem();
-        }
-
-        function requestMicrophoneAccess() {
-            claudeAI.requestMicrophonePermission().then(() => {
-                showSuccessMessage('✅ Microphone access granted!');
-                claudeAI.updateVoiceStatus();
-            }).catch(error => {
-                showSuccessMessage('❌ Failed to get microphone access: ' + error.message);
-            });
-        }
-
-        function testSpeechOutput() {
-            claudeAI.speak("Hello! This is a test of the speech output system. If you can hear this message clearly, speech synthesis is working correctly.");
-        }
-
-        function startListening() {
-            claudeAI.startVoiceInput().catch(error => {
-                showSuccessMessage('❌ Error starting voice input: ' + error.message);
-            });
-        }
-
-        function startVoiceConversation() {
-            toggleClaudeAIChat();
+            // Simulate AI thinking time
             setTimeout(() => {
-                claudeAI.speak("Voice conversation mode activated. You can now speak to me!");
-                showSuccessMessage('💬 Voice conversation started! Say "Hey Claude" to begin.');
-            }, 500);
-        }
-
-        function sayHelloMaiya() {
-            claudeAI.processVoiceInput("Hey Claude");
-        }
-
-        // ===== THEME MANAGEMENT =====
-        const themes = {
-            red: { name: 'Coral Sunset', icon: '🌅' },
-            orange: { name: 'Peach Glow', icon: '🍑' },
-            pink: { name: 'Rose Blush', icon: '🌸' },
-            yellow: { name: 'Butter Cream', icon: '🌻' },
-            bluegreen: { name: 'Mint Breeze', icon: '🌊' },
-            purplegrey: { name: 'Lavender Mist', icon: '💜' },
-            browngrey: { name: 'Warm Taupe', icon: '🤎' },
-            greenbrown: { name: 'Sage Olive', icon: '🌿' }
-        };
-
-        function switchToTheme(theme) {
-            appState.currentTheme = theme;
-            document.body.setAttribute('data-theme', theme);
-            
-            // Update theme display elements
-            document.getElementById('current-theme-icon').textContent = themes[theme].icon;
-            document.getElementById('app-logo').textContent = themes[theme].icon;
-            document.getElementById('company-logo').textContent = themes[theme].icon;
-            
-            showSuccessMessage(`✨ Theme changed to ${themes[theme].name}!`);
-            updateDisplay();
-        }
-
-        function randomTheme() {
-            const themeKeys = Object.keys(themes);
-            const randomTheme = themeKeys[Math.floor(Math.random() * themeKeys.length)];
-            switchToTheme(randomTheme);
-        }
-
-        function toggleMode() {
-            const newMode = appState.currentMode === 'light' ? 'dark' : 'light';
-            appState.currentMode = newMode;
-            document.body.setAttribute('data-mode', newMode);
-            
-            const modeText = newMode === 'light' ? 'Darker' : 'Lighter';
-            const modeIcon = newMode === 'light' ? '🌑' : '🌞';
-            
-            document.getElementById('mode-toggle').innerHTML = `${modeIcon} ${modeText}`;
-            showSuccessMessage(`🌙 Switched to ${newMode === 'light' ? 'Standard' : 'Dark'} mode!`);
-        }
-
-        function openThemePicker() {
-            showView('settings');
-        }
-
-        // ===== VIEW MANAGEMENT =====
-        function showView(viewName) {
-            // Hide all views
-            document.querySelectorAll('.view').forEach(view => {
-                view.classList.add('hidden');
-            });
-            
-            // Show selected view
-            document.getElementById(`${viewName}-view`).classList.remove('hidden');
-            
-            // Update navigation
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Find and activate the correct nav item
-            document.querySelectorAll('.nav-item').forEach(item => {
-                const itemText = item.textContent.toLowerCase();
-                if ((viewName === 'dashboard' && itemText.includes('home')) ||
-                    itemText.includes(viewName.toLowerCase())) {
-                    item.classList.add('active');
-                }
-            });
-            
-            appState.currentView = viewName;
-            
-            if (viewName === 'dashboard') {
-                updateStats();
-            }
-        }
-
-        // ===== SUCCESS MESSAGE =====
-        function showSuccessMessage(message) {
-            const successMsg = document.getElementById('success-message');
-            const successText = document.getElementById('success-text');
-            successText.textContent = message;
-            successMsg.classList.add('show');
-            
-            setTimeout(() => {
-                successMsg.classList.remove('show');
-            }, 3000);
-        }
-
-        // ===== UTILITY FUNCTIONS =====
-        function updateDisplay() {
-            updateUserDisplay();
-            updateCompanyDisplay();
-            updateStats();
-            
-            document.getElementById('app-logo').textContent = appState.companyInfo.logo;
-            document.getElementById('company-logo').textContent = appState.companyInfo.logo;
-            document.getElementById('current-theme-icon').textContent = themes[appState.currentTheme].icon;
-            
-            document.body.setAttribute('data-theme', appState.currentTheme);
-            document.body.setAttribute('data-mode', appState.currentMode);
-        }
-
-        function updateUserDisplay() {
-            const fullName = `${appState.userProfile.firstName} ${appState.userProfile.lastName}`;
-            const initials = `${appState.userProfile.firstName.charAt(0)}${appState.userProfile.lastName.charAt(0)}`;
-            
-            document.getElementById('user-display-name').textContent = fullName;
-            document.getElementById('user-display-title').textContent = appState.userProfile.title;
-            document.getElementById('user-avatar').textContent = initials;
-        }
-
-        function updateCompanyDisplay() {
-            document.getElementById('company-display-name').textContent = appState.companyInfo.name;
-            document.getElementById('company-display-tagline').textContent = appState.companyInfo.tagline;
-            document.getElementById('company-name').textContent = appState.companyInfo.name;
-        }
-
-        function updateStats() {
-            document.getElementById('total-quotes-count').textContent = appState.stats.totalQuotes;
-            document.getElementById('total-customers-count').textContent = appState.stats.totalCustomers;
-            document.getElementById('monthly-revenue').textContent = `RM ${appState.stats.monthlyRevenue.toFixed(2)}`;
-            document.getElementById('total-revenue').textContent = `RM ${appState.stats.totalRevenue.toFixed(2)}`;
-        }
-
-        function updateTime() {
-            const now = new Date();
-            const time = now.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                hour12: false 
-            });
-            document.getElementById('status-time').textContent = time;
-        }
-
-        // ===== PLACEHOLDER FUNCTIONS =====
-        function createQuote() {
-            showSuccessMessage('📋 Quote creation feature coming soon!');
-        }
-
-        function addCustomer() {
-            showSuccessMessage('👥 Customer management feature coming soon!');
-        }
-
-        function editProfile() {
-            showSuccessMessage('👤 Profile editing feature coming soon!');
-        }
-
-        function editCompany() {
-            showSuccessMessage('🏢 Company editing feature coming soon!');
-        }
-
-        function openCompanyManager() {
-            showSuccessMessage('🏢 Company manager coming soon!');
-        }
-
-        function viewReports() {
-            showSuccessMessage('📊 Advanced reports coming soon!');
-        }
-
-        function exportData() {
-            const exportData = {
-                userProfile: appState.userProfile,
-                companyInfo: appState.companyInfo,
-                customers: appState.customers,
-                quotes: appState.quotes,
-                chatHistory: voiceAI.chatHistory,
-                voiceSettings: voiceAI.settings,
-                exportDate: new Date().toISOString(),
-                version: '3.0.0-voice-fixed'
-            };
-            
-            const dataStr = JSON.stringify(exportData, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `refit-voice-fixed-backup-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            
-            showSuccessMessage('📤 Complete data exported with voice AI settings!');
-        }
-
-        // ===== COMPLETE AI CAPABILITY FUNCTIONS =====
-        function startGeneralConversation() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('Let\'s have a casual conversation. I\'d like to chat about whatever is on my mind or just talk like friends.');
-            }, 500);
-        }
-
-        function startCreativeWriting() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I\'m interested in creative writing. Can you help me with stories, poems, scripts, or any creative project I have in mind?');
-            }, 500);
-        }
-
-        function startProgrammingHelp() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I need programming and technical assistance. Can you help me with coding, debugging, software development, or technical problems?');
-            }, 500);
-        }
-
-        function startAcademicHelp() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I need academic and learning support. Can you help me with research, studying, explanations, or educational topics?');
-            }, 500);
-        }
-
-        function startLifeCoaching() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I\'d like personal life coaching and advice. Can you help me with relationships, personal development, life decisions, or general life guidance?');
-            }, 500);
-        }
-
-        function startEntertainment() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I want to have some fun! Can we play games, tell jokes, do creative challenges, or just have an entertaining conversation?');
-            }, 500);
-        }
-
-        function startHealthFitness() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I\'m interested in health and fitness guidance. Can you help me with wellness, exercise, nutrition, or healthy lifestyle advice?');
-            }, 500);
-        }
-
-        function startTravelLifestyle() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I\'d like help with travel and lifestyle topics. Can you assist with trip planning, cultural insights, or lifestyle recommendations?');
-            }, 500);
-        }
-
-        function startArtsCulture() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I\'m interested in arts and culture. Can you discuss art, music, cultural topics, or help with creative artistic projects?');
-            }, 500);
-        }
-
-        function startScienceTech() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I want to explore science and technology topics. Can you explain scientific concepts, discuss research, or help with technical analysis?');
-            }, 500);
-        }
-
-        function startPhilosophy() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I\'d like to have deep philosophical discussions. Can we explore ethics, meaning of life, moral questions, or big philosophical ideas?');
-            }, 500);
-        }
-
-        function startBusinessConsulting() {
-            toggleClaudeAIChat();
-            setTimeout(() => {
-                claudeAI.sendMessage('I need comprehensive business consulting. Can you help me with strategic planning, financial analysis, marketing, operations, or any business challenge?');
-            }, 500);
-        }
-
-        function askMaiyaAboutCompany() {
-            toggleMaiyaChat();
-            setTimeout(() => {
-                voiceAI.sendMessage('Can you analyze my company and provide insights? I\'d like your perspective on performance, opportunities, and strategic recommendations.');
-            }, 500);
-        }
-
-        // ===== APPLICATION INITIALIZATION =====
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 REFIT Business System v3.0.0 with FIXED Voice AI Starting...');
-            
-            updateDisplay();
-            updateTime();
-            setInterval(updateTime, 60000);
-            
-            // Initialize voice status after a short delay
-            setTimeout(() => {
-                voiceAI.updateVoiceStatus();
+                hideTypingIndicator();
+                const response = getAIResponse(message);
+                addMessage(response, 'ai');
                 
-                // Show welcome message
-                const hasVoice = voiceAI.voiceSupported;
-                const hasSpeech = voiceAI.speechSupported;
-                
-                if (hasVoice && hasSpeech) {
-                    showSuccessMessage('🧠 Welcome! Maiya (Claude.ai) is fully operational - voice enabled, unlimited capabilities ready!');
-                } else if (hasSpeech) {
-                    showSuccessMessage('🧠 Welcome! Maiya (Claude.ai) is ready - full capabilities with speech output available!');
-                } else {
-                    showSuccessMessage('🧠 Welcome! Maiya (Claude.ai) is ready for unlimited conversations and assistance!');
-                }
+                // Simulate speaking
+                simulateSpeaking();
+            }, 1500);
+        }
+
+        function sendQuickMessage(message) {
+            addMessage(message, 'user');
+            
+            showTypingIndicator();
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = getAIResponse(message);
+                addMessage(response, 'ai');
+                simulateSpeaking();
             }, 1000);
+        }
+
+        function addMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
             
-            // Test voice capabilities after initialization
-            setTimeout(() => {
-                if (voiceAI.speechSupported) {
-                    console.log('🔊 Testing speech synthesis on startup...');
-                    // Uncomment to test speech on startup
-                    // voiceAI.speak("Hello! I'm Maiya - essentially Claude.ai with voice. I can help with absolutely anything!");
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.textContent = text;
+            
+            messageDiv.appendChild(bubbleDiv);
+            messages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function getAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            for (const key in aiResponses) {
+                if (lowerMessage.includes(key)) {
+                    return aiResponses[key];
                 }
-            }, 2000);
+            }
             
-            console.log('✅ REFIT Business System with Maiya (Claude.ai) loaded successfully!');
-            console.log('🧠 Maiya Complete AI Assistant Features:');
-            console.log(`   - General Conversation & Knowledge`);
-            console.log(`   - Creative Writing & Storytelling`);
-            console.log(`   - Programming & Technical Support`);
-            console.log(`   - Academic Learning & Research`);
-            console.log(`   - Personal Life Coaching & Advice`);
-            console.log(`   - Entertainment & Games`);
-            console.log(`   - Health & Fitness Guidance`);
-            console.log(`   - Travel & Lifestyle Planning`);
-            console.log(`   - Arts & Culture Discussions`);
-            console.log(`   - Science & Technology Exploration`);
-            console.log(`   - Philosophy & Deep Thinking`);
-            console.log(`   - Business Consulting (in business context)`);
-            console.log('🗣️ Enhanced Voice Commands: "Creative writing", "Programming help", "Life advice", "Let\'s chat"');
-            console.log('🎯 12 Specialized Domains - Full Claude.ai Capabilities Available');
+            // Generate contextual responses
+            if (lowerMessage.includes('stress') || lowerMessage.includes('anxiety')) {
+                return '😌 For stress relief:\n\n• Try the 4-7-8 breathing technique\n• Take a 5-minute mindfulness break\n• List 3 things you\'re grateful for\n• Step outside for fresh air';
+            }
+            
+            if (lowerMessage.includes('motivation') || lowerMessage.includes('energy')) {
+                return '⚡ Boost your motivation:\n\n• Break big goals into small steps\n• Celebrate small wins\n• Change your environment\n• Listen to upbeat music';
+            }
+            
+            if (lowerMessage.includes('time') || lowerMessage.includes('productive')) {
+                return '⏰ Time management tips:\n\n• Use the Pomodoro Technique\n• Prioritize with the Eisenhower Matrix\n• Batch similar tasks together\n• Eliminate distractions';
+            }
+            
+            return aiResponses.default;
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message ai';
+            typingDiv.id = 'typingIndicator';
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.innerHTML = '💭 Thinking...';
+            
+            typingDiv.appendChild(bubbleDiv);
+            messages.appendChild(typingDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function simulateSpeaking() {
+            voiceIndicator.classList.add('active');
+            setTimeout(() => {
+                voiceIndicator.classList.remove('active');
+            }, 2000);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Initialize with a welcome sequence
+        setTimeout(() => {
+            addMessage('💡 Try asking me about daily planning, budgeting, health tips, or career advice!', 'ai');
+        }, 2000);
+
+        // Add touch feedback for mobile
+        document.querySelectorAll('.quick-btn, .send-btn').forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.95)';
+            });
+            
+            btn.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
         });
 
-        // ===== ERROR HANDLING =====
-        window.addEventListener('error', function(e) {
-            console.error('Application error:', e.error);
-            showSuccessMessage('⚠️ An error occurred. Maiya (Claude.ai) and your data are safe!');
-        });
-
-        window.addEventListener('unhandledrejection', function(e) {
-            console.error('Unhandled promise rejection:', e.reason);
-            showSuccessMessage('⚠️ A network error occurred. Maiya is still available to help you with anything.');
+        // Auto-focus input on mobile
+        messageInput.addEventListener('click', function() {
+            setTimeout(() => {
+                this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
         });
     </script>
 </body>
