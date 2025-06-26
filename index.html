@@ -293,6 +293,57 @@
             border-radius: 2px;
         }
 
+        /* Voice Controls */
+        .voice-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            animation: slideUp 1.4s ease-out;
+        }
+
+        .voice-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .voice-btn.mic {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        }
+
+        .voice-btn.mic.listening {
+            background: linear-gradient(45deg, #ff3838, #c0392b);
+            animation: pulse 1s infinite;
+            box-shadow: 0 0 20px rgba(255, 59, 56, 0.5);
+        }
+
+        .voice-btn.speaker {
+            background: linear-gradient(45deg, #4ecdc4, #00b894);
+        }
+
+        .voice-btn.speaker.speaking {
+            animation: pulse 1s infinite;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+
+        .voice-btn.settings {
+            background: linear-gradient(45deg, #a29bfe, #6c5ce7);
+        }
+
+        .voice-btn:hover {
+            transform: scale(1.1);
+        }
+
         /* Voice Animation */
         .voice-indicator {
             display: none;
@@ -320,6 +371,335 @@
 
         .voice-indicator.active {
             display: flex;
+        }
+
+        /* Full Settings Modal */
+        .full-settings {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .full-settings.active {
+            display: flex;
+        }
+
+        .settings-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            border-radius: 25px;
+            width: 95%;
+            max-width: 450px;
+            color: white;
+            animation: slideInSettings 0.4s ease-out;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin: 20px 0;
+        }
+
+        @keyframes slideInSettings {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .settings-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            padding: 25px;
+            border-radius: 25px 25px 0 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .settings-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .close-settings-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-nav {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0;
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: all 0.3s;
+            min-width: 100px;
+            position: relative;
+        }
+
+        .nav-tab.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+
+        .settings-content {
+            padding: 25px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeInTab 0.3s ease-out;
+        }
+
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .setting-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .setting-item {
+            margin-bottom: 18px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .setting-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .setting-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .setting-description {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+
+        .setting-control {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .setting-control option {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .custom-checkbox.checked {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-color: transparent;
+        }
+
+        .custom-checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .color-picker-wrapper {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .color-option.selected {
+            border-color: white;
+            transform: scale(1.1);
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 60px;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+        }
+
+        .save-settings {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 15px;
+            padding: 15px 30px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .save-settings:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .reset-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* Scrollbar for settings */
+        .settings-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .settings-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .settings-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        /* Voice Status */
+        .voice-status {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            min-height: 20px;
+        }
+
+        .listening-pulse {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 1s infinite;
         }
 
         /* Responsive Design */
@@ -365,6 +745,22 @@
             </div>
         </div>
 
+        <div class="voice-status" id="voiceStatus">
+            🎤 Voice ready - Tap mic to speak
+        </div>
+
+        <div class="voice-controls">
+            <button class="voice-btn mic" id="micBtn" onclick="toggleVoiceInput()" title="Voice Input">
+                🎤
+            </button>
+            <button class="voice-btn speaker" id="speakerBtn" onclick="toggleVoiceOutput()" title="Voice Output">
+                🔊
+            </button>
+            <button class="voice-btn settings" onclick="openFullSettings()" title="All Settings">
+                ⚙️
+            </button>
+        </div>
+
         <div class="quick-actions">
             <button class="quick-btn" onclick="sendQuickMessage('Plan my day')">📅 Plan Day</button>
             <button class="quick-btn" onclick="sendQuickMessage('Budget advice')">💰 Budget Tips</button>
@@ -388,55 +784,1073 @@
         </div>
     </div>
 
+    <!-- Full Settings Modal -->
+    <div class="full-settings" id="fullSettings">
+        <div class="settings-container">
+            <div class="settings-header">
+                <h2 class="settings-title">⚙️ Settings</h2>
+                <button class="close-settings-btn" onclick="closeFullSettings()">✕</button>
+            </div>
+
+            <div class="settings-nav">
+                <button class="nav-tab active" onclick="switchTab('voice')">🎤 Voice</button>
+                <button class="nav-tab" onclick="switchTab('appearance')">🎨 Theme</button>
+                <button class="nav-tab" onclick="switchTab('ai')">🤖 AI</button>
+                <button class="nav-tab" onclick="switchTab('privacy')">🔒 Privacy</button>
+                <button class="nav-tab" onclick="switchTab('advanced')">⚡ Advanced</button>
+            </div>
+
+            <div class="settings-content">
+                <!-- Voice Settings Tab -->
+                <div class="tab-panel active" id="voice-tab">
+                    <div class="setting-section">
+                        <div class="section-title">🎙️ Voice Input</div>
+                        
+                        <div class="setting-item">
+                            <label class="setting-label">Voice Recognition Language</label>
+                            <div class="setting-description">Choose your preferred language for voice input</div>
+                            <select class="setting-control" id="voiceLanguage">
+                                <option value="en-US">English (US)</option>
+                                <option value="en-GB">English (UK)</option>
+                                <option value="es-ES">Spanish</option>
+                                <option value="fr-FR">French</option>
+                                <option value="de-DE">German</option>
+                                <option value="it-IT">Italian</option>
+                                <option value="ja-JP">Japanese</option>
+                                <option value="ko-KR">Korean</option>
+                                <option value="zh-CN">Chinese (Mandarin)</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('wakeWord')">
+                                <div class="custom-checkbox" id="wakeWordCheck"></div>
+                                <div>
+                                    <div class="setting-label">Wake Word Activation</div>
+                                    <div class="setting-description">Say "Hey Claude" to start listening</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('continuousListening')">
+                                <div class="custom-checkbox" id="continuousListeningCheck"></div>
+                                <div>
+                                    <div class="setting-label">Continuous Listening</div>
+                                    <div class="setting-description">Keep microphone active after responses</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-section">
+                        <div class="section-title">🔊 Voice Output</div>
+                        
+                        <div class="setting-item">
+                            <label class="setting-label">Voice Selection</label>
+                            <select class="setting-control" id="voiceSelect">
+                                <option value="0">Loading voices...</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Speech Rate: <span id="rateValue">1.0x</span></label>
+                            <input type="range" class="slider" id="speechRate" min="0.5" max="2" value="1" step="0.1">
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Voice Volume: <span id="volumeValue">80%</span></label>
+                            <input type="range" class="slider" id="speechVolume" min="0" max="1" value="0.8" step="0.1">
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Voice Pitch: <span id="pitchValue">1.0</span></label>
+                            <input type="range" class="slider" id="speechPitch" min="0.5" max="2" value="1" step="0.1">
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('autoSpeak')">
+                                <div class="custom-checkbox checked" id="autoSpeakCheck"></div>
+                                <div>
+                                    <div class="setting-label">Auto-speak AI Responses</div>
+                                    <div class="setting-description">Automatically read AI responses aloud</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appearance Settings Tab -->
+                <div class="tab-panel" id="appearance-tab">
+                    <div class="setting-section">
+                        <div class="section-title">🎨 Theme & Colors</div>
+                        
+                        <div class="setting-item">
+                            <label class="setting-label">App Theme</label>
+                            <div class="setting-description">Choose your preferred color scheme</div>
+                            <div class="color-picker-wrapper">
+                                <div class="color-option selected" style="background: linear-gradient(45deg, #667eea, #764ba2)" onclick="setTheme('default')"></div>
+                                <div class="color-option" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24)" onclick="setTheme('sunset')"></div>
+                                <div class="color-option" style="background: linear-gradient(45deg, #4ecdc4, #00b894)" onclick="setTheme('ocean')"></div>
+                                <div class="color-option" style="background: linear-gradient(45deg, #a29bfe, #6c5ce7)" onclick="setTheme('purple')"></div>
+                                <div class="color-option" style="background: linear-gradient(45deg, #fd79a8, #e84393)" onclick="setTheme('pink')"></div>
+                                <div class="color-option" style="background: linear-gradient(45deg, #2d3436, #636e72)" onclick="setTheme('dark')"></div>
+                            </div>
+                            <div class="theme-preview" id="themePreview">Current Theme Preview</div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Animation Speed: <span id="animationSpeedValue">Normal</span></label>
+                            <input type="range" class="slider" id="animationSpeed" min="0.5" max="2" value="1" step="0.25">
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('floatingEffects')">
+                                <div class="custom-checkbox checked" id="floatingEffectsCheck"></div>
+                                <div>
+                                    <div class="setting-label">Floating Background Effects</div>
+                                    <div class="setting-description">Show animated floating elements</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('glassEffect')">
+                                <div class="custom-checkbox checked" id="glassEffectCheck"></div>
+                                <div>
+                                    <div class="setting-label">Glass Morphism Effect</div>
+                                    <div class="setting-description">Apply blur and transparency effects</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-section">
+                        <div class="section-title">📱 Interface</div>
+                        
+                        <div class="setting-item">
+                            <label class="setting-label">Font Size: <span id="fontSizeValue">Medium</span></label>
+                            <input type="range" class="slider" id="fontSize" min="0.8" max="1.4" value="1" step="0.1">
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('compactMode')">
+                                <div class="custom-checkbox" id="compactModeCheck"></div>
+                                <div>
+                                    <div class="setting-label">Compact Mode</div>
+                                    <div class="setting-description">Reduce spacing for smaller screens</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Settings Tab -->
+                <div class="tab-panel" id="ai-tab">
+                    <div class="setting-section">
+                        <div class="section-title">🤖 AI Behavior</div>
+                        
+                        <div class="setting-item">
+                            <label class="setting-label">Response Style</label>
+                            <div class="setting-description">How detailed should AI responses be?</div>
+                            <select class="setting-control" id="responseStyle">
+                                <option value="concise">Concise & Brief</option>
+                                <option value="balanced" selected>Balanced Detail</option>
+                                <option value="detailed">Detailed & Comprehensive</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">AI Personality</label>
+                            <div class="setting-description">Choose AI communication style</div>
+                            <select class="setting-control" id="aiPersonality">
+                                <option value="professional">Professional</option>
+                                <option value="friendly" selected>Friendly</option>
+                                <option value="casual">Casual</option>
+                                <option value="formal">Formal</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Response Delay: <span id="responseDelayValue">1.5s</span></label>
+                            <div class="setting-description">Simulate thinking time</div>
+                            <input type="range" class="slider" id="responseDelay" min="0.5" max="3" value="1.5" step="0.25">
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('typingIndicator')">
+                                <div class="custom-checkbox checked" id="typingIndicatorCheck"></div>
+                                <div>
+                                    <div class="setting-label">Show Typing Indicator</div>
+                                    <div class="setting-description">Display "Thinking..." while AI processes</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('suggestions')">
+                                <div class="custom-checkbox checked" id="suggestionsCheck"></div>
+                                <div>
+                                    <div class="setting-label">Quick Suggestions</div>
+                                    <div class="setting-description">Show quick action buttons</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-section">
+                        <div class="section-title">💡 Smart Features</div>
+                        
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('contextMemory')">
+                                <div class="custom-checkbox" id="contextMemoryCheck"></div>
+                                <div>
+                                    <div class="setting-label">Context Memory</div>
+                                    <div class="setting-description">Remember conversation context</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('proactiveHelp')">
+                                <div class="custom-checkbox" id="proactiveHelpCheck"></div>
+                                <div>
+                                    <div class="setting-label">Proactive Suggestions</div>
+                                    <div class="setting-description">AI offers help based on patterns</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Settings Tab -->
+                <div class="tab-panel" id="privacy-tab">
+                    <div class="setting-section">
+                        <div class="section-title">🔒 Data & Privacy</div>
+                        
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('saveConversations')">
+                                <div class="custom-checkbox" id="saveConversationsCheck"></div>
+                                <div>
+                                    <div class="setting-label">Save Conversations</div>
+                                    <div class="setting-description">Store chat history locally</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('voiceRecording')">
+                                <div class="custom-checkbox checked" id="voiceRecordingCheck"></div>
+                                <div>
+                                    <div class="setting-label">Voice Recording</div>
+                                    <div class="setting-description">Allow microphone access</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('analytics')">
+                                <div class="custom-checkbox" id="analyticsCheck"></div>
+                                <div>
+                                    <div class="setting-label">Usage Analytics</div>
+                                    <div class="setting-description">Help improve the app</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <button class="reset-btn" onclick="clearAllData()">🗑️ Clear All Data</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Settings Tab -->
+                <div class="tab-panel" id="advanced-tab">
+                    <div class="setting-section">
+                        <div class="section-title">⚡ Performance</div>
+                        
+                        <div class="setting-item">
+                            <label class="setting-label">Max Messages: <span id="maxMessagesValue">50</span></label>
+                            <div class="setting-description">Limit chat history for better performance</div>
+                            <input type="range" class="slider" id="maxMessages" min="20" max="200" value="50" step="10">
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('reducedMotion')">
+                                <div class="custom-checkbox" id="reducedMotionCheck"></div>
+                                <div>
+                                    <div class="setting-label">Reduced Motion</div>
+                                    <div class="setting-description">Minimize animations for better performance</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-section">
+                        <div class="section-title">🔧 Developer</div>
+                        
+                        <div class="setting-item">
+                            <div class="checkbox-wrapper" onclick="toggleSetting('debugMode')">
+                                <div class="custom-checkbox" id="debugModeCheck"></div>
+                                <div>
+                                    <div class="setting-label">Debug Mode</div>
+                                    <div class="setting-description">Show technical information</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <button class="reset-btn" onclick="resetAllSettings()">🔄 Reset All Settings</button>
+                        </div>
+
+                        <div class="setting-item">
+                            <button class="reset-btn" onclick="exportSettings()">📤 Export Settings</button>
+                        </div>
+
+                        <div class="setting-item">
+                            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importSettings()">
+                            <button class="reset-btn" onclick="document.getElementById('importFile').click()">📥 Import Settings</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="save-settings" onclick="saveAllSettings()">💾 Save All Settings</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Global variables
         const messages = document.getElementById('messages');
         const messageInput = document.getElementById('messageInput');
         const voiceIndicator = document.getElementById('voiceIndicator');
+        const micBtn = document.getElementById('micBtn');
+        const speakerBtn = document.getElementById('speakerBtn');
+        const voiceStatus = document.getElementById('voiceStatus');
+        const fullSettings = document.getElementById('fullSettings');
+
+        // Voice API variables
+        let recognition = null;
+        let synthesis = window.speechSynthesis;
+        let voices = [];
+        let isListening = false;
+        let isSpeaking = false;
+        let isVoiceEnabled = true;
+        let currentUtterance = null;
+
+        // Comprehensive app settings
+        let appSettings = {
+            // Voice settings
+            voice: {
+                selectedVoice: 0,
+                rate: 1.0,
+                volume: 0.8,
+                pitch: 1.0,
+                autoSpeak: true,
+                wakeWord: false,
+                continuousListening: false,
+                language: 'en-US'
+            },
+            // Appearance settings
+            appearance: {
+                theme: 'default',
+                animationSpeed: 1.0,
+                floatingEffects: true,
+                glassEffect: true,
+                fontSize: 1.0,
+                compactMode: false
+            },
+            // AI behavior settings
+            ai: {
+                responseStyle: 'balanced',
+                personality: 'friendly',
+                responseDelay: 1.5,
+                typingIndicator: true,
+                suggestions: true,
+                contextMemory: false,
+                proactiveHelp: false
+            },
+            // Privacy settings
+            privacy: {
+                saveConversations: false,
+                voiceRecording: true,
+                analytics: false
+            },
+            // Advanced settings
+            advanced: {
+                maxMessages: 50,
+                reducedMotion: false,
+                debugMode: false
+            }
+        };
+
+        // Theme configurations
+        const themes = {
+            default: { primary: '#667eea', secondary: '#764ba2' },
+            sunset: { primary: '#ff6b6b', secondary: '#ee5a24' },
+            ocean: { primary: '#4ecdc4', secondary: '#00b894' },
+            purple: { primary: '#a29bfe', secondary: '#6c5ce7' },
+            pink: { primary: '#fd79a8', secondary: '#e84393' },
+            dark: { primary: '#2d3436', secondary: '#636e72' }
+        };
 
         // AI Responses Database
         const aiResponses = {
-            'plan my day': '📅 Here\'s how to plan your day effectively:\n\n1. Start with your most important task\n2. Schedule breaks every 90 minutes\n3. Block time for unexpected tasks\n4. End with a reflection on achievements',
+            'plan my day': '📅 Here\'s how to plan your day effectively: Start with your most important task, schedule breaks every 90 minutes, block time for unexpected tasks, and end with a reflection on achievements.',
             
-            'budget advice': '💰 Smart budgeting tips:\n\n• Follow the 50/30/20 rule\n• Track every expense for a week\n• Automate your savings\n• Review and adjust monthly',
+            'budget advice': '💰 Smart budgeting tips: Follow the 50/30/20 rule, track every expense for a week, automate your savings, and review and adjust monthly.',
             
-            'health tips': '🏃 Daily health boosters:\n\n• Drink water first thing in the morning\n• Take a 10-minute walk after meals\n• Get 7-8 hours of sleep\n• Practice deep breathing for 5 minutes',
+            'health tips': '🏃 Daily health boosters: Drink water first thing in the morning, take a 10-minute walk after meals, get 7-8 hours of sleep, and practice deep breathing for 5 minutes.',
             
-            'career advice': '🎯 Career growth strategies:\n\n• Set clear monthly goals\n• Learn one new skill quarterly\n• Network within your industry\n• Seek feedback regularly',
+            'career advice': '🎯 Career growth strategies: Set clear monthly goals, learn one new skill quarterly, network within your industry, and seek feedback regularly.',
             
             'default': 'I understand you\'re looking for advice. Could you be more specific about what area you\'d like help with? I can assist with planning, finances, health, career, or personal development.'
         };
 
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            initializeVoice();
+            applySettings();
+            
+            // Welcome sequence
+            setTimeout(() => {
+                addMessage('💡 Try asking me about daily planning, budgeting, health tips, or career advice!', 'ai');
+                if (appSettings.voice.autoSpeak) {
+                    setTimeout(() => {
+                        speakText('Hello! I\'m your personal AI advisor. You can speak to me by tapping the microphone button.');
+                    }, 1000);
+                }
+            }, 2000);
+
+            setupEventListeners();
+        });
+
+        // Settings Management
+        function loadSettings() {
+            const saved = localStorage.getItem('aiAdvisorSettings');
+            if (saved) {
+                try {
+                    const savedSettings = JSON.parse(saved);
+                    appSettings = { ...appSettings, ...savedSettings };
+                } catch (e) {
+                    console.error('Error loading settings:', e);
+                }
+            }
+        }
+
+        function saveAllSettings() {
+            try {
+                localStorage.setItem('aiAdvisorSettings', JSON.stringify(appSettings));
+                closeFullSettings();
+                applySettings();
+                addMessage('⚙️ Settings saved successfully!', 'ai');
+            } catch (e) {
+                console.error('Error saving settings:', e);
+                addMessage('❌ Error saving settings. Please try again.', 'ai');
+            }
+        }
+
+        function applySettings() {
+            applyTheme();
+            applyVoiceSettings();
+            applyUISettings();
+            applyAnimationSettings();
+        }
+
+        function applyTheme() {
+            const theme = themes[appSettings.appearance.theme];
+            if (theme) {
+                document.documentElement.style.setProperty('--primary-color', theme.primary);
+                document.documentElement.style.setProperty('--secondary-color', theme.secondary);
+                
+                // Update CSS gradients
+                const style = document.createElement('style');
+                style.textContent = `
+                    body { background: linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 100%) !important; }
+                    .logo, .send-btn, .save-settings { background: linear-gradient(45deg, ${theme.primary}, ${theme.secondary}) !important; }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        function applyVoiceSettings() {
+            if (recognition) {
+                recognition.lang = appSettings.voice.language;
+            }
+        }
+
+        function applyUISettings() {
+            const fontSize = appSettings.appearance.fontSize;
+            document.documentElement.style.fontSize = (16 * fontSize) + 'px';
+            
+            if (appSettings.appearance.compactMode) {
+                document.body.classList.add('compact-mode');
+            } else {
+                document.body.classList.remove('compact-mode');
+            }
+
+            // Toggle floating effects
+            const floatingBg = document.querySelector('.floating-bg');
+            if (floatingBg) {
+                floatingBg.style.display = appSettings.appearance.floatingEffects ? 'block' : 'none';
+            }
+
+            // Toggle quick suggestions
+            const quickActions = document.querySelector('.quick-actions');
+            if (quickActions) {
+                quickActions.style.display = appSettings.ai.suggestions ? 'flex' : 'none';
+            }
+        }
+
+        function applyAnimationSettings() {
+            const speed = appSettings.appearance.animationSpeed;
+            document.documentElement.style.setProperty('--animation-speed', speed);
+            
+            if (appSettings.advanced.reducedMotion) {
+                document.documentElement.style.setProperty('--animation-duration', '0.1s');
+            }
+        }
+
+        // Settings UI Functions
+        function openFullSettings() {
+            fullSettings.classList.add('active');
+            updateSettingsUI();
+        }
+
+        function closeFullSettings() {
+            fullSettings.classList.remove('active');
+        }
+
+        function switchTab(tabName) {
+            // Remove active class from all tabs and panels
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            
+            // Add active class to selected tab and panel
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+
+        function updateSettingsUI() {
+            // Update all form controls with current settings
+            updateSliderValue('speechRate', 'rateValue', appSettings.voice.rate, 'x');
+            updateSliderValue('speechVolume', 'volumeValue', appSettings.voice.volume, '%', 100);
+            updateSliderValue('speechPitch', 'pitchValue', appSettings.voice.pitch);
+            updateSliderValue('animationSpeed', 'animationSpeedValue', appSettings.appearance.animationSpeed, '', 1, ['Slow', 'Normal', 'Fast']);
+            updateSliderValue('fontSize', 'fontSizeValue', appSettings.appearance.fontSize, '', 1, ['Small', 'Medium', 'Large']);
+            updateSliderValue('responseDelay', 'responseDelayValue', appSettings.ai.responseDelay, 's');
+            updateSliderValue('maxMessages', 'maxMessagesValue', appSettings.advanced.maxMessages);
+
+            // Update checkboxes
+            updateCheckbox('autoSpeakCheck', appSettings.voice.autoSpeak);
+            updateCheckbox('wakeWordCheck', appSettings.voice.wakeWord);
+            updateCheckbox('continuousListeningCheck', appSettings.voice.continuousListening);
+            updateCheckbox('floatingEffectsCheck', appSettings.appearance.floatingEffects);
+            updateCheckbox('glassEffectCheck', appSettings.appearance.glassEffect);
+            updateCheckbox('compactModeCheck', appSettings.appearance.compactMode);
+            updateCheckbox('typingIndicatorCheck', appSettings.ai.typingIndicator);
+            updateCheckbox('suggestionsCheck', appSettings.ai.suggestions);
+            updateCheckbox('contextMemoryCheck', appSettings.ai.contextMemory);
+            updateCheckbox('proactiveHelpCheck', appSettings.ai.proactiveHelp);
+            updateCheckbox('saveConversationsCheck', appSettings.privacy.saveConversations);
+            updateCheckbox('voiceRecordingCheck', appSettings.privacy.voiceRecording);
+            updateCheckbox('analyticsCheck', appSettings.privacy.analytics);
+            updateCheckbox('reducedMotionCheck', appSettings.advanced.reducedMotion);
+            updateCheckbox('debugModeCheck', appSettings.advanced.debugMode);
+
+            // Update select boxes
+            updateSelect('voiceLanguage', appSettings.voice.language);
+            updateSelect('responseStyle', appSettings.ai.responseStyle);
+            updateSelect('aiPersonality', appSettings.ai.personality);
+        }
+
+        function updateSliderValue(sliderId, valueId, value, suffix = '', multiplier = 1, textArray = null) {
+            const slider = document.getElementById(sliderId);
+            const valueSpan = document.getElementById(valueId);
+            if (slider && valueSpan) {
+                slider.value = value;
+                if (textArray) {
+                    const index = Math.round((value - 0.5) / 0.5);
+                    valueSpan.textContent = textArray[index] || textArray[1];
+                } else {
+                    valueSpan.textContent = (value * multiplier).toFixed(multiplier === 100 ? 0 : 1) + suffix;
+                }
+            }
+        }
+
+        function updateCheckbox(checkboxId, isChecked) {
+            const checkbox = document.getElementById(checkboxId);
+            if (checkbox) {
+                if (isChecked) {
+                    checkbox.classList.add('checked');
+                } else {
+                    checkbox.classList.remove('checked');
+                }
+            }
+        }
+
+        function updateSelect(selectId, value) {
+            const select = document.getElementById(selectId);
+            if (select) {
+                select.value = value;
+            }
+        }
+
+        function toggleSetting(settingName) {
+            const checkboxMap = {
+                'autoSpeak': () => appSettings.voice.autoSpeak = !appSettings.voice.autoSpeak,
+                'wakeWord': () => appSettings.voice.wakeWord = !appSettings.voice.wakeWord,
+                'continuousListening': () => appSettings.voice.continuousListening = !appSettings.voice.continuousListening,
+                'floatingEffects': () => appSettings.appearance.floatingEffects = !appSettings.appearance.floatingEffects,
+                'glassEffect': () => appSettings.appearance.glassEffect = !appSettings.appearance.glassEffect,
+                'compactMode': () => appSettings.appearance.compactMode = !appSettings.appearance.compactMode,
+                'typingIndicator': () => appSettings.ai.typingIndicator = !appSettings.ai.typingIndicator,
+                'suggestions': () => appSettings.ai.suggestions = !appSettings.ai.suggestions,
+                'contextMemory': () => appSettings.ai.contextMemory = !appSettings.ai.contextMemory,
+                'proactiveHelp': () => appSettings.ai.proactiveHelp = !appSettings.ai.proactiveHelp,
+                'saveConversations': () => appSettings.privacy.saveConversations = !appSettings.privacy.saveConversations,
+                'voiceRecording': () => appSettings.privacy.voiceRecording = !appSettings.privacy.voiceRecording,
+                'analytics': () => appSettings.privacy.analytics = !appSettings.privacy.analytics,
+                'reducedMotion': () => appSettings.advanced.reducedMotion = !appSettings.advanced.reducedMotion,
+                'debugMode': () => appSettings.advanced.debugMode = !appSettings.advanced.debugMode
+            };
+
+            if (checkboxMap[settingName]) {
+                checkboxMap[settingName]();
+                updateSettingsUI();
+            }
+        }
+
+        function setTheme(themeName) {
+            appSettings.appearance.theme = themeName;
+            
+            // Update UI
+            document.querySelectorAll('.color-option').forEach(option => option.classList.remove('selected'));
+            event.target.classList.add('selected');
+            
+            // Apply theme immediately for preview
+            applyTheme();
+        }
+
+        function resetAllSettings() {
+            if (confirm('Are you sure you want to reset all settings to default? This cannot be undone.')) {
+                localStorage.removeItem('aiAdvisorSettings');
+                location.reload();
+            }
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data including chat history? This cannot be undone.')) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        function exportSettings() {
+            const dataStr = JSON.stringify(appSettings, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'ai-advisor-settings.json';
+            link.click();
+        }
+
+        function importSettings() {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedSettings = JSON.parse(e.target.result);
+                        appSettings = { ...appSettings, ...importedSettings };
+                        updateSettingsUI();
+                        addMessage('⚙️ Settings imported successfully!', 'ai');
+                    } catch (error) {
+                        addMessage('❌ Error importing settings. Please check the file format.', 'ai');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function setupEventListeners() {
+            // Slider event listeners
+            const sliders = ['speechRate', 'speechVolume', 'speechPitch', 'animationSpeed', 'fontSize', 'responseDelay', 'maxMessages'];
+            sliders.forEach(sliderId => {
+                const slider = document.getElementById(sliderId);
+                if (slider) {
+                    slider.addEventListener('input', function() {
+                        const value = parseFloat(this.value);
+                        switch(sliderId) {
+                            case 'speechRate':
+                                appSettings.voice.rate = value;
+                                updateSliderValue(sliderId, 'rateValue', value, 'x');
+                                break;
+                            case 'speechVolume':
+                                appSettings.voice.volume = value;
+                                updateSliderValue(sliderId, 'volumeValue', value, '%', 100);
+                                break;
+                            case 'speechPitch':
+                                appSettings.voice.pitch = value;
+                                updateSliderValue(sliderId, 'pitchValue', value);
+                                break;
+                            case 'animationSpeed':
+                                appSettings.appearance.animationSpeed = value;
+                                updateSliderValue(sliderId, 'animationSpeedValue', value, '', 1, ['Slow', 'Normal', 'Fast']);
+                                break;
+                            case 'fontSize':
+                                appSettings.appearance.fontSize = value;
+                                updateSliderValue(sliderId, 'fontSizeValue', value, '', 1, ['Small', 'Medium', 'Large']);
+                                break;
+                            case 'responseDelay':
+                                appSettings.ai.responseDelay = value;
+                                updateSliderValue(sliderId, 'responseDelayValue', value, 's');
+                                break;
+                            case 'maxMessages':
+                                appSettings.advanced.maxMessages = parseInt(value);
+                                updateSliderValue(sliderId, 'maxMessagesValue', value);
+                                break;
+                        }
+                    });
+                }
+            });
+
+            // Select event listeners
+            const voiceLanguageSelect = document.getElementById('voiceLanguage');
+            if (voiceLanguageSelect) {
+                voiceLanguageSelect.addEventListener('change', function() {
+                    appSettings.voice.language = this.value;
+                    if (recognition) {
+                        recognition.lang = this.value;
+                    }
+                });
+            }
+
+            const voiceSelect = document.getElementById('voiceSelect');
+            if (voiceSelect) {
+                voiceSelect.addEventListener('change', function() {
+                    appSettings.voice.selectedVoice = parseInt(this.value);
+                });
+            }
+
+            const responseStyleSelect = document.getElementById('responseStyle');
+            if (responseStyleSelect) {
+                responseStyleSelect.addEventListener('change', function() {
+                    appSettings.ai.responseStyle = this.value;
+                });
+            }
+
+            const aiPersonalitySelect = document.getElementById('aiPersonality');
+            if (aiPersonalitySelect) {
+                aiPersonalitySelect.addEventListener('change', function() {
+                    appSettings.ai.personality = this.value;
+                });
+            }
+
+            // Close modal when clicking outside
+            fullSettings.addEventListener('click', function(e) {
+                if (e.target === fullSettings) {
+                    closeFullSettings();
+                }
+            });
+
+            // Touch feedback for mobile
+            document.querySelectorAll('.quick-btn, .send-btn, .voice-btn').forEach(btn => {
+                btn.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                btn.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // Auto-focus input on mobile
+            messageInput.addEventListener('click', function() {
+                setTimeout(() => {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(event) {
+                if (event.ctrlKey || event.metaKey) {
+                    switch(event.key) {
+                        case 'm':
+                            event.preventDefault();
+                            toggleVoiceInput();
+                            break;
+                        case 's':
+                            event.preventDefault();
+                            toggleVoiceOutput();
+                            break;
+                        case ',':
+                            event.preventDefault();
+                            openFullSettings();
+                            break;
+                    }
+                }
+            });
+        }
+
+        // Initialize voice functionality
+        function initializeVoice() {
+            // Initialize Speech Recognition
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.lang = appSettings.voice.language;
+
+                recognition.onstart = function() {
+                    isListening = true;
+                    micBtn.classList.add('listening');
+                    voiceStatus.innerHTML = '<span class="listening-pulse"></span>Listening...';
+                };
+
+                recognition.onresult = function(event) {
+                    let finalTranscript = '';
+                    let interimTranscript = '';
+
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        const transcript = event.results[i][0].transcript;
+                        if (event.results[i].isFinal) {
+                            finalTranscript += transcript;
+                        } else {
+                            interimTranscript += transcript;
+                        }
+                    }
+
+                    if (finalTranscript) {
+                        // Check for wake word
+                        if (appSettings.voice.wakeWord && finalTranscript.toLowerCase().includes('hey claude')) {
+                            const cleanedTranscript = finalTranscript.toLowerCase().replace('hey claude', '').trim();
+                            if (cleanedTranscript) {
+                                processVoiceInput(cleanedTranscript);
+                            }
+                        } else if (!appSettings.voice.wakeWord) {
+                            processVoiceInput(finalTranscript);
+                        }
+                    }
+
+                    if (interimTranscript) {
+                        voiceStatus.innerHTML = `<span class="listening-pulse"></span>Hearing: "${interimTranscript}"`;
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                    stopVoiceInput();
+                    voiceStatus.textContent = 'Voice error - try again';
+                };
+
+                recognition.onend = function() {
+                    if (isListening && (appSettings.voice.wakeWord || appSettings.voice.continuousListening)) {
+                        // Restart recognition if continuous listening is enabled
+                        setTimeout(() => {
+                            if (isListening) {
+                                recognition.start();
+                            }
+                        }, 100);
+                    }
+                };
+            }
+
+            // Load available voices
+            loadVoices();
+            if (synthesis.onvoiceschanged !== undefined) {
+                synthesis.onvoiceschanged = loadVoices;
+            }
+        }
+
+        function loadVoices() {
+            voices = synthesis.getVoices();
+            const voiceSelect = document.getElementById('voiceSelect');
+            if (voiceSelect) {
+                voiceSelect.innerHTML = '';
+
+                voices.forEach((voice, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    voiceSelect.appendChild(option);
+                });
+
+                if (voices.length > 0) {
+                    // Prefer female English voices
+                    const preferredVoice = voices.findIndex(voice => 
+                        voice.lang.startsWith('en') && voice.name.toLowerCase().includes('female')
+                    );
+                    if (preferredVoice !== -1) {
+                        appSettings.voice.selectedVoice = preferredVoice;
+                        voiceSelect.value = preferredVoice;
+                    }
+                }
+            }
+        }
+
+        function processVoiceInput(transcript) {
+            stopVoiceInput();
+            messageInput.value = transcript;
+            sendMessage();
+        }
+
+        function toggleVoiceInput() {
+            if (!recognition) {
+                voiceStatus.textContent = 'Voice input not supported in this browser';
+                return;
+            }
+
+            if (isListening) {
+                stopVoiceInput();
+            } else {
+                startVoiceInput();
+            }
+        }
+
+        function startVoiceInput() {
+            if (!recognition || isListening || !appSettings.privacy.voiceRecording) return;
+
+            try {
+                recognition.start();
+            } catch (error) {
+                console.error('Error starting voice recognition:', error);
+                voiceStatus.textContent = 'Voice input error';
+            }
+        }
+
+        function stopVoiceInput() {
+            if (recognition && isListening) {
+                isListening = false;
+                recognition.stop();
+                micBtn.classList.remove('listening');
+                voiceStatus.textContent = '🎤 Voice ready - Tap mic to speak';
+            }
+        }
+
+        function toggleVoiceOutput() {
+            isVoiceEnabled = !isVoiceEnabled;
+            
+            if (isVoiceEnabled) {
+                speakerBtn.style.opacity = '1';
+                voiceStatus.textContent = 'Voice output enabled';
+            } else {
+                speakerBtn.style.opacity = '0.5';
+                voiceStatus.textContent = 'Voice output disabled';
+                stopSpeaking();
+            }
+        }
+
+        function speakText(text) {
+            if (!isVoiceEnabled || !text || !appSettings.privacy.voiceRecording) return;
+
+            // Stop any current speech
+            stopSpeaking();
+
+            // Clean text for speech (remove emojis and markdown)
+            const cleanText = text.replace(/[📅💰🏃🎯👋😌⚡⏰💡⚙️❌]/g, '')
+                                .replace(/\n/g, '. ')
+                                .replace(/•/g, '')
+                                .replace(/\*/g, '')
+                                .trim();
+
+            if (!cleanText) return;
+
+            currentUtterance = new SpeechSynthesisUtterance(cleanText);
+            
+            // Apply voice settings
+            if (voices[appSettings.voice.selectedVoice]) {
+                currentUtterance.voice = voices[appSettings.voice.selectedVoice];
+            }
+            currentUtterance.rate = appSettings.voice.rate;
+            currentUtterance.volume = appSettings.voice.volume;
+            currentUtterance.pitch = appSettings.voice.pitch;
+
+            currentUtterance.onstart = function() {
+                isSpeaking = true;
+                speakerBtn.classList.add('speaking');
+                voiceIndicator.classList.add('active');
+                voiceStatus.textContent = '🗣️ Speaking...';
+            };
+
+            currentUtterance.onend = function() {
+                isSpeaking = false;
+                speakerBtn.classList.remove('speaking');
+                voiceIndicator.classList.remove('active');
+                voiceStatus.textContent = '🎤 Voice ready - Tap mic to speak';
+            };
+
+            currentUtterance.onerror = function(event) {
+                console.error('Speech synthesis error:', event.error);
+                stopSpeaking();
+            };
+
+            synthesis.speak(currentUtterance);
+        }
+
+        function stopSpeaking() {
+            if (synthesis.speaking) {
+                synthesis.cancel();
+            }
+            isSpeaking = false;
+            speakerBtn.classList.remove('speaking');
+            voiceIndicator.classList.remove('active');
+        }
+
+        // Chat Functions
         function sendMessage() {
             const message = messageInput.value.trim();
             if (!message) return;
 
             addMessage(message, 'user');
             messageInput.value = '';
+            stopVoiceInput(); // Stop listening when sending
 
-            // Show typing indicator
-            showTypingIndicator();
+            // Show typing indicator if enabled
+            if (appSettings.ai.typingIndicator) {
+                showTypingIndicator();
+            }
 
-            // Simulate AI thinking time
+            // Simulate AI thinking time based on settings
             setTimeout(() => {
-                hideTypingIndicator();
+                if (appSettings.ai.typingIndicator) {
+                    hideTypingIndicator();
+                }
                 const response = getAIResponse(message);
                 addMessage(response, 'ai');
                 
-                // Simulate speaking
-                simulateSpeaking();
-            }, 1500);
+                // Auto-speak if enabled
+                if (appSettings.voice.autoSpeak) {
+                    setTimeout(() => {
+                        speakText(response);
+                    }, 500);
+                }
+            }, appSettings.ai.responseDelay * 1000);
         }
 
         function sendQuickMessage(message) {
             addMessage(message, 'user');
+            stopVoiceInput();
             
-            showTypingIndicator();
+            if (appSettings.ai.typingIndicator) {
+                showTypingIndicator();
+            }
+            
             setTimeout(() => {
-                hideTypingIndicator();
+                if (appSettings.ai.typingIndicator) {
+                    hideTypingIndicator();
+                }
                 const response = getAIResponse(message);
                 addMessage(response, 'ai');
-                simulateSpeaking();
-            }, 1000);
+                
+                if (appSettings.voice.autoSpeak) {
+                    setTimeout(() => {
+                        speakText(response);
+                    }, 500);
+                }
+            }, appSettings.ai.responseDelay * 1000);
         }
 
         function addMessage(text, type) {
@@ -450,6 +1864,12 @@
             messageDiv.appendChild(bubbleDiv);
             messages.appendChild(messageDiv);
             
+            // Limit message history based on settings
+            const messageCount = messages.children.length;
+            if (messageCount > appSettings.advanced.maxMessages) {
+                messages.removeChild(messages.firstChild);
+            }
+            
             // Scroll to bottom
             messages.scrollTop = messages.scrollHeight;
         }
@@ -457,26 +1877,47 @@
         function getAIResponse(message) {
             const lowerMessage = message.toLowerCase();
             
+            // Adjust response based on personality setting
+            let responsePrefix = '';
+            switch(appSettings.ai.personality) {
+                case 'professional':
+                    responsePrefix = '';
+                    break;
+                case 'friendly':
+                    responsePrefix = '';
+                    break;
+                case 'casual':
+                    responsePrefix = '';
+                    break;
+                case 'formal':
+                    responsePrefix = '';
+                    break;
+            }
+            
             for (const key in aiResponses) {
                 if (lowerMessage.includes(key)) {
-                    return aiResponses[key];
+                    return responsePrefix + aiResponses[key];
                 }
             }
             
             // Generate contextual responses
             if (lowerMessage.includes('stress') || lowerMessage.includes('anxiety')) {
-                return '😌 For stress relief:\n\n• Try the 4-7-8 breathing technique\n• Take a 5-minute mindfulness break\n• List 3 things you\'re grateful for\n• Step outside for fresh air';
+                return '😌 For stress relief: Try the 4-7-8 breathing technique, take a 5-minute mindfulness break, list 3 things you\'re grateful for, and step outside for fresh air.';
             }
             
             if (lowerMessage.includes('motivation') || lowerMessage.includes('energy')) {
-                return '⚡ Boost your motivation:\n\n• Break big goals into small steps\n• Celebrate small wins\n• Change your environment\n• Listen to upbeat music';
+                return '⚡ Boost your motivation: Break big goals into small steps, celebrate small wins, change your environment, and listen to upbeat music.';
             }
             
             if (lowerMessage.includes('time') || lowerMessage.includes('productive')) {
-                return '⏰ Time management tips:\n\n• Use the Pomodoro Technique\n• Prioritize with the Eisenhower Matrix\n• Batch similar tasks together\n• Eliminate distractions';
+                return '⏰ Time management tips: Use the Pomodoro Technique, prioritize with the Eisenhower Matrix, batch similar tasks together, and eliminate distractions.';
+            }
+
+            if (lowerMessage.includes('voice') || lowerMessage.includes('speak') || lowerMessage.includes('settings')) {
+                return '🎤 Voice features are active! You can speak to me by tapping the microphone button, and I can speak back to you. Check the settings menu for full customization options.';
             }
             
-            return aiResponses.default;
+            return responsePrefix + aiResponses.default;
         }
 
         function showTypingIndicator() {
@@ -500,41 +1941,11 @@
             }
         }
 
-        function simulateSpeaking() {
-            voiceIndicator.classList.add('active');
-            setTimeout(() => {
-                voiceIndicator.classList.remove('active');
-            }, 2000);
-        }
-
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 sendMessage();
             }
         }
-
-        // Initialize with a welcome sequence
-        setTimeout(() => {
-            addMessage('💡 Try asking me about daily planning, budgeting, health tips, or career advice!', 'ai');
-        }, 2000);
-
-        // Add touch feedback for mobile
-        document.querySelectorAll('.quick-btn, .send-btn').forEach(btn => {
-            btn.addEventListener('touchstart', function() {
-                this.style.transform = 'scale(0.95)';
-            });
-            
-            btn.addEventListener('touchend', function() {
-                this.style.transform = 'scale(1)';
-            });
-        });
-
-        // Auto-focus input on mobile
-        messageInput.addEventListener('click', function() {
-            setTimeout(() => {
-                this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 300);
-        });
     </script>
 </body>
 </html>
