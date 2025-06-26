@@ -1496,32 +1496,32 @@
 
                 <!-- Welcome Card with Maiya -->
                 <div class="card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; text-align: center;">
-                    <h3 style="margin-bottom: 16px; font-size: 20px;">🤖 Meet Maiya - Your AI Business Assistant</h3>
-                    <p style="margin-bottom: 16px; opacity: 0.9;">Maiya combines powerful business management with intelligent AI assistance for document creation, data analysis, and general business support.</p>
+                    <h3 style="margin-bottom: 16px; font-size: 20px;">🧠 Meet Maiya - Your Master Business Advisor</h3>
+                    <p style="margin-bottom: 16px; opacity: 0.9;">Maiya is your comprehensive strategic consultant, combining powerful business intelligence with expert advisory across all business domains - from strategic planning and financial optimization to crisis management and innovation strategy.</p>
                     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
                         <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
-                            <div style="font-size: 24px; margin-bottom: 4px;">📋</div>
-                            <div style="font-size: 12px; font-weight: 600;">Smart Quotes</div>
+                            <div style="font-size: 24px; margin-bottom: 4px;">🎯</div>
+                            <div style="font-size: 12px; font-weight: 600;">Strategic Advisory</div>
                         </div>
                         <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
-                            <div style="font-size: 24px; margin-bottom: 4px;">👥</div>
-                            <div style="font-size: 12px; font-weight: 600;">CRM System</div>
+                            <div style="font-size: 24px; margin-bottom: 4px;">💰</div>
+                            <div style="font-size: 12px; font-weight: 600;">Financial Consulting</div>
                         </div>
                         <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
-                            <div style="font-size: 24px; margin-bottom: 4px;">🤖</div>
-                            <div style="font-size: 12px; font-weight: 600;">Maiya AI</div>
+                            <div style="font-size: 24px; margin-bottom: 4px;">🚨</div>
+                            <div style="font-size: 12px; font-weight: 600;">Crisis Management</div>
                         </div>
                         <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
-                            <div style="font-size: 24px; margin-bottom: 4px;">📊</div>
-                            <div style="font-size: 12px; font-weight: 600;">Analytics</div>
+                            <div style="font-size: 24px; margin-bottom: 4px;">💡</div>
+                            <div style="font-size: 12px; font-weight: 600;">Innovation Strategy</div>
                         </div>
                     </div>
                     <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
                         <button class="btn" onclick="toggleMaiyaChat()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                            🤖 Chat with Maiya
+                            🧠 Strategic Consultation
                         </button>
-                        <button class="btn" onclick="createQuote()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                            🚀 Create Quote
+                        <button class="btn" onclick="startGeneralAdvisory()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
+                            🌟 Master Advisory
                         </button>
                     </div>
                 </div>
@@ -1568,7 +1568,7 @@
 
                 <!-- Quick Actions with Maiya -->
                 <div class="card">
-                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🚀 Quick Actions</h3>
+                    <h3 style="font-weight: 700; margin-bottom: 16px; font-size: 18px; color: var(--text-primary);">🚀 Quick Advisory Access</h3>
                     <div class="quick-actions">
                         <button class="quick-btn primary" onclick="createQuote()">
                             <span class="icon">📋</span>
@@ -1578,9 +1578,23 @@
                             <span class="icon">👥</span>
                             <span class="label">Add Customer</span>
                         </button>
-                        <button class="quick-btn" onclick="toggleMaiyaChat()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
-                            <span class="icon">🤖</span>
-                            <span class="label">Chat Maiya</span>
+                        <button class="quick-btn" onclick="startStrategicAdvisory()" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
+                            <span class="icon">🎯</span>
+                            <span class="label">Strategic Plan</span>
+                        </button>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="quick-btn info" onclick="startFinancialAdvisory()">
+                            <span class="icon">💰</span>
+                            <span class="label">Financial Advisory</span>
+                        </button>
+                        <button class="quick-btn warning" onclick="startOperationsConsulting()">
+                            <span class="icon">⚙️</span>
+                            <span class="label">Operations</span>
+                        </button>
+                        <button class="quick-btn danger" onclick="startGeneralAdvisory()">
+                            <span class="icon">🧠</span>
+                            <span class="label">Master Advisor</span>
                         </button>
                     </div>
                 </div>
@@ -2058,8 +2072,48 @@
             handleVoiceCommands(transcript) {
                 const commands = {
                     'analyze business': () => {
-                        this.speak("Analyzing your business data now.");
-                        this.sendMessage('Analyze my business performance and provide insights');
+                        this.speak("Let me provide comprehensive business analysis and strategic recommendations.");
+                        this.sendMessage('Provide a complete business analysis with strategic recommendations');
+                        return true;
+                    },
+                    'strategic advice': () => {
+                        this.speak("Accessing strategic advisory mode. I'll help you with strategic planning.");
+                        this.sendMessage('I need strategic advisory support for long-term business planning');
+                        return true;
+                    },
+                    'financial advice': () => {
+                        this.speak("Activating financial advisory services. Let me analyze your financial position.");
+                        this.sendMessage('I need financial advisory and cash flow optimization guidance');
+                        return true;
+                    },
+                    'marketing strategy': () => {
+                        this.speak("Let me help you develop comprehensive marketing and growth strategies.");
+                        this.sendMessage('I need marketing strategy development and customer acquisition planning');
+                        return true;
+                    },
+                    'crisis management': () => {
+                        this.speak("Activating crisis management mode. I'll help you navigate challenges.");
+                        this.sendMessage('I need crisis management support and problem-solving guidance');
+                        return true;
+                    },
+                    'leadership coaching': () => {
+                        this.speak("Providing leadership coaching and management guidance.");
+                        this.sendMessage('I need leadership coaching and decision-making framework guidance');
+                        return true;
+                    },
+                    'operations consulting': () => {
+                        this.speak("Analyzing operations for efficiency improvements and optimization.");
+                        this.sendMessage('I need operations consulting for process improvement and efficiency');
+                        return true;
+                    },
+                    'innovation strategy': () => {
+                        this.speak("Let me help you develop innovation and technology strategies.");
+                        this.sendMessage('I need innovation strategy and technology advisory support');
+                        return true;
+                    },
+                    'master advisor': () => {
+                        this.speak("Activating master advisor mode. I'm your comprehensive business consultant.");
+                        this.sendMessage('Act as my master business advisor and strategic consultant');
                         return true;
                     },
                     'create document': () => {
@@ -2083,8 +2137,8 @@
                         return true;
                     },
                     'help': () => {
-                        this.speak("I'm here to help with your business needs.");
-                        this.sendMessage('How can you help me with my business?');
+                        this.speak("I'm your comprehensive business advisor. I can help with strategy, finance, operations, and any business challenge.");
+                        this.sendMessage('What are all the ways you can help me as my business advisor?');
                         return true;
                     }
                 };
@@ -2232,25 +2286,71 @@
             generateResponse(message) {
                 const lowerMessage = message.toLowerCase();
                 
-                // Simple response generation
-                if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-                    return "Hello! I'm Maiya, your AI business assistant. How can I help you today?";
+                // Greeting responses - Master advisor introduction
+                if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                    const greetings = [
+                        "Hello! I'm Maiya, your comprehensive business advisor and strategic partner. Whether you're facing a complex challenge, planning your next move, or need expert guidance on any business matter, I'm here to help.",
+                        "Hi there! Think of me as your personal business consultant and master advisor. From strategic planning to crisis management, financial advisory to innovation strategy - I'm equipped to guide you through any challenge.",
+                        "Greetings! I'm Maiya, your AI business strategist and advisor. I bring expertise across all business domains - operations, finance, marketing, leadership, technology, and strategic planning. What challenge can we tackle together?"
+                    ];
+                    return greetings[Math.floor(Math.random() * greetings.length)];
                 }
                 
-                if (lowerMessage.includes('analyze') || lowerMessage.includes('business')) {
-                    return "I can help analyze your business performance. You currently have 2 customers and RM 22,790 in total revenue. Would you like me to provide more detailed insights?";
+                // Strategic and business analysis
+                if (lowerMessage.includes('analyze') || lowerMessage.includes('business') || lowerMessage.includes('strategy')) {
+                    return "Let me provide a comprehensive business analysis. With RM 22,790 in revenue and 2 active customers, you're in the foundation-building phase. Key strategic recommendations: 1) Diversify your customer base to reduce concentration risk, 2) Develop recurring revenue streams, 3) Implement systematic sales processes, 4) Focus on customer lifetime value optimization. Your current customer-to-revenue ratio suggests strong deal values - leverage this for premium positioning. Would you like me to dive deeper into any specific strategic area?";
                 }
                 
-                if (lowerMessage.includes('help')) {
-                    return "I can assist you with business analysis, document creation, customer management, and general business advice. What specific area would you like help with?";
+                // Financial advisory responses
+                if (lowerMessage.includes('financial') || lowerMessage.includes('money') || lowerMessage.includes('revenue') || lowerMessage.includes('profit')) {
+                    return "From a financial advisory perspective, your current position shows promise but needs strategic focus. With RM 22,790 in revenue, I recommend: 1) Establish cash flow forecasting for next 6-12 months, 2) Create financial reserves equivalent to 3-6 months operating expenses, 3) Implement pricing strategies based on value delivery, 4) Consider invoice factoring if cash flow timing is challenging, 5) Explore revenue diversification through service packages or retainer models. Your average deal size appears strong - this is a competitive advantage to amplify. What specific financial challenge would you like strategic guidance on?";
                 }
                 
-                if (lowerMessage.includes('voice') || lowerMessage.includes('speak')) {
-                    return "Voice functionality is now working! You can speak to me using the microphone button, and I'll respond with both text and speech.";
+                // Marketing and growth strategy
+                if (lowerMessage.includes('market') || lowerMessage.includes('customer') || lowerMessage.includes('growth') || lowerMessage.includes('sales')) {
+                    return "For sustainable growth, I recommend a multi-faceted approach: 1) Customer Acquisition - develop ideal customer profiles and targeted outreach strategies, 2) Retention Strategy - implement systematic follow-up and upselling processes, 3) Referral Programs - leverage your existing customers for warm introductions, 4) Digital Presence - establish thought leadership through content marketing, 5) Partnership Development - identify strategic alliances for mutual referrals. With only 2 customers, focus on replication - what made these customers choose you? Scale those success factors. Which growth lever interests you most?";
                 }
                 
-                // Default response
-                return `I understand you're asking about "${message.substring(0, 50)}${message.length > 50 ? '...' : ''}". I'm here to help with your business needs. Could you be more specific about what you'd like assistance with?`;
+                // Leadership and management guidance
+                if (lowerMessage.includes('team') || lowerMessage.includes('management') || lowerMessage.includes('leadership') || lowerMessage.includes('decision')) {
+                    return "Strong leadership is crucial for business success. Key areas to focus on: 1) Decision Framework - establish clear criteria for major business decisions, 2) Time Management - prioritize high-impact activities using the Eisenhower Matrix, 3) Communication Systems - create regular check-ins and feedback loops, 4) Performance Metrics - define success indicators for all key activities, 5) Personal Development - continuous learning in your industry and leadership skills. Remember: your business growth is directly tied to your growth as a leader. What leadership challenge would you like strategic guidance on?";
+                }
+                
+                // Technology and innovation
+                if (lowerMessage.includes('technology') || lowerMessage.includes('digital') || lowerMessage.includes('automation') || lowerMessage.includes('innovation')) {
+                    return "Technology should amplify your business capabilities, not complicate them. Strategic tech priorities: 1) Customer Relationship Management - systematic tracking of all client interactions, 2) Financial Management - automated invoicing and expense tracking, 3) Marketing Automation - email sequences and social media scheduling, 4) Process Documentation - create systems that allow scaling without your constant involvement, 5) Data Analytics - track key performance indicators automatically. Start with tools that solve your biggest pain points. What operational challenge could technology help streamline?";
+                }
+                
+                // Crisis management and problem solving
+                if (lowerMessage.includes('problem') || lowerMessage.includes('issue') || lowerMessage.includes('challenge') || lowerMessage.includes('crisis')) {
+                    return "Every challenge is an opportunity for strategic improvement. My problem-solving approach: 1) Root Cause Analysis - identify the fundamental issue, not just symptoms, 2) Impact Assessment - understand short and long-term consequences, 3) Solution Generation - brainstorm multiple approaches before choosing, 4) Risk Evaluation - consider potential downsides of each option, 5) Implementation Planning - create step-by-step action plans with timelines. Most business problems fall into categories: cash flow, customer acquisition, operational efficiency, or strategic direction. What specific challenge needs immediate attention?";
+                }
+                
+                // General advisory and consultation
+                if (lowerMessage.includes('advice') || lowerMessage.includes('help') || lowerMessage.includes('guidance') || lowerMessage.includes('recommend')) {
+                    return "As your comprehensive business advisor, I can provide strategic guidance across all business domains. Common areas where I help business owners: Strategic Planning (3-5 year vision), Financial Management (cash flow optimization), Operations Improvement (efficiency gains), Marketing Strategy (customer acquisition), Leadership Development (decision-making frameworks), Technology Integration (automation opportunities), Risk Management (crisis prevention), and Innovation Strategy (competitive advantages). Think of me as your board of advisors condensed into one intelligent partner. What specific area would benefit from strategic consultation?";
+                }
+                
+                // Voice and technical responses
+                if (lowerMessage.includes('voice') || lowerMessage.includes('speak') || lowerMessage.includes('microphone')) {
+                    return "Voice interaction is now fully functional! This enables more natural, conversational business consulting. You can discuss complex strategies, brainstorm solutions, or get immediate advice just by speaking. Voice communication often leads to better strategic discussions because it's more natural and allows for rapid idea exchange. Try asking about strategic planning, operational challenges, or any business decision you're contemplating.";
+                }
+                
+                // Industry and competitive intelligence
+                if (lowerMessage.includes('industry') || lowerMessage.includes('competitor') || lowerMessage.includes('market trend')) {
+                    return "Industry intelligence is crucial for strategic positioning. Key areas to monitor: 1) Competitive Landscape - who are your direct and indirect competitors, 2) Market Trends - technological, regulatory, and consumer behavior changes, 3) Pricing Dynamics - how market pricing affects your positioning, 4) Innovation Patterns - what new solutions are emerging, 5) Customer Expectations - how client needs are evolving. I can help you develop competitive intelligence systems and strategic responses. Which aspect of your competitive environment needs immediate analysis?";
+                }
+                
+                // Default comprehensive response
+                const responseTemplates = [
+                    `I see you're asking about "${message.substring(0, 40)}${message.length > 40 ? '...' : ''}". As your strategic business advisor, I can provide comprehensive guidance across multiple dimensions. Whether this involves financial planning, operational optimization, strategic positioning, or innovation strategies, let's explore the underlying business implications and develop actionable solutions. What specific outcome are you hoping to achieve?`,
+                    
+                    `That's an interesting question about "${message.substring(0, 40)}${message.length > 40 ? '...' : ''}". Let me approach this from a strategic consulting perspective. Most business challenges intersect multiple areas - operations, finance, marketing, and strategy. I can help you analyze this from all angles and develop a comprehensive action plan. Could you provide more context about your specific situation or desired outcome?`,
+                    
+                    `I understand you're exploring "${message.substring(0, 40)}${message.length > 40 ? '...' : ''}". As your master business advisor, I believe in addressing not just the immediate question but also the strategic implications. This likely connects to broader business themes like growth strategy, operational efficiency, competitive positioning, or financial optimization. Let's dig deeper - what's the business context behind this question?`
+                ];
+                
+                return responseTemplates[Math.floor(Math.random() * responseTemplates.length)];
             }
 
             generateSpokenResponse(fullResponse) {
@@ -2793,10 +2893,95 @@
             showSuccessMessage('📤 Complete data exported with voice AI settings!');
         }
 
+        // ===== MASTER ADVISORY FUNCTIONS =====
+        function startStrategicAdvisory() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need strategic advisory support. Help me develop a comprehensive business strategy including market positioning, competitive analysis, and long-term growth planning.');
+            }, 500);
+        }
+
+        function startFinancialAdvisory() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need financial advisory services. Please analyze my current financial position and provide recommendations for cash flow optimization, investment strategies, and financial risk management.');
+            }, 500);
+        }
+
+        function startOperationsConsulting() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need operations consulting. Help me identify process improvements, efficiency opportunities, and ways to optimize my business operations for better performance.');
+            }, 500);
+        }
+
+        function startMarketingStrategy() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need marketing strategy development. Help me create a comprehensive customer acquisition plan, brand positioning strategy, and growth marketing approach.');
+            }, 500);
+        }
+
+        function startLeadershipCoaching() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need leadership coaching and management guidance. Help me improve my decision-making processes, team management skills, and executive effectiveness.');
+            }, 500);
+        }
+
+        function startTechAdvisory() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need technology and innovation advisory. Help me identify automation opportunities, digital transformation strategies, and technology solutions for business growth.');
+            }, 500);
+        }
+
+        function startCrisisManagement() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need crisis management and problem-solving support. Help me develop emergency response strategies and turn current challenges into opportunities.');
+            }, 500);
+        }
+
+        function startLegalGuidance() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need legal and compliance guidance. Help me understand contract requirements, regulatory compliance issues, and legal risk mitigation strategies for my business.');
+            }, 500);
+        }
+
+        function startIndustryIntelligence() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need industry intelligence and market analysis. Help me understand current market trends, competitive landscape, and opportunities in my industry sector.');
+            }, 500);
+        }
+
+        function startProductivityCoaching() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need productivity and time management coaching. Help me optimize my schedule, prioritize tasks effectively, and improve my personal and business efficiency.');
+            }, 500);
+        }
+
+        function startCreativeProblemSolving() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need creative problem-solving support. Help me brainstorm innovative solutions, think outside the box, and approach challenges from new perspectives.');
+            }, 500);
+        }
+
+        function startGeneralAdvisory() {
+            toggleMaiyaChat();
+            setTimeout(() => {
+                voiceAI.sendMessage('I need comprehensive business advisory support. Act as my strategic consultant and help me with any business challenge or decision I\'m facing.');
+            }, 500);
+        }
+
         function askMaiyaAboutCompany() {
             toggleMaiyaChat();
             setTimeout(() => {
-                voiceAI.sendMessage('Tell me about my company performance and opportunities');
+                voiceAI.sendMessage('Provide a comprehensive strategic analysis of my company performance, market position, and growth opportunities as my business advisor.');
             }, 500);
         }
 
@@ -2817,11 +3002,11 @@
                 const hasSpeech = voiceAI.speechSupported;
                 
                 if (hasVoice && hasSpeech) {
-                    showSuccessMessage('🎉 Welcome! Voice AI is fully functional - microphone and speakers ready!');
+                    showSuccessMessage('🧠 Welcome! Maiya Master Business Advisor is fully operational - voice, strategy, and comprehensive consulting ready!');
                 } else if (hasSpeech) {
-                    showSuccessMessage('🎉 Welcome! Speech output is ready, voice input needs microphone access.');
+                    showSuccessMessage('🧠 Welcome! Maiya Master Business Advisor is ready - comprehensive consulting with speech output available!');
                 } else {
-                    showSuccessMessage('🎉 Welcome! Voice features may be limited in this browser.');
+                    showSuccessMessage('🧠 Welcome! Maiya Master Business Advisor is ready for comprehensive business consulting!');
                 }
             }, 1000);
             
@@ -2830,28 +3015,35 @@
                 if (voiceAI.speechSupported) {
                     console.log('🔊 Testing speech synthesis on startup...');
                     // Uncomment to test speech on startup
-                    // voiceAI.speak("Voice AI system is ready and functional!");
+                    // voiceAI.speak("Maiya Master Business Advisor is ready to provide comprehensive strategic consulting!");
                 }
             }, 2000);
             
-            console.log('✅ REFIT Business System with FIXED Voice AI loaded successfully!');
-            console.log('🎤 Voice Features:');
-            console.log(`   - Microphone Access: ${voiceAI.micPermissionGranted ? 'Granted' : 'Needs Permission'}`);
-            console.log(`   - Voice Recognition: ${voiceAI.voiceSupported ? 'Supported' : 'Not Supported'}`);
-            console.log(`   - Speech Synthesis: ${voiceAI.speechSupported ? 'Supported' : 'Not Supported'}`);
-            console.log('🗣️ Voice Commands: "Hey Maiya", "Analyze business", "Change theme", "Help"');
-            console.log('🎯 Test buttons available in dashboard and settings');
+            console.log('✅ REFIT Business System with Master Advisor Maiya AI loaded successfully!');
+            console.log('🧠 Maiya Master Business Advisor Features:');
+            console.log(`   - Strategic Advisory & Business Consulting`);
+            console.log(`   - Financial Planning & Investment Guidance`);
+            console.log(`   - Operations Optimization & Process Improvement`);
+            console.log(`   - Marketing Strategy & Growth Planning`);
+            console.log(`   - Leadership Coaching & Management Guidance`);
+            console.log(`   - Crisis Management & Problem Solving`);
+            console.log(`   - Technology Advisory & Innovation Strategy`);
+            console.log(`   - Legal Guidance & Compliance Support`);
+            console.log(`   - Industry Intelligence & Market Analysis`);
+            console.log(`   - 24/7 Comprehensive Business Advisory`);
+            console.log('🗣️ Enhanced Voice Commands: "Strategic advice", "Financial advice", "Master advisor"');
+            console.log('🎯 12 Specialized Advisory Domains Available');
         });
 
         // ===== ERROR HANDLING =====
         window.addEventListener('error', function(e) {
             console.error('Application error:', e.error);
-            showSuccessMessage('⚠️ An error occurred. Voice AI and your data are safe!');
+            showSuccessMessage('⚠️ An error occurred. Maiya Master Advisor and your data are safe!');
         });
 
         window.addEventListener('unhandledrejection', function(e) {
             console.error('Unhandled promise rejection:', e.reason);
-            showSuccessMessage('⚠️ A network error occurred. Please check your connection.');
+            showSuccessMessage('⚠️ A network error occurred. Maiya is still available to help you solve problems.');
         });
     </script>
 </body>
