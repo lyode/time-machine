@@ -2,11 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#000000">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Spiritual AI Voice Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#007AFF">
+    <title>AI Voice Assistant Pro</title>
     
     <style>
         :root {
@@ -15,127 +13,65 @@
             --success-color: #4CAF50;
             --danger-color: #FF3B30;
             --warning-color: #ff9800;
+            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #87ceeb 15%, #4169e1 35%, #191970 60%, #000033 85%, #000000 100%);
+            --card-background: rgba(255, 255, 255, 0.08);
             --text-color: #ffffff;
-            --border-radius: 16px;
-            --safe-area-top: env(safe-area-inset-top, 47px);
-            --safe-area-bottom: env(safe-area-inset-bottom, 34px);
-            --safe-area-left: env(safe-area-inset-left, 0px);
-            --safe-area-right: env(safe-area-inset-right, 0px);
-            
-            /* Lightning Theme (Default) */
-            --bg-gradient: radial-gradient(ellipse at center, #1a0033 0%, #000066 30%, #000033 60%, #000000 100%);
-            --wave-color-1: #00d4ff;
-            --wave-color-2: #0099ff;
-            --wave-color-3: #3366ff;
-            --wave-color-4: #6633ff;
-            --wave-color-5: #9900ff;
-            --energy-color: #00d4ff;
-            --glow-color: #00d4ff;
+            --border-radius: 20px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.3);
+            --wave-color-1: #ffffff;
+            --wave-color-2: #87ceeb;
+            --wave-color-3: #4169e1;
+            --wave-color-4: #6495ed;
+            --wave-color-5: #b0c4de;
         }
 
-        /* Theme Variations */
-        [data-theme="lightning"] {
-            --bg-gradient: radial-gradient(ellipse at center, #1a0033 0%, #000066 30%, #000033 60%, #000000 100%);
-            --wave-color-1: #00d4ff;
-            --wave-color-2: #0099ff;
-            --wave-color-3: #3366ff;
-            --wave-color-4: #6633ff;
-            --wave-color-5: #9900ff;
-            --energy-color: #00d4ff;
-            --glow-color: #00d4ff;
+        [data-theme="cosmic"] {
+            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #ffd700 8%, #ff69b4 18%, #9370db 30%, #4b0082 50%, #191970 70%, #000033 85%, #000000 100%);
+            --wave-color-1: #ffffff;
+            --wave-color-2: #ffd700;
+            --wave-color-3: #ff69b4;
+            --wave-color-4: #9370db;
+            --wave-color-5: #00ffff;
         }
 
-        [data-theme="voice"] {
-            --bg-gradient: radial-gradient(ellipse at center, #001122 0%, #002244 30%, #001133 60%, #000000 100%);
-            --wave-color-1: #ff6b9d;
-            --wave-color-2: #c44569;
-            --wave-color-3: #f8b500;
-            --wave-color-4: #00d2d3;
-            --wave-color-5: #0abde3;
-            --energy-color: #ff6b9d;
-            --glow-color: #c44569;
+        [data-theme="aurora"] {
+            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #00ff7f 10%, #00ced1 20%, #9370db 35%, #4b0082 55%, #000080 75%, #000033 90%, #000000 100%);
+            --wave-color-1: #ffffff;
+            --wave-color-2: #00ff7f;
+            --wave-color-3: #00ced1;
+            --wave-color-4: #9370db;
+            --wave-color-5: #ff1493;
         }
 
-        [data-theme="dancer"] {
-            --bg-gradient: radial-gradient(ellipse at center, #0f1419 0%, #1e3a5f 30%, #0f2027 60%, #000000 100%);
-            --wave-color-1: #00d4ff;
-            --wave-color-2: #0099cc;
-            --wave-color-3: #006699;
-            --wave-color-4: #004466;
-            --wave-color-5: #002233;
-            --energy-color: #00d4ff;
-            --glow-color: #0099cc;
-        }
-
-        [data-theme="awakening"] {
-            --bg-gradient: radial-gradient(ellipse at center, #ff6b00 0%, #ff8c42 20%, #3d5a80 50%, #293241 80%, #000000 100%);
-            --wave-color-1: #ff6b00;
-            --wave-color-2: #ff8c42;
-            --wave-color-3: #ffa500;
-            --wave-color-4: #ffb347;
-            --wave-color-5: #ffd700;
-            --energy-color: #ff6b00;
-            --glow-color: #ff8c42;
-        }
-
-        [data-theme="flow"] {
-            --bg-gradient: linear-gradient(135deg, #000000 0%, #1a0033 50%, #000000 100%);
-            --wave-color-1: #ff00ff;
-            --wave-color-2: #ff3366;
-            --wave-color-3: #ff6600;
-            --wave-color-4: #ffaa00;
-            --wave-color-5: #00ff88;
-            --energy-color: #ff00ff;
-            --glow-color: #ff3366;
-        }
-
-        [data-theme="chakra"] {
-            --bg-gradient: radial-gradient(ellipse at center, #2c1810 0%, #1a0f3d 30%, #0f1c3d 60%, #000000 100%);
-            --wave-color-1: #ff0000;
-            --wave-color-2: #ff8800;
-            --wave-color-3: #ffff00;
-            --wave-color-4: #00ff00;
-            --wave-color-5: #0088ff;
-            --energy-color: #ffd700;
-            --glow-color: #ff8800;
+        [data-theme="celestial"] {
+            --background-gradient: radial-gradient(ellipse at center, #fffacd 0%, #f0e68c 12%, #dda0dd 25%, #ba55d3 40%, #8a2be2 60%, #4b0082 80%, #191970 95%, #000000 100%);
+            --wave-color-1: #fffacd;
+            --wave-color-2: #f0e68c;
+            --wave-color-3: #dda0dd;
+            --wave-color-4: #ba55d3;
+            --wave-color-5: #8a2be2;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-            background: var(--bg-gradient);
-            width: 100vw;
-            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background-gradient);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             touch-action: manipulation;
             overflow: hidden;
             color: var(--text-color);
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding-top: var(--safe-area-top);
-            padding-bottom: var(--safe-area-bottom);
-            padding-left: var(--safe-area-left);
-            padding-right: var(--safe-area-right);
+            position: relative;
         }
 
-        /* iPhone 15 Pro Max specific optimizations */
-        @media screen and (width: 430px) and (height: 932px) {
-            :root {
-                --safe-area-top: 59px;
-                --safe-area-bottom: 34px;
-            }
-        }
-
-        /* Energy Background Effects */
+        /* Cosmic Background Effects */
         body::before {
             content: '';
             position: absolute;
@@ -144,397 +80,186 @@
             right: 0;
             bottom: 0;
             background-image: 
-                radial-gradient(1px 1px at 25px 35px, var(--energy-color), transparent),
-                radial-gradient(1px 1px at 85px 75px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(0.5px 0.5px at 135px 45px, var(--glow-color), transparent),
-                radial-gradient(1px 1px at 195px 85px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(0.5px 0.5px at 245px 35px, var(--energy-color), transparent),
-                radial-gradient(1px 1px at 295px 65px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(0.5px 0.5px at 345px 95px, var(--glow-color), transparent),
-                radial-gradient(1px 1px at 395px 25px, rgba(255,255,255,0.9), transparent);
+                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ffffff, transparent),
+                radial-gradient(1px 1px at 200px 60px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 240px 90px, #ffffff, transparent),
+                radial-gradient(1px 1px at 280px 20px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 320px 70px, #ffffff, transparent),
+                radial-gradient(2px 2px at 360px 40px, rgba(255,255,255,0.8), transparent);
             background-repeat: repeat;
-            background-size: 430px 430px;
-            animation: energyFlow 25s linear infinite;
+            background-size: 400px 400px;
+            animation: stars 20s linear infinite;
             pointer-events: none;
-            opacity: 0.4;
         }
 
-        @keyframes energyFlow {
-            from { transform: translateY(0px) translateX(0px); }
-            to { transform: translateY(-430px) translateX(-50px); }
-        }
-
-        /* Central Energy Core */
+        /* Central Light Burst */
         body::after {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, 
-                var(--energy-color) 0%, 
-                var(--glow-color) 30%, 
-                transparent 70%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 30%, transparent 70%);
             transform: translate(-50%, -50%);
-            animation: energyCore 4s ease-in-out infinite alternate;
+            animation: centralGlow 4s ease-in-out infinite alternate;
             pointer-events: none;
         }
 
-        @keyframes energyCore {
+        @keyframes stars {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-400px); }
+        }
+
+        @keyframes centralGlow {
             0% { 
-                transform: translate(-50%, -50%) scale(0.8);
+                transform: translate(-50%, -50%) scale(1);
                 opacity: 0.3;
             }
             100% { 
-                transform: translate(-50%, -50%) scale(1.4);
-                opacity: 0.7;
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.6;
             }
         }
 
-        /* Theme Selection Screen */
-        .theme-selection {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: var(--safe-area-top) 20px var(--safe-area-bottom) 20px;
-            opacity: 1;
-            visibility: visible;
-            transition: all 0.5s ease;
-        }
-
-        .theme-selection.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .theme-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-align: center;
-            background: linear-gradient(45deg, #00d4ff, #ff6b9d, #ffd700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .theme-subtitle {
-            font-size: 16px;
-            opacity: 0.8;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .theme-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+        /* Light Rays */
+        .light-rays {
+            position: absolute;
+            top: 50%;
+            left: 50%;
             width: 100%;
-            max-width: 350px;
-            margin-bottom: 30px;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .theme-option {
-            aspect-ratio: 1;
-            border-radius: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 15px;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
+        .light-ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 50%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent);
+            transform-origin: bottom center;
+            animation: rayRotate 8s linear infinite;
         }
 
-        .theme-option:active {
-            transform: scale(0.95);
+        .light-ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
+        .light-ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); animation-delay: -1s; }
+        .light-ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); animation-delay: -2s; }
+        .light-ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); animation-delay: -3s; }
+        .light-ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); animation-delay: -4s; }
+        .light-ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); animation-delay: -5s; }
+        .light-ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); animation-delay: -6s; }
+        .light-ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); animation-delay: -7s; }
+
+        @keyframes rayRotate {
+            0% { 
+                transform: translate(-50%, -100%) rotate(var(--start-rotation, 0deg)) scaleY(0.5);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 180deg)) scaleY(1);
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 360deg)) scaleY(0.5);
+                opacity: 0.3;
+            }
         }
 
-        .theme-option.selected {
-            border-color: #00d4ff;
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
-        }
-
-        .theme-option .theme-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .theme-option .theme-name {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .theme-option .theme-desc {
-            font-size: 11px;
-            opacity: 0.7;
-            line-height: 1.2;
-        }
-
-        /* Individual theme backgrounds */
-        .theme-lightning {
-            background: radial-gradient(circle, #1a0033, #000066, #000000);
-        }
-
-        .theme-voice {
-            background: radial-gradient(circle, #001122, #002244, #000000);
-        }
-
-        .theme-dancer {
-            background: radial-gradient(circle, #0f1419, #1e3a5f, #000000);
-        }
-
-        .theme-awakening {
-            background: radial-gradient(circle, #ff6b00, #3d5a80, #000000);
-        }
-
-        .theme-flow {
-            background: linear-gradient(135deg, #000000, #1a0033, #000000);
-        }
-
-        .theme-chakra {
-            background: radial-gradient(circle, #2c1810, #1a0f3d, #000000);
-        }
-
-        .continue-btn {
-            background: linear-gradient(135deg, #00d4ff, #0099ff);
-            color: white;
-            border: none;
-            padding: 16px 40px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-        }
-
-        .continue-btn:active {
-            transform: translateY(2px);
-        }
-
-        .continue-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Energy Lightning Effects */
-        .energy-paths {
+        /* Energy Particles */
+        .energy-particles {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
 
-        .lightning-path {
+        .particle {
             position: absolute;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                var(--energy-color) 20%, 
-                white 50%, 
-                var(--energy-color) 80%, 
-                transparent 100%);
-            border-radius: 1px;
-            animation: lightningFlow 3s linear infinite;
-            box-shadow: 0 0 10px var(--energy-color);
-            opacity: 0.8;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ffffff, transparent);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
         }
 
-        .lightning-path.vertical {
-            width: 2px;
-            height: 300px;
-            left: 50%;
-            top: 10%;
-            transform: translateX(-50%);
-        }
-
-        .lightning-path.diagonal-1 {
-            width: 2px;
-            height: 200px;
-            top: 20%;
-            left: 30%;
-            transform: rotate(45deg);
-        }
-
-        .lightning-path.diagonal-2 {
-            width: 2px;
-            height: 200px;
-            top: 20%;
-            right: 30%;
-            transform: rotate(-45deg);
-        }
-
-        .lightning-path.horizontal {
-            height: 2px;
-            width: 250px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .lightning-path.branch-1 {
-            height: 2px;
-            width: 120px;
-            top: 35%;
-            left: 25%;
-            transform: rotate(30deg);
-        }
-
-        .lightning-path.branch-2 {
-            height: 2px;
-            width: 120px;
-            top: 35%;
-            right: 25%;
-            transform: rotate(-30deg);
-        }
-
-        .lightning-path.branch-3 {
-            height: 2px;
-            width: 100px;
-            top: 65%;
-            left: 35%;
-            transform: rotate(60deg);
-        }
-
-        .lightning-path.branch-4 {
-            height: 2px;
-            width: 100px;
-            top: 65%;
-            right: 35%;
-            transform: rotate(-60deg);
-        }
-
-        @keyframes lightningFlow {
-            0% { 
+        @keyframes float {
+            0%, 100% { 
+                transform: translate(0, 0) scale(0.5);
                 opacity: 0.3;
-                filter: brightness(0.5);
             }
             50% { 
+                transform: translate(20px, -30px) scale(1);
                 opacity: 1;
-                filter: brightness(2);
-            }
-            100% { 
-                opacity: 0.3;
-                filter: brightness(0.5);
             }
         }
 
-        /* Settings Button */
+        /* Minimized Settings Button */
         .settings-btn {
             position: absolute;
-            top: calc(var(--safe-area-top) + 10px);
-            right: calc(var(--safe-area-right) + 15px);
+            top: 15px;
+            right: 15px;
             background: rgba(255, 255, 255, 0.1);
             border: none;
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 16px;
-            color: var(--energy-color);
+            width: 35px;
+            height: 35px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
             transition: all 0.3s ease;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             z-index: 100;
+            opacity: 0.5;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 20px var(--glow-color);
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
         }
 
-        .settings-btn:active {
+        .settings-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: scale(0.95);
-        }
-
-        /* Theme Selector Button */
-        .theme-btn {
-            position: absolute;
-            top: calc(var(--safe-area-top) + 10px);
-            left: calc(var(--safe-area-left) + 15px);
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 16px;
-            color: var(--energy-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(15px);
-            z-index: 100;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 20px var(--glow-color);
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-        }
-
-        .theme-btn:active {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(0.95);
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
         /* Wake Word Indicator */
         .wake-indicator {
             position: absolute;
-            bottom: calc(var(--safe-area-bottom) + 25px);
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
-            padding: 10px 18px;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 12px;
             opacity: 0;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 80%;
-            box-shadow: 0 0 25px var(--glow-color);
         }
 
         .wake-indicator.show {
-            opacity: 0.9;
+            opacity: 0.8;
         }
 
         .wake-indicator.active {
             background: rgba(255, 255, 255, 0.2);
-            border: 1px solid var(--energy-color);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             opacity: 1;
-            box-shadow: 0 0 40px var(--energy-color);
-            animation: wakeGlow 2s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
         }
 
-        @keyframes wakeGlow {
-            0%, 100% { box-shadow: 0 0 25px var(--glow-color); }
-            50% { box-shadow: 0 0 50px var(--energy-color); }
-        }
-
-        /* Sound Wave Container */
+        /* Full Screen Wave Container */
         .wave-container {
             position: absolute;
             top: 0;
@@ -544,6 +269,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
             z-index: 10;
         }
 
@@ -551,19 +277,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1.5px;
-            width: 85vw;
-            height: 60vh;
-            max-width: 380px;
+            gap: 2px;
+            width: 90vw;
+            height: 80vh;
+            max-width: 1200px;
             transition: all 0.3s ease;
         }
 
         .wave-bar {
             flex: 1;
-            max-width: 4px;
-            border-radius: 2px;
-            transition: all 0.08s ease;
-            min-height: 6px;
+            max-width: 8px;
+            border-radius: 4px;
+            transition: all 0.1s ease;
+            min-height: 8px;
             transform-origin: center;
             background: linear-gradient(to top, 
                 var(--wave-color-1) 0%, 
@@ -571,55 +297,55 @@
                 var(--wave-color-3) 50%, 
                 var(--wave-color-4) 75%, 
                 var(--wave-color-5) 100%);
-            box-shadow: 0 0 8px var(--energy-color);
-            filter: drop-shadow(0 0 4px var(--glow-color));
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
         }
 
         .wave-bar.active {
-            box-shadow: 0 0 20px var(--wave-color-1), 0 0 40px var(--wave-color-2);
-            filter: brightness(2) drop-shadow(0 0 12px var(--energy-color));
-            transform: scaleY(1.5);
+            box-shadow: 0 0 30px var(--wave-color-1), 0 0 60px var(--wave-color-2);
+            filter: brightness(1.8) drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+            transform: scaleY(1.2);
         }
 
         .wave-bar.wake-detected {
-            animation: spiritualWakeDetected 1.8s ease;
+            animation: wakeDetected 1s ease;
         }
 
         .wave-bar.speaking {
-            animation: spiritualSpeaking 0.9s infinite alternate;
+            animation: speakingPulse 0.6s infinite alternate;
         }
 
-        @keyframes spiritualWakeDetected {
+        @keyframes wakeDetected {
             0% { 
                 transform: scaleY(1); 
-                filter: brightness(1) drop-shadow(0 0 4px var(--glow-color));
+                filter: brightness(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
             }
             25% { 
-                transform: scaleY(3); 
-                filter: brightness(5) hue-rotate(90deg) drop-shadow(0 0 25px var(--energy-color));
+                transform: scaleY(1.8); 
+                filter: brightness(3) hue-rotate(90deg) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
             }
             50% { 
-                transform: scaleY(4); 
-                filter: brightness(6) hue-rotate(180deg) drop-shadow(0 0 35px white);
+                transform: scaleY(2.5); 
+                filter: brightness(4) hue-rotate(180deg) drop-shadow(0 0 40px rgba(255, 255, 255, 1));
             }
             75% { 
-                transform: scaleY(3); 
-                filter: brightness(5) hue-rotate(270deg) drop-shadow(0 0 25px var(--energy-color));
+                transform: scaleY(1.8); 
+                filter: brightness(3) hue-rotate(270deg) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
             }
             100% { 
                 transform: scaleY(1); 
-                filter: brightness(1) drop-shadow(0 0 4px var(--glow-color));
+                filter: brightness(1) hue-rotate(360deg) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
             }
         }
 
-        @keyframes spiritualSpeaking {
+        @keyframes speakingPulse {
             0% { 
                 transform: scaleY(1); 
-                filter: brightness(1.5) drop-shadow(0 0 8px var(--glow-color));
+                filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
             }
             100% { 
-                transform: scaleY(2); 
-                filter: brightness(3) saturate(2) drop-shadow(0 0 20px var(--energy-color));
+                transform: scaleY(1.4); 
+                filter: brightness(2) saturate(1.5) drop-shadow(0 0 20px rgba(255, 255, 255, 0.7));
             }
         }
 
@@ -628,16 +354,17 @@
             position: fixed;
             top: 0;
             right: -100%;
-            width: 100vw;
+            width: 90%;
+            max-width: 450px;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(25px);
-            padding: var(--safe-area-top) 20px var(--safe-area-bottom) 20px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+            padding: 20px;
             overflow-y: auto;
             transition: right 0.3s ease;
             z-index: 1000;
             color: var(--text-color);
-            -webkit-overflow-scrolling: touch;
             border-left: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -649,61 +376,52 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .settings-header h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--energy-color);
+            border-bottom: 2px solid rgba(255,255,255,0.1);
         }
 
         .close-settings {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
             cursor: pointer;
             color: var(--text-color);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
         }
 
-        .close-settings:active {
+        .close-settings:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: scale(0.95);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         .setting-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .setting-label {
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: block;
             font-size: 16px;
-            color: var(--energy-color);
         }
 
         .setting-input, .setting-textarea {
             width: 100%;
-            padding: 12px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            padding: 12px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.1);
             color: var(--text-color);
             font-family: inherit;
-            -webkit-appearance: none;
         }
 
         .setting-textarea {
@@ -712,68 +430,46 @@
         }
 
         .setting-input:focus, .setting-textarea:focus {
-            border-color: var(--energy-color);
+            border-color: var(--primary-color);
             outline: none;
-            box-shadow: 0 0 20px var(--glow-color);
+            box-shadow: 0 0 15px rgba(135, 206, 235, 0.3);
         }
 
         .setting-range {
             width: 100%;
             margin: 10px 0;
-            -webkit-appearance: none;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(255, 255, 255, 0.2);
-            outline: none;
-        }
-
-        .setting-range::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--energy-color);
-            cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 2px 8px var(--glow-color);
         }
 
         .setting-select {
             width: 100%;
-            padding: 12px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            padding: 12px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.1);
             color: var(--text-color);
-            -webkit-appearance: none;
         }
 
         .btn {
             padding: 12px 20px;
             border: none;
-            border-radius: 20px;
+            border-radius: 25px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin: 4px;
-            min-height: 44px;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
+            margin: 5px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--energy-color), var(--glow-color));
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            box-shadow: 0 0 20px var(--glow-color);
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, var(--wave-color-3), var(--wave-color-4));
+            background: linear-gradient(135deg, #9C27B0, #673AB7);
             color: white;
         }
 
@@ -787,41 +483,38 @@
             color: white;
         }
 
-        .btn:active {
-            transform: scale(0.95);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .toggle-switch {
             position: relative;
             width: 60px;
-            height: 32px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
+            height: 30px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
             cursor: pointer;
             transition: background 0.3s;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .toggle-switch.active {
-            background: var(--energy-color);
+            background: var(--success-color);
         }
 
         .toggle-slider {
             position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 28px;
-            height: 28px;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
             background: white;
             border-radius: 50%;
             transition: transform 0.3s;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
         .toggle-switch.active .toggle-slider {
-            transform: translateX(28px);
+            transform: translateX(30px);
         }
 
         .setting-toggle {
@@ -829,39 +522,97 @@
             align-items: center;
             justify-content: space-between;
             margin: 15px 0;
-            padding: 8px 0;
         }
 
-        .wave-controls, .wake-word-controls {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 16px;
-            border-radius: 12px;
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .color-option.active {
+            border-color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .wave-color-option {
+            width: 60px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .wave-color-option.active {
+            border-color: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+        }
+
+        .wave-controls {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
             margin: 15px 0;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .wake-word-controls {
-            border: 1px solid var(--glow-color);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .error-message, .success-message {
-            padding: 12px 16px;
-            border-radius: 12px;
-            margin: 10px 0;
-            font-size: 14px;
+            background: rgba(135, 206, 235, 0.1);
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
         }
 
         .error-message {
-            background: rgba(255, 59, 48, 0.15);
-            color: #ff6b6b;
+            background: rgba(255, 59, 48, 0.2);
+            color: var(--danger-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
             border-left: 4px solid var(--danger-color);
         }
 
         .success-message {
-            background: rgba(76, 175, 80, 0.15);
-            color: #81c784;
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
             border-left: 4px solid var(--success-color);
+        }
+
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .settings-overlay.open {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* Response Display */
@@ -870,20 +621,19 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            max-width: 85%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(25px);
-            padding: 20px;
-            border-radius: 16px;
+            max-width: 70%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 25px;
+            border-radius: 20px;
             font-size: 16px;
             text-align: center;
             opacity: 0;
-            transform: translate(-50%, -50%) scale(0.85);
+            transform: translate(-50%, -50%) scale(0.8);
             transition: all 0.4s ease;
-            border: 1px solid var(--glow-color);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 30px var(--glow-color);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             z-index: 50;
-            line-height: 1.4;
         }
 
         .response-display.show {
@@ -892,111 +642,110 @@
         }
 
         .wake-word-list {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
             border-radius: 8px;
-            margin: 12px 0;
+            margin: 10px 0;
             font-size: 13px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .wake-word-item {
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .wake-word-item:last-child {
             border-bottom: none;
         }
 
-        /* iPhone specific optimizations */
-        @supports (-webkit-touch-callout: none) {
-            body {
-                -webkit-text-size-adjust: 100%;
-                -webkit-font-smoothing: antialiased;
+        /* Cosmic wave presets */
+        .cosmic-wave {
+            --wave-color-1: #ffffff;
+            --wave-color-2: #87ceeb;
+            --wave-color-3: #4169e1;
+            --wave-color-4: #6495ed;
+            --wave-color-5: #b0c4de;
+        }
+
+        .spiritual-wave {
+            --wave-color-1: #ffffff;
+            --wave-color-2: #ffd700;
+            --wave-color-3: #ff69b4;
+            --wave-color-4: #9370db;
+            --wave-color-5: #00ffff;
+        }
+
+        .aurora-wave {
+            --wave-color-1: #ffffff;
+            --wave-color-2: #00ff7f;
+            --wave-color-3: #00ced1;
+            --wave-color-4: #9370db;
+            --wave-color-5: #ff1493;
+        }
+
+        .celestial-wave {
+            --wave-color-1: #fffacd;
+            --wave-color-2: #f0e68c;
+            --wave-color-3: #dda0dd;
+            --wave-color-4: #ba55d3;
+            --wave-color-5: #8a2be2;
+        }
+
+        @media (max-width: 480px) {
+            .settings-panel { 
+                width: 100%; 
             }
-            
+            .sound-wave { 
+                width: 95vw; 
+                height: 85vh; 
+            }
             .wave-bar {
-                will-change: height, filter;
+                max-width: 6px;
             }
-            
-            .lightning-path {
-                will-change: opacity, filter;
+            .response-display {
+                max-width: 85%;
+                font-size: 14px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .sound-wave {
+                gap: 1px;
+            }
+            .wave-bar {
+                max-width: 4px;
             }
         }
     </style>
 </head>
-<body data-theme="lightning">
-    <!-- Theme Selection Screen -->
-    <div class="theme-selection" id="themeSelection">
-        <h1 class="theme-title">✨ Spiritual AI Assistant</h1>
-        <p class="theme-subtitle">Choose your spiritual energy theme</p>
-        
-        <div class="theme-grid">
-            <div class="theme-option theme-lightning selected" data-theme="lightning">
-                <div class="theme-icon">⚡</div>
-                <div class="theme-name">Lightning</div>
-                <div class="theme-desc">Electric blue energy & cosmic lightning</div>
-            </div>
-            
-            <div class="theme-option theme-voice" data-theme="voice">
-                <div class="theme-icon">🎵</div>
-                <div class="theme-name">Voice Waves</div>
-                <div class="theme-desc">Colorful sound vibrations & vocal energy</div>
-            </div>
-            
-            <div class="theme-option theme-dancer" data-theme="dancer">
-                <div class="theme-icon">💃</div>
-                <div class="theme-name">Energy Dancer</div>
-                <div class="theme-desc">Flowing blue lightning dance</div>
-            </div>
-            
-            <div class="theme-option theme-awakening" data-theme="awakening">
-                <div class="theme-icon">🔥</div>
-                <div class="theme-name">Awakening</div>
-                <div class="theme-desc">Orange fire & blue cosmic wings</div>
-            </div>
-            
-            <div class="theme-option theme-flow" data-theme="flow">
-                <div class="theme-icon">🌊</div>
-                <div class="theme-name">Energy Flow</div>
-                <div class="theme-desc">Flowing rainbow wave patterns</div>
-            </div>
-            
-            <div class="theme-option theme-chakra" data-theme="chakra">
-                <div class="theme-icon">🧘‍♀️</div>
-                <div class="theme-name">Chakra Energy</div>
-                <div class="theme-desc">Meditation & chakra alignment</div>
-            </div>
-        </div>
-        
-        <button class="continue-btn" id="continueBtn">Begin Spiritual Journey</button>
+<body data-theme="default" class="cosmic-wave">
+    <!-- Cosmic Light Rays -->
+    <div class="light-rays">
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
     </div>
 
-    <!-- Energy Lightning Effects -->
-    <div class="energy-paths">
-        <div class="lightning-path vertical"></div>
-        <div class="lightning-path horizontal"></div>
-        <div class="lightning-path diagonal-1"></div>
-        <div class="lightning-path diagonal-2"></div>
-        <div class="lightning-path branch-1"></div>
-        <div class="lightning-path branch-2"></div>
-        <div class="lightning-path branch-3"></div>
-        <div class="lightning-path branch-4"></div>
+    <!-- Energy Particles -->
+    <div class="energy-particles" id="energyParticles">
+        <!-- Particles will be generated by JavaScript -->
     </div>
-
-    <!-- Theme Selector Button -->
-    <button class="theme-btn" id="themeBtn">🎨</button>
 
     <!-- Settings Button -->
     <button class="settings-btn" id="settingsBtn">⚙</button>
 
     <!-- Wake Word Indicator -->
     <div class="wake-indicator" id="wakeIndicator">
-        👂 <span id="currentWakeWord">Hey Spirit</span>
+        👂 <span id="currentWakeWord">Hey Assistant</span>
     </div>
 
-    <!-- Spiritual Wave Container -->
+    <!-- Full Screen Wave Container -->
     <div class="wave-container" id="waveContainer">
         <div class="sound-wave" id="soundWave">
             <!-- Wave bars will be generated by JavaScript -->
@@ -1006,10 +755,13 @@
     <!-- Response Display -->
     <div class="response-display" id="responseDisplay"></div>
 
+    <!-- Settings Overlay -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+
     <!-- Settings Panel -->
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
-            <h2>⚙️ Spiritual Settings</h2>
+            <h2>⚙️ Cosmic Settings</h2>
             <button class="close-settings" id="closeSettings">×</button>
         </div>
 
@@ -1025,7 +777,7 @@
 
         <!-- AI Model Selection -->
         <div class="setting-group">
-            <label class="setting-label">🧠 AI Consciousness Model</label>
+            <label class="setting-label">🧠 AI Model</label>
             <select class="setting-select" id="modelSelect">
                 <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
                 <option value="gpt-4">GPT-4</option>
@@ -1035,7 +787,7 @@
 
         <!-- Wake Word Settings -->
         <div class="setting-group">
-            <label class="setting-label">👂 Spiritual Wake Word</label>
+            <label class="setting-label">👂 Wake Word Detection</label>
             <div class="wake-word-controls">
                 <div class="setting-toggle">
                     <span>Enable Wake Word</span>
@@ -1045,50 +797,69 @@
                 </div>
                 
                 <label style="font-size: 14px; margin-top: 15px; display: block;">Wake Word/Phrase:</label>
-                <input type="text" class="setting-input" id="wakeWordInput" placeholder="Hey Spirit" value="Hey Spirit">
+                <input type="text" class="setting-input" id="wakeWordInput" placeholder="Hey Assistant" value="Hey Assistant">
                 
-                <label style="font-size: 14px; margin-top: 15px; display: block;">Spiritual Response:</label>
-                <textarea class="setting-textarea" id="wakeResponseInput" placeholder="I am here, ready to guide you">I am here, ready to guide you</textarea>
+                <label style="font-size: 14px; margin-top: 15px; display: block;">Wake Response:</label>
+                <textarea class="setting-textarea" id="wakeResponseInput" placeholder="Hi dear, I'm here!">Hi dear, I'm here!</textarea>
                 
                 <label style="font-size: 14px; margin-top: 15px; display: block;">
-                    Energy Sensitivity: <span id="wakeSensitivityValue">0.7</span>
+                    Wake Sensitivity: <span id="wakeSensitivityValue">0.7</span>
                 </label>
                 <input type="range" class="setting-range" id="wakeSensitivity" min="0.1" max="1.0" step="0.1" value="0.7">
                 
                 <div class="wake-word-list">
-                    <strong>Spiritual Wake Words:</strong>
-                    <div class="wake-word-item">✨ "Hey Spirit" - Divine connection</div>
-                    <div class="wake-word-item">🌟 "Awaken" - Consciousness activation</div>
-                    <div class="wake-word-item">⚡ "Energy" - Power channeling</div>
-                    <div class="wake-word-item">🧘 "Presence" - Mindful awareness</div>
+                    <strong>Suggested Wake Words:</strong>
+                    <div class="wake-word-item">👋 "Hey Assistant" - Classic</div>
+                    <div class="wake-word-item">🤖 "Hello AI" - Simple</div>
+                    <div class="wake-word-item">✨ "Hey there" - Casual</div>
+                    <div class="wake-word-item">🎯 "Computer" - Direct</div>
                 </div>
             </div>
         </div>
 
         <!-- Wave Visualization Settings -->
         <div class="setting-group">
-            <label class="setting-label">🌊 Energy Wave Visualization</label>
+            <label class="setting-label">🌊 Cosmic Wave Visualization</label>
             <div class="wave-controls">
                 <label style="font-size: 14px; display: block; margin-bottom: 5px;">
-                    Wave Count: <span id="waveCountValue">85</span>
+                    Wave Count: <span id="waveCountValue">100</span>
                 </label>
-                <input type="range" class="setting-range" id="waveCount" min="40" max="120" step="5" value="85">
+                <input type="range" class="setting-range" id="waveCount" min="50" max="200" step="10" value="100">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    Energy Responsiveness: <span id="responsiveValue">1.3</span>
+                    Wave Responsiveness: <span id="responsiveValue">1.5</span>
                 </label>
-                <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="2.5" step="0.1" value="1.3">
+                <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="3.0" step="0.1" value="1.5">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    Flow Speed: <span id="animSpeedValue">65</span>ms
+                    Animation Speed: <span id="animSpeedValue">60</span>ms
                 </label>
-                <input type="range" class="setting-range" id="animSpeed" min="40" max="120" step="5" value="65">
+                <input type="range" class="setting-range" id="animSpeed" min="30" max="150" step="10" value="60">
+                
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Cosmic Wave Schemes:</label>
+                <div class="color-picker">
+                    <div class="wave-color-option active" data-wave-scheme="cosmic" style="background: linear-gradient(to right, #ffffff, #87ceeb, #4169e1, #6495ed, #b0c4de);"></div>
+                    <div class="wave-color-option" data-wave-scheme="spiritual" style="background: linear-gradient(to right, #ffffff, #ffd700, #ff69b4, #9370db, #00ffff);"></div>
+                    <div class="wave-color-option" data-wave-scheme="aurora" style="background: linear-gradient(to right, #ffffff, #00ff7f, #00ced1, #9370db, #ff1493);"></div>
+                    <div class="wave-color-option" data-wave-scheme="celestial" style="background: linear-gradient(to right, #fffacd, #f0e68c, #dda0dd, #ba55d3, #8a2be2);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme Settings -->
+        <div class="setting-group">
+            <label class="setting-label">🌌 Cosmic Background Theme</label>
+            <div class="color-picker">
+                <div class="color-option active" data-theme="default" style="background: radial-gradient(circle, #ffffff 0%, #87ceeb 30%, #4169e1 60%, #000033 100%);"></div>
+                <div class="color-option" data-theme="cosmic" style="background: radial-gradient(circle, #ffffff 0%, #ffd700 20%, #ff69b4 40%, #9370db 60%, #000000 100%);"></div>
+                <div class="color-option" data-theme="aurora" style="background: radial-gradient(circle, #ffffff 0%, #00ff7f 25%, #00ced1 50%, #9370db 75%, #000000 100%);"></div>
+                <div class="color-option" data-theme="celestial" style="background: radial-gradient(circle, #fffacd 0%, #f0e68c 30%, #dda0dd 60%, #4b0082 100%);"></div>
             </div>
         </div>
 
         <!-- Voice Settings -->
         <div class="setting-group">
-            <label class="setting-label">🗣️ Spiritual Voice Settings</label>
+            <label class="setting-label">🗣️ Voice Settings</label>
             
             <label style="font-size: 14px; margin-top: 15px; display: block;">
                 Speech Rate: <span id="rateValue">0.8</span>
@@ -1125,7 +896,7 @@
 
         <!-- Advanced Settings -->
         <div class="setting-group">
-            <label class="setting-label">🔧 Advanced Spiritual Settings</label>
+            <label class="setting-label">🔧 Advanced Settings</label>
             
             <div class="setting-toggle">
                 <span>Show Response Text</span>
@@ -1142,10 +913,10 @@
 
         <!-- Test Functions -->
         <div class="setting-group">
-            <label class="setting-label">🧪 Spiritual Test Functions</label>
-            <button class="btn btn-success" id="testSpeechBtn">🗣️ Test Spiritual Speech</button>
-            <button class="btn btn-secondary" id="testWaveBtn">🌊 Test Energy Waves</button>
-            <button class="btn btn-primary" id="testWakeWordBtn">👂 Test Wake Word</button>
+            <label class="setting-label">🧪 Test Functions</label>
+            <button class="btn btn-success" id="testSpeechBtn">🗣️ Test Speech</button>
+            <button class="btn btn-secondary" id="testWaveBtn">🌊 Test Wave Animation</button>
+            <button class="btn" id="testWakeWordBtn" style="background: #00bcd4; color: white;">👂 Test Wake Word</button>
         </div>
 
         <!-- Export/Import -->
@@ -1157,13 +928,13 @@
         </div>
 
         <!-- Reset -->
-        <div class="setting-group" style="margin-bottom: 40px;">
+        <div class="setting-group">
             <button class="btn btn-danger" id="resetBtn">🔄 Reset All</button>
         </div>
     </div>
 
     <script>
-        class SpiritualVoiceAssistant {
+        class CosmicVoiceAssistant {
             constructor() {
                 this.settings = {
                     apiKey: '',
@@ -1172,15 +943,16 @@
                     speechPitch: 1.0,
                     speechVolume: 1.0,
                     language: 'en-US',
-                    theme: 'lightning',
+                    theme: 'default',
                     showResponse: true,
                     maxTokens: 150,
-                    waveCount: 85,
-                    waveResponsive: 1.3,
-                    animSpeed: 65,
+                    waveCount: 100,
+                    waveResponsive: 1.5,
+                    animSpeed: 60,
+                    waveScheme: 'cosmic',
                     wakeWordEnabled: true,
-                    wakeWord: 'Hey Spirit',
-                    wakeResponse: "I am here, ready to guide you",
+                    wakeWord: 'Hey Assistant',
+                    wakeResponse: "Hi dear, I'm here!",
                     wakeSensitivity: 0.7
                 };
 
@@ -1206,32 +978,16 @@
                 this.setupEventListeners();
                 this.setupSpeechRecognition();
                 this.initializeWave();
+                this.applyTheme();
+                this.applyWaveScheme();
                 this.startIdleAnimation();
                 this.enableAudio();
+                this.createEnergyParticles();
 
-                // Mobile-specific setup
-                this.setupMobileOptimizations();
-            }
-
-            setupMobileOptimizations() {
-                // Prevent zoom on iOS
-                document.addEventListener('touchstart', (e) => {
-                    if (e.touches.length > 1) {
-                        e.preventDefault();
-                    }
-                });
-
-                // Handle orientation changes
-                window.addEventListener('orientationchange', () => {
-                    setTimeout(() => this.initializeWave(), 100);
-                });
-
-                // Handle mobile audio context
-                document.addEventListener('touchstart', () => {
-                    if (this.audioContext && this.audioContext.state === 'suspended') {
-                        this.audioContext.resume();
-                    }
-                }, { once: true });
+                // Start wake word listening immediately
+                if (this.settings.wakeWordEnabled) {
+                    setTimeout(() => this.startWakeWordListening(), 1000);
+                }
             }
 
             initializeElements() {
@@ -1241,15 +997,12 @@
                 this.waveContainer = document.getElementById('waveContainer');
                 this.wakeIndicator = document.getElementById('wakeIndicator');
                 this.currentWakeWord = document.getElementById('currentWakeWord');
-
-                // Theme selection
-                this.themeSelection = document.getElementById('themeSelection');
-                this.continueBtn = document.getElementById('continueBtn');
-                this.themeBtn = document.getElementById('themeBtn');
+                this.energyParticles = document.getElementById('energyParticles');
 
                 // Settings elements
                 this.settingsBtn = document.getElementById('settingsBtn');
                 this.settingsPanel = document.getElementById('settingsPanel');
+                this.settingsOverlay = document.getElementById('settingsOverlay');
                 this.closeSettings = document.getElementById('closeSettings');
 
                 // Settings inputs
@@ -1292,23 +1045,10 @@
             }
 
             setupEventListeners() {
-                // Theme selection
-                this.continueBtn.addEventListener('click', () => this.startSpiritualJourney());
-                this.themeBtn.addEventListener('click', () => this.showThemeSelection());
-
-                document.querySelectorAll('.theme-option').forEach(option => {
-                    option.addEventListener('click', () => {
-                        document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('selected'));
-                        option.classList.add('selected');
-                        const theme = option.dataset.theme;
-                        this.saveSetting('theme', theme);
-                        this.applyTheme(theme);
-                    });
-                });
-
                 // Settings panel
                 this.settingsBtn.addEventListener('click', () => this.openSettings());
                 this.closeSettings.addEventListener('click', () => this.closeSettingsPanel());
+                this.settingsOverlay.addEventListener('click', () => this.closeSettingsPanel());
 
                 // Settings controls
                 this.saveApiKeyBtn.addEventListener('click', () => this.saveApiKey());
@@ -1377,6 +1117,26 @@
                 this.showResponseToggle.addEventListener('click', () => this.toggleSetting('showResponse'));
                 this.wakeWordToggle.addEventListener('click', () => this.toggleWakeWord());
 
+                // Theme selection
+                document.querySelectorAll('.color-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+                        option.classList.add('active');
+                        this.saveSetting('theme', option.dataset.theme);
+                        this.applyTheme();
+                    });
+                });
+
+                // Wave scheme selection
+                document.querySelectorAll('.wave-color-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        document.querySelectorAll('.wave-color-option').forEach(opt => opt.classList.remove('active'));
+                        option.classList.add('active');
+                        this.saveSetting('waveScheme', option.dataset.waveScheme);
+                        this.applyWaveScheme();
+                    });
+                });
+
                 // Data management
                 this.exportBtn.addEventListener('click', () => this.exportSettings());
                 this.importBtn.addEventListener('click', () => this.importFile.click());
@@ -1384,21 +1144,16 @@
                 this.resetBtn.addEventListener('click', () => this.resetSettings());
             }
 
-            startSpiritualJourney() {
-                this.themeSelection.classList.add('hidden');
-                
-                // Start wake word listening after theme selection
-                if (this.settings.wakeWordEnabled) {
-                    setTimeout(() => this.startWakeWordListening(), 1000);
+            createEnergyParticles() {
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    particle.style.animationDuration = (3 + Math.random() * 4) + 's';
+                    this.energyParticles.appendChild(particle);
                 }
-            }
-
-            showThemeSelection() {
-                this.themeSelection.classList.remove('hidden');
-            }
-
-            applyTheme(theme) {
-                document.body.setAttribute('data-theme', theme);
             }
 
             initializeWave() {
@@ -1410,6 +1165,12 @@
                     bar.style.animationDelay = `${i * 20}ms`;
                     this.soundWave.appendChild(bar);
                 }
+                
+                this.applyWaveScheme();
+            }
+
+            applyWaveScheme() {
+                document.body.className = `${this.settings.waveScheme}-wave`;
             }
 
             startIdleAnimation() {
@@ -1422,7 +1183,7 @@
                             const height = 20 + Math.sin(time + index * 0.3) * 15;
                             bar.style.height = height + 'px';
                         });
-                        time += 0.04;
+                        time += 0.05;
                     }
                     
                     this.idleAnimationId = requestAnimationFrame(animate);
@@ -1478,7 +1239,7 @@
 
                     this.recognition.onerror = (event) => {
                         if (event.error !== 'no-speech') {
-                            this.showMessage(`Spiritual connection error: ${event.error}`, 'error');
+                            this.showMessage(`Speech error: ${event.error}`, 'error');
                         }
                         if (!this.wakeListening) {
                             this.stopListening();
@@ -1559,14 +1320,9 @@
                 this.wakeListening = false;
                 this.wakeIndicator.classList.add('active');
                 
-                // Animate wave bars with spiritual energy
+                // Animate wave bars
                 const bars = this.soundWave.querySelectorAll('.wave-bar');
                 bars.forEach(bar => bar.classList.add('wake-detected'));
-                
-                // Add haptic feedback for iPhone
-                if ('vibrate' in navigator) {
-                    navigator.vibrate([150, 50, 150, 50, 150]);
-                }
                 
                 this.speakResponse(this.settings.wakeResponse);
                 
@@ -1576,7 +1332,7 @@
                     
                     // Start listening for user input
                     this.startListening();
-                }, 2500);
+                }, 2000);
             }
 
             startWakeWordListening() {
@@ -1602,11 +1358,11 @@
                 
                 if (this.settings.wakeWordEnabled) {
                     this.startWakeWordListening();
-                    this.showMessage('👂 Spiritual wake word enabled', 'success');
+                    this.showMessage('👂 Wake word listening enabled', 'success');
                 } else {
                     this.wakeListening = false;
                     this.wakeIndicator.classList.remove('show', 'active');
-                    this.showMessage('👂 Spiritual wake word disabled', 'info');
+                    this.showMessage('👂 Wake word listening disabled', 'info');
                 }
             }
 
@@ -1616,16 +1372,10 @@
                         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
                     }
 
-                    const stream = await navigator.mediaDevices.getUserMedia({ 
-                        audio: {
-                            echoCancellation: true,
-                            noiseSuppression: true,
-                            autoGainControl: true
-                        } 
-                    });
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     this.microphone = this.audioContext.createMediaStreamSource(stream);
                     this.analyser = this.audioContext.createAnalyser();
-                    this.analyser.fftSize = 512;
+                    this.analyser.fftSize = 1024;
                     
                     this.microphone.connect(this.analyser);
                     this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
@@ -1644,9 +1394,9 @@
                 
                 bars.forEach((bar, index) => {
                     const dataIndex = Math.floor(index * this.dataArray.length / bars.length);
-                    const height = (this.dataArray[dataIndex] / 255) * window.innerHeight * 0.5 * this.settings.waveResponsive;
-                    bar.style.height = Math.max(6, height) + 'px';
-                    bar.classList.toggle('active', height > 25);
+                    const height = (this.dataArray[dataIndex] / 255) * window.innerHeight * 0.6 * this.settings.waveResponsive;
+                    bar.style.height = Math.max(8, height) + 'px';
+                    bar.classList.toggle('active', height > 30);
                 });
                 
                 this.waveAnimationId = requestAnimationFrame(() => this.animateWave());
@@ -1665,7 +1415,7 @@
                     this.synthesis.cancel();
                     this.recognition.start();
                 } catch (error) {
-                    this.showMessage('Failed to start spiritual connection', 'error');
+                    this.showMessage('Failed to start listening', 'error');
                 }
             }
 
@@ -1700,7 +1450,7 @@
                     
                     this.speakResponse(response);
                 } catch (error) {
-                    this.showMessage(`Spiritual AI Error: ${error.message}`, 'error');
+                    this.showMessage(`AI Error: ${error.message}`, 'error');
                 } finally {
                     this.isProcessing = false;
                     bars.forEach(bar => bar.classList.remove('speaking'));
@@ -1728,7 +1478,7 @@
                         messages: [
                             {
                                 role: 'system',
-                                content: 'You are a wise spiritual AI guide with deep understanding of consciousness, energy, and personal growth. Provide insightful, compassionate responses suitable for speech that offer spiritual wisdom and guidance.'
+                                content: 'You are a helpful cosmic voice assistant. Provide concise, friendly responses suitable for speech with a touch of cosmic wisdom.'
                             },
                             {
                                 role: 'user',
@@ -1774,7 +1524,7 @@
                         <strong style="color: var(--wave-color-1);">✨ You:</strong> "${userInput}"
                     </div>
                     <div>
-                        <strong style="color: var(--wave-color-4);">🌟 Spiritual Guide:</strong> ${response}
+                        <strong style="color: var(--wave-color-4);">🌌 Cosmic AI:</strong> ${response}
                     </div>
                 `;
                 
@@ -1782,7 +1532,7 @@
                 
                 setTimeout(() => {
                     this.responseDisplay.classList.remove('show');
-                }, 8000);
+                }, 7000);
             }
 
             showMessage(message, type = 'info') {
@@ -1811,15 +1561,15 @@
 
             openSettings() {
                 this.settingsPanel.classList.add('open');
-                document.body.style.overflow = 'hidden';
+                this.settingsOverlay.classList.add('open');
             }
 
             closeSettingsPanel() {
                 this.settingsPanel.classList.remove('open');
-                document.body.style.overflow = '';
+                this.settingsOverlay.classList.remove('open');
             }
 
-            // Settings management methods
+            // Settings methods
             loadSettings() {
                 Object.keys(this.settings).forEach(key => {
                     const saved = localStorage.getItem(`va_${key}`);
@@ -1833,19 +1583,6 @@
                         }
                     }
                 });
-
-                // Apply saved theme
-                if (this.settings.theme) {
-                    this.applyTheme(this.settings.theme);
-                    // Update theme selection
-                    setTimeout(() => {
-                        document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('selected'));
-                        const savedThemeOption = document.querySelector(`[data-theme="${this.settings.theme}"]`);
-                        if (savedThemeOption) {
-                            savedThemeOption.classList.add('selected');
-                        }
-                    }, 100);
-                }
 
                 // Update UI elements
                 setTimeout(() => {
@@ -1863,6 +1600,7 @@
                     if (this.wakeResponseInput) this.wakeResponseInput.value = this.settings.wakeResponse;
                     if (this.wakeSensitivity) this.wakeSensitivity.value = this.settings.wakeSensitivity;
 
+                    // Update current wake word display
                     if (this.currentWakeWord) this.currentWakeWord.textContent = this.settings.wakeWord;
 
                     // Update value displays
@@ -1878,6 +1616,16 @@
                     // Update toggles
                     this.updateToggle(this.showResponseToggle, this.settings.showResponse);
                     this.updateToggle(this.wakeWordToggle, this.settings.wakeWordEnabled);
+
+                    // Update theme
+                    document.querySelectorAll('.color-option').forEach(option => {
+                        option.classList.toggle('active', option.dataset.theme === this.settings.theme);
+                    });
+
+                    // Update wave scheme
+                    document.querySelectorAll('.wave-color-option').forEach(option => {
+                        option.classList.toggle('active', option.dataset.waveScheme === this.settings.waveScheme);
+                    });
                 }, 100);
             }
 
@@ -1904,11 +1652,15 @@
                 }
             }
 
+            applyTheme() {
+                document.body.setAttribute('data-theme', this.settings.theme);
+            }
+
             saveApiKey() {
                 const apiKey = this.apiKeyInput.value.trim();
                 if (apiKey && apiKey.startsWith('sk-')) {
                     this.saveSetting('apiKey', apiKey);
-                    this.showMessage('✅ Spiritual API key saved successfully!', 'success');
+                    this.showMessage('✅ API key saved successfully!', 'success');
                 } else {
                     this.showMessage('❌ Invalid API key format. Should start with "sk-"', 'error');
                 }
@@ -1939,11 +1691,11 @@
                     });
 
                     if (response.ok) {
-                        this.showMessage('✅ Spiritual connection established!', 'success');
+                        this.showMessage('✅ API key is valid and working!', 'success');
                         this.saveApiKey();
                     } else {
                         const error = await response.json();
-                        this.showMessage(`❌ Connection failed: ${error.error?.message || 'Invalid key'}`, 'error');
+                        this.showMessage(`❌ API key test failed: ${error.error?.message || 'Invalid key'}`, 'error');
                     }
                 } catch (error) {
                     this.showMessage(`❌ Test failed: ${error.message}`, 'error');
@@ -1954,7 +1706,7 @@
             }
 
             testSpeech() {
-                this.speakResponse('Welcome to your spiritual journey. I am your AI guide, ready to assist you with wisdom and compassion on your path of growth and enlightenment.');
+                this.speakResponse('Greetings from the cosmic realm! I am your AI voice assistant, channeling the wisdom of the universe through speech synthesis.');
             }
 
             testWaveAnimation() {
@@ -1963,11 +1715,11 @@
                 
                 const testAnimation = () => {
                     bars.forEach((bar, index) => {
-                        const height = 90 + Math.sin(time + index * 0.9) * 70;
+                        const height = 100 + Math.sin(time + index * 0.8) * 80;
                         bar.style.height = height + 'px';
                         bar.classList.add('active');
                     });
-                    time += 0.5;
+                    time += 0.4;
                     
                     if (time < 15) {
                         setTimeout(testAnimation, this.settings.animSpeed);
@@ -1980,7 +1732,7 @@
             }
 
             testWakeWord() {
-                this.showMessage(`🌟 Testing spiritual wake word: "${this.settings.wakeWord}"`, 'info');
+                this.showMessage(`🌌 Testing cosmic wake word detection with: "${this.settings.wakeWord}"`, 'info');
                 this.handleWakeWordDetected();
             }
 
@@ -1994,11 +1746,11 @@
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `spiritual-assistant-${new Date().toISOString().split('T')[0]}.json`;
+                a.download = `cosmic-voice-assistant-settings-${new Date().toISOString().split('T')[0]}.json`;
                 a.click();
                 URL.revokeObjectURL(url);
 
-                this.showMessage('✅ Spiritual settings exported!', 'success');
+                this.showMessage('✅ Cosmic settings exported successfully!', 'success');
             }
 
             importSettings(event) {
@@ -2019,7 +1771,9 @@
 
                         this.loadSettings();
                         this.initializeWave();
-                        this.showMessage('✅ Spiritual settings imported successfully!', 'success');
+                        this.applyTheme();
+                        this.applyWaveScheme();
+                        this.showMessage('✅ Cosmic settings imported successfully!', 'success');
                     } catch (error) {
                         this.showMessage('❌ Invalid settings file', 'error');
                     }
@@ -2029,7 +1783,7 @@
             }
 
             resetSettings() {
-                if (confirm('Reset all spiritual settings? This will restore your assistant to its original energy.')) {
+                if (confirm('Are you sure you want to reset all cosmic settings? This cannot be undone.')) {
                     Object.keys(localStorage).forEach(key => {
                         if (key.startsWith('va_')) {
                             localStorage.removeItem(key);
@@ -2043,32 +1797,34 @@
                         speechPitch: 1.0,
                         speechVolume: 1.0,
                         language: 'en-US',
-                        theme: 'lightning',
+                        theme: 'default',
                         showResponse: true,
                         maxTokens: 150,
-                        waveCount: 85,
-                        waveResponsive: 1.3,
-                        animSpeed: 65,
+                        waveCount: 100,
+                        waveResponsive: 1.5,
+                        animSpeed: 60,
+                        waveScheme: 'cosmic',
                         wakeWordEnabled: true,
-                        wakeWord: 'Hey Spirit',
-                        wakeResponse: "I am here, ready to guide you",
+                        wakeWord: 'Hey Assistant',
+                        wakeResponse: "Hi dear, I'm here!",
                         wakeSensitivity: 0.7
                     };
 
                     this.loadSettings();
                     this.initializeWave();
-                    this.applyTheme('lightning');
-                    this.showMessage('✅ Spiritual energy restored to original state!', 'success');
+                    this.applyTheme();
+                    this.applyWaveScheme();
+                    this.showMessage('✅ All cosmic settings reset to defaults!', 'success');
                 }
             }
         }
 
-        // Initialize the spiritual voice assistant
+        // Initialize the cosmic voice assistant
         document.addEventListener('DOMContentLoaded', () => {
-            window.voiceAssistant = new SpiritualVoiceAssistant();
+            window.voiceAssistant = new CosmicVoiceAssistant();
         });
 
-        // Handle mobile-specific events
+        // Handle page visibility changes
         document.addEventListener('visibilitychange', () => {
             if (document.hidden && window.voiceAssistant) {
                 window.voiceAssistant.synthesis.cancel();
@@ -2076,14 +1832,6 @@
                     window.voiceAssistant.stopListening();
                 }
             }
-        });
-
-        window.addEventListener('orientationchange', () => {
-            setTimeout(() => {
-                if (window.voiceAssistant) {
-                    window.voiceAssistant.initializeWave();
-                }
-            }, 200);
         });
     </script>
 </body>
