@@ -13,31 +13,43 @@
             --success-color: #4CAF50;
             --danger-color: #FF3B30;
             --warning-color: #ff9800;
-            --background-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --background-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
             --card-background: rgba(255, 255, 255, 0.05);
             --text-color: #ffffff;
             --border-radius: 20px;
             --shadow: 0 8px 32px rgba(0,0,0,0.3);
-            --wave-color: #00ff88;
-            --wave-glow: #00ff88;
+            --wave-color-1: #ff006e;
+            --wave-color-2: #ff8500;
+            --wave-color-3: #ffb700;
+            --wave-color-4: #00f5ff;
+            --wave-color-5: #8338ec;
         }
 
         [data-theme="blue"] {
-            --background-gradient: linear-gradient(135deg, #001122 0%, #003366 100%);
-            --wave-color: #00aaff;
-            --wave-glow: #0088cc;
+            --background-gradient: linear-gradient(135deg, #000428 0%, #004e92 100%);
+            --wave-color-1: #00d4ff;
+            --wave-color-2: #0099ff;
+            --wave-color-3: #0066ff;
+            --wave-color-4: #3399ff;
+            --wave-color-5: #66ccff;
         }
 
         [data-theme="purple"] {
-            --background-gradient: linear-gradient(135deg, #2d1b4e 0%, #4a2c6a 100%);
-            --wave-color: #aa88ff;
-            --wave-glow: #8866dd;
+            --background-gradient: linear-gradient(135deg, #2d1b69 0%, #8b5a83 50%, #f18a8a 100%);
+            --wave-color-1: #a855f7;
+            --wave-color-2: #c084fc;
+            --wave-color-3: #ddd6fe;
+            --wave-color-4: #8b5cf6;
+            --wave-color-5: #7c3aed;
         }
 
         [data-theme="orange"] {
-            --background-gradient: linear-gradient(135deg, #331100 0%, #663300 100%);
-            --wave-color: #ff8800;
-            --wave-glow: #ff6600;
+            --background-gradient: linear-gradient(135deg, #ff9a00 0%, #ffad00 50%, #ff6600 100%);
+            --wave-color-1: #ff4500;
+            --wave-color-2: #ff6600;
+            --wave-color-3: #ff8c00;
+            --wave-color-4: #ffa500;
+            --wave-color-5: #ffb347;
         }
 
         * {
@@ -51,7 +63,6 @@
             background: var(--background-gradient);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             touch-action: manipulation;
@@ -60,75 +71,64 @@
             position: relative;
         }
 
-        /* Settings Button */
+        /* Minimized Settings Button */
         .settings-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.08);
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-            color: white;
+            width: 35px;
+            height: 35px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             z-index: 100;
+            opacity: 0.5;
         }
 
         .settings-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(90deg) scale(1.1);
+            background: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.9);
+            transform: scale(1.1);
+            opacity: 1;
         }
 
-        /* Status Display */
-        .status-display {
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--card-background);
-            backdrop-filter: blur(20px);
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            opacity: 0.9;
-            transition: all 0.3s ease;
-        }
-
-        /* Wake Word Indicator */
+        /* Wake Word Indicator (subtle) */
         .wake-indicator {
             position: absolute;
-            top: 120px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--card-background);
+            background: rgba(0, 188, 212, 0.1);
             backdrop-filter: blur(20px);
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 12px;
             opacity: 0;
             transition: all 0.3s ease;
+            border: 1px solid rgba(0, 188, 212, 0.3);
         }
 
         .wake-indicator.show {
-            opacity: 0.8;
+            opacity: 0.7;
         }
 
         .wake-indicator.active {
             background: rgba(76, 175, 80, 0.2);
-            border: 2px solid var(--success-color);
+            border: 1px solid rgba(76, 175, 80, 0.5);
             opacity: 1;
         }
 
-        /* Vertical Sound Wave Container */
+        /* Full Screen Wave Container */
         .wave-container {
-            position: relative;
-            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -138,108 +138,55 @@
 
         .sound-wave {
             display: flex;
-            align-items: end;
+            align-items: center;
             justify-content: center;
             gap: 2px;
-            width: 300px;
-            height: 200px;
+            width: 90vw;
+            height: 80vh;
+            max-width: 1200px;
             transition: all 0.3s ease;
-            transform: rotate(90deg);
         }
 
         .wave-bar {
-            width: 3px;
-            background: linear-gradient(to top, 
-                var(--wave-color) 0%, 
-                rgba(255, 255, 255, 0.8) 50%, 
-                var(--wave-color) 100%);
-            border-radius: 2px;
+            flex: 1;
+            max-width: 8px;
+            border-radius: 4px;
             transition: all 0.1s ease;
-            min-height: 4px;
-            box-shadow: 0 0 8px var(--wave-glow);
-            transform-origin: bottom;
+            min-height: 8px;
+            transform-origin: center;
+            background: linear-gradient(to top, 
+                var(--wave-color-1) 0%, 
+                var(--wave-color-2) 25%, 
+                var(--wave-color-3) 50%, 
+                var(--wave-color-4) 75%, 
+                var(--wave-color-5) 100%);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
         .wave-bar.active {
-            box-shadow: 0 0 15px var(--wave-glow), 0 0 30px var(--wave-glow);
-            background: linear-gradient(to top, 
-                var(--wave-color) 0%, 
-                #ffffff 50%, 
-                var(--wave-color) 100%);
+            box-shadow: 0 0 30px var(--wave-color-1), 0 0 60px var(--wave-color-2);
+            filter: brightness(1.5);
         }
 
         .wave-bar.wake-detected {
-            animation: wakeDetected 0.5s ease;
+            animation: wakeDetected 0.8s ease;
+        }
+
+        .wave-bar.speaking {
+            animation: speakingPulse 0.6s infinite alternate;
         }
 
         @keyframes wakeDetected {
-            0% { transform: scaleY(1); }
-            50% { transform: scaleY(2); }
-            100% { transform: scaleY(1); }
+            0% { transform: scaleY(1); filter: brightness(1); }
+            25% { transform: scaleY(1.5); filter: brightness(2) hue-rotate(90deg); }
+            50% { transform: scaleY(2); filter: brightness(3) hue-rotate(180deg); }
+            75% { transform: scaleY(1.5); filter: brightness(2) hue-rotate(270deg); }
+            100% { transform: scaleY(1); filter: brightness(1) hue-rotate(360deg); }
         }
 
-        /* Microphone Button */
-        .mic-button {
-            position: absolute;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 32px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(238, 90, 82, 0.4);
-            border: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .mic-button.listening {
-            background: linear-gradient(135deg, var(--success-color), #45a049);
-            animation: pulse 1.5s infinite;
-        }
-
-        .mic-button.processing {
-            background: linear-gradient(135deg, var(--warning-color), #f57c00);
-            animation: spin 2s linear infinite;
-        }
-
-        .mic-button.speaking {
-            background: linear-gradient(135deg, #9C27B0, #673AB7);
-            animation: speak 0.8s infinite alternate;
-        }
-
-        .mic-button.wake-listening {
-            background: linear-gradient(135deg, #00bcd4, #0097a7);
-            animation: wakePulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.1); }
-            100% { transform: translateX(-50%) scale(1); }
-        }
-
-        @keyframes wakePulse {
-            0% { transform: translateX(-50%) scale(1); box-shadow: 0 8px 24px rgba(0, 188, 212, 0.4); }
-            50% { transform: translateX(-50%) scale(1.05); box-shadow: 0 12px 32px rgba(0, 188, 212, 0.8); }
-            100% { transform: translateX(-50%) scale(1); box-shadow: 0 8px 24px rgba(0, 188, 212, 0.4); }
-        }
-
-        @keyframes spin {
-            0% { transform: translateX(-50%) rotate(0deg); }
-            100% { transform: translateX(-50%) rotate(360deg); }
-        }
-
-        @keyframes speak {
-            0% { transform: translateX(-50%) scale(1); }
-            100% { transform: translateX(-50%) scale(1.05); }
+        @keyframes speakingPulse {
+            0% { transform: scaleY(1); filter: brightness(1); }
+            100% { transform: scaleY(1.3); filter: brightness(1.8) saturate(1.5); }
         }
 
         /* Settings Panel */
@@ -425,7 +372,7 @@
         }
 
         .wave-color-option {
-            width: 40px;
+            width: 60px;
             height: 40px;
             border-radius: 8px;
             cursor: pointer;
@@ -437,6 +384,7 @@
         .wave-color-option.active {
             border-color: white;
             transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
 
         .wave-controls {
@@ -493,24 +441,26 @@
         /* Response Display */
         .response-display {
             position: absolute;
-            bottom: 150px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            max-width: 80%;
+            transform: translate(-50%, -50%);
+            max-width: 70%;
             background: var(--card-background);
             backdrop-filter: blur(20px);
-            padding: 20px;
-            border-radius: 15px;
-            font-size: 14px;
+            padding: 25px;
+            border-radius: 20px;
+            font-size: 16px;
             text-align: center;
             opacity: 0;
-            transform: translateX(-50%) translateY(20px);
-            transition: all 0.3s ease;
+            transform: translate(-50%, -50%) scale(0.8);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         .response-display.show {
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
+            transform: translate(-50%, -50%) scale(1);
         }
 
         .wake-word-list {
@@ -530,34 +480,82 @@
             border-bottom: none;
         }
 
+        /* Colorful wave presets */
+        .rainbow-wave {
+            --wave-color-1: #ff0080;
+            --wave-color-2: #ff8000;
+            --wave-color-3: #80ff00;
+            --wave-color-4: #00ff80;
+            --wave-color-5: #8000ff;
+        }
+
+        .ocean-wave {
+            --wave-color-1: #006994;
+            --wave-color-2: #13a6b7;
+            --wave-color-3: #20c0db;
+            --wave-color-4: #4dd7fa;
+            --wave-color-5: #9cecfb;
+        }
+
+        .fire-wave {
+            --wave-color-1: #ff0000;
+            --wave-color-2: #ff4500;
+            --wave-color-3: #ff8c00;
+            --wave-color-4: #ffd700;
+            --wave-color-5: #ffff00;
+        }
+
+        .neon-wave {
+            --wave-color-1: #ff00ff;
+            --wave-color-2: #00ffff;
+            --wave-color-3: #ffff00;
+            --wave-color-4: #ff0080;
+            --wave-color-5: #80ff00;
+        }
+
         @media (max-width: 480px) {
-            .settings-panel { width: 100%; }
-            .sound-wave { width: 250px; height: 150px; }
-            .mic-button { width: 70px; height: 70px; font-size: 28px; }
+            .settings-panel { 
+                width: 100%; 
+            }
+            .sound-wave { 
+                width: 95vw; 
+                height: 85vh; 
+            }
+            .wave-bar {
+                max-width: 6px;
+            }
+            .response-display {
+                max-width: 85%;
+                font-size: 14px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .sound-wave {
+                gap: 1px;
+            }
+            .wave-bar {
+                max-width: 4px;
+            }
         }
     </style>
 </head>
-<body data-theme="default">
-    <!-- Settings Button -->
-    <button class="settings-btn" id="settingsBtn">⚙️</button>
+<body data-theme="default" class="rainbow-wave">
+    <!-- Minimized Settings Button -->
+    <button class="settings-btn" id="settingsBtn">⚙</button>
 
-    <!-- Status Display -->
-    <div class="status-display" id="statusDisplay">Ready to listen</div>
-
-    <!-- Wake Word Indicator -->
+    <!-- Wake Word Indicator (subtle) -->
     <div class="wake-indicator" id="wakeIndicator">
-        👂 Listening for wake word: <span id="currentWakeWord">Hey Assistant</span>
+        👂 <span id="currentWakeWord">Hey Assistant</span>
     </div>
 
-    <!-- Main Wave Container -->
+    <!-- Full Screen Wave Container -->
     <div class="wave-container" id="waveContainer">
         <div class="sound-wave" id="soundWave">
             <!-- Wave bars will be generated by JavaScript -->
         </div>
     </div>
-
-    <!-- Microphone Button -->
-    <button class="mic-button" id="micButton">🎤</button>
 
     <!-- Response Display -->
     <div class="response-display" id="responseDisplay"></div>
@@ -598,7 +596,7 @@
             <div class="wake-word-controls">
                 <div class="setting-toggle">
                     <span>Enable Wake Word</span>
-                    <div class="toggle-switch" id="wakeWordToggle">
+                    <div class="toggle-switch active" id="wakeWordToggle">
                         <div class="toggle-slider"></div>
                     </div>
                 </div>
@@ -629,30 +627,28 @@
             <label class="setting-label">🌊 Wave Visualization</label>
             <div class="wave-controls">
                 <label style="font-size: 14px; display: block; margin-bottom: 5px;">
-                    Wave Count: <span id="waveCountValue">60</span>
+                    Wave Count: <span id="waveCountValue">100</span>
                 </label>
-                <input type="range" class="setting-range" id="waveCount" min="30" max="120" step="5" value="60">
+                <input type="range" class="setting-range" id="waveCount" min="50" max="200" step="10" value="100">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    Wave Height: <span id="waveHeightValue">200</span>px
+                    Wave Responsiveness: <span id="responsiveValue">1.5</span>
                 </label>
-                <input type="range" class="setting-range" id="waveHeight" min="150" max="400" step="10" value="200">
+                <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="3.0" step="0.1" value="1.5">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    Animation Speed: <span id="animSpeedValue">80</span>ms
+                    Animation Speed: <span id="animSpeedValue">60</span>ms
                 </label>
-                <input type="range" class="setting-range" id="animSpeed" min="30" max="200" step="10" value="80">
+                <input type="range" class="setting-range" id="animSpeed" min="30" max="150" step="10" value="60">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Wave Colors:</label>
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Wave Color Schemes:</label>
                 <div class="color-picker">
-                    <div class="wave-color-option active" data-wave-color="#00ff88" style="background: linear-gradient(to right, #00ff88, #00cc66);"></div>
-                    <div class="wave-color-option" data-wave-color="#00aaff" style="background: linear-gradient(to right, #00aaff, #0088cc);"></div>
-                    <div class="wave-color-option" data-wave-color="#aa88ff" style="background: linear-gradient(to right, #aa88ff, #8866dd);"></div>
-                    <div class="wave-color-option" data-wave-color="#ff8800" style="background: linear-gradient(to right, #ff8800, #ff6600);"></div>
-                    <div class="wave-color-option" data-wave-color="#ff6b9d" style="background: linear-gradient(to right, #ff6b9d, #ff4081);"></div>
-                    <div class="wave-color-option" data-wave-color="#00e5ff" style="background: linear-gradient(to right, #00e5ff, #00bcd4);"></div>
-                    <div class="wave-color-option" data-wave-color="#ffeb3b" style="background: linear-gradient(to right, #ffeb3b, #ffc107);"></div>
-                    <div class="wave-color-option" data-wave-color="#e91e63" style="background: linear-gradient(to right, #e91e63, #c2185b);"></div>
+                    <div class="wave-color-option active" data-wave-scheme="rainbow" style="background: linear-gradient(to right, #ff0080, #ff8000, #80ff00, #00ff80, #8000ff);"></div>
+                    <div class="wave-color-option" data-wave-scheme="ocean" style="background: linear-gradient(to right, #006994, #13a6b7, #20c0db, #4dd7fa, #9cecfb);"></div>
+                    <div class="wave-color-option" data-wave-scheme="fire" style="background: linear-gradient(to right, #ff0000, #ff4500, #ff8c00, #ffd700, #ffff00);"></div>
+                    <div class="wave-color-option" data-wave-scheme="neon" style="background: linear-gradient(to right, #ff00ff, #00ffff, #ffff00, #ff0080, #80ff00);"></div>
+                    <div class="wave-color-option" data-wave-scheme="purple" style="background: linear-gradient(to right, #a855f7, #c084fc, #ddd6fe, #8b5cf6, #7c3aed);"></div>
+                    <div class="wave-color-option" data-wave-scheme="blue" style="background: linear-gradient(to right, #00d4ff, #0099ff, #0066ff, #3399ff, #66ccff);"></div>
                 </div>
             </div>
         </div>
@@ -661,10 +657,10 @@
         <div class="setting-group">
             <label class="setting-label">🎨 Background Theme</label>
             <div class="color-picker">
-                <div class="color-option active" data-theme="default" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d);"></div>
-                <div class="color-option" data-theme="blue" style="background: linear-gradient(135deg, #001122, #003366);"></div>
-                <div class="color-option" data-theme="purple" style="background: linear-gradient(135deg, #2d1b4e, #4a2c6a);"></div>
-                <div class="color-option" data-theme="orange" style="background: linear-gradient(135deg, #331100, #663300);"></div>
+                <div class="color-option active" data-theme="default" style="background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);"></div>
+                <div class="color-option" data-theme="blue" style="background: linear-gradient(135deg, #000428, #004e92);"></div>
+                <div class="color-option" data-theme="purple" style="background: linear-gradient(135deg, #2d1b69, #8b5a83, #f18a8a);"></div>
+                <div class="color-option" data-theme="orange" style="background: linear-gradient(135deg, #ff9a00, #ffad00, #ff6600);"></div>
             </div>
         </div>
 
@@ -710,20 +706,6 @@
             <label class="setting-label">🔧 Advanced Settings</label>
             
             <div class="setting-toggle">
-                <span>Continuous Listening</span>
-                <div class="toggle-switch" id="continuousToggle">
-                    <div class="toggle-slider"></div>
-                </div>
-            </div>
-            
-            <div class="setting-toggle">
-                <span>Auto-Enable Audio</span>
-                <div class="toggle-switch active" id="autoAudioToggle">
-                    <div class="toggle-slider"></div>
-                </div>
-            </div>
-            
-            <div class="setting-toggle">
                 <span>Show Response Text</span>
                 <div class="toggle-switch active" id="showResponseToggle">
                     <div class="toggle-slider"></div>
@@ -740,7 +722,6 @@
         <div class="setting-group">
             <label class="setting-label">🧪 Test Functions</label>
             <button class="btn btn-success" id="testSpeechBtn">🗣️ Test Speech</button>
-            <button class="btn btn-primary" id="testMicBtn">🎤 Test Microphone</button>
             <button class="btn btn-secondary" id="testWaveBtn">🌊 Test Wave Animation</button>
             <button class="btn" id="testWakeWordBtn" style="background: #00bcd4; color: white;">👂 Test Wake Word</button>
         </div>
@@ -760,7 +741,7 @@
     </div>
 
     <script>
-        class VerticalVoiceAssistant {
+        class FullScreenVoiceAssistant {
             constructor() {
                 this.settings = {
                     apiKey: '',
@@ -770,15 +751,13 @@
                     speechVolume: 1.0,
                     language: 'en-US',
                     theme: 'default',
-                    continuousListening: false,
-                    autoAudio: true,
                     showResponse: true,
                     maxTokens: 150,
-                    waveCount: 60,
-                    waveHeight: 200,
-                    animSpeed: 80,
-                    waveColor: '#00ff88',
-                    wakeWordEnabled: false,
+                    waveCount: 100,
+                    waveResponsive: 1.5,
+                    animSpeed: 60,
+                    waveScheme: 'rainbow',
+                    wakeWordEnabled: true,
                     wakeWord: 'Hey Assistant',
                     wakeResponse: "Hi dear, I'm here!",
                     wakeSensitivity: 0.7
@@ -807,23 +786,19 @@
                 this.setupSpeechRecognition();
                 this.initializeWave();
                 this.applyTheme();
-                this.applyWaveColor();
+                this.applyWaveScheme();
                 this.startIdleAnimation();
-                
-                if (this.settings.autoAudio) {
-                    this.enableAudio();
-                }
+                this.enableAudio();
 
+                // Start wake word listening immediately
                 if (this.settings.wakeWordEnabled) {
-                    this.startWakeWordListening();
+                    setTimeout(() => this.startWakeWordListening(), 1000);
                 }
             }
 
             initializeElements() {
                 // Main elements
-                this.statusDisplay = document.getElementById('statusDisplay');
                 this.soundWave = document.getElementById('soundWave');
-                this.micButton = document.getElementById('micButton');
                 this.responseDisplay = document.getElementById('responseDisplay');
                 this.waveContainer = document.getElementById('waveContainer');
                 this.wakeIndicator = document.getElementById('wakeIndicator');
@@ -844,7 +819,7 @@
                 this.languageSelect = document.getElementById('languageSelect');
                 this.maxTokens = document.getElementById('maxTokens');
                 this.waveCount = document.getElementById('waveCount');
-                this.waveHeight = document.getElementById('waveHeight');
+                this.waveResponsive = document.getElementById('waveResponsive');
                 this.animSpeed = document.getElementById('animSpeed');
                 this.wakeWordInput = document.getElementById('wakeWordInput');
                 this.wakeResponseInput = document.getElementById('wakeResponseInput');
@@ -854,11 +829,8 @@
                 this.saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
                 this.testApiKeyBtn = document.getElementById('testApiKeyBtn');
                 this.testSpeechBtn = document.getElementById('testSpeechBtn');
-                this.testMicBtn = document.getElementById('testMicBtn');
                 this.testWaveBtn = document.getElementById('testWaveBtn');
                 this.testWakeWordBtn = document.getElementById('testWakeWordBtn');
-                this.continuousToggle = document.getElementById('continuousToggle');
-                this.autoAudioToggle = document.getElementById('autoAudioToggle');
                 this.showResponseToggle = document.getElementById('showResponseToggle');
                 this.wakeWordToggle = document.getElementById('wakeWordToggle');
                 this.exportBtn = document.getElementById('exportBtn');
@@ -872,16 +844,12 @@
                 this.volumeValue = document.getElementById('volumeValue');
                 this.maxTokensValue = document.getElementById('maxTokensValue');
                 this.waveCountValue = document.getElementById('waveCountValue');
-                this.waveHeightValue = document.getElementById('waveHeightValue');
+                this.responsiveValue = document.getElementById('responsiveValue');
                 this.animSpeedValue = document.getElementById('animSpeedValue');
                 this.wakeSensitivityValue = document.getElementById('wakeSensitivityValue');
             }
 
             setupEventListeners() {
-                // Main controls
-                this.micButton.addEventListener('click', () => this.toggleListening());
-                this.waveContainer.addEventListener('click', () => this.toggleListening());
-
                 // Settings panel
                 this.settingsBtn.addEventListener('click', () => this.openSettings());
                 this.closeSettings.addEventListener('click', () => this.closeSettings());
@@ -891,7 +859,6 @@
                 this.saveApiKeyBtn.addEventListener('click', () => this.saveApiKey());
                 this.testApiKeyBtn.addEventListener('click', () => this.testApiKey());
                 this.testSpeechBtn.addEventListener('click', () => this.testSpeech());
-                this.testMicBtn.addEventListener('click', () => this.testMicrophone());
                 this.testWaveBtn.addEventListener('click', () => this.testWaveAnimation());
                 this.testWakeWordBtn.addEventListener('click', () => this.testWakeWord());
 
@@ -932,10 +899,9 @@
                     this.initializeWave();
                 });
 
-                this.waveHeight.addEventListener('input', (e) => {
-                    this.waveHeightValue.textContent = e.target.value;
-                    this.saveSetting('waveHeight', parseInt(e.target.value));
-                    this.soundWave.style.height = e.target.value + 'px';
+                this.waveResponsive.addEventListener('input', (e) => {
+                    this.responsiveValue.textContent = e.target.value;
+                    this.saveSetting('waveResponsive', parseFloat(e.target.value));
                 });
 
                 this.animSpeed.addEventListener('input', (e) => {
@@ -953,8 +919,6 @@
                 this.languageSelect.addEventListener('change', () => this.saveSetting('language', this.languageSelect.value));
 
                 // Toggle switches
-                this.continuousToggle.addEventListener('click', () => this.toggleSetting('continuousListening'));
-                this.autoAudioToggle.addEventListener('click', () => this.toggleSetting('autoAudio'));
                 this.showResponseToggle.addEventListener('click', () => this.toggleSetting('showResponse'));
                 this.wakeWordToggle.addEventListener('click', () => this.toggleWakeWord());
 
@@ -968,13 +932,13 @@
                     });
                 });
 
-                // Wave color selection
+                // Wave scheme selection
                 document.querySelectorAll('.wave-color-option').forEach(option => {
                     option.addEventListener('click', () => {
                         document.querySelectorAll('.wave-color-option').forEach(opt => opt.classList.remove('active'));
                         option.classList.add('active');
-                        this.saveSetting('waveColor', option.dataset.waveColor);
-                        this.applyWaveColor();
+                        this.saveSetting('waveScheme', option.dataset.waveScheme);
+                        this.applyWaveScheme();
                     });
                 });
 
@@ -987,22 +951,19 @@
 
             initializeWave() {
                 this.soundWave.innerHTML = '';
-                this.soundWave.style.height = this.settings.waveHeight + 'px';
                 
                 for (let i = 0; i < this.settings.waveCount; i++) {
                     const bar = document.createElement('div');
                     bar.className = 'wave-bar';
-                    bar.style.animationDelay = `${i * 30}ms`;
+                    bar.style.animationDelay = `${i * 20}ms`;
                     this.soundWave.appendChild(bar);
                 }
                 
-                this.applyWaveColor();
+                this.applyWaveScheme();
             }
 
-            applyWaveColor() {
-                const root = document.documentElement;
-                root.style.setProperty('--wave-color', this.settings.waveColor);
-                root.style.setProperty('--wave-glow', this.settings.waveColor);
+            applyWaveScheme() {
+                document.body.className = `${this.settings.waveScheme}-wave`;
             }
 
             startIdleAnimation() {
@@ -1012,10 +973,10 @@
                 const animate = () => {
                     if (!this.isListening && !this.isProcessing && !this.isSpeaking) {
                         bars.forEach((bar, index) => {
-                            const height = 15 + Math.sin(time + index * 0.4) * 12;
+                            const height = 20 + Math.sin(time + index * 0.3) * 15;
                             bar.style.height = height + 'px';
                         });
-                        time += 0.08;
+                        time += 0.05;
                     }
                     
                     this.idleAnimationId = requestAnimationFrame(animate);
@@ -1035,13 +996,9 @@
 
                     this.recognition.onstart = () => {
                         if (this.wakeListening) {
-                            this.updateStatus('👂 Listening for wake word...');
                             this.wakeIndicator.classList.add('show');
-                            this.micButton.classList.add('wake-listening');
                         } else {
                             this.isListening = true;
-                            this.updateStatus('🎤 Listening... Speak now!');
-                            this.updateUI();
                             this.setupAudioVisualization();
                         }
                     };
@@ -1074,7 +1031,9 @@
                     };
 
                     this.recognition.onerror = (event) => {
-                        this.showMessage(`Speech error: ${event.error}`, 'error');
+                        if (event.error !== 'no-speech') {
+                            this.showMessage(`Speech error: ${event.error}`, 'error');
+                        }
                         if (!this.wakeListening) {
                             this.stopListening();
                         }
@@ -1083,8 +1042,6 @@
                     this.recognition.onend = () => {
                         if (this.wakeListening && this.settings.wakeWordEnabled) {
                             setTimeout(() => this.startWakeWordListening(), 1000);
-                        } else if (this.isListening && !this.isProcessing && this.settings.continuousListening) {
-                            setTimeout(() => this.startListening(), 1000);
                         } else {
                             this.stopListening();
                         }
@@ -1099,7 +1056,6 @@
             }
 
             calculateStringMatch(str1, str2) {
-                // Simple fuzzy matching algorithm
                 const words1 = str1.split(' ');
                 const words2 = str2.split(' ');
                 let matches = 0;
@@ -1161,16 +1117,14 @@
                 const bars = this.soundWave.querySelectorAll('.wave-bar');
                 bars.forEach(bar => bar.classList.add('wake-detected'));
                 
-                this.updateStatus('✨ Wake word detected!');
                 this.speakResponse(this.settings.wakeResponse);
                 
                 setTimeout(() => {
                     this.wakeIndicator.classList.remove('active');
                     bars.forEach(bar => bar.classList.remove('wake-detected'));
                     
-                    if (this.settings.wakeWordEnabled) {
-                        this.startWakeWordListening();
-                    }
+                    // Start listening for user input
+                    this.startListening();
                 }, 2000);
             }
 
@@ -1186,6 +1140,7 @@
                 } catch (error) {
                     console.warn('Wake word listening failed:', error);
                     this.wakeListening = false;
+                    setTimeout(() => this.startWakeWordListening(), 2000);
                 }
             }
 
@@ -1200,8 +1155,6 @@
                 } else {
                     this.wakeListening = false;
                     this.wakeIndicator.classList.remove('show', 'active');
-                    this.micButton.classList.remove('wake-listening');
-                    this.updateStatus('Ready to listen');
                     this.showMessage('👂 Wake word listening disabled', 'info');
                 }
             }
@@ -1215,7 +1168,7 @@
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     this.microphone = this.audioContext.createMediaStreamSource(stream);
                     this.analyser = this.audioContext.createAnalyser();
-                    this.analyser.fftSize = 512;
+                    this.analyser.fftSize = 1024;
                     
                     this.microphone.connect(this.analyser);
                     this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
@@ -1234,40 +1187,12 @@
                 
                 bars.forEach((bar, index) => {
                     const dataIndex = Math.floor(index * this.dataArray.length / bars.length);
-                    const height = (this.dataArray[dataIndex] / 255) * this.settings.waveHeight * 0.8;
-                    bar.style.height = Math.max(6, height) + 'px';
-                    bar.classList.toggle('active', height > 25);
+                    const height = (this.dataArray[dataIndex] / 255) * window.innerHeight * 0.6 * this.settings.waveResponsive;
+                    bar.style.height = Math.max(8, height) + 'px';
+                    bar.classList.toggle('active', height > 30);
                 });
                 
                 this.waveAnimationId = requestAnimationFrame(() => this.animateWave());
-            }
-
-            toggleListening() {
-                if (!this.audioEnabled && this.settings.autoAudio) {
-                    this.enableAudio();
-                }
-
-                if (this.wakeListening) {
-                    this.settings.wakeWordEnabled = false;
-                    this.toggleWakeWord();
-                }
-
-                if (this.isListening) {
-                    this.stopListening();
-                } else {
-                    this.startListening();
-                }
-            }
-
-            enableAudio() {
-                if (!this.audioEnabled) {
-                    const utterance = new SpeechSynthesisUtterance('');
-                    utterance.volume = 0;
-                    this.synthesis.speak(utterance);
-                    
-                    this.audioEnabled = true;
-                    this.showMessage('🔊 Audio enabled! Voice responses active.', 'success');
-                }
             }
 
             startListening() {
@@ -1299,15 +1224,15 @@
                 this.isListening = false;
                 this.wakeListening = false;
                 this.wakeIndicator.classList.remove('show', 'active');
-                this.updateStatus('Ready to listen');
-                this.updateUI();
             }
 
             async processUserInput(input) {
                 this.isProcessing = true;
                 this.isListening = false;
-                this.updateStatus('🤖 Processing...');
-                this.updateUI();
+
+                // Animate bars while processing
+                const bars = this.soundWave.querySelectorAll('.wave-bar');
+                bars.forEach(bar => bar.classList.add('speaking'));
 
                 try {
                     const response = await this.sendToChatGPT(input);
@@ -1321,10 +1246,9 @@
                     this.showMessage(`AI Error: ${error.message}`, 'error');
                 } finally {
                     this.isProcessing = false;
-                    this.updateStatus('Ready to listen');
-                    this.updateUI();
+                    bars.forEach(bar => bar.classList.remove('speaking'));
                     
-                    // Restart wake word listening if enabled
+                    // Restart wake word listening
                     if (this.settings.wakeWordEnabled) {
                         setTimeout(() => this.startWakeWordListening(), 2000);
                     }
@@ -1373,8 +1297,6 @@
 
                 this.synthesis.cancel();
                 this.isSpeaking = true;
-                this.updateStatus('🗣️ Speaking...');
-                this.updateUI();
 
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.rate = this.settings.speechRate;
@@ -1384,8 +1306,6 @@
 
                 utterance.onend = () => {
                     this.isSpeaking = false;
-                    this.updateStatus('Ready to listen');
-                    this.updateUI();
                 };
 
                 this.synthesis.speak(utterance);
@@ -1393,11 +1313,11 @@
 
             showResponse(userInput, response) {
                 this.responseDisplay.innerHTML = `
-                    <div style="margin-bottom: 10px;">
-                        <strong style="color: var(--primary-color);">You:</strong> "${userInput}"
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: var(--wave-color-1);">You:</strong> "${userInput}"
                     </div>
                     <div>
-                        <strong style="color: var(--success-color);">AI:</strong> ${response}
+                        <strong style="color: var(--wave-color-4);">AI:</strong> ${response}
                     </div>
                 `;
                 
@@ -1405,7 +1325,7 @@
                 
                 setTimeout(() => {
                     this.responseDisplay.classList.remove('show');
-                }, 5000);
+                }, 6000);
             }
 
             showMessage(message, type = 'info') {
@@ -1422,26 +1342,13 @@
                 }, 3000);
             }
 
-            updateStatus(status) {
-                this.statusDisplay.textContent = status;
-            }
-
-            updateUI() {
-                this.micButton.className = 'mic-button';
-                if (this.wakeListening) {
-                    this.micButton.classList.add('wake-listening');
-                    this.micButton.textContent = '👂';
-                } else if (this.isListening) {
-                    this.micButton.classList.add('listening');
-                    this.micButton.textContent = '🔴';
-                } else if (this.isProcessing) {
-                    this.micButton.classList.add('processing');
-                    this.micButton.textContent = '⚙️';
-                } else if (this.isSpeaking) {
-                    this.micButton.classList.add('speaking');
-                    this.micButton.textContent = '🗣️';
-                } else {
-                    this.micButton.textContent = '🎤';
+            enableAudio() {
+                if (!this.audioEnabled) {
+                    const utterance = new SpeechSynthesisUtterance('');
+                    utterance.volume = 0;
+                    this.synthesis.speak(utterance);
+                    
+                    this.audioEnabled = true;
                 }
             }
 
@@ -1470,9 +1377,9 @@
                     if (this.languageSelect) this.languageSelect.value = this.settings.language;
                     if (this.maxTokens) this.maxTokens.value = this.settings.maxTokens;
                     if (this.waveCount) this.waveCount.value = this.settings.waveCount;
-                    if (this.waveHeight) this.waveHeight.value = this.settings.waveHeight;
+                    if (this.waveResponsive) this.waveResponsive.value = this.settings.waveResponsive;
                     if (this.animSpeed) this.animSpeed.value = this.settings.animSpeed;
-                    if (this.wakeWordInput) this.waveWordInput.value = this.settings.wakeWord;
+                    if (this.wakeWordInput) this.wakeWordInput.value = this.settings.wakeWord;
                     if (this.wakeResponseInput) this.wakeResponseInput.value = this.settings.wakeResponse;
                     if (this.wakeSensitivity) this.wakeSensitivity.value = this.settings.wakeSensitivity;
 
@@ -1485,13 +1392,11 @@
                     if (this.volumeValue) this.volumeValue.textContent = this.settings.speechVolume;
                     if (this.maxTokensValue) this.maxTokensValue.textContent = this.settings.maxTokens;
                     if (this.waveCountValue) this.waveCountValue.textContent = this.settings.waveCount;
-                    if (this.waveHeightValue) this.waveHeightValue.textContent = this.settings.waveHeight;
+                    if (this.responsiveValue) this.responsiveValue.textContent = this.settings.waveResponsive;
                     if (this.animSpeedValue) this.animSpeedValue.textContent = this.settings.animSpeed;
                     if (this.wakeSensitivityValue) this.wakeSensitivityValue.textContent = this.settings.wakeSensitivity;
 
                     // Update toggles
-                    this.updateToggle(this.continuousToggle, this.settings.continuousListening);
-                    this.updateToggle(this.autoAudioToggle, this.settings.autoAudio);
                     this.updateToggle(this.showResponseToggle, this.settings.showResponse);
                     this.updateToggle(this.wakeWordToggle, this.settings.wakeWordEnabled);
 
@@ -1500,9 +1405,9 @@
                         option.classList.toggle('active', option.dataset.theme === this.settings.theme);
                     });
 
-                    // Update wave color
+                    // Update wave scheme
                     document.querySelectorAll('.wave-color-option').forEach(option => {
-                        option.classList.toggle('active', option.dataset.waveColor === this.settings.waveColor);
+                        option.classList.toggle('active', option.dataset.waveScheme === this.settings.waveScheme);
                     });
                 }, 100);
             }
@@ -1514,20 +1419,13 @@
                 if (key === 'language' && this.recognition) {
                     this.recognition.lang = value;
                 }
-                
-                if (key === 'continuousListening' && this.recognition) {
-                    this.recognition.continuous = value;
-                }
             }
 
             toggleSetting(key) {
                 this.settings[key] = !this.settings[key];
                 localStorage.setItem(`va_${key}`, this.settings[key]);
                 
-                const toggle = key === 'continuousListening' ? this.continuousToggle :
-                              key === 'autoAudio' ? this.autoAudioToggle :
-                              this.showResponseToggle;
-                
+                const toggle = this.showResponseToggle;
                 this.updateToggle(toggle, this.settings[key]);
             }
 
@@ -1601,12 +1499,7 @@
             }
 
             testSpeech() {
-                this.enableAudio();
                 this.speakResponse('Hello! I am your AI voice assistant. Speech synthesis is working correctly.');
-            }
-
-            testMicrophone() {
-                this.showMessage('🎤 Click the microphone to test speech recognition', 'info');
             }
 
             testWaveAnimation() {
@@ -1615,13 +1508,13 @@
                 
                 const testAnimation = () => {
                     bars.forEach((bar, index) => {
-                        const height = 60 + Math.sin(time + index * 0.6) * 50;
+                        const height = 100 + Math.sin(time + index * 0.8) * 80;
                         bar.style.height = height + 'px';
                         bar.classList.add('active');
                     });
-                    time += 0.3;
+                    time += 0.4;
                     
-                    if (time < 12) {
+                    if (time < 15) {
                         setTimeout(testAnimation, this.settings.animSpeed);
                     } else {
                         bars.forEach(bar => bar.classList.remove('active'));
@@ -1672,7 +1565,7 @@
                         this.loadSettings();
                         this.initializeWave();
                         this.applyTheme();
-                        this.applyWaveColor();
+                        this.applyWaveScheme();
                         this.showMessage('✅ Settings imported successfully!', 'success');
                     } catch (error) {
                         this.showMessage('❌ Invalid settings file', 'error');
@@ -1698,15 +1591,13 @@
                         speechVolume: 1.0,
                         language: 'en-US',
                         theme: 'default',
-                        continuousListening: false,
-                        autoAudio: true,
                         showResponse: true,
                         maxTokens: 150,
-                        waveCount: 60,
-                        waveHeight: 200,
-                        animSpeed: 80,
-                        waveColor: '#00ff88',
-                        wakeWordEnabled: false,
+                        waveCount: 100,
+                        waveResponsive: 1.5,
+                        animSpeed: 60,
+                        waveScheme: 'rainbow',
+                        wakeWordEnabled: true,
                         wakeWord: 'Hey Assistant',
                         wakeResponse: "Hi dear, I'm here!",
                         wakeSensitivity: 0.7
@@ -1715,7 +1606,7 @@
                     this.loadSettings();
                     this.initializeWave();
                     this.applyTheme();
-                    this.applyWaveColor();
+                    this.applyWaveScheme();
                     this.showMessage('✅ All settings reset to defaults!', 'success');
                 }
             }
@@ -1723,7 +1614,7 @@
 
         // Initialize the voice assistant
         document.addEventListener('DOMContentLoaded', () => {
-            window.voiceAssistant = new VerticalVoiceAssistant();
+            window.voiceAssistant = new FullScreenVoiceAssistant();
         });
 
         // Handle page visibility changes
