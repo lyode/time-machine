@@ -71,28 +71,44 @@
             position: relative;
         }
 
-        /* Hidden Settings Button - Long press to activate */
+        /* Settings Button - Subtle but accessible */
         .settings-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: transparent;
-            border: none;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 12px;
-            color: transparent;
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.3);
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 100;
-            opacity: 0;
+            opacity: 0.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .settings-btn:hover, .settings-btn:active {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.8);
+        .settings-btn:hover, .settings-btn:active, .settings-btn:focus {
+            background: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.9);
             opacity: 1;
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Settings button pulse animation for first-time users */
+        @keyframes settingsPulse {
+            0% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.6; transform: scale(1); }
+        }
+
+        .settings-btn.pulse {
+            animation: settingsPulse 2s infinite;
         }
 
         /* Full Screen Wave Container - Optimized for iPhone 15 Pro Max */
@@ -403,6 +419,60 @@
             margin: 15px 0;
         }
 
+        .privacy-controls {
+            background: rgba(255, 59, 48, 0.1);
+            border: 1px solid rgba(255, 59, 48, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .privacy-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .privacy-item:last-child {
+            border-bottom: none;
+        }
+
+        .privacy-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .privacy-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .privacy-desc {
+            font-size: 12px;
+            opacity: 0.7;
+            line-height: 1.3;
+        }
+
+        .privacy-level {
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+
+        .privacy-warning {
+            background: rgba(255, 152, 0, 0.2);
+            border-left: 4px solid #ff9800;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+
         .error-message {
             background: rgba(255, 59, 48, 0.2);
             color: var(--danger-color);
@@ -650,7 +720,179 @@
             </div>
         </div>
 
-        <!-- Wake Word Settings -->
+        <!-- AI Configuration -->
+        <div class="setting-group">
+            <label class="setting-label">🧠 AI Assistant Configuration</label>
+            <div class="ai-controls">
+                <label style="font-size: 14px; display: block; margin-bottom: 5px;">🔑 OpenAI API Key</label>
+                <input type="password" class="setting-input" id="apiKeyInput" placeholder="sk-proj-...">
+                <div style="margin: 10px 0;">
+                    <button class="btn btn-primary" id="saveApiKeyBtn">💾 Save Key</button>
+                    <button class="btn btn-secondary" id="testApiKeyBtn">🧪 Test</button>
+                </div>
+                
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">🧠 AI Model</label>
+                <select class="setting-select" id="modelSelect">
+                    <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Fast)</option>
+                    <option value="gpt-4">GPT-4 (Smart)</option>
+                    <option value="gpt-4-turbo">GPT-4 Turbo (Balanced)</option>
+                </select>
+                
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
+                    📝 Response Length: <span id="maxTokensValue">150</span> words
+                </label>
+                <input type="range" class="setting-range" id="maxTokens" min="50" max="500" step="25" value="150">
+                
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
+                    🎯 AI Personality: <span id="temperatureValue">0.7</span>
+                </label>
+                <input type="range" class="setting-range" id="temperature" min="0.1" max="2.0" step="0.1" value="0.7">
+                <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 5px;">
+                    Lower = More focused • Higher = More creative
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy & Security Controls -->
+        <div class="setting-group">
+            <label class="setting-label">🔒 Privacy & Security Controls</label>
+            <div class="privacy-controls">
+                <div class="privacy-warning">
+                    ⚠️ <strong>Important:</strong> Control what information the AI assistant can access and discuss. Disable sensitive categories for maximum privacy.
+                </div>
+                
+                <div class="privacy-level">
+                    <strong>🛡️ Current Privacy Level:</strong> 
+                    <span id="privacyLevel">Medium Security</span>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">💰 Financial & Banking Information</div>
+                        <div class="privacy-desc">Bank details, credit cards, investments, crypto wallets</div>
+                    </div>
+                    <div class="toggle-switch" id="privacyFinancial">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">📁 File System & Documents</div>
+                        <div class="privacy-desc">Access to local files, folders, and document contents</div>
+                    </div>
+                    <div class="toggle-switch" id="privacyFiles">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">📧 Email & Messages</div>
+                        <div class="privacy-desc">Email content, SMS, chat messages, social media DMs</div>
+                    </div>
+                    <div class="toggle-switch" id="privacyMessages">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">📇 Contact Information</div>
+                        <div class="privacy-desc">Phone numbers, addresses, personal contacts</div>
+                    </div>
+                    <div class="toggle-switch active" id="privacyContacts">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">📍 Location & GPS Data</div>
+                        <div class="privacy-desc">Current location, location history, travel patterns</div>
+                    </div>
+                    <div class="toggle-switch" id="privacyLocation">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">📅 Calendar & Schedule</div>
+                        <div class="privacy-desc">Appointments, meetings, personal events</div>
+                    </div>
+                    <div class="toggle-switch active" id="privacyCalendar">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">📸 Photos & Media</div>
+                        <div class="privacy-desc">Photo library, videos, personal media files</div>
+                    </div>
+                    <div class="toggle-switch" id="privacyPhotos">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">💼 Work & Business Data</div>
+                        <div class="privacy-desc">Work documents, business emails, confidential projects</div>
+                    </div>
+                    <div class="toggle-switch" id="privacyWork">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">🏥 Health & Medical Data</div>
+                        <div class="privacy-desc">Medical records, health apps, fitness data</div>
+                    </div>
+                    <div class="toggle-switch" id="privacyHealth">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">🌐 Browsing & App Usage</div>
+                        <div class="privacy-desc">Browser history, app usage patterns, online accounts</div>
+                    </div>
+                    <div class="toggle-switch" id="privacyBrowsing">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">🔐 Passwords & Authentication</div>
+                        <div class="privacy-desc">Saved passwords, 2FA codes, security keys</div>
+                    </div>
+                    <div class="toggle-switch" id="privacyPasswords">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-info">
+                        <div class="privacy-title">👥 Social Media & Personal Life</div>
+                        <div class="privacy-desc">Social profiles, personal relationships, private posts</div>
+                    </div>
+                    <div class="toggle-switch" id="privacySocial">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <button class="btn btn-danger" id="privacyLockAll">🔒 Lock All Categories</button>
+                    <button class="btn btn-success" id="privacyUnlockSafe">✅ Enable Safe Categories</button>
+                    <button class="btn btn-secondary" id="privacyReset">🔄 Reset Privacy</button>
+                </div>
+            </div>
+        </div>
         <div class="setting-group">
             <label class="setting-label">👂 Wake Word Detection</label>
             <div class="wake-word-controls">
@@ -816,7 +1058,20 @@
                     wakeResponse: "Hi! I'm here to help you.",
                     wakeSensitivity: 0.7,
                     autoRestart: true,
-                    selectedVoice: null
+                    selectedVoice: null,
+                    // Privacy Controls
+                    privacyFinancial: false,
+                    privacyFiles: false,
+                    privacyMessages: false,
+                    privacyContacts: true,
+                    privacyLocation: false,
+                    privacyCalendar: true,
+                    privacyPhotos: false,
+                    privacyWork: false,
+                    privacyHealth: false,
+                    privacyBrowsing: false,
+                    privacyPasswords: false,
+                    privacySocial: false
                 };
 
                 this.loadSettings();
@@ -883,6 +1138,21 @@
                 this.wakeSensitivity = document.getElementById('wakeSensitivity');
                 this.voiceSelection = document.getElementById('voiceSelection');
 
+                // Privacy control elements
+                this.privacyFinancial = document.getElementById('privacyFinancial');
+                this.privacyFiles = document.getElementById('privacyFiles');
+                this.privacyMessages = document.getElementById('privacyMessages');
+                this.privacyContacts = document.getElementById('privacyContacts');
+                this.privacyLocation = document.getElementById('privacyLocation');
+                this.privacyCalendar = document.getElementById('privacyCalendar');
+                this.privacyPhotos = document.getElementById('privacyPhotos');
+                this.privacyWork = document.getElementById('privacyWork');
+                this.privacyHealth = document.getElementById('privacyHealth');
+                this.privacyBrowsing = document.getElementById('privacyBrowsing');
+                this.privacyPasswords = document.getElementById('privacyPasswords');
+                this.privacySocial = document.getElementById('privacySocial');
+                this.privacyLevel = document.getElementById('privacyLevel');
+
                 // Buttons and toggles
                 this.saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
                 this.testApiKeyBtn = document.getElementById('testApiKeyBtn');
@@ -894,6 +1164,9 @@
                 this.importBtn = document.getElementById('importBtn');
                 this.importFile = document.getElementById('importFile');
                 this.resetBtn = document.getElementById('resetBtn');
+                this.privacyLockAll = document.getElementById('privacyLockAll');
+                this.privacyUnlockSafe = document.getElementById('privacyUnlockSafe');
+                this.privacyReset = document.getElementById('privacyReset');
 
                 // Value displays
                 this.rateValue = document.getElementById('rateValue');
@@ -907,12 +1180,8 @@
             }
 
             setupEventListeners() {
-                // Long press for settings access
-                this.settingsBtn.addEventListener('mousedown', () => this.startLongPress());
-                this.settingsBtn.addEventListener('mouseup', () => this.endLongPress());
-                this.settingsBtn.addEventListener('mouseleave', () => this.endLongPress());
-                this.settingsBtn.addEventListener('touchstart', () => this.startLongPress());
-                this.settingsBtn.addEventListener('touchend', () => this.endLongPress());
+                // Simple click for settings access
+                this.settingsBtn.addEventListener('click', () => this.openSettings());
 
                 // Settings panel - Fixed close functionality
                 this.closeSettings.addEventListener('click', (e) => {
@@ -1021,18 +1290,111 @@
                 this.importBtn.addEventListener('click', () => this.importFile.click());
                 this.importFile.addEventListener('change', (e) => this.importSettings(e));
                 this.resetBtn.addEventListener('click', () => this.resetSettings());
+
+                // Privacy Controls
+                this.privacyFinancial.addEventListener('click', () => this.togglePrivacySetting('privacyFinancial'));
+                this.privacyFiles.addEventListener('click', () => this.togglePrivacySetting('privacyFiles'));
+                this.privacyMessages.addEventListener('click', () => this.togglePrivacySetting('privacyMessages'));
+                this.privacyContacts.addEventListener('click', () => this.togglePrivacySetting('privacyContacts'));
+                this.privacyLocation.addEventListener('click', () => this.togglePrivacySetting('privacyLocation'));
+                this.privacyCalendar.addEventListener('click', () => this.togglePrivacySetting('privacyCalendar'));
+                this.privacyPhotos.addEventListener('click', () => this.togglePrivacySetting('privacyPhotos'));
+                this.privacyWork.addEventListener('click', () => this.togglePrivacySetting('privacyWork'));
+                this.privacyHealth.addEventListener('click', () => this.togglePrivacySetting('privacyHealth'));
+                this.privacyBrowsing.addEventListener('click', () => this.togglePrivacySetting('privacyBrowsing'));
+                this.privacyPasswords.addEventListener('click', () => this.togglePrivacySetting('privacyPasswords'));
+                this.privacySocial.addEventListener('click', () => this.togglePrivacySetting('privacySocial'));
+
+                // Privacy control buttons
+                this.privacyLockAll.addEventListener('click', () => this.lockAllPrivacy());
+                this.privacyUnlockSafe.addEventListener('click', () => this.unlockSafePrivacy());
+                this.privacyReset.addEventListener('click', () => this.resetPrivacy());
             }
 
-            startLongPress() {
-                this.longPressTimer = setTimeout(() => {
-                    this.openSettings();
-                }, 800); // 800ms long press
+            testSpeech() {
+                this.speakResponse('Hello! I am your AI voice assistant. My speech synthesis is working perfectly with your selected voice settings.');
             }
 
-            endLongPress() {
-                if (this.longPressTimer) {
-                    clearTimeout(this.longPressTimer);
-                    this.longPressTimer = null;
+            // Privacy Control Methods
+            togglePrivacySetting(key) {
+                this.settings[key] = !this.settings[key];
+                localStorage.setItem(`va_${key}`, this.settings[key]);
+                
+                const toggleElement = this[key];
+                this.updateToggle(toggleElement, this.settings[key]);
+                this.updatePrivacyLevel();
+            }
+
+            updatePrivacyLevel() {
+                const privacyKeys = [
+                    'privacyFinancial', 'privacyFiles', 'privacyMessages', 'privacyContacts',
+                    'privacyLocation', 'privacyCalendar', 'privacyPhotos', 'privacyWork',
+                    'privacyHealth', 'privacyBrowsing', 'privacyPasswords', 'privacySocial'
+                ];
+                
+                const enabledCount = privacyKeys.filter(key => this.settings[key]).length;
+                const totalCount = privacyKeys.length;
+                const percentage = (enabledCount / totalCount) * 100;
+                
+                let level, levelClass;
+                if (percentage <= 20) {
+                    level = '🔒 Maximum Security';
+                    levelClass = 'success';
+                } else if (percentage <= 50) {
+                    level = '🛡️ High Security';
+                    levelClass = 'success';
+                } else if (percentage <= 70) {
+                    level = '⚖️ Medium Security';
+                    levelClass = 'warning';
+                } else {
+                    level = '⚠️ Low Security';
+                    levelClass = 'danger';
+                }
+                
+                if (this.privacyLevel) {
+                    this.privacyLevel.textContent = level;
+                    this.privacyLevel.className = levelClass;
+                }
+            }
+
+            lockAllPrivacy() {
+                const privacyKeys = [
+                    'privacyFinancial', 'privacyFiles', 'privacyMessages', 'privacyContacts',
+                    'privacyLocation', 'privacyCalendar', 'privacyPhotos', 'privacyWork',
+                    'privacyHealth', 'privacyBrowsing', 'privacyPasswords', 'privacySocial'
+                ];
+                
+                privacyKeys.forEach(key => {
+                    this.settings[key] = false;
+                    localStorage.setItem(`va_${key}`, false);
+                    const toggleElement = this[key];
+                    this.updateToggle(toggleElement, false);
+                });
+                
+                this.updatePrivacyLevel();
+                this.showMessage('🔒 All privacy categories locked for maximum security!', 'success');
+            }
+
+            unlockSafePrivacy() {
+                // Reset all to false first
+                this.lockAllPrivacy();
+                
+                // Enable only safe categories
+                const safeCategories = ['privacyContacts', 'privacyCalendar'];
+                safeCategories.forEach(key => {
+                    this.settings[key] = true;
+                    localStorage.setItem(`va_${key}`, true);
+                    const toggleElement = this[key];
+                    this.updateToggle(toggleElement, true);
+                });
+                
+                this.updatePrivacyLevel();
+                this.showMessage('✅ Safe privacy categories enabled (Contacts & Calendar only)', 'success');
+            }
+
+            resetPrivacy() {
+                if (confirm('Reset privacy settings to defaults? This will enable safe categories only.')) {
+                    this.unlockSafePrivacy();
                 }
             }
 
@@ -1562,6 +1924,23 @@
                 this.updateToggle(this.wakeWordToggle, this.settings.wakeWordEnabled);
                 this.updateToggle(this.autoRestartToggle, this.settings.autoRestart);
 
+                // Update privacy toggles
+                this.updateToggle(this.privacyFinancial, this.settings.privacyFinancial);
+                this.updateToggle(this.privacyFiles, this.settings.privacyFiles);
+                this.updateToggle(this.privacyMessages, this.settings.privacyMessages);
+                this.updateToggle(this.privacyContacts, this.settings.privacyContacts);
+                this.updateToggle(this.privacyLocation, this.settings.privacyLocation);
+                this.updateToggle(this.privacyCalendar, this.settings.privacyCalendar);
+                this.updateToggle(this.privacyPhotos, this.settings.privacyPhotos);
+                this.updateToggle(this.privacyWork, this.settings.privacyWork);
+                this.updateToggle(this.privacyHealth, this.settings.privacyHealth);
+                this.updateToggle(this.privacyBrowsing, this.settings.privacyBrowsing);
+                this.updateToggle(this.privacyPasswords, this.settings.privacyPasswords);
+                this.updateToggle(this.privacySocial, this.settings.privacySocial);
+
+                // Update privacy level
+                this.updatePrivacyLevel();
+
                 // Update theme
                 document.querySelectorAll('.color-option').forEach(option => {
                     option.classList.toggle('active', option.dataset.theme === this.settings.theme);
@@ -1734,7 +2113,20 @@
                         wakeResponse: "Hi! I'm here to help you.",
                         wakeSensitivity: 0.7,
                         autoRestart: true,
-                        selectedVoice: null
+                        selectedVoice: null,
+                        // Privacy Controls
+                        privacyFinancial: false,
+                        privacyFiles: false,
+                        privacyMessages: false,
+                        privacyContacts: true,
+                        privacyLocation: false,
+                        privacyCalendar: true,
+                        privacyPhotos: false,
+                        privacyWork: false,
+                        privacyHealth: false,
+                        privacyBrowsing: false,
+                        privacyPasswords: false,
+                        privacySocial: false
                     };
 
                     this.updateUIFromSettings();
