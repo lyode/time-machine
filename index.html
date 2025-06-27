@@ -2,12 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#007AFF">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Cosmic Voice AI">
-    <title>Cosmic Voice Assistant Pro</title>
+    <title>AI Voice Assistant Pro</title>
     
     <style>
         :root {
@@ -16,404 +13,195 @@
             --success-color: #4CAF50;
             --danger-color: #FF3B30;
             --warning-color: #ff9800;
-            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #87ceeb 15%, #4169e1 35%, #191970 60%, #000033 85%, #000000 100%);
-            --card-background: rgba(255, 255, 255, 0.08);
+            --background-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --card-background: rgba(255, 255, 255, 0.05);
             --text-color: #ffffff;
             --border-radius: 20px;
             --shadow: 0 8px 32px rgba(0,0,0,0.3);
-            --wave-color-1: #ffffff;
-            --wave-color-2: #87ceeb;
-            --wave-color-3: #4169e1;
-            --wave-color-4: #6495ed;
-            --wave-color-5: #b0c4de;
-            
-            /* iPhone 15 Pro Max safe areas */
-            --safe-area-top: env(safe-area-inset-top, 59px);
-            --safe-area-bottom: env(safe-area-inset-bottom, 34px);
-            --safe-area-left: env(safe-area-inset-left, 0px);
-            --safe-area-right: env(safe-area-inset-right, 0px);
+            --wave-color: #00ff88;
+            --wave-glow: #00ff88;
         }
 
-        [data-theme="cosmic"] {
-            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #ffd700 8%, #ff69b4 18%, #9370db 30%, #4b0082 50%, #191970 70%, #000033 85%, #000000 100%);
-            --wave-color-1: #ffffff;
-            --wave-color-2: #ffd700;
-            --wave-color-3: #ff69b4;
-            --wave-color-4: #9370db;
-            --wave-color-5: #00ffff;
+        [data-theme="blue"] {
+            --background-gradient: linear-gradient(135deg, #001122 0%, #003366 100%);
+            --wave-color: #00aaff;
+            --wave-glow: #0088cc;
         }
 
-        [data-theme="aurora"] {
-            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #00ff7f 10%, #00ced1 20%, #9370db 35%, #4b0082 55%, #000080 75%, #000033 90%, #000000 100%);
-            --wave-color-1: #ffffff;
-            --wave-color-2: #00ff7f;
-            --wave-color-3: #00ced1;
-            --wave-color-4: #9370db;
-            --wave-color-5: #ff1493;
+        [data-theme="purple"] {
+            --background-gradient: linear-gradient(135deg, #2d1b4e 0%, #4a2c6a 100%);
+            --wave-color: #aa88ff;
+            --wave-glow: #8866dd;
         }
 
-        [data-theme="celestial"] {
-            --background-gradient: radial-gradient(ellipse at center, #fffacd 0%, #f0e68c 12%, #dda0dd 25%, #ba55d3 40%, #8a2be2 60%, #4b0082 80%, #191970 95%, #000000 100%);
-            --wave-color-1: #fffacd;
-            --wave-color-2: #f0e68c;
-            --wave-color-3: #dda0dd;
-            --wave-color-4: #ba55d3;
-            --wave-color-5: #8a2be2;
+        [data-theme="orange"] {
+            --background-gradient: linear-gradient(135deg, #331100 0%, #663300 100%);
+            --wave-color: #ff8800;
+            --wave-glow: #ff6600;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--background-gradient);
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             touch-action: manipulation;
             overflow: hidden;
             color: var(--text-color);
-            padding-top: var(--safe-area-top);
-            padding-bottom: var(--safe-area-bottom);
-            padding-left: var(--safe-area-left);
-            padding-right: var(--safe-area-right);
+            position: relative;
         }
 
-        /* iPhone 15 Pro Max specific optimizations */
-        @media screen and (width: 430px) and (height: 932px) {
-            :root {
-                --safe-area-top: 59px;
-                --safe-area-bottom: 34px;
-            }
-        }
-
-        /* Landscape mode for iPhone 15 Pro Max */
-        @media screen and (width: 932px) and (height: 430px) {
-            :root {
-                --safe-area-top: 0px;
-                --safe-area-bottom: 21px;
-                --safe-area-left: 59px;
-                --safe-area-right: 59px;
-            }
-        }
-
-        /* Cosmic Background Effects */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
-                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(2px 2px at 160px 30px, #ffffff, transparent),
-                radial-gradient(1px 1px at 200px 60px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(2px 2px at 240px 90px, #ffffff, transparent),
-                radial-gradient(1px 1px at 280px 20px, rgba(255,255,255,0.9), transparent),
-                radial-gradient(1px 1px at 320px 70px, #ffffff, transparent),
-                radial-gradient(2px 2px at 360px 40px, rgba(255,255,255,0.8), transparent);
-            background-repeat: repeat;
-            background-size: 400px 400px;
-            animation: stars 20s linear infinite;
-            pointer-events: none;
-        }
-
-        /* Central Light Burst */
-        body::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 30%, transparent 70%);
-            transform: translate(-50%, -50%);
-            animation: centralGlow 4s ease-in-out infinite alternate;
-            pointer-events: none;
-        }
-
-        @keyframes stars {
-            from { transform: translateY(0px); }
-            to { transform: translateY(-400px); }
-        }
-
-        @keyframes centralGlow {
-            0% { 
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.3;
-            }
-            100% { 
-                transform: translate(-50%, -50%) scale(1.2);
-                opacity: 0.6;
-            }
-        }
-
-        /* Light Rays */
-        .light-rays {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .light-ray {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 2px;
-            height: 50%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent);
-            transform-origin: bottom center;
-            animation: rayRotate 8s linear infinite;
-        }
-
-        .light-ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
-        .light-ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); animation-delay: -1s; }
-        .light-ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); animation-delay: -2s; }
-        .light-ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); animation-delay: -3s; }
-        .light-ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); animation-delay: -4s; }
-        .light-ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); animation-delay: -5s; }
-        .light-ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); animation-delay: -6s; }
-        .light-ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); animation-delay: -7s; }
-
-        @keyframes rayRotate {
-            0% { 
-                transform: translate(-50%, -100%) rotate(var(--start-rotation, 0deg)) scaleY(0.5);
-                opacity: 0.3;
-            }
-            50% { 
-                transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 180deg)) scaleY(1);
-                opacity: 0.8;
-            }
-            100% { 
-                transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 360deg)) scaleY(0.5);
-                opacity: 0.3;
-            }
-        }
-
-        /* Energy Particles */
-        .energy-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: radial-gradient(circle, #ffffff, transparent);
-            border-radius: 50%;
-            animation: float 6s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { 
-                transform: translate(0, 0) scale(0.5);
-                opacity: 0.3;
-            }
-            50% { 
-                transform: translate(20px, -30px) scale(1);
-                opacity: 1;
-            }
-        }
-
-        /* Settings Button - iPhone optimized */
+        /* Settings Button */
         .settings-btn {
-            position: fixed;
-            top: calc(var(--safe-area-top) + 10px);
-            right: calc(var(--safe-area-right) + 15px);
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background: rgba(255, 255, 255, 0.1);
             border: none;
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.7);
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            color: white;
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             z-index: 100;
-            opacity: 0.6;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            touch-action: manipulation;
         }
 
-        .settings-btn:active {
+        .settings-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 1);
-            transform: scale(0.95);
-            opacity: 1;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg) scale(1.1);
         }
 
-        /* Wake Word Indicator - iPhone optimized */
-        .wake-indicator {
-            position: fixed;
-            bottom: calc(var(--safe-area-bottom) + 20px);
+        /* Status Display */
+        .status-display {
+            position: absolute;
+            top: 50px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--card-background);
             backdrop-filter: blur(20px);
-            padding: 10px 20px;
+            padding: 15px 30px;
             border-radius: 25px;
-            font-size: 14px;
-            opacity: 0;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: calc(100vw - 40px);
+            font-size: 16px;
+            font-weight: 600;
             text-align: center;
+            opacity: 0.9;
+            transition: all 0.3s ease;
         }
 
-        .wake-indicator.show {
-            opacity: 0.8;
-        }
-
-        .wake-indicator.active {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            opacity: 1;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
-        }
-
-        /* Full Screen Wave Container - iPhone optimized */
+        /* Sound Wave Container */
         .wave-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
+            position: relative;
+            width: 100%;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            z-index: 10;
-            padding: var(--safe-area-top) var(--safe-area-right) var(--safe-area-bottom) var(--safe-area-left);
         }
 
         .sound-wave {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 2px;
-            width: 100%;
-            height: 100%;
+            gap: 3px;
+            height: 200px;
             transition: all 0.3s ease;
         }
 
         .wave-bar {
-            flex: 1;
-            max-width: 6px;
-            border-radius: 3px;
+            width: 4px;
+            background: linear-gradient(to top, var(--wave-color), transparent);
+            border-radius: 2px;
             transition: all 0.1s ease;
-            min-height: 8px;
-            transform-origin: center;
-            background: linear-gradient(to top, 
-                var(--wave-color-1) 0%, 
-                var(--wave-color-2) 25%, 
-                var(--wave-color-3) 50%, 
-                var(--wave-color-4) 75%, 
-                var(--wave-color-5) 100%);
-            box-shadow: 
-                0 0 15px var(--wave-color-1),
-                0 0 30px var(--wave-color-2),
-                0 0 45px var(--wave-color-3);
-            filter: brightness(1.2) saturate(1.5);
+            min-height: 4px;
+            box-shadow: 0 0 10px var(--wave-glow);
         }
 
         .wave-bar.active {
-            box-shadow: 
-                0 0 25px var(--wave-color-1), 
-                0 0 50px var(--wave-color-2),
-                0 0 75px var(--wave-color-3),
-                0 0 100px var(--wave-color-4);
-            filter: brightness(2.5) saturate(2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
-            transform: scaleY(1.2);
+            box-shadow: 0 0 20px var(--wave-glow), 0 0 40px var(--wave-glow);
         }
 
-        .wave-bar.wake-detected {
-            animation: wakeDetected 1s ease;
+        /* Microphone Button */
+        .mic-button {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(238, 90, 82, 0.4);
+            border: none;
+            backdrop-filter: blur(10px);
         }
 
-        .wave-bar.speaking {
-            animation: speakingPulse 0.6s infinite alternate;
+        .mic-button.listening {
+            background: linear-gradient(135deg, var(--success-color), #45a049);
+            animation: pulse 1.5s infinite;
         }
 
-        @keyframes wakeDetected {
-            0% { 
-                transform: scaleY(1); 
-                filter: brightness(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
-            }
-            25% { 
-                transform: scaleY(1.8); 
-                filter: brightness(4) hue-rotate(90deg) drop-shadow(0 0 25px rgba(255, 255, 255, 1));
-            }
-            50% { 
-                transform: scaleY(2.5); 
-                filter: brightness(5) hue-rotate(180deg) drop-shadow(0 0 40px rgba(255, 255, 255, 1.2));
-            }
-            75% { 
-                transform: scaleY(1.8); 
-                filter: brightness(4) hue-rotate(270deg) drop-shadow(0 0 25px rgba(255, 255, 255, 1));
-            }
-            100% { 
-                transform: scaleY(1); 
-                filter: brightness(1) hue-rotate(360deg) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
-            }
+        .mic-button.processing {
+            background: linear-gradient(135deg, var(--warning-color), #f57c00);
+            animation: spin 2s linear infinite;
         }
 
-        @keyframes speakingPulse {
-            0% { 
-                transform: scaleY(1); 
-                filter: brightness(1.5) drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
-            }
-            100% { 
-                transform: scaleY(1.4); 
-                filter: brightness(3) saturate(2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.9));
-            }
+        .mic-button.speaking {
+            background: linear-gradient(135deg, #9C27B0, #673AB7);
+            animation: speak 0.8s infinite alternate;
         }
 
-        /* Settings Panel - iPhone optimized */
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
+        @keyframes spin {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        @keyframes speak {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.05); }
+        }
+
+        /* Settings Panel */
         .settings-panel {
             position: fixed;
             top: 0;
             right: -100%;
-            width: 100vw;
+            width: 90%;
+            max-width: 400px;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
+            background: var(--card-background);
             backdrop-filter: blur(20px);
-            box-shadow: -5px 0 20px rgba(0,0,0,0.5);
-            padding: var(--safe-area-top) 20px var(--safe-area-bottom) 20px;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+            padding: 20px;
             overflow-y: auto;
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: right 0.3s ease;
             z-index: 1000;
             color: var(--text-color);
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-            -webkit-overflow-scrolling: touch;
         }
 
         .settings-panel.open {
@@ -425,125 +213,61 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
-            padding-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 2px solid rgba(255,255,255,0.1);
-            position: sticky;
-            top: 0;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(20px);
-            z-index: 10;
-        }
-
-        .settings-header h2 {
-            font-size: 22px;
-            font-weight: 700;
         }
 
         .close-settings {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
             cursor: pointer;
             color: var(--text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            touch-action: manipulation;
-        }
-
-        .close-settings:active {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(0.95);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         .setting-group {
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 25px;
         }
 
         .setting-label {
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: block;
             font-size: 16px;
         }
 
-        .setting-input, .setting-textarea {
+        .setting-input {
             width: 100%;
-            padding: 16px;
+            padding: 12px;
             border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 16px;
             background: rgba(255,255,255,0.1);
             color: var(--text-color);
-            font-family: inherit;
-            -webkit-appearance: none;
-            touch-action: manipulation;
         }
 
-        .setting-textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .setting-input:focus, .setting-textarea:focus {
+        .setting-input:focus {
             border-color: var(--primary-color);
             outline: none;
-            box-shadow: 0 0 15px rgba(135, 206, 235, 0.3);
         }
 
         .setting-range {
             width: 100%;
-            height: 8px;
-            margin: 15px 0;
-            -webkit-appearance: none;
-            appearance: none;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            outline: none;
-        }
-
-        .setting-range::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 2px 10px rgba(0, 122, 255, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .setting-range::-webkit-slider-thumb:active {
-            transform: scale(1.2);
-            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.6);
+            margin: 10px 0;
         }
 
         .setting-select {
             width: 100%;
-            padding: 16px;
+            padding: 12px;
             border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 16px;
             background: rgba(255,255,255,0.1);
             color: var(--text-color);
-            -webkit-appearance: none;
-            appearance: none;
-            cursor: pointer;
         }
 
         .btn {
-            padding: 16px 24px;
+            padding: 12px 20px;
             border: none;
             border-radius: 25px;
             font-size: 14px;
@@ -552,12 +276,7 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin: 8px;
-            min-height: 48px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            touch-action: manipulation;
+            margin: 5px;
         }
 
         .btn-primary {
@@ -580,129 +299,90 @@
             color: white;
         }
 
-        .btn:active {
-            transform: translateY(-2px) scale(0.98);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
         .toggle-switch {
             position: relative;
-            width: 68px;
-            height: 36px;
+            width: 60px;
+            height: 30px;
             background: rgba(255,255,255,0.2);
-            border-radius: 18px;
+            border-radius: 15px;
             cursor: pointer;
             transition: background 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            touch-action: manipulation;
         }
 
         .toggle-switch.active {
             background: var(--success-color);
-            border-color: var(--success-color);
         }
 
         .toggle-slider {
             position: absolute;
             top: 3px;
             left: 3px;
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             background: white;
             border-radius: 50%;
             transition: transform 0.3s;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .toggle-switch.active .toggle-slider {
-            transform: translateX(32px);
+            transform: translateX(30px);
         }
 
         .setting-toggle {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 20px 0;
-            padding: 12px 0;
-        }
-
-        .color-picker {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-            gap: 15px;
             margin: 15px 0;
         }
 
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
         .color-option {
-            aspect-ratio: 1;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             cursor: pointer;
             border: 3px solid transparent;
             transition: all 0.3s ease;
-            position: relative;
-            touch-action: manipulation;
         }
 
         .color-option.active {
             border-color: white;
             transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
-        .wave-color-option {
-            width: 100%;
-            height: 50px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            position: relative;
-            touch-action: manipulation;
-        }
-
-        .wave-color-option.active {
-            border-color: white;
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,255,255,0.4);
-        }
-
-        .wave-controls, .wake-word-controls {
+        .wave-controls {
             background: rgba(255,255,255,0.05);
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .wake-word-controls {
-            background: rgba(135, 206, 235, 0.1);
-            border: 1px solid rgba(135, 206, 235, 0.3);
-        }
-
-        .error-message, .success-message, .info-message {
-            padding: 16px 20px;
-            border-radius: 12px;
+            padding: 15px;
+            border-radius: 10px;
             margin: 15px 0;
-            font-size: 14px;
-            font-weight: 500;
         }
 
         .error-message {
             background: rgba(255, 59, 48, 0.2);
             color: var(--danger-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
             border-left: 4px solid var(--danger-color);
         }
 
         .success-message {
             background: rgba(76, 175, 80, 0.2);
             color: var(--success-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
             border-left: 4px solid var(--success-color);
-        }
-
-        .info-message {
-            background: rgba(0, 188, 212, 0.2);
-            color: #4dd0e1;
-            border-left: 4px solid #00bcd4;
         }
 
         .settings-overlay {
@@ -711,7 +391,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.5);
             z-index: 999;
             opacity: 0;
             visibility: hidden;
@@ -723,559 +403,55 @@
             visibility: visible;
         }
 
-        /* Response Display - iPhone optimized */
+        /* Response Display */
         .response-display {
-            position: fixed;
-            top: 50%;
+            position: absolute;
+            bottom: 150px;
             left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: calc(100vw - 40px);
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(25px);
-            padding: 25px;
-            border-radius: 20px;
-            font-size: 16px;
-            text-align: left;
+            transform: translateX(-50%);
+            max-width: 80%;
+            background: var(--card-background);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 14px;
+            text-align: center;
             opacity: 0;
-            transform: translate(-50%, -50%) scale(0.8);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            z-index: 50;
-            line-height: 1.5;
+            transform: translateX(-50%) translateY(20px);
+            transition: all 0.3s ease;
         }
 
         .response-display.show {
             opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
+            transform: translateX(-50%) translateY(0);
         }
 
-        .wake-word-list {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            font-size: 13px;
-        }
-
-        .wake-word-item {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .wake-word-item:last-child {
-            border-bottom: none;
-        }
-
-        .value-display {
-            display: inline-block;
-            min-width: 50px;
-            text-align: right;
-            font-weight: 600;
-            color: var(--wave-color-3);
-        }
-
-        /* Cosmic wave presets */
-        .cosmic-wave {
-            --wave-color-1: #ffffff;
-            --wave-color-2: #87ceeb;
-            --wave-color-3: #4169e1;
-            --wave-color-4: #6495ed;
-            --wave-color-5: #b0c4de;
-        }
-
-        .spiritual-wave {
-            --wave-color-1: #ffffff;
-            --wave-color-2: #ffd700;
-            --wave-color-3: #ff69b4;
-            --wave-color-4: #9370db;
-            --wave-color-5: #00ffff;
-        }
-
-        .aurora-wave {
-            --wave-color-1: #ffffff;
-            --wave-color-2: #00ff7f;
-            --wave-color-3: #00ced1;
-            --wave-color-4: #9370db;
-            --wave-color-5: #ff1493;
-        }
-
-        .celestial-wave {
-            --wave-color-1: #fffacd;
-            --wave-color-2: #f0e68c;
-            --wave-color-3: #dda0dd;
-            --wave-color-4: #ba55d3;
-            --wave-color-5: #8a2be2;
-        }
-
-        /* Colorful Light Wave Schemes */
-        .neon-spectrum-wave {
-            --wave-color-1: #00ffff;
-            --wave-color-2: #00ff00;
-            --wave-color-3: #ffff00;
-            --wave-color-4: #ff6600;
-            --wave-color-5: #ff0066;
-        }
-
-        .rainbow-light-wave {
-            --wave-color-1: #ff0000;
-            --wave-color-2: #ff8000;
-            --wave-color-3: #ffff00;
-            --wave-color-4: #00ff00;
-            --wave-color-5: #0080ff;
-        }
-
-        .electric-wave {
-            --wave-color-1: #00ffff;
-            --wave-color-2: #0099ff;
-            --wave-color-3: #6600ff;
-            --wave-color-4: #ff00ff;
-            --wave-color-5: #ff0099;
-        }
-
-        .plasma-wave {
-            --wave-color-1: #ff00ff;
-            --wave-color-2: #ff3366;
-            --wave-color-3: #ff6600;
-            --wave-color-4: #ffaa00;
-            --wave-color-5: #00ff88;
-        }
-
-        .cyber-wave {
-            --wave-color-1: #00ff00;
-            --wave-color-2: #00ffff;
-            --wave-color-3: #0099ff;
-            --wave-color-4: #6600ff;
-            --wave-color-5: #ff00cc;
-        }
-
-        .laser-wave {
-            --wave-color-1: #ff0000;
-            --wave-color-2: #ff4400;
-            --wave-color-3: #ff8800;
-            --wave-color-4: #ffcc00;
-            --wave-color-5: #ffff00;
-        }
-
-        .hologram-wave {
-            --wave-color-1: #00ffff;
-            --wave-color-2: #3399ff;
-            --wave-color-3: #6633ff;
-            --wave-color-4: #9900ff;
-            --wave-color-5: #cc00ff;
-        }
-
-        .spectrum-wave {
-            --wave-color-1: #ff0099;
-            --wave-color-2: #ff6600;
-            --wave-color-3: #ffcc00;
-            --wave-color-4: #66ff00;
-            --wave-color-5: #00ff99;
-        }
-
-        /* Dark Cosmic Wave Schemes */
-        .dark-cosmic-wave {
-            --wave-color-1: #1a1a2e;
-            --wave-color-2: #16213e;
-            --wave-color-3: #0f0f23;
-            --wave-color-4: #533e85;
-            --wave-color-5: #6c5ce7;
-        }
-
-        .deep-space-wave {
-            --wave-color-1: #0c0c0c;
-            --wave-color-2: #1a1a1a;
-            --wave-color-3: #2d1b4e;
-            --wave-color-4: #4b0082;
-            --wave-color-5: #191970;
-        }
-
-        .shadow-nebula-wave {
-            --wave-color-1: #0a0a0a;
-            --wave-color-2: #1c1c1c;
-            --wave-color-3: #2e1065;
-            --wave-color-4: #4a0e4e;
-            --wave-color-5: #8b008b;
-        }
-
-        .void-wave {
-            --wave-color-1: #000000;
-            --wave-color-2: #0d0d0d;
-            --wave-color-3: #1a1a1a;
-            --wave-color-4: #2d2d2d;
-            --wave-color-5: #404040;
-        }
-
-        .dark-matter-wave {
-            --wave-color-1: #000000;
-            --wave-color-2: #0a0a0a;
-            --wave-color-3: #1a0033;
-            --wave-color-4: #2d0a2d;
-            --wave-color-5: #330033;
-        }
-
-        .obsidian-wave {
-            --wave-color-1: #000000;
-            --wave-color-2: #0f0f0f;
-            --wave-color-3: #1a1a1a;
-            --wave-color-4: #2a2a2a;
-            --wave-color-5: #3d3d3d;
-        }
-
-        .black-hole-wave {
-            --wave-color-1: #000000;
-            --wave-color-2: #0a0015;
-            --wave-color-3: #1a0033;
-            --wave-color-4: #2d004d;
-            --wave-color-5: #4d0080;
-        }
-
-        .midnight-wave {
-            --wave-color-1: #000000;
-            --wave-color-2: #0d1421;
-            --wave-color-3: #1a2332;
-            --wave-color-4: #2d3748;
-            --wave-color-5: #4a5568;
-        }
-
-        /* iPhone 15 Pro Max specific responsive breakpoints */
-        @media (max-width: 430px) {
-            .sound-wave {
-                gap: 1.5px;
-            }
-            
-            .wave-bar {
-                max-width: 4px;
-            }
-            
-            .settings-panel {
-                padding: var(--safe-area-top) 15px var(--safe-area-bottom) 15px;
-            }
-            
-            .setting-group {
-                padding: 15px;
-                margin-bottom: 20px;
-            }
-            
-            .response-display {
-                max-width: calc(100vw - 30px);
-                font-size: 14px;
-                padding: 20px;
-            }
-            
-            .btn {
-                padding: 14px 20px;
-                font-size: 12px;
-                margin: 6px;
-            }
-            
-            .color-picker {
-                grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-                gap: 10px;
-            }
-        }
-
-        /* Ultra-narrow screens */
-        @media (max-width: 375px) {
-            .sound-wave {
-                gap: 1px;
-            }
-            
-            .wave-bar {
-                max-width: 3px;
-            }
-        }
-
-        /* Landscape mode adjustments */
-        @media (orientation: landscape) and (max-height: 500px) {
-            .settings-header h2 {
-                font-size: 18px;
-            }
-            
-            .setting-group {
-                margin-bottom: 20px;
-                padding: 15px;
-            }
-            
-            .wake-indicator {
-                bottom: calc(var(--safe-area-bottom) + 10px);
-                font-size: 12px;
-                padding: 8px 16px;
-            }
-            
-            .settings-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 14px;
-            }
-        }
-
-        /* Custom scrollbar for settings panel */
-        .settings-panel::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .settings-panel::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-        }
-
-        .settings-panel::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 2px;
-        }
-
-        .settings-panel::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Loading states */
-        .btn.loading {
-            position: relative;
-            color: transparent;
-        }
-
-        .btn.loading::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            top: 50%;
-            left: 50%;
-            margin: -10px 0 0 -10px;
-            border: 2px solid transparent;
-            border-top-color: #ffffff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Haptic feedback simulation */
-        .haptic-light {
-            animation: hapticLight 0.1s ease;
-        }
-
-        @keyframes hapticLight {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-
-        /* Password Lock Modal */
-        .password-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 3000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .password-modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .password-modal-content {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 350px;
-            width: 90%;
-        }
-
-        .password-modal h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: var(--text-color);
-        }
-
-        .pin-input {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 30px 0;
-        }
-
-        .pin-digit {
-            width: 50px;
-            height: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-color);
-            font-size: 24px;
-            text-align: center;
-            font-weight: bold;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .pin-digit:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 15px rgba(0, 122, 255, 0.4);
-        }
-
-        .pin-digit.filled {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .lock-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-            opacity: 0.8;
-        }
-
-        .unlock-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .unlock-btn:active {
-            transform: scale(0.98);
-        }
-
-        .unlock-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .locked-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2500;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .locked-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .locked-message {
-            text-align: center;
-            color: var(--text-color);
-            font-size: 18px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .locked-message h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        .locked-message p {
-            opacity: 0.8;
-            margin-bottom: 20px;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+        @media (max-width: 480px) {
+            .settings-panel { width: 100%; }
+            .sound-wave { height: 150px; }
+            .mic-button { width: 70px; height: 70px; font-size: 28px; }
         }
     </style>
 </head>
-<body data-theme="default" class="neon-spectrum-wave">
-    <!-- Cosmic Light Rays -->
-    <div class="light-rays">
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-    </div>
-
-    <!-- Energy Particles -->
-    <div class="energy-particles" id="energyParticles">
-        <!-- Particles will be generated by JavaScript -->
-    </div>
-
+<body data-theme="default">
     <!-- Settings Button -->
-    <button class="settings-btn" id="settingsBtn">⚙</button>
+    <button class="settings-btn" id="settingsBtn">⚙️</button>
 
-    <!-- Wake Word Indicator -->
-    <div class="wake-indicator" id="wakeIndicator">
-        👂 <span id="currentWakeWord">Hey Assistant</span>
-    </div>
+    <!-- Status Display -->
+    <div class="status-display" id="statusDisplay">Ready to listen</div>
 
-    <!-- Full Screen Wave Container -->
+    <!-- Main Wave Container -->
     <div class="wave-container" id="waveContainer">
         <div class="sound-wave" id="soundWave">
             <!-- Wave bars will be generated by JavaScript -->
         </div>
     </div>
 
+    <!-- Microphone Button -->
+    <button class="mic-button" id="micButton">🎤</button>
+
     <!-- Response Display -->
     <div class="response-display" id="responseDisplay"></div>
-
-    <!-- Password Lock Modal -->
-    <div class="password-modal" id="passwordModal">
-        <div class="password-modal-content">
-            <div class="lock-icon">🔒</div>
-            <h3>Enter PIN</h3>
-            <div class="pin-input">
-                <input type="password" class="pin-digit" maxlength="1" pattern="[0-9]" id="pin1">
-                <input type="password" class="pin-digit" maxlength="1" pattern="[0-9]" id="pin2">
-                <input type="password" class="pin-digit" maxlength="1" pattern="[0-9]" id="pin3">
-                <input type="password" class="pin-digit" maxlength="1" pattern="[0-9]" id="pin4">
-            </div>
-            <button class="unlock-btn" id="unlockBtn" disabled>🔓 Unlock</button>
-            <div id="pinError" class="error-message" style="display: none; margin-top: 15px;">
-                ❌ Incorrect PIN. Try again.
-            </div>
-        </div>
-    </div>
-
-    <!-- Locked Overlay -->
-    <div class="locked-overlay" id="lockedOverlay">
-        <div class="locked-message">
-            <div class="lock-icon">🔒</div>
-            <h3>Assistant Locked</h3>
-            <p>AI functionality is disabled. Tap settings to unlock.</p>
-        </div>
-    </div>
 
     <!-- Settings Overlay -->
     <div class="settings-overlay" id="settingsOverlay"></div>
@@ -1283,15 +459,15 @@
     <!-- Settings Panel -->
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
-            <h2>⚙️ Cosmic Settings</h2>
-            <button class="close-settings" id="closeSettings">×</button>
+            <h2>⚙️ Settings</h2>
+            <button class="close-settings" id="closeSettings">✕</button>
         </div>
 
         <!-- API Configuration -->
         <div class="setting-group">
             <label class="setting-label">🔑 OpenAI API Key</label>
             <input type="password" class="setting-input" id="apiKeyInput" placeholder="sk-proj-...">
-            <div style="margin-top: 15px;">
+            <div style="margin-top: 10px;">
                 <button class="btn btn-primary" id="saveApiKeyBtn">💾 Save</button>
                 <button class="btn btn-secondary" id="testApiKeyBtn">🧪 Test API</button>
             </div>
@@ -1307,144 +483,35 @@
             </select>
         </div>
 
-        <!-- Wake Word Settings -->
-        <div class="setting-group">
-            <label class="setting-label">👂 Wake Word Detection</label>
-            <div class="wake-word-controls">
-                <div class="setting-toggle">
-                    <span>Enable Wake Word</span>
-                    <div class="toggle-switch active" id="wakeWordToggle">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
-                
-                <label style="font-size: 14px; margin-top: 15px; display: block;">Wake Word/Phrase:</label>
-                <input type="text" class="setting-input" id="wakeWordInput" placeholder="Hey Assistant" value="Hey Assistant">
-                
-                <label style="font-size: 14px; margin-top: 15px; display: block;">Wake Response:</label>
-                <textarea class="setting-textarea" id="wakeResponseInput" placeholder="Hi dear, I'm here!">Hi dear, I'm here!</textarea>
-                
-                <label style="font-size: 14px; margin-top: 15px; display: block;">
-                    Wake Sensitivity: <span class="value-display" id="wakeSensitivityValue">0.7</span>
-                </label>
-                <input type="range" class="setting-range" id="wakeSensitivity" min="0.1" max="1.0" step="0.1" value="0.7">
-                
-                <div class="wake-word-list">
-                    <strong>Suggested Wake Words:</strong>
-                    <div class="wake-word-item">👋 "Hey Assistant" - Classic</div>
-                    <div class="wake-word-item">🤖 "Hello AI" - Simple</div>
-                    <div class="wake-word-item">✨ "Hey there" - Casual</div>
-                    <div class="wake-word-item">🎯 "Computer" - Direct</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Privacy & Security Settings -->
-        <div class="setting-group">
-            <label class="setting-label">🔒 Privacy & Security</label>
-            <div class="wake-word-controls" style="background: rgba(255, 59, 48, 0.1); border-color: rgba(255, 59, 48, 0.3);">
-                <div class="setting-toggle">
-                    <span>🛡️ Password Protection</span>
-                    <div class="toggle-switch" id="passwordToggle">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
-                
-                <div id="passwordSettings" style="display: none;">
-                    <label style="font-size: 14px; margin-top: 15px; display: block;">Set Password:</label>
-                    <input type="password" class="setting-input" id="passwordInput" placeholder="Enter 4-digit PIN" maxlength="4" pattern="[0-9]{4}">
-                    
-                    <label style="font-size: 14px; margin-top: 15px; display: block;">Confirm Password:</label>
-                    <input type="password" class="setting-input" id="confirmPasswordInput" placeholder="Confirm 4-digit PIN" maxlength="4" pattern="[0-9]{4}">
-                    
-                    <div style="margin-top: 15px;">
-                        <button class="btn btn-primary" id="setPasswordBtn">🔐 Set Password</button>
-                        <button class="btn btn-danger" id="clearPasswordBtn">🗑️ Clear Password</button>
-                    </div>
-                </div>
-                
-                <div class="setting-toggle" style="margin-top: 20px;">
-                    <span>🤖 AI Access Control</span>
-                    <div class="toggle-switch active" id="aiAccessToggle">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
-                
-                <div class="wake-word-list" style="background: rgba(255, 59, 48, 0.1);">
-                    <strong>🔐 Security Features:</strong>
-                    <div class="wake-word-item">🛡️ Password lock prevents unauthorized access</div>
-                    <div class="wake-word-item">🤖 AI Access toggle controls assistant functionality</div>
-                    <div class="wake-word-item">🔒 When locked, only settings are accessible</div>
-                    <div class="wake-word-item">⚡ Quick unlock with 4-digit PIN</div>
-                </div>
-                
-                <div id="lockStatus" class="info-message" style="display: none;">
-                    🔒 Assistant is currently locked. Enter PIN to unlock.
-                </div>
-            </div>
-        </div>
-
         <!-- Wave Visualization Settings -->
         <div class="setting-group">
-            <label class="setting-label">🌊 Colorful Light Wave Visualization</label>
+            <label class="setting-label">🎵 Wave Visualization</label>
             <div class="wave-controls">
-                <label style="font-size: 14px; display: block; margin-bottom: 8px;">
-                    Wave Count: <span class="value-display" id="waveCountValue">120</span>
+                <label style="font-size: 14px; display: block; margin-bottom: 5px;">
+                    Wave Count: <span id="waveCountValue">50</span>
                 </label>
-                <input type="range" class="setting-range" id="waveCount" min="60" max="180" step="10" value="120">
+                <input type="range" class="setting-range" id="waveCount" min="20" max="100" step="5" value="50">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 8px;">
-                    Wave Responsiveness: <span class="value-display" id="responsiveValue">1.5</span>
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
+                    Wave Height: <span id="waveHeightValue">200</span>px
                 </label>
-                <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="3.0" step="0.1" value="1.5">
+                <input type="range" class="setting-range" id="waveHeight" min="100" max="400" step="10" value="200">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 8px;">
-                    Animation Speed: <span class="value-display" id="animSpeedValue">60</span>ms
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
+                    Animation Speed: <span id="animSpeedValue">100</span>ms
                 </label>
-                <input type="range" class="setting-range" id="animSpeed" min="30" max="150" step="10" value="60">
-                
-                <label style="font-size: 14px; display: block; margin: 15px 0 8px;">✨ Colorful Light Schemes:</label>
-                <div class="color-picker">
-                    <div class="wave-color-option active" data-wave-scheme="neon-spectrum" style="background: linear-gradient(to right, #00ffff, #00ff00, #ffff00, #ff6600, #ff0066);" title="Neon Spectrum"></div>
-                    <div class="wave-color-option" data-wave-scheme="rainbow-light" style="background: linear-gradient(to right, #ff0000, #ff8000, #ffff00, #00ff00, #0080ff);" title="Rainbow Light"></div>
-                    <div class="wave-color-option" data-wave-scheme="electric" style="background: linear-gradient(to right, #00ffff, #0099ff, #6600ff, #ff00ff, #ff0099);" title="Electric"></div>
-                    <div class="wave-color-option" data-wave-scheme="plasma" style="background: linear-gradient(to right, #ff00ff, #ff3366, #ff6600, #ffaa00, #00ff88);" title="Plasma"></div>
-                    <div class="wave-color-option" data-wave-scheme="cyber" style="background: linear-gradient(to right, #00ff00, #00ffff, #0099ff, #6600ff, #ff00cc);" title="Cyber"></div>
-                    <div class="wave-color-option" data-wave-scheme="laser" style="background: linear-gradient(to right, #ff0000, #ff4400, #ff8800, #ffcc00, #ffff00);" title="Laser"></div>
-                    <div class="wave-color-option" data-wave-scheme="hologram" style="background: linear-gradient(to right, #00ffff, #3399ff, #6633ff, #9900ff, #cc00ff);" title="Hologram"></div>
-                    <div class="wave-color-option" data-wave-scheme="spectrum" style="background: linear-gradient(to right, #ff0099, #ff6600, #ffcc00, #66ff00, #00ff99);" title="Spectrum"></div>
-                </div>
-                
-                <label style="font-size: 14px; display: block; margin: 25px 0 8px;">🌌 Cosmic Schemes:</label>
-                <div class="color-picker">
-                    <div class="wave-color-option" data-wave-scheme="cosmic" style="background: linear-gradient(to right, #ffffff, #87ceeb, #4169e1, #6495ed, #b0c4de);" title="Classic Cosmic"></div>
-                    <div class="wave-color-option" data-wave-scheme="spiritual" style="background: linear-gradient(to right, #ffffff, #ffd700, #ff69b4, #9370db, #00ffff);" title="Spiritual"></div>
-                    <div class="wave-color-option" data-wave-scheme="aurora" style="background: linear-gradient(to right, #ffffff, #00ff7f, #00ced1, #9370db, #ff1493);" title="Aurora"></div>
-                    <div class="wave-color-option" data-wave-scheme="celestial" style="background: linear-gradient(to right, #fffacd, #f0e68c, #dda0dd, #ba55d3, #8a2be2);" title="Celestial"></div>
-                </div>
-                
-                <label style="font-size: 14px; display: block; margin: 25px 0 8px; color: #888;">🌑 Dark Cosmic Schemes:</label>
-                <div class="color-picker">
-                    <div class="wave-color-option" data-wave-scheme="dark-cosmic" style="background: linear-gradient(to right, #1a1a2e, #16213e, #0f0f23, #533e85, #6c5ce7);" title="Dark Cosmic"></div>
-                    <div class="wave-color-option" data-wave-scheme="deep-space" style="background: linear-gradient(to right, #0c0c0c, #1a1a1a, #2d1b4e, #4b0082, #191970);" title="Deep Space"></div>
-                    <div class="wave-color-option" data-wave-scheme="shadow-nebula" style="background: linear-gradient(to right, #0a0a0a, #1c1c1c, #2e1065, #4a0e4e, #8b008b);" title="Shadow Nebula"></div>
-                    <div class="wave-color-option" data-wave-scheme="void" style="background: linear-gradient(to right, #000000, #0d0d0d, #1a1a1a, #2d2d2d, #404040);" title="Void"></div>
-                    <div class="wave-color-option" data-wave-scheme="dark-matter" style="background: linear-gradient(to right, #000000, #0a0a0a, #1a0033, #2d0a2d, #330033);" title="Dark Matter"></div>
-                    <div class="wave-color-option" data-wave-scheme="obsidian" style="background: linear-gradient(to right, #000000, #0f0f0f, #1a1a1a, #2a2a2a, #3d3d3d);" title="Obsidian"></div>
-                    <div class="wave-color-option" data-wave-scheme="black-hole" style="background: linear-gradient(to right, #000000, #0a0015, #1a0033, #2d004d, #4d0080);" title="Black Hole"></div>
-                    <div class="wave-color-option" data-wave-scheme="midnight" style="background: linear-gradient(to right, #000000, #0d1421, #1a2332, #2d3748, #4a5568);" title="Midnight"></div>
-                </div>
+                <input type="range" class="setting-range" id="animSpeed" min="50" max="500" step="25" value="100">
             </div>
         </div>
 
         <!-- Theme Settings -->
         <div class="setting-group">
-            <label class="setting-label">🌌 Cosmic Background Theme</label>
+            <label class="setting-label">🎨 Theme</label>
             <div class="color-picker">
-                <div class="color-option active" data-theme="default" style="background: radial-gradient(circle, #ffffff 0%, #87ceeb 30%, #4169e1 60%, #000033 100%);"></div>
-                <div class="color-option" data-theme="cosmic" style="background: radial-gradient(circle, #ffffff 0%, #ffd700 20%, #ff69b4 40%, #9370db 60%, #000000 100%);"></div>
-                <div class="color-option" data-theme="aurora" style="background: radial-gradient(circle, #ffffff 0%, #00ff7f 25%, #00ced1 50%, #9370db 75%, #000000 100%);"></div>
-                <div class="color-option" data-theme="celestial" style="background: radial-gradient(circle, #fffacd 0%, #f0e68c 30%, #dda0dd 60%, #4b0082 100%);"></div>
+                <div class="color-option active" data-theme="default" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d);"></div>
+                <div class="color-option" data-theme="blue" style="background: linear-gradient(135deg, #001122, #003366);"></div>
+                <div class="color-option" data-theme="purple" style="background: linear-gradient(135deg, #2d1b4e, #4a2c6a);"></div>
+                <div class="color-option" data-theme="orange" style="background: linear-gradient(135deg, #331100, #663300);"></div>
             </div>
         </div>
 
@@ -1453,17 +520,17 @@
             <label class="setting-label">🗣️ Voice Settings</label>
             
             <label style="font-size: 14px; margin-top: 15px; display: block;">
-                Speech Rate: <span class="value-display" id="rateValue">0.8</span>
+                Speech Rate: <span id="rateValue">0.8</span>
             </label>
             <input type="range" class="setting-range" id="speechRate" min="0.1" max="2" step="0.1" value="0.8">
             
             <label style="font-size: 14px; margin-top: 15px; display: block;">
-                Speech Pitch: <span class="value-display" id="pitchValue">1.0</span>
+                Speech Pitch: <span id="pitchValue">1.0</span>
             </label>
             <input type="range" class="setting-range" id="speechPitch" min="0.1" max="2" step="0.1" value="1.0">
             
             <label style="font-size: 14px; margin-top: 15px; display: block;">
-                Volume: <span class="value-display" id="volumeValue">1.0</span>
+                Volume: <span id="volumeValue">1.0</span>
             </label>
             <input type="range" class="setting-range" id="speechVolume" min="0" max="1" step="0.1" value="1.0">
         </div>
@@ -1490,6 +557,20 @@
             <label class="setting-label">🔧 Advanced Settings</label>
             
             <div class="setting-toggle">
+                <span>Continuous Listening</span>
+                <div class="toggle-switch" id="continuousToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+            
+            <div class="setting-toggle">
+                <span>Auto-Enable Audio</span>
+                <div class="toggle-switch active" id="autoAudioToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+            
+            <div class="setting-toggle">
                 <span>Show Response Text</span>
                 <div class="toggle-switch active" id="showResponseToggle">
                     <div class="toggle-slider"></div>
@@ -1497,7 +578,7 @@
             </div>
 
             <label style="font-size: 14px; margin-top: 15px; display: block;">
-                Max Response Length: <span class="value-display" id="maxTokensValue">150</span>
+                Max Response Length: <span id="maxTokensValue">150</span>
             </label>
             <input type="range" class="setting-range" id="maxTokens" min="50" max="500" step="25" value="150">
         </div>
@@ -1506,8 +587,8 @@
         <div class="setting-group">
             <label class="setting-label">🧪 Test Functions</label>
             <button class="btn btn-success" id="testSpeechBtn">🗣️ Test Speech</button>
+            <button class="btn btn-primary" id="testMicBtn">🎤 Test Microphone</button>
             <button class="btn btn-secondary" id="testWaveBtn">🌊 Test Wave Animation</button>
-            <button class="btn" id="testWakeWordBtn" style="background: #00bcd4; color: white;">👂 Test Wake Word</button>
         </div>
 
         <!-- Export/Import -->
@@ -1525,7 +606,7 @@
     </div>
 
     <script>
-        class CosmicVoiceAssistant {
+        class CleanVoiceAssistant {
             constructor() {
                 this.settings = {
                     apiKey: '',
@@ -1535,20 +616,13 @@
                     speechVolume: 1.0,
                     language: 'en-US',
                     theme: 'default',
+                    continuousListening: false,
+                    autoAudio: true,
                     showResponse: true,
                     maxTokens: 150,
-                    waveCount: 120,
-                    waveResponsive: 1.5,
-                    animSpeed: 60,
-                    waveScheme: 'neon-spectrum',
-                    wakeWordEnabled: true,
-                    wakeWord: 'Hey Assistant',
-                    wakeResponse: "Hi dear, I'm here!",
-                    wakeSensitivity: 0.7,
-                    passwordEnabled: false,
-                    password: '',
-                    aiAccessEnabled: true,
-                    isLocked: false
+                    waveCount: 50,
+                    waveHeight: 200,
+                    animSpeed: 100
                 };
 
                 this.loadSettings();
@@ -1564,7 +638,6 @@
                 this.isProcessing = false;
                 this.isSpeaking = false;
                 this.audioEnabled = false;
-                this.wakeListening = false;
                 
                 this.waveAnimationId = null;
                 this.idleAnimationId = null;
@@ -1574,72 +647,20 @@
                 this.setupSpeechRecognition();
                 this.initializeWave();
                 this.applyTheme();
-                this.applyWaveScheme();
                 this.startIdleAnimation();
-                this.enableAudio();
-                this.createEnergyParticles();
-                this.setupIOSOptimizations();
-
-                // Start wake word listening immediately
-                if (this.settings.wakeWordEnabled && this.settings.aiAccessEnabled && !this.settings.isLocked) {
-                    setTimeout(() => this.startWakeWordListening(), 1000);
-                } else if (!this.settings.aiAccessEnabled || this.settings.isLocked) {
-                    this.lockApp();
+                
+                if (this.settings.autoAudio) {
+                    this.enableAudio();
                 }
-            }
-
-            setupIOSOptimizations() {
-                // Prevent zoom on double tap
-                let lastTouchEnd = 0;
-                document.addEventListener('touchend', (event) => {
-                    const now = (new Date()).getTime();
-                    if (now - lastTouchEnd <= 300) {
-                        event.preventDefault();
-                    }
-                    lastTouchEnd = now;
-                }, false);
-
-                // Handle orientation changes
-                window.addEventListener('orientationchange', () => {
-                    setTimeout(() => {
-                        this.initializeWave();
-                    }, 200);
-                });
-
-                // Handle visibility changes
-                document.addEventListener('visibilitychange', () => {
-                    if (document.hidden) {
-                        this.synthesis.cancel();
-                        if (this.isListening) {
-                            this.stopListening();
-                        }
-                    } else if (this.settings.wakeWordEnabled) {
-                        // Restart wake word listening when page becomes visible
-                        setTimeout(() => {
-                            this.startWakeWordListening();
-                        }, 1000);
-                    }
-                });
             }
 
             initializeElements() {
                 // Main elements
+                this.statusDisplay = document.getElementById('statusDisplay');
                 this.soundWave = document.getElementById('soundWave');
+                this.micButton = document.getElementById('micButton');
                 this.responseDisplay = document.getElementById('responseDisplay');
                 this.waveContainer = document.getElementById('waveContainer');
-                this.wakeIndicator = document.getElementById('wakeIndicator');
-                this.currentWakeWord = document.getElementById('currentWakeWord');
-                this.energyParticles = document.getElementById('energyParticles');
-
-                // Password elements
-                this.passwordModal = document.getElementById('passwordModal');
-                this.lockedOverlay = document.getElementById('lockedOverlay');
-                this.pin1 = document.getElementById('pin1');
-                this.pin2 = document.getElementById('pin2');
-                this.pin3 = document.getElementById('pin3');
-                this.pin4 = document.getElementById('pin4');
-                this.unlockBtn = document.getElementById('unlockBtn');
-                this.pinError = document.getElementById('pinError');
 
                 // Settings elements
                 this.settingsBtn = document.getElementById('settingsBtn');
@@ -1656,29 +677,18 @@
                 this.languageSelect = document.getElementById('languageSelect');
                 this.maxTokens = document.getElementById('maxTokens');
                 this.waveCount = document.getElementById('waveCount');
-                this.waveResponsive = document.getElementById('waveResponsive');
+                this.waveHeight = document.getElementById('waveHeight');
                 this.animSpeed = document.getElementById('animSpeed');
-                this.wakeWordInput = document.getElementById('wakeWordInput');
-                this.wakeResponseInput = document.getElementById('wakeResponseInput');
-                this.wakeSensitivity = document.getElementById('wakeSensitivity');
-
-                // Password settings inputs
-                this.passwordInput = document.getElementById('passwordInput');
-                this.confirmPasswordInput = document.getElementById('confirmPasswordInput');
-                this.passwordSettings = document.getElementById('passwordSettings');
 
                 // Buttons and toggles
                 this.saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
                 this.testApiKeyBtn = document.getElementById('testApiKeyBtn');
                 this.testSpeechBtn = document.getElementById('testSpeechBtn');
+                this.testMicBtn = document.getElementById('testMicBtn');
                 this.testWaveBtn = document.getElementById('testWaveBtn');
-                this.testWakeWordBtn = document.getElementById('testWakeWordBtn');
+                this.continuousToggle = document.getElementById('continuousToggle');
+                this.autoAudioToggle = document.getElementById('autoAudioToggle');
                 this.showResponseToggle = document.getElementById('showResponseToggle');
-                this.wakeWordToggle = document.getElementById('wakeWordToggle');
-                this.passwordToggle = document.getElementById('passwordToggle');
-                this.aiAccessToggle = document.getElementById('aiAccessToggle');
-                this.setPasswordBtn = document.getElementById('setPasswordBtn');
-                this.clearPasswordBtn = document.getElementById('clearPasswordBtn');
                 this.exportBtn = document.getElementById('exportBtn');
                 this.importBtn = document.getElementById('importBtn');
                 this.importFile = document.getElementById('importFile');
@@ -1690,33 +700,26 @@
                 this.volumeValue = document.getElementById('volumeValue');
                 this.maxTokensValue = document.getElementById('maxTokensValue');
                 this.waveCountValue = document.getElementById('waveCountValue');
-                this.responsiveValue = document.getElementById('responsiveValue');
+                this.waveHeightValue = document.getElementById('waveHeightValue');
                 this.animSpeedValue = document.getElementById('animSpeedValue');
-                this.wakeSensitivityValue = document.getElementById('wakeSensitivityValue');
             }
 
             setupEventListeners() {
+                // Main controls
+                this.micButton.addEventListener('click', () => this.toggleListening());
+                this.waveContainer.addEventListener('click', () => this.toggleListening());
+
                 // Settings panel
                 this.settingsBtn.addEventListener('click', () => this.openSettings());
-                this.closeSettings.addEventListener('click', () => this.closeSettingsPanel());
-                this.settingsOverlay.addEventListener('click', () => this.closeSettingsPanel());
+                this.closeSettings.addEventListener('click', () => this.closeSettings());
+                this.settingsOverlay.addEventListener('click', () => this.closeSettings());
 
                 // Settings controls
                 this.saveApiKeyBtn.addEventListener('click', () => this.saveApiKey());
                 this.testApiKeyBtn.addEventListener('click', () => this.testApiKey());
                 this.testSpeechBtn.addEventListener('click', () => this.testSpeech());
+                this.testMicBtn.addEventListener('click', () => this.testMicrophone());
                 this.testWaveBtn.addEventListener('click', () => this.testWaveAnimation());
-                this.testWakeWordBtn.addEventListener('click', () => this.testWakeWord());
-
-                // Wake word settings
-                this.wakeWordInput.addEventListener('input', (e) => {
-                    this.saveSetting('wakeWord', e.target.value);
-                    this.currentWakeWord.textContent = e.target.value;
-                });
-
-                this.wakeResponseInput.addEventListener('input', (e) => {
-                    this.saveSetting('wakeResponse', e.target.value);
-                });
 
                 // Range inputs
                 this.speechRate.addEventListener('input', (e) => {
@@ -1745,9 +748,10 @@
                     this.initializeWave();
                 });
 
-                this.waveResponsive.addEventListener('input', (e) => {
-                    this.responsiveValue.textContent = e.target.value;
-                    this.saveSetting('waveResponsive', parseFloat(e.target.value));
+                this.waveHeight.addEventListener('input', (e) => {
+                    this.waveHeightValue.textContent = e.target.value;
+                    this.saveSetting('waveHeight', parseInt(e.target.value));
+                    this.soundWave.style.height = e.target.value + 'px';
                 });
 
                 this.animSpeed.addEventListener('input', (e) => {
@@ -1755,18 +759,14 @@
                     this.saveSetting('animSpeed', parseInt(e.target.value));
                 });
 
-                this.wakeSensitivity.addEventListener('input', (e) => {
-                    this.wakeSensitivityValue.textContent = e.target.value;
-                    this.saveSetting('wakeSensitivity', parseFloat(e.target.value));
-                });
-
                 // Select inputs
                 this.modelSelect.addEventListener('change', () => this.saveSetting('model', this.modelSelect.value));
                 this.languageSelect.addEventListener('change', () => this.saveSetting('language', this.languageSelect.value));
 
                 // Toggle switches
+                this.continuousToggle.addEventListener('click', () => this.toggleSetting('continuousListening'));
+                this.autoAudioToggle.addEventListener('click', () => this.toggleSetting('autoAudio'));
                 this.showResponseToggle.addEventListener('click', () => this.toggleSetting('showResponse'));
-                this.wakeWordToggle.addEventListener('click', () => this.toggleWakeWord());
 
                 // Theme selection
                 document.querySelectorAll('.color-option').forEach(option => {
@@ -1775,18 +775,6 @@
                         option.classList.add('active');
                         this.saveSetting('theme', option.dataset.theme);
                         this.applyTheme();
-                        this.triggerHaptic();
-                    });
-                });
-
-                // Wave scheme selection
-                document.querySelectorAll('.wave-color-option').forEach(option => {
-                    option.addEventListener('click', () => {
-                        document.querySelectorAll('.wave-color-option').forEach(opt => opt.classList.remove('active'));
-                        option.classList.add('active');
-                        this.saveSetting('waveScheme', option.dataset.waveScheme);
-                        this.applyWaveScheme();
-                        this.triggerHaptic();
                     });
                 });
 
@@ -1797,45 +785,16 @@
                 this.resetBtn.addEventListener('click', () => this.resetSettings());
             }
 
-            triggerHaptic() {
-                if ('vibrate' in navigator) {
-                    navigator.vibrate(50);
-                }
-                
-                // Visual haptic feedback
-                document.body.classList.add('haptic-light');
-                setTimeout(() => {
-                    document.body.classList.remove('haptic-light');
-                }, 100);
-            }
-
-            createEnergyParticles() {
-                for (let i = 0; i < 15; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.top = Math.random() * 100 + '%';
-                    particle.style.animationDelay = Math.random() * 6 + 's';
-                    particle.style.animationDuration = (3 + Math.random() * 4) + 's';
-                    this.energyParticles.appendChild(particle);
-                }
-            }
-
             initializeWave() {
                 this.soundWave.innerHTML = '';
+                this.soundWave.style.height = this.settings.waveHeight + 'px';
                 
                 for (let i = 0; i < this.settings.waveCount; i++) {
                     const bar = document.createElement('div');
                     bar.className = 'wave-bar';
-                    bar.style.animationDelay = `${i * 20}ms`;
+                    bar.style.animationDelay = `${i * 50}ms`;
                     this.soundWave.appendChild(bar);
                 }
-                
-                this.applyWaveScheme();
-            }
-
-            applyWaveScheme() {
-                document.body.className = `${this.settings.waveScheme}-wave`;
             }
 
             startIdleAnimation() {
@@ -1848,7 +807,7 @@
                             const height = 20 + Math.sin(time + index * 0.3) * 15;
                             bar.style.height = height + 'px';
                         });
-                        time += 0.05;
+                        time += 0.1;
                     }
                     
                     this.idleAnimationId = requestAnimationFrame(animate);
@@ -1862,335 +821,42 @@
                     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                     this.recognition = new SpeechRecognition();
                     
-                    this.recognition.continuous = true;
+                    this.recognition.continuous = this.settings.continuousListening;
                     this.recognition.interimResults = true;
                     this.recognition.lang = this.settings.language;
 
                     this.recognition.onstart = () => {
-                        if (this.wakeListening) {
-                            this.wakeIndicator.classList.add('show');
-                        } else {
-                            this.isListening = true;
-                            this.setupAudioVisualization();
-                        }
+                        this.isListening = true;
+                        this.updateStatus('🎤 Listening... Speak now!');
+                        this.updateUI();
+                        this.setupAudioVisualization();
                     };
 
                     this.recognition.onresult = (event) => {
                         let finalTranscript = '';
-                        let interimTranscript = '';
-                        
                         for (let i = event.resultIndex; i < event.results.length; i++) {
-                            const transcript = event.results[i][0].transcript;
                             if (event.results[i].isFinal) {
-                                finalTranscript += transcript;
-                            } else {
-                                interimTranscript += transcript;
+                                finalTranscript += event.results[i][0].transcript;
                             }
                         }
 
-                        const fullTranscript = (finalTranscript + interimTranscript).toLowerCase();
-
-                        if (this.wakeListening && this.settings.wakeWordEnabled) {
-                            if (this.detectWakeWord(fullTranscript)) {
-                                this.handleWakeWordDetected();
-                                return;
-                            }
-                        }
-
-                        if (finalTranscript && !this.wakeListening) {
+                        if (finalTranscript) {
                             this.processUserInput(finalTranscript.trim());
                         }
                     };
 
                     this.recognition.onerror = (event) => {
-                        if (event.error !== 'no-speech') {
-                            this.showMessage(`Speech error: ${event.error}`, 'error');
-                        }
-                        if (!this.wakeListening) {
-                            this.stopListening();
-                        }
+                        this.showMessage(`Speech error: ${event.error}`, 'error');
+                        this.stopListening();
                     };
 
                     this.recognition.onend = () => {
-                        if (this.wakeListening && this.settings.wakeWordEnabled) {
-                            setTimeout(() => this.startWakeWordListening(), 1000);
+                        if (this.isListening && !this.isProcessing && this.settings.continuousListening) {
+                            setTimeout(() => this.startListening(), 1000);
                         } else {
                             this.stopListening();
                         }
                     };
-                }
-            }
-
-            detectWakeWord(transcript) {
-                const wakeWord = this.settings.wakeWord.toLowerCase();
-                const confidence = this.calculateStringMatch(transcript, wakeWord);
-                return confidence >= this.settings.wakeSensitivity;
-            }
-
-            calculateStringMatch(str1, str2) {
-                const words1 = str1.split(' ');
-                const words2 = str2.split(' ');
-                let matches = 0;
-                
-                words2.forEach(word2 => {
-                    const bestMatch = words1.reduce((best, word1) => {
-                        const similarity = this.stringSimilarity(word1, word2);
-                        return similarity > best ? similarity : best;
-                    }, 0);
-                    matches += bestMatch;
-                });
-                
-                return matches / words2.length;
-            }
-
-            stringSimilarity(str1, str2) {
-                const longer = str1.length > str2.length ? str1 : str2;
-                const shorter = str1.length > str2.length ? str2 : str1;
-                
-                if (longer.length === 0) return 1.0;
-                
-                const editDistance = this.levenshteinDistance(longer, shorter);
-                return (longer.length - editDistance) / longer.length;
-            }
-
-            levenshteinDistance(str1, str2) {
-                const matrix = [];
-                
-                for (let i = 0; i <= str2.length; i++) {
-                    matrix[i] = [i];
-                }
-                
-                for (let j = 0; j <= str1.length; j++) {
-                    matrix[0][j] = j;
-                }
-                
-                for (let i = 1; i <= str2.length; i++) {
-                    for (let j = 1; j <= str1.length; j++) {
-                        if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
-                            matrix[i][j] = matrix[i - 1][j - 1];
-                        } else {
-                            matrix[i][j] = Math.min(
-                                matrix[i - 1][j - 1] + 1,
-                                matrix[i][j - 1] + 1,
-                                matrix[i - 1][j] + 1
-                            );
-                        }
-                    }
-                }
-                
-                return matrix[str2.length][str1.length];
-            }
-
-            handleWakeWordDetected() {
-                this.wakeListening = false;
-                this.wakeIndicator.classList.add('active');
-                
-                // Haptic feedback
-                if ('vibrate' in navigator) {
-                    navigator.vibrate([100, 50, 100]);
-                }
-                
-                // Animate wave bars
-                const bars = this.soundWave.querySelectorAll('.wave-bar');
-                bars.forEach(bar => bar.classList.add('wake-detected'));
-                
-                this.speakResponse(this.settings.wakeResponse);
-                
-                setTimeout(() => {
-                    this.wakeIndicator.classList.remove('active');
-                    bars.forEach(bar => bar.classList.remove('wake-detected'));
-                    
-                    // Start listening for user input
-                    this.startListening();
-                }, 2000);
-            }
-
-            startWakeWordListening() {
-                if (!this.recognition || !this.settings.wakeWordEnabled || !this.settings.aiAccessEnabled || this.settings.isLocked) return;
-                
-                this.wakeListening = true;
-                this.stopListening();
-                
-                try {
-                    this.synthesis.cancel();
-                    this.recognition.start();
-                } catch (error) {
-                    console.warn('Wake word listening failed:', error);
-                    this.wakeListening = false;
-                    setTimeout(() => this.startWakeWordListening(), 2000);
-                }
-            }
-
-            toggleWakeWord() {
-                this.settings.wakeWordEnabled = !this.settings.wakeWordEnabled;
-                localStorage.setItem('va_wakeWordEnabled', this.settings.wakeWordEnabled);
-                this.updateToggle(this.wakeWordToggle, this.settings.wakeWordEnabled);
-                
-                if (this.settings.wakeWordEnabled) {
-                    this.startWakeWordListening();
-                    this.showMessage('👂 Wake word listening enabled', 'success');
-                } else {
-                    this.wakeListening = false;
-                    this.wakeIndicator.classList.remove('show', 'active');
-                    this.showMessage('👂 Wake word listening disabled', 'info');
-                }
-                
-                this.triggerHaptic();
-            }
-            
-            // Password Protection Methods
-            togglePasswordProtection() {
-                this.settings.passwordEnabled = !this.settings.passwordEnabled;
-                this.saveSetting('passwordEnabled', this.settings.passwordEnabled);
-                this.updateToggle(this.passwordToggle, this.settings.passwordEnabled);
-                
-                if (this.settings.passwordEnabled) {
-                    this.passwordSettings.style.display = 'block';
-                    this.showMessage('🔒 Password protection enabled', 'success');
-                } else {
-                    this.passwordSettings.style.display = 'none';
-                    this.settings.password = '';
-                    this.saveSetting('password', '');
-                    this.showMessage('🔓 Password protection disabled', 'info');
-                }
-                
-                this.triggerHaptic();
-            }
-            
-            toggleAIAccess() {
-                this.settings.aiAccessEnabled = !this.settings.aiAccessEnabled;
-                this.saveSetting('aiAccessEnabled', this.settings.aiAccessEnabled);
-                this.updateToggle(this.aiAccessToggle, this.settings.aiAccessEnabled);
-                
-                if (!this.settings.aiAccessEnabled) {
-                    this.lockApp();
-                    this.showMessage('🤖 AI access disabled', 'info');
-                } else {
-                    this.unlockApp();
-                    this.showMessage('🤖 AI access enabled', 'success');
-                }
-                
-                this.triggerHaptic();
-            }
-            
-            setPassword() {
-                const password = this.passwordInput.value.trim();
-                const confirmPassword = this.confirmPasswordInput.value.trim();
-                
-                if (!password || password.length !== 4 || !/^\d{4}$/.test(password)) {
-                    this.showMessage('❌ Password must be exactly 4 digits', 'error');
-                    return;
-                }
-                
-                if (password !== confirmPassword) {
-                    this.showMessage('❌ Passwords do not match', 'error');
-                    return;
-                }
-                
-                this.settings.password = password;
-                this.saveSetting('password', password);
-                this.passwordInput.value = '';
-                this.confirmPasswordInput.value = '';
-                this.showMessage('✅ Password set successfully!', 'success');
-                this.triggerHaptic();
-            }
-            
-            clearPassword() {
-                if (confirm('Are you sure you want to clear the password?')) {
-                    this.settings.password = '';
-                    this.settings.passwordEnabled = false;
-                    this.saveSetting('password', '');
-                    this.saveSetting('passwordEnabled', false);
-                    this.updateToggle(this.passwordToggle, false);
-                    this.passwordSettings.style.display = 'none';
-                    this.passwordInput.value = '';
-                    this.confirmPasswordInput.value = '';
-                    this.showMessage('🗑️ Password cleared', 'success');
-                    this.triggerHaptic();
-                }
-            }
-            
-            lockApp() {
-                this.settings.isLocked = true;
-                this.lockedOverlay.classList.add('show');
-                this.stopListening();
-                this.wakeListening = false;
-                this.synthesis.cancel();
-            }
-            
-            unlockApp() {
-                this.settings.isLocked = false;
-                this.lockedOverlay.classList.remove('show');
-                this.passwordModal.classList.remove('show');
-                this.clearPinInputs();
-                
-                // Restart wake word listening if enabled
-                if (this.settings.wakeWordEnabled && this.settings.aiAccessEnabled) {
-                    setTimeout(() => this.startWakeWordListening(), 1000);
-                }
-            }
-            
-            showPasswordModal() {
-                this.passwordModal.classList.add('show');
-                this.pin1.focus();
-            }
-            
-            handlePinInput(event, index) {
-                const value = event.target.value;
-                
-                if (value && /^\d$/.test(value)) {
-                    event.target.classList.add('filled');
-                    
-                    // Move to next input
-                    if (index < 3) {
-                        [this.pin1, this.pin2, this.pin3, this.pin4][index + 1].focus();
-                    }
-                } else {
-                    event.target.classList.remove('filled');
-                }
-                
-                this.checkPinComplete();
-            }
-            
-            handlePinKeydown(event, index) {
-                // Handle backspace
-                if (event.key === 'Backspace' && !event.target.value && index > 0) {
-                    [this.pin1, this.pin2, this.pin3, this.pin4][index - 1].focus();
-                }
-            }
-            
-            checkPinComplete() {
-                const pins = [this.pin1, this.pin2, this.pin3, this.pin4];
-                const allFilled = pins.every(pin => pin.value && /^\d$/.test(pin.value));
-                this.unlockBtn.disabled = !allFilled;
-            }
-            
-            clearPinInputs() {
-                [this.pin1, this.pin2, this.pin3, this.pin4].forEach(pin => {
-                    pin.value = '';
-                    pin.classList.remove('filled');
-                });
-                this.unlockBtn.disabled = true;
-                this.pinError.style.display = 'none';
-            }
-            
-            attemptUnlock() {
-                const enteredPin = [this.pin1, this.pin2, this.pin3, this.pin4]
-                    .map(pin => pin.value).join('');
-                
-                if (enteredPin === this.settings.password) {
-                    this.unlockApp();
-                } else {
-                    this.pinError.style.display = 'block';
-                    this.clearPinInputs();
-                    
-                    // Shake animation
-                    this.passwordModal.style.animation = 'shake 0.5s ease-in-out';
-                    setTimeout(() => {
-                        this.passwordModal.style.animation = '';
-                    }, 500);
-                    
-                    this.pin1.focus();
                 }
             }
 
@@ -2200,18 +866,10 @@
                         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
                     }
 
-                    const stream = await navigator.mediaDevices.getUserMedia({ 
-                        audio: {
-                            echoCancellation: true,
-                            noiseSuppression: true,
-                            autoGainControl: true
-                        }
-                    });
-                    
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     this.microphone = this.audioContext.createMediaStreamSource(stream);
                     this.analyser = this.audioContext.createAnalyser();
-                    this.analyser.fftSize = 1024;
-                    this.analyser.smoothingTimeConstant = 0.8;
+                    this.analyser.fftSize = 256;
                     
                     this.microphone.connect(this.analyser);
                     this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
@@ -2223,19 +881,42 @@
             }
 
             animateWave() {
-                if (!this.analyser || (!this.isListening && !this.wakeListening)) return;
+                if (!this.analyser || !this.isListening) return;
                 
                 this.analyser.getByteFrequencyData(this.dataArray);
                 const bars = this.soundWave.querySelectorAll('.wave-bar');
                 
                 bars.forEach((bar, index) => {
                     const dataIndex = Math.floor(index * this.dataArray.length / bars.length);
-                    const height = (this.dataArray[dataIndex] / 255) * window.innerHeight * 0.6 * this.settings.waveResponsive;
-                    bar.style.height = Math.max(8, height) + 'px';
-                    bar.classList.toggle('active', height > 30);
+                    const height = (this.dataArray[dataIndex] / 255) * this.settings.waveHeight;
+                    bar.style.height = Math.max(4, height) + 'px';
+                    bar.classList.toggle('active', height > 20);
                 });
                 
                 this.waveAnimationId = requestAnimationFrame(() => this.animateWave());
+            }
+
+            toggleListening() {
+                if (!this.audioEnabled && this.settings.autoAudio) {
+                    this.enableAudio();
+                }
+
+                if (this.isListening) {
+                    this.stopListening();
+                } else {
+                    this.startListening();
+                }
+            }
+
+            enableAudio() {
+                if (!this.audioEnabled) {
+                    const utterance = new SpeechSynthesisUtterance('');
+                    utterance.volume = 0;
+                    this.synthesis.speak(utterance);
+                    
+                    this.audioEnabled = true;
+                    this.showMessage('🔊 Audio enabled! Voice responses active.', 'success');
+                }
             }
 
             startListening() {
@@ -2243,9 +924,6 @@
                     this.showMessage('Speech recognition not supported', 'error');
                     return;
                 }
-
-                this.wakeListening = false;
-                this.wakeIndicator.classList.remove('show', 'active');
 
                 try {
                     this.synthesis.cancel();
@@ -2256,7 +934,7 @@
             }
 
             stopListening() {
-                if (this.recognition && (this.isListening || this.wakeListening)) {
+                if (this.recognition && this.isListening) {
                     this.recognition.stop();
                 }
                 
@@ -2265,22 +943,15 @@
                 }
                 
                 this.isListening = false;
-                this.wakeListening = false;
-                this.wakeIndicator.classList.remove('show', 'active');
+                this.updateStatus('Ready to listen');
+                this.updateUI();
             }
 
             async processUserInput(input) {
-                if (!this.settings.aiAccessEnabled || this.settings.isLocked) {
-                    this.showMessage('🔒 AI access is disabled', 'error');
-                    return;
-                }
-                
                 this.isProcessing = true;
                 this.isListening = false;
-
-                // Animate bars while processing
-                const bars = this.soundWave.querySelectorAll('.wave-bar');
-                bars.forEach(bar => bar.classList.add('speaking'));
+                this.updateStatus('🤖 Processing...');
+                this.updateUI();
 
                 try {
                     const response = await this.sendToChatGPT(input);
@@ -2294,12 +965,8 @@
                     this.showMessage(`AI Error: ${error.message}`, 'error');
                 } finally {
                     this.isProcessing = false;
-                    bars.forEach(bar => bar.classList.remove('speaking'));
-                    
-                    // Restart wake word listening
-                    if (this.settings.wakeWordEnabled) {
-                        setTimeout(() => this.startWakeWordListening(), 2000);
-                    }
+                    this.updateStatus('Ready to listen');
+                    this.updateUI();
                 }
             }
 
@@ -2319,7 +986,7 @@
                         messages: [
                             {
                                 role: 'system',
-                                content: 'You are a helpful cosmic voice assistant. Provide concise, friendly responses suitable for speech with a touch of cosmic wisdom.'
+                                content: 'You are a helpful voice assistant. Provide concise, friendly responses suitable for speech.'
                             },
                             {
                                 role: 'user',
@@ -2345,6 +1012,8 @@
 
                 this.synthesis.cancel();
                 this.isSpeaking = true;
+                this.updateStatus('🗣️ Speaking...');
+                this.updateUI();
 
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.rate = this.settings.speechRate;
@@ -2354,6 +1023,8 @@
 
                 utterance.onend = () => {
                     this.isSpeaking = false;
+                    this.updateStatus('Ready to listen');
+                    this.updateUI();
                 };
 
                 this.synthesis.speak(utterance);
@@ -2361,13 +1032,11 @@
 
             showResponse(userInput, response) {
                 this.responseDisplay.innerHTML = `
-                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                        <div style="color: var(--wave-color-1); font-weight: 600; margin-bottom: 8px; font-size: 13px;">✨ You said:</div>
-                        <div style="opacity: 0.9;">"${userInput}"</div>
+                    <div style="margin-bottom: 10px;">
+                        <strong style="color: var(--primary-color);">You:</strong> "${userInput}"
                     </div>
                     <div>
-                        <div style="color: var(--wave-color-4); font-weight: 600; margin-bottom: 8px; font-size: 13px;">🌌 Cosmic AI:</div>
-                        <div style="opacity: 0.9;">${response}</div>
+                        <strong style="color: var(--success-color);">AI:</strong> ${response}
                     </div>
                 `;
                 
@@ -2375,18 +1044,12 @@
                 
                 setTimeout(() => {
                     this.responseDisplay.classList.remove('show');
-                }, 7000);
+                }, 5000);
             }
 
             showMessage(message, type = 'info') {
-                const typeColors = {
-                    error: '#ff6b6b',
-                    success: '#4CAF50',
-                    info: '#00bcd4'
-                };
-
                 this.responseDisplay.innerHTML = `
-                    <div class="${type}-message" style="border-left-color: ${typeColors[type] || '#00bcd4'};">
+                    <div class="${type}-message">
                         ${message}
                     </div>
                 `;
@@ -2398,39 +1061,24 @@
                 }, 3000);
             }
 
-            enableAudio() {
-                if (!this.audioEnabled) {
-                    // iOS audio context activation
-                    document.addEventListener('touchstart', () => {
-                        if (this.audioContext && this.audioContext.state === 'suspended') {
-                            this.audioContext.resume();
-                        }
-                    }, { once: true });
-
-                    const utterance = new SpeechSynthesisUtterance('');
-                    utterance.volume = 0;
-                    this.synthesis.speak(utterance);
-                    
-                    this.audioEnabled = true;
-                }
+            updateStatus(status) {
+                this.statusDisplay.textContent = status;
             }
 
-            openSettings() {
-                if (this.settings.passwordEnabled && this.settings.password && this.settings.isLocked) {
-                    this.showPasswordModal();
-                } else if (!this.settings.aiAccessEnabled && this.settings.passwordEnabled && this.settings.password) {
-                    this.showPasswordModal();
+            updateUI() {
+                this.micButton.className = 'mic-button';
+                if (this.isListening) {
+                    this.micButton.classList.add('listening');
+                    this.micButton.textContent = '🔴';
+                } else if (this.isProcessing) {
+                    this.micButton.classList.add('processing');
+                    this.micButton.textContent = '⚙️';
+                } else if (this.isSpeaking) {
+                    this.micButton.classList.add('speaking');
+                    this.micButton.textContent = '🗣️';
                 } else {
-                    this.settingsPanel.classList.add('open');
-                    this.settingsOverlay.classList.add('open');
-                    this.triggerHaptic();
+                    this.micButton.textContent = '🎤';
                 }
-            }
-
-            closeSettingsPanel() {
-                this.settingsPanel.classList.remove('open');
-                this.settingsOverlay.classList.remove('open');
-                this.triggerHaptic();
             }
 
             // Settings methods
@@ -2449,58 +1097,37 @@
                 });
 
                 // Update UI elements
-                setTimeout(() => this.updateUIElements(), 100);
-            }
+                setTimeout(() => {
+                    if (this.apiKeyInput) this.apiKeyInput.value = this.settings.apiKey;
+                    if (this.modelSelect) this.modelSelect.value = this.settings.model;
+                    if (this.speechRate) this.speechRate.value = this.settings.speechRate;
+                    if (this.speechPitch) this.speechPitch.value = this.settings.speechPitch;
+                    if (this.speechVolume) this.speechVolume.value = this.settings.speechVolume;
+                    if (this.languageSelect) this.languageSelect.value = this.settings.language;
+                    if (this.maxTokens) this.maxTokens.value = this.settings.maxTokens;
+                    if (this.waveCount) this.waveCount.value = this.settings.waveCount;
+                    if (this.waveHeight) this.waveHeight.value = this.settings.waveHeight;
+                    if (this.animSpeed) this.animSpeed.value = this.settings.animSpeed;
 
-            updateUIElements() {
-                // Update all input values
-                if (this.apiKeyInput) this.apiKeyInput.value = this.settings.apiKey;
-                if (this.modelSelect) this.modelSelect.value = this.settings.model;
-                if (this.speechRate) this.speechRate.value = this.settings.speechRate;
-                if (this.speechPitch) this.speechPitch.value = this.settings.speechPitch;
-                if (this.speechVolume) this.speechVolume.value = this.settings.speechVolume;
-                if (this.languageSelect) this.languageSelect.value = this.settings.language;
-                if (this.maxTokens) this.maxTokens.value = this.settings.maxTokens;
-                if (this.waveCount) this.waveCount.value = this.settings.waveCount;
-                if (this.waveResponsive) this.waveResponsive.value = this.settings.waveResponsive;
-                if (this.animSpeed) this.animSpeed.value = this.settings.animSpeed;
-                if (this.wakeWordInput) this.wakeWordInput.value = this.settings.wakeWord;
-                if (this.wakeResponseInput) this.wakeResponseInput.value = this.settings.wakeResponse;
-                if (this.wakeSensitivity) this.wakeSensitivity.value = this.settings.wakeSensitivity;
+                    // Update value displays
+                    if (this.rateValue) this.rateValue.textContent = this.settings.speechRate;
+                    if (this.pitchValue) this.pitchValue.textContent = this.settings.speechPitch;
+                    if (this.volumeValue) this.volumeValue.textContent = this.settings.speechVolume;
+                    if (this.maxTokensValue) this.maxTokensValue.textContent = this.settings.maxTokens;
+                    if (this.waveCountValue) this.waveCountValue.textContent = this.settings.waveCount;
+                    if (this.waveHeightValue) this.waveHeightValue.textContent = this.settings.waveHeight;
+                    if (this.animSpeedValue) this.animSpeedValue.textContent = this.settings.animSpeed;
 
-                // Update current wake word display
-                if (this.currentWakeWord) this.currentWakeWord.textContent = this.settings.wakeWord;
+                    // Update toggles
+                    this.updateToggle(this.continuousToggle, this.settings.continuousListening);
+                    this.updateToggle(this.autoAudioToggle, this.settings.autoAudio);
+                    this.updateToggle(this.showResponseToggle, this.settings.showResponse);
 
-                // Update value displays
-                if (this.rateValue) this.rateValue.textContent = this.settings.speechRate;
-                if (this.pitchValue) this.pitchValue.textContent = this.settings.speechPitch;
-                if (this.volumeValue) this.volumeValue.textContent = this.settings.speechVolume;
-                if (this.maxTokensValue) this.maxTokensValue.textContent = this.settings.maxTokens;
-                if (this.waveCountValue) this.waveCountValue.textContent = this.settings.waveCount;
-                if (this.responsiveValue) this.responsiveValue.textContent = this.settings.waveResponsive;
-                if (this.animSpeedValue) this.animSpeedValue.textContent = this.settings.animSpeed;
-                if (this.wakeSensitivityValue) this.wakeSensitivityValue.textContent = this.settings.wakeSensitivity;
-
-                // Update toggles
-                this.updateToggle(this.showResponseToggle, this.settings.showResponse);
-                this.updateToggle(this.wakeWordToggle, this.settings.wakeWordEnabled);
-                this.updateToggle(this.passwordToggle, this.settings.passwordEnabled);
-                this.updateToggle(this.aiAccessToggle, this.settings.aiAccessEnabled);
-
-                // Show/hide password settings
-                if (this.passwordSettings) {
-                    this.passwordSettings.style.display = this.settings.passwordEnabled ? 'block' : 'none';
-                }
-
-                // Update theme
-                document.querySelectorAll('.color-option').forEach(option => {
-                    option.classList.toggle('active', option.dataset.theme === this.settings.theme);
-                });
-
-                // Update wave scheme
-                document.querySelectorAll('.wave-color-option').forEach(option => {
-                    option.classList.toggle('active', option.dataset.waveScheme === this.settings.waveScheme);
-                });
+                    // Update theme
+                    document.querySelectorAll('.color-option').forEach(option => {
+                        option.classList.toggle('active', option.dataset.theme === this.settings.theme);
+                    });
+                }, 100);
             }
 
             saveSetting(key, value) {
@@ -2510,15 +1137,21 @@
                 if (key === 'language' && this.recognition) {
                     this.recognition.lang = value;
                 }
+                
+                if (key === 'continuousListening' && this.recognition) {
+                    this.recognition.continuous = value;
+                }
             }
 
             toggleSetting(key) {
                 this.settings[key] = !this.settings[key];
                 localStorage.setItem(`va_${key}`, this.settings[key]);
                 
-                const toggle = this.showResponseToggle;
+                const toggle = key === 'continuousListening' ? this.continuousToggle :
+                              key === 'autoAudio' ? this.autoAudioToggle :
+                              this.showResponseToggle;
+                
                 this.updateToggle(toggle, this.settings[key]);
-                this.triggerHaptic();
             }
 
             updateToggle(toggle, active) {
@@ -2531,12 +1164,21 @@
                 document.body.setAttribute('data-theme', this.settings.theme);
             }
 
+            openSettings() {
+                this.settingsPanel.classList.add('open');
+                this.settingsOverlay.classList.add('open');
+            }
+
+            closeSettings() {
+                this.settingsPanel.classList.remove('open');
+                this.settingsOverlay.classList.remove('open');
+            }
+
             saveApiKey() {
                 const apiKey = this.apiKeyInput.value.trim();
                 if (apiKey && apiKey.startsWith('sk-')) {
                     this.saveSetting('apiKey', apiKey);
                     this.showMessage('✅ API key saved successfully!', 'success');
-                    this.triggerHaptic();
                 } else {
                     this.showMessage('❌ Invalid API key format. Should start with "sk-"', 'error');
                 }
@@ -2549,7 +1191,7 @@
                     return;
                 }
 
-                this.testApiKeyBtn.classList.add('loading');
+                this.testApiKeyBtn.textContent = '🧪 Testing...';
                 this.testApiKeyBtn.disabled = true;
 
                 try {
@@ -2569,7 +1211,6 @@
                     if (response.ok) {
                         this.showMessage('✅ API key is valid and working!', 'success');
                         this.saveApiKey();
-                        this.triggerHaptic();
                     } else {
                         const error = await response.json();
                         this.showMessage(`❌ API key test failed: ${error.error?.message || 'Invalid key'}`, 'error');
@@ -2578,12 +1219,17 @@
                     this.showMessage(`❌ Test failed: ${error.message}`, 'error');
                 }
 
-                this.testApiKeyBtn.classList.remove('loading');
+                this.testApiKeyBtn.textContent = '🧪 Test API';
                 this.testApiKeyBtn.disabled = false;
             }
 
             testSpeech() {
-                this.speakResponse('Greetings from the cosmic realm! I am your AI voice assistant, channeling the wisdom of the universe through speech synthesis.');
+                this.enableAudio();
+                this.speakResponse('Hello! I am your AI voice assistant. Speech synthesis is working correctly.');
+            }
+
+            testMicrophone() {
+                this.showMessage('🎤 Click the microphone to test speech recognition', 'info');
             }
 
             testWaveAnimation() {
@@ -2592,25 +1238,20 @@
                 
                 const testAnimation = () => {
                     bars.forEach((bar, index) => {
-                        const height = 100 + Math.sin(time + index * 0.8) * 80;
+                        const height = 50 + Math.sin(time + index * 0.5) * 40;
                         bar.style.height = height + 'px';
                         bar.classList.add('active');
                     });
-                    time += 0.4;
+                    time += 0.2;
                     
-                    if (time < 15) {
-                        setTimeout(testAnimation, this.settings.animSpeed);
+                    if (time < 10) {
+                        setTimeout(testAnimation, 100);
                     } else {
                         bars.forEach(bar => bar.classList.remove('active'));
                     }
                 };
                 
                 testAnimation();
-            }
-
-            testWakeWord() {
-                this.showMessage(`🌌 Testing cosmic wake word detection with: "${this.settings.wakeWord}"`, 'info');
-                this.handleWakeWordDetected();
             }
 
             exportSettings() {
@@ -2623,12 +1264,11 @@
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `cosmic-voice-assistant-settings-${new Date().toISOString().split('T')[0]}.json`;
+                a.download = `voice-assistant-settings-${new Date().toISOString().split('T')[0]}.json`;
                 a.click();
                 URL.revokeObjectURL(url);
 
-                this.showMessage('✅ Cosmic settings exported successfully!', 'success');
-                this.triggerHaptic();
+                this.showMessage('✅ Settings exported successfully!', 'success');
             }
 
             importSettings(event) {
@@ -2647,12 +1287,10 @@
                             });
                         }
 
-                        this.updateUIElements();
+                        this.loadSettings();
                         this.initializeWave();
                         this.applyTheme();
-                        this.applyWaveScheme();
-                        this.showMessage('✅ Cosmic settings imported successfully!', 'success');
-                        this.triggerHaptic();
+                        this.showMessage('✅ Settings imported successfully!', 'success');
                     } catch (error) {
                         this.showMessage('❌ Invalid settings file', 'error');
                     }
@@ -2662,7 +1300,7 @@
             }
 
             resetSettings() {
-                if (confirm('Are you sure you want to reset all cosmic settings? This cannot be undone.')) {
+                if (confirm('Are you sure you want to reset all settings? This cannot be undone.')) {
                     Object.keys(localStorage).forEach(key => {
                         if (key.startsWith('va_')) {
                             localStorage.removeItem(key);
@@ -2677,35 +1315,26 @@
                         speechVolume: 1.0,
                         language: 'en-US',
                         theme: 'default',
+                        continuousListening: false,
+                        autoAudio: true,
                         showResponse: true,
                         maxTokens: 150,
-                        waveCount: 120,
-                        waveResponsive: 1.5,
-                        animSpeed: 60,
-                        waveScheme: 'neon-spectrum',
-                        wakeWordEnabled: true,
-                        wakeWord: 'Hey Assistant',
-                        wakeResponse: "Hi dear, I'm here!",
-                        wakeSensitivity: 0.7,
-                        passwordEnabled: false,
-                        password: '',
-                        aiAccessEnabled: true,
-                        isLocked: false
+                        waveCount: 50,
+                        waveHeight: 200,
+                        animSpeed: 100
                     };
 
-                    this.updateUIElements();
+                    this.loadSettings();
                     this.initializeWave();
                     this.applyTheme();
-                    this.applyWaveScheme();
-                    this.showMessage('✅ All cosmic settings reset to defaults!', 'success');
-                    this.triggerHaptic();
+                    this.showMessage('✅ All settings reset to defaults!', 'success');
                 }
             }
         }
 
-        // Initialize the cosmic voice assistant
+        // Initialize the voice assistant
         document.addEventListener('DOMContentLoaded', () => {
-            window.voiceAssistant = new CosmicVoiceAssistant();
+            window.voiceAssistant = new CleanVoiceAssistant();
         });
 
         // Handle page visibility changes
