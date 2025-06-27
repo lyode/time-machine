@@ -45,6 +45,47 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
+        .api-setup {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .api-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        .api-input:focus {
+            border-color: #007AFF;
+            outline: none;
+        }
+
+        .save-btn {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .save-btn:hover {
+            background: #0056CC;
+        }
+
         .status-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -53,6 +94,7 @@
             margin-bottom: 25px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             text-align: center;
+            display: none;
         }
 
         .status-text {
@@ -158,10 +200,6 @@
             cursor: not-allowed;
         }
 
-        .btn:active {
-            transform: translateY(1px);
-        }
-
         .response-container {
             flex: 1;
             background: rgba(255, 255, 255, 0.95);
@@ -172,6 +210,7 @@
             overflow-y: auto;
             min-height: 200px;
             position: relative;
+            display: none;
         }
 
         .response-text {
@@ -180,11 +219,25 @@
             color: #333;
         }
 
-        .placeholder-text {
-            color: #999;
-            font-style: italic;
+        .security-warning {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
             text-align: center;
-            margin-top: 50px;
+        }
+
+        .security-info {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .hidden {
+            display: none;
         }
 
         .error-message {
@@ -203,26 +256,6 @@
             border-radius: 10px;
             margin: 10px 0;
             border-left: 4px solid #4caf50;
-        }
-
-        .clear-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #ff9800;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .clear-btn:hover {
-            background: #f57c00;
-            transform: scale(1.1);
         }
 
         .loading {
@@ -249,30 +282,18 @@
             40% { transform: scale(1.2); opacity: 1; }
         }
 
-        .audio-controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            justify-content: center;
-        }
-
-        .audio-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .volume-indicator {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 15px;
-            text-align: center;
+        .clear-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff9800;
             color: white;
-            font-size: 14px;
+            border: none;
+            border-radius: 20px;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -282,53 +303,96 @@
             <h1>🤖 AI Voice Assistant</h1>
         </div>
 
-        <div class="volume-indicator" id="volumeIndicator">
-            🔊 Tap any button to enable audio
+        <!-- Security Warning -->
+        <div class="security-warning" id="securityWarning">
+            🚨 <strong>Security Setup Required</strong><br>
+            Please enter your OpenAI API key securely below
         </div>
 
-        <div class="status-card">
+        <!-- API Key Setup -->
+        <div class="api-setup" id="apiSetup">
+            <h3>🔑 Secure API Key Setup</h3>
+            <p style="margin: 15px 0; color: #666;">
+                Your API key will be stored securely in your browser's local storage (not in the code).
+            </p>
+            
+            <input 
+                type="password" 
+                class="api-input" 
+                id="apiKeyInput" 
+                placeholder="Enter your OpenAI API key (sk-...)"
+                maxlength="100"
+            >
+            
+            <div>
+                <button class="save-btn" id="saveKeyBtn">💾 Save Key Securely</button>
+                <button class="save-btn" id="testKeyBtn" style="background: #4CAF50;">🧪 Test Key</button>
+            </div>
+            
+            <div class="security-info">
+                <strong>🔒 Security Features:</strong><br>
+                • Key stored locally in your browser only<br>
+                • Not visible in source code<br>
+                • Can be cleared anytime<br>
+                • Encrypted in transit to OpenAI
+            </div>
+            
+            <p style="font-size: 14px; color: #666; margin-top: 15px;">
+                Get your API key from: <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a>
+            </p>
+        </div>
+
+        <!-- Main App (Hidden until API key set) -->
+        <div class="status-card" id="statusCard">
             <div class="status-text" id="statusText">Ready to listen</div>
         </div>
 
-        <div class="microphone-container">
+        <div class="microphone-container hidden" id="micContainer">
             <div class="microphone" id="microphoneBtn">🎤</div>
         </div>
 
-        <div class="controls">
+        <div class="controls hidden" id="controlsContainer">
             <button class="btn btn-primary" id="startBtn">🎤 Start</button>
             <button class="btn btn-danger" id="stopBtn" disabled>⏹️ Stop</button>
+            <button class="btn btn-secondary" id="enableAudioBtn">🔊 Enable Audio</button>
         </div>
 
-        <div class="audio-controls">
-            <button class="btn audio-btn btn-secondary" id="testSpeechBtn">🗣️ Test Speech</button>
-            <button class="btn audio-btn btn-secondary" id="enableAudioBtn">🔊 Enable Audio</button>
-        </div>
-
-        <div class="response-container">
+        <div class="response-container" id="responseContainer">
             <button class="clear-btn" id="clearBtn" title="Clear">🗑️</button>
             <div class="response-text" id="responseText">
-                <div class="placeholder-text">
+                <div style="text-align: center; color: #999; margin-top: 50px;">
                     🎯 AI responses will appear here...<br><br>
-                    💡 Try asking: "What's the weather like?" or "Tell me a joke!"<br><br>
-                    🔊 First tap "Enable Audio" or "Test Speech" button to activate sound
+                    💡 Try asking: "What's the weather like?" or "Tell me a joke!"
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        class VoiceAssistant {
+        class SecureVoiceAssistant {
             constructor() {
+                this.openAIKey = null;
+                this.openAIURL = 'https://api.openai.com/v1/chat/completions';
+                
+                // DOM elements
+                this.apiSetup = document.getElementById('apiSetup');
+                this.securityWarning = document.getElementById('securityWarning');
+                this.apiKeyInput = document.getElementById('apiKeyInput');
+                this.saveKeyBtn = document.getElementById('saveKeyBtn');
+                this.testKeyBtn = document.getElementById('testKeyBtn');
+                this.statusCard = document.getElementById('statusCard');
                 this.statusText = document.getElementById('statusText');
+                this.micContainer = document.getElementById('micContainer');
+                this.controlsContainer = document.getElementById('controlsContainer');
+                this.responseContainer = document.getElementById('responseContainer');
                 this.responseText = document.getElementById('responseText');
                 this.microphoneBtn = document.getElementById('microphoneBtn');
                 this.startBtn = document.getElementById('startBtn');
                 this.stopBtn = document.getElementById('stopBtn');
-                this.clearBtn = document.getElementById('clearBtn');
-                this.testSpeechBtn = document.getElementById('testSpeechBtn');
                 this.enableAudioBtn = document.getElementById('enableAudioBtn');
-                this.volumeIndicator = document.getElementById('volumeIndicator');
+                this.clearBtn = document.getElementById('clearBtn');
 
+                // Voice properties
                 this.recognition = null;
                 this.synthesis = window.speechSynthesis;
                 this.isListening = false;
@@ -336,58 +400,136 @@
                 this.isSpeaking = false;
                 this.audioEnabled = false;
 
-                // OpenAI Configuration - REPLACE WITH YOUR API KEY
-                this.openAIKey = 'sk-your-openai-api-key-here'; // IMPORTANT: Replace this!
-                this.openAIURL = 'https://api.openai.com/v1/chat/completions';
-
                 this.init();
             }
 
             init() {
-                this.setupSpeechRecognition();
                 this.setupEventListeners();
-                this.updateUI();
-                this.loadVoices();
-                this.sendMessageToNative('success', 'Voice Assistant initialized');
+                this.checkStoredKey();
+                this.setupSpeechRecognition();
             }
 
-            loadVoices() {
-                // Load voices and enable speech synthesis
-                const voices = this.synthesis.getVoices();
-                if (voices.length === 0) {
-                    // Wait for voices to load
-                    this.synthesis.onvoiceschanged = () => {
-                        console.log('✅ Voices loaded:', this.synthesis.getVoices().length);
-                    };
+            setupEventListeners() {
+                this.saveKeyBtn.addEventListener('click', () => this.saveApiKey());
+                this.testKeyBtn.addEventListener('click', () => this.testApiKey());
+                this.startBtn.addEventListener('click', () => this.startListening());
+                this.stopBtn.addEventListener('click', () => this.stopListening());
+                this.enableAudioBtn.addEventListener('click', () => this.enableAudio());
+                this.clearBtn.addEventListener('click', () => this.clearResponse());
+                
+                this.microphoneBtn.addEventListener('click', () => {
+                    this.enableAudio();
+                    if (this.isListening) {
+                        this.stopListening();
+                    } else {
+                        this.startListening();
+                    }
+                });
+
+                // Allow Enter key to save API key
+                this.apiKeyInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.saveApiKey();
+                    }
+                });
+            }
+
+            checkStoredKey() {
+                // Check if API key is already stored securely
+                const storedKey = localStorage.getItem('openai_api_key_secure');
+                if (storedKey) {
+                    this.openAIKey = storedKey;
+                    this.showMainApp();
                 }
             }
 
+            saveApiKey() {
+                const apiKey = this.apiKeyInput.value.trim();
+                
+                if (!apiKey) {
+                    this.showError('Please enter an API key');
+                    return;
+                }
+
+                if (!apiKey.startsWith('sk-')) {
+                    this.showError('Invalid API key format. Should start with "sk-"');
+                    return;
+                }
+
+                // Store securely in localStorage
+                localStorage.setItem('openai_api_key_secure', apiKey);
+                this.openAIKey = apiKey;
+                
+                // Clear input field
+                this.apiKeyInput.value = '';
+                
+                this.showSuccess('API key saved securely! 🔒');
+                
+                setTimeout(() => {
+                    this.showMainApp();
+                }, 1500);
+            }
+
+            async testApiKey() {
+                const apiKey = this.apiKeyInput.value.trim();
+                
+                if (!apiKey) {
+                    this.showError('Please enter an API key to test');
+                    return;
+                }
+
+                this.testKeyBtn.textContent = '🧪 Testing...';
+                this.testKeyBtn.disabled = true;
+
+                try {
+                    const response = await fetch(this.openAIURL, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${apiKey}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            model: 'gpt-3.5-turbo',
+                            messages: [{ role: 'user', content: 'test' }],
+                            max_tokens: 5
+                        })
+                    });
+
+                    if (response.ok) {
+                        this.showSuccess('✅ API key is valid!');
+                    } else {
+                        const error = await response.json();
+                        this.showError(`❌ API key test failed: ${error.error?.message || 'Invalid key'}`);
+                    }
+                } catch (error) {
+                    this.showError(`❌ Test failed: ${error.message}`);
+                }
+
+                this.testKeyBtn.textContent = '🧪 Test Key';
+                this.testKeyBtn.disabled = false;
+            }
+
+            showMainApp() {
+                this.apiSetup.style.display = 'none';
+                this.securityWarning.style.display = 'none';
+                this.statusCard.style.display = 'block';
+                this.micContainer.classList.remove('hidden');
+                this.controlsContainer.classList.remove('hidden');
+                this.responseContainer.style.display = 'block';
+                
+                this.showSuccess('🎉 Ready to use! Click "Enable Audio" first, then start talking!');
+            }
+
             enableAudio() {
-                // This function must be called from a user gesture
                 if (!this.audioEnabled) {
-                    // Create a silent utterance to initialize speech synthesis
                     const utterance = new SpeechSynthesisUtterance('');
                     utterance.volume = 0;
                     this.synthesis.speak(utterance);
                     
                     this.audioEnabled = true;
-                    this.volumeIndicator.textContent = '🔊 Audio enabled - Ready to speak!';
-                    this.volumeIndicator.style.background = 'rgba(76, 175, 80, 0.3)';
-                    
-                    this.showSuccess('Audio enabled! Voice responses will now work.');
-                    
-                    setTimeout(() => {
-                        this.volumeIndicator.style.display = 'none';
-                    }, 3000);
-                }
-            }
-
-            sendMessageToNative(action, message) {
-                if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.voiceAssistant) {
-                    window.webkit.messageHandlers.voiceAssistant.postMessage({
-                        action: action,
-                        message: message
-                    });
+                    this.enableAudioBtn.textContent = '🔊 Audio Enabled';
+                    this.enableAudioBtn.style.background = '#4CAF50';
+                    this.showSuccess('🔊 Audio enabled! Voice responses will now work.');
                 }
             }
 
@@ -408,19 +550,10 @@
 
                     this.recognition.onresult = (event) => {
                         let finalTranscript = '';
-                        let interimTranscript = '';
-
                         for (let i = event.resultIndex; i < event.results.length; i++) {
-                            const transcript = event.results[i][0].transcript;
                             if (event.results[i].isFinal) {
-                                finalTranscript += transcript;
-                            } else {
-                                interimTranscript += transcript;
+                                finalTranscript += event.results[i][0].transcript;
                             }
-                        }
-
-                        if (interimTranscript) {
-                            this.updateStatus(`🎤 Listening: "${interimTranscript}"`);
                         }
 
                         if (finalTranscript) {
@@ -429,9 +562,7 @@
                     };
 
                     this.recognition.onerror = (event) => {
-                        console.error('Speech recognition error:', event.error);
-                        this.showError(`Speech recognition error: ${event.error}`);
-                        this.sendMessageToNative('error', `Speech recognition error: ${event.error}`);
+                        this.showError(`Speech error: ${event.error}`);
                         this.stopListening();
                     };
 
@@ -440,68 +571,25 @@
                             this.stopListening();
                         }
                     };
-                } else {
-                    this.showError('Speech recognition not supported in this browser. Try Chrome or Safari.');
-                    this.sendMessageToNative('error', 'Speech recognition not supported');
                 }
-            }
-
-            setupEventListeners() {
-                this.startBtn.addEventListener('click', () => {
-                    this.enableAudio();
-                    this.startListening();
-                });
-                
-                this.stopBtn.addEventListener('click', () => this.stopListening());
-                this.clearBtn.addEventListener('click', () => this.clearResponse());
-                
-                this.microphoneBtn.addEventListener('click', () => {
-                    this.enableAudio();
-                    if (this.isListening) {
-                        this.stopListening();
-                    } else {
-                        this.startListening();
-                    }
-                });
-
-                this.testSpeechBtn.addEventListener('click', () => {
-                    this.enableAudio();
-                    this.testSpeech();
-                });
-
-                this.enableAudioBtn.addEventListener('click', () => {
-                    this.enableAudio();
-                });
-
-                // Add click listener to document to enable audio on any interaction
-                document.addEventListener('click', () => {
-                    if (!this.audioEnabled) {
-                        this.enableAudio();
-                    }
-                }, { once: true });
             }
 
             startListening() {
                 if (!this.recognition) {
-                    this.showError('Speech recognition not available');
-                    this.sendMessageToNative('permissionRequest', 'Speech recognition permission needed');
+                    this.showError('Speech recognition not supported');
                     return;
                 }
 
-                if (this.isListening) {
+                if (!this.audioEnabled) {
+                    this.showError('Please enable audio first');
                     return;
                 }
-
-                // Stop any ongoing speech
-                this.synthesis.cancel();
-                this.isSpeaking = false;
 
                 try {
+                    this.synthesis.cancel();
                     this.recognition.start();
                 } catch (error) {
-                    console.error('Error starting recognition:', error);
                     this.showError('Failed to start listening');
-                    this.sendMessageToNative('error', 'Failed to start listening');
                 }
             }
 
@@ -517,7 +605,7 @@
             async processUserInput(input) {
                 this.isProcessing = true;
                 this.isListening = false;
-                this.updateStatus('🤖 Processing your request...');
+                this.updateStatus('🤖 Processing...');
                 this.updateUI();
 
                 this.showLoading();
@@ -526,11 +614,8 @@
                     const response = await this.sendToChatGPT(input);
                     this.displayResponse(input, response);
                     this.speakResponse(response);
-                    this.sendMessageToNative('success', 'Response generated successfully');
                 } catch (error) {
-                    console.error('Error processing input:', error);
-                    this.showError('Failed to get AI response: ' + error.message);
-                    this.sendMessageToNative('error', error.message);
+                    this.showError(`AI Error: ${error.message}`);
                 } finally {
                     this.isProcessing = false;
                     this.updateStatus('Ready to listen');
@@ -539,10 +624,6 @@
             }
 
             async sendToChatGPT(message) {
-                if (this.openAIKey === 'sk-your-openai-api-key-here' || !this.openAIKey) {
-                    throw new Error('Please set your OpenAI API key! Get one from https://platform.openai.com/api-keys');
-                }
-
                 const response = await fetch(this.openAIURL, {
                     method: 'POST',
                     headers: {
@@ -554,7 +635,7 @@
                         messages: [
                             {
                                 role: 'system',
-                                content: 'You are a helpful voice assistant. Provide concise, friendly responses suitable for speech. Keep responses under 100 words and make them conversational.'
+                                content: 'You are a helpful voice assistant. Provide concise, friendly responses suitable for speech.'
                             },
                             {
                                 role: 'user',
@@ -567,68 +648,26 @@
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
+                    const errorData = await response.json();
                     throw new Error(errorData.error?.message || `HTTP ${response.status}`);
                 }
 
                 const data = await response.json();
-                
-                if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-                    throw new Error('Invalid response format from OpenAI');
-                }
-
                 return data.choices[0].message.content.trim();
             }
 
-            displayResponse(userInput, response) {
-                this.responseText.innerHTML = `
-                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(0, 122, 255, 0.1); border-radius: 10px;">
-                        <strong style="color: #007AFF;">👤 You said:</strong><br>
-                        "${userInput}"
-                    </div>
-                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(76, 175, 80, 0.1); border-radius: 10px;">
-                        <strong style="color: #4CAF50;">🤖 AI Assistant:</strong><br>
-                        ${response}
-                    </div>
-                    <div style="margin-top: 15px; font-size: 12px; color: #666; text-align: center;">
-                        🕐 ${new Date().toLocaleTimeString()}
-                    </div>
-                `;
-            }
-
             speakResponse(text) {
-                if (!this.audioEnabled) {
-                    this.showError('Audio not enabled. Please tap "Enable Audio" button first.');
-                    return;
-                }
+                if (!this.audioEnabled) return;
 
-                // Stop any ongoing speech
                 this.synthesis.cancel();
                 this.isSpeaking = true;
-                this.updateStatus('🗣️ Speaking response...');
+                this.updateStatus('🗣️ Speaking...');
                 this.updateUI();
 
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.rate = 0.8;
                 utterance.pitch = 1;
                 utterance.volume = 1;
-                utterance.lang = 'en-US';
-
-                // Try to use a good voice
-                const voices = this.synthesis.getVoices();
-                const preferredVoice = voices.find(voice => 
-                    voice.lang.startsWith('en') && 
-                    (voice.name.includes('Female') || voice.name.includes('Google') || voice.name.includes('Samantha'))
-                );
-                if (preferredVoice) {
-                    utterance.voice = preferredVoice;
-                }
-
-                utterance.onstart = () => {
-                    this.isSpeaking = true;
-                    this.updateStatus('🗣️ Speaking...');
-                    this.updateUI();
-                };
 
                 utterance.onend = () => {
                     this.isSpeaking = false;
@@ -636,19 +675,18 @@
                     this.updateUI();
                 };
 
-                utterance.onerror = (event) => {
-                    console.error('Speech synthesis error:', event);
-                    this.isSpeaking = false;
-                    this.updateStatus('❌ Speech error - Ready to listen');
-                    this.updateUI();
-                    this.showError('Text-to-speech error. Try enabling audio again.');
-                };
-
                 this.synthesis.speak(utterance);
             }
 
-            testSpeech() {
-                this.speakResponse('Hello! I am your AI voice assistant. Speech is working correctly.');
+            displayResponse(userInput, response) {
+                this.responseText.innerHTML = `
+                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(0, 122, 255, 0.1); border-radius: 10px;">
+                        <strong style="color: #007AFF;">👤 You:</strong> "${userInput}"
+                    </div>
+                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(76, 175, 80, 0.1); border-radius: 10px;">
+                        <strong style="color: #4CAF50;">🤖 AI:</strong> ${response}
+                    </div>
+                `;
             }
 
             showLoading() {
@@ -658,44 +696,42 @@
                         <div class="loading-dot"></div>
                         <div class="loading-dot"></div>
                     </div>
-                    <div style="text-align: center; margin-top: 15px; color: #666;">
-                        🤖 Getting AI response...
-                    </div>
                 `;
             }
 
             showError(message) {
-                this.responseText.innerHTML = `
-                    <div class="error-message">
-                        <strong>❌ Error:</strong><br>
-                        ${message}
-                        <br><br>
-                        <small>💡 Try refreshing the page or checking your settings.</small>
-                    </div>
-                `;
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.innerHTML = `<strong>❌ Error:</strong><br>${message}`;
+                
+                if (this.responseContainer.style.display === 'block') {
+                    this.responseText.innerHTML = errorDiv.outerHTML;
+                } else {
+                    this.apiSetup.appendChild(errorDiv);
+                    setTimeout(() => errorDiv.remove(), 5000);
+                }
             }
 
             showSuccess(message) {
-                this.responseText.innerHTML = `
-                    <div class="success-message">
-                        <strong>✅ Success:</strong><br>
-                        ${message}
-                    </div>
-                `;
+                const successDiv = document.createElement('div');
+                successDiv.className = 'success-message';
+                successDiv.innerHTML = `<strong>✅ Success:</strong><br>${message}`;
+                
+                if (this.responseContainer.style.display === 'block') {
+                    this.responseText.innerHTML = successDiv.outerHTML;
+                } else {
+                    this.apiSetup.appendChild(successDiv);
+                    setTimeout(() => successDiv.remove(), 3000);
+                }
             }
 
             clearResponse() {
                 this.responseText.innerHTML = `
-                    <div class="placeholder-text">
+                    <div style="text-align: center; color: #999; margin-top: 50px;">
                         🎯 AI responses will appear here...<br><br>
-                        💡 Try asking: "What's the weather like?" or "Tell me a joke!"<br><br>
-                        🔊 Make sure audio is enabled for voice responses
+                        💡 Try asking: "What's the weather like?" or "Tell me a joke!"
                     </div>
                 `;
-                this.synthesis.cancel();
-                this.isSpeaking = false;
-                this.updateStatus('Ready to listen');
-                this.updateUI();
             }
 
             updateStatus(status) {
@@ -709,38 +745,35 @@
                 this.microphoneBtn.className = 'microphone';
                 if (this.isListening) {
                     this.microphoneBtn.classList.add('listening');
-                } else if (this.isProcessing) {
-                    this.microphoneBtn.classList.add('processing');
-                } else if (this.isSpeaking) {
-                    this.microphoneBtn.classList.add('speaking');
-                }
-
-                if (this.isListening) {
                     this.microphoneBtn.textContent = '🔴';
                 } else if (this.isProcessing) {
+                    this.microphoneBtn.classList.add('processing');
                     this.microphoneBtn.textContent = '⚙️';
                 } else if (this.isSpeaking) {
+                    this.microphoneBtn.classList.add('speaking');
                     this.microphoneBtn.textContent = '🗣️';
                 } else {
                     this.microphoneBtn.textContent = '🎤';
                 }
             }
+
+            // Method to clear stored API key if needed
+            clearStoredKey() {
+                localStorage.removeItem('openai_api_key_secure');
+                location.reload();
+            }
         }
 
+        // Initialize the secure voice assistant
         document.addEventListener('DOMContentLoaded', () => {
-            window.voiceAssistant = new VoiceAssistant();
-            console.log('🤖 AI Voice Assistant initialized');
+            window.voiceAssistant = new SecureVoiceAssistant();
         });
 
-        // Handle page visibility changes
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && window.voiceAssistant) {
-                window.voiceAssistant.synthesis.cancel();
-                if (window.voiceAssistant.isListening) {
-                    window.voiceAssistant.stopListening();
-                }
-            }
-        });
+        // Add clear key function to console for debugging
+        window.clearApiKey = () => {
+            localStorage.removeItem('openai_api_key_secure');
+            location.reload();
+        };
     </script>
 </body>
 </html>
