@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#007AFF">
-    <title>AI Voice Assistant Pro</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cosmic Voice AI">
+    <title>Cosmic Voice Assistant Pro</title>
     
     <style>
         :root {
@@ -23,6 +26,12 @@
             --wave-color-3: #4169e1;
             --wave-color-4: #6495ed;
             --wave-color-5: #b0c4de;
+            
+            /* iPhone 15 Pro Max safe areas */
+            --safe-area-top: env(safe-area-inset-top, 59px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 34px);
+            --safe-area-left: env(safe-area-inset-left, 0px);
+            --safe-area-right: env(safe-area-inset-right, 0px);
         }
 
         [data-theme="cosmic"] {
@@ -56,19 +65,48 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
             background: var(--background-gradient);
-            min-height: 100vh;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             touch-action: manipulation;
             overflow: hidden;
             color: var(--text-color);
-            position: relative;
+            padding-top: var(--safe-area-top);
+            padding-bottom: var(--safe-area-bottom);
+            padding-left: var(--safe-area-left);
+            padding-right: var(--safe-area-right);
+        }
+
+        /* iPhone 15 Pro Max specific optimizations */
+        @media screen and (width: 430px) and (height: 932px) {
+            :root {
+                --safe-area-top: 59px;
+                --safe-area-bottom: 34px;
+            }
+        }
+
+        /* Landscape mode for iPhone 15 Pro Max */
+        @media screen and (width: 932px) and (height: 430px) {
+            :root {
+                --safe-area-top: 0px;
+                --safe-area-bottom: 21px;
+                --safe-area-left: 59px;
+                --safe-area-right: 59px;
+            }
         }
 
         /* Cosmic Background Effects */
@@ -204,48 +242,51 @@
             }
         }
 
-        /* Minimized Settings Button */
+        /* Settings Button - iPhone optimized */
         .settings-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
+            position: fixed;
+            top: calc(var(--safe-area-top) + 10px);
+            right: calc(var(--safe-area-right) + 15px);
             background: rgba(255, 255, 255, 0.1);
             border: none;
             border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            font-size: 14px;
+            width: 44px;
+            height: 44px;
+            font-size: 16px;
             color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             z-index: 100;
-            opacity: 0.5;
+            opacity: 0.6;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            touch-action: manipulation;
         }
 
-        .settings-btn:hover {
+        .settings-btn:active {
             background: rgba(255, 255, 255, 0.2);
             color: rgba(255, 255, 255, 1);
-            transform: scale(1.1);
+            transform: scale(0.95);
             opacity: 1;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
-        /* Wake Word Indicator */
+        /* Wake Word Indicator - iPhone optimized */
         .wake-indicator {
-            position: absolute;
-            bottom: 30px;
+            position: fixed;
+            bottom: calc(var(--safe-area-bottom) + 20px);
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
             opacity: 0;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: calc(100vw - 40px);
+            text-align: center;
         }
 
         .wake-indicator.show {
@@ -259,7 +300,7 @@
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
         }
 
-        /* Full Screen Wave Container */
+        /* Full Screen Wave Container - iPhone optimized */
         .wave-container {
             position: absolute;
             top: 0;
@@ -271,6 +312,7 @@
             align-items: center;
             cursor: pointer;
             z-index: 10;
+            padding: var(--safe-area-top) var(--safe-area-right) var(--safe-area-bottom) var(--safe-area-left);
         }
 
         .sound-wave {
@@ -278,16 +320,15 @@
             align-items: center;
             justify-content: center;
             gap: 2px;
-            width: 90vw;
-            height: 80vh;
-            max-width: 1200px;
+            width: 100%;
+            height: 100%;
             transition: all 0.3s ease;
         }
 
         .wave-bar {
             flex: 1;
-            max-width: 8px;
-            border-radius: 4px;
+            max-width: 6px;
+            border-radius: 3px;
             transition: all 0.1s ease;
             min-height: 8px;
             transform-origin: center;
@@ -349,23 +390,23 @@
             }
         }
 
-        /* Settings Panel */
+        /* Settings Panel - iPhone optimized */
         .settings-panel {
             position: fixed;
             top: 0;
             right: -100%;
-            width: 90%;
-            max-width: 450px;
+            width: 100vw;
             height: 100vh;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(20px);
             box-shadow: -5px 0 20px rgba(0,0,0,0.5);
-            padding: 20px;
+            padding: var(--safe-area-top) 20px var(--safe-area-bottom) 20px;
             overflow-y: auto;
-            transition: right 0.3s ease;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
             color: var(--text-color);
             border-left: 1px solid rgba(255, 255, 255, 0.1);
+            -webkit-overflow-scrolling: touch;
         }
 
         .settings-panel.open {
@@ -377,55 +418,72 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
-            padding-bottom: 15px;
+            padding-bottom: 20px;
             border-bottom: 2px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 10;
+        }
+
+        .settings-header h2 {
+            font-size: 22px;
+            font-weight: 700;
         }
 
         .close-settings {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
             cursor: pointer;
             color: var(--text-color);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            touch-action: manipulation;
         }
 
-        .close-settings:hover {
+        .close-settings:active {
             background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
+            transform: scale(0.95);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         .setting-group {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .setting-label {
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: block;
             font-size: 16px;
         }
 
         .setting-input, .setting-textarea {
             width: 100%;
-            padding: 12px;
+            padding: 16px;
             border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             background: rgba(255,255,255,0.1);
             color: var(--text-color);
             font-family: inherit;
+            -webkit-appearance: none;
+            touch-action: manipulation;
         }
 
         .setting-textarea {
-            min-height: 80px;
+            min-height: 100px;
             resize: vertical;
         }
 
@@ -437,21 +495,48 @@
 
         .setting-range {
             width: 100%;
-            margin: 10px 0;
+            height: 8px;
+            margin: 15px 0;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .setting-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 10px rgba(0, 122, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .setting-range::-webkit-slider-thumb:active {
+            transform: scale(1.2);
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.6);
         }
 
         .setting-select {
             width: 100%;
-            padding: 12px;
+            padding: 16px;
             border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             background: rgba(255,255,255,0.1);
             color: var(--text-color);
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
         }
 
         .btn {
-            padding: 12px 20px;
+            padding: 16px 24px;
             border: none;
             border-radius: 25px;
             font-size: 14px;
@@ -460,7 +545,12 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin: 5px;
+            margin: 8px;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
         }
 
         .btn-primary {
@@ -483,78 +573,84 @@
             color: white;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
+        .btn:active {
+            transform: translateY(-2px) scale(0.98);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .toggle-switch {
             position: relative;
-            width: 60px;
-            height: 30px;
+            width: 68px;
+            height: 36px;
             background: rgba(255,255,255,0.2);
-            border-radius: 15px;
+            border-radius: 18px;
             cursor: pointer;
             transition: background 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            touch-action: manipulation;
         }
 
         .toggle-switch.active {
             background: var(--success-color);
+            border-color: var(--success-color);
         }
 
         .toggle-slider {
             position: absolute;
             top: 3px;
             left: 3px;
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             background: white;
             border-radius: 50%;
             transition: transform 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .toggle-switch.active .toggle-slider {
-            transform: translateX(30px);
+            transform: translateX(32px);
         }
 
         .setting-toggle {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 15px 0;
+            margin: 20px 0;
+            padding: 12px 0;
         }
 
         .color-picker {
-            display: flex;
-            gap: 10px;
-            margin: 10px 0;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
         }
 
         .color-option {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+            aspect-ratio: 1;
+            border-radius: 12px;
             cursor: pointer;
             border: 3px solid transparent;
             transition: all 0.3s ease;
             position: relative;
+            touch-action: manipulation;
         }
 
         .color-option.active {
             border-color: white;
             transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
         .wave-color-option {
-            width: 60px;
-            height: 40px;
+            width: 100%;
+            height: 50px;
             border-radius: 8px;
             cursor: pointer;
             border: 2px solid transparent;
             transition: all 0.3s ease;
             position: relative;
+            touch-action: manipulation;
         }
 
         .wave-color-option.active {
@@ -563,38 +659,43 @@
             box-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
 
-        .wave-controls {
+        .wave-controls, .wake-word-controls {
             background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .wake-word-controls {
             background: rgba(135, 206, 235, 0.1);
             border: 1px solid rgba(135, 206, 235, 0.3);
-            padding: 15px;
-            border-radius: 10px;
+        }
+
+        .error-message, .success-message, .info-message {
+            padding: 16px 20px;
+            border-radius: 12px;
             margin: 15px 0;
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .error-message {
             background: rgba(255, 59, 48, 0.2);
             color: var(--danger-color);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
             border-left: 4px solid var(--danger-color);
         }
 
         .success-message {
             background: rgba(76, 175, 80, 0.2);
             color: var(--success-color);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
             border-left: 4px solid var(--success-color);
+        }
+
+        .info-message {
+            background: rgba(0, 188, 212, 0.2);
+            color: #4dd0e1;
+            border-left: 4px solid #00bcd4;
         }
 
         .settings-overlay {
@@ -615,25 +716,26 @@
             visibility: visible;
         }
 
-        /* Response Display */
+        /* Response Display - iPhone optimized */
         .response-display {
-            position: absolute;
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            max-width: 70%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
+            max-width: calc(100vw - 40px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(25px);
             padding: 25px;
             border-radius: 20px;
             font-size: 16px;
-            text-align: center;
+            text-align: left;
             opacity: 0;
             transform: translate(-50%, -50%) scale(0.8);
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(255,255,255,0.2);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             z-index: 50;
+            line-height: 1.5;
         }
 
         .response-display.show {
@@ -643,19 +745,27 @@
 
         .wake-word-list {
             background: rgba(255,255,255,0.05);
-            padding: 10px;
-            border-radius: 8px;
-            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
             font-size: 13px;
         }
 
         .wake-word-item {
-            padding: 5px 0;
+            padding: 8px 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .wake-word-item:last-child {
             border-bottom: none;
+        }
+
+        .value-display {
+            display: inline-block;
+            min-width: 50px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--wave-color-3);
         }
 
         /* Cosmic wave presets */
@@ -691,31 +801,131 @@
             --wave-color-5: #8a2be2;
         }
 
-        @media (max-width: 480px) {
-            .settings-panel { 
-                width: 100%; 
-            }
-            .sound-wave { 
-                width: 95vw; 
-                height: 85vh; 
-            }
-            .wave-bar {
-                max-width: 6px;
-            }
-            .response-display {
-                max-width: 85%;
-                font-size: 14px;
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 320px) {
+        /* iPhone 15 Pro Max specific responsive breakpoints */
+        @media (max-width: 430px) {
             .sound-wave {
-                gap: 1px;
+                gap: 1.5px;
             }
+            
             .wave-bar {
                 max-width: 4px;
             }
+            
+            .settings-panel {
+                padding: var(--safe-area-top) 15px var(--safe-area-bottom) 15px;
+            }
+            
+            .setting-group {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .response-display {
+                max-width: calc(100vw - 30px);
+                font-size: 14px;
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 14px 20px;
+                font-size: 12px;
+                margin: 6px;
+            }
+            
+            .color-picker {
+                grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+                gap: 10px;
+            }
+        }
+
+        /* Ultra-narrow screens */
+        @media (max-width: 375px) {
+            .sound-wave {
+                gap: 1px;
+            }
+            
+            .wave-bar {
+                max-width: 3px;
+            }
+        }
+
+        /* Landscape mode adjustments */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .settings-header h2 {
+                font-size: 18px;
+            }
+            
+            .setting-group {
+                margin-bottom: 20px;
+                padding: 15px;
+            }
+            
+            .wake-indicator {
+                bottom: calc(var(--safe-area-bottom) + 10px);
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+            
+            .settings-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+        }
+
+        /* Custom scrollbar for settings panel */
+        .settings-panel::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .settings-panel::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .settings-panel::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .settings-panel::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Loading states */
+        .btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Haptic feedback simulation */
+        .haptic-light {
+            animation: hapticLight 0.1s ease;
+        }
+
+        @keyframes hapticLight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -769,7 +979,7 @@
         <div class="setting-group">
             <label class="setting-label">🔑 OpenAI API Key</label>
             <input type="password" class="setting-input" id="apiKeyInput" placeholder="sk-proj-...">
-            <div style="margin-top: 10px;">
+            <div style="margin-top: 15px;">
                 <button class="btn btn-primary" id="saveApiKeyBtn">💾 Save</button>
                 <button class="btn btn-secondary" id="testApiKeyBtn">🧪 Test API</button>
             </div>
@@ -803,7 +1013,7 @@
                 <textarea class="setting-textarea" id="wakeResponseInput" placeholder="Hi dear, I'm here!">Hi dear, I'm here!</textarea>
                 
                 <label style="font-size: 14px; margin-top: 15px; display: block;">
-                    Wake Sensitivity: <span id="wakeSensitivityValue">0.7</span>
+                    Wake Sensitivity: <span class="value-display" id="wakeSensitivityValue">0.7</span>
                 </label>
                 <input type="range" class="setting-range" id="wakeSensitivity" min="0.1" max="1.0" step="0.1" value="0.7">
                 
@@ -821,22 +1031,22 @@
         <div class="setting-group">
             <label class="setting-label">🌊 Cosmic Wave Visualization</label>
             <div class="wave-controls">
-                <label style="font-size: 14px; display: block; margin-bottom: 5px;">
-                    Wave Count: <span id="waveCountValue">100</span>
+                <label style="font-size: 14px; display: block; margin-bottom: 8px;">
+                    Wave Count: <span class="value-display" id="waveCountValue">120</span>
                 </label>
-                <input type="range" class="setting-range" id="waveCount" min="50" max="200" step="10" value="100">
+                <input type="range" class="setting-range" id="waveCount" min="60" max="180" step="10" value="120">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    Wave Responsiveness: <span id="responsiveValue">1.5</span>
+                <label style="font-size: 14px; display: block; margin: 15px 0 8px;">
+                    Wave Responsiveness: <span class="value-display" id="responsiveValue">1.5</span>
                 </label>
                 <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="3.0" step="0.1" value="1.5">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    Animation Speed: <span id="animSpeedValue">60</span>ms
+                <label style="font-size: 14px; display: block; margin: 15px 0 8px;">
+                    Animation Speed: <span class="value-display" id="animSpeedValue">60</span>ms
                 </label>
                 <input type="range" class="setting-range" id="animSpeed" min="30" max="150" step="10" value="60">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Cosmic Wave Schemes:</label>
+                <label style="font-size: 14px; display: block; margin: 15px 0 8px;">Cosmic Wave Schemes:</label>
                 <div class="color-picker">
                     <div class="wave-color-option active" data-wave-scheme="cosmic" style="background: linear-gradient(to right, #ffffff, #87ceeb, #4169e1, #6495ed, #b0c4de);"></div>
                     <div class="wave-color-option" data-wave-scheme="spiritual" style="background: linear-gradient(to right, #ffffff, #ffd700, #ff69b4, #9370db, #00ffff);"></div>
@@ -862,17 +1072,17 @@
             <label class="setting-label">🗣️ Voice Settings</label>
             
             <label style="font-size: 14px; margin-top: 15px; display: block;">
-                Speech Rate: <span id="rateValue">0.8</span>
+                Speech Rate: <span class="value-display" id="rateValue">0.8</span>
             </label>
             <input type="range" class="setting-range" id="speechRate" min="0.1" max="2" step="0.1" value="0.8">
             
             <label style="font-size: 14px; margin-top: 15px; display: block;">
-                Speech Pitch: <span id="pitchValue">1.0</span>
+                Speech Pitch: <span class="value-display" id="pitchValue">1.0</span>
             </label>
             <input type="range" class="setting-range" id="speechPitch" min="0.1" max="2" step="0.1" value="1.0">
             
             <label style="font-size: 14px; margin-top: 15px; display: block;">
-                Volume: <span id="volumeValue">1.0</span>
+                Volume: <span class="value-display" id="volumeValue">1.0</span>
             </label>
             <input type="range" class="setting-range" id="speechVolume" min="0" max="1" step="0.1" value="1.0">
         </div>
@@ -906,7 +1116,7 @@
             </div>
 
             <label style="font-size: 14px; margin-top: 15px; display: block;">
-                Max Response Length: <span id="maxTokensValue">150</span>
+                Max Response Length: <span class="value-display" id="maxTokensValue">150</span>
             </label>
             <input type="range" class="setting-range" id="maxTokens" min="50" max="500" step="25" value="150">
         </div>
@@ -946,7 +1156,7 @@
                     theme: 'default',
                     showResponse: true,
                     maxTokens: 150,
-                    waveCount: 100,
+                    waveCount: 120,
                     waveResponsive: 1.5,
                     animSpeed: 60,
                     waveScheme: 'cosmic',
@@ -983,11 +1193,46 @@
                 this.startIdleAnimation();
                 this.enableAudio();
                 this.createEnergyParticles();
+                this.setupIOSOptimizations();
 
                 // Start wake word listening immediately
                 if (this.settings.wakeWordEnabled) {
                     setTimeout(() => this.startWakeWordListening(), 1000);
                 }
+            }
+
+            setupIOSOptimizations() {
+                // Prevent zoom on double tap
+                let lastTouchEnd = 0;
+                document.addEventListener('touchend', (event) => {
+                    const now = (new Date()).getTime();
+                    if (now - lastTouchEnd <= 300) {
+                        event.preventDefault();
+                    }
+                    lastTouchEnd = now;
+                }, false);
+
+                // Handle orientation changes
+                window.addEventListener('orientationchange', () => {
+                    setTimeout(() => {
+                        this.initializeWave();
+                    }, 200);
+                });
+
+                // Handle visibility changes
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) {
+                        this.synthesis.cancel();
+                        if (this.isListening) {
+                            this.stopListening();
+                        }
+                    } else if (this.settings.wakeWordEnabled) {
+                        // Restart wake word listening when page becomes visible
+                        setTimeout(() => {
+                            this.startWakeWordListening();
+                        }, 1000);
+                    }
+                });
             }
 
             initializeElements() {
@@ -1124,6 +1369,7 @@
                         option.classList.add('active');
                         this.saveSetting('theme', option.dataset.theme);
                         this.applyTheme();
+                        this.triggerHaptic();
                     });
                 });
 
@@ -1134,6 +1380,7 @@
                         option.classList.add('active');
                         this.saveSetting('waveScheme', option.dataset.waveScheme);
                         this.applyWaveScheme();
+                        this.triggerHaptic();
                     });
                 });
 
@@ -1144,8 +1391,20 @@
                 this.resetBtn.addEventListener('click', () => this.resetSettings());
             }
 
+            triggerHaptic() {
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(50);
+                }
+                
+                // Visual haptic feedback
+                document.body.classList.add('haptic-light');
+                setTimeout(() => {
+                    document.body.classList.remove('haptic-light');
+                }, 100);
+            }
+
             createEnergyParticles() {
-                for (let i = 0; i < 20; i++) {
+                for (let i = 0; i < 15; i++) {
                     const particle = document.createElement('div');
                     particle.className = 'particle';
                     particle.style.left = Math.random() * 100 + '%';
@@ -1320,6 +1579,11 @@
                 this.wakeListening = false;
                 this.wakeIndicator.classList.add('active');
                 
+                // Haptic feedback
+                if ('vibrate' in navigator) {
+                    navigator.vibrate([100, 50, 100]);
+                }
+                
                 // Animate wave bars
                 const bars = this.soundWave.querySelectorAll('.wave-bar');
                 bars.forEach(bar => bar.classList.add('wake-detected'));
@@ -1364,6 +1628,8 @@
                     this.wakeIndicator.classList.remove('show', 'active');
                     this.showMessage('👂 Wake word listening disabled', 'info');
                 }
+                
+                this.triggerHaptic();
             }
 
             async setupAudioVisualization() {
@@ -1372,10 +1638,18 @@
                         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
                     }
 
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true
+                        }
+                    });
+                    
                     this.microphone = this.audioContext.createMediaStreamSource(stream);
                     this.analyser = this.audioContext.createAnalyser();
                     this.analyser.fftSize = 1024;
+                    this.analyser.smoothingTimeConstant = 0.8;
                     
                     this.microphone.connect(this.analyser);
                     this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
@@ -1520,11 +1794,13 @@
 
             showResponse(userInput, response) {
                 this.responseDisplay.innerHTML = `
-                    <div style="margin-bottom: 15px;">
-                        <strong style="color: var(--wave-color-1);">✨ You:</strong> "${userInput}"
+                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <div style="color: var(--wave-color-1); font-weight: 600; margin-bottom: 8px; font-size: 13px;">✨ You said:</div>
+                        <div style="opacity: 0.9;">"${userInput}"</div>
                     </div>
                     <div>
-                        <strong style="color: var(--wave-color-4);">🌌 Cosmic AI:</strong> ${response}
+                        <div style="color: var(--wave-color-4); font-weight: 600; margin-bottom: 8px; font-size: 13px;">🌌 Cosmic AI:</div>
+                        <div style="opacity: 0.9;">${response}</div>
                     </div>
                 `;
                 
@@ -1536,8 +1812,14 @@
             }
 
             showMessage(message, type = 'info') {
+                const typeColors = {
+                    error: '#ff6b6b',
+                    success: '#4CAF50',
+                    info: '#00bcd4'
+                };
+
                 this.responseDisplay.innerHTML = `
-                    <div class="${type}-message">
+                    <div class="${type}-message" style="border-left-color: ${typeColors[type] || '#00bcd4'};">
                         ${message}
                     </div>
                 `;
@@ -1551,6 +1833,13 @@
 
             enableAudio() {
                 if (!this.audioEnabled) {
+                    // iOS audio context activation
+                    document.addEventListener('touchstart', () => {
+                        if (this.audioContext && this.audioContext.state === 'suspended') {
+                            this.audioContext.resume();
+                        }
+                    }, { once: true });
+
                     const utterance = new SpeechSynthesisUtterance('');
                     utterance.volume = 0;
                     this.synthesis.speak(utterance);
@@ -1562,11 +1851,13 @@
             openSettings() {
                 this.settingsPanel.classList.add('open');
                 this.settingsOverlay.classList.add('open');
+                this.triggerHaptic();
             }
 
             closeSettingsPanel() {
                 this.settingsPanel.classList.remove('open');
                 this.settingsOverlay.classList.remove('open');
+                this.triggerHaptic();
             }
 
             // Settings methods
@@ -1585,48 +1876,51 @@
                 });
 
                 // Update UI elements
-                setTimeout(() => {
-                    if (this.apiKeyInput) this.apiKeyInput.value = this.settings.apiKey;
-                    if (this.modelSelect) this.modelSelect.value = this.settings.model;
-                    if (this.speechRate) this.speechRate.value = this.settings.speechRate;
-                    if (this.speechPitch) this.speechPitch.value = this.settings.speechPitch;
-                    if (this.speechVolume) this.speechVolume.value = this.settings.speechVolume;
-                    if (this.languageSelect) this.languageSelect.value = this.settings.language;
-                    if (this.maxTokens) this.maxTokens.value = this.settings.maxTokens;
-                    if (this.waveCount) this.waveCount.value = this.settings.waveCount;
-                    if (this.waveResponsive) this.waveResponsive.value = this.settings.waveResponsive;
-                    if (this.animSpeed) this.animSpeed.value = this.settings.animSpeed;
-                    if (this.wakeWordInput) this.wakeWordInput.value = this.settings.wakeWord;
-                    if (this.wakeResponseInput) this.wakeResponseInput.value = this.settings.wakeResponse;
-                    if (this.wakeSensitivity) this.wakeSensitivity.value = this.settings.wakeSensitivity;
+                setTimeout(() => this.updateUIElements(), 100);
+            }
 
-                    // Update current wake word display
-                    if (this.currentWakeWord) this.currentWakeWord.textContent = this.settings.wakeWord;
+            updateUIElements() {
+                // Update all input values
+                if (this.apiKeyInput) this.apiKeyInput.value = this.settings.apiKey;
+                if (this.modelSelect) this.modelSelect.value = this.settings.model;
+                if (this.speechRate) this.speechRate.value = this.settings.speechRate;
+                if (this.speechPitch) this.speechPitch.value = this.settings.speechPitch;
+                if (this.speechVolume) this.speechVolume.value = this.settings.speechVolume;
+                if (this.languageSelect) this.languageSelect.value = this.settings.language;
+                if (this.maxTokens) this.maxTokens.value = this.settings.maxTokens;
+                if (this.waveCount) this.waveCount.value = this.settings.waveCount;
+                if (this.waveResponsive) this.waveResponsive.value = this.settings.waveResponsive;
+                if (this.animSpeed) this.animSpeed.value = this.settings.animSpeed;
+                if (this.wakeWordInput) this.wakeWordInput.value = this.settings.wakeWord;
+                if (this.wakeResponseInput) this.wakeResponseInput.value = this.settings.wakeResponse;
+                if (this.wakeSensitivity) this.wakeSensitivity.value = this.settings.wakeSensitivity;
 
-                    // Update value displays
-                    if (this.rateValue) this.rateValue.textContent = this.settings.speechRate;
-                    if (this.pitchValue) this.pitchValue.textContent = this.settings.speechPitch;
-                    if (this.volumeValue) this.volumeValue.textContent = this.settings.speechVolume;
-                    if (this.maxTokensValue) this.maxTokensValue.textContent = this.settings.maxTokens;
-                    if (this.waveCountValue) this.waveCountValue.textContent = this.settings.waveCount;
-                    if (this.responsiveValue) this.responsiveValue.textContent = this.settings.waveResponsive;
-                    if (this.animSpeedValue) this.animSpeedValue.textContent = this.settings.animSpeed;
-                    if (this.wakeSensitivityValue) this.wakeSensitivityValue.textContent = this.settings.wakeSensitivity;
+                // Update current wake word display
+                if (this.currentWakeWord) this.currentWakeWord.textContent = this.settings.wakeWord;
 
-                    // Update toggles
-                    this.updateToggle(this.showResponseToggle, this.settings.showResponse);
-                    this.updateToggle(this.wakeWordToggle, this.settings.wakeWordEnabled);
+                // Update value displays
+                if (this.rateValue) this.rateValue.textContent = this.settings.speechRate;
+                if (this.pitchValue) this.pitchValue.textContent = this.settings.speechPitch;
+                if (this.volumeValue) this.volumeValue.textContent = this.settings.speechVolume;
+                if (this.maxTokensValue) this.maxTokensValue.textContent = this.settings.maxTokens;
+                if (this.waveCountValue) this.waveCountValue.textContent = this.settings.waveCount;
+                if (this.responsiveValue) this.responsiveValue.textContent = this.settings.waveResponsive;
+                if (this.animSpeedValue) this.animSpeedValue.textContent = this.settings.animSpeed;
+                if (this.wakeSensitivityValue) this.wakeSensitivityValue.textContent = this.settings.wakeSensitivity;
 
-                    // Update theme
-                    document.querySelectorAll('.color-option').forEach(option => {
-                        option.classList.toggle('active', option.dataset.theme === this.settings.theme);
-                    });
+                // Update toggles
+                this.updateToggle(this.showResponseToggle, this.settings.showResponse);
+                this.updateToggle(this.wakeWordToggle, this.settings.wakeWordEnabled);
 
-                    // Update wave scheme
-                    document.querySelectorAll('.wave-color-option').forEach(option => {
-                        option.classList.toggle('active', option.dataset.waveScheme === this.settings.waveScheme);
-                    });
-                }, 100);
+                // Update theme
+                document.querySelectorAll('.color-option').forEach(option => {
+                    option.classList.toggle('active', option.dataset.theme === this.settings.theme);
+                });
+
+                // Update wave scheme
+                document.querySelectorAll('.wave-color-option').forEach(option => {
+                    option.classList.toggle('active', option.dataset.waveScheme === this.settings.waveScheme);
+                });
             }
 
             saveSetting(key, value) {
@@ -1644,6 +1938,7 @@
                 
                 const toggle = this.showResponseToggle;
                 this.updateToggle(toggle, this.settings[key]);
+                this.triggerHaptic();
             }
 
             updateToggle(toggle, active) {
@@ -1661,6 +1956,7 @@
                 if (apiKey && apiKey.startsWith('sk-')) {
                     this.saveSetting('apiKey', apiKey);
                     this.showMessage('✅ API key saved successfully!', 'success');
+                    this.triggerHaptic();
                 } else {
                     this.showMessage('❌ Invalid API key format. Should start with "sk-"', 'error');
                 }
@@ -1673,7 +1969,7 @@
                     return;
                 }
 
-                this.testApiKeyBtn.textContent = '🧪 Testing...';
+                this.testApiKeyBtn.classList.add('loading');
                 this.testApiKeyBtn.disabled = true;
 
                 try {
@@ -1693,6 +1989,7 @@
                     if (response.ok) {
                         this.showMessage('✅ API key is valid and working!', 'success');
                         this.saveApiKey();
+                        this.triggerHaptic();
                     } else {
                         const error = await response.json();
                         this.showMessage(`❌ API key test failed: ${error.error?.message || 'Invalid key'}`, 'error');
@@ -1701,7 +1998,7 @@
                     this.showMessage(`❌ Test failed: ${error.message}`, 'error');
                 }
 
-                this.testApiKeyBtn.textContent = '🧪 Test API';
+                this.testApiKeyBtn.classList.remove('loading');
                 this.testApiKeyBtn.disabled = false;
             }
 
@@ -1751,6 +2048,7 @@
                 URL.revokeObjectURL(url);
 
                 this.showMessage('✅ Cosmic settings exported successfully!', 'success');
+                this.triggerHaptic();
             }
 
             importSettings(event) {
@@ -1769,11 +2067,12 @@
                             });
                         }
 
-                        this.loadSettings();
+                        this.updateUIElements();
                         this.initializeWave();
                         this.applyTheme();
                         this.applyWaveScheme();
                         this.showMessage('✅ Cosmic settings imported successfully!', 'success');
+                        this.triggerHaptic();
                     } catch (error) {
                         this.showMessage('❌ Invalid settings file', 'error');
                     }
@@ -1800,7 +2099,7 @@
                         theme: 'default',
                         showResponse: true,
                         maxTokens: 150,
-                        waveCount: 100,
+                        waveCount: 120,
                         waveResponsive: 1.5,
                         animSpeed: 60,
                         waveScheme: 'cosmic',
@@ -1810,11 +2109,12 @@
                         wakeSensitivity: 0.7
                     };
 
-                    this.loadSettings();
+                    this.updateUIElements();
                     this.initializeWave();
                     this.applyTheme();
                     this.applyWaveScheme();
                     this.showMessage('✅ All cosmic settings reset to defaults!', 'success');
+                    this.triggerHaptic();
                 }
             }
         }
