@@ -106,8 +106,6 @@
             position: absolute;
             top: max(15px, env(safe-area-inset-top));
             right: max(15px, env(safe-area-inset-right));
-            display: flex;
-            gap: 10px;
             z-index: 100;
         }
 
@@ -132,17 +130,6 @@
             color: rgba(255, 255, 255, 1);
             transform: scale(1.1);
             border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        /* Light/Dark Mode Button */
-        .mode-btn {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            color: #333;
-        }
-
-        [data-mode="light"] .mode-btn {
-            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
-            color: white;
         }
 
         /* Full Screen Wave Container - iPhone 15 Pro Max Optimized */
@@ -762,7 +749,6 @@
 <body data-theme="default" data-mode="dark" class="rainbow-wave">
     <!-- Top Controls -->
     <div class="top-controls">
-        <button class="control-btn mode-btn" id="modeBtn" title="Toggle Light/Dark Mode">🌙</button>
         <button class="control-btn" id="settingsBtn" title="Settings">⚙️</button>
     </div>
 
@@ -1090,6 +1076,13 @@
             <label class="setting-label">🔧 Advanced Settings</label>
             
             <div class="setting-toggle">
+                <span>🌙 Dark Mode</span>
+                <div class="toggle-switch active" id="darkModeToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+            
+            <div class="setting-toggle">
                 <span>📱 Show Response Text on Screen</span>
                 <div class="toggle-switch active" id="showResponseToggle">
                     <div class="toggle-slider"></div>
@@ -1199,7 +1192,6 @@
                 this.waveContainer = document.getElementById('waveContainer');
 
                 // Top control elements
-                this.modeBtn = document.getElementById('modeBtn');
                 this.settingsBtn = document.getElementById('settingsBtn');
 
                 // Settings elements
@@ -1251,6 +1243,7 @@
                 this.showResponseToggle = document.getElementById('showResponseToggle');
                 this.wakeWordToggle = document.getElementById('wakeWordToggle');
                 this.autoRestartToggle = document.getElementById('autoRestartToggle');
+                this.darkModeToggle = document.getElementById('darkModeToggle');
                 this.exportBtn = document.getElementById('exportBtn');
                 this.importBtn = document.getElementById('importBtn');
                 this.importFile = document.getElementById('importFile');
@@ -1272,7 +1265,6 @@
 
             setupEventListeners() {
                 // Top controls
-                this.modeBtn.addEventListener('click', () => this.toggleMode());
                 this.settingsBtn.addEventListener('click', () => this.openSettings());
 
                 // Settings panel
@@ -1357,6 +1349,7 @@
                 this.languageSelect.addEventListener('change', () => this.saveSetting('language', this.languageSelect.value));
 
                 // Toggle switches
+                this.darkModeToggle.addEventListener('click', () => this.toggleMode());
                 this.showResponseToggle.addEventListener('click', () => this.toggleSetting('showResponse', this.showResponseToggle));
                 this.wakeWordToggle.addEventListener('click', () => this.toggleWakeWord());
                 this.autoRestartToggle.addEventListener('click', () => this.toggleSetting('autoRestart', this.autoRestartToggle));
@@ -1411,14 +1404,11 @@
                 this.settings.mode = this.settings.mode === 'dark' ? 'light' : 'dark';
                 this.saveSetting('mode', this.settings.mode);
                 this.applyMode();
+                this.updateToggle(this.darkModeToggle, this.settings.mode === 'dark');
             }
 
             applyMode() {
                 document.body.setAttribute('data-mode', this.settings.mode);
-                if (this.modeBtn) {
-                    this.modeBtn.textContent = this.settings.mode === 'dark' ? '☀️' : '🌙';
-                    this.modeBtn.title = this.settings.mode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
-                }
             }
 
             // Privacy Management
@@ -2103,6 +2093,7 @@
                 if (this.wakeSensitivityValue) this.wakeSensitivityValue.textContent = this.settings.wakeSensitivity;
 
                 // Update toggles
+                this.updateToggle(this.darkModeToggle, this.settings.mode === 'dark');
                 this.updateToggle(this.showResponseToggle, this.settings.showResponse);
                 this.updateToggle(this.wakeWordToggle, this.settings.wakeWordEnabled);
                 this.updateToggle(this.autoRestartToggle, this.settings.autoRestart);
