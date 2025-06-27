@@ -3,59 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#000033">
+    <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Cosmic AI Voice Assistant</title>
+    <title>Neural AI Voice Assistant</title>
     
     <style>
         :root {
-            --primary-color: #007AFF;
-            --secondary-color: #5856D6;
+            --primary-color: #FFB000;
+            --secondary-color: #FF6B00;
             --success-color: #4CAF50;
             --danger-color: #FF3B30;
             --warning-color: #ff9800;
-            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #87ceeb 15%, #4169e1 35%, #191970 60%, #000033 85%, #000000 100%);
-            --card-background: rgba(255, 255, 255, 0.08);
+            --background: #000000;
+            --card-background: rgba(255, 176, 0, 0.08);
             --text-color: #ffffff;
             --border-radius: 16px;
-            --shadow: 0 8px 32px rgba(0,0,0,0.3);
-            --wave-color-1: #ffffff;
-            --wave-color-2: #87ceeb;
-            --wave-color-3: #4169e1;
-            --wave-color-4: #6495ed;
-            --wave-color-5: #b0c4de;
+            --shadow: 0 8px 32px rgba(255, 176, 0, 0.2);
+            --wave-color-1: #FFD700;
+            --wave-color-2: #FFB000;
+            --wave-color-3: #FF8C00;
+            --wave-color-4: #FF6B00;
+            --wave-color-5: #FF4500;
+            --neural-gold: #FFD700;
+            --neural-orange: #FF8C00;
+            --neural-amber: #FFB000;
             --safe-area-top: env(safe-area-inset-top, 20px);
             --safe-area-bottom: env(safe-area-inset-bottom, 20px);
             --safe-area-left: env(safe-area-inset-left, 0px);
             --safe-area-right: env(safe-area-inset-right, 0px);
         }
 
-        [data-theme="cosmic"] {
-            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #ffd700 8%, #ff69b4 18%, #9370db 30%, #4b0082 50%, #191970 70%, #000033 85%, #000000 100%);
-            --wave-color-1: #ffffff;
-            --wave-color-2: #ffd700;
-            --wave-color-3: #ff69b4;
-            --wave-color-4: #9370db;
-            --wave-color-5: #00ffff;
+        [data-theme="neural"] {
+            --wave-color-1: #FFD700;
+            --wave-color-2: #FFB000;
+            --wave-color-3: #FF8C00;
+            --wave-color-4: #FF6B00;
+            --wave-color-5: #FF4500;
         }
 
-        [data-theme="aurora"] {
-            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #00ff7f 10%, #00ced1 20%, #9370db 35%, #4b0082 55%, #000080 75%, #000033 90%, #000000 100%);
-            --wave-color-1: #ffffff;
-            --wave-color-2: #00ff7f;
-            --wave-color-3: #00ced1;
-            --wave-color-4: #9370db;
-            --wave-color-5: #ff1493;
+        [data-theme="blue-neural"] {
+            --wave-color-1: #00D4FF;
+            --wave-color-2: #0099FF;
+            --wave-color-3: #0066FF;
+            --wave-color-4: #3399FF;
+            --wave-color-5: #66CCFF;
         }
 
-        [data-theme="celestial"] {
-            --background-gradient: radial-gradient(ellipse at center, #fffacd 0%, #f0e68c 12%, #dda0dd 25%, #ba55d3 40%, #8a2be2 60%, #4b0082 80%, #191970 95%, #000000 100%);
-            --wave-color-1: #fffacd;
-            --wave-color-2: #f0e68c;
-            --wave-color-3: #dda0dd;
-            --wave-color-4: #ba55d3;
-            --wave-color-5: #8a2be2;
+        [data-theme="green-neural"] {
+            --wave-color-1: #00FF7F;
+            --wave-color-2: #00FF00;
+            --wave-color-3: #32CD32;
+            --wave-color-4: #7FFF00;
+            --wave-color-5: #ADFF2F;
+        }
+
+        [data-theme="purple-neural"] {
+            --wave-color-1: #DDA0DD;
+            --wave-color-2: #DA70D6;
+            --wave-color-3: #BA55D3;
+            --wave-color-4: #9370DB;
+            --wave-color-5: #8A2BE2;
         }
 
         * {
@@ -67,7 +75,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
-            background: var(--background-gradient);
+            background: var(--background);
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -85,7 +93,7 @@
             padding-right: var(--safe-area-right);
         }
 
-        /* iPhone 16 Pro Max optimized cosmic effects */
+        /* Neural Network Background */
         body::before {
             content: '';
             position: absolute;
@@ -94,102 +102,163 @@
             right: 0;
             bottom: 0;
             background-image: 
-                radial-gradient(1.5px 1.5px at 15px 25px, #ffffff, transparent),
-                radial-gradient(1.5px 1.5px at 35px 60px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 75px 35px, #ffffff, transparent),
-                radial-gradient(1px 1px at 110px 70px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1.5px 1.5px at 140px 25px, #ffffff, transparent),
-                radial-gradient(1px 1px at 170px 55px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(1.5px 1.5px at 200px 80px, #ffffff, transparent),
-                radial-gradient(1px 1px at 230px 15px, rgba(255,255,255,0.9), transparent),
-                radial-gradient(1px 1px at 260px 65px, #ffffff, transparent),
-                radial-gradient(1.5px 1.5px at 290px 35px, rgba(255,255,255,0.8), transparent);
+                radial-gradient(1px 1px at 20px 30px, var(--neural-gold), transparent),
+                radial-gradient(1px 1px at 40px 70px, var(--neural-amber), transparent),
+                radial-gradient(0.5px 0.5px at 90px 40px, var(--neural-orange), transparent),
+                radial-gradient(1px 1px at 130px 80px, var(--neural-gold), transparent),
+                radial-gradient(0.5px 0.5px at 160px 30px, var(--neural-amber), transparent),
+                radial-gradient(1px 1px at 200px 60px, var(--neural-orange), transparent),
+                radial-gradient(0.5px 0.5px at 240px 90px, var(--neural-gold), transparent),
+                radial-gradient(1px 1px at 280px 20px, var(--neural-amber), transparent),
+                radial-gradient(0.5px 0.5px at 320px 70px, var(--neural-orange), transparent),
+                radial-gradient(1px 1px at 360px 40px, var(--neural-gold), transparent);
             background-repeat: repeat;
-            background-size: 320px 320px;
-            animation: stars 25s linear infinite;
+            background-size: 400px 400px;
+            animation: neuralStars 30s linear infinite;
             pointer-events: none;
-            opacity: 0.7;
+            opacity: 0.6;
         }
 
-        /* Mobile-optimized central light burst */
+        @keyframes neuralStars {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-400px); }
+        }
+
+        /* Neural Energy Center */
         body::after {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.15) 30%, transparent 70%);
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, 
+                rgba(255, 215, 0, 0.4) 0%, 
+                rgba(255, 140, 0, 0.2) 30%, 
+                rgba(255, 176, 0, 0.1) 60%, 
+                transparent 100%);
             transform: translate(-50%, -50%);
-            animation: centralGlow 5s ease-in-out infinite alternate;
+            animation: neuralCore 6s ease-in-out infinite alternate;
             pointer-events: none;
         }
 
-        @keyframes stars {
-            from { transform: translateY(0px); }
-            to { transform: translateY(-320px); }
-        }
-
-        @keyframes centralGlow {
+        @keyframes neuralCore {
             0% { 
                 transform: translate(-50%, -50%) scale(1);
                 opacity: 0.4;
             }
             100% { 
-                transform: translate(-50%, -50%) scale(1.3);
-                opacity: 0.7;
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.8;
             }
         }
 
-        /* Mobile-optimized light rays */
-        .light-rays {
+        /* Neural Network Lines */
+        .neural-network {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 1;
         }
 
-        .light-ray {
+        .neural-path {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 1.5px;
-            height: 40%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
-            transform-origin: bottom center;
-            animation: rayRotate 10s linear infinite;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--neural-gold) 20%, 
+                var(--neural-amber) 40%, 
+                var(--neural-orange) 60%, 
+                var(--neural-gold) 80%, 
+                transparent 100%);
+            border-radius: 1px;
+            animation: neuralFlow 4s linear infinite;
+            box-shadow: 0 0 6px var(--neural-gold);
         }
 
-        .light-ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
-        .light-ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); animation-delay: -1.25s; }
-        .light-ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); animation-delay: -2.5s; }
-        .light-ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); animation-delay: -3.75s; }
-        .light-ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); animation-delay: -5s; }
-        .light-ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); animation-delay: -6.25s; }
-        .light-ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); animation-delay: -7.5s; }
-        .light-ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); animation-delay: -8.75s; }
+        .neural-path.vertical {
+            width: 1px;
+            height: 200px;
+            left: 50%;
+            top: 20%;
+            transform: translateX(-50%);
+        }
 
-        @keyframes rayRotate {
+        .neural-path.horizontal {
+            height: 1px;
+            width: 150px;
+            top: 50%;
+            left: 30%;
+            transform: translateY(-50%);
+        }
+
+        .neural-path.diagonal-1 {
+            width: 1px;
+            height: 120px;
+            top: 30%;
+            left: 40%;
+            transform: rotate(45deg);
+        }
+
+        .neural-path.diagonal-2 {
+            width: 1px;
+            height: 120px;
+            top: 30%;
+            right: 40%;
+            transform: rotate(-45deg);
+        }
+
+        .neural-path.branch-1 {
+            height: 1px;
+            width: 80px;
+            top: 35%;
+            left: 35%;
+            transform: rotate(30deg);
+        }
+
+        .neural-path.branch-2 {
+            height: 1px;
+            width: 80px;
+            top: 35%;
+            right: 35%;
+            transform: rotate(-30deg);
+        }
+
+        .neural-path.branch-3 {
+            height: 1px;
+            width: 60px;
+            top: 65%;
+            left: 40%;
+            transform: rotate(60deg);
+        }
+
+        .neural-path.branch-4 {
+            height: 1px;
+            width: 60px;
+            top: 65%;
+            right: 40%;
+            transform: rotate(-60deg);
+        }
+
+        @keyframes neuralFlow {
             0% { 
-                transform: translate(-50%, -100%) rotate(var(--start-rotation, 0deg)) scaleY(0.6);
-                opacity: 0.4;
+                opacity: 0.3;
+                filter: brightness(0.5);
             }
             50% { 
-                transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 180deg)) scaleY(1);
-                opacity: 0.8;
+                opacity: 1;
+                filter: brightness(1.5);
             }
             100% { 
-                transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 360deg)) scaleY(0.6);
-                opacity: 0.4;
+                opacity: 0.3;
+                filter: brightness(0.5);
             }
         }
 
-        /* Mobile-optimized energy particles */
-        .energy-particles {
+        /* Neural Nodes */
+        .neural-nodes {
             position: absolute;
             top: 0;
             left: 0;
@@ -199,59 +268,61 @@
             z-index: 2;
         }
 
-        .particle {
+        .neural-node {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background: radial-gradient(circle, #ffffff, transparent);
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, var(--neural-gold), var(--neural-orange));
             border-radius: 50%;
-            animation: float 8s infinite ease-in-out;
+            animation: neuralPulse 3s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--neural-gold);
         }
 
-        @keyframes float {
+        @keyframes neuralPulse {
             0%, 100% { 
-                transform: translate(0, 0) scale(0.6);
-                opacity: 0.4;
+                transform: scale(1);
+                opacity: 0.7;
             }
             50% { 
-                transform: translate(15px, -25px) scale(1);
+                transform: scale(1.5);
                 opacity: 1;
             }
         }
 
-        /* iPhone-optimized Settings Button */
+        /* Settings Button */
         .settings-btn {
             position: absolute;
             top: calc(var(--safe-area-top) + 10px);
             right: calc(var(--safe-area-right) + 15px);
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 176, 0, 0.15);
             border: none;
             border-radius: 50%;
             width: 44px;
             height: 44px;
             font-size: 16px;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--neural-gold);
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(15px);
             z-index: 100;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 176, 0, 0.2);
             -webkit-touch-callout: none;
             -webkit-user-select: none;
+            box-shadow: 0 0 15px rgba(255, 176, 0, 0.3);
         }
 
         .settings-btn:active {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 176, 0, 0.3);
             transform: scale(0.95);
         }
 
-        /* Mobile-optimized Wake Word Indicator */
+        /* Wake Word Indicator */
         .wake-indicator {
             position: absolute;
             bottom: calc(var(--safe-area-bottom) + 25px);
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 176, 0, 0.12);
             backdrop-filter: blur(20px);
             padding: 10px 18px;
             border-radius: 20px;
@@ -259,8 +330,9 @@
             font-weight: 500;
             opacity: 0;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 176, 0, 0.2);
             max-width: 80%;
+            box-shadow: 0 0 20px rgba(255, 176, 0, 0.2);
         }
 
         .wake-indicator.show {
@@ -268,13 +340,19 @@
         }
 
         .wake-indicator.active {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 176, 0, 0.25);
+            border: 1px solid rgba(255, 176, 0, 0.5);
             opacity: 1;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(255, 176, 0, 0.5);
+            animation: neuralGlow 2s ease-in-out infinite;
         }
 
-        /* iPhone 16 Pro Max optimized wave container */
+        @keyframes neuralGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 176, 0, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 176, 0, 0.8); }
+        }
+
+        /* Neural Wave Container */
         .wave-container {
             position: absolute;
             top: 0;
@@ -311,66 +389,71 @@
                 var(--wave-color-3) 50%, 
                 var(--wave-color-4) 75%, 
                 var(--wave-color-5) 100%);
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
-            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+            box-shadow: 0 0 8px var(--neural-gold);
+            filter: drop-shadow(0 0 4px var(--neural-gold));
         }
 
         .wave-bar.active {
-            box-shadow: 0 0 20px var(--wave-color-1), 0 0 40px var(--wave-color-2);
-            filter: brightness(1.8) drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
-            transform: scaleY(1.3);
+            box-shadow: 0 0 15px var(--wave-color-1), 0 0 30px var(--wave-color-2);
+            filter: brightness(2) drop-shadow(0 0 10px var(--neural-gold));
+            transform: scaleY(1.4);
         }
 
         .wave-bar.wake-detected {
-            animation: wakeDetected 1.2s ease;
+            animation: neuralWakeDetected 1.5s ease;
         }
 
         .wave-bar.speaking {
-            animation: speakingPulse 0.7s infinite alternate;
+            animation: neuralSpeaking 0.8s infinite alternate;
         }
 
-        @keyframes wakeDetected {
+        @keyframes neuralWakeDetected {
             0% { 
                 transform: scaleY(1); 
-                filter: brightness(1) drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+                filter: brightness(1) drop-shadow(0 0 4px var(--neural-gold));
+                box-shadow: 0 0 8px var(--neural-gold);
             }
             25% { 
-                transform: scaleY(2); 
-                filter: brightness(3.5) hue-rotate(90deg) drop-shadow(0 0 20px rgba(255, 255, 255, 0.9));
+                transform: scaleY(2.5); 
+                filter: brightness(4) hue-rotate(30deg) drop-shadow(0 0 20px var(--neural-gold));
+                box-shadow: 0 0 40px var(--neural-gold), 0 0 80px var(--neural-amber);
             }
             50% { 
-                transform: scaleY(2.8); 
-                filter: brightness(4.5) hue-rotate(180deg) drop-shadow(0 0 30px rgba(255, 255, 255, 1));
+                transform: scaleY(3.2); 
+                filter: brightness(5) hue-rotate(60deg) drop-shadow(0 0 30px var(--neural-gold));
+                box-shadow: 0 0 60px var(--neural-gold), 0 0 120px var(--neural-orange);
             }
             75% { 
-                transform: scaleY(2); 
-                filter: brightness(3.5) hue-rotate(270deg) drop-shadow(0 0 20px rgba(255, 255, 255, 0.9));
+                transform: scaleY(2.5); 
+                filter: brightness(4) hue-rotate(30deg) drop-shadow(0 0 20px var(--neural-gold));
+                box-shadow: 0 0 40px var(--neural-gold), 0 0 80px var(--neural-amber);
             }
             100% { 
                 transform: scaleY(1); 
-                filter: brightness(1) hue-rotate(360deg) drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+                filter: brightness(1) drop-shadow(0 0 4px var(--neural-gold));
+                box-shadow: 0 0 8px var(--neural-gold);
             }
         }
 
-        @keyframes speakingPulse {
+        @keyframes neuralSpeaking {
             0% { 
                 transform: scaleY(1); 
-                filter: brightness(1.3) drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+                filter: brightness(1.5) drop-shadow(0 0 6px var(--neural-gold));
             }
             100% { 
-                transform: scaleY(1.5); 
-                filter: brightness(2.2) saturate(1.6) drop-shadow(0 0 16px rgba(255, 255, 255, 0.7));
+                transform: scaleY(1.8); 
+                filter: brightness(2.5) saturate(1.8) drop-shadow(0 0 15px var(--neural-gold));
             }
         }
 
-        /* Mobile-optimized Settings Panel */
+        /* Settings Panel */
         .settings-panel {
             position: fixed;
             top: 0;
             right: -100%;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.92);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(25px);
             padding: var(--safe-area-top) 20px var(--safe-area-bottom) 20px;
             overflow-y: auto;
@@ -378,6 +461,7 @@
             z-index: 1000;
             color: var(--text-color);
             -webkit-overflow-scrolling: touch;
+            border-left: 1px solid rgba(255, 176, 0, 0.2);
         }
 
         .settings-panel.open {
@@ -390,33 +474,35 @@
             align-items: center;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.15);
+            border-bottom: 1px solid rgba(255, 176, 0, 0.2);
         }
 
         .settings-header h2 {
             font-size: 20px;
             font-weight: 600;
+            color: var(--neural-gold);
         }
 
         .close-settings {
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 176, 0, 0.12);
+            border: 1px solid rgba(255, 176, 0, 0.2);
             border-radius: 50%;
             width: 44px;
             height: 44px;
             font-size: 20px;
             cursor: pointer;
-            color: var(--text-color);
+            color: var(--neural-gold);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
+            box-shadow: 0 0 15px rgba(255, 176, 0, 0.2);
         }
 
         .close-settings:active {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 176, 0, 0.25);
             transform: scale(0.95);
         }
 
@@ -429,15 +515,16 @@
             margin-bottom: 8px;
             display: block;
             font-size: 16px;
+            color: var(--neural-gold);
         }
 
         .setting-input, .setting-textarea {
             width: 100%;
             padding: 12px 16px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 176, 0, 0.3);
             border-radius: 12px;
             font-size: 16px;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255, 176, 0, 0.08);
             color: var(--text-color);
             font-family: inherit;
             -webkit-appearance: none;
@@ -449,9 +536,9 @@
         }
 
         .setting-input:focus, .setting-textarea:focus {
-            border-color: var(--primary-color);
+            border-color: var(--neural-gold);
             outline: none;
-            box-shadow: 0 0 15px rgba(135, 206, 235, 0.3);
+            box-shadow: 0 0 15px rgba(255, 176, 0, 0.3);
         }
 
         .setting-range {
@@ -460,7 +547,7 @@
             -webkit-appearance: none;
             height: 6px;
             border-radius: 3px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 176, 0, 0.2);
             outline: none;
         }
 
@@ -470,19 +557,19 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background: var(--wave-color-3);
+            background: var(--neural-gold);
             cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            border: 2px solid var(--neural-amber);
+            box-shadow: 0 2px 8px rgba(255, 176, 0, 0.4);
         }
 
         .setting-select {
             width: 100%;
             padding: 12px 16px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 176, 0, 0.3);
             border-radius: 12px;
             font-size: 16px;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255, 176, 0, 0.08);
             color: var(--text-color);
             -webkit-appearance: none;
         }
@@ -504,13 +591,15 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            background: linear-gradient(135deg, var(--neural-gold), var(--neural-amber));
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 176, 0, 0.3);
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, #9C27B0, #673AB7);
-            color: white;
+            background: linear-gradient(135deg, var(--neural-orange), var(--neural-gold));
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
         }
 
         .btn-danger {
@@ -531,16 +620,17 @@
             position: relative;
             width: 60px;
             height: 32px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 176, 0, 0.2);
             border-radius: 16px;
             cursor: pointer;
             transition: background 0.3s;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
+            border: 1px solid rgba(255, 176, 0, 0.3);
         }
 
         .toggle-switch.active {
-            background: var(--success-color);
+            background: var(--neural-gold);
         }
 
         .toggle-slider {
@@ -549,14 +639,15 @@
             left: 2px;
             width: 28px;
             height: 28px;
-            background: white;
+            background: #000;
             border-radius: 50%;
             transition: transform 0.3s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 6px rgba(255, 176, 0, 0.3);
         }
 
         .toggle-switch.active .toggle-slider {
             transform: translateX(28px);
+            background: #000;
         }
 
         .setting-toggle {
@@ -587,9 +678,9 @@
         }
 
         .color-option.active {
-            border-color: white;
+            border-color: var(--neural-gold);
             transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(255, 176, 0, 0.5);
         }
 
         .wave-color-option {
@@ -605,22 +696,22 @@
         }
 
         .wave-color-option.active {
-            border-color: white;
+            border-color: var(--neural-gold);
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+            box-shadow: 0 0 25px rgba(255, 176, 0, 0.4);
         }
 
         .wave-controls, .wake-word-controls {
-            background: rgba(255,255,255,0.06);
+            background: rgba(255, 176, 0, 0.06);
             padding: 16px;
             border-radius: 12px;
             margin: 15px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 176, 0, 0.2);
         }
 
         .wake-word-controls {
-            background: rgba(135, 206, 235, 0.08);
-            border: 1px solid rgba(135, 206, 235, 0.2);
+            background: rgba(255, 176, 0, 0.08);
+            border: 1px solid rgba(255, 176, 0, 0.3);
         }
 
         .error-message, .success-message {
@@ -637,23 +728,19 @@
         }
 
         .success-message {
-            background: rgba(76, 175, 80, 0.15);
-            color: #81c784;
-            border-left: 4px solid var(--success-color);
+            background: rgba(255, 176, 0, 0.15);
+            color: var(--neural-gold);
+            border-left: 4px solid var(--neural-gold);
         }
 
-        .settings-overlay {
-            display: none;
-        }
-
-        /* Mobile-optimized Response Display */
+        /* Response Display */
         .response-display {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             max-width: 85%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(25px);
             padding: 20px;
             border-radius: 16px;
@@ -662,8 +749,8 @@
             opacity: 0;
             transform: translate(-50%, -50%) scale(0.85);
             transition: all 0.4s ease;
-            border: 1px solid rgba(255,255,255,0.15);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255, 176, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 176, 0, 0.2);
             z-index: 50;
             line-height: 1.4;
         }
@@ -674,53 +761,54 @@
         }
 
         .wake-word-list {
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 176, 0, 0.04);
             padding: 12px;
             border-radius: 8px;
             margin: 12px 0;
             font-size: 13px;
+            border: 1px solid rgba(255, 176, 0, 0.1);
         }
 
         .wake-word-item {
             padding: 6px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255, 176, 0, 0.1);
         }
 
         .wake-word-item:last-child {
             border-bottom: none;
         }
 
-        /* Cosmic wave presets optimized for mobile */
-        .cosmic-wave {
-            --wave-color-1: #ffffff;
-            --wave-color-2: #87ceeb;
-            --wave-color-3: #4169e1;
-            --wave-color-4: #6495ed;
-            --wave-color-5: #b0c4de;
+        /* Neural wave presets */
+        .neural-wave {
+            --wave-color-1: #FFD700;
+            --wave-color-2: #FFB000;
+            --wave-color-3: #FF8C00;
+            --wave-color-4: #FF6B00;
+            --wave-color-5: #FF4500;
         }
 
-        .spiritual-wave {
-            --wave-color-1: #ffffff;
-            --wave-color-2: #ffd700;
-            --wave-color-3: #ff69b4;
-            --wave-color-4: #9370db;
-            --wave-color-5: #00ffff;
+        .blue-neural-wave {
+            --wave-color-1: #00D4FF;
+            --wave-color-2: #0099FF;
+            --wave-color-3: #0066FF;
+            --wave-color-4: #3399FF;
+            --wave-color-5: #66CCFF;
         }
 
-        .aurora-wave {
-            --wave-color-1: #ffffff;
-            --wave-color-2: #00ff7f;
-            --wave-color-3: #00ced1;
-            --wave-color-4: #9370db;
-            --wave-color-5: #ff1493;
+        .green-neural-wave {
+            --wave-color-1: #00FF7F;
+            --wave-color-2: #00FF00;
+            --wave-color-3: #32CD32;
+            --wave-color-4: #7FFF00;
+            --wave-color-5: #ADFF2F;
         }
 
-        .celestial-wave {
-            --wave-color-1: #fffacd;
-            --wave-color-2: #f0e68c;
-            --wave-color-3: #dda0dd;
-            --wave-color-4: #ba55d3;
-            --wave-color-5: #8a2be2;
+        .purple-neural-wave {
+            --wave-color-1: #DDA0DD;
+            --wave-color-2: #DA70D6;
+            --wave-color-3: #BA55D3;
+            --wave-color-4: #9370DB;
+            --wave-color-5: #8A2BE2;
         }
 
         /* iPhone-specific optimizations */
@@ -734,56 +822,56 @@
                 will-change: height, filter;
             }
             
-            .light-ray {
-                will-change: transform, opacity;
+            .neural-path {
+                will-change: opacity, filter;
             }
             
-            .particle {
+            .neural-node {
                 will-change: transform, opacity;
             }
         }
     </style>
 </head>
-<body data-theme="default" class="cosmic-wave">
-    <!-- Mobile-optimized Cosmic Light Rays -->
-    <div class="light-rays">
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
-        <div class="light-ray"></div>
+<body data-theme="neural" class="neural-wave">
+    <!-- Neural Network Background -->
+    <div class="neural-network">
+        <div class="neural-path vertical"></div>
+        <div class="neural-path horizontal"></div>
+        <div class="neural-path diagonal-1"></div>
+        <div class="neural-path diagonal-2"></div>
+        <div class="neural-path branch-1"></div>
+        <div class="neural-path branch-2"></div>
+        <div class="neural-path branch-3"></div>
+        <div class="neural-path branch-4"></div>
     </div>
 
-    <!-- Mobile Energy Particles -->
-    <div class="energy-particles" id="energyParticles">
-        <!-- Particles will be generated by JavaScript -->
+    <!-- Neural Nodes -->
+    <div class="neural-nodes" id="neuralNodes">
+        <!-- Nodes will be generated by JavaScript -->
     </div>
 
-    <!-- iPhone-optimized Settings Button -->
+    <!-- Settings Button -->
     <button class="settings-btn" id="settingsBtn">⚙</button>
 
-    <!-- Mobile Wake Word Indicator -->
+    <!-- Wake Word Indicator -->
     <div class="wake-indicator" id="wakeIndicator">
         👂 <span id="currentWakeWord">Hey Assistant</span>
     </div>
 
-    <!-- iPhone 16 Pro Max Wave Container -->
+    <!-- Neural Wave Container -->
     <div class="wave-container" id="waveContainer">
         <div class="sound-wave" id="soundWave">
             <!-- Wave bars will be generated by JavaScript -->
         </div>
     </div>
 
-    <!-- Mobile Response Display -->
+    <!-- Response Display -->
     <div class="response-display" id="responseDisplay"></div>
 
-    <!-- Full-screen Mobile Settings Panel -->
+    <!-- Settings Panel -->
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
-            <h2>⚙️ Cosmic Settings</h2>
+            <h2>⚙️ Neural Settings</h2>
             <button class="close-settings" id="closeSettings">×</button>
         </div>
 
@@ -809,7 +897,7 @@
 
         <!-- Wake Word Settings -->
         <div class="setting-group">
-            <label class="setting-label">👂 Wake Word Detection</label>
+            <label class="setting-label">👂 Neural Wake Word Detection</label>
             <div class="wake-word-controls">
                 <div class="setting-toggle">
                     <span>Enable Wake Word</span>
@@ -821,27 +909,27 @@
                 <label style="font-size: 14px; margin-top: 15px; display: block;">Wake Word/Phrase:</label>
                 <input type="text" class="setting-input" id="wakeWordInput" placeholder="Hey Assistant" value="Hey Assistant">
                 
-                <label style="font-size: 14px; margin-top: 15px; display: block;">Wake Response:</label>
+                <label style="font-size: 14px; margin-top: 15px; display: block;">Neural Response:</label>
                 <textarea class="setting-textarea" id="wakeResponseInput" placeholder="Hi dear, I'm here!">Hi dear, I'm here!</textarea>
                 
                 <label style="font-size: 14px; margin-top: 15px; display: block;">
-                    Wake Sensitivity: <span id="wakeSensitivityValue">0.7</span>
+                    Neural Sensitivity: <span id="wakeSensitivityValue">0.7</span>
                 </label>
                 <input type="range" class="setting-range" id="wakeSensitivity" min="0.1" max="1.0" step="0.1" value="0.7">
                 
                 <div class="wake-word-list">
-                    <strong>Suggested Wake Words:</strong>
-                    <div class="wake-word-item">👋 "Hey Assistant" - Classic</div>
-                    <div class="wake-word-item">🤖 "Hello AI" - Simple</div>
-                    <div class="wake-word-item">✨ "Hey there" - Casual</div>
-                    <div class="wake-word-item">🎯 "Computer" - Direct</div>
+                    <strong>Neural Wake Words:</strong>
+                    <div class="wake-word-item">🧠 "Hey Assistant" - Classic Neural</div>
+                    <div class="wake-word-item">⚡ "Neural Network" - Advanced</div>
+                    <div class="wake-word-item">✨ "Connect" - Simple</div>
+                    <div class="wake-word-item">🔗 "Activate" - Direct</div>
                 </div>
             </div>
         </div>
 
         <!-- Wave Visualization Settings -->
         <div class="setting-group">
-            <label class="setting-label">🌊 Cosmic Wave Visualization</label>
+            <label class="setting-label">🌊 Neural Wave Visualization</label>
             <div class="wave-controls">
                 <label style="font-size: 14px; display: block; margin-bottom: 5px;">
                     Wave Count: <span id="waveCountValue">80</span>
@@ -849,7 +937,7 @@
                 <input type="range" class="setting-range" id="waveCount" min="40" max="120" step="5" value="80">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    Wave Responsiveness: <span id="responsiveValue">1.2</span>
+                    Neural Responsiveness: <span id="responsiveValue">1.2</span>
                 </label>
                 <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="2.5" step="0.1" value="1.2">
                 
@@ -858,30 +946,19 @@
                 </label>
                 <input type="range" class="setting-range" id="animSpeed" min="40" max="120" step="5" value="70">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Cosmic Wave Schemes:</label>
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Neural Wave Colors:</label>
                 <div class="color-picker">
-                    <div class="wave-color-option active" data-wave-scheme="cosmic" style="background: linear-gradient(to right, #ffffff, #87ceeb, #4169e1, #6495ed, #b0c4de);"></div>
-                    <div class="wave-color-option" data-wave-scheme="spiritual" style="background: linear-gradient(to right, #ffffff, #ffd700, #ff69b4, #9370db, #00ffff);"></div>
-                    <div class="wave-color-option" data-wave-scheme="aurora" style="background: linear-gradient(to right, #ffffff, #00ff7f, #00ced1, #9370db, #ff1493);"></div>
-                    <div class="wave-color-option" data-wave-scheme="celestial" style="background: linear-gradient(to right, #fffacd, #f0e68c, #dda0dd, #ba55d3, #8a2be2);"></div>
+                    <div class="wave-color-option active" data-wave-scheme="neural" style="background: linear-gradient(to right, #FFD700, #FFB000, #FF8C00, #FF6B00, #FF4500);"></div>
+                    <div class="wave-color-option" data-wave-scheme="blue-neural" style="background: linear-gradient(to right, #00D4FF, #0099FF, #0066FF, #3399FF, #66CCFF);"></div>
+                    <div class="wave-color-option" data-wave-scheme="green-neural" style="background: linear-gradient(to right, #00FF7F, #00FF00, #32CD32, #7FFF00, #ADFF2F);"></div>
+                    <div class="wave-color-option" data-wave-scheme="purple-neural" style="background: linear-gradient(to right, #DDA0DD, #DA70D6, #BA55D3, #9370DB, #8A2BE2);"></div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Theme Settings -->
-        <div class="setting-group">
-            <label class="setting-label">🌌 Cosmic Background Theme</label>
-            <div class="color-picker">
-                <div class="color-option active" data-theme="default" style="background: radial-gradient(circle, #ffffff 0%, #87ceeb 30%, #4169e1 60%, #000033 100%);"></div>
-                <div class="color-option" data-theme="cosmic" style="background: radial-gradient(circle, #ffffff 0%, #ffd700 20%, #ff69b4 40%, #9370db 60%, #000000 100%);"></div>
-                <div class="color-option" data-theme="aurora" style="background: radial-gradient(circle, #ffffff 0%, #00ff7f 25%, #00ced1 50%, #9370db 75%, #000000 100%);"></div>
-                <div class="color-option" data-theme="celestial" style="background: radial-gradient(circle, #fffacd 0%, #f0e68c 30%, #dda0dd 60%, #4b0082 100%);"></div>
             </div>
         </div>
 
         <!-- Voice Settings -->
         <div class="setting-group">
-            <label class="setting-label">🗣️ Voice Settings</label>
+            <label class="setting-label">🗣️ Neural Voice Settings</label>
             
             <label style="font-size: 14px; margin-top: 15px; display: block;">
                 Speech Rate: <span id="rateValue">0.8</span>
@@ -918,7 +995,7 @@
 
         <!-- Advanced Settings -->
         <div class="setting-group">
-            <label class="setting-label">🔧 Advanced Settings</label>
+            <label class="setting-label">🔧 Advanced Neural Settings</label>
             
             <div class="setting-toggle">
                 <span>Show Response Text</span>
@@ -935,10 +1012,10 @@
 
         <!-- Test Functions -->
         <div class="setting-group">
-            <label class="setting-label">🧪 Test Functions</label>
-            <button class="btn btn-success" id="testSpeechBtn">🗣️ Test Speech</button>
+            <label class="setting-label">🧪 Neural Test Functions</label>
+            <button class="btn btn-success" id="testSpeechBtn">🗣️ Test Neural Speech</button>
             <button class="btn btn-secondary" id="testWaveBtn">🌊 Test Wave Animation</button>
-            <button class="btn" id="testWakeWordBtn" style="background: #00bcd4; color: white;">👂 Test Wake Word</button>
+            <button class="btn" id="testWakeWordBtn" style="background: var(--neural-gold); color: #000;">👂 Test Wake Word</button>
         </div>
 
         <!-- Export/Import -->
@@ -956,7 +1033,7 @@
     </div>
 
     <script>
-        class MobileCosmicVoiceAssistant {
+        class NeuralVoiceAssistant {
             constructor() {
                 this.settings = {
                     apiKey: '',
@@ -965,13 +1042,13 @@
                     speechPitch: 1.0,
                     speechVolume: 1.0,
                     language: 'en-US',
-                    theme: 'default',
+                    theme: 'neural',
                     showResponse: true,
                     maxTokens: 150,
                     waveCount: 80,
                     waveResponsive: 1.2,
                     animSpeed: 70,
-                    waveScheme: 'cosmic',
+                    waveScheme: 'neural',
                     wakeWordEnabled: true,
                     wakeWord: 'Hey Assistant',
                     wakeResponse: "Hi dear, I'm here!",
@@ -1000,11 +1077,10 @@
                 this.setupEventListeners();
                 this.setupSpeechRecognition();
                 this.initializeWave();
-                this.applyTheme();
                 this.applyWaveScheme();
                 this.startIdleAnimation();
                 this.enableAudio();
-                this.createEnergyParticles();
+                this.createNeuralNodes();
 
                 // Mobile-specific setup
                 this.setupMobileOptimizations();
@@ -1022,12 +1098,6 @@
                         e.preventDefault();
                     }
                 });
-
-                // Optimize for mobile performance
-                if ('serviceWorker' in navigator) {
-                    // Enable hardware acceleration hints
-                    document.body.style.transform = 'translateZ(0)';
-                }
 
                 // Handle orientation changes
                 window.addEventListener('orientationchange', () => {
@@ -1049,7 +1119,7 @@
                 this.waveContainer = document.getElementById('waveContainer');
                 this.wakeIndicator = document.getElementById('wakeIndicator');
                 this.currentWakeWord = document.getElementById('currentWakeWord');
-                this.energyParticles = document.getElementById('energyParticles');
+                this.neuralNodes = document.getElementById('neuralNodes');
 
                 // Settings elements
                 this.settingsBtn = document.getElementById('settingsBtn');
@@ -1167,16 +1237,6 @@
                 this.showResponseToggle.addEventListener('click', () => this.toggleSetting('showResponse'));
                 this.wakeWordToggle.addEventListener('click', () => this.toggleWakeWord());
 
-                // Theme selection
-                document.querySelectorAll('.color-option').forEach(option => {
-                    option.addEventListener('click', () => {
-                        document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
-                        option.classList.add('active');
-                        this.saveSetting('theme', option.dataset.theme);
-                        this.applyTheme();
-                    });
-                });
-
                 // Wave scheme selection
                 document.querySelectorAll('.wave-color-option').forEach(option => {
                     option.addEventListener('click', () => {
@@ -1194,17 +1254,27 @@
                 this.resetBtn.addEventListener('click', () => this.resetSettings());
             }
 
-            createEnergyParticles() {
-                // Fewer particles for mobile performance
-                for (let i = 0; i < 12; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.top = Math.random() * 100 + '%';
-                    particle.style.animationDelay = Math.random() * 8 + 's';
-                    particle.style.animationDuration = (4 + Math.random() * 6) + 's';
-                    this.energyParticles.appendChild(particle);
-                }
+            createNeuralNodes() {
+                // Create neural network nodes
+                const nodePositions = [
+                    { x: 50, y: 25 }, // Top center
+                    { x: 30, y: 40 }, // Left upper
+                    { x: 70, y: 40 }, // Right upper
+                    { x: 25, y: 60 }, // Left center
+                    { x: 75, y: 60 }, // Right center
+                    { x: 50, y: 75 }, // Bottom center
+                    { x: 40, y: 30 }, // Left diagonal
+                    { x: 60, y: 30 }, // Right diagonal
+                ];
+
+                nodePositions.forEach((pos, index) => {
+                    const node = document.createElement('div');
+                    node.className = 'neural-node';
+                    node.style.left = pos.x + '%';
+                    node.style.top = pos.y + '%';
+                    node.style.animationDelay = (index * 0.5) + 's';
+                    this.neuralNodes.appendChild(node);
+                });
             }
 
             initializeWave() {
@@ -1231,7 +1301,7 @@
                 const animate = () => {
                     if (!this.isListening && !this.isProcessing && !this.isSpeaking) {
                         bars.forEach((bar, index) => {
-                            const height = 18 + Math.sin(time + index * 0.25) * 12;
+                            const height = 18 + Math.sin(time + index * 0.3) * 12;
                             bar.style.height = height + 'px';
                         });
                         time += 0.04;
@@ -1290,7 +1360,7 @@
 
                     this.recognition.onerror = (event) => {
                         if (event.error !== 'no-speech') {
-                            this.showMessage(`Speech error: ${event.error}`, 'error');
+                            this.showMessage(`Neural error: ${event.error}`, 'error');
                         }
                         if (!this.wakeListening) {
                             this.stopListening();
@@ -1371,13 +1441,18 @@
                 this.wakeListening = false;
                 this.wakeIndicator.classList.add('active');
                 
-                // Animate wave bars
+                // Animate wave bars and neural nodes
                 const bars = this.soundWave.querySelectorAll('.wave-bar');
+                const nodes = this.neuralNodes.querySelectorAll('.neural-node');
+                
                 bars.forEach(bar => bar.classList.add('wake-detected'));
+                nodes.forEach(node => {
+                    node.style.animation = 'neuralPulse 0.5s ease-in-out 3';
+                });
                 
                 // Add haptic feedback for iPhone
                 if ('vibrate' in navigator) {
-                    navigator.vibrate([50, 30, 50]);
+                    navigator.vibrate([100, 50, 100]);
                 }
                 
                 this.speakResponse(this.settings.wakeResponse);
@@ -1385,6 +1460,9 @@
                 setTimeout(() => {
                     this.wakeIndicator.classList.remove('active');
                     bars.forEach(bar => bar.classList.remove('wake-detected'));
+                    nodes.forEach(node => {
+                        node.style.animation = 'neuralPulse 3s ease-in-out infinite';
+                    });
                     
                     // Start listening for user input
                     this.startListening();
@@ -1414,11 +1492,11 @@
                 
                 if (this.settings.wakeWordEnabled) {
                     this.startWakeWordListening();
-                    this.showMessage('👂 Wake word listening enabled', 'success');
+                    this.showMessage('👂 Neural wake word enabled', 'success');
                 } else {
                     this.wakeListening = false;
                     this.wakeIndicator.classList.remove('show', 'active');
-                    this.showMessage('👂 Wake word listening disabled', 'info');
+                    this.showMessage('👂 Neural wake word disabled', 'info');
                 }
             }
 
@@ -1437,7 +1515,7 @@
                     });
                     this.microphone = this.audioContext.createMediaStreamSource(stream);
                     this.analyser = this.audioContext.createAnalyser();
-                    this.analyser.fftSize = 512; // Reduced for mobile performance
+                    this.analyser.fftSize = 512;
                     
                     this.microphone.connect(this.analyser);
                     this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
@@ -1512,7 +1590,7 @@
                     
                     this.speakResponse(response);
                 } catch (error) {
-                    this.showMessage(`AI Error: ${error.message}`, 'error');
+                    this.showMessage(`Neural AI Error: ${error.message}`, 'error');
                 } finally {
                     this.isProcessing = false;
                     bars.forEach(bar => bar.classList.remove('speaking'));
@@ -1540,7 +1618,7 @@
                         messages: [
                             {
                                 role: 'system',
-                                content: 'You are a helpful cosmic voice assistant. Provide concise, friendly responses suitable for speech with a touch of cosmic wisdom.'
+                                content: 'You are a neural AI voice assistant with advanced cognitive processing. Provide concise, intelligent responses suitable for speech with a touch of technological sophistication.'
                             },
                             {
                                 role: 'user',
@@ -1583,10 +1661,10 @@
             showResponse(userInput, response) {
                 this.responseDisplay.innerHTML = `
                     <div style="margin-bottom: 15px;">
-                        <strong style="color: var(--wave-color-1);">✨ You:</strong> "${userInput}"
+                        <strong style="color: var(--wave-color-1);">⚡ You:</strong> "${userInput}"
                     </div>
                     <div>
-                        <strong style="color: var(--wave-color-4);">🌌 Cosmic AI:</strong> ${response}
+                        <strong style="color: var(--wave-color-4);">🧠 Neural AI:</strong> ${response}
                     </div>
                 `;
                 
@@ -1623,19 +1701,15 @@
 
             openSettings() {
                 this.settingsPanel.classList.add('open');
-                // Prevent body scroll on mobile
                 document.body.style.overflow = 'hidden';
             }
 
             closeSettingsPanel() {
                 this.settingsPanel.classList.remove('open');
-                // Restore body scroll
                 document.body.style.overflow = '';
             }
 
-            // All other methods remain the same as the previous version but optimized for mobile...
-            // (loadSettings, saveSetting, toggleSetting, updateToggle, applyTheme, saveApiKey, etc.)
-            
+            // Settings management methods
             loadSettings() {
                 Object.keys(this.settings).forEach(key => {
                     const saved = localStorage.getItem(`va_${key}`);
@@ -1666,7 +1740,6 @@
                     if (this.wakeResponseInput) this.wakeResponseInput.value = this.settings.wakeResponse;
                     if (this.wakeSensitivity) this.wakeSensitivity.value = this.settings.wakeSensitivity;
 
-                    // Update current wake word display
                     if (this.currentWakeWord) this.currentWakeWord.textContent = this.settings.wakeWord;
 
                     // Update value displays
@@ -1682,11 +1755,6 @@
                     // Update toggles
                     this.updateToggle(this.showResponseToggle, this.settings.showResponse);
                     this.updateToggle(this.wakeWordToggle, this.settings.wakeWordEnabled);
-
-                    // Update theme
-                    document.querySelectorAll('.color-option').forEach(option => {
-                        option.classList.toggle('active', option.dataset.theme === this.settings.theme);
-                    });
 
                     // Update wave scheme
                     document.querySelectorAll('.wave-color-option').forEach(option => {
@@ -1718,15 +1786,11 @@
                 }
             }
 
-            applyTheme() {
-                document.body.setAttribute('data-theme', this.settings.theme);
-            }
-
             saveApiKey() {
                 const apiKey = this.apiKeyInput.value.trim();
                 if (apiKey && apiKey.startsWith('sk-')) {
                     this.saveSetting('apiKey', apiKey);
-                    this.showMessage('✅ API key saved successfully!', 'success');
+                    this.showMessage('✅ Neural API key saved successfully!', 'success');
                 } else {
                     this.showMessage('❌ Invalid API key format. Should start with "sk-"', 'error');
                 }
@@ -1757,7 +1821,7 @@
                     });
 
                     if (response.ok) {
-                        this.showMessage('✅ API key is valid and working!', 'success');
+                        this.showMessage('✅ Neural API key is valid and working!', 'success');
                         this.saveApiKey();
                     } else {
                         const error = await response.json();
@@ -1772,7 +1836,7 @@
             }
 
             testSpeech() {
-                this.speakResponse('Greetings from the cosmic realm! I am your AI voice assistant, perfectly optimized for your iPhone 16 Pro Max.');
+                this.speakResponse('Greetings! I am your neural AI voice assistant, powered by advanced cognitive processing and optimized for your iPhone 16 Pro Max.');
             }
 
             testWaveAnimation() {
@@ -1781,11 +1845,11 @@
                 
                 const testAnimation = () => {
                     bars.forEach((bar, index) => {
-                        const height = 80 + Math.sin(time + index * 0.7) * 60;
+                        const height = 80 + Math.sin(time + index * 0.8) * 60;
                         bar.style.height = height + 'px';
                         bar.classList.add('active');
                     });
-                    time += 0.35;
+                    time += 0.4;
                     
                     if (time < 12) {
                         setTimeout(testAnimation, this.settings.animSpeed);
@@ -1798,7 +1862,7 @@
             }
 
             testWakeWord() {
-                this.showMessage(`🌌 Testing cosmic wake word detection with: "${this.settings.wakeWord}"`, 'info');
+                this.showMessage(`🧠 Testing neural wake word detection with: "${this.settings.wakeWord}"`, 'info');
                 this.handleWakeWordDetected();
             }
 
@@ -1812,11 +1876,11 @@
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `cosmic-mobile-assistant-${new Date().toISOString().split('T')[0]}.json`;
+                a.download = `neural-assistant-${new Date().toISOString().split('T')[0]}.json`;
                 a.click();
                 URL.revokeObjectURL(url);
 
-                this.showMessage('✅ Mobile cosmic settings exported!', 'success');
+                this.showMessage('✅ Neural settings exported!', 'success');
             }
 
             importSettings(event) {
@@ -1837,9 +1901,8 @@
 
                         this.loadSettings();
                         this.initializeWave();
-                        this.applyTheme();
                         this.applyWaveScheme();
-                        this.showMessage('✅ Mobile settings imported successfully!', 'success');
+                        this.showMessage('✅ Neural settings imported successfully!', 'success');
                     } catch (error) {
                         this.showMessage('❌ Invalid settings file', 'error');
                     }
@@ -1849,7 +1912,7 @@
             }
 
             resetSettings() {
-                if (confirm('Reset all cosmic settings? This cannot be undone.')) {
+                if (confirm('Reset all neural settings? This cannot be undone.')) {
                     Object.keys(localStorage).forEach(key => {
                         if (key.startsWith('va_')) {
                             localStorage.removeItem(key);
@@ -1863,13 +1926,13 @@
                         speechPitch: 1.0,
                         speechVolume: 1.0,
                         language: 'en-US',
-                        theme: 'default',
+                        theme: 'neural',
                         showResponse: true,
                         maxTokens: 150,
                         waveCount: 80,
                         waveResponsive: 1.2,
                         animSpeed: 70,
-                        waveScheme: 'cosmic',
+                        waveScheme: 'neural',
                         wakeWordEnabled: true,
                         wakeWord: 'Hey Assistant',
                         wakeResponse: "Hi dear, I'm here!",
@@ -1878,19 +1941,18 @@
 
                     this.loadSettings();
                     this.initializeWave();
-                    this.applyTheme();
                     this.applyWaveScheme();
-                    this.showMessage('✅ Mobile cosmic settings reset!', 'success');
+                    this.showMessage('✅ Neural settings reset!', 'success');
                 }
             }
         }
 
-        // Initialize the mobile cosmic voice assistant
+        // Initialize the neural voice assistant
         document.addEventListener('DOMContentLoaded', () => {
-            window.voiceAssistant = new MobileCosmicVoiceAssistant();
+            window.voiceAssistant = new NeuralVoiceAssistant();
         });
 
-        // Handle mobile-specific page visibility changes
+        // Handle mobile-specific events
         document.addEventListener('visibilitychange', () => {
             if (document.hidden && window.voiceAssistant) {
                 window.voiceAssistant.synthesis.cancel();
@@ -1900,7 +1962,6 @@
             }
         });
 
-        // Handle mobile orientation changes
         window.addEventListener('orientationchange', () => {
             setTimeout(() => {
                 if (window.voiceAssistant) {
