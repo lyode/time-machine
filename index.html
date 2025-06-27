@@ -34,7 +34,7 @@
             --shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
 
-        /* Light Mode Colors */
+        /* Light mode adjustments */
         [data-mode="light"] {
             --background-gradient: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 50%, #ddeeff 100%);
             --card-background: rgba(255, 255, 255, 0.9);
@@ -50,6 +50,15 @@
             --wave-color-5: #99ccff;
             
             --shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        /* Force light mode background coverage */
+        [data-mode="light"] html {
+            background: var(--background-gradient);
+        }
+
+        [data-mode="light"] body::before {
+            background: var(--background-gradient);
         }
 
         [data-theme="blue"] {
@@ -97,8 +106,40 @@
             touch-action: manipulation;
             overflow: hidden;
             color: var(--text-color);
-            position: relative;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+            padding: 0;
+            /* Ensure background covers safe areas */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+
+        /* Force background to cover entire viewport including safe areas */
+        html {
+            background: var(--background-gradient);
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Additional background layer to ensure coverage */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--background-gradient);
+            z-index: -1;
         }
 
         /* Top Controls */
@@ -659,6 +700,24 @@
 
         /* iPhone 15 Pro Max Specific Optimizations */
         @media (max-width: 430px) and (max-height: 932px) {
+            html, body {
+                height: 100vh;
+                height: 100dvh;
+                background: var(--background-gradient);
+                margin: 0;
+                padding: 0;
+            }
+            
+            body {
+                /* Ensure full coverage on iPhone */
+                min-height: -webkit-fill-available;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+            
             .settings-panel { 
                 width: 100vw;
                 padding: 15px;
@@ -1611,8 +1670,9 @@
             }
 
             drawAdvancedWaveform() {
-                // Clear canvas
-                this.canvasCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+                // Clear canvas with slight fade effect for trails
+                this.canvasCtx.fillStyle = 'rgba(10, 10, 15, 0.03)';
+                this.canvasCtx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
                 
                 // Apply smoothing
                 for (let i = 0; i < this.barCount; i++) {
@@ -1620,32 +1680,257 @@
                                          this.frequencyData[i] * (1 - this.smoothingFactor);
                 }
                 
-                // Draw energy sphere
-                this.drawEnergySphere();
+                // Draw neural network
+                this.drawNeuralNetwork();
             }
 
-            drawEnergySphere() {
+            drawNeuralNetwork() {
                 const centerX = this.canvasWidth / 2;
                 const centerY = this.canvasHeight / 2;
-                const baseRadius = Math.min(this.canvasWidth, this.canvasHeight) * 0.25;
                 
-                // Get average intensity for sphere size
+                // Get average intensity for overall activity
                 const avgIntensity = this.smoothedData.reduce((a, b) => a + b, 0) / this.smoothedData.length;
                 
-                // Add subtle breathing effect during idle
+                // Breathing effect for center
                 const currentTime = Date.now();
-                const breathingEffect = Math.sin((currentTime - this.startTime) * 0.001) * 0.05 + 1;
+                const breathingCycle = (currentTime - this.startTime) * 0.001;
+                const breathingIntensity = (Math.sin(breathingCycle) + 1) * 0.5; // 0-1
+                const coreIntensity = 0.3 + breathingIntensity * 0.4 + avgIntensity * 0.5;
                 
-                const sphereRadius = (baseRadius + (avgIntensity * 50 * this.lightningIntensity)) * breathingEffect;
+                // Draw neural pathways
+                this.drawNeuralPathways(centerX, centerY, avgIntensity);
                 
-                // Draw sphere structure
-                this.drawSphereStructure(centerX, centerY, sphereRadius, avgIntensity);
+                // Draw central core with breathing effect
+                this.drawBreathingCore(centerX, centerY, coreIntensity);
                 
-                // Draw radiating energy lines
-                this.drawRadiatingEnergy(centerX, centerY, sphereRadius, avgIntensity);
+                // Draw organic branches
+                this.drawOrganicBranches(centerX, centerY, avgIntensity);
+            }
+
+            drawNeuralPathways(centerX, centerY, intensity) {
+                const currentTime = Date.now();
+                const time = (currentTime - this.startTime) * 0.0005;
                 
-                // Draw core glow
-                this.drawSphereCore(centerX, centerY, sphereRadius * 0.3, avgIntensity);
+                // Create multiple organic pathways
+                const pathwayCount = 24;
+                
+                for (let p = 0; p < pathwayCount; p++) {
+                    const baseAngle = (p / pathwayCount) * Math.PI * 2;
+                    const angleVariation = Math.sin(time + p * 0.5) * 0.3;
+                    const angle = baseAngle + angleVariation;
+                    
+                    this.drawOrganicPath(centerX, centerY, angle, intensity, p);
+                }
+            }
+
+            drawOrganicPath(startX, startY, baseAngle, intensity, pathIndex) {
+                const currentTime = Date.now();
+                const time = (currentTime - this.startTime) * 0.0003;
+                
+                // Path properties
+                const maxLength = Math.min(this.canvasWidth, this.canvasHeight) * 0.4;
+                const segments = 50;
+                const pathIntensity = 0.1 + intensity * 0.6;
+                
+                this.canvasCtx.beginPath();
+                this.canvasCtx.lineWidth = 0.5 + intensity * 2;
+                this.canvasCtx.lineCap = 'round';
+                
+                let currentX = startX;
+                let currentY = startY;
+                let currentAngle = baseAngle;
+                
+                this.canvasCtx.moveTo(currentX, currentY);
+                
+                for (let i = 1; i <= segments; i++) {
+                    const progress = i / segments;
+                    const distance = (maxLength * progress) * (1 + intensity * 0.5);
+                    
+                    // Add organic curve variation
+                    const curve1 = Math.sin(time * 2 + pathIndex * 0.7 + progress * 8) * 0.2;
+                    const curve2 = Math.cos(time * 1.3 + pathIndex * 0.9 + progress * 6) * 0.15;
+                    const angleOffset = curve1 + curve2;
+                    
+                    currentAngle += angleOffset;
+                    
+                    // Calculate next point
+                    const stepSize = distance / segments;
+                    const nextX = currentX + Math.cos(currentAngle) * stepSize;
+                    const nextY = currentY + Math.sin(currentAngle) * stepSize;
+                    
+                    // Add noise for organic feel
+                    const noiseX = (Math.random() - 0.5) * intensity * 3;
+                    const noiseY = (Math.random() - 0.5) * intensity * 3;
+                    
+                    currentX = nextX + noiseX;
+                    currentY = nextY + noiseY;
+                    
+                    this.canvasCtx.lineTo(currentX, currentY);
+                }
+                
+                // Create gradient along path
+                const gradient = this.createNeuralGradient(startX, startY, currentX, currentY, pathIntensity);
+                this.canvasCtx.strokeStyle = gradient;
+                
+                // Add glow effect
+                this.canvasCtx.shadowColor = this.getNeuralGlowColor();
+                this.canvasCtx.shadowBlur = 5 + intensity * 15;
+                this.canvasCtx.stroke();
+                this.canvasCtx.shadowBlur = 0;
+            }
+
+            drawOrganicBranches(centerX, centerY, intensity) {
+                if (intensity < 0.3) return;
+                
+                const currentTime = Date.now();
+                const time = (currentTime - this.startTime) * 0.0008;
+                const branchCount = Math.floor(8 + intensity * 16);
+                
+                for (let b = 0; b < branchCount; b++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 50 + Math.random() * 150;
+                    const branchLength = 30 + Math.random() * 100 * intensity;
+                    
+                    // Main branch point
+                    const branchX = centerX + Math.cos(angle) * distance;
+                    const branchY = centerY + Math.sin(angle) * distance;
+                    
+                    // Create sub-branches
+                    const subBranches = 2 + Math.floor(Math.random() * 4);
+                    
+                    for (let sb = 0; sb < subBranches; sb++) {
+                        const subAngle = angle + (Math.random() - 0.5) * Math.PI * 0.8;
+                        const endX = branchX + Math.cos(subAngle) * branchLength;
+                        const endY = branchY + Math.sin(subAngle) * branchLength;
+                        
+                        this.canvasCtx.beginPath();
+                        this.canvasCtx.moveTo(branchX, branchY);
+                        this.canvasCtx.lineTo(endX, endY);
+                        
+                        this.canvasCtx.lineWidth = 0.3 + intensity * 1.5;
+                        this.canvasCtx.strokeStyle = `rgba(147, 51, 234, ${0.3 + intensity * 0.5})`;
+                        this.canvasCtx.shadowColor = this.getNeuralGlowColor();
+                        this.canvasCtx.shadowBlur = 3 + intensity * 8;
+                        this.canvasCtx.stroke();
+                        this.canvasCtx.shadowBlur = 0;
+                    }
+                }
+            }
+
+            drawBreathingCore(centerX, centerY, intensity) {
+                // Central breathing core
+                const baseRadius = 15;
+                const pulseRadius = baseRadius + intensity * 25;
+                
+                // Multiple concentric circles for depth
+                for (let layer = 0; layer < 4; layer++) {
+                    const layerRadius = pulseRadius * (0.3 + layer * 0.25);
+                    const layerAlpha = (1 - layer * 0.2) * intensity;
+                    
+                    const coreGradient = this.canvasCtx.createRadialGradient(
+                        centerX, centerY, 0,
+                        centerX, centerY, layerRadius
+                    );
+                    
+                    switch(layer) {
+                        case 0: // Inner white core
+                            coreGradient.addColorStop(0, `rgba(255, 255, 255, ${layerAlpha * 0.9})`);
+                            coreGradient.addColorStop(0.3, `rgba(200, 150, 255, ${layerAlpha * 0.7})`);
+                            coreGradient.addColorStop(1, 'rgba(147, 51, 234, 0)');
+                            break;
+                        case 1: // Purple glow
+                            coreGradient.addColorStop(0, `rgba(200, 150, 255, ${layerAlpha * 0.6})`);
+                            coreGradient.addColorStop(0.5, `rgba(147, 51, 234, ${layerAlpha * 0.4})`);
+                            coreGradient.addColorStop(1, 'rgba(88, 28, 135, 0)');
+                            break;
+                        case 2: // Outer purple
+                            coreGradient.addColorStop(0, `rgba(147, 51, 234, ${layerAlpha * 0.4})`);
+                            coreGradient.addColorStop(0.7, `rgba(88, 28, 135, ${layerAlpha * 0.2})`);
+                            coreGradient.addColorStop(1, 'rgba(45, 12, 60, 0)');
+                            break;
+                        case 3: // Very outer dark purple
+                            coreGradient.addColorStop(0, `rgba(88, 28, 135, ${layerAlpha * 0.2})`);
+                            coreGradient.addColorStop(1, 'rgba(20, 5, 30, 0)');
+                            break;
+                    }
+                    
+                    this.canvasCtx.beginPath();
+                    this.canvasCtx.arc(centerX, centerY, layerRadius, 0, Math.PI * 2);
+                    this.canvasCtx.fillStyle = coreGradient;
+                    this.canvasCtx.fill();
+                }
+                
+                // Add sparkling effect in center
+                if (intensity > 0.6) {
+                    for (let spark = 0; spark < 8; spark++) {
+                        const sparkAngle = Math.random() * Math.PI * 2;
+                        const sparkDistance = Math.random() * pulseRadius * 0.5;
+                        const sparkX = centerX + Math.cos(sparkAngle) * sparkDistance;
+                        const sparkY = centerY + Math.sin(sparkAngle) * sparkDistance;
+                        
+                        this.canvasCtx.beginPath();
+                        this.canvasCtx.arc(sparkX, sparkY, Math.random() * 2, 0, Math.PI * 2);
+                        this.canvasCtx.fillStyle = `rgba(255, 255, 255, ${Math.random() * intensity})`;
+                        this.canvasCtx.fill();
+                    }
+                }
+            }
+
+            createNeuralGradient(x1, y1, x2, y2, intensity) {
+                const gradient = this.canvasCtx.createLinearGradient(x1, y1, x2, y2);
+                
+                // Apply different neural schemes based on wave scheme setting
+                switch(this.settings.waveScheme) {
+                    case 'ocean':
+                        gradient.addColorStop(0, `rgba(100, 255, 255, ${intensity * 0.8})`);
+                        gradient.addColorStop(0.5, `rgba(0, 200, 255, ${intensity * 0.6})`);
+                        gradient.addColorStop(1, `rgba(0, 100, 200, ${intensity * 0.3})`);
+                        break;
+                    case 'fire':
+                        gradient.addColorStop(0, `rgba(255, 200, 100, ${intensity * 0.8})`);
+                        gradient.addColorStop(0.5, `rgba(255, 100, 50, ${intensity * 0.6})`);
+                        gradient.addColorStop(1, `rgba(200, 50, 0, ${intensity * 0.3})`);
+                        break;
+                    case 'neon':
+                        gradient.addColorStop(0, `rgba(255, 0, 255, ${intensity * 0.8})`);
+                        gradient.addColorStop(0.3, `rgba(0, 255, 255, ${intensity * 0.7})`);
+                        gradient.addColorStop(0.7, `rgba(255, 255, 0, ${intensity * 0.5})`);
+                        gradient.addColorStop(1, `rgba(255, 0, 128, ${intensity * 0.3})`);
+                        break;
+                    case 'blue':
+                        gradient.addColorStop(0, `rgba(150, 200, 255, ${intensity * 0.8})`);
+                        gradient.addColorStop(0.5, `rgba(100, 150, 255, ${intensity * 0.6})`);
+                        gradient.addColorStop(1, `rgba(50, 100, 200, ${intensity * 0.3})`);
+                        break;
+                    case 'rainbow':
+                        gradient.addColorStop(0, `rgba(255, 100, 150, ${intensity * 0.8})`);
+                        gradient.addColorStop(0.2, `rgba(255, 150, 50, ${intensity * 0.7})`);
+                        gradient.addColorStop(0.4, `rgba(150, 255, 50, ${intensity * 0.6})`);
+                        gradient.addColorStop(0.6, `rgba(50, 255, 150, ${intensity * 0.5})`);
+                        gradient.addColorStop(0.8, `rgba(150, 50, 255, ${intensity * 0.4})`);
+                        gradient.addColorStop(1, `rgba(255, 50, 150, ${intensity * 0.3})`);
+                        break;
+                    case 'purple':
+                    default:
+                        gradient.addColorStop(0, `rgba(200, 150, 255, ${intensity * 0.8})`);
+                        gradient.addColorStop(0.5, `rgba(147, 51, 234, ${intensity * 0.6})`);
+                        gradient.addColorStop(1, `rgba(88, 28, 135, ${intensity * 0.3})`);
+                        break;
+                }
+                
+                return gradient;
+            }
+
+            getNeuralGlowColor() {
+                switch(this.settings.waveScheme) {
+                    case 'ocean': return '#00ccff';
+                    case 'fire': return '#ff6600';
+                    case 'neon': return '#ff00ff';
+                    case 'blue': return '#4080ff';
+                    case 'rainbow': return '#ff80c0';
+                    case 'purple':
+                    default: return '#9333ea';
+                }
             }
 
             drawSphereStructure(centerX, centerY, radius, intensity) {
