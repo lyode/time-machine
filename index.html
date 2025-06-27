@@ -13,43 +13,43 @@
             --success-color: #4CAF50;
             --danger-color: #FF3B30;
             --warning-color: #ff9800;
-            --background-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            --card-background: rgba(255, 255, 255, 0.05);
+            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #87ceeb 15%, #4169e1 35%, #191970 60%, #000033 85%, #000000 100%);
+            --card-background: rgba(255, 255, 255, 0.08);
             --text-color: #ffffff;
             --border-radius: 20px;
             --shadow: 0 8px 32px rgba(0,0,0,0.3);
-            --wave-color-1: #ff006e;
-            --wave-color-2: #ff8500;
-            --wave-color-3: #ffb700;
-            --wave-color-4: #00f5ff;
-            --wave-color-5: #8338ec;
+            --wave-color-1: #ffffff;
+            --wave-color-2: #87ceeb;
+            --wave-color-3: #4169e1;
+            --wave-color-4: #6495ed;
+            --wave-color-5: #b0c4de;
         }
 
-        [data-theme="blue"] {
-            --background-gradient: linear-gradient(135deg, #000428 0%, #004e92 100%);
-            --wave-color-1: #00d4ff;
-            --wave-color-2: #0099ff;
-            --wave-color-3: #0066ff;
-            --wave-color-4: #3399ff;
-            --wave-color-5: #66ccff;
+        [data-theme="cosmic"] {
+            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #ffd700 8%, #ff69b4 18%, #9370db 30%, #4b0082 50%, #191970 70%, #000033 85%, #000000 100%);
+            --wave-color-1: #ffffff;
+            --wave-color-2: #ffd700;
+            --wave-color-3: #ff69b4;
+            --wave-color-4: #9370db;
+            --wave-color-5: #00ffff;
         }
 
-        [data-theme="purple"] {
-            --background-gradient: linear-gradient(135deg, #2d1b69 0%, #8b5a83 50%, #f18a8a 100%);
-            --wave-color-1: #a855f7;
-            --wave-color-2: #c084fc;
-            --wave-color-3: #ddd6fe;
-            --wave-color-4: #8b5cf6;
-            --wave-color-5: #7c3aed;
+        [data-theme="aurora"] {
+            --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #00ff7f 10%, #00ced1 20%, #9370db 35%, #4b0082 55%, #000080 75%, #000033 90%, #000000 100%);
+            --wave-color-1: #ffffff;
+            --wave-color-2: #00ff7f;
+            --wave-color-3: #00ced1;
+            --wave-color-4: #9370db;
+            --wave-color-5: #ff1493;
         }
 
-        [data-theme="orange"] {
-            --background-gradient: linear-gradient(135deg, #ff9a00 0%, #ffad00 50%, #ff6600 100%);
-            --wave-color-1: #ff4500;
-            --wave-color-2: #ff6600;
-            --wave-color-3: #ff8c00;
-            --wave-color-4: #ffa500;
-            --wave-color-5: #ffb347;
+        [data-theme="celestial"] {
+            --background-gradient: radial-gradient(ellipse at center, #fffacd 0%, #f0e68c 12%, #dda0dd 25%, #ba55d3 40%, #8a2be2 60%, #4b0082 80%, #191970 95%, #000000 100%);
+            --wave-color-1: #fffacd;
+            --wave-color-2: #f0e68c;
+            --wave-color-3: #dda0dd;
+            --wave-color-4: #ba55d3;
+            --wave-color-5: #8a2be2;
         }
 
         * {
@@ -71,56 +71,192 @@
             position: relative;
         }
 
+        /* Cosmic Background Effects */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ffffff, transparent),
+                radial-gradient(1px 1px at 200px 60px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 240px 90px, #ffffff, transparent),
+                radial-gradient(1px 1px at 280px 20px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 320px 70px, #ffffff, transparent),
+                radial-gradient(2px 2px at 360px 40px, rgba(255,255,255,0.8), transparent);
+            background-repeat: repeat;
+            background-size: 400px 400px;
+            animation: stars 20s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Central Light Burst */
+        body::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 30%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: centralGlow 4s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes stars {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-400px); }
+        }
+
+        @keyframes centralGlow {
+            0% { 
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        /* Light Rays */
+        .light-rays {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .light-ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 50%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent);
+            transform-origin: bottom center;
+            animation: rayRotate 8s linear infinite;
+        }
+
+        .light-ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
+        .light-ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); animation-delay: -1s; }
+        .light-ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); animation-delay: -2s; }
+        .light-ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); animation-delay: -3s; }
+        .light-ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); animation-delay: -4s; }
+        .light-ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); animation-delay: -5s; }
+        .light-ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); animation-delay: -6s; }
+        .light-ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); animation-delay: -7s; }
+
+        @keyframes rayRotate {
+            0% { 
+                transform: translate(-50%, -100%) rotate(var(--start-rotation, 0deg)) scaleY(0.5);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 180deg)) scaleY(1);
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 360deg)) scaleY(0.5);
+                opacity: 0.3;
+            }
+        }
+
+        /* Energy Particles */
+        .energy-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ffffff, transparent);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translate(0, 0) scale(0.5);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translate(20px, -30px) scale(1);
+                opacity: 1;
+            }
+        }
+
         /* Minimized Settings Button */
         .settings-btn {
             position: absolute;
             top: 15px;
             right: 15px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             border-radius: 50%;
             width: 35px;
             height: 35px;
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             z-index: 100;
             opacity: 0.5;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .settings-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 1);
             transform: scale(1.1);
             opacity: 1;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
-        /* Wake Word Indicator (subtle) */
+        /* Wake Word Indicator */
         .wake-indicator {
             position: absolute;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 188, 212, 0.1);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 12px;
             opacity: 0;
             transition: all 0.3s ease;
-            border: 1px solid rgba(0, 188, 212, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .wake-indicator.show {
-            opacity: 0.7;
+            opacity: 0.8;
         }
 
         .wake-indicator.active {
-            background: rgba(76, 175, 80, 0.2);
-            border: 1px solid rgba(76, 175, 80, 0.5);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             opacity: 1;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
         }
 
         /* Full Screen Wave Container */
@@ -134,6 +270,7 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            z-index: 10;
         }
 
         .sound-wave {
@@ -160,16 +297,18 @@
                 var(--wave-color-3) 50%, 
                 var(--wave-color-4) 75%, 
                 var(--wave-color-5) 100%);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
         }
 
         .wave-bar.active {
             box-shadow: 0 0 30px var(--wave-color-1), 0 0 60px var(--wave-color-2);
-            filter: brightness(1.5);
+            filter: brightness(1.8) drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+            transform: scaleY(1.2);
         }
 
         .wave-bar.wake-detected {
-            animation: wakeDetected 0.8s ease;
+            animation: wakeDetected 1s ease;
         }
 
         .wave-bar.speaking {
@@ -177,16 +316,37 @@
         }
 
         @keyframes wakeDetected {
-            0% { transform: scaleY(1); filter: brightness(1); }
-            25% { transform: scaleY(1.5); filter: brightness(2) hue-rotate(90deg); }
-            50% { transform: scaleY(2); filter: brightness(3) hue-rotate(180deg); }
-            75% { transform: scaleY(1.5); filter: brightness(2) hue-rotate(270deg); }
-            100% { transform: scaleY(1); filter: brightness(1) hue-rotate(360deg); }
+            0% { 
+                transform: scaleY(1); 
+                filter: brightness(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+            }
+            25% { 
+                transform: scaleY(1.8); 
+                filter: brightness(3) hue-rotate(90deg) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
+            }
+            50% { 
+                transform: scaleY(2.5); 
+                filter: brightness(4) hue-rotate(180deg) drop-shadow(0 0 40px rgba(255, 255, 255, 1));
+            }
+            75% { 
+                transform: scaleY(1.8); 
+                filter: brightness(3) hue-rotate(270deg) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
+            }
+            100% { 
+                transform: scaleY(1); 
+                filter: brightness(1) hue-rotate(360deg) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+            }
         }
 
         @keyframes speakingPulse {
-            0% { transform: scaleY(1); filter: brightness(1); }
-            100% { transform: scaleY(1.3); filter: brightness(1.8) saturate(1.5); }
+            0% { 
+                transform: scaleY(1); 
+                filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+            }
+            100% { 
+                transform: scaleY(1.4); 
+                filter: brightness(2) saturate(1.5) drop-shadow(0 0 20px rgba(255, 255, 255, 0.7));
+            }
         }
 
         /* Settings Panel */
@@ -197,14 +357,15 @@
             width: 90%;
             max-width: 450px;
             height: 100vh;
-            background: var(--card-background);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(20px);
-            box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+            box-shadow: -5px 0 20px rgba(0,0,0,0.5);
             padding: 20px;
             overflow-y: auto;
             transition: right 0.3s ease;
             z-index: 1000;
             color: var(--text-color);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .settings-panel.open {
@@ -221,11 +382,24 @@
         }
 
         .close-settings {
-            background: none;
-            border: none;
-            font-size: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
             cursor: pointer;
             color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-settings:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         .setting-group {
@@ -258,6 +432,7 @@
         .setting-input:focus, .setting-textarea:focus {
             border-color: var(--primary-color);
             outline: none;
+            box-shadow: 0 0 15px rgba(135, 206, 235, 0.3);
         }
 
         .setting-range {
@@ -310,7 +485,7 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .toggle-switch {
@@ -369,6 +544,7 @@
         .color-option.active {
             border-color: white;
             transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
         .wave-color-option {
@@ -384,7 +560,7 @@
         .wave-color-option.active {
             border-color: white;
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
 
         .wave-controls {
@@ -392,11 +568,12 @@
             padding: 15px;
             border-radius: 10px;
             margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .wake-word-controls {
-            background: rgba(0, 188, 212, 0.1);
-            border: 1px solid rgba(0, 188, 212, 0.3);
+            background: rgba(135, 206, 235, 0.1);
+            border: 1px solid rgba(135, 206, 235, 0.3);
             padding: 15px;
             border-radius: 10px;
             margin: 15px 0;
@@ -426,7 +603,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 999;
             opacity: 0;
             visibility: hidden;
@@ -445,7 +622,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             max-width: 70%;
-            background: var(--card-background);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(20px);
             padding: 25px;
             border-radius: 20px;
@@ -454,8 +631,9 @@
             opacity: 0;
             transform: translate(-50%, -50%) scale(0.8);
             transition: all 0.4s ease;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            z-index: 50;
         }
 
         .response-display.show {
@@ -480,37 +658,37 @@
             border-bottom: none;
         }
 
-        /* Colorful wave presets */
-        .rainbow-wave {
-            --wave-color-1: #ff0080;
-            --wave-color-2: #ff8000;
-            --wave-color-3: #80ff00;
-            --wave-color-4: #00ff80;
-            --wave-color-5: #8000ff;
+        /* Cosmic wave presets */
+        .cosmic-wave {
+            --wave-color-1: #ffffff;
+            --wave-color-2: #87ceeb;
+            --wave-color-3: #4169e1;
+            --wave-color-4: #6495ed;
+            --wave-color-5: #b0c4de;
         }
 
-        .ocean-wave {
-            --wave-color-1: #006994;
-            --wave-color-2: #13a6b7;
-            --wave-color-3: #20c0db;
-            --wave-color-4: #4dd7fa;
-            --wave-color-5: #9cecfb;
+        .spiritual-wave {
+            --wave-color-1: #ffffff;
+            --wave-color-2: #ffd700;
+            --wave-color-3: #ff69b4;
+            --wave-color-4: #9370db;
+            --wave-color-5: #00ffff;
         }
 
-        .fire-wave {
-            --wave-color-1: #ff0000;
-            --wave-color-2: #ff4500;
-            --wave-color-3: #ff8c00;
-            --wave-color-4: #ffd700;
-            --wave-color-5: #ffff00;
+        .aurora-wave {
+            --wave-color-1: #ffffff;
+            --wave-color-2: #00ff7f;
+            --wave-color-3: #00ced1;
+            --wave-color-4: #9370db;
+            --wave-color-5: #ff1493;
         }
 
-        .neon-wave {
-            --wave-color-1: #ff00ff;
-            --wave-color-2: #00ffff;
-            --wave-color-3: #ffff00;
-            --wave-color-4: #ff0080;
-            --wave-color-5: #80ff00;
+        .celestial-wave {
+            --wave-color-1: #fffacd;
+            --wave-color-2: #f0e68c;
+            --wave-color-3: #dda0dd;
+            --wave-color-4: #ba55d3;
+            --wave-color-5: #8a2be2;
         }
 
         @media (max-width: 480px) {
@@ -541,11 +719,28 @@
         }
     </style>
 </head>
-<body data-theme="default" class="rainbow-wave">
-    <!-- Minimized Settings Button -->
+<body data-theme="default" class="cosmic-wave">
+    <!-- Cosmic Light Rays -->
+    <div class="light-rays">
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+    </div>
+
+    <!-- Energy Particles -->
+    <div class="energy-particles" id="energyParticles">
+        <!-- Particles will be generated by JavaScript -->
+    </div>
+
+    <!-- Settings Button -->
     <button class="settings-btn" id="settingsBtn">⚙</button>
 
-    <!-- Wake Word Indicator (subtle) -->
+    <!-- Wake Word Indicator -->
     <div class="wake-indicator" id="wakeIndicator">
         👂 <span id="currentWakeWord">Hey Assistant</span>
     </div>
@@ -566,8 +761,8 @@
     <!-- Settings Panel -->
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
-            <h2>⚙️ Settings</h2>
-            <button class="close-settings" id="closeSettings">✕</button>
+            <h2>⚙️ Cosmic Settings</h2>
+            <button class="close-settings" id="closeSettings">×</button>
         </div>
 
         <!-- API Configuration -->
@@ -624,7 +819,7 @@
 
         <!-- Wave Visualization Settings -->
         <div class="setting-group">
-            <label class="setting-label">🌊 Wave Visualization</label>
+            <label class="setting-label">🌊 Cosmic Wave Visualization</label>
             <div class="wave-controls">
                 <label style="font-size: 14px; display: block; margin-bottom: 5px;">
                     Wave Count: <span id="waveCountValue">100</span>
@@ -641,26 +836,24 @@
                 </label>
                 <input type="range" class="setting-range" id="animSpeed" min="30" max="150" step="10" value="60">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Wave Color Schemes:</label>
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Cosmic Wave Schemes:</label>
                 <div class="color-picker">
-                    <div class="wave-color-option active" data-wave-scheme="rainbow" style="background: linear-gradient(to right, #ff0080, #ff8000, #80ff00, #00ff80, #8000ff);"></div>
-                    <div class="wave-color-option" data-wave-scheme="ocean" style="background: linear-gradient(to right, #006994, #13a6b7, #20c0db, #4dd7fa, #9cecfb);"></div>
-                    <div class="wave-color-option" data-wave-scheme="fire" style="background: linear-gradient(to right, #ff0000, #ff4500, #ff8c00, #ffd700, #ffff00);"></div>
-                    <div class="wave-color-option" data-wave-scheme="neon" style="background: linear-gradient(to right, #ff00ff, #00ffff, #ffff00, #ff0080, #80ff00);"></div>
-                    <div class="wave-color-option" data-wave-scheme="purple" style="background: linear-gradient(to right, #a855f7, #c084fc, #ddd6fe, #8b5cf6, #7c3aed);"></div>
-                    <div class="wave-color-option" data-wave-scheme="blue" style="background: linear-gradient(to right, #00d4ff, #0099ff, #0066ff, #3399ff, #66ccff);"></div>
+                    <div class="wave-color-option active" data-wave-scheme="cosmic" style="background: linear-gradient(to right, #ffffff, #87ceeb, #4169e1, #6495ed, #b0c4de);"></div>
+                    <div class="wave-color-option" data-wave-scheme="spiritual" style="background: linear-gradient(to right, #ffffff, #ffd700, #ff69b4, #9370db, #00ffff);"></div>
+                    <div class="wave-color-option" data-wave-scheme="aurora" style="background: linear-gradient(to right, #ffffff, #00ff7f, #00ced1, #9370db, #ff1493);"></div>
+                    <div class="wave-color-option" data-wave-scheme="celestial" style="background: linear-gradient(to right, #fffacd, #f0e68c, #dda0dd, #ba55d3, #8a2be2);"></div>
                 </div>
             </div>
         </div>
 
         <!-- Theme Settings -->
         <div class="setting-group">
-            <label class="setting-label">🎨 Background Theme</label>
+            <label class="setting-label">🌌 Cosmic Background Theme</label>
             <div class="color-picker">
-                <div class="color-option active" data-theme="default" style="background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);"></div>
-                <div class="color-option" data-theme="blue" style="background: linear-gradient(135deg, #000428, #004e92);"></div>
-                <div class="color-option" data-theme="purple" style="background: linear-gradient(135deg, #2d1b69, #8b5a83, #f18a8a);"></div>
-                <div class="color-option" data-theme="orange" style="background: linear-gradient(135deg, #ff9a00, #ffad00, #ff6600);"></div>
+                <div class="color-option active" data-theme="default" style="background: radial-gradient(circle, #ffffff 0%, #87ceeb 30%, #4169e1 60%, #000033 100%);"></div>
+                <div class="color-option" data-theme="cosmic" style="background: radial-gradient(circle, #ffffff 0%, #ffd700 20%, #ff69b4 40%, #9370db 60%, #000000 100%);"></div>
+                <div class="color-option" data-theme="aurora" style="background: radial-gradient(circle, #ffffff 0%, #00ff7f 25%, #00ced1 50%, #9370db 75%, #000000 100%);"></div>
+                <div class="color-option" data-theme="celestial" style="background: radial-gradient(circle, #fffacd 0%, #f0e68c 30%, #dda0dd 60%, #4b0082 100%);"></div>
             </div>
         </div>
 
@@ -741,7 +934,7 @@
     </div>
 
     <script>
-        class FullScreenVoiceAssistant {
+        class CosmicVoiceAssistant {
             constructor() {
                 this.settings = {
                     apiKey: '',
@@ -756,7 +949,7 @@
                     waveCount: 100,
                     waveResponsive: 1.5,
                     animSpeed: 60,
-                    waveScheme: 'rainbow',
+                    waveScheme: 'cosmic',
                     wakeWordEnabled: true,
                     wakeWord: 'Hey Assistant',
                     wakeResponse: "Hi dear, I'm here!",
@@ -789,6 +982,7 @@
                 this.applyWaveScheme();
                 this.startIdleAnimation();
                 this.enableAudio();
+                this.createEnergyParticles();
 
                 // Start wake word listening immediately
                 if (this.settings.wakeWordEnabled) {
@@ -803,6 +997,7 @@
                 this.waveContainer = document.getElementById('waveContainer');
                 this.wakeIndicator = document.getElementById('wakeIndicator');
                 this.currentWakeWord = document.getElementById('currentWakeWord');
+                this.energyParticles = document.getElementById('energyParticles');
 
                 // Settings elements
                 this.settingsBtn = document.getElementById('settingsBtn');
@@ -852,8 +1047,8 @@
             setupEventListeners() {
                 // Settings panel
                 this.settingsBtn.addEventListener('click', () => this.openSettings());
-                this.closeSettings.addEventListener('click', () => this.closeSettings());
-                this.settingsOverlay.addEventListener('click', () => this.closeSettings());
+                this.closeSettings.addEventListener('click', () => this.closeSettingsPanel());
+                this.settingsOverlay.addEventListener('click', () => this.closeSettingsPanel());
 
                 // Settings controls
                 this.saveApiKeyBtn.addEventListener('click', () => this.saveApiKey());
@@ -947,6 +1142,18 @@
                 this.importBtn.addEventListener('click', () => this.importFile.click());
                 this.importFile.addEventListener('change', (e) => this.importSettings(e));
                 this.resetBtn.addEventListener('click', () => this.resetSettings());
+            }
+
+            createEnergyParticles() {
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    particle.style.animationDuration = (3 + Math.random() * 4) + 's';
+                    this.energyParticles.appendChild(particle);
+                }
             }
 
             initializeWave() {
@@ -1271,7 +1478,7 @@
                         messages: [
                             {
                                 role: 'system',
-                                content: 'You are a helpful voice assistant. Provide concise, friendly responses suitable for speech.'
+                                content: 'You are a helpful cosmic voice assistant. Provide concise, friendly responses suitable for speech with a touch of cosmic wisdom.'
                             },
                             {
                                 role: 'user',
@@ -1314,10 +1521,10 @@
             showResponse(userInput, response) {
                 this.responseDisplay.innerHTML = `
                     <div style="margin-bottom: 15px;">
-                        <strong style="color: var(--wave-color-1);">You:</strong> "${userInput}"
+                        <strong style="color: var(--wave-color-1);">✨ You:</strong> "${userInput}"
                     </div>
                     <div>
-                        <strong style="color: var(--wave-color-4);">AI:</strong> ${response}
+                        <strong style="color: var(--wave-color-4);">🌌 Cosmic AI:</strong> ${response}
                     </div>
                 `;
                 
@@ -1325,7 +1532,7 @@
                 
                 setTimeout(() => {
                     this.responseDisplay.classList.remove('show');
-                }, 6000);
+                }, 7000);
             }
 
             showMessage(message, type = 'info') {
@@ -1350,6 +1557,16 @@
                     
                     this.audioEnabled = true;
                 }
+            }
+
+            openSettings() {
+                this.settingsPanel.classList.add('open');
+                this.settingsOverlay.classList.add('open');
+            }
+
+            closeSettingsPanel() {
+                this.settingsPanel.classList.remove('open');
+                this.settingsOverlay.classList.remove('open');
             }
 
             // Settings methods
@@ -1439,16 +1656,6 @@
                 document.body.setAttribute('data-theme', this.settings.theme);
             }
 
-            openSettings() {
-                this.settingsPanel.classList.add('open');
-                this.settingsOverlay.classList.add('open');
-            }
-
-            closeSettings() {
-                this.settingsPanel.classList.remove('open');
-                this.settingsOverlay.classList.remove('open');
-            }
-
             saveApiKey() {
                 const apiKey = this.apiKeyInput.value.trim();
                 if (apiKey && apiKey.startsWith('sk-')) {
@@ -1499,7 +1706,7 @@
             }
 
             testSpeech() {
-                this.speakResponse('Hello! I am your AI voice assistant. Speech synthesis is working correctly.');
+                this.speakResponse('Greetings from the cosmic realm! I am your AI voice assistant, channeling the wisdom of the universe through speech synthesis.');
             }
 
             testWaveAnimation() {
@@ -1525,7 +1732,7 @@
             }
 
             testWakeWord() {
-                this.showMessage(`Testing wake word detection with: "${this.settings.wakeWord}"`, 'info');
+                this.showMessage(`🌌 Testing cosmic wake word detection with: "${this.settings.wakeWord}"`, 'info');
                 this.handleWakeWordDetected();
             }
 
@@ -1539,11 +1746,11 @@
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `voice-assistant-settings-${new Date().toISOString().split('T')[0]}.json`;
+                a.download = `cosmic-voice-assistant-settings-${new Date().toISOString().split('T')[0]}.json`;
                 a.click();
                 URL.revokeObjectURL(url);
 
-                this.showMessage('✅ Settings exported successfully!', 'success');
+                this.showMessage('✅ Cosmic settings exported successfully!', 'success');
             }
 
             importSettings(event) {
@@ -1566,7 +1773,7 @@
                         this.initializeWave();
                         this.applyTheme();
                         this.applyWaveScheme();
-                        this.showMessage('✅ Settings imported successfully!', 'success');
+                        this.showMessage('✅ Cosmic settings imported successfully!', 'success');
                     } catch (error) {
                         this.showMessage('❌ Invalid settings file', 'error');
                     }
@@ -1576,7 +1783,7 @@
             }
 
             resetSettings() {
-                if (confirm('Are you sure you want to reset all settings? This cannot be undone.')) {
+                if (confirm('Are you sure you want to reset all cosmic settings? This cannot be undone.')) {
                     Object.keys(localStorage).forEach(key => {
                         if (key.startsWith('va_')) {
                             localStorage.removeItem(key);
@@ -1596,7 +1803,7 @@
                         waveCount: 100,
                         waveResponsive: 1.5,
                         animSpeed: 60,
-                        waveScheme: 'rainbow',
+                        waveScheme: 'cosmic',
                         wakeWordEnabled: true,
                         wakeWord: 'Hey Assistant',
                         wakeResponse: "Hi dear, I'm here!",
@@ -1607,14 +1814,14 @@
                     this.initializeWave();
                     this.applyTheme();
                     this.applyWaveScheme();
-                    this.showMessage('✅ All settings reset to defaults!', 'success');
+                    this.showMessage('✅ All cosmic settings reset to defaults!', 'success');
                 }
             }
         }
 
-        // Initialize the voice assistant
+        // Initialize the cosmic voice assistant
         document.addEventListener('DOMContentLoaded', () => {
-            window.voiceAssistant = new FullScreenVoiceAssistant();
+            window.voiceAssistant = new CosmicVoiceAssistant();
         });
 
         // Handle page visibility changes
