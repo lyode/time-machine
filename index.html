@@ -357,6 +357,12 @@
             <button class="btn btn-secondary" id="enableAudioBtn">🔊 Enable Audio</button>
         </div>
 
+        <div class="controls hidden" id="settingsContainer" style="margin-top: 10px;">
+            <button class="btn" id="resetApiKeyBtn" style="background: #ff9800; color: white;">
+                🔑 Reset API Key
+            </button>
+        </div>
+
         <div class="response-container" id="responseContainer">
             <button class="clear-btn" id="clearBtn" title="Clear">🗑️</button>
             <div class="response-text" id="responseText">
@@ -391,6 +397,7 @@
                 this.stopBtn = document.getElementById('stopBtn');
                 this.enableAudioBtn = document.getElementById('enableAudioBtn');
                 this.clearBtn = document.getElementById('clearBtn');
+                this.resetApiKeyBtn = document.getElementById('resetApiKeyBtn');
 
                 // Voice properties
                 this.recognition = null;
@@ -416,6 +423,7 @@
                 this.stopBtn.addEventListener('click', () => this.stopListening());
                 this.enableAudioBtn.addEventListener('click', () => this.enableAudio());
                 this.clearBtn.addEventListener('click', () => this.clearResponse());
+                this.resetApiKeyBtn.addEventListener('click', () => this.resetApiKey());
                 
                 this.microphoneBtn.addEventListener('click', () => {
                     this.enableAudio();
@@ -515,6 +523,7 @@
                 this.statusCard.style.display = 'block';
                 this.micContainer.classList.remove('hidden');
                 this.controlsContainer.classList.remove('hidden');
+                document.getElementById('settingsContainer').classList.remove('hidden');
                 this.responseContainer.style.display = 'block';
                 
                 this.showSuccess('🎉 Ready to use! Click "Enable Audio" first, then start talking!');
@@ -758,6 +767,13 @@
             }
 
             // Method to clear stored API key if needed
+            resetApiKey() {
+                if (confirm('🔑 Reset API Key?\n\nThis will clear your current API key and return to the setup screen.\n\nAre you sure?')) {
+                    localStorage.removeItem('openai_api_key_secure');
+                    location.reload();
+                }
+            }
+
             clearStoredKey() {
                 localStorage.removeItem('openai_api_key_secure');
                 location.reload();
@@ -777,4 +793,3 @@
     </script>
 </body>
 </html>
-
