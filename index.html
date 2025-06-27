@@ -4,9 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#007AFF">
-    <title>AI Voice Assistant</title>
+    <title>AI Voice Assistant Pro</title>
     
     <style>
+        :root {
+            --primary-color: #007AFF;
+            --secondary-color: #5856D6;
+            --success-color: #4CAF50;
+            --danger-color: #FF3B30;
+            --warning-color: #ff9800;
+            --background-gradient: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            --card-background: rgba(255, 255, 255, 0.95);
+            --text-color: #333;
+            --border-radius: 20px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] {
+            --card-background: rgba(28, 28, 30, 0.95);
+            --text-color: #ffffff;
+            --background-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        [data-theme="purple"] {
+            --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        [data-theme="green"] {
+            --background-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,13 +42,14 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            background: var(--background-gradient);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             touch-action: manipulation;
             padding-top: env(safe-area-inset-top, 0);
             padding-bottom: env(safe-area-inset-bottom, 0);
+            transition: all 0.3s ease;
         }
 
         .app-container {
@@ -30,12 +58,14 @@
             flex-direction: column;
             padding: 20px;
             max-width: 100%;
+            position: relative;
         }
 
         .header {
             text-align: center;
             color: white;
             margin-bottom: 30px;
+            position: relative;
         }
 
         .header h1 {
@@ -45,53 +75,47 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .mode-selector {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            text-align: center;
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
         }
 
-        .mode-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
+        .settings-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
             border: none;
-            border-radius: 15px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            color: white;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .mode-btn.demo {
-            background: #4CAF50;
-            color: white;
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
         }
 
-        .mode-btn.openai {
-            background: #007AFF;
-            color: white;
-        }
-
-        .status-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+        .main-card {
+            background: var(--card-background);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             text-align: center;
+            transition: all 0.3s ease;
+            color: var(--text-color);
         }
 
         .status-text {
             font-size: 18px;
             font-weight: 600;
-            color: #333;
+            margin-bottom: 10px;
         }
 
         .microphone-container {
@@ -115,15 +139,16 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 24px rgba(238, 90, 82, 0.4);
             user-select: none;
+            position: relative;
         }
 
         .microphone.listening {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
+            background: linear-gradient(135deg, var(--success-color), #45a049);
             animation: pulse 1.5s infinite;
         }
 
         .microphone.processing {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
+            background: linear-gradient(135deg, var(--warning-color), #f57c00);
             animation: spin 2s linear infinite;
         }
 
@@ -152,10 +177,12 @@
             display: flex;
             gap: 15px;
             margin-bottom: 25px;
+            flex-wrap: wrap;
         }
 
         .btn {
             flex: 1;
+            min-width: 120px;
             padding: 16px 24px;
             border: none;
             border-radius: 25px;
@@ -169,13 +196,13 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #007AFF, #5856D6);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, #FF3B30, #D70015);
+            background: linear-gradient(135deg, var(--danger-color), #D70015);
             color: white;
             box-shadow: 0 4px 15px rgba(255, 59, 48, 0.3);
         }
@@ -186,91 +213,67 @@
             box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
         }
 
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color), #45a049);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
         .response-container {
             flex: 1;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+            background: var(--card-background);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
             padding: 25px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             overflow-y: auto;
-            min-height: 200px;
+            min-height: 250px;
             position: relative;
+            color: var(--text-color);
         }
 
         .response-text {
             font-size: 16px;
             line-height: 1.6;
-            color: #333;
         }
 
-        .error-message {
-            background: #ffebee;
-            color: #c62828;
+        .conversation-item {
+            margin-bottom: 20px;
             padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-            border-left: 4px solid #f44336;
+            border-radius: 15px;
+            animation: fadeIn 0.3s ease;
         }
 
-        .success-message {
-            background: #e8f5e8;
-            color: #2e7d32;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-            border-left: 4px solid #4caf50;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .demo-badge {
-            background: rgba(76, 175, 80, 0.2);
-            color: #2e7d32;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 15px;
+        .user-message {
+            background: rgba(0, 122, 255, 0.1);
+            border-left: 4px solid var(--primary-color);
         }
 
-        .hidden {
-            display: none;
-        }
-
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            margin: 20px 0;
-        }
-
-        .loading-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #007AFF;
-            animation: loading 1.4s infinite both;
-        }
-
-        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
-        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes loading {
-            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
-            40% { transform: scale(1.2); opacity: 1; }
+        .ai-message {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid var(--success-color);
         }
 
         .clear-btn {
             position: absolute;
             top: 15px;
             right: 15px;
-            background: #ff9800;
+            background: var(--warning-color);
             color: white;
             border: none;
             border-radius: 20px;
@@ -278,117 +281,573 @@
             height: 40px;
             font-size: 18px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            background: #f57c00;
+            transform: scale(1.1);
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 90%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--card-background);
+            backdrop-filter: blur(20px);
+            box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+            padding: 20px;
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            color: var(--text-color);
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+        }
+
+        .close-settings {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .setting-group {
+            margin-bottom: 25px;
+        }
+
+        .setting-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 16px;
+        }
+
+        .setting-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.8);
+            color: var(--text-color);
+        }
+
+        .setting-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .setting-range {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .setting-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.9);
+            color: var(--text-color);
+        }
+
+        .setting-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--success-color);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .color-option.active {
+            border-color: white;
+            transform: scale(1.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(0,0,0,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .history-item {
+            background: rgba(0,0,0,0.05);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .loading-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            animation: loading 1.4s infinite both;
+        }
+
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes loading {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .error-message {
+            background: rgba(255, 59, 48, 0.1);
+            color: var(--danger-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .success-message {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .settings-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .settings-panel {
+                width: 100%;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
-<body>
+<body data-theme="default">
     <div class="app-container">
         <div class="header">
-            <h1>🤖 AI Voice Assistant</h1>
+            <h1>🤖 AI Voice Assistant Pro</h1>
+            <p>Advanced AI-powered voice interaction</p>
+            <button class="settings-btn" id="settingsBtn">⚙️</button>
         </div>
 
-        <!-- Mode Selection -->
-        <div class="mode-selector" id="modeSelector">
-            <h3>🚀 Choose Mode</h3>
-            <p style="margin: 15px 0; color: #666;">
-                Start with Demo Mode to test voice recognition, then switch to OpenAI when ready.
-            </p>
-            
-            <button class="mode-btn demo" id="demoModeBtn">
-                🎭 Demo Mode (Works Immediately)<br>
-                <small>Test voice recognition with smart responses</small>
-            </button>
-            
-            <button class="mode-btn openai" id="openaiModeBtn">
-                🧠 OpenAI Mode (Requires API Key)<br>
-                <small>Real ChatGPT AI responses</small>
-            </button>
-        </div>
-
-        <!-- Main App Interface -->
-        <div class="status-card hidden" id="statusCard">
-            <div class="demo-badge hidden" id="demoBadge">🎭 Demo Mode Active</div>
+        <div class="main-card">
             <div class="status-text" id="statusText">Ready to listen</div>
+            <div id="statsDisplay" style="font-size: 14px; opacity: 0.7; margin-top: 10px;">
+                Conversations: <span id="conversationCount">0</span> | 
+                Words spoken: <span id="wordsCount">0</span>
+            </div>
         </div>
 
-        <div class="microphone-container hidden" id="micContainer">
-            <div class="microphone" id="microphoneBtn">🎤</div>
+        <div class="microphone-container">
+            <div class="microphone" id="microphoneBtn" title="Click to start/stop listening">
+                🎤
+            </div>
         </div>
 
-        <div class="controls hidden" id="controlsContainer">
+        <div class="controls">
             <button class="btn btn-primary" id="startBtn">🎤 Start</button>
             <button class="btn btn-danger" id="stopBtn" disabled>⏹️ Stop</button>
-            <button class="btn btn-secondary" id="enableAudioBtn">🔊 Enable Audio</button>
+            <button class="btn btn-success" id="enableAudioBtn">🔊 Enable Audio</button>
         </div>
 
-        <div class="controls hidden" id="modeControls" style="margin-top: 10px;">
-            <button class="btn" id="switchModeBtn" style="background: #ff9800; color: white;">
-                🔄 Switch Mode
-            </button>
+        <div class="controls">
+            <button class="btn btn-secondary" id="testSpeechBtn">🗣️ Test Speech</button>
+            <button class="btn" id="exportBtn" style="background: var(--warning-color); color: white;">💾 Export</button>
+            <button class="btn" id="importBtn" style="background: #9C27B0; color: white;">📥 Import</button>
         </div>
 
-        <div class="response-container hidden" id="responseContainer">
-            <button class="clear-btn" id="clearBtn" title="Clear">🗑️</button>
+        <div class="response-container">
+            <button class="clear-btn" id="clearBtn" title="Clear conversation">🗑️</button>
             <div class="response-text" id="responseText">
                 <div style="text-align: center; color: #999; margin-top: 50px;">
-                    🎯 AI responses will appear here...<br><br>
-                    💡 Try asking: "What's the weather like?" or "Tell me a joke!"
+                    🎯 AI conversations will appear here...<br><br>
+                    💡 Try saying: "Hello", "What's the weather?", or "Tell me a joke!"<br><br>
+                    ⚙️ Click the settings button to customize everything!
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        class VoiceAssistant {
-            constructor() {
-                this.mode = 'demo'; // 'demo' or 'openai'
-                this.openAIKey = null;
-                this.openAIURL = 'https://api.openai.com/v1/chat/completions';
-                
-                // DOM elements
-                this.modeSelector = document.getElementById('modeSelector');
-                this.demoModeBtn = document.getElementById('demoModeBtn');
-                this.openaiModeBtn = document.getElementById('openaiModeBtn');
-                this.statusCard = document.getElementById('statusCard');
-                this.demoBadge = document.getElementById('demoBadge');
-                this.statusText = document.getElementById('statusText');
-                this.micContainer = document.getElementById('micContainer');
-                this.controlsContainer = document.getElementById('controlsContainer');
-                this.modeControls = document.getElementById('modeControls');
-                this.responseContainer = document.getElementById('responseContainer');
-                this.responseText = document.getElementById('responseText');
-                this.microphoneBtn = document.getElementById('microphoneBtn');
-                this.startBtn = document.getElementById('startBtn');
-                this.stopBtn = document.getElementById('stopBtn');
-                this.enableAudioBtn = document.getElementById('enableAudioBtn');
-                this.switchModeBtn = document.getElementById('switchModeBtn');
-                this.clearBtn = document.getElementById('clearBtn');
+    <!-- Settings Overlay -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
 
-                // Voice properties
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2>⚙️ Settings</h2>
+            <button class="close-settings" id="closeSettings">✕</button>
+        </div>
+
+        <!-- API Configuration -->
+        <div class="setting-group">
+            <label class="setting-label">🔑 OpenAI API Key</label>
+            <input type="password" class="setting-input" id="apiKeyInput" placeholder="sk-proj-...">
+            <div style="margin-top: 10px;">
+                <button class="btn btn-primary" id="saveApiKeyBtn" style="width: 48%; margin-right: 4%;">💾 Save</button>
+                <button class="btn btn-secondary" id="testApiKeyBtn" style="width: 48%;">🧪 Test</button>
+            </div>
+        </div>
+
+        <!-- AI Model Selection -->
+        <div class="setting-group">
+            <label class="setting-label">🧠 AI Model</label>
+            <select class="setting-select" id="modelSelect">
+                <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Fast & Affordable)</option>
+                <option value="gpt-4">GPT-4 (Advanced & Powerful)</option>
+                <option value="gpt-4-turbo">GPT-4 Turbo (Latest)</option>
+            </select>
+        </div>
+
+        <!-- Voice Settings -->
+        <div class="setting-group">
+            <label class="setting-label">🗣️ Voice Settings</label>
+            
+            <label style="font-size: 14px; margin-top: 15px; display: block;">Speech Rate: <span id="rateValue">0.8</span></label>
+            <input type="range" class="setting-range" id="speechRate" min="0.1" max="2" step="0.1" value="0.8">
+            
+            <label style="font-size: 14px; margin-top: 15px; display: block;">Speech Pitch: <span id="pitchValue">1.0</span></label>
+            <input type="range" class="setting-range" id="speechPitch" min="0.1" max="2" step="0.1" value="1.0">
+            
+            <label style="font-size: 14px; margin-top: 15px; display: block;">Volume: <span id="volumeValue">1.0</span></label>
+            <input type="range" class="setting-range" id="speechVolume" min="0" max="1" step="0.1" value="1.0">
+        </div>
+
+        <!-- Language Settings -->
+        <div class="setting-group">
+            <label class="setting-label">🌍 Language</label>
+            <select class="setting-select" id="languageSelect">
+                <option value="en-US">English (US)</option>
+                <option value="en-GB">English (UK)</option>
+                <option value="es-ES">Spanish</option>
+                <option value="fr-FR">French</option>
+                <option value="de-DE">German</option>
+                <option value="it-IT">Italian</option>
+                <option value="pt-BR">Portuguese</option>
+                <option value="ja-JP">Japanese</option>
+                <option value="ko-KR">Korean</option>
+                <option value="zh-CN">Chinese</option>
+            </select>
+        </div>
+
+        <!-- Theme Settings -->
+        <div class="setting-group">
+            <label class="setting-label">🎨 Theme</label>
+            <div class="color-picker">
+                <div class="color-option active" data-theme="default" style="background: linear-gradient(135deg, #007AFF, #5856D6);"></div>
+                <div class="color-option" data-theme="dark" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d);"></div>
+                <div class="color-option" data-theme="purple" style="background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+                <div class="color-option" data-theme="green" style="background: linear-gradient(135deg, #11998e, #38ef7d);"></div>
+            </div>
+        </div>
+
+        <!-- Advanced Settings -->
+        <div class="setting-group">
+            <label class="setting-label">🔧 Advanced Settings</label>
+            
+            <div class="setting-toggle">
+                <span>Continuous Listening</span>
+                <div class="toggle-switch" id="continuousToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+            
+            <div class="setting-toggle">
+                <span>Auto-Save Conversations</span>
+                <div class="toggle-switch active" id="autoSaveToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+            
+            <div class="setting-toggle">
+                <span>Wake Word Detection</span>
+                <div class="toggle-switch" id="wakeWordToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <label style="font-size: 14px; margin-top: 15px; display: block;">Max Response Length: <span id="maxTokensValue">150</span></label>
+            <input type="range" class="setting-range" id="maxTokens" min="50" max="500" step="25" value="150">
+        </div>
+
+        <!-- Statistics -->
+        <div class="setting-group">
+            <label class="setting-label">📊 Statistics</label>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalConversations">0</div>
+                    <div class="stat-label">Total Conversations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalWords">0</div>
+                    <div class="stat-label">Words Spoken</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="averageResponse">0s</div>
+                    <div class="stat-label">Avg Response Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="successRate">100%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conversation History -->
+        <div class="setting-group">
+            <label class="setting-label">📝 Recent Conversations</label>
+            <div id="conversationHistory" style="max-height: 200px; overflow-y: auto;">
+                <div style="text-align: center; color: #999; padding: 20px;">
+                    No conversations yet
+                </div>
+            </div>
+            <button class="btn btn-danger" id="clearHistoryBtn" style="width: 100%; margin-top: 10px;">🗑️ Clear History</button>
+        </div>
+
+        <!-- Export/Import -->
+        <div class="setting-group">
+            <label class="setting-label">💾 Data Management</label>
+            <button class="btn btn-primary" id="exportSettingsBtn" style="width: 48%; margin-right: 4%;">📤 Export Settings</button>
+            <button class="btn btn-secondary" id="importSettingsBtn" style="width: 48%;">📥 Import Settings</button>
+            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+        </div>
+
+        <!-- Reset -->
+        <div class="setting-group">
+            <button class="btn btn-danger" id="resetAllBtn" style="width: 100%;">🔄 Reset All Settings</button>
+        </div>
+    </div>
+
+    <script>
+        class VoiceAssistantPro {
+            constructor() {
+                this.settings = {
+                    apiKey: localStorage.getItem('va_api_key') || '',
+                    model: localStorage.getItem('va_model') || 'gpt-3.5-turbo',
+                    speechRate: parseFloat(localStorage.getItem('va_speech_rate')) || 0.8,
+                    speechPitch: parseFloat(localStorage.getItem('va_speech_pitch')) || 1.0,
+                    speechVolume: parseFloat(localStorage.getItem('va_speech_volume')) || 1.0,
+                    language: localStorage.getItem('va_language') || 'en-US',
+                    theme: localStorage.getItem('va_theme') || 'default',
+                    continuousListening: localStorage.getItem('va_continuous') === 'true',
+                    autoSave: localStorage.getItem('va_auto_save') !== 'false',
+                    wakeWord: localStorage.getItem('va_wake_word') === 'true',
+                    maxTokens: parseInt(localStorage.getItem('va_max_tokens')) || 150
+                };
+
+                this.stats = {
+                    conversations: parseInt(localStorage.getItem('va_conversations')) || 0,
+                    words: parseInt(localStorage.getItem('va_words')) || 0,
+                    responseTimes: JSON.parse(localStorage.getItem('va_response_times')) || [],
+                    errors: parseInt(localStorage.getItem('va_errors')) || 0
+                };
+
+                this.conversationHistory = JSON.parse(localStorage.getItem('va_history')) || [];
+                
+                this.openAIURL = 'https://api.openai.com/v1/chat/completions';
                 this.recognition = null;
                 this.synthesis = window.speechSynthesis;
                 this.isListening = false;
                 this.isProcessing = false;
                 this.isSpeaking = false;
                 this.audioEnabled = false;
+                this.currentConversation = [];
 
-                this.init();
-            }
-
-            init() {
+                this.initializeElements();
                 this.setupEventListeners();
                 this.setupSpeechRecognition();
+                this.loadSettings();
+                this.updateStats();
+                this.applyTheme();
+            }
+
+            initializeElements() {
+                // Main elements
+                this.statusText = document.getElementById('statusText');
+                this.responseText = document.getElementById('responseText');
+                this.microphoneBtn = document.getElementById('microphoneBtn');
+                this.startBtn = document.getElementById('startBtn');
+                this.stopBtn = document.getElementById('stopBtn');
+                this.enableAudioBtn = document.getElementById('enableAudioBtn');
+                this.testSpeechBtn = document.getElementById('testSpeechBtn');
+                this.clearBtn = document.getElementById('clearBtn');
+                this.exportBtn = document.getElementById('exportBtn');
+                this.importBtn = document.getElementById('importBtn');
+
+                // Settings elements
+                this.settingsBtn = document.getElementById('settingsBtn');
+                this.settingsPanel = document.getElementById('settingsPanel');
+                this.settingsOverlay = document.getElementById('settingsOverlay');
+                this.closeSettings = document.getElementById('closeSettings');
+
+                // Settings inputs
+                this.apiKeyInput = document.getElementById('apiKeyInput');
+                this.modelSelect = document.getElementById('modelSelect');
+                this.speechRate = document.getElementById('speechRate');
+                this.speechPitch = document.getElementById('speechPitch');
+                this.speechVolume = document.getElementById('speechVolume');
+                this.languageSelect = document.getElementById('languageSelect');
+                this.maxTokens = document.getElementById('maxTokens');
+
+                // Buttons
+                this.saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
+                this.testApiKeyBtn = document.getElementById('testApiKeyBtn');
+                this.continuousToggle = document.getElementById('continuousToggle');
+                this.autoSaveToggle = document.getElementById('autoSaveToggle');
+                this.wakeWordToggle = document.getElementById('wakeWordToggle');
+                this.clearHistoryBtn = document.getElementById('clearHistoryBtn');
+                this.exportSettingsBtn = document.getElementById('exportSettingsBtn');
+                this.importSettingsBtn = document.getElementById('importSettingsBtn');
+                this.importFileInput = document.getElementById('importFileInput');
+                this.resetAllBtn = document.getElementById('resetAllBtn');
+
+                // Stats elements
+                this.conversationCount = document.getElementById('conversationCount');
+                this.wordsCount = document.getElementById('wordsCount');
+                this.totalConversations = document.getElementById('totalConversations');
+                this.totalWords = document.getElementById('totalWords');
+                this.averageResponse = document.getElementById('averageResponse');
+                this.successRate = document.getElementById('successRate');
+                this.conversationHistory = document.getElementById('conversationHistory');
+
+                // Value displays
+                this.rateValue = document.getElementById('rateValue');
+                this.pitchValue = document.getElementById('pitchValue');
+                this.volumeValue = document.getElementById('volumeValue');
+                this.maxTokensValue = document.getElementById('maxTokensValue');
             }
 
             setupEventListeners() {
-                this.demoModeBtn.addEventListener('click', () => this.setMode('demo'));
-                this.openaiModeBtn.addEventListener('click', () => this.setMode('openai'));
+                // Main controls
                 this.startBtn.addEventListener('click', () => this.startListening());
                 this.stopBtn.addEventListener('click', () => this.stopListening());
                 this.enableAudioBtn.addEventListener('click', () => this.enableAudio());
-                this.switchModeBtn.addEventListener('click', () => this.switchMode());
-                this.clearBtn.addEventListener('click', () => this.clearResponse());
-                
+                this.testSpeechBtn.addEventListener('click', () => this.testSpeech());
+                this.clearBtn.addEventListener('click', () => this.clearConversation());
+                this.exportBtn.addEventListener('click', () => this.exportConversation());
+                this.importBtn.addEventListener('click', () => this.importConversation());
+
                 this.microphoneBtn.addEventListener('click', () => {
                     this.enableAudio();
                     if (this.isListening) {
@@ -397,67 +856,60 @@
                         this.startListening();
                     }
                 });
-            }
 
-            setMode(mode) {
-                this.mode = mode;
-                this.showMainApp();
-                
-                if (mode === 'demo') {
-                    this.demoBadge.classList.remove('hidden');
-                    this.showSuccess('🎭 Demo Mode Active! Voice recognition works with smart responses. No API key needed!');
-                } else {
-                    this.demoBadge.classList.add('hidden');
-                    this.promptForApiKey();
-                }
-            }
+                // Settings panel
+                this.settingsBtn.addEventListener('click', () => this.openSettings());
+                this.closeSettings.addEventListener('click', () => this.closeSettingsPanel());
+                this.settingsOverlay.addEventListener('click', () => this.closeSettingsPanel());
 
-            promptForApiKey() {
-                const apiKey = prompt('🔑 Enter your OpenAI API Key:\n(Get one from: platform.openai.com/api-keys)');
-                if (apiKey && apiKey.startsWith('sk-')) {
-                    this.openAIKey = apiKey;
-                    this.showSuccess('🧠 OpenAI Mode Active! Real ChatGPT responses enabled!');
-                } else if (apiKey) {
-                    this.showError('Invalid API key format. Switching to Demo Mode.');
-                    this.setMode('demo');
-                } else {
-                    this.setMode('demo');
-                }
-            }
+                // Settings controls
+                this.saveApiKeyBtn.addEventListener('click', () => this.saveApiKey());
+                this.testApiKeyBtn.addEventListener('click', () => this.testApiKey());
+                this.modelSelect.addEventListener('change', () => this.saveSetting('model', this.modelSelect.value));
+                this.languageSelect.addEventListener('change', () => this.saveSetting('language', this.languageSelect.value));
 
-            switchMode() {
-                this.modeSelector.classList.remove('hidden');
-                this.hideMainApp();
-            }
+                // Range inputs
+                this.speechRate.addEventListener('input', (e) => {
+                    this.rateValue.textContent = e.target.value;
+                    this.saveSetting('speechRate', parseFloat(e.target.value));
+                });
 
-            showMainApp() {
-                this.modeSelector.classList.add('hidden');
-                this.statusCard.classList.remove('hidden');
-                this.micContainer.classList.remove('hidden');
-                this.controlsContainer.classList.remove('hidden');
-                this.modeControls.classList.remove('hidden');
-                this.responseContainer.classList.remove('hidden');
-            }
+                this.speechPitch.addEventListener('input', (e) => {
+                    this.pitchValue.textContent = e.target.value;
+                    this.saveSetting('speechPitch', parseFloat(e.target.value));
+                });
 
-            hideMainApp() {
-                this.statusCard.classList.add('hidden');
-                this.micContainer.classList.add('hidden');
-                this.controlsContainer.classList.add('hidden');
-                this.modeControls.classList.add('hidden');
-                this.responseContainer.classList.add('hidden');
-            }
+                this.speechVolume.addEventListener('input', (e) => {
+                    this.volumeValue.textContent = e.target.value;
+                    this.saveSetting('speechVolume', parseFloat(e.target.value));
+                });
 
-            enableAudio() {
-                if (!this.audioEnabled) {
-                    const utterance = new SpeechSynthesisUtterance('');
-                    utterance.volume = 0;
-                    this.synthesis.speak(utterance);
-                    
-                    this.audioEnabled = true;
-                    this.enableAudioBtn.textContent = '🔊 Audio Enabled';
-                    this.enableAudioBtn.style.background = '#4CAF50';
-                    this.showSuccess('🔊 Audio enabled! Voice responses will now work.');
-                }
+                this.maxTokens.addEventListener('input', (e) => {
+                    this.maxTokensValue.textContent = e.target.value;
+                    this.saveSetting('maxTokens', parseInt(e.target.value));
+                });
+
+                // Toggle switches
+                this.continuousToggle.addEventListener('click', () => this.toggleSetting('continuousListening'));
+                this.autoSaveToggle.addEventListener('click', () => this.toggleSetting('autoSave'));
+                this.wakeWordToggle.addEventListener('click', () => this.toggleSetting('wakeWord'));
+
+                // Theme selection
+                document.querySelectorAll('.color-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+                        option.classList.add('active');
+                        this.saveSetting('theme', option.dataset.theme);
+                        this.applyTheme();
+                    });
+                });
+
+                // Data management
+                this.clearHistoryBtn.addEventListener('click', () => this.clearHistory());
+                this.exportSettingsBtn.addEventListener('click', () => this.exportSettings());
+                this.importSettingsBtn.addEventListener('click', () => this.importFileInput.click());
+                this.importFileInput.addEventListener('change', (e) => this.importSettings(e));
+                this.resetAllBtn.addEventListener('click', () => this.resetAllSettings());
             }
 
             setupSpeechRecognition() {
@@ -465,9 +917,9 @@
                     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                     this.recognition = new SpeechRecognition();
                     
-                    this.recognition.continuous = false;
+                    this.recognition.continuous = this.settings.continuousListening;
                     this.recognition.interimResults = true;
-                    this.recognition.lang = 'en-US';
+                    this.recognition.lang = this.settings.language;
 
                     this.recognition.onstart = () => {
                         this.isListening = true;
@@ -490,14 +942,93 @@
 
                     this.recognition.onerror = (event) => {
                         this.showError(`Speech error: ${event.error}`);
+                        this.updateStats('error');
                         this.stopListening();
                     };
 
                     this.recognition.onend = () => {
-                        if (this.isListening && !this.isProcessing) {
-                            this.stopListening();
+                        if (this.isListening && !this.isProcessing && this.settings.continuousListening) {
+                            setTimeout(() => this.startListening(), 1000);
+                        } else {
+                            this.isListening = false;
+                            this.updateStatus('Ready to listen');
+                            this.updateUI();
                         }
                     };
+                }
+            }
+
+            loadSettings() {
+                this.apiKeyInput.value = this.settings.apiKey;
+                this.modelSelect.value = this.settings.model;
+                this.speechRate.value = this.settings.speechRate;
+                this.speechPitch.value = this.settings.speechPitch;
+                this.speechVolume.value = this.settings.speechVolume;
+                this.languageSelect.value = this.settings.language;
+                this.maxTokens.value = this.settings.maxTokens;
+
+                this.rateValue.textContent = this.settings.speechRate;
+                this.pitchValue.textContent = this.settings.speechPitch;
+                this.volumeValue.textContent = this.settings.speechVolume;
+                this.maxTokensValue.textContent = this.settings.maxTokens;
+
+                this.updateToggle(this.continuousToggle, this.settings.continuousListening);
+                this.updateToggle(this.autoSaveToggle, this.settings.autoSave);
+                this.updateToggle(this.wakeWordToggle, this.settings.wakeWord);
+
+                document.querySelectorAll('.color-option').forEach(option => {
+                    option.classList.toggle('active', option.dataset.theme === this.settings.theme);
+                });
+
+                this.updateHistoryDisplay();
+            }
+
+            saveSetting(key, value) {
+                this.settings[key] = value;
+                localStorage.setItem(`va_${key.toLowerCase()}`, value);
+                
+                if (key === 'language' && this.recognition) {
+                    this.recognition.lang = value;
+                }
+                
+                if (key === 'continuousListening' && this.recognition) {
+                    this.recognition.continuous = value;
+                }
+            }
+
+            toggleSetting(key) {
+                this.settings[key] = !this.settings[key];
+                localStorage.setItem(`va_${key.toLowerCase()}`, this.settings[key]);
+                
+                const toggle = key === 'continuousListening' ? this.continuousToggle :
+                              key === 'autoSave' ? this.autoSaveToggle :
+                              this.wakeWordToggle;
+                
+                this.updateToggle(toggle, this.settings[key]);
+                
+                if (key === 'continuousListening' && this.recognition) {
+                    this.recognition.continuous = this.settings[key];
+                }
+            }
+
+            updateToggle(toggle, active) {
+                toggle.classList.toggle('active', active);
+            }
+
+            applyTheme() {
+                document.body.setAttribute('data-theme', this.settings.theme);
+            }
+
+            enableAudio() {
+                if (!this.audioEnabled) {
+                    const utterance = new SpeechSynthesisUtterance('');
+                    utterance.volume = 0;
+                    this.synthesis.speak(utterance);
+                    
+                    this.audioEnabled = true;
+                    this.enableAudioBtn.textContent = '🔊 Audio Enabled';
+                    this.enableAudioBtn.style.background = 'var(--success-color)';
+                    this.showSuccess('🔊 Audio enabled! Voice responses will now work.');
                 }
             }
 
@@ -508,8 +1039,7 @@
                 }
 
                 if (!this.audioEnabled) {
-                    this.showError('Please enable audio first');
-                    return;
+                    this.enableAudio();
                 }
 
                 try {
@@ -530,6 +1060,7 @@
             }
 
             async processUserInput(input) {
+                const startTime = Date.now();
                 this.isProcessing = true;
                 this.isListening = false;
                 this.updateStatus('🤖 Processing...');
@@ -538,17 +1069,21 @@
                 this.showLoading();
 
                 try {
-                    let response;
-                    if (this.mode === 'demo') {
-                        response = this.getDemoResponse(input);
-                    } else {
-                        response = await this.sendToChatGPT(input);
+                    const response = await this.sendToChatGPT(input);
+                    const responseTime = Date.now() - startTime;
+                    
+                    this.stats.responseTimes.push(responseTime);
+                    if (this.stats.responseTimes.length > 100) {
+                        this.stats.responseTimes = this.stats.responseTimes.slice(-100);
                     }
                     
                     this.displayResponse(input, response);
                     this.speakResponse(response);
+                    this.saveConversation(input, response);
+                    this.updateStats('success', input.split(' ').length);
                 } catch (error) {
-                    this.showError(`Error: ${error.message}`);
+                    this.showError(`AI Error: ${error.message}`);
+                    this.updateStats('error');
                 } finally {
                     this.isProcessing = false;
                     this.updateStatus('Ready to listen');
@@ -556,54 +1091,31 @@
                 }
             }
 
-            getDemoResponse(input) {
-                const lowerInput = input.toLowerCase();
-                
-                // Smart demo responses based on input
-                if (lowerInput.includes('hello') || lowerInput.includes('hi')) {
-                    return "Hello! I'm your AI voice assistant. I'm currently in demo mode, but I can still help you test voice recognition!";
-                } else if (lowerInput.includes('weather')) {
-                    return "I'd love to tell you about the weather, but I'm in demo mode. In real mode with OpenAI, I could give you actual weather information!";
-                } else if (lowerInput.includes('joke')) {
-                    return "Why don't scientists trust atoms? Because they make up everything! This is a demo response - real AI would have better jokes!";
-                } else if (lowerInput.includes('time')) {
-                    const now = new Date();
-                    return `The current time is ${now.toLocaleTimeString()}. This is working because I'm running locally in demo mode!`;
-                } else if (lowerInput.includes('name')) {
-                    return "I'm your AI Voice Assistant! Currently running in demo mode to test speech recognition. Switch to OpenAI mode for real AI responses!";
-                } else if (lowerInput.includes('demo')) {
-                    return "Yes, you're in demo mode! This means speech recognition works, but responses are pre-programmed. Try OpenAI mode for real AI!";
-                } else if (lowerInput.includes('test')) {
-                    return "Great! The test is working perfectly. Your voice is being recognized and converted to text successfully!";
-                } else {
-                    return `I heard you say: "${input}". This is a demo response. In OpenAI mode, I'd give you intelligent answers about anything!`;
-                }
-            }
-
             async sendToChatGPT(message) {
-                if (!this.openAIKey) {
-                    throw new Error('No OpenAI API key set');
+                if (!this.settings.apiKey) {
+                    throw new Error('No API key set. Please configure in settings.');
                 }
 
                 const response = await fetch(this.openAIURL, {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${this.openAIKey}`,
+                        'Authorization': `Bearer ${this.settings.apiKey}`,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        model: 'gpt-3.5-turbo',
+                        model: this.settings.model,
                         messages: [
                             {
                                 role: 'system',
                                 content: 'You are a helpful voice assistant. Provide concise, friendly responses suitable for speech.'
                             },
+                            ...this.currentConversation.slice(-5), // Include last 5 exchanges for context
                             {
                                 role: 'user',
                                 content: message
                             }
                         ],
-                        max_tokens: 150,
+                        max_tokens: this.settings.maxTokens,
                         temperature: 0.7
                     })
                 });
@@ -626,9 +1138,10 @@
                 this.updateUI();
 
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.8;
-                utterance.pitch = 1;
-                utterance.volume = 1;
+                utterance.rate = this.settings.speechRate;
+                utterance.pitch = this.settings.speechPitch;
+                utterance.volume = this.settings.speechVolume;
+                utterance.lang = this.settings.language;
 
                 utterance.onend = () => {
                     this.isSpeaking = false;
@@ -639,23 +1152,312 @@
                 this.synthesis.speak(utterance);
             }
 
-            displayResponse(userInput, response) {
-                const modeIcon = this.mode === 'demo' ? '🎭' : '🧠';
-                const modeLabel = this.mode === 'demo' ? 'Demo AI' : 'ChatGPT';
-                
-                this.responseText.innerHTML = `
-                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(0, 122, 255, 0.1); border-radius: 10px;">
-                        <strong style="color: #007AFF;">👤 You:</strong> "${userInput}"
-                    </div>
-                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(76, 175, 80, 0.1); border-radius: 10px;">
-                        <strong style="color: #4CAF50;">${modeIcon} ${modeLabel}:</strong> ${response}
-                    </div>
-                    <div style="text-align: center; font-size: 12px; color: #666;">
-                        ${new Date().toLocaleTimeString()} • ${this.mode.toUpperCase()} MODE
-                    </div>
-                `;
+            testSpeech() {
+                this.enableAudio();
+                this.speakResponse('Hello! I am your AI voice assistant. Speech synthesis is working correctly.');
             }
 
+            displayResponse(userInput, response) {
+                const timestamp = new Date().toLocaleTimeString();
+                const conversationItem = document.createElement('div');
+                conversationItem.className = 'conversation-item';
+                
+                conversationItem.innerHTML = `
+                    <div class="user-message" style="margin-bottom: 10px;">
+                        <strong style="color: var(--primary-color);">👤 You:</strong> "${userInput}"
+                    </div>
+                    <div class="ai-message">
+                        <strong style="color: var(--success-color);">🤖 AI:</strong> ${response}
+                    </div>
+                    <div style="text-align: center; font-size: 12px; color: #666; margin-top: 10px;">
+                        ${timestamp} • ${this.settings.model.toUpperCase()}
+                    </div>
+                `;
+
+                if (this.responseText.querySelector('.placeholder-text')) {
+                    this.responseText.innerHTML = '';
+                }
+
+                this.responseText.appendChild(conversationItem);
+                this.responseText.scrollTop = this.responseText.scrollHeight;
+            }
+
+            saveConversation(userInput, response) {
+                const conversation = {
+                    user: userInput,
+                    assistant: response,
+                    timestamp: new Date().toISOString(),
+                    model: this.settings.model
+                };
+
+                this.currentConversation.push(
+                    { role: 'user', content: userInput },
+                    { role: 'assistant', content: response }
+                );
+
+                if (this.settings.autoSave) {
+                    this.conversationHistory.unshift(conversation);
+                    if (this.conversationHistory.length > 50) {
+                        this.conversationHistory = this.conversationHistory.slice(0, 50);
+                    }
+                    localStorage.setItem('va_history', JSON.stringify(this.conversationHistory));
+                    this.updateHistoryDisplay();
+                }
+            }
+
+            updateHistoryDisplay() {
+                if (this.conversationHistory.length === 0) {
+                    this.conversationHistory.innerHTML = '<div style="text-align: center; color: #999; padding: 20px;">No conversations yet</div>';
+                    return;
+                }
+
+                this.conversationHistory.innerHTML = this.conversationHistory.slice(0, 10).map(conv => `
+                    <div class="history-item">
+                        <strong>You:</strong> ${conv.user.substring(0, 50)}${conv.user.length > 50 ? '...' : ''}<br>
+                        <strong>AI:</strong> ${conv.assistant.substring(0, 50)}${conv.assistant.length > 50 ? '...' : ''}<br>
+                        <small>${new Date(conv.timestamp).toLocaleString()}</small>
+                    </div>
+                `).join('');
+            }
+
+            updateStats(type = 'success', wordCount = 0) {
+                if (type === 'success') {
+                    this.stats.conversations++;
+                    this.stats.words += wordCount;
+                } else if (type === 'error') {
+                    this.stats.errors++;
+                }
+
+                // Save to localStorage
+                localStorage.setItem('va_conversations', this.stats.conversations);
+                localStorage.setItem('va_words', this.stats.words);
+                localStorage.setItem('va_response_times', JSON.stringify(this.stats.responseTimes));
+                localStorage.setItem('va_errors', this.stats.errors);
+
+                // Update displays
+                this.conversationCount.textContent = this.stats.conversations;
+                this.wordsCount.textContent = this.stats.words;
+                this.totalConversations.textContent = this.stats.conversations;
+                this.totalWords.textContent = this.stats.words;
+
+                const avgTime = this.stats.responseTimes.length > 0 
+                    ? Math.round(this.stats.responseTimes.reduce((a, b) => a + b) / this.stats.responseTimes.length / 1000) 
+                    : 0;
+                this.averageResponse.textContent = `${avgTime}s`;
+
+                const total = this.stats.conversations + this.stats.errors;
+                const success = total > 0 ? Math.round((this.stats.conversations / total) * 100) : 100;
+                this.successRate.textContent = `${success}%`;
+            }
+
+            // Settings Panel Methods
+            openSettings() {
+                this.settingsPanel.classList.add('open');
+                this.settingsOverlay.classList.add('open');
+            }
+
+            closeSettingsPanel() {
+                this.settingsPanel.classList.remove('open');
+                this.settingsOverlay.classList.remove('open');
+            }
+
+            saveApiKey() {
+                const apiKey = this.apiKeyInput.value.trim();
+                if (apiKey && apiKey.startsWith('sk-')) {
+                    this.saveSetting('apiKey', apiKey);
+                    this.showSuccess('✅ API key saved successfully!');
+                } else {
+                    this.showError('❌ Invalid API key format. Should start with "sk-"');
+                }
+            }
+
+            async testApiKey() {
+                const apiKey = this.apiKeyInput.value.trim();
+                if (!apiKey) {
+                    this.showError('Please enter an API key to test');
+                    return;
+                }
+
+                this.testApiKeyBtn.textContent = '🧪 Testing...';
+                this.testApiKeyBtn.disabled = true;
+
+                try {
+                    const response = await fetch(this.openAIURL, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${apiKey}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            model: 'gpt-3.5-turbo',
+                            messages: [{ role: 'user', content: 'test' }],
+                            max_tokens: 5
+                        })
+                    });
+
+                    if (response.ok) {
+                        this.showSuccess('✅ API key is valid and working!');
+                        this.saveApiKey();
+                    } else {
+                        const error = await response.json();
+                        this.showError(`❌ API key test failed: ${error.error?.message || 'Invalid key'}`);
+                    }
+                } catch (error) {
+                    this.showError(`❌ Test failed: ${error.message}`);
+                }
+
+                this.testApiKeyBtn.textContent = '🧪 Test';
+                this.testApiKeyBtn.disabled = false;
+            }
+
+            clearHistory() {
+                if (confirm('Are you sure you want to clear all conversation history?')) {
+                    this.conversationHistory = [];
+                    localStorage.removeItem('va_history');
+                    this.updateHistoryDisplay();
+                    this.showSuccess('✅ Conversation history cleared!');
+                }
+            }
+
+            clearConversation() {
+                this.responseText.innerHTML = `
+                    <div style="text-align: center; color: #999; margin-top: 50px;">
+                        🎯 AI conversations will appear here...<br><br>
+                        💡 Try saying: "Hello", "What's the weather?", or "Tell me a joke!"<br><br>
+                        ⚙️ Click the settings button to customize everything!
+                    </div>
+                `;
+                this.currentConversation = [];
+                this.synthesis.cancel();
+            }
+
+            exportConversation() {
+                if (this.currentConversation.length === 0) {
+                    this.showError('No conversation to export');
+                    return;
+                }
+
+                const data = {
+                    conversation: this.currentConversation,
+                    timestamp: new Date().toISOString(),
+                    settings: this.settings
+                };
+
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `conversation-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                this.showSuccess('✅ Conversation exported successfully!');
+            }
+
+            importConversation() {
+                // This would be handled by file input
+                this.showSuccess('Use the Import button in settings to import conversation files');
+            }
+
+            exportSettings() {
+                const data = {
+                    settings: this.settings,
+                    stats: this.stats,
+                    conversationHistory: this.conversationHistory,
+                    exported: new Date().toISOString()
+                };
+
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `voice-assistant-settings-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                this.showSuccess('✅ Settings exported successfully!');
+            }
+
+            importSettings(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        
+                        if (data.settings) {
+                            Object.assign(this.settings, data.settings);
+                            Object.keys(this.settings).forEach(key => {
+                                localStorage.setItem(`va_${key.toLowerCase()}`, this.settings[key]);
+                            });
+                        }
+
+                        if (data.stats) {
+                            Object.assign(this.stats, data.stats);
+                        }
+
+                        if (data.conversationHistory) {
+                            this.conversationHistory = data.conversationHistory;
+                            localStorage.setItem('va_history', JSON.stringify(this.conversationHistory));
+                        }
+
+                        this.loadSettings();
+                        this.updateStats();
+                        this.applyTheme();
+                        this.showSuccess('✅ Settings imported successfully!');
+                    } catch (error) {
+                        this.showError('❌ Invalid settings file');
+                    }
+                };
+                reader.readAsText(file);
+                event.target.value = '';
+            }
+
+            resetAllSettings() {
+                if (confirm('Are you sure you want to reset all settings? This cannot be undone.')) {
+                    // Clear localStorage
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.startsWith('va_')) {
+                            localStorage.removeItem(key);
+                        }
+                    });
+
+                    // Reset to defaults
+                    this.settings = {
+                        apiKey: '',
+                        model: 'gpt-3.5-turbo',
+                        speechRate: 0.8,
+                        speechPitch: 1.0,
+                        speechVolume: 1.0,
+                        language: 'en-US',
+                        theme: 'default',
+                        continuousListening: false,
+                        autoSave: true,
+                        wakeWord: false,
+                        maxTokens: 150
+                    };
+
+                    this.stats = {
+                        conversations: 0,
+                        words: 0,
+                        responseTimes: [],
+                        errors: 0
+                    };
+
+                    this.conversationHistory = [];
+                    this.currentConversation = [];
+
+                    this.loadSettings();
+                    this.updateStats();
+                    this.applyTheme();
+                    this.clearConversation();
+                    this.showSuccess('✅ All settings reset to defaults!');
+                }
+            }
+
+            // Utility Methods
             showLoading() {
                 this.responseText.innerHTML = `
                     <div class="loading">
@@ -663,32 +1465,36 @@
                         <div class="loading-dot"></div>
                         <div class="loading-dot"></div>
                     </div>
+                    <div style="text-align: center; margin-top: 15px; color: #666;">
+                        🤖 Getting AI response...
+                    </div>
                 `;
             }
 
             showError(message) {
-                this.responseText.innerHTML = `
-                    <div class="error-message">
-                        <strong>❌ Error:</strong><br>${message}
-                    </div>
-                `;
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.innerHTML = `<strong>❌ Error:</strong><br>${message}`;
+                
+                if (this.responseText.querySelector('.placeholder-text')) {
+                    this.responseText.innerHTML = '';
+                }
+                
+                this.responseText.appendChild(errorDiv);
+                setTimeout(() => errorDiv.remove(), 5000);
             }
 
             showSuccess(message) {
-                this.responseText.innerHTML = `
-                    <div class="success-message">
-                        <strong>✅ Success:</strong><br>${message}
-                    </div>
-                `;
-            }
-
-            clearResponse() {
-                this.responseText.innerHTML = `
-                    <div style="text-align: center; color: #999; margin-top: 50px;">
-                        🎯 AI responses will appear here...<br><br>
-                        💡 Try asking: "What's the weather like?" or "Tell me a joke!"
-                    </div>
-                `;
+                const successDiv = document.createElement('div');
+                successDiv.className = 'success-message';
+                successDiv.innerHTML = `<strong>✅ Success:</strong><br>${message}`;
+                
+                if (this.responseText.querySelector('.placeholder-text')) {
+                    this.responseText.innerHTML = '';
+                }
+                
+                this.responseText.appendChild(successDiv);
+                setTimeout(() => successDiv.remove(), 3000);
             }
 
             updateStatus(status) {
@@ -717,7 +1523,17 @@
 
         // Initialize the voice assistant
         document.addEventListener('DOMContentLoaded', () => {
-            window.voiceAssistant = new VoiceAssistant();
+            window.voiceAssistant = new VoiceAssistantPro();
+        });
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && window.voiceAssistant) {
+                window.voiceAssistant.synthesis.cancel();
+                if (window.voiceAssistant.isListening) {
+                    window.voiceAssistant.stopListening();
+                }
+            }
         });
     </script>
 </body>
