@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#007AFF">
-    <title>AI Voice Assistant Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#000033">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Cosmic AI Voice Assistant</title>
     
     <style>
         :root {
@@ -16,13 +18,17 @@
             --background-gradient: radial-gradient(ellipse at center, #ffffff 0%, #87ceeb 15%, #4169e1 35%, #191970 60%, #000033 85%, #000000 100%);
             --card-background: rgba(255, 255, 255, 0.08);
             --text-color: #ffffff;
-            --border-radius: 20px;
+            --border-radius: 16px;
             --shadow: 0 8px 32px rgba(0,0,0,0.3);
             --wave-color-1: #ffffff;
             --wave-color-2: #87ceeb;
             --wave-color-3: #4169e1;
             --wave-color-4: #6495ed;
             --wave-color-5: #b0c4de;
+            --safe-area-top: env(safe-area-inset-top, 20px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 20px);
+            --safe-area-left: env(safe-area-inset-left, 0px);
+            --safe-area-right: env(safe-area-inset-right, 0px);
         }
 
         [data-theme="cosmic"] {
@@ -56,22 +62,30 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
             background: var(--background-gradient);
-            min-height: 100vh;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             touch-action: manipulation;
             overflow: hidden;
             color: var(--text-color);
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: var(--safe-area-top);
+            padding-bottom: var(--safe-area-bottom);
+            padding-left: var(--safe-area-left);
+            padding-right: var(--safe-area-right);
         }
 
-        /* Cosmic Background Effects */
+        /* iPhone 16 Pro Max optimized cosmic effects */
         body::before {
             content: '';
             position: absolute;
@@ -80,53 +94,54 @@
             right: 0;
             bottom: 0;
             background-image: 
-                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
-                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(2px 2px at 160px 30px, #ffffff, transparent),
-                radial-gradient(1px 1px at 200px 60px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(2px 2px at 240px 90px, #ffffff, transparent),
-                radial-gradient(1px 1px at 280px 20px, rgba(255,255,255,0.9), transparent),
-                radial-gradient(1px 1px at 320px 70px, #ffffff, transparent),
-                radial-gradient(2px 2px at 360px 40px, rgba(255,255,255,0.8), transparent);
+                radial-gradient(1.5px 1.5px at 15px 25px, #ffffff, transparent),
+                radial-gradient(1.5px 1.5px at 35px 60px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 75px 35px, #ffffff, transparent),
+                radial-gradient(1px 1px at 110px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1.5px 1.5px at 140px 25px, #ffffff, transparent),
+                radial-gradient(1px 1px at 170px 55px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1.5px 1.5px at 200px 80px, #ffffff, transparent),
+                radial-gradient(1px 1px at 230px 15px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 260px 65px, #ffffff, transparent),
+                radial-gradient(1.5px 1.5px at 290px 35px, rgba(255,255,255,0.8), transparent);
             background-repeat: repeat;
-            background-size: 400px 400px;
-            animation: stars 20s linear infinite;
+            background-size: 320px 320px;
+            animation: stars 25s linear infinite;
             pointer-events: none;
+            opacity: 0.7;
         }
 
-        /* Central Light Burst */
+        /* Mobile-optimized central light burst */
         body::after {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 30%, transparent 70%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.15) 30%, transparent 70%);
             transform: translate(-50%, -50%);
-            animation: centralGlow 4s ease-in-out infinite alternate;
+            animation: centralGlow 5s ease-in-out infinite alternate;
             pointer-events: none;
         }
 
         @keyframes stars {
             from { transform: translateY(0px); }
-            to { transform: translateY(-400px); }
+            to { transform: translateY(-320px); }
         }
 
         @keyframes centralGlow {
             0% { 
                 transform: translate(-50%, -50%) scale(1);
-                opacity: 0.3;
+                opacity: 0.4;
             }
             100% { 
-                transform: translate(-50%, -50%) scale(1.2);
-                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 0.7;
             }
         }
 
-        /* Light Rays */
+        /* Mobile-optimized light rays */
         .light-rays {
             position: absolute;
             top: 50%;
@@ -142,38 +157,38 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 2px;
-            height: 50%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent);
+            width: 1.5px;
+            height: 40%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
             transform-origin: bottom center;
-            animation: rayRotate 8s linear infinite;
+            animation: rayRotate 10s linear infinite;
         }
 
         .light-ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
-        .light-ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); animation-delay: -1s; }
-        .light-ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); animation-delay: -2s; }
-        .light-ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); animation-delay: -3s; }
-        .light-ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); animation-delay: -4s; }
-        .light-ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); animation-delay: -5s; }
-        .light-ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); animation-delay: -6s; }
-        .light-ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); animation-delay: -7s; }
+        .light-ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); animation-delay: -1.25s; }
+        .light-ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); animation-delay: -2.5s; }
+        .light-ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); animation-delay: -3.75s; }
+        .light-ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); animation-delay: -5s; }
+        .light-ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); animation-delay: -6.25s; }
+        .light-ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); animation-delay: -7.5s; }
+        .light-ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); animation-delay: -8.75s; }
 
         @keyframes rayRotate {
             0% { 
-                transform: translate(-50%, -100%) rotate(var(--start-rotation, 0deg)) scaleY(0.5);
-                opacity: 0.3;
+                transform: translate(-50%, -100%) rotate(var(--start-rotation, 0deg)) scaleY(0.6);
+                opacity: 0.4;
             }
             50% { 
                 transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 180deg)) scaleY(1);
                 opacity: 0.8;
             }
             100% { 
-                transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 360deg)) scaleY(0.5);
-                opacity: 0.3;
+                transform: translate(-50%, -100%) rotate(calc(var(--start-rotation, 0deg) + 360deg)) scaleY(0.6);
+                opacity: 0.4;
             }
         }
 
-        /* Energy Particles */
+        /* Mobile-optimized energy particles */
         .energy-particles {
             position: absolute;
             top: 0;
@@ -186,80 +201,80 @@
 
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             background: radial-gradient(circle, #ffffff, transparent);
             border-radius: 50%;
-            animation: float 6s infinite ease-in-out;
+            animation: float 8s infinite ease-in-out;
         }
 
         @keyframes float {
             0%, 100% { 
-                transform: translate(0, 0) scale(0.5);
-                opacity: 0.3;
+                transform: translate(0, 0) scale(0.6);
+                opacity: 0.4;
             }
             50% { 
-                transform: translate(20px, -30px) scale(1);
+                transform: translate(15px, -25px) scale(1);
                 opacity: 1;
             }
         }
 
-        /* Minimized Settings Button */
+        /* iPhone-optimized Settings Button */
         .settings-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.1);
+            top: calc(var(--safe-area-top) + 10px);
+            right: calc(var(--safe-area-right) + 15px);
+            background: rgba(255, 255, 255, 0.12);
             border: none;
             border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
+            width: 44px;
+            height: 44px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
             cursor: pointer;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             z-index: 100;
-            opacity: 0.5;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
         }
 
-        .settings-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 1);
-            transform: scale(1.1);
-            opacity: 1;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        .settings-btn:active {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(0.95);
         }
 
-        /* Wake Word Indicator */
+        /* Mobile-optimized Wake Word Indicator */
         .wake-indicator {
             position: absolute;
-            bottom: 30px;
+            bottom: calc(var(--safe-area-bottom) + 25px);
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(20px);
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: 500;
             opacity: 0;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 80%;
         }
 
         .wake-indicator.show {
-            opacity: 0.8;
+            opacity: 0.9;
         }
 
         .wake-indicator.active {
             background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             opacity: 1;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
         }
 
-        /* Full Screen Wave Container */
+        /* iPhone 16 Pro Max optimized wave container */
         .wave-container {
             position: absolute;
             top: 0;
@@ -269,7 +284,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
             z-index: 10;
         }
 
@@ -277,19 +291,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 2px;
-            width: 90vw;
-            height: 80vh;
-            max-width: 1200px;
+            gap: 1.5px;
+            width: 85vw;
+            height: 65vh;
+            max-width: 350px;
             transition: all 0.3s ease;
         }
 
         .wave-bar {
             flex: 1;
-            max-width: 8px;
-            border-radius: 4px;
-            transition: all 0.1s ease;
-            min-height: 8px;
+            max-width: 4px;
+            border-radius: 2px;
+            transition: all 0.08s ease;
+            min-height: 6px;
             transform-origin: center;
             background: linear-gradient(to top, 
                 var(--wave-color-1) 0%, 
@@ -297,75 +311,73 @@
                 var(--wave-color-3) 50%, 
                 var(--wave-color-4) 75%, 
                 var(--wave-color-5) 100%);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
         }
 
         .wave-bar.active {
-            box-shadow: 0 0 30px var(--wave-color-1), 0 0 60px var(--wave-color-2);
-            filter: brightness(1.8) drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
-            transform: scaleY(1.2);
+            box-shadow: 0 0 20px var(--wave-color-1), 0 0 40px var(--wave-color-2);
+            filter: brightness(1.8) drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
+            transform: scaleY(1.3);
         }
 
         .wave-bar.wake-detected {
-            animation: wakeDetected 1s ease;
+            animation: wakeDetected 1.2s ease;
         }
 
         .wave-bar.speaking {
-            animation: speakingPulse 0.6s infinite alternate;
+            animation: speakingPulse 0.7s infinite alternate;
         }
 
         @keyframes wakeDetected {
             0% { 
                 transform: scaleY(1); 
-                filter: brightness(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+                filter: brightness(1) drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
             }
             25% { 
-                transform: scaleY(1.8); 
-                filter: brightness(3) hue-rotate(90deg) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
+                transform: scaleY(2); 
+                filter: brightness(3.5) hue-rotate(90deg) drop-shadow(0 0 20px rgba(255, 255, 255, 0.9));
             }
             50% { 
-                transform: scaleY(2.5); 
-                filter: brightness(4) hue-rotate(180deg) drop-shadow(0 0 40px rgba(255, 255, 255, 1));
+                transform: scaleY(2.8); 
+                filter: brightness(4.5) hue-rotate(180deg) drop-shadow(0 0 30px rgba(255, 255, 255, 1));
             }
             75% { 
-                transform: scaleY(1.8); 
-                filter: brightness(3) hue-rotate(270deg) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
+                transform: scaleY(2); 
+                filter: brightness(3.5) hue-rotate(270deg) drop-shadow(0 0 20px rgba(255, 255, 255, 0.9));
             }
             100% { 
                 transform: scaleY(1); 
-                filter: brightness(1) hue-rotate(360deg) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+                filter: brightness(1) hue-rotate(360deg) drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
             }
         }
 
         @keyframes speakingPulse {
             0% { 
                 transform: scaleY(1); 
-                filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+                filter: brightness(1.3) drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
             }
             100% { 
-                transform: scaleY(1.4); 
-                filter: brightness(2) saturate(1.5) drop-shadow(0 0 20px rgba(255, 255, 255, 0.7));
+                transform: scaleY(1.5); 
+                filter: brightness(2.2) saturate(1.6) drop-shadow(0 0 16px rgba(255, 255, 255, 0.7));
             }
         }
 
-        /* Settings Panel */
+        /* Mobile-optimized Settings Panel */
         .settings-panel {
             position: fixed;
             top: 0;
             right: -100%;
-            width: 90%;
-            max-width: 450px;
+            width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(20px);
-            box-shadow: -5px 0 20px rgba(0,0,0,0.5);
-            padding: 20px;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(25px);
+            padding: var(--safe-area-top) 20px var(--safe-area-bottom) 20px;
             overflow-y: auto;
             transition: right 0.3s ease;
             z-index: 1000;
             color: var(--text-color);
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            -webkit-overflow-scrolling: touch;
         }
 
         .settings-panel.open {
@@ -376,52 +388,59 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .settings-header h2 {
+            font-size: 20px;
+            font-weight: 600;
         }
 
         .close-settings {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
             cursor: pointer;
             color: var(--text-color);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
         }
 
-        .close-settings:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        .close-settings:active {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(0.95);
         }
 
         .setting-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .setting-label {
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: block;
             font-size: 16px;
         }
 
         .setting-input, .setting-textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
+            padding: 12px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
             font-size: 16px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
             color: var(--text-color);
             font-family: inherit;
+            -webkit-appearance: none;
         }
 
         .setting-textarea {
@@ -438,29 +457,50 @@
         .setting-range {
             width: 100%;
             margin: 10px 0;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.2);
+            outline: none;
+        }
+
+        .setting-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--wave-color-3);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .setting-select {
             width: 100%;
-            padding: 12px;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
+            padding: 12px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
             font-size: 16px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
             color: var(--text-color);
+            -webkit-appearance: none;
         }
 
         .btn {
             padding: 12px 20px;
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin: 5px;
+            margin: 4px;
+            min-height: 44px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
         }
 
         .btn-primary {
@@ -483,19 +523,20 @@
             color: white;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        .btn:active {
+            transform: scale(0.95);
         }
 
         .toggle-switch {
             position: relative;
             width: 60px;
-            height: 30px;
+            height: 32px;
             background: rgba(255,255,255,0.2);
-            border-radius: 15px;
+            border-radius: 16px;
             cursor: pointer;
             transition: background 0.3s;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
         }
 
         .toggle-switch.active {
@@ -504,17 +545,18 @@
 
         .toggle-slider {
             position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 24px;
-            height: 24px;
+            top: 2px;
+            left: 2px;
+            width: 28px;
+            height: 28px;
             background: white;
             border-radius: 50%;
             transition: transform 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
         .toggle-switch.active .toggle-slider {
-            transform: translateX(30px);
+            transform: translateX(28px);
         }
 
         .setting-toggle {
@@ -522,23 +564,26 @@
             align-items: center;
             justify-content: space-between;
             margin: 15px 0;
+            padding: 8px 0;
         }
 
         .color-picker {
             display: flex;
-            gap: 10px;
-            margin: 10px 0;
+            gap: 12px;
+            margin: 12px 0;
             flex-wrap: wrap;
         }
 
         .color-option {
-            width: 35px;
-            height: 35px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             cursor: pointer;
             border: 3px solid transparent;
             transition: all 0.3s ease;
             position: relative;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
         }
 
         .color-option.active {
@@ -548,13 +593,15 @@
         }
 
         .wave-color-option {
-            width: 60px;
-            height: 40px;
-            border-radius: 8px;
+            width: 70px;
+            height: 44px;
+            border-radius: 12px;
             cursor: pointer;
             border: 2px solid transparent;
             transition: all 0.3s ease;
             position: relative;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
         }
 
         .wave-color-option.active {
@@ -563,77 +610,62 @@
             box-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
 
-        .wave-controls {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 10px;
+        .wave-controls, .wake-word-controls {
+            background: rgba(255,255,255,0.06);
+            padding: 16px;
+            border-radius: 12px;
             margin: 15px 0;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .wake-word-controls {
-            background: rgba(135, 206, 235, 0.1);
-            border: 1px solid rgba(135, 206, 235, 0.3);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
+            background: rgba(135, 206, 235, 0.08);
+            border: 1px solid rgba(135, 206, 235, 0.2);
+        }
+
+        .error-message, .success-message {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin: 10px 0;
+            font-size: 14px;
         }
 
         .error-message {
-            background: rgba(255, 59, 48, 0.2);
-            color: var(--danger-color);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
+            background: rgba(255, 59, 48, 0.15);
+            color: #ff6b6b;
             border-left: 4px solid var(--danger-color);
         }
 
         .success-message {
-            background: rgba(76, 175, 80, 0.2);
-            color: var(--success-color);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
+            background: rgba(76, 175, 80, 0.15);
+            color: #81c784;
             border-left: 4px solid var(--success-color);
         }
 
         .settings-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+            display: none;
         }
 
-        .settings-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Response Display */
+        /* Mobile-optimized Response Display */
         .response-display {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            max-width: 70%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            padding: 25px;
-            border-radius: 20px;
+            max-width: 85%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(25px);
+            padding: 20px;
+            border-radius: 16px;
             font-size: 16px;
             text-align: center;
             opacity: 0;
-            transform: translate(-50%, -50%) scale(0.8);
+            transform: translate(-50%, -50%) scale(0.85);
             transition: all 0.4s ease;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             z-index: 50;
+            line-height: 1.4;
         }
 
         .response-display.show {
@@ -642,23 +674,23 @@
         }
 
         .wake-word-list {
-            background: rgba(255,255,255,0.05);
-            padding: 10px;
+            background: rgba(255,255,255,0.04);
+            padding: 12px;
             border-radius: 8px;
-            margin: 10px 0;
+            margin: 12px 0;
             font-size: 13px;
         }
 
         .wake-word-item {
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .wake-word-item:last-child {
             border-bottom: none;
         }
 
-        /* Cosmic wave presets */
+        /* Cosmic wave presets optimized for mobile */
         .cosmic-wave {
             --wave-color-1: #ffffff;
             --wave-color-2: #87ceeb;
@@ -691,36 +723,29 @@
             --wave-color-5: #8a2be2;
         }
 
-        @media (max-width: 480px) {
-            .settings-panel { 
-                width: 100%; 
+        /* iPhone-specific optimizations */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                -webkit-text-size-adjust: 100%;
+                -webkit-font-smoothing: antialiased;
             }
-            .sound-wave { 
-                width: 95vw; 
-                height: 85vh; 
-            }
+            
             .wave-bar {
-                max-width: 6px;
+                will-change: height, filter;
             }
-            .response-display {
-                max-width: 85%;
-                font-size: 14px;
-                padding: 20px;
+            
+            .light-ray {
+                will-change: transform, opacity;
             }
-        }
-
-        @media (max-width: 320px) {
-            .sound-wave {
-                gap: 1px;
-            }
-            .wave-bar {
-                max-width: 4px;
+            
+            .particle {
+                will-change: transform, opacity;
             }
         }
     </style>
 </head>
 <body data-theme="default" class="cosmic-wave">
-    <!-- Cosmic Light Rays -->
+    <!-- Mobile-optimized Cosmic Light Rays -->
     <div class="light-rays">
         <div class="light-ray"></div>
         <div class="light-ray"></div>
@@ -732,33 +757,30 @@
         <div class="light-ray"></div>
     </div>
 
-    <!-- Energy Particles -->
+    <!-- Mobile Energy Particles -->
     <div class="energy-particles" id="energyParticles">
         <!-- Particles will be generated by JavaScript -->
     </div>
 
-    <!-- Settings Button -->
+    <!-- iPhone-optimized Settings Button -->
     <button class="settings-btn" id="settingsBtn">⚙</button>
 
-    <!-- Wake Word Indicator -->
+    <!-- Mobile Wake Word Indicator -->
     <div class="wake-indicator" id="wakeIndicator">
         👂 <span id="currentWakeWord">Hey Assistant</span>
     </div>
 
-    <!-- Full Screen Wave Container -->
+    <!-- iPhone 16 Pro Max Wave Container -->
     <div class="wave-container" id="waveContainer">
         <div class="sound-wave" id="soundWave">
             <!-- Wave bars will be generated by JavaScript -->
         </div>
     </div>
 
-    <!-- Response Display -->
+    <!-- Mobile Response Display -->
     <div class="response-display" id="responseDisplay"></div>
 
-    <!-- Settings Overlay -->
-    <div class="settings-overlay" id="settingsOverlay"></div>
-
-    <!-- Settings Panel -->
+    <!-- Full-screen Mobile Settings Panel -->
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
             <h2>⚙️ Cosmic Settings</h2>
@@ -822,19 +844,19 @@
             <label class="setting-label">🌊 Cosmic Wave Visualization</label>
             <div class="wave-controls">
                 <label style="font-size: 14px; display: block; margin-bottom: 5px;">
-                    Wave Count: <span id="waveCountValue">100</span>
+                    Wave Count: <span id="waveCountValue">80</span>
                 </label>
-                <input type="range" class="setting-range" id="waveCount" min="50" max="200" step="10" value="100">
+                <input type="range" class="setting-range" id="waveCount" min="40" max="120" step="5" value="80">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    Wave Responsiveness: <span id="responsiveValue">1.5</span>
+                    Wave Responsiveness: <span id="responsiveValue">1.2</span>
                 </label>
-                <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="3.0" step="0.1" value="1.5">
+                <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="2.5" step="0.1" value="1.2">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    Animation Speed: <span id="animSpeedValue">60</span>ms
+                    Animation Speed: <span id="animSpeedValue">70</span>ms
                 </label>
-                <input type="range" class="setting-range" id="animSpeed" min="30" max="150" step="10" value="60">
+                <input type="range" class="setting-range" id="animSpeed" min="40" max="120" step="5" value="70">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Cosmic Wave Schemes:</label>
                 <div class="color-picker">
@@ -928,13 +950,13 @@
         </div>
 
         <!-- Reset -->
-        <div class="setting-group">
+        <div class="setting-group" style="margin-bottom: 40px;">
             <button class="btn btn-danger" id="resetBtn">🔄 Reset All</button>
         </div>
     </div>
 
     <script>
-        class CosmicVoiceAssistant {
+        class MobileCosmicVoiceAssistant {
             constructor() {
                 this.settings = {
                     apiKey: '',
@@ -946,9 +968,9 @@
                     theme: 'default',
                     showResponse: true,
                     maxTokens: 150,
-                    waveCount: 100,
-                    waveResponsive: 1.5,
-                    animSpeed: 60,
+                    waveCount: 80,
+                    waveResponsive: 1.2,
+                    animSpeed: 70,
                     waveScheme: 'cosmic',
                     wakeWordEnabled: true,
                     wakeWord: 'Hey Assistant',
@@ -984,10 +1006,40 @@
                 this.enableAudio();
                 this.createEnergyParticles();
 
+                // Mobile-specific setup
+                this.setupMobileOptimizations();
+
                 // Start wake word listening immediately
                 if (this.settings.wakeWordEnabled) {
                     setTimeout(() => this.startWakeWordListening(), 1000);
                 }
+            }
+
+            setupMobileOptimizations() {
+                // Prevent zoom on iOS
+                document.addEventListener('touchstart', (e) => {
+                    if (e.touches.length > 1) {
+                        e.preventDefault();
+                    }
+                });
+
+                // Optimize for mobile performance
+                if ('serviceWorker' in navigator) {
+                    // Enable hardware acceleration hints
+                    document.body.style.transform = 'translateZ(0)';
+                }
+
+                // Handle orientation changes
+                window.addEventListener('orientationchange', () => {
+                    setTimeout(() => this.initializeWave(), 100);
+                });
+
+                // Handle mobile audio context
+                document.addEventListener('touchstart', () => {
+                    if (this.audioContext && this.audioContext.state === 'suspended') {
+                        this.audioContext.resume();
+                    }
+                }, { once: true });
             }
 
             initializeElements() {
@@ -1002,7 +1054,6 @@
                 // Settings elements
                 this.settingsBtn = document.getElementById('settingsBtn');
                 this.settingsPanel = document.getElementById('settingsPanel');
-                this.settingsOverlay = document.getElementById('settingsOverlay');
                 this.closeSettings = document.getElementById('closeSettings');
 
                 // Settings inputs
@@ -1048,7 +1099,6 @@
                 // Settings panel
                 this.settingsBtn.addEventListener('click', () => this.openSettings());
                 this.closeSettings.addEventListener('click', () => this.closeSettingsPanel());
-                this.settingsOverlay.addEventListener('click', () => this.closeSettingsPanel());
 
                 // Settings controls
                 this.saveApiKeyBtn.addEventListener('click', () => this.saveApiKey());
@@ -1145,13 +1195,14 @@
             }
 
             createEnergyParticles() {
-                for (let i = 0; i < 20; i++) {
+                // Fewer particles for mobile performance
+                for (let i = 0; i < 12; i++) {
                     const particle = document.createElement('div');
                     particle.className = 'particle';
                     particle.style.left = Math.random() * 100 + '%';
                     particle.style.top = Math.random() * 100 + '%';
-                    particle.style.animationDelay = Math.random() * 6 + 's';
-                    particle.style.animationDuration = (3 + Math.random() * 4) + 's';
+                    particle.style.animationDelay = Math.random() * 8 + 's';
+                    particle.style.animationDuration = (4 + Math.random() * 6) + 's';
                     this.energyParticles.appendChild(particle);
                 }
             }
@@ -1162,7 +1213,7 @@
                 for (let i = 0; i < this.settings.waveCount; i++) {
                     const bar = document.createElement('div');
                     bar.className = 'wave-bar';
-                    bar.style.animationDelay = `${i * 20}ms`;
+                    bar.style.animationDelay = `${i * 25}ms`;
                     this.soundWave.appendChild(bar);
                 }
                 
@@ -1180,10 +1231,10 @@
                 const animate = () => {
                     if (!this.isListening && !this.isProcessing && !this.isSpeaking) {
                         bars.forEach((bar, index) => {
-                            const height = 20 + Math.sin(time + index * 0.3) * 15;
+                            const height = 18 + Math.sin(time + index * 0.25) * 12;
                             bar.style.height = height + 'px';
                         });
-                        time += 0.05;
+                        time += 0.04;
                     }
                     
                     this.idleAnimationId = requestAnimationFrame(animate);
@@ -1324,6 +1375,11 @@
                 const bars = this.soundWave.querySelectorAll('.wave-bar');
                 bars.forEach(bar => bar.classList.add('wake-detected'));
                 
+                // Add haptic feedback for iPhone
+                if ('vibrate' in navigator) {
+                    navigator.vibrate([50, 30, 50]);
+                }
+                
                 this.speakResponse(this.settings.wakeResponse);
                 
                 setTimeout(() => {
@@ -1372,10 +1428,16 @@
                         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
                     }
 
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true
+                        } 
+                    });
                     this.microphone = this.audioContext.createMediaStreamSource(stream);
                     this.analyser = this.audioContext.createAnalyser();
-                    this.analyser.fftSize = 1024;
+                    this.analyser.fftSize = 512; // Reduced for mobile performance
                     
                     this.microphone.connect(this.analyser);
                     this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
@@ -1394,9 +1456,9 @@
                 
                 bars.forEach((bar, index) => {
                     const dataIndex = Math.floor(index * this.dataArray.length / bars.length);
-                    const height = (this.dataArray[dataIndex] / 255) * window.innerHeight * 0.6 * this.settings.waveResponsive;
-                    bar.style.height = Math.max(8, height) + 'px';
-                    bar.classList.toggle('active', height > 30);
+                    const height = (this.dataArray[dataIndex] / 255) * window.innerHeight * 0.5 * this.settings.waveResponsive;
+                    bar.style.height = Math.max(6, height) + 'px';
+                    bar.classList.toggle('active', height > 25);
                 });
                 
                 this.waveAnimationId = requestAnimationFrame(() => this.animateWave());
@@ -1532,7 +1594,7 @@
                 
                 setTimeout(() => {
                     this.responseDisplay.classList.remove('show');
-                }, 7000);
+                }, 8000);
             }
 
             showMessage(message, type = 'info') {
@@ -1561,15 +1623,19 @@
 
             openSettings() {
                 this.settingsPanel.classList.add('open');
-                this.settingsOverlay.classList.add('open');
+                // Prevent body scroll on mobile
+                document.body.style.overflow = 'hidden';
             }
 
             closeSettingsPanel() {
                 this.settingsPanel.classList.remove('open');
-                this.settingsOverlay.classList.remove('open');
+                // Restore body scroll
+                document.body.style.overflow = '';
             }
 
-            // Settings methods
+            // All other methods remain the same as the previous version but optimized for mobile...
+            // (loadSettings, saveSetting, toggleSetting, updateToggle, applyTheme, saveApiKey, etc.)
+            
             loadSettings() {
                 Object.keys(this.settings).forEach(key => {
                     const saved = localStorage.getItem(`va_${key}`);
@@ -1706,7 +1772,7 @@
             }
 
             testSpeech() {
-                this.speakResponse('Greetings from the cosmic realm! I am your AI voice assistant, channeling the wisdom of the universe through speech synthesis.');
+                this.speakResponse('Greetings from the cosmic realm! I am your AI voice assistant, perfectly optimized for your iPhone 16 Pro Max.');
             }
 
             testWaveAnimation() {
@@ -1715,13 +1781,13 @@
                 
                 const testAnimation = () => {
                     bars.forEach((bar, index) => {
-                        const height = 100 + Math.sin(time + index * 0.8) * 80;
+                        const height = 80 + Math.sin(time + index * 0.7) * 60;
                         bar.style.height = height + 'px';
                         bar.classList.add('active');
                     });
-                    time += 0.4;
+                    time += 0.35;
                     
-                    if (time < 15) {
+                    if (time < 12) {
                         setTimeout(testAnimation, this.settings.animSpeed);
                     } else {
                         bars.forEach(bar => bar.classList.remove('active'));
@@ -1746,11 +1812,11 @@
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `cosmic-voice-assistant-settings-${new Date().toISOString().split('T')[0]}.json`;
+                a.download = `cosmic-mobile-assistant-${new Date().toISOString().split('T')[0]}.json`;
                 a.click();
                 URL.revokeObjectURL(url);
 
-                this.showMessage('✅ Cosmic settings exported successfully!', 'success');
+                this.showMessage('✅ Mobile cosmic settings exported!', 'success');
             }
 
             importSettings(event) {
@@ -1773,7 +1839,7 @@
                         this.initializeWave();
                         this.applyTheme();
                         this.applyWaveScheme();
-                        this.showMessage('✅ Cosmic settings imported successfully!', 'success');
+                        this.showMessage('✅ Mobile settings imported successfully!', 'success');
                     } catch (error) {
                         this.showMessage('❌ Invalid settings file', 'error');
                     }
@@ -1783,7 +1849,7 @@
             }
 
             resetSettings() {
-                if (confirm('Are you sure you want to reset all cosmic settings? This cannot be undone.')) {
+                if (confirm('Reset all cosmic settings? This cannot be undone.')) {
                     Object.keys(localStorage).forEach(key => {
                         if (key.startsWith('va_')) {
                             localStorage.removeItem(key);
@@ -1800,9 +1866,9 @@
                         theme: 'default',
                         showResponse: true,
                         maxTokens: 150,
-                        waveCount: 100,
-                        waveResponsive: 1.5,
-                        animSpeed: 60,
+                        waveCount: 80,
+                        waveResponsive: 1.2,
+                        animSpeed: 70,
                         waveScheme: 'cosmic',
                         wakeWordEnabled: true,
                         wakeWord: 'Hey Assistant',
@@ -1814,17 +1880,17 @@
                     this.initializeWave();
                     this.applyTheme();
                     this.applyWaveScheme();
-                    this.showMessage('✅ All cosmic settings reset to defaults!', 'success');
+                    this.showMessage('✅ Mobile cosmic settings reset!', 'success');
                 }
             }
         }
 
-        // Initialize the cosmic voice assistant
+        // Initialize the mobile cosmic voice assistant
         document.addEventListener('DOMContentLoaded', () => {
-            window.voiceAssistant = new CosmicVoiceAssistant();
+            window.voiceAssistant = new MobileCosmicVoiceAssistant();
         });
 
-        // Handle page visibility changes
+        // Handle mobile-specific page visibility changes
         document.addEventListener('visibilitychange', () => {
             if (document.hidden && window.voiceAssistant) {
                 window.voiceAssistant.synthesis.cancel();
@@ -1832,6 +1898,15 @@
                     window.voiceAssistant.stopListening();
                 }
             }
+        });
+
+        // Handle mobile orientation changes
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                if (window.voiceAssistant) {
+                    window.voiceAssistant.initializeWave();
+                }
+            }, 200);
         });
     </script>
 </body>
