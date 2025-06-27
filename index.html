@@ -163,36 +163,36 @@
             display: none; /* Hidden - replaced by canvas */
         }
 
-        /* Canvas glow effects for lightning */
+        /* Canvas glow effects for energy sphere */
         .audio-canvas {
-            filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.3));
+            filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.4));
         }
 
         .wave-container.listening .audio-canvas {
-            filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.5));
+            filter: drop-shadow(0 0 35px rgba(147, 51, 234, 0.6));
         }
 
         .wave-container.speaking .audio-canvas {
-            filter: drop-shadow(0 0 35px rgba(255, 255, 255, 0.8));
-            animation: lightningGlow 0.4s infinite alternate;
+            filter: drop-shadow(0 0 50px rgba(147, 51, 234, 0.8));
+            animation: sphereGlow 1.2s infinite alternate ease-in-out;
         }
 
         .wave-container.wake-detected .audio-canvas {
-            animation: lightningStrike 0.8s ease;
+            animation: sphereBurst 3s ease;
         }
 
-        @keyframes lightningGlow {
-            0% { filter: drop-shadow(0 0 35px rgba(255, 255, 255, 0.8)); }
-            100% { filter: drop-shadow(0 0 50px rgba(0, 255, 255, 1)) drop-shadow(0 0 80px rgba(255, 255, 255, 0.6)); }
+        @keyframes sphereGlow {
+            0% { filter: drop-shadow(0 0 50px rgba(147, 51, 234, 0.8)); }
+            100% { filter: drop-shadow(0 0 80px rgba(200, 150, 255, 1)) drop-shadow(0 0 120px rgba(147, 51, 234, 0.6)); }
         }
 
-        @keyframes lightningStrike {
-            0% { filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.3)); }
-            10% { filter: drop-shadow(0 0 80px rgba(255, 255, 255, 1)) drop-shadow(0 0 120px rgba(0, 255, 255, 0.8)); }
-            20% { filter: drop-shadow(0 0 40px rgba(0, 200, 255, 0.5)); }
-            30% { filter: drop-shadow(0 0 100px rgba(255, 255, 255, 1)) drop-shadow(0 0 140px rgba(0, 255, 255, 1)); }
-            50% { filter: drop-shadow(0 0 60px rgba(100, 200, 255, 0.7)); }
-            100% { filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.3)); }
+        @keyframes sphereBurst {
+            0% { filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.4)); }
+            15% { filter: drop-shadow(0 0 100px rgba(255, 255, 255, 1)) drop-shadow(0 0 150px rgba(147, 51, 234, 0.8)); }
+            30% { filter: drop-shadow(0 0 60px rgba(200, 150, 255, 0.7)); }
+            50% { filter: drop-shadow(0 0 80px rgba(147, 51, 234, 0.9)); }
+            70% { filter: drop-shadow(0 0 40px rgba(147, 51, 234, 0.6)); }
+            100% { filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.4)); }
         }
 
         /* Settings Panel */
@@ -732,7 +732,7 @@
         }
     </style>
 </head>
-<body data-theme="default" data-mode="dark" class="rainbow-wave">
+    <body data-theme="default" data-mode="dark" class="purple-wave">
     <!-- Top Controls -->
     <div class="top-controls">
         <button class="control-btn" id="settingsBtn" title="Settings">⚙️</button>
@@ -1021,28 +1021,28 @@
             </div>
         </div>
 
-        <!-- Wave Visualization Settings -->
+        <!-- Energy Sphere Visualization -->
         <div class="setting-group">
-            <label class="setting-label">⚡ Lightning Visualization</label>
+            <label class="setting-label">🔮 Energy Sphere Visualization</label>
             <div class="wave-controls">
                 <label style="font-size: 14px; display: block; margin-bottom: 5px;">
-                    📊 Lightning Density: <span id="waveCountValue">120</span>
+                    🌌 Sphere Complexity: <span id="waveCountValue">120</span>
                 </label>
                 <input type="range" class="setting-range" id="waveCount" min="50" max="200" step="10" value="120">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    ⚡ Lightning Intensity: <span id="responsiveValue">1.5</span>
+                    ✨ Energy Intensity: <span id="responsiveValue">1.5</span>
                 </label>
                 <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="3.0" step="0.1" value="1.5">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Lightning Color Schemes:</label>
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Energy Color Schemes:</label>
                 <div class="color-picker">
-                    <div class="wave-color-option active" data-wave-scheme="rainbow" style="background: linear-gradient(to right, #ffffff, #00ffff, #0080ff, #8000ff, #ff00ff);"></div>
-                    <div class="wave-color-option" data-wave-scheme="ocean" style="background: linear-gradient(to right, #ffffff, #00ffff, #0080ff, #004080, #002040);"></div>
-                    <div class="wave-color-option" data-wave-scheme="fire" style="background: linear-gradient(to right, #ffffff, #ffff80, #ff8040, #ff4000, #800000);"></div>
-                    <div class="wave-color-option" data-wave-scheme="neon" style="background: linear-gradient(to right, #ffffff, #ff00ff, #00ffff, #ffff00, #ff0080);"></div>
-                    <div class="wave-color-option" data-wave-scheme="purple" style="background: linear-gradient(to right, #ffffff, #c080ff, #8040ff, #4020c0, #200080);"></div>
-                    <div class="wave-color-option" data-wave-scheme="blue" style="background: linear-gradient(to right, #ffffff, #80c0ff, #4080ff, #2040c0, #002080);"></div>
+                    <div class="wave-color-option active" data-wave-scheme="purple" style="background: radial-gradient(circle, #ffffff 0%, #c084fc 30%, #9333ea 70%, #581c87 100%);"></div>
+                    <div class="wave-color-option" data-wave-scheme="ocean" style="background: radial-gradient(circle, #ffffff 0%, #67e8f9 30%, #0891b2 70%, #164e63 100%);"></div>
+                    <div class="wave-color-option" data-wave-scheme="fire" style="background: radial-gradient(circle, #ffffff 0%, #fed7aa 30%, #ea580c 70%, #9a3412 100%);"></div>
+                    <div class="wave-color-option" data-wave-scheme="neon" style="background: radial-gradient(circle, #ffffff 0%, #f0abfc 30%, #d946ef 50%, #a21caf 100%);"></div>
+                    <div class="wave-color-option" data-wave-scheme="rainbow" style="background: radial-gradient(circle, #ffffff 0%, #fbbf24 20%, #f59e0b 40%, #10b981 60%, #3b82f6 80%, #8b5cf6 100%);"></div>
+                    <div class="wave-color-option" data-wave-scheme="blue" style="background: radial-gradient(circle, #ffffff 0%, #93c5fd 30%, #3b82f6 70%, #1e40af 100%);"></div>
                 </div>
             </div>
         </div>
@@ -1111,7 +1111,7 @@
                     temperature: 0.7,
                     waveCount: 120,
                     waveResponsive: 1.5,
-                    waveScheme: 'rainbow',
+                    waveScheme: 'purple',
                     wakeWordEnabled: true,
                     wakeWord: 'Hey Assistant',
                     wakeResponse: "Hi! I'm here to help you.",
@@ -1168,6 +1168,7 @@
                 // Initialize canvas after a brief delay to ensure DOM is ready
                 setTimeout(() => {
                     this.setupCanvas();
+                    this.startAdvancedIdleAnimation();
                 }, 100);
 
                 // Start wake word listening immediately
@@ -1557,6 +1558,9 @@
                 this.barWidth = this.canvasWidth / this.barCount;
                 this.maxBarHeight = this.canvasHeight * 0.4;
                 this.lightningIntensity = this.settings.waveResponsive || 1.5;
+                
+                // Reset rotation timer for smooth animation
+                this.startTime = Date.now();
             }
 
             initializeAudioVisualizer() {
@@ -1568,40 +1572,36 @@
                 this.animationSpeed = 0.1;
                 this.smoothingFactor = 0.8;
                 
-                // Start idle animation
-                this.startAdvancedIdleAnimation();
+                // Sphere rotation properties
+                this.rotationSpeed = 0.0003; // Very slow rotation
+                this.startTime = Date.now();
             }
 
             applyWaveScheme() {
-                // Wave scheme now handled by canvas gradients
-                // Color changes are applied in createFireGradient method
+                // Energy sphere scheme now handled by canvas gradients
+                // Color changes are applied in createSphereGradient method
                 document.body.className = document.body.className.replace(/\b\w+-wave\b/g, '') + ` ${this.settings.waveScheme}-wave`;
             }
 
             startAdvancedIdleAnimation() {
                 let time = 0;
-                let lastFlash = 0;
                 
                 const animate = () => {
                     if (!this.isListening && !this.isProcessing && !this.isSpeaking) {
-                        // Generate electric idle pattern with occasional flashes
+                        // Generate gentle sphere pulsing effect
+                        const baseIntensity = 0.15;
+                        const pulseIntensity = Math.sin(time * 0.5) * 0.1;
+                        
                         for (let i = 0; i < this.barCount; i++) {
-                            // Base electrical activity
-                            const baseNoise = (Math.random() - 0.5) * 0.1;
-                            const wave = Math.sin(time + i * 0.3) * 0.15;
+                            // Subtle energy fluctuation
+                            const noise = (Math.random() - 0.5) * 0.05;
+                            const wave = Math.sin(time + i * 0.1) * 0.08;
                             
-                            // Occasional electrical bursts
-                            let burst = 0;
-                            if (time - lastFlash > 2 && Math.random() > 0.998) {
-                                burst = Math.random() * 0.8;
-                                lastFlash = time;
-                            }
-                            
-                            this.frequencyData[i] = Math.abs(baseNoise + wave + burst) * 0.4 + 0.05;
+                            this.frequencyData[i] = Math.abs(baseIntensity + pulseIntensity + wave + noise);
                         }
                         
                         this.drawAdvancedWaveform();
-                        time += 0.05;
+                        time += 0.02; // Very slow animation
                     }
                     
                     this.idleAnimationId = requestAnimationFrame(animate);
@@ -1620,24 +1620,274 @@
                                          this.frequencyData[i] * (1 - this.smoothingFactor);
                 }
                 
-                // Draw lightning waveform
-                this.drawLightningWave();
+                // Draw energy sphere
+                this.drawEnergySphere();
             }
 
-            drawLightningWave() {
-                // Set line properties for lightning effect
-                this.canvasCtx.lineWidth = 2;
+            drawEnergySphere() {
+                const centerX = this.canvasWidth / 2;
+                const centerY = this.canvasHeight / 2;
+                const baseRadius = Math.min(this.canvasWidth, this.canvasHeight) * 0.25;
+                
+                // Get average intensity for sphere size
+                const avgIntensity = this.smoothedData.reduce((a, b) => a + b, 0) / this.smoothedData.length;
+                
+                // Add subtle breathing effect during idle
+                const currentTime = Date.now();
+                const breathingEffect = Math.sin((currentTime - this.startTime) * 0.001) * 0.05 + 1;
+                
+                const sphereRadius = (baseRadius + (avgIntensity * 50 * this.lightningIntensity)) * breathingEffect;
+                
+                // Draw sphere structure
+                this.drawSphereStructure(centerX, centerY, sphereRadius, avgIntensity);
+                
+                // Draw radiating energy lines
+                this.drawRadiatingEnergy(centerX, centerY, sphereRadius, avgIntensity);
+                
+                // Draw core glow
+                this.drawSphereCore(centerX, centerY, sphereRadius * 0.3, avgIntensity);
+            }
+
+            drawSphereStructure(centerX, centerY, radius, intensity) {
+                const currentTime = Date.now();
+                const time = (currentTime - this.startTime) * this.rotationSpeed; // Continuous smooth rotation
+                
+                // Number of meridian lines (longitude)
+                const meridians = 12;
+                // Number of parallel lines (latitude)  
+                const parallels = 8;
+                
+                // Set line properties
+                this.canvasCtx.lineWidth = 1.5 + (intensity * 2);
                 this.canvasCtx.lineCap = 'round';
-                this.canvasCtx.lineJoin = 'round';
                 
-                // Main lightning path
-                this.drawMainLightningPath();
+                // Draw meridian lines (vertical curves)
+                for (let m = 0; m < meridians; m++) {
+                    const angle = (m / meridians) * Math.PI * 2 + time;
+                    this.drawMeridianLine(centerX, centerY, radius, angle, intensity, time);
+                }
                 
-                // Add lightning branches for high intensity areas
-                this.drawLightningBranches();
+                // Draw parallel lines (horizontal curves)
+                for (let p = 1; p < parallels; p++) {
+                    const latAngle = (p / parallels) * Math.PI - Math.PI / 2;
+                    this.drawParallelLine(centerX, centerY, radius, latAngle, intensity, time);
+                }
+            }
+
+            drawMeridianLine(centerX, centerY, radius, baseAngle, intensity, time) {
+                this.canvasCtx.beginPath();
                 
-                // Add electrical glow effects
-                this.drawElectricalGlow();
+                const segments = 50;
+                let firstPoint = true;
+                
+                for (let i = 0; i <= segments; i++) {
+                    const t = (i / segments) * Math.PI; // 0 to π
+                    
+                    // 3D sphere coordinates
+                    const phi = baseAngle;
+                    const theta = t - Math.PI / 2; // -π/2 to π/2
+                    
+                    // Convert to 2D with perspective
+                    const x3d = Math.cos(theta) * Math.cos(phi);
+                    const y3d = Math.sin(theta);
+                    const z3d = Math.cos(theta) * Math.sin(phi);
+                    
+                    // Apply slow rotation around Y axis
+                    const rotY = time * 0.5;
+                    const xRot = x3d * Math.cos(rotY) - z3d * Math.sin(rotY);
+                    const zRot = x3d * Math.sin(rotY) + z3d * Math.cos(rotY);
+                    
+                    // Project to 2D with perspective
+                    const perspective = 0.6 + (zRot + 1) * 0.2; // Simple perspective
+                    const x2d = centerX + (xRot * radius * perspective);
+                    const y2d = centerY + (y3d * radius * perspective);
+                    
+                    // Add slight energy fluctuation
+                    const fluctuation = Math.sin(time * 3 + i * 0.2) * intensity * 5;
+                    const finalX = x2d + fluctuation;
+                    const finalY = y2d + fluctuation * 0.5;
+                    
+                    if (firstPoint) {
+                        this.canvasCtx.moveTo(finalX, finalY);
+                        firstPoint = false;
+                    } else {
+                        this.canvasCtx.lineTo(finalX, finalY);
+                    }
+                }
+                
+                // Apply gradient and glow
+                const gradient = this.createSphereGradient(centerX, centerY, radius);
+                this.canvasCtx.strokeStyle = gradient;
+                this.canvasCtx.shadowColor = this.getSphereGlowColor();
+                this.canvasCtx.shadowBlur = 15 + (intensity * 20);
+                this.canvasCtx.stroke();
+                this.canvasCtx.shadowBlur = 0;
+            }
+
+            drawParallelLine(centerX, centerY, radius, latAngle, intensity, time) {
+                this.canvasCtx.beginPath();
+                
+                const segments = 60;
+                const circleRadius = Math.cos(latAngle) * radius;
+                const yOffset = Math.sin(latAngle) * radius;
+                
+                let firstPoint = true;
+                
+                for (let i = 0; i <= segments; i++) {
+                    const angle = (i / segments) * Math.PI * 2 + time;
+                    
+                    // Apply rotation
+                    const rotY = time * 0.5;
+                    const x3d = Math.cos(angle) * circleRadius;
+                    const z3d = Math.sin(angle) * circleRadius;
+                    
+                    const xRot = x3d * Math.cos(rotY) - z3d * Math.sin(rotY);
+                    const zRot = x3d * Math.sin(rotY) + z3d * Math.cos(rotY);
+                    
+                    // Perspective and position
+                    const perspective = 0.6 + (zRot / radius + 1) * 0.2;
+                    const x2d = centerX + (xRot * perspective);
+                    const y2d = centerY + (yOffset * perspective);
+                    
+                    // Add energy fluctuation
+                    const fluctuation = Math.sin(time * 2 + angle * 3) * intensity * 3;
+                    const finalX = x2d + fluctuation;
+                    const finalY = y2d + fluctuation * 0.5;
+                    
+                    if (firstPoint) {
+                        this.canvasCtx.moveTo(finalX, finalY);
+                        firstPoint = false;
+                    } else {
+                        this.canvasCtx.lineTo(finalX, finalY);
+                    }
+                }
+                
+                // Style the line
+                const gradient = this.createSphereGradient(centerX, centerY, radius);
+                this.canvasCtx.strokeStyle = gradient;
+                this.canvasCtx.shadowColor = this.getSphereGlowColor();
+                this.canvasCtx.shadowBlur = 10 + (intensity * 15);
+                this.canvasCtx.stroke();
+                this.canvasCtx.shadowBlur = 0;
+            }
+
+            drawRadiatingEnergy(centerX, centerY, radius, intensity) {
+                if (intensity < 0.2) return;
+                
+                const currentTime = Date.now();
+                const time = (currentTime - this.startTime) * this.rotationSpeed * 2; // Slightly faster rotation for energy rays
+                const rays = 16;
+                
+                for (let i = 0; i < rays; i++) {
+                    const angle = (i / rays) * Math.PI * 2 + time;
+                    const rayLength = radius * (2 + intensity * 2);
+                    
+                    // Calculate ray end points
+                    const startX = centerX + Math.cos(angle) * radius;
+                    const startY = centerY + Math.sin(angle) * radius;
+                    const endX = centerX + Math.cos(angle) * rayLength;
+                    const endY = centerY + Math.sin(angle) * rayLength;
+                    
+                    // Draw ray with fade effect
+                    const rayGradient = this.canvasCtx.createLinearGradient(startX, startY, endX, endY);
+                    rayGradient.addColorStop(0, this.getSphereGlowColor());
+                    rayGradient.addColorStop(1, 'rgba(147, 51, 234, 0)');
+                    
+                    this.canvasCtx.beginPath();
+                    this.canvasCtx.moveTo(startX, startY);
+                    this.canvasCtx.lineTo(endX, endY);
+                    this.canvasCtx.strokeStyle = rayGradient;
+                    this.canvasCtx.lineWidth = 2 + intensity * 3;
+                    this.canvasCtx.shadowColor = this.getSphereGlowColor();
+                    this.canvasCtx.shadowBlur = 8 + intensity * 12;
+                    this.canvasCtx.stroke();
+                    this.canvasCtx.shadowBlur = 0;
+                }
+            }
+
+            drawSphereCore(centerX, centerY, coreRadius, intensity) {
+                // Create core glow effect
+                const coreGradient = this.canvasCtx.createRadialGradient(
+                    centerX, centerY, 0,
+                    centerX, centerY, coreRadius
+                );
+                
+                const coreIntensity = 0.3 + intensity * 0.7;
+                coreGradient.addColorStop(0, `rgba(255, 255, 255, ${coreIntensity})`);
+                coreGradient.addColorStop(0.3, `rgba(200, 150, 255, ${coreIntensity * 0.8})`);
+                coreGradient.addColorStop(0.7, `rgba(147, 51, 234, ${coreIntensity * 0.4})`);
+                coreGradient.addColorStop(1, 'rgba(147, 51, 234, 0)');
+                
+                this.canvasCtx.beginPath();
+                this.canvasCtx.arc(centerX, centerY, coreRadius, 0, Math.PI * 2);
+                this.canvasCtx.fillStyle = coreGradient;
+                this.canvasCtx.fill();
+            }
+
+            createSphereGradient(centerX, centerY, radius) {
+                const gradient = this.canvasCtx.createRadialGradient(
+                    centerX, centerY, 0,
+                    centerX, centerY, radius
+                );
+                
+                // Apply different color schemes based on wave scheme setting
+                switch(this.settings.waveScheme) {
+                    case 'ocean':
+                        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+                        gradient.addColorStop(0.3, 'rgba(100, 255, 255, 0.8)');
+                        gradient.addColorStop(0.7, 'rgba(0, 200, 255, 0.6)');
+                        gradient.addColorStop(1, 'rgba(0, 100, 200, 0.3)');
+                        break;
+                    case 'fire':
+                        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+                        gradient.addColorStop(0.3, 'rgba(255, 200, 100, 0.8)');
+                        gradient.addColorStop(0.7, 'rgba(255, 100, 50, 0.6)');
+                        gradient.addColorStop(1, 'rgba(200, 50, 0, 0.3)');
+                        break;
+                    case 'neon':
+                        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                        gradient.addColorStop(0.2, 'rgba(255, 0, 255, 0.8)');
+                        gradient.addColorStop(0.5, 'rgba(0, 255, 255, 0.6)');
+                        gradient.addColorStop(0.8, 'rgba(255, 255, 0, 0.4)');
+                        gradient.addColorStop(1, 'rgba(255, 0, 128, 0.2)');
+                        break;
+                    case 'blue':
+                        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+                        gradient.addColorStop(0.3, 'rgba(150, 200, 255, 0.8)');
+                        gradient.addColorStop(0.7, 'rgba(100, 150, 255, 0.6)');
+                        gradient.addColorStop(1, 'rgba(50, 100, 200, 0.3)');
+                        break;
+                    case 'purple':
+                    default:
+                        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+                        gradient.addColorStop(0.3, 'rgba(200, 150, 255, 0.8)');
+                        gradient.addColorStop(0.7, 'rgba(147, 51, 234, 0.6)');
+                        gradient.addColorStop(1, 'rgba(88, 28, 135, 0.3)');
+                        break;
+                    case 'rainbow':
+                        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                        gradient.addColorStop(0.16, 'rgba(255, 100, 150, 0.8)');
+                        gradient.addColorStop(0.33, 'rgba(255, 150, 50, 0.7)');
+                        gradient.addColorStop(0.5, 'rgba(150, 255, 50, 0.6)');
+                        gradient.addColorStop(0.66, 'rgba(50, 255, 150, 0.5)');
+                        gradient.addColorStop(0.83, 'rgba(150, 50, 255, 0.4)');
+                        gradient.addColorStop(1, 'rgba(255, 50, 150, 0.3)');
+                        break;
+                }
+                
+                return gradient;
+            }
+
+            getSphereGlowColor() {
+                switch(this.settings.waveScheme) {
+                    case 'ocean': return '#00ccff';
+                    case 'fire': return '#ff6600';
+                    case 'neon': return '#ff00ff';
+                    case 'blue': return '#4080ff';
+                    case 'rainbow': return '#ff80c0';
+                    case 'purple':
+                    default: return '#9333ea';
+                }
             }
 
             drawMainLightningPath() {
@@ -2655,7 +2905,7 @@
                         temperature: 0.7,
                         waveCount: 120,
                         waveResponsive: 1.5,
-                        waveScheme: 'rainbow',
+                        waveScheme: 'purple',
                         wakeWordEnabled: true,
                         wakeWord: 'Hey Assistant',
                         wakeResponse: "Hi! I'm here to help you.",
