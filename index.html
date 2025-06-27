@@ -338,13 +338,20 @@
                 var(--wave-color-3) 50%, 
                 var(--wave-color-4) 75%, 
                 var(--wave-color-5) 100%);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+            box-shadow: 
+                0 0 15px var(--wave-color-1),
+                0 0 30px var(--wave-color-2),
+                0 0 45px var(--wave-color-3);
+            filter: brightness(1.2) saturate(1.5);
         }
 
         .wave-bar.active {
-            box-shadow: 0 0 30px var(--wave-color-1), 0 0 60px var(--wave-color-2);
-            filter: brightness(2.5) drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
+            box-shadow: 
+                0 0 25px var(--wave-color-1), 
+                0 0 50px var(--wave-color-2),
+                0 0 75px var(--wave-color-3),
+                0 0 100px var(--wave-color-4);
+            filter: brightness(2.5) saturate(2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
             transform: scaleY(1.2);
         }
 
@@ -801,6 +808,71 @@
             --wave-color-5: #8a2be2;
         }
 
+        /* Colorful Light Wave Schemes */
+        .neon-spectrum-wave {
+            --wave-color-1: #00ffff;
+            --wave-color-2: #00ff00;
+            --wave-color-3: #ffff00;
+            --wave-color-4: #ff6600;
+            --wave-color-5: #ff0066;
+        }
+
+        .rainbow-light-wave {
+            --wave-color-1: #ff0000;
+            --wave-color-2: #ff8000;
+            --wave-color-3: #ffff00;
+            --wave-color-4: #00ff00;
+            --wave-color-5: #0080ff;
+        }
+
+        .electric-wave {
+            --wave-color-1: #00ffff;
+            --wave-color-2: #0099ff;
+            --wave-color-3: #6600ff;
+            --wave-color-4: #ff00ff;
+            --wave-color-5: #ff0099;
+        }
+
+        .plasma-wave {
+            --wave-color-1: #ff00ff;
+            --wave-color-2: #ff3366;
+            --wave-color-3: #ff6600;
+            --wave-color-4: #ffaa00;
+            --wave-color-5: #00ff88;
+        }
+
+        .cyber-wave {
+            --wave-color-1: #00ff00;
+            --wave-color-2: #00ffff;
+            --wave-color-3: #0099ff;
+            --wave-color-4: #6600ff;
+            --wave-color-5: #ff00cc;
+        }
+
+        .laser-wave {
+            --wave-color-1: #ff0000;
+            --wave-color-2: #ff4400;
+            --wave-color-3: #ff8800;
+            --wave-color-4: #ffcc00;
+            --wave-color-5: #ffff00;
+        }
+
+        .hologram-wave {
+            --wave-color-1: #00ffff;
+            --wave-color-2: #3399ff;
+            --wave-color-3: #6633ff;
+            --wave-color-4: #9900ff;
+            --wave-color-5: #cc00ff;
+        }
+
+        .spectrum-wave {
+            --wave-color-1: #ff0099;
+            --wave-color-2: #ff6600;
+            --wave-color-3: #ffcc00;
+            --wave-color-4: #66ff00;
+            --wave-color-5: #00ff99;
+        }
+
         /* Dark Cosmic Wave Schemes */
         .dark-cosmic-wave {
             --wave-color-1: #1a1a2e;
@@ -992,9 +1064,157 @@
             50% { transform: scale(1.02); }
             100% { transform: scale(1); }
         }
+
+        /* Password Lock Modal */
+        .password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .password-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .password-modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 350px;
+            width: 90%;
+        }
+
+        .password-modal h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .pin-input {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .pin-digit {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 24px;
+            text-align: center;
+            font-weight: bold;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .pin-digit:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(0, 122, 255, 0.4);
+        }
+
+        .pin-digit.filled {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .lock-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .unlock-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .unlock-btn:active {
+            transform: scale(0.98);
+        }
+
+        .unlock-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .locked-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2500;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .locked-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .locked-message {
+            text-align: center;
+            color: var(--text-color);
+            font-size: 18px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .locked-message h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .locked-message p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
     </style>
 </head>
-<body data-theme="default" class="dark-cosmic-wave">
+<body data-theme="default" class="neon-spectrum-wave">
     <!-- Cosmic Light Rays -->
     <div class="light-rays">
         <div class="light-ray"></div>
@@ -1029,6 +1249,33 @@
 
     <!-- Response Display -->
     <div class="response-display" id="responseDisplay"></div>
+
+    <!-- Password Lock Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-modal-content">
+            <div class="lock-icon">🔒</div>
+            <h3>Enter PIN</h3>
+            <div class="pin-input">
+                <input type="password" class="pin-digit" maxlength="1" pattern="[0-9]" id="pin1">
+                <input type="password" class="pin-digit" maxlength="1" pattern="[0-9]" id="pin2">
+                <input type="password" class="pin-digit" maxlength="1" pattern="[0-9]" id="pin3">
+                <input type="password" class="pin-digit" maxlength="1" pattern="[0-9]" id="pin4">
+            </div>
+            <button class="unlock-btn" id="unlockBtn" disabled>🔓 Unlock</button>
+            <div id="pinError" class="error-message" style="display: none; margin-top: 15px;">
+                ❌ Incorrect PIN. Try again.
+            </div>
+        </div>
+    </div>
+
+    <!-- Locked Overlay -->
+    <div class="locked-overlay" id="lockedOverlay">
+        <div class="locked-message">
+            <div class="lock-icon">🔒</div>
+            <h3>Assistant Locked</h3>
+            <p>AI functionality is disabled. Tap settings to unlock.</p>
+        </div>
+    </div>
 
     <!-- Settings Overlay -->
     <div class="settings-overlay" id="settingsOverlay"></div>
@@ -1092,9 +1339,54 @@
             </div>
         </div>
 
+        <!-- Privacy & Security Settings -->
+        <div class="setting-group">
+            <label class="setting-label">🔒 Privacy & Security</label>
+            <div class="wake-word-controls" style="background: rgba(255, 59, 48, 0.1); border-color: rgba(255, 59, 48, 0.3);">
+                <div class="setting-toggle">
+                    <span>🛡️ Password Protection</span>
+                    <div class="toggle-switch" id="passwordToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div id="passwordSettings" style="display: none;">
+                    <label style="font-size: 14px; margin-top: 15px; display: block;">Set Password:</label>
+                    <input type="password" class="setting-input" id="passwordInput" placeholder="Enter 4-digit PIN" maxlength="4" pattern="[0-9]{4}">
+                    
+                    <label style="font-size: 14px; margin-top: 15px; display: block;">Confirm Password:</label>
+                    <input type="password" class="setting-input" id="confirmPasswordInput" placeholder="Confirm 4-digit PIN" maxlength="4" pattern="[0-9]{4}">
+                    
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-primary" id="setPasswordBtn">🔐 Set Password</button>
+                        <button class="btn btn-danger" id="clearPasswordBtn">🗑️ Clear Password</button>
+                    </div>
+                </div>
+                
+                <div class="setting-toggle" style="margin-top: 20px;">
+                    <span>🤖 AI Access Control</span>
+                    <div class="toggle-switch active" id="aiAccessToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="wake-word-list" style="background: rgba(255, 59, 48, 0.1);">
+                    <strong>🔐 Security Features:</strong>
+                    <div class="wake-word-item">🛡️ Password lock prevents unauthorized access</div>
+                    <div class="wake-word-item">🤖 AI Access toggle controls assistant functionality</div>
+                    <div class="wake-word-item">🔒 When locked, only settings are accessible</div>
+                    <div class="wake-word-item">⚡ Quick unlock with 4-digit PIN</div>
+                </div>
+                
+                <div id="lockStatus" class="info-message" style="display: none;">
+                    🔒 Assistant is currently locked. Enter PIN to unlock.
+                </div>
+            </div>
+        </div>
+
         <!-- Wave Visualization Settings -->
         <div class="setting-group">
-            <label class="setting-label">🌊 Dark Cosmic Wave Visualization</label>
+            <label class="setting-label">🌊 Colorful Light Wave Visualization</label>
             <div class="wave-controls">
                 <label style="font-size: 14px; display: block; margin-bottom: 8px;">
                     Wave Count: <span class="value-display" id="waveCountValue">120</span>
@@ -1111,7 +1403,19 @@
                 </label>
                 <input type="range" class="setting-range" id="animSpeed" min="30" max="150" step="10" value="60">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 8px;">Cosmic Wave Schemes:</label>
+                <label style="font-size: 14px; display: block; margin: 15px 0 8px;">✨ Colorful Light Schemes:</label>
+                <div class="color-picker">
+                    <div class="wave-color-option active" data-wave-scheme="neon-spectrum" style="background: linear-gradient(to right, #00ffff, #00ff00, #ffff00, #ff6600, #ff0066);" title="Neon Spectrum"></div>
+                    <div class="wave-color-option" data-wave-scheme="rainbow-light" style="background: linear-gradient(to right, #ff0000, #ff8000, #ffff00, #00ff00, #0080ff);" title="Rainbow Light"></div>
+                    <div class="wave-color-option" data-wave-scheme="electric" style="background: linear-gradient(to right, #00ffff, #0099ff, #6600ff, #ff00ff, #ff0099);" title="Electric"></div>
+                    <div class="wave-color-option" data-wave-scheme="plasma" style="background: linear-gradient(to right, #ff00ff, #ff3366, #ff6600, #ffaa00, #00ff88);" title="Plasma"></div>
+                    <div class="wave-color-option" data-wave-scheme="cyber" style="background: linear-gradient(to right, #00ff00, #00ffff, #0099ff, #6600ff, #ff00cc);" title="Cyber"></div>
+                    <div class="wave-color-option" data-wave-scheme="laser" style="background: linear-gradient(to right, #ff0000, #ff4400, #ff8800, #ffcc00, #ffff00);" title="Laser"></div>
+                    <div class="wave-color-option" data-wave-scheme="hologram" style="background: linear-gradient(to right, #00ffff, #3399ff, #6633ff, #9900ff, #cc00ff);" title="Hologram"></div>
+                    <div class="wave-color-option" data-wave-scheme="spectrum" style="background: linear-gradient(to right, #ff0099, #ff6600, #ffcc00, #66ff00, #00ff99);" title="Spectrum"></div>
+                </div>
+                
+                <label style="font-size: 14px; display: block; margin: 25px 0 8px;">🌌 Cosmic Schemes:</label>
                 <div class="color-picker">
                     <div class="wave-color-option" data-wave-scheme="cosmic" style="background: linear-gradient(to right, #ffffff, #87ceeb, #4169e1, #6495ed, #b0c4de);" title="Classic Cosmic"></div>
                     <div class="wave-color-option" data-wave-scheme="spiritual" style="background: linear-gradient(to right, #ffffff, #ffd700, #ff69b4, #9370db, #00ffff);" title="Spiritual"></div>
@@ -1121,7 +1425,7 @@
                 
                 <label style="font-size: 14px; display: block; margin: 25px 0 8px; color: #888;">🌑 Dark Cosmic Schemes:</label>
                 <div class="color-picker">
-                    <div class="wave-color-option active" data-wave-scheme="dark-cosmic" style="background: linear-gradient(to right, #1a1a2e, #16213e, #0f0f23, #533e85, #6c5ce7);" title="Dark Cosmic"></div>
+                    <div class="wave-color-option" data-wave-scheme="dark-cosmic" style="background: linear-gradient(to right, #1a1a2e, #16213e, #0f0f23, #533e85, #6c5ce7);" title="Dark Cosmic"></div>
                     <div class="wave-color-option" data-wave-scheme="deep-space" style="background: linear-gradient(to right, #0c0c0c, #1a1a1a, #2d1b4e, #4b0082, #191970);" title="Deep Space"></div>
                     <div class="wave-color-option" data-wave-scheme="shadow-nebula" style="background: linear-gradient(to right, #0a0a0a, #1c1c1c, #2e1065, #4a0e4e, #8b008b);" title="Shadow Nebula"></div>
                     <div class="wave-color-option" data-wave-scheme="void" style="background: linear-gradient(to right, #000000, #0d0d0d, #1a1a1a, #2d2d2d, #404040);" title="Void"></div>
@@ -1236,11 +1540,15 @@
                     waveCount: 120,
                     waveResponsive: 1.5,
                     animSpeed: 60,
-                    waveScheme: 'dark-cosmic',
+                    waveScheme: 'neon-spectrum',
                     wakeWordEnabled: true,
                     wakeWord: 'Hey Assistant',
                     wakeResponse: "Hi dear, I'm here!",
-                    wakeSensitivity: 0.7
+                    wakeSensitivity: 0.7,
+                    passwordEnabled: false,
+                    password: '',
+                    aiAccessEnabled: true,
+                    isLocked: false
                 };
 
                 this.loadSettings();
@@ -1273,8 +1581,10 @@
                 this.setupIOSOptimizations();
 
                 // Start wake word listening immediately
-                if (this.settings.wakeWordEnabled) {
+                if (this.settings.wakeWordEnabled && this.settings.aiAccessEnabled && !this.settings.isLocked) {
                     setTimeout(() => this.startWakeWordListening(), 1000);
+                } else if (!this.settings.aiAccessEnabled || this.settings.isLocked) {
+                    this.lockApp();
                 }
             }
 
@@ -1321,6 +1631,16 @@
                 this.currentWakeWord = document.getElementById('currentWakeWord');
                 this.energyParticles = document.getElementById('energyParticles');
 
+                // Password elements
+                this.passwordModal = document.getElementById('passwordModal');
+                this.lockedOverlay = document.getElementById('lockedOverlay');
+                this.pin1 = document.getElementById('pin1');
+                this.pin2 = document.getElementById('pin2');
+                this.pin3 = document.getElementById('pin3');
+                this.pin4 = document.getElementById('pin4');
+                this.unlockBtn = document.getElementById('unlockBtn');
+                this.pinError = document.getElementById('pinError');
+
                 // Settings elements
                 this.settingsBtn = document.getElementById('settingsBtn');
                 this.settingsPanel = document.getElementById('settingsPanel');
@@ -1342,6 +1662,11 @@
                 this.wakeResponseInput = document.getElementById('wakeResponseInput');
                 this.wakeSensitivity = document.getElementById('wakeSensitivity');
 
+                // Password settings inputs
+                this.passwordInput = document.getElementById('passwordInput');
+                this.confirmPasswordInput = document.getElementById('confirmPasswordInput');
+                this.passwordSettings = document.getElementById('passwordSettings');
+
                 // Buttons and toggles
                 this.saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
                 this.testApiKeyBtn = document.getElementById('testApiKeyBtn');
@@ -1350,6 +1675,10 @@
                 this.testWakeWordBtn = document.getElementById('testWakeWordBtn');
                 this.showResponseToggle = document.getElementById('showResponseToggle');
                 this.wakeWordToggle = document.getElementById('wakeWordToggle');
+                this.passwordToggle = document.getElementById('passwordToggle');
+                this.aiAccessToggle = document.getElementById('aiAccessToggle');
+                this.setPasswordBtn = document.getElementById('setPasswordBtn');
+                this.clearPasswordBtn = document.getElementById('clearPasswordBtn');
                 this.exportBtn = document.getElementById('exportBtn');
                 this.importBtn = document.getElementById('importBtn');
                 this.importFile = document.getElementById('importFile');
@@ -1677,7 +2006,7 @@
             }
 
             startWakeWordListening() {
-                if (!this.recognition || !this.settings.wakeWordEnabled) return;
+                if (!this.recognition || !this.settings.wakeWordEnabled || !this.settings.aiAccessEnabled || this.settings.isLocked) return;
                 
                 this.wakeListening = true;
                 this.stopListening();
@@ -1707,6 +2036,162 @@
                 }
                 
                 this.triggerHaptic();
+            }
+            
+            // Password Protection Methods
+            togglePasswordProtection() {
+                this.settings.passwordEnabled = !this.settings.passwordEnabled;
+                this.saveSetting('passwordEnabled', this.settings.passwordEnabled);
+                this.updateToggle(this.passwordToggle, this.settings.passwordEnabled);
+                
+                if (this.settings.passwordEnabled) {
+                    this.passwordSettings.style.display = 'block';
+                    this.showMessage('🔒 Password protection enabled', 'success');
+                } else {
+                    this.passwordSettings.style.display = 'none';
+                    this.settings.password = '';
+                    this.saveSetting('password', '');
+                    this.showMessage('🔓 Password protection disabled', 'info');
+                }
+                
+                this.triggerHaptic();
+            }
+            
+            toggleAIAccess() {
+                this.settings.aiAccessEnabled = !this.settings.aiAccessEnabled;
+                this.saveSetting('aiAccessEnabled', this.settings.aiAccessEnabled);
+                this.updateToggle(this.aiAccessToggle, this.settings.aiAccessEnabled);
+                
+                if (!this.settings.aiAccessEnabled) {
+                    this.lockApp();
+                    this.showMessage('🤖 AI access disabled', 'info');
+                } else {
+                    this.unlockApp();
+                    this.showMessage('🤖 AI access enabled', 'success');
+                }
+                
+                this.triggerHaptic();
+            }
+            
+            setPassword() {
+                const password = this.passwordInput.value.trim();
+                const confirmPassword = this.confirmPasswordInput.value.trim();
+                
+                if (!password || password.length !== 4 || !/^\d{4}$/.test(password)) {
+                    this.showMessage('❌ Password must be exactly 4 digits', 'error');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    this.showMessage('❌ Passwords do not match', 'error');
+                    return;
+                }
+                
+                this.settings.password = password;
+                this.saveSetting('password', password);
+                this.passwordInput.value = '';
+                this.confirmPasswordInput.value = '';
+                this.showMessage('✅ Password set successfully!', 'success');
+                this.triggerHaptic();
+            }
+            
+            clearPassword() {
+                if (confirm('Are you sure you want to clear the password?')) {
+                    this.settings.password = '';
+                    this.settings.passwordEnabled = false;
+                    this.saveSetting('password', '');
+                    this.saveSetting('passwordEnabled', false);
+                    this.updateToggle(this.passwordToggle, false);
+                    this.passwordSettings.style.display = 'none';
+                    this.passwordInput.value = '';
+                    this.confirmPasswordInput.value = '';
+                    this.showMessage('🗑️ Password cleared', 'success');
+                    this.triggerHaptic();
+                }
+            }
+            
+            lockApp() {
+                this.settings.isLocked = true;
+                this.lockedOverlay.classList.add('show');
+                this.stopListening();
+                this.wakeListening = false;
+                this.synthesis.cancel();
+            }
+            
+            unlockApp() {
+                this.settings.isLocked = false;
+                this.lockedOverlay.classList.remove('show');
+                this.passwordModal.classList.remove('show');
+                this.clearPinInputs();
+                
+                // Restart wake word listening if enabled
+                if (this.settings.wakeWordEnabled && this.settings.aiAccessEnabled) {
+                    setTimeout(() => this.startWakeWordListening(), 1000);
+                }
+            }
+            
+            showPasswordModal() {
+                this.passwordModal.classList.add('show');
+                this.pin1.focus();
+            }
+            
+            handlePinInput(event, index) {
+                const value = event.target.value;
+                
+                if (value && /^\d$/.test(value)) {
+                    event.target.classList.add('filled');
+                    
+                    // Move to next input
+                    if (index < 3) {
+                        [this.pin1, this.pin2, this.pin3, this.pin4][index + 1].focus();
+                    }
+                } else {
+                    event.target.classList.remove('filled');
+                }
+                
+                this.checkPinComplete();
+            }
+            
+            handlePinKeydown(event, index) {
+                // Handle backspace
+                if (event.key === 'Backspace' && !event.target.value && index > 0) {
+                    [this.pin1, this.pin2, this.pin3, this.pin4][index - 1].focus();
+                }
+            }
+            
+            checkPinComplete() {
+                const pins = [this.pin1, this.pin2, this.pin3, this.pin4];
+                const allFilled = pins.every(pin => pin.value && /^\d$/.test(pin.value));
+                this.unlockBtn.disabled = !allFilled;
+            }
+            
+            clearPinInputs() {
+                [this.pin1, this.pin2, this.pin3, this.pin4].forEach(pin => {
+                    pin.value = '';
+                    pin.classList.remove('filled');
+                });
+                this.unlockBtn.disabled = true;
+                this.pinError.style.display = 'none';
+            }
+            
+            attemptUnlock() {
+                const enteredPin = [this.pin1, this.pin2, this.pin3, this.pin4]
+                    .map(pin => pin.value).join('');
+                
+                if (enteredPin === this.settings.password) {
+                    this.unlockApp();
+                } else {
+                    this.pinError.style.display = 'block';
+                    this.clearPinInputs();
+                    
+                    // Shake animation
+                    this.passwordModal.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => {
+                        this.passwordModal.style.animation = '';
+                    }, 500);
+                    
+                    this.pin1.focus();
+                }
             }
 
             async setupAudioVisualization() {
@@ -1785,6 +2270,11 @@
             }
 
             async processUserInput(input) {
+                if (!this.settings.aiAccessEnabled || this.settings.isLocked) {
+                    this.showMessage('🔒 AI access is disabled', 'error');
+                    return;
+                }
+                
                 this.isProcessing = true;
                 this.isListening = false;
 
@@ -1926,9 +2416,15 @@
             }
 
             openSettings() {
-                this.settingsPanel.classList.add('open');
-                this.settingsOverlay.classList.add('open');
-                this.triggerHaptic();
+                if (this.settings.passwordEnabled && this.settings.password && this.settings.isLocked) {
+                    this.showPasswordModal();
+                } else if (!this.settings.aiAccessEnabled && this.settings.passwordEnabled && this.settings.password) {
+                    this.showPasswordModal();
+                } else {
+                    this.settingsPanel.classList.add('open');
+                    this.settingsOverlay.classList.add('open');
+                    this.triggerHaptic();
+                }
             }
 
             closeSettingsPanel() {
@@ -1988,6 +2484,13 @@
                 // Update toggles
                 this.updateToggle(this.showResponseToggle, this.settings.showResponse);
                 this.updateToggle(this.wakeWordToggle, this.settings.wakeWordEnabled);
+                this.updateToggle(this.passwordToggle, this.settings.passwordEnabled);
+                this.updateToggle(this.aiAccessToggle, this.settings.aiAccessEnabled);
+
+                // Show/hide password settings
+                if (this.passwordSettings) {
+                    this.passwordSettings.style.display = this.settings.passwordEnabled ? 'block' : 'none';
+                }
 
                 // Update theme
                 document.querySelectorAll('.color-option').forEach(option => {
@@ -2179,11 +2682,15 @@
                         waveCount: 120,
                         waveResponsive: 1.5,
                         animSpeed: 60,
-                        waveScheme: 'dark-cosmic',
+                        waveScheme: 'neon-spectrum',
                         wakeWordEnabled: true,
                         wakeWord: 'Hey Assistant',
                         wakeResponse: "Hi dear, I'm here!",
-                        wakeSensitivity: 0.7
+                        wakeSensitivity: 0.7,
+                        passwordEnabled: false,
+                        password: '',
+                        aiAccessEnabled: true,
+                        isLocked: false
                     };
 
                     this.updateUIElements();
