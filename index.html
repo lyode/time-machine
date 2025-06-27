@@ -132,7 +132,7 @@
             border-color: rgba(255, 255, 255, 0.4);
         }
 
-        /* Full Screen Wave Container - iPhone 15 Pro Max Optimized */
+        /* Full Screen Wave Container - Advanced Audio Visualization */
         .wave-container {
             position: absolute;
             top: 0;
@@ -146,58 +146,53 @@
             cursor: pointer;
         }
 
-        .sound-wave {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1px;
+        .audio-canvas {
             width: calc(100vw - 20px);
             height: calc(100vh - 100px);
             height: calc(100dvh - 100px);
-            max-width: 430px; /* iPhone 15 Pro Max width */
-            transition: all 0.3s ease;
+            max-width: 430px;
+            background: transparent;
+            border-radius: 10px;
+        }
+
+        .sound-wave {
+            display: none; /* Hide old wave visualization */
         }
 
         .wave-bar {
-            flex: 1;
-            max-width: 4px;
-            border-radius: 2px;
-            transition: all 0.1s ease;
-            min-height: 4px;
-            transform-origin: center;
-            background: linear-gradient(to top, 
-                var(--wave-color-1) 0%, 
-                var(--wave-color-2) 25%, 
-                var(--wave-color-3) 50%, 
-                var(--wave-color-4) 75%, 
-                var(--wave-color-5) 100%);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            display: none; /* Hidden - replaced by canvas */
         }
 
-        .wave-bar.active {
-            box-shadow: 0 0 15px var(--wave-color-1), 0 0 30px var(--wave-color-2);
-            filter: brightness(1.5);
+        /* Canvas glow effects for lightning */
+        .audio-canvas {
+            filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.3));
         }
 
-        .wave-bar.wake-detected {
-            animation: wakeDetected 0.8s ease;
+        .wave-container.listening .audio-canvas {
+            filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.5));
         }
 
-        .wave-bar.speaking {
-            animation: speakingPulse 0.6s infinite alternate;
+        .wave-container.speaking .audio-canvas {
+            filter: drop-shadow(0 0 35px rgba(255, 255, 255, 0.8));
+            animation: lightningGlow 0.4s infinite alternate;
         }
 
-        @keyframes wakeDetected {
-            0% { transform: scaleY(1); filter: brightness(1); }
-            25% { transform: scaleY(1.5); filter: brightness(2) hue-rotate(90deg); }
-            50% { transform: scaleY(2); filter: brightness(3) hue-rotate(180deg); }
-            75% { transform: scaleY(1.5); filter: brightness(2) hue-rotate(270deg); }
-            100% { transform: scaleY(1); filter: brightness(1) hue-rotate(360deg); }
+        .wave-container.wake-detected .audio-canvas {
+            animation: lightningStrike 0.8s ease;
         }
 
-        @keyframes speakingPulse {
-            0% { transform: scaleY(1); filter: brightness(1); }
-            100% { transform: scaleY(1.3); filter: brightness(1.8) saturate(1.5); }
+        @keyframes lightningGlow {
+            0% { filter: drop-shadow(0 0 35px rgba(255, 255, 255, 0.8)); }
+            100% { filter: drop-shadow(0 0 50px rgba(0, 255, 255, 1)) drop-shadow(0 0 80px rgba(255, 255, 255, 0.6)); }
+        }
+
+        @keyframes lightningStrike {
+            0% { filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.3)); }
+            10% { filter: drop-shadow(0 0 80px rgba(255, 255, 255, 1)) drop-shadow(0 0 120px rgba(0, 255, 255, 0.8)); }
+            20% { filter: drop-shadow(0 0 40px rgba(0, 200, 255, 0.5)); }
+            30% { filter: drop-shadow(0 0 100px rgba(255, 255, 255, 1)) drop-shadow(0 0 140px rgba(0, 255, 255, 1)); }
+            50% { filter: drop-shadow(0 0 60px rgba(100, 200, 255, 0.7)); }
+            100% { filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.3)); }
         }
 
         /* Settings Panel */
@@ -670,13 +665,9 @@
                 padding-top: max(40px, env(safe-area-inset-top));
                 padding-bottom: max(30px, env(safe-area-inset-bottom));
             }
-            .sound-wave { 
+            .audio-canvas { 
                 width: calc(100vw - 10px);
                 height: calc(100dvh - 80px);
-                gap: 0.5px;
-            }
-            .wave-bar {
-                max-width: 3px;
             }
             .response-display {
                 max-width: 90%;
@@ -702,12 +693,9 @@
             .settings-panel { 
                 width: 100%; 
             }
-            .sound-wave { 
+            .audio-canvas { 
                 width: calc(100vw - 15px);
                 height: calc(100dvh - 90px);
-            }
-            .wave-bar {
-                max-width: 4px;
             }
             .response-display {
                 max-width: 88%;
@@ -717,11 +705,9 @@
         }
 
         @media (max-width: 320px) {
-            .sound-wave {
-                gap: 0px;
-            }
-            .wave-bar {
-                max-width: 2px;
+            .audio-canvas {
+                width: calc(100vw - 10px);
+                height: calc(100dvh - 70px);
             }
         }
 
@@ -754,8 +740,9 @@
 
     <!-- Full Screen Wave Container -->
     <div class="wave-container" id="waveContainer">
-        <div class="sound-wave" id="soundWave">
-            <!-- Wave bars will be generated by JavaScript -->
+        <canvas class="audio-canvas" id="audioCanvas"></canvas>
+        <div class="sound-wave" id="soundWave" style="display: none;">
+            <!-- Legacy wave bars - hidden -->
         </div>
     </div>
 
@@ -1036,26 +1023,26 @@
 
         <!-- Wave Visualization Settings -->
         <div class="setting-group">
-            <label class="setting-label">🌊 Wave Visualization</label>
+            <label class="setting-label">⚡ Lightning Visualization</label>
             <div class="wave-controls">
                 <label style="font-size: 14px; display: block; margin-bottom: 5px;">
-                    📊 Wave Bar Count: <span id="waveCountValue">120</span>
+                    📊 Lightning Density: <span id="waveCountValue">120</span>
                 </label>
                 <input type="range" class="setting-range" id="waveCount" min="50" max="200" step="10" value="120">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    🎭 Wave Responsiveness: <span id="responsiveValue">1.5</span>
+                    ⚡ Lightning Intensity: <span id="responsiveValue">1.5</span>
                 </label>
                 <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="3.0" step="0.1" value="1.5">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Wave Color Schemes:</label>
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Lightning Color Schemes:</label>
                 <div class="color-picker">
-                    <div class="wave-color-option active" data-wave-scheme="rainbow" style="background: linear-gradient(to right, #ff0080, #ff8000, #80ff00, #00ff80, #8000ff);"></div>
-                    <div class="wave-color-option" data-wave-scheme="ocean" style="background: linear-gradient(to right, #006994, #13a6b7, #20c0db, #4dd7fa, #9cecfb);"></div>
-                    <div class="wave-color-option" data-wave-scheme="fire" style="background: linear-gradient(to right, #ff0000, #ff4500, #ff8c00, #ffd700, #ffff00);"></div>
-                    <div class="wave-color-option" data-wave-scheme="neon" style="background: linear-gradient(to right, #ff00ff, #00ffff, #ffff00, #ff0080, #80ff00);"></div>
-                    <div class="wave-color-option" data-wave-scheme="purple" style="background: linear-gradient(to right, #a855f7, #c084fc, #ddd6fe, #8b5cf6, #7c3aed);"></div>
-                    <div class="wave-color-option" data-wave-scheme="blue" style="background: linear-gradient(to right, #00d4ff, #0099ff, #0066ff, #3399ff, #66ccff);"></div>
+                    <div class="wave-color-option active" data-wave-scheme="rainbow" style="background: linear-gradient(to right, #ffffff, #00ffff, #0080ff, #8000ff, #ff00ff);"></div>
+                    <div class="wave-color-option" data-wave-scheme="ocean" style="background: linear-gradient(to right, #ffffff, #00ffff, #0080ff, #004080, #002040);"></div>
+                    <div class="wave-color-option" data-wave-scheme="fire" style="background: linear-gradient(to right, #ffffff, #ffff80, #ff8040, #ff4000, #800000);"></div>
+                    <div class="wave-color-option" data-wave-scheme="neon" style="background: linear-gradient(to right, #ffffff, #ff00ff, #00ffff, #ffff00, #ff0080);"></div>
+                    <div class="wave-color-option" data-wave-scheme="purple" style="background: linear-gradient(to right, #ffffff, #c080ff, #8040ff, #4020c0, #200080);"></div>
+                    <div class="wave-color-option" data-wave-scheme="blue" style="background: linear-gradient(to right, #ffffff, #80c0ff, #4080ff, #2040c0, #002080);"></div>
                 </div>
             </div>
         </div>
@@ -1174,10 +1161,14 @@
                 this.applyTheme();
                 this.applyMode();
                 this.applyWaveScheme();
-                this.startIdleAnimation();
                 this.enableAudio();
                 this.loadVoices();
                 this.updatePrivacyDisplay();
+
+                // Initialize canvas after a brief delay to ensure DOM is ready
+                setTimeout(() => {
+                    this.setupCanvas();
+                }, 100);
 
                 // Start wake word listening immediately
                 if (this.settings.wakeWordEnabled) {
@@ -1188,6 +1179,8 @@
             initializeElements() {
                 // Main elements
                 this.soundWave = document.getElementById('soundWave');
+                this.audioCanvas = document.getElementById('audioCanvas');
+                this.canvasCtx = this.audioCanvas.getContext('2d');
                 this.responseDisplay = document.getElementById('responseDisplay');
                 this.waveContainer = document.getElementById('waveContainer');
 
@@ -1337,6 +1330,10 @@
                 this.waveResponsive.addEventListener('input', (e) => {
                     this.responsiveValue.textContent = e.target.value;
                     this.saveSetting('waveResponsive', parseFloat(e.target.value));
+                    // Update lightning intensity in real-time
+                    if (this.lightningIntensity !== undefined) {
+                        this.lightningIntensity = parseFloat(e.target.value);
+                    }
                 });
 
                 this.wakeSensitivity.addEventListener('input', (e) => {
@@ -1533,39 +1530,357 @@
             }
 
             initializeWave() {
-                this.soundWave.innerHTML = '';
+                this.setupCanvas();
+                this.initializeAudioVisualizer();
+            }
+
+            setupCanvas() {
+                const container = this.waveContainer;
+                const rect = container.getBoundingClientRect();
                 
-                for (let i = 0; i < this.settings.waveCount; i++) {
-                    const bar = document.createElement('div');
-                    bar.className = 'wave-bar';
-                    bar.style.animationDelay = `${i * 8}ms`;
-                    this.soundWave.appendChild(bar);
-                }
+                // Set canvas size
+                this.audioCanvas.width = Math.min(rect.width - 20, 430) * window.devicePixelRatio;
+                this.audioCanvas.height = (rect.height - 100) * window.devicePixelRatio;
                 
-                this.applyWaveScheme();
+                // Scale for high DPI displays
+                this.audioCanvas.style.width = Math.min(rect.width - 20, 430) + 'px';
+                this.audioCanvas.style.height = (rect.height - 100) + 'px';
+                this.canvasCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                
+                // Canvas properties
+                this.canvasWidth = this.audioCanvas.width / window.devicePixelRatio;
+                this.canvasHeight = this.audioCanvas.height / window.devicePixelRatio;
+                this.centerY = this.canvasHeight / 2;
+                
+                // Audio visualization properties
+                this.barCount = Math.floor(this.canvasWidth / 3); // More bars for smoother effect
+                this.barWidth = this.canvasWidth / this.barCount;
+                this.maxBarHeight = this.canvasHeight * 0.4;
+                this.lightningIntensity = this.settings.waveResponsive || 1.5;
+            }
+
+            initializeAudioVisualizer() {
+                // Initialize frequency data array
+                this.frequencyData = new Array(this.barCount).fill(0);
+                this.smoothedData = new Array(this.barCount).fill(0);
+                
+                // Animation properties
+                this.animationSpeed = 0.1;
+                this.smoothingFactor = 0.8;
+                
+                // Start idle animation
+                this.startAdvancedIdleAnimation();
             }
 
             applyWaveScheme() {
+                // Wave scheme now handled by canvas gradients
+                // Color changes are applied in createFireGradient method
                 document.body.className = document.body.className.replace(/\b\w+-wave\b/g, '') + ` ${this.settings.waveScheme}-wave`;
             }
 
-            startIdleAnimation() {
-                const bars = this.soundWave.querySelectorAll('.wave-bar');
+            startAdvancedIdleAnimation() {
                 let time = 0;
+                let lastFlash = 0;
                 
                 const animate = () => {
                     if (!this.isListening && !this.isProcessing && !this.isSpeaking) {
-                        bars.forEach((bar, index) => {
-                            const height = 8 + Math.sin(time + index * 0.15) * 6;
-                            bar.style.height = height + 'px';
-                        });
-                        time += 0.02;
+                        // Generate electric idle pattern with occasional flashes
+                        for (let i = 0; i < this.barCount; i++) {
+                            // Base electrical activity
+                            const baseNoise = (Math.random() - 0.5) * 0.1;
+                            const wave = Math.sin(time + i * 0.3) * 0.15;
+                            
+                            // Occasional electrical bursts
+                            let burst = 0;
+                            if (time - lastFlash > 2 && Math.random() > 0.998) {
+                                burst = Math.random() * 0.8;
+                                lastFlash = time;
+                            }
+                            
+                            this.frequencyData[i] = Math.abs(baseNoise + wave + burst) * 0.4 + 0.05;
+                        }
+                        
+                        this.drawAdvancedWaveform();
+                        time += 0.05;
                     }
                     
                     this.idleAnimationId = requestAnimationFrame(animate);
                 };
                 
                 animate();
+            }
+
+            drawAdvancedWaveform() {
+                // Clear canvas
+                this.canvasCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+                
+                // Apply smoothing
+                for (let i = 0; i < this.barCount; i++) {
+                    this.smoothedData[i] = this.smoothedData[i] * this.smoothingFactor + 
+                                         this.frequencyData[i] * (1 - this.smoothingFactor);
+                }
+                
+                // Draw lightning waveform
+                this.drawLightningWave();
+            }
+
+            drawLightningWave() {
+                // Set line properties for lightning effect
+                this.canvasCtx.lineWidth = 2;
+                this.canvasCtx.lineCap = 'round';
+                this.canvasCtx.lineJoin = 'round';
+                
+                // Main lightning path
+                this.drawMainLightningPath();
+                
+                // Add lightning branches for high intensity areas
+                this.drawLightningBranches();
+                
+                // Add electrical glow effects
+                this.drawElectricalGlow();
+            }
+
+            drawMainLightningPath() {
+                this.canvasCtx.beginPath();
+                
+                // Set lightning line properties
+                this.canvasCtx.lineWidth = 3 + (this.lightningIntensity * 2);
+                
+                // Create jagged lightning path
+                let currentX = 0;
+                let currentY = this.centerY;
+                
+                this.canvasCtx.moveTo(currentX, currentY);
+                
+                for (let i = 0; i < this.barCount; i++) {
+                    const intensity = Math.abs(this.smoothedData[i]);
+                    const x = i * this.barWidth;
+                    
+                    // Create lightning-style displacement with more dramatic effect
+                    const maxDisplacement = intensity * this.maxBarHeight * this.lightningIntensity;
+                    const displacement = maxDisplacement * (Math.random() > 0.5 ? 1 : -1);
+                    const y = this.centerY + displacement;
+                    
+                    // Add more jagged segments for dramatic lightning effect
+                    const segments = Math.floor(intensity * 12) + 3;
+                    const segmentWidth = this.barWidth / segments;
+                    
+                    for (let j = 0; j < segments; j++) {
+                        const segmentX = x + (j * segmentWidth);
+                        const randomOffset = (Math.random() - 0.5) * intensity * 50 * this.lightningIntensity;
+                        const segmentY = y + randomOffset;
+                        
+                        this.canvasCtx.lineTo(segmentX, segmentY);
+                    }
+                }
+                
+                // Create lightning gradient
+                const gradient = this.createLightningGradient();
+                this.canvasCtx.strokeStyle = gradient;
+                this.canvasCtx.shadowColor = '#ffffff';
+                this.canvasCtx.shadowBlur = 20 * this.lightningIntensity;
+                this.canvasCtx.stroke();
+                
+                // Add secondary glow
+                this.canvasCtx.shadowColor = '#00ffff';
+                this.canvasCtx.shadowBlur = 10 * this.lightningIntensity;
+                this.canvasCtx.stroke();
+                
+                // Reset shadow
+                this.canvasCtx.shadowBlur = 0;
+            }
+
+            drawLightningBranches() {
+                // Draw secondary lightning branches for high intensity areas
+                for (let i = 0; i < this.barCount; i += 6) {
+                    const intensity = Math.abs(this.smoothedData[i]);
+                    
+                    if (intensity > 0.4) {
+                        const x = i * this.barWidth;
+                        const mainY = this.centerY;
+                        
+                        // Create more dramatic branches
+                        const branches = Math.floor(intensity * 4) + 1;
+                        
+                        for (let b = 0; b < branches; b++) {
+                            this.canvasCtx.beginPath();
+                            this.canvasCtx.lineWidth = 1 + (intensity * 2);
+                            
+                            const startY = mainY + (Math.random() - 0.5) * intensity * 150 * this.lightningIntensity;
+                            const endX = x + (Math.random() - 0.5) * 100;
+                            const endY = startY + (Math.random() - 0.5) * intensity * 120 * this.lightningIntensity;
+                            
+                            this.canvasCtx.moveTo(x, startY);
+                            
+                            // Create more jagged branches
+                            const branchSegments = 4 + Math.floor(Math.random() * 6);
+                            for (let s = 1; s <= branchSegments; s++) {
+                                const segmentX = x + (endX - x) * (s / branchSegments);
+                                const segmentY = startY + (endY - startY) * (s / branchSegments);
+                                const jag = (Math.random() - 0.5) * 40 * this.lightningIntensity;
+                                
+                                this.canvasCtx.lineTo(segmentX + jag, segmentY + jag);
+                            }
+                            
+                            this.canvasCtx.strokeStyle = `rgba(255, 255, 255, ${intensity * 0.9})`;
+                            this.canvasCtx.shadowColor = '#ffffff';
+                            this.canvasCtx.shadowBlur = 12 * this.lightningIntensity;
+                            this.canvasCtx.stroke();
+                            this.canvasCtx.shadowBlur = 0;
+                        }
+                    }
+                }
+            }
+
+            drawElectricalGlow() {
+                // Add more dramatic electrical discharge effects
+                for (let i = 0; i < this.barCount; i += 4) {
+                    const intensity = Math.abs(this.smoothedData[i]);
+                    
+                    if (intensity > 0.3 && Math.random() > 0.6) {
+                        const x = i * this.barWidth;
+                        const y = this.centerY + (Math.random() - 0.5) * intensity * 200 * this.lightningIntensity;
+                        
+                        // Draw larger electrical sparks
+                        this.canvasCtx.beginPath();
+                        this.canvasCtx.arc(x, y, intensity * 5 * this.lightningIntensity, 0, Math.PI * 2);
+                        
+                        const sparkGradient = this.canvasCtx.createRadialGradient(x, y, 0, x, y, intensity * 12 * this.lightningIntensity);
+                        sparkGradient.addColorStop(0, `rgba(255, 255, 255, ${intensity})`);
+                        sparkGradient.addColorStop(0.3, `rgba(200, 200, 255, ${intensity * 0.8})`);
+                        sparkGradient.addColorStop(0.6, `rgba(100, 150, 255, ${intensity * 0.6})`);
+                        sparkGradient.addColorStop(1, 'rgba(50, 100, 255, 0)');
+                        
+                        this.canvasCtx.fillStyle = sparkGradient;
+                        this.canvasCtx.fill();
+                    }
+                }
+            }
+
+            createLightningGradient() {
+                // Apply different lightning schemes based on wave scheme setting
+                switch(this.settings.waveScheme) {
+                    case 'ocean':
+                        return this.createOceanLightning();
+                    case 'fire':
+                        return this.createFireLightning();
+                    case 'neon':
+                        return this.createNeonLightning();
+                    case 'purple':
+                        return this.createPurpleLightning();
+                    case 'blue':
+                        return this.createBlueLightning();
+                    case 'rainbow':
+                    default:
+                        return this.createClassicLightning();
+                }
+            }
+
+            createClassicLightning() {
+                const gradient = this.canvasCtx.createLinearGradient(0, 0, this.canvasWidth, 0);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+                gradient.addColorStop(0.3, 'rgba(200, 200, 255, 1)');
+                gradient.addColorStop(0.6, 'rgba(100, 150, 255, 1)');
+                gradient.addColorStop(1, 'rgba(50, 100, 255, 0.8)');
+                return gradient;
+            }
+
+            createOceanLightning() {
+                const gradient = this.canvasCtx.createLinearGradient(0, 0, this.canvasWidth, 0);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+                gradient.addColorStop(0.3, 'rgba(100, 255, 255, 1)');
+                gradient.addColorStop(0.6, 'rgba(0, 200, 255, 1)');
+                gradient.addColorStop(1, 'rgba(0, 100, 200, 0.8)');
+                return gradient;
+            }
+
+            createFireLightning() {
+                const gradient = this.canvasCtx.createLinearGradient(0, 0, this.canvasWidth, 0);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+                gradient.addColorStop(0.3, 'rgba(255, 200, 100, 1)');
+                gradient.addColorStop(0.6, 'rgba(255, 100, 50, 1)');
+                gradient.addColorStop(1, 'rgba(200, 50, 0, 0.8)');
+                return gradient;
+            }
+
+            createNeonLightning() {
+                const gradient = this.canvasCtx.createLinearGradient(0, 0, this.canvasWidth, 0);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                gradient.addColorStop(0.2, 'rgba(255, 0, 255, 1)');
+                gradient.addColorStop(0.4, 'rgba(0, 255, 255, 1)');
+                gradient.addColorStop(0.6, 'rgba(255, 255, 0, 1)');
+                gradient.addColorStop(0.8, 'rgba(255, 0, 128, 1)');
+                gradient.addColorStop(1, 'rgba(128, 0, 255, 0.8)');
+                return gradient;
+            }
+
+            createPurpleLightning() {
+                const gradient = this.canvasCtx.createLinearGradient(0, 0, this.canvasWidth, 0);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+                gradient.addColorStop(0.3, 'rgba(200, 150, 255, 1)');
+                gradient.addColorStop(0.6, 'rgba(150, 100, 255, 1)');
+                gradient.addColorStop(1, 'rgba(100, 50, 200, 0.8)');
+                return gradient;
+            }
+
+            createBlueLightning() {
+                const gradient = this.canvasCtx.createLinearGradient(0, 0, this.canvasWidth, 0);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+                gradient.addColorStop(0.3, 'rgba(150, 200, 255, 1)');
+                gradient.addColorStop(0.6, 'rgba(100, 150, 255, 1)');
+                gradient.addColorStop(1, 'rgba(50, 100, 200, 0.8)');
+                return gradient;
+            }
+
+            createFireGradient(x1, y1, x2, y2, intensity) {
+                const gradient = this.canvasCtx.createLinearGradient(x1, y1, x2, y2);
+                
+                // Apply different color schemes based on wave scheme setting
+                switch(this.settings.waveScheme) {
+                    case 'ocean':
+                        return this.createOceanGradient(gradient, intensity);
+                    case 'fire':
+                        return this.createFireGradientColors(gradient, intensity);
+                    case 'neon':
+                        return this.createNeonGradient(gradient, intensity);
+                    case 'purple':
+                        return this.createPurpleGradient(gradient, intensity);
+                    case 'blue':
+                        return this.createBlueGradient(gradient, intensity);
+                    case 'rainbow':
+                    default:
+                        return this.createRainbowGradient(gradient, intensity);
+                }
+            }
+
+            createFireGradientColors(gradient, intensity) {
+                // Legacy method - now using lightning effects
+                return this.createFireLightning();
+            }
+
+            createOceanGradient(gradient, intensity) {
+                // Legacy method - now using lightning effects  
+                return this.createOceanLightning();
+            }
+
+            createNeonGradient(gradient, intensity) {
+                // Legacy method - now using lightning effects
+                return this.createNeonLightning();
+            }
+
+            createPurpleGradient(gradient, intensity) {
+                // Legacy method - now using lightning effects
+                return this.createPurpleLightning();
+            }
+
+            createBlueGradient(gradient, intensity) {
+                // Legacy method - now using lightning effects
+                return this.createBlueLightning();
+            }
+
+            createRainbowGradient(gradient, intensity) {
+                // Legacy method - now using lightning effects
+                return this.createClassicLightning();
             }
 
             setupSpeechRecognition() {
@@ -1693,18 +2008,44 @@
             handleWakeWordDetected() {
                 this.wakeListening = false;
                 
-                // Animate wave bars
-                const bars = this.soundWave.querySelectorAll('.wave-bar');
-                bars.forEach(bar => bar.classList.add('wake-detected'));
+                // Add visual effects to container
+                this.waveContainer.classList.add('wake-detected');
+                
+                // Create special wake word animation
+                this.animateWakeWordDetection();
                 
                 this.speakResponse(this.settings.wakeResponse);
                 
                 setTimeout(() => {
-                    bars.forEach(bar => bar.classList.remove('wake-detected'));
+                    this.waveContainer.classList.remove('wake-detected');
                     
                     // Start listening for user input
                     this.startListening();
                 }, 2000);
+            }
+
+            animateWakeWordDetection() {
+                let animationTime = 0;
+                const animationDuration = 2000; // 2 seconds
+                
+                const animate = () => {
+                    if (animationTime < animationDuration) {
+                        const progress = animationTime / animationDuration;
+                        
+                        // Create expanding wave effect
+                        for (let i = 0; i < this.barCount; i++) {
+                            const distance = Math.abs(i - this.barCount / 2) / this.barCount;
+                            const wave = Math.sin(progress * Math.PI * 4 - distance * 10) * (1 - progress);
+                            this.frequencyData[i] = Math.max(0.1, Math.abs(wave) * 1.5);
+                        }
+                        
+                        this.drawAdvancedWaveform();
+                        animationTime += 16; // ~60fps
+                        requestAnimationFrame(animate);
+                    }
+                };
+                
+                animate();
             }
 
             startWakeWordListening() {
@@ -1763,15 +2104,25 @@
                 if (!this.analyser || (!this.isListening && !this.wakeListening)) return;
                 
                 this.analyser.getByteFrequencyData(this.dataArray);
-                const bars = this.soundWave.querySelectorAll('.wave-bar');
                 
-                bars.forEach((bar, index) => {
-                    const dataIndex = Math.floor(index * this.dataArray.length / bars.length);
-                    const height = (this.dataArray[dataIndex] / 255) * window.innerHeight * 0.6 * this.settings.waveResponsive;
-                    bar.style.height = Math.max(4, height) + 'px';
-                    bar.classList.toggle('active', height > 25);
-                });
+                // Process audio data for lightning visualization
+                const step = Math.floor(this.dataArray.length / this.barCount);
+                for (let i = 0; i < this.barCount; i++) {
+                    const dataIndex = i * step;
+                    const audioValue = this.dataArray[dataIndex] || 0;
+                    
+                    // Normalize and apply responsiveness with electrical spikes
+                    let normalizedValue = (audioValue / 255) * this.settings.waveResponsive;
+                    
+                    // Add electrical randomness for lightning effect
+                    if (normalizedValue > 0.3) {
+                        normalizedValue += (Math.random() - 0.5) * 0.2;
+                    }
+                    
+                    this.frequencyData[i] = Math.max(0, normalizedValue);
+                }
                 
+                this.drawAdvancedWaveform();
                 this.waveAnimationId = requestAnimationFrame(() => this.animateWave());
             }
 
@@ -1782,6 +2133,7 @@
                 }
 
                 this.wakeListening = false;
+                this.waveContainer.classList.add('listening');
 
                 try {
                     this.synthesis.cancel();
@@ -1802,15 +2154,16 @@
                 
                 this.isListening = false;
                 this.wakeListening = false;
+                this.waveContainer.classList.remove('listening');
             }
 
             async processUserInput(input) {
                 this.isProcessing = true;
                 this.isListening = false;
 
-                // Animate bars while processing
-                const bars = this.soundWave.querySelectorAll('.wave-bar');
-                bars.forEach(bar => bar.classList.add('speaking'));
+                // Add speaking visual effects
+                this.waveContainer.classList.add('speaking');
+                this.animateSpeaking();
 
                 try {
                     const response = await this.sendToChatGPT(input);
@@ -1824,13 +2177,35 @@
                     this.showMessage(`AI Error: ${error.message}`, 'error');
                 } finally {
                     this.isProcessing = false;
-                    bars.forEach(bar => bar.classList.remove('speaking'));
+                    this.waveContainer.classList.remove('speaking');
                     
                     // Restart wake word listening
                     if (this.settings.wakeWordEnabled && this.settings.autoRestart) {
                         setTimeout(() => this.startWakeWordListening(), 2000);
                     }
                 }
+            }
+
+            animateSpeaking() {
+                let time = 0;
+                
+                const animate = () => {
+                    if (this.isProcessing || this.isSpeaking) {
+                        // Create speaking animation pattern
+                        for (let i = 0; i < this.barCount; i++) {
+                            const wave1 = Math.sin(time + i * 0.2) * 0.6;
+                            const wave2 = Math.sin(time * 1.5 + i * 0.1) * 0.4;
+                            const wave3 = Math.sin(time * 2.3 + i * 0.3) * 0.3;
+                            this.frequencyData[i] = Math.abs(wave1 + wave2 + wave3) * 0.8 + 0.2;
+                        }
+                        
+                        this.drawAdvancedWaveform();
+                        time += 0.1;
+                        requestAnimationFrame(animate);
+                    }
+                };
+                
+                animate();
             }
 
             async sendToChatGPT(message) {
@@ -2337,6 +2712,13 @@
                     window.voiceAssistant.initializeWave();
                 }
             }, 500);
+        });
+
+        // Handle window resize for canvas
+        window.addEventListener('resize', () => {
+            if (window.voiceAssistant) {
+                window.voiceAssistant.setupCanvas();
+            }
         });
     </script>
 </body>
