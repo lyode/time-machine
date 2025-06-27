@@ -338,13 +338,13 @@
                 var(--wave-color-3) 50%, 
                 var(--wave-color-4) 75%, 
                 var(--wave-color-5) 100%);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
         }
 
         .wave-bar.active {
             box-shadow: 0 0 30px var(--wave-color-1), 0 0 60px var(--wave-color-2);
-            filter: brightness(1.8) drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+            filter: brightness(2.5) drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
             transform: scaleY(1.2);
         }
 
@@ -363,15 +363,15 @@
             }
             25% { 
                 transform: scaleY(1.8); 
-                filter: brightness(3) hue-rotate(90deg) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
+                filter: brightness(4) hue-rotate(90deg) drop-shadow(0 0 25px rgba(255, 255, 255, 1));
             }
             50% { 
                 transform: scaleY(2.5); 
-                filter: brightness(4) hue-rotate(180deg) drop-shadow(0 0 40px rgba(255, 255, 255, 1));
+                filter: brightness(5) hue-rotate(180deg) drop-shadow(0 0 40px rgba(255, 255, 255, 1.2));
             }
             75% { 
                 transform: scaleY(1.8); 
-                filter: brightness(3) hue-rotate(270deg) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
+                filter: brightness(4) hue-rotate(270deg) drop-shadow(0 0 25px rgba(255, 255, 255, 1));
             }
             100% { 
                 transform: scaleY(1); 
@@ -382,11 +382,11 @@
         @keyframes speakingPulse {
             0% { 
                 transform: scaleY(1); 
-                filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+                filter: brightness(1.5) drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
             }
             100% { 
                 transform: scaleY(1.4); 
-                filter: brightness(2) saturate(1.5) drop-shadow(0 0 20px rgba(255, 255, 255, 0.7));
+                filter: brightness(3) saturate(2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.9));
             }
         }
 
@@ -801,6 +801,71 @@
             --wave-color-5: #8a2be2;
         }
 
+        /* Dark Cosmic Wave Schemes */
+        .dark-cosmic-wave {
+            --wave-color-1: #1a1a2e;
+            --wave-color-2: #16213e;
+            --wave-color-3: #0f0f23;
+            --wave-color-4: #533e85;
+            --wave-color-5: #6c5ce7;
+        }
+
+        .deep-space-wave {
+            --wave-color-1: #0c0c0c;
+            --wave-color-2: #1a1a1a;
+            --wave-color-3: #2d1b4e;
+            --wave-color-4: #4b0082;
+            --wave-color-5: #191970;
+        }
+
+        .shadow-nebula-wave {
+            --wave-color-1: #0a0a0a;
+            --wave-color-2: #1c1c1c;
+            --wave-color-3: #2e1065;
+            --wave-color-4: #4a0e4e;
+            --wave-color-5: #8b008b;
+        }
+
+        .void-wave {
+            --wave-color-1: #000000;
+            --wave-color-2: #0d0d0d;
+            --wave-color-3: #1a1a1a;
+            --wave-color-4: #2d2d2d;
+            --wave-color-5: #404040;
+        }
+
+        .dark-matter-wave {
+            --wave-color-1: #000000;
+            --wave-color-2: #0a0a0a;
+            --wave-color-3: #1a0033;
+            --wave-color-4: #2d0a2d;
+            --wave-color-5: #330033;
+        }
+
+        .obsidian-wave {
+            --wave-color-1: #000000;
+            --wave-color-2: #0f0f0f;
+            --wave-color-3: #1a1a1a;
+            --wave-color-4: #2a2a2a;
+            --wave-color-5: #3d3d3d;
+        }
+
+        .black-hole-wave {
+            --wave-color-1: #000000;
+            --wave-color-2: #0a0015;
+            --wave-color-3: #1a0033;
+            --wave-color-4: #2d004d;
+            --wave-color-5: #4d0080;
+        }
+
+        .midnight-wave {
+            --wave-color-1: #000000;
+            --wave-color-2: #0d1421;
+            --wave-color-3: #1a2332;
+            --wave-color-4: #2d3748;
+            --wave-color-5: #4a5568;
+        }
+
         /* iPhone 15 Pro Max specific responsive breakpoints */
         @media (max-width: 430px) {
             .sound-wave {
@@ -929,7 +994,7 @@
         }
     </style>
 </head>
-<body data-theme="default" class="cosmic-wave">
+<body data-theme="default" class="dark-cosmic-wave">
     <!-- Cosmic Light Rays -->
     <div class="light-rays">
         <div class="light-ray"></div>
@@ -1029,7 +1094,7 @@
 
         <!-- Wave Visualization Settings -->
         <div class="setting-group">
-            <label class="setting-label">🌊 Cosmic Wave Visualization</label>
+            <label class="setting-label">🌊 Dark Cosmic Wave Visualization</label>
             <div class="wave-controls">
                 <label style="font-size: 14px; display: block; margin-bottom: 8px;">
                     Wave Count: <span class="value-display" id="waveCountValue">120</span>
@@ -1048,10 +1113,22 @@
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 8px;">Cosmic Wave Schemes:</label>
                 <div class="color-picker">
-                    <div class="wave-color-option active" data-wave-scheme="cosmic" style="background: linear-gradient(to right, #ffffff, #87ceeb, #4169e1, #6495ed, #b0c4de);"></div>
-                    <div class="wave-color-option" data-wave-scheme="spiritual" style="background: linear-gradient(to right, #ffffff, #ffd700, #ff69b4, #9370db, #00ffff);"></div>
-                    <div class="wave-color-option" data-wave-scheme="aurora" style="background: linear-gradient(to right, #ffffff, #00ff7f, #00ced1, #9370db, #ff1493);"></div>
-                    <div class="wave-color-option" data-wave-scheme="celestial" style="background: linear-gradient(to right, #fffacd, #f0e68c, #dda0dd, #ba55d3, #8a2be2);"></div>
+                    <div class="wave-color-option" data-wave-scheme="cosmic" style="background: linear-gradient(to right, #ffffff, #87ceeb, #4169e1, #6495ed, #b0c4de);" title="Classic Cosmic"></div>
+                    <div class="wave-color-option" data-wave-scheme="spiritual" style="background: linear-gradient(to right, #ffffff, #ffd700, #ff69b4, #9370db, #00ffff);" title="Spiritual"></div>
+                    <div class="wave-color-option" data-wave-scheme="aurora" style="background: linear-gradient(to right, #ffffff, #00ff7f, #00ced1, #9370db, #ff1493);" title="Aurora"></div>
+                    <div class="wave-color-option" data-wave-scheme="celestial" style="background: linear-gradient(to right, #fffacd, #f0e68c, #dda0dd, #ba55d3, #8a2be2);" title="Celestial"></div>
+                </div>
+                
+                <label style="font-size: 14px; display: block; margin: 25px 0 8px; color: #888;">🌑 Dark Cosmic Schemes:</label>
+                <div class="color-picker">
+                    <div class="wave-color-option active" data-wave-scheme="dark-cosmic" style="background: linear-gradient(to right, #1a1a2e, #16213e, #0f0f23, #533e85, #6c5ce7);" title="Dark Cosmic"></div>
+                    <div class="wave-color-option" data-wave-scheme="deep-space" style="background: linear-gradient(to right, #0c0c0c, #1a1a1a, #2d1b4e, #4b0082, #191970);" title="Deep Space"></div>
+                    <div class="wave-color-option" data-wave-scheme="shadow-nebula" style="background: linear-gradient(to right, #0a0a0a, #1c1c1c, #2e1065, #4a0e4e, #8b008b);" title="Shadow Nebula"></div>
+                    <div class="wave-color-option" data-wave-scheme="void" style="background: linear-gradient(to right, #000000, #0d0d0d, #1a1a1a, #2d2d2d, #404040);" title="Void"></div>
+                    <div class="wave-color-option" data-wave-scheme="dark-matter" style="background: linear-gradient(to right, #000000, #0a0a0a, #1a0033, #2d0a2d, #330033);" title="Dark Matter"></div>
+                    <div class="wave-color-option" data-wave-scheme="obsidian" style="background: linear-gradient(to right, #000000, #0f0f0f, #1a1a1a, #2a2a2a, #3d3d3d);" title="Obsidian"></div>
+                    <div class="wave-color-option" data-wave-scheme="black-hole" style="background: linear-gradient(to right, #000000, #0a0015, #1a0033, #2d004d, #4d0080);" title="Black Hole"></div>
+                    <div class="wave-color-option" data-wave-scheme="midnight" style="background: linear-gradient(to right, #000000, #0d1421, #1a2332, #2d3748, #4a5568);" title="Midnight"></div>
                 </div>
             </div>
         </div>
@@ -1159,7 +1236,7 @@
                     waveCount: 120,
                     waveResponsive: 1.5,
                     animSpeed: 60,
-                    waveScheme: 'cosmic',
+                    waveScheme: 'dark-cosmic',
                     wakeWordEnabled: true,
                     wakeWord: 'Hey Assistant',
                     wakeResponse: "Hi dear, I'm here!",
@@ -2102,7 +2179,7 @@
                         waveCount: 120,
                         waveResponsive: 1.5,
                         animSpeed: 60,
-                        waveScheme: 'cosmic',
+                        waveScheme: 'dark-cosmic',
                         wakeWordEnabled: true,
                         wakeWord: 'Hey Assistant',
                         wakeResponse: "Hi dear, I'm here!",
