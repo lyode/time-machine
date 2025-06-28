@@ -465,6 +465,142 @@
             opacity: 0.9;
         }
 
+        .voice-info {
+            color: #c44bd1;
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .settings-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .settings-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(196, 75, 209, 0.3));
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .settings-panel {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .settings-panel.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .settings-section {
+            margin-bottom: 20px;
+        }
+
+        .settings-label {
+            color: #ff6b9d;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .voice-select-space {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 10px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .voice-select-space option {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        .slider-group-space {
+            margin: 10px 0;
+        }
+
+        .slider-label-space {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .slider-space {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .slider-space::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b9d, #c44bd1);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(255, 107, 157, 0.4);
+        }
+
+        .test-voice-btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(196, 75, 209, 0.3));
+            border: 1px solid rgba(255, 107, 157, 0.5);
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+
+        .test-voice-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.5), rgba(196, 75, 209, 0.5));
+            transform: translateY(-2px);
+        }
+
         .sound-waves {
             position: absolute;
             width: 100%;
@@ -870,6 +1006,47 @@
 
     <!-- AI Interface -->
     <div class="ai-interface" id="aiInterface">
+        <!-- Settings Button -->
+        <button class="settings-btn" id="settingsBtn" onclick="toggleSettings()" title="Voice Settings">⚙️</button>
+        
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-section">
+                <label class="settings-label">🎵 Voice Selection</label>
+                <select class="voice-select-space" id="voiceSelectSpace" onchange="updateSpaceVoice()">
+                    <option value="maple">Maple AI Voice (Default)</option>
+                </select>
+            </div>
+            
+            <div class="settings-section">
+                <div class="slider-group-space">
+                    <div class="slider-label-space">
+                        <span>Speaking Speed</span>
+                        <span id="speedValueSpace">0.9</span>
+                    </div>
+                    <input type="range" class="slider-space" id="speedSliderSpace" min="0.5" max="1.5" step="0.1" value="0.9" onchange="updateSpaceVoiceSettings()">
+                </div>
+                
+                <div class="slider-group-space">
+                    <div class="slider-label-space">
+                        <span>Voice Pitch</span>
+                        <span id="pitchValueSpace">0.8</span>
+                    </div>
+                    <input type="range" class="slider-space" id="pitchSliderSpace" min="0.5" max="1.5" step="0.1" value="0.8" onchange="updateSpaceVoiceSettings()">
+                </div>
+                
+                <div class="slider-group-space">
+                    <div class="slider-label-space">
+                        <span>Volume</span>
+                        <span id="volumeValueSpace">0.8</span>
+                    </div>
+                    <input type="range" class="slider-space" id="volumeSliderSpace" min="0.1" max="1" step="0.1" value="0.8" onchange="updateSpaceVoiceSettings()">
+                </div>
+            </div>
+            
+            <button class="test-voice-btn" onclick="testCurrentVoice()">🎤 Test Voice</button>
+        </div>
+
         <!-- Initial Welcome -->
         <div class="ai-message" id="aiMessage">
             <div class="typing-animation">Hi dear, I'm here with you... Let's have a quality conversation now! 💕</div>
@@ -894,6 +1071,7 @@
             </div>
             <div class="ai-name">Aria</div>
             <div class="ai-status" id="aiStatus">Ready to chat in the cosmos! ✨</div>
+            <div class="voice-info" id="voiceInfo">🎵 Maple AI Voice</div>
         </div>
         
         <div class="chat-container" id="chatContainer" style="opacity: 0; transform: translateY(50px); transition: all 1s ease-out 10s;">
@@ -1042,8 +1220,12 @@
             loadVoices() {
                 const loadVoicesCallback = () => {
                     const voices = this.synthesis.getVoices();
+                    const voiceSelect = document.getElementById('voiceSelectSpace');
                     
-                    // Find the best female voice
+                    // Clear existing options except Maple
+                    voiceSelect.innerHTML = '<option value="maple">🍁 Maple AI Voice (Default)</option>';
+                    
+                    // Find the best female voices and categorize them
                     const femaleVoices = voices.filter(voice => {
                         const name = voice.name.toLowerCase();
                         return name.includes('female') || 
@@ -1054,18 +1236,58 @@
                                name.includes('karen') ||
                                name.includes('zira') ||
                                name.includes('aria') ||
+                               name.includes('emma') ||
+                               name.includes('anna') ||
                                (name.includes('google') && voice.lang.includes('en'));
                     });
                     
+                    // Add premium voices section
+                    if (femaleVoices.length > 0) {
+                        const premiumGroup = document.createElement('optgroup');
+                        premiumGroup.label = '✨ Premium Female Voices';
+                        
+                        femaleVoices.forEach(voice => {
+                            const option = document.createElement('option');
+                            option.value = voice.name;
+                            option.textContent = `${voice.name} (${voice.lang})`;
+                            premiumGroup.appendChild(option);
+                        });
+                        
+                        voiceSelect.appendChild(premiumGroup);
+                    }
+                    
+                    // Add all other voices
+                    const otherVoices = voices.filter(voice => !femaleVoices.includes(voice));
+                    if (otherVoices.length > 0) {
+                        const allGroup = document.createElement('optgroup');
+                        allGroup.label = '🎤 All Available Voices';
+                        
+                        otherVoices.forEach(voice => {
+                            const option = document.createElement('option');
+                            option.value = voice.name;
+                            option.textContent = `${voice.name} (${voice.lang})`;
+                            allGroup.appendChild(option);
+                        });
+                        
+                        voiceSelect.appendChild(allGroup);
+                    }
+                    
+                    // Set default to best female voice (Maple AI simulation)
                     if (femaleVoices.length > 0) {
                         this.selectedVoice = femaleVoices[0];
+                        this.updateVoiceDisplay('Maple AI Voice');
                     } else if (voices.length > 0) {
                         this.selectedVoice = voices[0];
+                        this.updateVoiceDisplay('Maple AI Voice');
                     }
                 };
                 
                 loadVoicesCallback();
                 this.synthesis.addEventListener('voiceschanged', loadVoicesCallback);
+            }
+            
+            updateVoiceDisplay(voiceName) {
+                document.getElementById('voiceInfo').textContent = `🎵 ${voiceName}`;
             }
             
             async processMessage(message) {
@@ -1420,6 +1642,72 @@
             }
         }
 
+        function toggleSettings() {
+            const settingsPanel = document.getElementById('settingsPanel');
+            settingsPanel.classList.toggle('active');
+        }
+
+        function updateSpaceVoice() {
+            const voiceSelect = document.getElementById('voiceSelectSpace');
+            const selectedValue = voiceSelect.value;
+            
+            if (window.aria) {
+                if (selectedValue === 'maple') {
+                    // Use the best available female voice for Maple AI
+                    const voices = speechSynthesis.getVoices();
+                    const femaleVoices = voices.filter(voice => {
+                        const name = voice.name.toLowerCase();
+                        return name.includes('female') || 
+                               name.includes('samantha') ||
+                               name.includes('victoria') ||
+                               name.includes('susan') ||
+                               (name.includes('google') && voice.lang.includes('en'));
+                    });
+                    
+                    if (femaleVoices.length > 0) {
+                        window.aria.selectedVoice = femaleVoices[0];
+                    }
+                    window.aria.updateVoiceDisplay('Maple AI Voice');
+                } else {
+                    // Use selected voice
+                    const voices = speechSynthesis.getVoices();
+                    const selectedVoice = voices.find(voice => voice.name === selectedValue);
+                    if (selectedVoice) {
+                        window.aria.selectedVoice = selectedVoice;
+                        window.aria.updateVoiceDisplay(selectedVoice.name);
+                    }
+                }
+                
+                // Test the new voice
+                window.aria.speak("Hi! This is my new voice. How do you like it?");
+            }
+        }
+
+        function updateSpaceVoiceSettings() {
+            if (window.aria) {
+                window.aria.voiceSettings.rate = parseFloat(document.getElementById('speedSliderSpace').value);
+                window.aria.voiceSettings.pitch = parseFloat(document.getElementById('pitchSliderSpace').value);
+                window.aria.voiceSettings.volume = parseFloat(document.getElementById('volumeSliderSpace').value);
+                
+                document.getElementById('speedValueSpace').textContent = window.aria.voiceSettings.rate;
+                document.getElementById('pitchValueSpace').textContent = window.aria.voiceSettings.pitch;
+                document.getElementById('volumeValueSpace').textContent = window.aria.voiceSettings.volume;
+            }
+        }
+
+        function testCurrentVoice() {
+            if (window.aria) {
+                const testMessages = [
+                    "Hello! This is how I sound with the current settings. Do you like my voice?",
+                    "Hi there! I'm testing my voice settings among the stars. How does this sound to you?",
+                    "Hey! This is my voice test. I hope you find it gentle and pleasant to listen to!"
+                ];
+                
+                const randomMessage = testMessages[Math.floor(Math.random() * testMessages.length)];
+                window.aria.speak(randomMessage);
+            }
+        }
+
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', () => {
             generateStars();
@@ -1430,6 +1718,18 @@
                     speechSynthesis.getVoices();
                 };
             }
+
+            // Close settings when clicking outside
+            document.addEventListener('click', (e) => {
+                const settingsPanel = document.getElementById('settingsPanel');
+                const settingsBtn = document.getElementById('settingsBtn');
+                
+                if (settingsPanel && settingsBtn && 
+                    !settingsPanel.contains(e.target) && 
+                    !settingsBtn.contains(e.target)) {
+                    settingsPanel.classList.remove('active');
+                }
+            });
         });
     </script>
 </body>
