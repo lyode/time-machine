@@ -482,6 +482,173 @@
             margin: 15px 0;
         }
 
+        .privacy-controls {
+            background: rgba(0, 188, 212, 0.1);
+            border: 1px solid rgba(0, 188, 212, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .privacy-permissions, .privacy-settings, .privacy-profiles, .privacy-actions, .privacy-audit {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .audit-log {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+            margin: 10px 0;
+        }
+
+        .audit-item {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .audit-item:last-child {
+            border-bottom: none;
+        }
+
+        .audit-item.access {
+            color: #4caf50;
+        }
+
+        .audit-item.denied {
+            color: #ff5722;
+        }
+
+        .audit-item.warning {
+            color: #ff9800;
+        }
+
+        .privacy-level-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 5px 0;
+        }
+
+        .privacy-level-minimal {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+        }
+
+        .privacy-level-standard {
+            background: rgba(255, 152, 0, 0.2);
+            border: 1px solid #ff9800;
+            color: #ff9800;
+        }
+
+        .privacy-level-enhanced {
+            background: rgba(33, 150, 243, 0.2);
+            border: 1px solid #2196f3;
+            color: #2196f3;
+        }
+
+        .privacy-level-full {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4caf50;
+            color: #4caf50;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+        }
+
+        .data-usage-chart {
+            width: 100%;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .emergency-mode {
+            background: rgba(244, 67, 54, 0.1) !important;
+            border: 2px solid #f44336 !important;
+        }
+
+        .emergency-mode * {
+            color: #f44336 !important;
+        }
+
+        .privacy-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .privacy-modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .privacy-modal-content {
+            background: var(--card-background);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .privacy-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
         .error-message {
             background: rgba(255, 59, 48, 0.2);
             color: var(--danger-color);
@@ -630,6 +797,130 @@
                 <option value="gpt-4">GPT-4</option>
                 <option value="gpt-4-turbo">GPT-4 Turbo</option>
             </select>
+        </div>
+
+        <!-- Privacy Controls -->
+        <div class="setting-group">
+            <label class="setting-label">🔒 Privacy & Data Control</label>
+            <div class="privacy-controls">
+                <label style="font-size: 14px; margin-bottom: 10px; display: block;">Privacy Level:</label>
+                <select class="setting-select" id="privacyLevel">
+                    <option value="minimal">🔒 Minimal - Basic functions only</option>
+                    <option value="standard">🛡️ Standard - Limited personal data</option>
+                    <option value="enhanced">⚖️ Enhanced - Moderate personal access</option>
+                    <option value="full">🔓 Full Access - Complete personalization</option>
+                </select>
+                
+                <div class="privacy-permissions">
+                    <h4 style="margin: 20px 0 10px 0; color: #00bcd4;">📋 Data Access Permissions</h4>
+                    
+                    <div class="setting-toggle">
+                        <span>🗓️ Calendar Access</span>
+                        <div class="toggle-switch" id="calendarAccess">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-toggle">
+                        <span>📞 Contacts Access</span>
+                        <div class="toggle-switch" id="contactsAccess">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-toggle">
+                        <span>📍 Location Services</span>
+                        <div class="toggle-switch" id="locationAccess">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-toggle">
+                        <span>📱 Device Information</span>
+                        <div class="toggle-switch" id="deviceAccess">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-toggle">
+                        <span>💬 Conversation History</span>
+                        <div class="toggle-switch active" id="conversationHistory">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-toggle">
+                        <span>🔍 Web Search History</span>
+                        <div class="toggle-switch" id="searchHistory">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-toggle">
+                        <span>📊 Usage Analytics</span>
+                        <div class="toggle-switch" id="usageAnalytics">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="privacy-settings">
+                    <h4 style="margin: 20px 0 10px 0; color: #00bcd4;">⚙️ Privacy Settings</h4>
+                    
+                    <label style="font-size: 14px; margin-top: 15px; display: block;">
+                        Data Retention (days): <span id="dataRetentionValue">30</span>
+                    </label>
+                    <input type="range" class="setting-range" id="dataRetention" min="1" max="365" step="1" value="30">
+                    
+                    <div class="setting-toggle">
+                        <span>🔐 End-to-End Encryption</span>
+                        <div class="toggle-switch active" id="encryptionEnabled">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-toggle">
+                        <span>🕵️ Anonymous Mode</span>
+                        <div class="toggle-switch" id="anonymousMode">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-toggle">
+                        <span>🚨 Emergency Privacy Lock</span>
+                        <div class="toggle-switch" id="emergencyLock">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="privacy-profiles">
+                    <h4 style="margin: 20px 0 10px 0; color: #00bcd4;">👥 Privacy Profiles</h4>
+                    <select class="setting-select" id="privacyProfile">
+                        <option value="personal">👤 Personal - Full access</option>
+                        <option value="work">💼 Work - Professional only</option>
+                        <option value="public">🌐 Public - No personal data</option>
+                        <option value="family">👨‍👩‍👧‍👦 Family - Safe sharing</option>
+                        <option value="guest">👋 Guest - Minimal access</option>
+                    </select>
+                </div>
+                
+                <div class="privacy-actions">
+                    <h4 style="margin: 20px 0 10px 0; color: #ff9800;">🛠️ Privacy Actions</h4>
+                    <button class="btn btn-secondary" id="viewDataBtn">📊 View My Data</button>
+                    <button class="btn btn-primary" id="exportDataBtn">📤 Export Data</button>
+                    <button class="btn btn-warning" id="clearHistoryBtn" style="background: #ff9800;">🗑️ Clear History</button>
+                    <button class="btn btn-danger" id="emergencyWipeBtn">⚠️ Emergency Wipe</button>
+                </div>
+                
+                <div class="privacy-audit">
+                    <h4 style="margin: 20px 0 10px 0; color: #4caf50;">📋 Recent Access Log</h4>
+                    <div class="audit-log" id="auditLog">
+                        <div class="audit-item">🕐 No recent activity</div>
+                    </div>
+                    <button class="btn btn-success" id="viewFullAuditBtn">📜 View Full Audit Log</button>
+                </div>
+            </div>
         </div>
 
         <!-- Mobile Optimization Settings -->
@@ -836,6 +1127,8 @@
         </div>
     </div>
 
+    <!-- Privacy Modal (Created dynamically by JavaScript) -->
+
     <script>
         class MobileFixedVoiceAssistant {
             constructor() {
@@ -864,8 +1157,27 @@
                     useLocalVoices: true,
                     splitText: true,
                     chunkSize: 40,
-                    chunkDelay: 300
+                    chunkDelay: 300,
+                    // Privacy settings
+                    privacyLevel: 'standard',
+                    calendarAccess: false,
+                    contactsAccess: false,
+                    locationAccess: false,
+                    deviceAccess: false,
+                    conversationHistory: true,
+                    searchHistory: false,
+                    usageAnalytics: false,
+                    dataRetention: 30,
+                    encryptionEnabled: true,
+                    anonymousMode: false,
+                    emergencyLock: false,
+                    privacyProfile: 'personal'
                 };
+
+                // Privacy and audit system
+                this.auditLog = this.loadAuditLog();
+                this.conversationData = this.loadConversationData();
+                this.emergencyMode = false;
 
                 // Mobile detection
                 this.isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -1047,6 +1359,27 @@
                 this.chunkSize = document.getElementById('chunkSize');
                 this.chunkDelay = document.getElementById('chunkDelay');
 
+                // Privacy settings
+                this.privacyLevel = document.getElementById('privacyLevel');
+                this.calendarAccess = document.getElementById('calendarAccess');
+                this.contactsAccess = document.getElementById('contactsAccess');
+                this.locationAccess = document.getElementById('locationAccess');
+                this.deviceAccess = document.getElementById('deviceAccess');
+                this.conversationHistory = document.getElementById('conversationHistory');
+                this.searchHistory = document.getElementById('searchHistory');
+                this.usageAnalytics = document.getElementById('usageAnalytics');
+                this.dataRetention = document.getElementById('dataRetention');
+                this.encryptionEnabled = document.getElementById('encryptionEnabled');
+                this.anonymousMode = document.getElementById('anonymousMode');
+                this.emergencyLock = document.getElementById('emergencyLock');
+                this.privacyProfile = document.getElementById('privacyProfile');
+                this.viewDataBtn = document.getElementById('viewDataBtn');
+                this.exportDataBtn = document.getElementById('exportDataBtn');
+                this.clearHistoryBtn = document.getElementById('clearHistoryBtn');
+                this.emergencyWipeBtn = document.getElementById('emergencyWipeBtn');
+                this.viewFullAuditBtn = document.getElementById('viewFullAuditBtn');
+                this.auditLogElement = document.getElementById('auditLog');
+
                 // Buttons and toggles
                 this.saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
                 this.testApiKeyBtn = document.getElementById('testApiKeyBtn');
@@ -1074,6 +1407,7 @@
                 this.wakeSensitivityValue = document.getElementById('wakeSensitivityValue');
                 this.chunkSizeValue = document.getElementById('chunkSizeValue');
                 this.chunkDelayValue = document.getElementById('chunkDelayValue');
+                this.dataRetentionValue = document.getElementById('dataRetentionValue');
             }
 
             setupEventListeners() {
@@ -1158,6 +1492,28 @@
                     this.saveSetting('chunkDelay', parseInt(e.target.value));
                 });
 
+                // Privacy settings
+                this.privacyLevel.addEventListener('change', () => {
+                    this.setPrivacyLevel(this.privacyLevel.value);
+                });
+
+                this.dataRetention.addEventListener('input', (e) => {
+                    this.dataRetentionValue.textContent = e.target.value;
+                    this.saveSetting('dataRetention', parseInt(e.target.value));
+                    this.cleanupOldData();
+                });
+
+                this.privacyProfile.addEventListener('change', () => {
+                    this.setPrivacyProfile(this.privacyProfile.value);
+                });
+
+                // Privacy action buttons
+                this.viewDataBtn.addEventListener('click', () => this.viewMyData());
+                this.exportDataBtn.addEventListener('click', () => this.exportPrivacyData());
+                this.clearHistoryBtn.addEventListener('click', () => this.clearHistory());
+                this.emergencyWipeBtn.addEventListener('click', () => this.emergencyWipe());
+                this.viewFullAuditBtn.addEventListener('click', () => this.viewFullAudit());
+
                 // Select inputs
                 this.modelSelect.addEventListener('change', () => this.saveSetting('model', this.modelSelect.value));
                 this.languageSelect.addEventListener('change', () => this.saveSetting('language', this.languageSelect.value));
@@ -1170,6 +1526,18 @@
                 this.mobileToggle.addEventListener('click', () => this.toggleSetting('mobileMode'));
                 this.localVoicesToggle.addEventListener('click', () => this.toggleSetting('useLocalVoices'));
                 this.splitTextToggle.addEventListener('click', () => this.toggleSetting('splitText'));
+
+                // Privacy toggles
+                this.calendarAccess.addEventListener('click', () => this.togglePrivacySetting('calendarAccess'));
+                this.contactsAccess.addEventListener('click', () => this.togglePrivacySetting('contactsAccess'));
+                this.locationAccess.addEventListener('click', () => this.togglePrivacySetting('locationAccess'));
+                this.deviceAccess.addEventListener('click', () => this.togglePrivacySetting('deviceAccess'));
+                this.conversationHistory.addEventListener('click', () => this.togglePrivacySetting('conversationHistory'));
+                this.searchHistory.addEventListener('click', () => this.togglePrivacySetting('searchHistory'));
+                this.usageAnalytics.addEventListener('click', () => this.togglePrivacySetting('usageAnalytics'));
+                this.encryptionEnabled.addEventListener('click', () => this.togglePrivacySetting('encryptionEnabled'));
+                this.anonymousMode.addEventListener('click', () => this.togglePrivacySetting('anonymousMode'));
+                this.emergencyLock.addEventListener('click', () => this.toggleEmergencyLock());
 
                 // Theme selection
                 document.querySelectorAll('.color-option').forEach(option => {
@@ -1742,6 +2110,426 @@
                 }
             }
 
+            // ====== PRIVACY CONTROL METHODS ======
+
+            logAccess(action, data = null, granted = true) {
+                if (!this.settings.usageAnalytics) return;
+
+                const logEntry = {
+                    timestamp: new Date().toISOString(),
+                    action: action,
+                    data: data,
+                    granted: granted,
+                    privacyLevel: this.settings.privacyLevel,
+                    anonymousMode: this.settings.anonymousMode
+                };
+
+                this.auditLog.push(logEntry);
+
+                // Keep only recent entries based on retention period
+                const cutoffDate = new Date();
+                cutoffDate.setDate(cutoffDate.getDate() - this.settings.dataRetention);
+                this.auditLog = this.auditLog.filter(entry => new Date(entry.timestamp) > cutoffDate);
+
+                this.saveAuditLog();
+                this.updateAuditDisplay();
+            }
+
+            updateAuditDisplay() {
+                if (!this.auditLogElement) return;
+
+                const recentEntries = this.auditLog.slice(-5).reverse();
+                
+                if (recentEntries.length === 0) {
+                    this.auditLogElement.innerHTML = '<div class="audit-item">🕐 No recent activity</div>';
+                    return;
+                }
+
+                this.auditLogElement.innerHTML = recentEntries.map(entry => {
+                    const time = new Date(entry.timestamp).toLocaleTimeString();
+                    const icon = entry.granted ? '✅' : '❌';
+                    const className = entry.granted ? 'access' : 'denied';
+                    return `<div class="audit-item ${className}">${icon} ${time} - ${entry.action}</div>`;
+                }).join('');
+            }
+
+            checkPermission(permission) {
+                if (this.emergencyMode) {
+                    this.logAccess(`Emergency mode: ${permission} denied`, null, false);
+                    return false;
+                }
+
+                if (this.settings.anonymousMode && ['calendarAccess', 'contactsAccess', 'locationAccess'].includes(permission)) {
+                    this.logAccess(`Anonymous mode: ${permission} denied`, null, false);
+                    return false;
+                }
+
+                const hasPermission = this.settings[permission];
+                this.logAccess(permission, null, hasPermission);
+                return hasPermission;
+            }
+
+            setPrivacyLevel(level) {
+                this.settings.privacyLevel = level;
+                this.saveSetting('privacyLevel', level);
+
+                // Auto-configure permissions based on level
+                const levelConfigs = {
+                    minimal: {
+                        calendarAccess: false,
+                        contactsAccess: false,
+                        locationAccess: false,
+                        deviceAccess: false,
+                        conversationHistory: false,
+                        searchHistory: false,
+                        usageAnalytics: false
+                    },
+                    standard: {
+                        calendarAccess: false,
+                        contactsAccess: false,
+                        locationAccess: false,
+                        deviceAccess: true,
+                        conversationHistory: true,
+                        searchHistory: false,
+                        usageAnalytics: false
+                    },
+                    enhanced: {
+                        calendarAccess: true,
+                        contactsAccess: false,
+                        locationAccess: true,
+                        deviceAccess: true,
+                        conversationHistory: true,
+                        searchHistory: true,
+                        usageAnalytics: true
+                    },
+                    full: {
+                        calendarAccess: true,
+                        contactsAccess: true,
+                        locationAccess: true,
+                        deviceAccess: true,
+                        conversationHistory: true,
+                        searchHistory: true,
+                        usageAnalytics: true
+                    }
+                };
+
+                const config = levelConfigs[level];
+                if (config) {
+                    Object.keys(config).forEach(key => {
+                        this.settings[key] = config[key];
+                        this.saveSetting(key, config[key]);
+                    });
+                    
+                    this.updateAllUIElements();
+                    this.showMessage(`🔒 Privacy level set to ${level}`, 'success');
+                    this.logAccess(`Privacy level changed to ${level}`);
+                }
+            }
+
+            setPrivacyProfile(profile) {
+                this.settings.privacyProfile = profile;
+                this.saveSetting('privacyProfile', profile);
+
+                const profileConfigs = {
+                    personal: { privacyLevel: 'full', anonymousMode: false },
+                    work: { privacyLevel: 'enhanced', anonymousMode: false, conversationHistory: false },
+                    public: { privacyLevel: 'minimal', anonymousMode: true },
+                    family: { privacyLevel: 'standard', anonymousMode: false },
+                    guest: { privacyLevel: 'minimal', anonymousMode: true, conversationHistory: false }
+                };
+
+                const config = profileConfigs[profile];
+                if (config) {
+                    Object.keys(config).forEach(key => {
+                        this.settings[key] = config[key];
+                        this.saveSetting(key, config[key]);
+                    });
+                    
+                    if (config.privacyLevel) {
+                        this.setPrivacyLevel(config.privacyLevel);
+                    }
+                    
+                    this.updateAllUIElements();
+                    this.showMessage(`👥 Privacy profile set to ${profile}`, 'success');
+                    this.logAccess(`Privacy profile changed to ${profile}`);
+                }
+            }
+
+            togglePrivacySetting(setting) {
+                this.settings[setting] = !this.settings[setting];
+                this.saveSetting(setting, this.settings[setting]);
+                
+                const toggle = this[setting];
+                this.updateToggle(toggle, this.settings[setting]);
+                
+                const action = this.settings[setting] ? 'enabled' : 'disabled';
+                this.showMessage(`🔒 ${setting} ${action}`, 'info');
+                this.logAccess(`${setting} ${action}`);
+            }
+
+            toggleEmergencyLock() {
+                this.emergencyMode = !this.emergencyMode;
+                this.settings.emergencyLock = this.emergencyMode;
+                this.saveSetting('emergencyLock', this.emergencyMode);
+                
+                this.updateToggle(this.emergencyLock, this.emergencyMode);
+                
+                if (this.emergencyMode) {
+                    document.body.classList.add('emergency-mode');
+                    this.synthesis.cancel();
+                    this.stopListening();
+                    this.showMessage('🚨 EMERGENCY PRIVACY LOCK ACTIVATED', 'error');
+                    this.logAccess('Emergency privacy lock activated');
+                } else {
+                    document.body.classList.remove('emergency-mode');
+                    this.showMessage('🔓 Emergency privacy lock deactivated', 'success');
+                    this.logAccess('Emergency privacy lock deactivated');
+                }
+            }
+
+            viewMyData() {
+                const dataSize = this.calculateDataSize();
+                const conversations = this.settings.conversationHistory ? this.conversationData.length : 0;
+                const auditEntries = this.auditLog.length;
+                
+                const dataReport = `
+                    📊 Personal Data Report:
+                    
+                    🗨️ Conversations: ${conversations} entries
+                    📋 Audit Log: ${auditEntries} entries
+                    💾 Total Data Size: ${dataSize} KB
+                    🕐 Data Age: Up to ${this.settings.dataRetention} days
+                    🔒 Privacy Level: ${this.settings.privacyLevel}
+                    👥 Current Profile: ${this.settings.privacyProfile}
+                    🔐 Encryption: ${this.settings.encryptionEnabled ? 'Enabled' : 'Disabled'}
+                `;
+                
+                this.showPrivacyModal('My Data Overview', dataReport);
+                this.logAccess('Viewed personal data report');
+            }
+
+            exportPrivacyData() {
+                const privacyData = {
+                    exported: new Date().toISOString(),
+                    settings: this.settings,
+                    conversationData: this.settings.conversationHistory ? this.conversationData : [],
+                    auditLog: this.auditLog,
+                    privacyInfo: {
+                        dataRetentionDays: this.settings.dataRetention,
+                        encryptionEnabled: this.settings.encryptionEnabled,
+                        anonymousMode: this.settings.anonymousMode
+                    }
+                };
+
+                const blob = new Blob([JSON.stringify(privacyData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `voice-assistant-privacy-data-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                this.showMessage('✅ Privacy data exported successfully!', 'success');
+                this.logAccess('Privacy data exported');
+            }
+
+            clearHistory() {
+                if (confirm('Are you sure you want to clear all conversation history? This cannot be undone.')) {
+                    this.conversationData = [];
+                    this.saveConversationData();
+                    this.showMessage('🗑️ Conversation history cleared', 'success');
+                    this.logAccess('Conversation history cleared');
+                }
+            }
+
+            emergencyWipe() {
+                const confirmation = prompt('⚠️ EMERGENCY DATA WIPE\n\nThis will permanently delete ALL your data including:\n- Conversation history\n- Audit logs\n- Personal settings\n- Privacy preferences\n\nType "WIPE MY DATA" to confirm:');
+                
+                if (confirmation === 'WIPE MY DATA') {
+                    // Clear all stored data
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.startsWith('va_')) {
+                            localStorage.removeItem(key);
+                        }
+                    });
+                    
+                    // Reset everything
+                    this.conversationData = [];
+                    this.auditLog = [];
+                    this.emergencyMode = true;
+                    
+                    this.showMessage('💥 EMERGENCY WIPE COMPLETED - All data destroyed', 'error');
+                    
+                    // Reload page after delay
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                }
+            }
+
+            viewFullAudit() {
+                const auditReport = this.auditLog.slice(-50).reverse().map(entry => {
+                    const date = new Date(entry.timestamp).toLocaleString();
+                    const status = entry.granted ? '✅ GRANTED' : '❌ DENIED';
+                    return `${date} - ${status} - ${entry.action}`;
+                }).join('\n');
+                
+                const fullReport = `📜 Full Audit Log (Last 50 entries):\n\n${auditReport || 'No audit entries found.'}`;
+                this.showPrivacyModal('Audit Log', fullReport);
+                this.logAccess('Viewed full audit log');
+            }
+
+            showPrivacyModal(title, content) {
+                // Create modal if it doesn't exist
+                let modal = document.getElementById('privacyModal');
+                if (!modal) {
+                    modal = document.createElement('div');
+                    modal.id = 'privacyModal';
+                    modal.className = 'privacy-modal';
+                    modal.innerHTML = `
+                        <div class="privacy-modal-content">
+                            <div class="privacy-modal-header">
+                                <h3 id="modalTitle"></h3>
+                                <button class="close-modal" id="closeModal">✕</button>
+                            </div>
+                            <div id="modalContent" style="white-space: pre-line; line-height: 1.6;"></div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    
+                    // Add close functionality
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) modal.classList.remove('open');
+                    });
+                    document.getElementById('closeModal').addEventListener('click', () => {
+                        modal.classList.remove('open');
+                    });
+                }
+                
+                document.getElementById('modalTitle').textContent = title;
+                document.getElementById('modalContent').textContent = content;
+                modal.classList.add('open');
+            }
+
+            cleanupOldData() {
+                const cutoffDate = new Date();
+                cutoffDate.setDate(cutoffDate.getDate() - this.settings.dataRetention);
+                
+                // Clean conversation data
+                this.conversationData = this.conversationData.filter(item => 
+                    new Date(item.timestamp) > cutoffDate
+                );
+                
+                // Clean audit log
+                this.auditLog = this.auditLog.filter(entry => 
+                    new Date(entry.timestamp) > cutoffDate
+                );
+                
+                this.saveConversationData();
+                this.saveAuditLog();
+                this.updateAuditDisplay();
+            }
+
+            calculateDataSize() {
+                const data = {
+                    settings: this.settings,
+                    conversations: this.conversationData,
+                    audit: this.auditLog
+                };
+                return Math.round(JSON.stringify(data).length / 1024);
+            }
+
+            // Data persistence methods
+            loadAuditLog() {
+                try {
+                    const stored = localStorage.getItem('va_auditLog');
+                    return stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    console.warn('Failed to load audit log:', error);
+                    return [];
+                }
+            }
+
+            saveAuditLog() {
+                try {
+                    localStorage.setItem('va_auditLog', JSON.stringify(this.auditLog));
+                } catch (error) {
+                    console.warn('Failed to save audit log:', error);
+                }
+            }
+
+            loadConversationData() {
+                try {
+                    const stored = localStorage.getItem('va_conversations');
+                    return stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    console.warn('Failed to load conversation data:', error);
+                    return [];
+                }
+            }
+
+            saveConversationData() {
+                if (!this.settings.conversationHistory) return;
+                
+                try {
+                    localStorage.setItem('va_conversations', JSON.stringify(this.conversationData));
+                } catch (error) {
+                    console.warn('Failed to save conversation data:', error);
+                }
+            }
+
+            storeConversation(userInput, aiResponse) {
+                if (!this.settings.conversationHistory) return;
+                
+                const conversation = {
+                    timestamp: new Date().toISOString(),
+                    userInput: this.settings.anonymousMode ? '[ANONYMOUS]' : userInput,
+                    aiResponse: aiResponse,
+                    privacyLevel: this.settings.privacyLevel
+                };
+                
+                this.conversationData.push(conversation);
+                this.saveConversationData();
+                this.logAccess('Conversation stored');
+            }
+
+            // Enhanced processUserInput with privacy controls
+            async processUserInput(input) {
+                // Check privacy permissions
+                if (this.emergencyMode) {
+                    this.showMessage('🚨 Emergency privacy mode active - interactions disabled', 'error');
+                    return;
+                }
+
+                this.isProcessing = true;
+                this.isListening = false;
+                this.updateStatus('🤖 Processing...');
+                this.updateUI();
+
+                try {
+                    const response = await this.sendToChatGPT(input);
+                    
+                    // Store conversation if permitted
+                    this.storeConversation(input, response);
+                    
+                    if (this.settings.showResponse) {
+                        this.showResponse(input, response);
+                    }
+                    
+                    this.speakResponse(response);
+                    this.logAccess('AI conversation completed');
+                } catch (error) {
+                    this.showMessage(`AI Error: ${error.message}`, 'error');
+                    this.logAccess('AI conversation failed', error.message, false);
+                } finally {
+                    this.isProcessing = false;
+                    this.updateStatus('Ready to listen');
+                    this.updateUI();
+                }
+            }
+
+            // ====== END PRIVACY METHODS ======
+
             // Settings methods (simplified for space)
             loadSettings() {
                 Object.keys(this.settings).forEach(key => {
@@ -1778,6 +2566,9 @@
                 if (this.wakeSensitivity) this.wakeSensitivity.value = this.settings.wakeSensitivity;
                 if (this.chunkSize) this.chunkSize.value = this.settings.chunkSize;
                 if (this.chunkDelay) this.chunkDelay.value = this.settings.chunkDelay;
+                if (this.dataRetention) this.dataRetention.value = this.settings.dataRetention;
+                if (this.privacyLevel) this.privacyLevel.value = this.settings.privacyLevel;
+                if (this.privacyProfile) this.privacyProfile.value = this.settings.privacyProfile;
 
                 // Update current wake word display
                 if (this.currentWakeWord) this.currentWakeWord.textContent = this.settings.wakeWord;
@@ -1793,6 +2584,7 @@
                 if (this.wakeSensitivityValue) this.wakeSensitivityValue.textContent = this.settings.wakeSensitivity;
                 if (this.chunkSizeValue) this.chunkSizeValue.textContent = this.settings.chunkSize;
                 if (this.chunkDelayValue) this.chunkDelayValue.textContent = this.settings.chunkDelay;
+                if (this.dataRetentionValue) this.dataRetentionValue.textContent = this.settings.dataRetention;
 
                 // Update toggles
                 this.updateToggle(this.continuousToggle, this.settings.continuousListening);
@@ -1803,6 +2595,18 @@
                 this.updateToggle(this.localVoicesToggle, this.settings.useLocalVoices);
                 this.updateToggle(this.splitTextToggle, this.settings.splitText);
 
+                // Update privacy toggles
+                this.updateToggle(this.calendarAccess, this.settings.calendarAccess);
+                this.updateToggle(this.contactsAccess, this.settings.contactsAccess);
+                this.updateToggle(this.locationAccess, this.settings.locationAccess);
+                this.updateToggle(this.deviceAccess, this.settings.deviceAccess);
+                this.updateToggle(this.conversationHistory, this.settings.conversationHistory);
+                this.updateToggle(this.searchHistory, this.settings.searchHistory);
+                this.updateToggle(this.usageAnalytics, this.settings.usageAnalytics);
+                this.updateToggle(this.encryptionEnabled, this.settings.encryptionEnabled);
+                this.updateToggle(this.anonymousMode, this.settings.anonymousMode);
+                this.updateToggle(this.emergencyLock, this.settings.emergencyLock);
+
                 // Update theme
                 document.querySelectorAll('.color-option').forEach(option => {
                     option.classList.toggle('active', option.dataset.theme === this.settings.theme);
@@ -1812,6 +2616,9 @@
                 document.querySelectorAll('.wave-color-option').forEach(option => {
                     option.classList.toggle('active', option.dataset.waveColor === this.settings.waveColor);
                 });
+
+                // Update audit display
+                this.updateAuditDisplay();
             }
 
             saveSetting(key, value) {
@@ -2020,8 +2827,27 @@
                         useLocalVoices: true,
                         splitText: true,
                         chunkSize: 40,
-                        chunkDelay: 300
+                        chunkDelay: 300,
+                        // Privacy defaults
+                        privacyLevel: 'standard',
+                        calendarAccess: false,
+                        contactsAccess: false,
+                        locationAccess: false,
+                        deviceAccess: false,
+                        conversationHistory: true,
+                        searchHistory: false,
+                        usageAnalytics: false,
+                        dataRetention: 30,
+                        encryptionEnabled: true,
+                        anonymousMode: false,
+                        emergencyLock: false,
+                        privacyProfile: 'personal'
                     };
+
+                    // Clear privacy data too
+                    this.conversationData = [];
+                    this.auditLog = [];
+                    this.emergencyMode = false;
 
                     this.loadSettings();
                     this.initializeWave();
