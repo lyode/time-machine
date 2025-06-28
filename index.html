@@ -100,6 +100,55 @@
             transition: all 0.3s ease;
         }
 
+        /* Debug Messages */
+        .debug-messages {
+            position: absolute;
+            top: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 250;
+        }
+
+        .debug-messages.show {
+            opacity: 0.9;
+        }
+
+        .debug-item {
+            padding: 3px 0;
+            color: #00ff88;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .debug-item:last-child {
+            border-bottom: none;
+        }
+
+        .debug-item.error {
+            color: #ff5722;
+        }
+
+        .debug-item.warning {
+            color: #ff9800;
+        }
+
+        .debug-item.success {
+            color: #4caf50;
+        }
+
+        .debug-item.info {
+            color: #2196f3;
+        }
+
         /* Microphone Status Indicator */
         .mic-status-indicator {
             position: absolute;
@@ -999,6 +1048,11 @@
     <!-- Status Display -->
     <div class="status-display" id="statusDisplay">Ready to listen</div>
 
+    <!-- Debug Messages -->
+    <div class="debug-messages" id="debugMessages">
+        <div class="debug-item">Ready for microphone test</div>
+    </div>
+
     <!-- Microphone Status Indicator -->
     <div class="mic-status-indicator" id="micStatusIndicator">
         <span class="mic-status-icon" id="micStatusIcon">🎤</span>
@@ -1409,8 +1463,16 @@
         <!-- Test Functions -->
         <div class="setting-group">
             <label class="setting-label">🧪 Test Functions</label>
+            <div style="background: rgba(255, 152, 0, 0.1); padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; border: 1px solid rgba(255, 152, 0, 0.3);">
+                💡 <strong>Microphone not working?</strong><br>
+                1. Try "⚡ Quick Mic Test" to see exact error<br>
+                2. Use "🌐 External Test" to verify your microphone works<br>
+                3. Follow the permission fix guide that appears
+            </div>
             <button class="btn btn-success" id="testSpeechBtn">🗣️ Test Speech</button>
             <button class="btn btn-primary" id="testMicBtn">🎤 Test Microphone</button>
+            <button class="btn btn-warning" id="quickMicTestBtn">⚡ Quick Mic Test</button>
+            <button class="btn" id="externalMicTestBtn" style="background: #4caf50; color: white;">🌐 External Test</button>
             <button class="btn btn-secondary" id="testWaveBtn">🌊 Test Wave Animation</button>
             <button class="btn" id="testWakeWordBtn" style="background: #00bcd4; color: white;">👂 Test Wake Word</button>
             <button class="btn btn-warning" id="testFullSystemBtn">🔧 Full System Test</button>
@@ -1640,6 +1702,9 @@
                 this.micStatusIcon = document.getElementById('micStatusIcon');
                 this.micStatusText = document.getElementById('micStatusText');
 
+                // Debug messages
+                this.debugMessages = document.getElementById('debugMessages');
+
                 // Voice Control Panel elements
                 this.voiceControlPanel = document.getElementById('voiceControlPanel');
                 this.controlPanelToggle = document.getElementById('controlPanelToggle');
@@ -1708,6 +1773,8 @@
                 this.testApiKeyBtn = document.getElementById('testApiKeyBtn');
                 this.testSpeechBtn = document.getElementById('testSpeechBtn');
                 this.testMicBtn = document.getElementById('testMicBtn');
+                this.quickMicTestBtn = document.getElementById('quickMicTestBtn');
+                this.externalMicTestBtn = document.getElementById('externalMicTestBtn');
                 this.testWaveBtn = document.getElementById('testWaveBtn');
                 this.testWakeWordBtn = document.getElementById('testWakeWordBtn');
                 this.testFullSystemBtn = document.getElementById('testFullSystemBtn');
@@ -1763,6 +1830,8 @@
                 this.testApiKeyBtn.addEventListener('click', () => this.testApiKey());
                 this.testSpeechBtn.addEventListener('click', () => this.testSpeech());
                 this.testMicBtn.addEventListener('click', () => this.testMicrophone());
+                this.quickMicTestBtn.addEventListener('click', () => this.quickMicrophoneTest());
+                this.externalMicTestBtn.addEventListener('click', () => this.openExternalMicTest());
                 this.testWaveBtn.addEventListener('click', () => this.testWaveAnimation());
                 this.testWakeWordBtn.addEventListener('click', () => this.testWakeWord());
                 this.testFullSystemBtn.addEventListener('click', () => this.testFullSystem());
@@ -2436,11 +2505,55 @@ ${this.isMobile ? `
             }
 
             testMicrophone() {
-                this.showMessage('🎤 Starting microphone test...', 'info');
-                this.updateMicrophoneStatus('processing', 'Testing...', 'warning');
+                this.showMessage('🎤 Choose your microphone test...', 'info');
                 
-                // Simple, direct microphone test
-                this.runSimpleMicrophoneTest();
+                const testOptions = `
+🎤 Microphone Test Options:
+
+1️⃣ ⚡ QUICK TEST (Recommended)
+   • Super simple, instant results
+   • Shows step-by-step debugging
+   • Best for troubleshooting
+
+2️⃣ 🎯 ADVANCED TEST  
+   • Tests audio levels and quality
+   • 3-second audio analysis
+   • Shows detailed performance
+
+Which test would you like to run?
+                `;
+                
+                this.showPrivacyModal('Choose Microphone Test', testOptions);
+                
+                // Add buttons to the modal
+                setTimeout(() => {
+                    const modal = document.getElementById('privacyModal');
+                    const modalContent = modal.querySelector('.privacy-modal-content');
+                    
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.style.textAlign = 'center';
+                    buttonContainer.style.marginTop = '20px';
+                    
+                    const quickBtn = document.createElement('button');
+                    quickBtn.className = 'btn btn-primary';
+                    quickBtn.innerHTML = '⚡ Quick Test';
+                    quickBtn.onclick = () => {
+                        modal.classList.remove('open');
+                        this.quickMicrophoneTest();
+                    };
+                    
+                    const advancedBtn = document.createElement('button');
+                    advancedBtn.className = 'btn btn-secondary';
+                    advancedBtn.innerHTML = '🎯 Advanced Test';
+                    advancedBtn.onclick = () => {
+                        modal.classList.remove('open');
+                        this.runSimpleMicrophoneTest();
+                    };
+                    
+                    buttonContainer.appendChild(quickBtn);
+                    buttonContainer.appendChild(advancedBtn);
+                    modalContent.appendChild(buttonContainer);
+                }, 100);
             }
 
             async runSimpleMicrophoneTest() {
@@ -2680,6 +2793,315 @@ ${this.isMobile ? '📱 Mobile: Make sure silent mode is OFF' : '💻 Desktop: C
                 `;
                 
                 this.showPrivacyModal('Microphone Test Results', testResults);
+            }
+
+            // ===== SUPER SIMPLE MICROPHONE TEST =====
+            
+            quickMicrophoneTest() {
+                this.showMessage('⚡ Starting SUPER SIMPLE microphone test...', 'info');
+                this.showDebugMessages(true);
+                this.addDebugMessage('Starting microphone diagnosis...', 'info');
+                this.debugMicrophoneStep1();
+            }
+
+            showDebugMessages(show) {
+                if (this.debugMessages) {
+                    if (show) {
+                        this.debugMessages.classList.add('show');
+                    } else {
+                        this.debugMessages.classList.remove('show');
+                    }
+                }
+            }
+
+            addDebugMessage(message, type = 'info') {
+                if (!this.debugMessages) return;
+                
+                const debugItem = document.createElement('div');
+                debugItem.className = `debug-item ${type}`;
+                debugItem.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+                
+                this.debugMessages.appendChild(debugItem);
+                
+                // Keep only last 10 messages
+                const items = this.debugMessages.querySelectorAll('.debug-item');
+                if (items.length > 10) {
+                    items[0].remove();
+                }
+                
+                // Scroll to bottom
+                this.debugMessages.scrollTop = this.debugMessages.scrollHeight;
+            }
+
+            clearDebugMessages() {
+                if (this.debugMessages) {
+                    this.debugMessages.innerHTML = '';
+                }
+            }
+
+            debugMicrophoneStep1() {
+                this.addDebugMessage('Checking browser support...', 'info');
+                
+                // Check if basic APIs exist
+                if (!navigator.mediaDevices) {
+                    this.addDebugMessage('FAIL: navigator.mediaDevices not supported', 'error');
+                    this.showMessage('❌ FAILED: navigator.mediaDevices not supported', 'error');
+                    this.showBasicTroubleshooting('MediaDevices API not supported. Try updating your browser.');
+                    return;
+                }
+                
+                if (!navigator.mediaDevices.getUserMedia) {
+                    this.addDebugMessage('FAIL: getUserMedia not supported', 'error');
+                    this.showMessage('❌ FAILED: getUserMedia not supported', 'error');
+                    this.showBasicTroubleshooting('getUserMedia not supported. Try a different browser.');
+                    return;
+                }
+                
+                this.addDebugMessage('OK: Browser APIs supported', 'success');
+                this.showMessage('✅ Step 1: Browser support OK!', 'success');
+                setTimeout(() => this.debugMicrophoneStep2(), 1000);
+            }
+
+            debugMicrophoneStep2() {
+                this.addDebugMessage('Checking security context...', 'info');
+                
+                const isSecure = location.protocol === 'https:' || 
+                               location.hostname === 'localhost' || 
+                               location.hostname === '127.0.0.1';
+                
+                if (!isSecure) {
+                    this.addDebugMessage('WARN: Not using HTTPS', 'warning');
+                    this.showMessage('⚠️ WARNING: Not using HTTPS. Microphone may not work.', 'warning');
+                    this.showBasicTroubleshooting('Try accessing this page via HTTPS for better microphone support.');
+                } else {
+                    this.addDebugMessage('OK: Secure context detected', 'success');
+                    this.showMessage('✅ Step 2: Security OK!', 'success');
+                }
+                
+                setTimeout(() => this.debugMicrophoneStep3(), 1000);
+            }
+
+            async debugMicrophoneStep3() {
+                this.addDebugMessage('Requesting microphone access...', 'info');
+                this.showMessage('🎤 Step 3: Requesting microphone (ALLOW when prompted!)...', 'info');
+                
+                try {
+                    // Most basic microphone request possible
+                    this.addDebugMessage('Calling getUserMedia({ audio: true })...', 'info');
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    
+                    this.addDebugMessage('SUCCESS: getUserMedia returned stream', 'success');
+                    this.showMessage('🎉 SUCCESS! Microphone access granted!', 'success');
+                    
+                    // Quick check if stream is working
+                    if (stream && stream.active) {
+                        this.addDebugMessage('OK: Stream is active', 'success');
+                        this.showMessage('✅ Step 4: Microphone stream is active!', 'success');
+                        
+                        // Check audio tracks
+                        const audioTracks = stream.getAudioTracks();
+                        this.addDebugMessage(`Found ${audioTracks.length} audio tracks`, 'info');
+                        
+                        if (audioTracks.length > 0) {
+                            this.addDebugMessage(`Track label: ${audioTracks[0].label || 'Unnamed'}`, 'info');
+                            this.addDebugMessage(`Track state: ${audioTracks[0].readyState}`, 'info');
+                        }
+                        
+                        // Stop the stream immediately
+                        stream.getTracks().forEach(track => {
+                            track.stop();
+                            this.addDebugMessage(`Stopped track: ${track.kind}`, 'info');
+                        });
+                        
+                        this.addDebugMessage('TEST COMPLETED SUCCESSFULLY!', 'success');
+                        this.showMessage('🎯 MICROPHONE IS WORKING! Test completed successfully.', 'success');
+                        this.updateMicrophoneStatus('success', 'Working!', 'success');
+                        
+                        setTimeout(() => {
+                            this.showBasicTroubleshooting('Great! Your microphone is working. If voice recognition still fails, the issue might be with speech recognition, not the microphone itself.');
+                            this.showDebugMessages(false);
+                        }, 5000);
+                        
+                    } else {
+                        this.addDebugMessage('FAIL: Stream is not active', 'error');
+                        this.showMessage('❌ Step 4: Stream is not active', 'error');
+                        this.showBasicTroubleshooting('Microphone access granted but stream is inactive. Try restarting your browser.');
+                    }
+                    
+                } catch (error) {
+                    this.addDebugMessage(`ERROR: ${error.name} - ${error.message}`, 'error');
+                    this.showMessage('❌ FAILED: Cannot access microphone', 'error');
+                    this.handleQuickTestError(error);
+                }
+            }
+
+            handleQuickTestError(error) {
+                let solution = '';
+                
+                switch (error.name) {
+                    case 'NotAllowedError':
+                        solution = 'SOLUTION: Click ALLOW when browser asks for microphone permission. Look for 🔒 or 🎤 icon in address bar.';
+                        break;
+                    case 'NotFoundError':
+                        solution = 'SOLUTION: No microphone detected. Connect a microphone and refresh the page.';
+                        break;
+                    case 'NotReadableError':
+                        solution = 'SOLUTION: Microphone is busy. Close other apps (Zoom, Skype, etc.) and try again.';
+                        break;
+                    default:
+                        solution = `SOLUTION: Error "${error.name}". Try refreshing page or using a different browser.`;
+                        break;
+                }
+                
+                this.showMessage(`🔧 ${solution}`, 'warning');
+                this.updateMicrophoneStatus('error', error.name, 'error');
+                
+                setTimeout(() => {
+                    this.showBasicTroubleshooting(`Detailed error: ${error.message || 'Unknown error'}`);
+                }, 3000);
+            }
+
+            showBasicTroubleshooting(primaryIssue) {
+                const troubleshootingText = `
+⚡ Quick Microphone Diagnosis
+
+🔴 Primary Issue: ${primaryIssue}
+
+🔧 IMMEDIATE FIXES TO TRY:
+
+1️⃣ BROWSER PERMISSION (Most Common):
+   📍 FIND THE ICON: Look for 🔒 🎤 🚫 ⚠️ in your address bar
+   
+   🌐 CHROME:
+   • Click 🔒 lock icon in address bar
+   • Find "Microphone" → Change "Block" to "Allow"
+   • Refresh page (F5) and try again
+   
+   🦊 FIREFOX:
+   • Click 🔒 lock icon → Click ">" arrow
+   • Find "Use the microphone" → Set to "Allow"
+   • Refresh and test again
+   
+   🧭 SAFARI:
+   • Safari menu → Settings for This Website
+   • Find "Microphone" → Change to "Allow"
+   • Refresh page
+   
+   🔄 RESET ALL PERMISSIONS:
+   • Chrome: Go to chrome://settings/content/microphone
+   • Firefox: Go to about:preferences#privacy
+   • Remove this website from blocked list
+
+2️⃣ TRY INCOGNITO/PRIVATE MODE:
+   • Chrome: Ctrl+Shift+N (PC) or Cmd+Shift+N (Mac)
+   • Firefox: Ctrl+Shift+P (PC) or Cmd+Shift+P (Mac)
+   • Safari: File → New Private Window
+   • Test microphone in private mode
+
+3️⃣ OTHER APPS USING MICROPHONE:
+   • Close Zoom, Skype, Teams, Discord, etc.
+   • Close other browser tabs using microphone
+   • Restart your browser completely
+
+4️⃣ DEVICE SETTINGS:
+   ${this.isMobile ? `
+   📱 Mobile (${this.isIOS ? 'iOS' : 'Android'}):
+   • Turn OFF silent/do not disturb mode
+   • Settings → Privacy → Microphone → Enable for browser
+   • Try restarting your device
+   • Close all other apps and try again
+   ` : `
+   💻 Desktop:
+   • Windows: Settings → Privacy → Microphone → Allow apps
+   • Mac: System Preferences → Security & Privacy → Microphone
+   • Ensure microphone is not muted
+   • Try a different microphone/headset
+   `}
+
+5️⃣ BROWSER ISSUES:
+   • Update browser to latest version
+   • Clear browser cache and cookies
+   • Try a different browser (Chrome, Firefox, Safari)
+   • Disable browser extensions temporarily
+
+6️⃣ NETWORK/SECURITY:
+   • Ensure page URL starts with "https://"
+   • Disable VPN temporarily
+   • Try on a different network
+   • Check firewall settings
+
+🧪 QUICK TEST: Try this simple test:
+   1. Go to: https://www.onlinemictest.com
+   2. If it works there → Browser permission issue
+   3. If it doesn't work → Hardware/system issue
+
+🆘 STILL NOT WORKING?
+• Test microphone in another app (Voice Recorder, Google Search)
+• If it works elsewhere: Browser issue (follow steps above)
+• If it doesn't work anywhere: Hardware issue (check connections)
+
+💡 Most microphone issues are browser permission problems. Follow the Chrome/Firefox steps above carefully!
+                `;
+                
+                this.showPrivacyModal('Fix Microphone Permissions', troubleshootingText);
+            }
+
+            openExternalMicTest() {
+                const externalTestInfo = `
+🌐 External Microphone Test
+
+This will open a simple microphone test website to verify if your microphone works outside of this app.
+
+🎯 What this tells us:
+• ✅ If it works there: The issue is browser permissions for THIS site
+• ❌ If it doesn't work there: Hardware or system-level issue
+
+📋 Instructions:
+1. Click "Open Test Site" below
+2. Allow microphone access when prompted
+3. Speak into your microphone
+4. See if the test detects audio
+
+🔍 Results Analysis:
+• Works on external site ✅ → Fix browser permissions here
+• Doesn't work anywhere ❌ → Check hardware/system settings
+
+This helps us determine if it's an app-specific issue or a general microphone problem.
+                `;
+                
+                this.showPrivacyModal('External Microphone Test', externalTestInfo);
+                
+                // Add button to open external test
+                setTimeout(() => {
+                    const modal = document.getElementById('privacyModal');
+                    const modalContent = modal.querySelector('.privacy-modal-content');
+                    
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.style.textAlign = 'center';
+                    buttonContainer.style.marginTop = '20px';
+                    
+                    const openTestBtn = document.createElement('button');
+                    openTestBtn.className = 'btn btn-success';
+                    openTestBtn.innerHTML = '🌐 Open Test Site';
+                    openTestBtn.onclick = () => {
+                        window.open('https://www.onlinemictest.com', '_blank');
+                        modal.classList.remove('open');
+                        
+                        // Show follow-up instructions
+                        setTimeout(() => {
+                            this.showMessage('🌐 External test opened! Test your microphone there, then come back.', 'info');
+                            
+                            setTimeout(() => {
+                                this.showMessage('💡 If external test worked, the issue is browser permissions. If not, check hardware.', 'warning');
+                            }, 5000);
+                        }, 1000);
+                    };
+                    
+                    buttonContainer.appendChild(openTestBtn);
+                    modalContent.appendChild(buttonContainer);
+                }, 100);
+                
+                this.logAccess('External microphone test opened');
             }
 
             async runMicrophoneSystemCheck() {
