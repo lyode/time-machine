@@ -569,7 +569,7 @@
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
             <h2>⚙️ Settings</h2>
-            <button class="close-settings" id="closeSettings">✕</button>
+            <button class="close-settings" id="closeSettingsBtn">✕</button>
         </div>
 
         <!-- API Configuration -->
@@ -833,7 +833,7 @@
                 this.settingsBtn = document.getElementById('settingsBtn');
                 this.settingsPanel = document.getElementById('settingsPanel');
                 this.settingsOverlay = document.getElementById('settingsOverlay');
-                this.closeSettings = document.getElementById('closeSettings');
+                this.closeSettingsBtn = document.getElementById('closeSettingsBtn'); // Changed this line
 
                 // Settings inputs
                 this.apiKeyInput = document.getElementById('apiKeyInput');
@@ -884,8 +884,8 @@
 
                 // Settings panel
                 this.settingsBtn.addEventListener('click', () => this.openSettings());
-                this.closeSettings.addEventListener('click', () => this.closeSettings());
-                this.settingsOverlay.addEventListener('click', () => this.closeSettings());
+                this.closeSettingsBtn.addEventListener('click', () => this.closeSettingsPanel()); // Changed this line
+                this.settingsOverlay.addEventListener('click', () => this.closeSettingsPanel()); // Changed this line
 
                 // Settings controls
                 this.saveApiKeyBtn.addEventListener('click', () => this.saveApiKey());
@@ -1472,7 +1472,7 @@
                     if (this.waveCount) this.waveCount.value = this.settings.waveCount;
                     if (this.waveHeight) this.waveHeight.value = this.settings.waveHeight;
                     if (this.animSpeed) this.animSpeed.value = this.settings.animSpeed;
-                    if (this.wakeWordInput) this.waveWordInput.value = this.settings.wakeWord;
+                    if (this.wakeWordInput) this.wakeWordInput.value = this.settings.wakeWord;
                     if (this.wakeResponseInput) this.wakeResponseInput.value = this.settings.wakeResponse;
                     if (this.wakeSensitivity) this.wakeSensitivity.value = this.settings.wakeSensitivity;
 
@@ -1546,7 +1546,7 @@
                 this.settingsOverlay.classList.add('open');
             }
 
-            closeSettings() {
+            closeSettingsPanel() { // Renamed this method
                 this.settingsPanel.classList.remove('open');
                 this.settingsOverlay.classList.remove('open');
             }
