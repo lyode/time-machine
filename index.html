@@ -743,10 +743,205 @@
             border-bottom: none;
         }
 
+        /* Voice Control Panel */
+        .voice-control-panel {
+            position: absolute;
+            bottom: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-background);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            opacity: 0;
+            transform: translateX(-50%) translateY(50px);
+            transition: all 0.3s ease;
+            z-index: 200;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .voice-control-panel.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .control-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            min-width: 300px;
+        }
+
+        .control-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 60px;
+            font-size: 12px;
+        }
+
+        .control-btn:hover:not(:disabled) {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .control-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-color: var(--primary-color);
+        }
+
+        .btn-icon {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .btn-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .quick-input-panel {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .quick-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .quick-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+        }
+
+        .quick-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .quick-send-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quick-send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+        }
+
+        .voice-level-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .voice-level-indicator.show {
+            opacity: 1;
+        }
+
+        .level-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .level-bar::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: var(--level-width, 0%);
+            background: linear-gradient(90deg, var(--success-color), var(--wave-color));
+            transition: width 0.1s ease;
+            border-radius: 3px;
+        }
+
+        .level-text {
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            min-width: 60px;
+        }
+
+        .control-panel-toggle {
+            position: absolute;
+            bottom: 90px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+            z-index: 150;
+        }
+
+        .control-panel-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+        }
+
         @media (max-width: 480px) {
-            .settings-panel { width: 100%; }
-            .sound-wave { width: 250px; height: 150px; }
-            .mic-button { width: 70px; height: 70px; font-size: 28px; }
+            .voice-control-panel {
+                width: 90%;
+                max-width: 350px;
+            }
+            
+            .control-buttons {
+                grid-template-columns: repeat(2, 1fr);
+                min-width: unset;
+            }
+            
+            .control-btn {
+                min-height: 55px;
+            }
         }
     </style>
 </head>
@@ -765,6 +960,48 @@
         👂 Listening for wake word: <span id="currentWakeWord">Hey Assistant</span>
     </div>
 
+    <!-- Voice Control Panel -->
+    <div class="voice-control-panel" id="voiceControlPanel">
+        <div class="control-buttons">
+            <button class="control-btn" id="startListeningBtn" title="Start Listening">
+                <span class="btn-icon">🎤</span>
+                <span class="btn-label">Listen</span>
+            </button>
+            <button class="control-btn" id="stopListeningBtn" title="Stop Listening" disabled>
+                <span class="btn-icon">⏹️</span>
+                <span class="btn-label">Stop</span>
+            </button>
+            <button class="control-btn" id="pauseSpeechBtn" title="Pause Speech" disabled>
+                <span class="btn-icon">⏸️</span>
+                <span class="btn-label">Pause</span>
+            </button>
+            <button class="control-btn" id="resumeSpeechBtn" title="Resume Speech" disabled>
+                <span class="btn-icon">▶️</span>
+                <span class="btn-label">Resume</span>
+            </button>
+            <button class="control-btn" id="clearConversationBtn" title="Clear Conversation">
+                <span class="btn-icon">🗑️</span>
+                <span class="btn-label">Clear</span>
+            </button>
+            <button class="control-btn" id="quickSettingsBtn" title="Quick Settings">
+                <span class="btn-icon">⚡</span>
+                <span class="btn-label">Quick</span>
+            </button>
+        </div>
+        
+        <!-- Quick Input Panel -->
+        <div class="quick-input-panel" id="quickInputPanel">
+            <input type="text" class="quick-input" id="quickTextInput" placeholder="Type your message...">
+            <button class="quick-send-btn" id="quickSendBtn">📨</button>
+        </div>
+        
+        <!-- Voice Level Indicator -->
+        <div class="voice-level-indicator" id="voiceLevelIndicator">
+            <div class="level-bar" id="levelBar"></div>
+            <span class="level-text">Voice Level</span>
+        </div>
+    </div>
+
     <!-- Main Wave Container -->
     <div class="wave-container" id="waveContainer">
         <div class="sound-wave" id="soundWave">
@@ -774,6 +1011,9 @@
 
     <!-- Microphone Button -->
     <button class="mic-button" id="micButton">🎤</button>
+
+    <!-- Control Panel Toggle -->
+    <button class="control-panel-toggle" id="controlPanelToggle" title="Voice Controls">🎛️</button>
 
     <!-- Response Display -->
     <div class="response-display" id="responseDisplay"></div>
@@ -1341,6 +1581,20 @@
                 this.currentWakeWord = document.getElementById('currentWakeWord');
                 this.mobileStatus = document.getElementById('mobileStatus');
 
+                // Voice Control Panel elements
+                this.voiceControlPanel = document.getElementById('voiceControlPanel');
+                this.controlPanelToggle = document.getElementById('controlPanelToggle');
+                this.startListeningBtn = document.getElementById('startListeningBtn');
+                this.stopListeningBtn = document.getElementById('stopListeningBtn');
+                this.pauseSpeechBtn = document.getElementById('pauseSpeechBtn');
+                this.resumeSpeechBtn = document.getElementById('resumeSpeechBtn');
+                this.clearConversationBtn = document.getElementById('clearConversationBtn');
+                this.quickSettingsBtn = document.getElementById('quickSettingsBtn');
+                this.quickTextInput = document.getElementById('quickTextInput');
+                this.quickSendBtn = document.getElementById('quickSendBtn');
+                this.voiceLevelIndicator = document.getElementById('voiceLevelIndicator');
+                this.levelBar = document.getElementById('levelBar');
+
                 // Settings elements
                 this.settingsBtn = document.getElementById('settingsBtn');
                 this.settingsPanel = document.getElementById('settingsPanel');
@@ -1425,6 +1679,19 @@
                 // Main controls
                 this.micButton.addEventListener('click', () => this.toggleListening());
                 this.waveContainer.addEventListener('click', () => this.toggleListening());
+
+                // Voice Control Panel
+                this.controlPanelToggle.addEventListener('click', () => this.toggleControlPanel());
+                this.startListeningBtn.addEventListener('click', () => this.startListening());
+                this.stopListeningBtn.addEventListener('click', () => this.stopListening());
+                this.pauseSpeechBtn.addEventListener('click', () => this.pauseSpeech());
+                this.resumeSpeechBtn.addEventListener('click', () => this.resumeSpeech());
+                this.clearConversationBtn.addEventListener('click', () => this.clearCurrentConversation());
+                this.quickSettingsBtn.addEventListener('click', () => this.showQuickSettings());
+                this.quickSendBtn.addEventListener('click', () => this.sendQuickMessage());
+                this.quickTextInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.sendQuickMessage();
+                });
 
                 // Settings panel
                 this.settingsBtn.addEventListener('click', () => this.openSettings());
@@ -1985,12 +2252,18 @@
                 this.analyser.getByteFrequencyData(this.dataArray);
                 const bars = this.soundWave.querySelectorAll('.wave-bar');
                 
+                // Calculate overall audio level
+                const averageLevel = this.dataArray.reduce((sum, value) => sum + value, 0) / this.dataArray.length;
+                
                 bars.forEach((bar, index) => {
                     const dataIndex = Math.floor(index * this.dataArray.length / bars.length);
                     const height = (this.dataArray[dataIndex] / 255) * this.settings.waveHeight * 0.8;
                     bar.style.height = Math.max(6, height) + 'px';
                     bar.classList.toggle('active', height > 25);
                 });
+                
+                // Update voice level in control panel
+                this.updateVoiceLevel(averageLevel);
                 
                 this.waveAnimationId = requestAnimationFrame(() => this.animateWave());
             }
@@ -2120,6 +2393,9 @@
                 } else {
                     this.micButton.textContent = '🎤';
                 }
+
+                // Update control panel state
+                this.updateControlPanelState();
             }
 
             // ====== PRIVACY CONTROL METHODS ======
@@ -2540,7 +2816,145 @@
                 }
             }
 
-            // ====== END PRIVACY METHODS ======
+            // ====== VOICE CONTROL PANEL METHODS ======
+
+            toggleControlPanel() {
+                this.voiceControlPanel.classList.toggle('show');
+                this.controlPanelToggle.style.transform = this.voiceControlPanel.classList.contains('show') ? 
+                    'scale(1.1) rotate(180deg)' : 'scale(1) rotate(0deg)';
+                this.logAccess('Control panel toggled');
+            }
+
+            updateControlPanelState() {
+                // Update button states based on current assistant state
+                this.startListeningBtn.disabled = this.isListening || this.isProcessing;
+                this.stopListeningBtn.disabled = !this.isListening;
+                this.pauseSpeechBtn.disabled = !this.isSpeaking;
+                this.resumeSpeechBtn.disabled = this.isSpeaking || this.synthesis.paused;
+
+                // Update active states
+                this.startListeningBtn.classList.toggle('active', this.isListening);
+                this.pauseSpeechBtn.classList.toggle('active', this.synthesis.paused);
+            }
+
+            pauseSpeech() {
+                if (this.isSpeaking) {
+                    this.synthesis.pause();
+                    this.showMessage('⏸️ Speech paused', 'info');
+                    this.logAccess('Speech paused');
+                    this.updateControlPanelState();
+                }
+            }
+
+            resumeSpeech() {
+                if (this.synthesis.paused) {
+                    this.synthesis.resume();
+                    this.showMessage('▶️ Speech resumed', 'info');
+                    this.logAccess('Speech resumed');
+                    this.updateControlPanelState();
+                }
+            }
+
+            clearCurrentConversation() {
+                if (confirm('Clear current conversation? This will stop any ongoing speech and reset the session.')) {
+                    this.synthesis.cancel();
+                    this.stopListening();
+                    this.speechQueue = [];
+                    this.currentChunk = 0;
+                    this.isProcessing = false;
+                    this.isSpeaking = false;
+                    this.updateStatus('Ready to listen');
+                    this.updateUI();
+                    this.showMessage('🗑️ Conversation cleared', 'success');
+                    this.logAccess('Conversation cleared manually');
+                }
+            }
+
+            showQuickSettings() {
+                const quickSettings = `
+                    🎛️ Quick Settings:
+                    
+                    Privacy Level: ${this.settings.privacyLevel}
+                    Mobile Mode: ${this.settings.mobileMode ? 'ON' : 'OFF'}
+                    Local Voices: ${this.settings.useLocalVoices ? 'ON' : 'OFF'}
+                    Text Splitting: ${this.settings.splitText ? 'ON' : 'OFF'}
+                    
+                    Voice Settings:
+                    Rate: ${this.settings.speechRate}
+                    Pitch: ${this.settings.speechPitch}
+                    Volume: ${this.settings.speechVolume}
+                    
+                    Data:
+                    Conversations: ${this.conversationData.length}
+                    Audit Entries: ${this.auditLog.length}
+                    Data Size: ${this.calculateDataSize()} KB
+                `;
+                
+                this.showPrivacyModal('Quick Settings Overview', quickSettings);
+                this.logAccess('Quick settings viewed');
+            }
+
+            async sendQuickMessage() {
+                const message = this.quickTextInput.value.trim();
+                if (!message) {
+                    this.showMessage('Please enter a message', 'warning');
+                    return;
+                }
+
+                if (this.emergencyMode) {
+                    this.showMessage('🚨 Emergency mode active - interactions disabled', 'error');
+                    return;
+                }
+
+                this.quickTextInput.value = '';
+                this.quickTextInput.disabled = true;
+                this.quickSendBtn.disabled = true;
+                
+                try {
+                    this.showMessage(`📨 Sending: "${message}"`, 'info');
+                    this.isProcessing = true;
+                    this.updateStatus('🤖 Processing text message...');
+                    this.updateUI();
+
+                    const response = await this.sendToChatGPT(message);
+                    
+                    // Store conversation if permitted
+                    this.storeConversation(message, response);
+                    
+                    if (this.settings.showResponse) {
+                        this.showResponse(message, response);
+                    }
+                    
+                    this.speakResponse(response);
+                    this.logAccess('Quick message sent successfully');
+                } catch (error) {
+                    this.showMessage(`❌ Quick message failed: ${error.message}`, 'error');
+                    this.logAccess('Quick message failed', error.message, false);
+                } finally {
+                    this.isProcessing = false;
+                    this.updateStatus('Ready to listen');
+                    this.updateUI();
+                    this.quickTextInput.disabled = false;
+                    this.quickSendBtn.disabled = false;
+                    this.updateControlPanelState();
+                }
+            }
+
+            updateVoiceLevel(level) {
+                if (this.levelBar) {
+                    const percentage = Math.min(100, (level / 255) * 100);
+                    this.levelBar.style.setProperty('--level-width', `${percentage}%`);
+                    
+                    // Show/hide voice level indicator
+                    if (this.isListening && level > 0) {
+                        this.voiceLevelIndicator.classList.add('show');
+                    } else if (!this.isListening) {
+                        this.voiceLevelIndicator.classList.remove('show');
+                    }
+                }
+            }
+
+            // ====== END VOICE CONTROL PANEL METHODS ======
 
             // Settings methods (simplified for space)
             loadSettings() {
