@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal AI Voice Assistant - Choose Your Companion</title>
+    <title>Personal AI Voice Assistant</title>
     <style>
         * {
             margin: 0;
@@ -20,25 +20,31 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .header {
-            text-align: center;
+            display: flex;
+            justify-content: between;
+            align-items: center;
             margin-bottom: 30px;
+            padding: 20px 0;
         }
 
         .header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: gradientShift 4s ease-in-out infinite;
+            flex: 1;
         }
 
         @keyframes gradientShift {
@@ -46,91 +52,27 @@
             50% { background-position: 100% 50%; }
         }
 
-        .personality-selector {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .personality-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
+        .settings-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .personality-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
         }
 
-        .personality-card:hover::before {
-            transform: translateX(100%);
-        }
-
-        .personality-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .personality-card.active {
-            border-color: #4ecdc4;
-            background: rgba(78, 205, 196, 0.2);
-            box-shadow: 0 0 30px rgba(78, 205, 196, 0.4);
-        }
-
-        .personality-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, var(--avatar-color1), var(--avatar-color2));
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .personality-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .personality-role {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 10px;
-        }
-
-        .personality-description {
-            font-size: 0.8rem;
-            opacity: 0.7;
-            line-height: 1.4;
-        }
-
-        .main-interface {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 30px;
-        }
-
-        .chat-section {
+        .main-chat {
+            flex: 1;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             border-radius: 25px;
@@ -138,10 +80,10 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             flex-direction: column;
-            min-height: 500px;
+            min-height: 600px;
         }
 
-        .current-assistant {
+        .assistant-status {
             background: rgba(0, 0, 0, 0.2);
             border-radius: 15px;
             padding: 20px;
@@ -151,7 +93,7 @@
             gap: 15px;
         }
 
-        .current-avatar {
+        .avatar {
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -159,15 +101,15 @@
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
-            background: linear-gradient(135deg, var(--current-color1), var(--current-color2));
+            background: linear-gradient(135deg, var(--color1), var(--color2));
         }
 
-        .current-info h3 {
+        .assistant-info h3 {
             margin: 0 0 5px 0;
             font-size: 1.2rem;
         }
 
-        .current-info p {
+        .assistant-info p {
             margin: 0;
             opacity: 0.8;
             font-size: 0.9rem;
@@ -246,7 +188,7 @@
         }
 
         .message.ai {
-            background: linear-gradient(135deg, var(--current-color1), var(--current-color2));
+            background: linear-gradient(135deg, var(--color1), var(--color2));
             margin-right: auto;
             border-bottom-left-radius: 5px;
         }
@@ -313,7 +255,7 @@
 
         .send-btn {
             padding: 18px 25px;
-            background: linear-gradient(135deg, var(--current-color1), var(--current-color2));
+            background: linear-gradient(135deg, var(--color1), var(--color2));
             border: none;
             border-radius: 25px;
             color: white;
@@ -326,23 +268,103 @@
             transform: translateY(-2px);
         }
 
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        /* Settings Modal */
+        .settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
 
-        .sidebar-card {
+        .settings-content {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 25px;
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 900px;
+            max-height: 80vh;
+            overflow-y: auto;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .close-btn:hover {
+            opacity: 1;
+        }
+
+        .settings-section {
+            margin-bottom: 30px;
+        }
+
+        .settings-section h3 {
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+
+        .personality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .personality-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .personality-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .personality-card.active {
+            border-color: #4ecdc4;
+            background: rgba(78, 205, 196, 0.2);
+        }
+
+        .personality-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--avatar-color1), var(--avatar-color2));
         }
 
         .api-setup {
             background: rgba(255, 152, 0, 0.1);
             border: 1px solid rgba(255, 152, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
         }
 
         .api-input {
@@ -380,244 +402,161 @@
             background: linear-gradient(135deg, #4ecdc4, #44a08d);
         }
 
-        .quick-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-        }
+        /* Personality-specific colors */
+        .emma { --color1: #ff6b9d; --color2: #c44569; --avatar-color1: #ff6b9d; --avatar-color2: #c44569; }
+        .alex { --color1: #4ecdc4; --color2: #44a08d; --avatar-color1: #4ecdc4; --avatar-color2: #44a08d; }
+        .sophia { --color1: #a8e6cf; --color2: #7fcdcd; --avatar-color1: #a8e6cf; --avatar-color2: #7fcdcd; }
+        .marcus { --color1: #667eea; --color2: #764ba2; --avatar-color1: #667eea; --avatar-color2: #764ba2; }
+        .zara { --color1: #ffeaa7; --color2: #fdcb6e; --avatar-color1: #ffeaa7; --avatar-color2: #fdcb6e; }
+        .david { --color1: #81ecec; --color2: #74b9ff; --avatar-color1: #81ecec; --avatar-color2: #74b9ff; }
 
-        .quick-action {
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-
-        .quick-action:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .personality-traits {
-            margin-top: 15px;
-        }
-
-        .trait {
-            display: flex;
-            justify-content: space-between;
-            margin: 8px 0;
-            font-size: 0.9rem;
-        }
-
-        .trait-bar {
-            width: 60px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .trait-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--current-color1), var(--current-color2));
-            transition: width 0.3s ease;
+        /* Default to Emma */
+        :root {
+            --color1: #ff6b9d;
+            --color2: #c44569;
         }
 
         @media (max-width: 768px) {
-            .main-interface {
-                grid-template-columns: 1fr;
+            .container {
+                padding: 10px;
             }
             
-            .personality-selector {
-                grid-template-columns: repeat(2, 1fr);
+            .main-chat {
+                padding: 20px;
+                min-height: calc(100vh - 120px);
             }
             
-            .current-assistant {
-                flex-direction: column;
-                text-align: center;
+            .settings-content {
+                margin: 20px;
+                max-height: calc(100vh - 40px);
             }
             
-            .voice-controls {
-                margin: 15px 0 0 0;
+            .personality-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
-
-        .status-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #4ecdc4;
-            box-shadow: 0 0 10px #4ecdc4;
-        }
-
-        /* Personality-specific color variables */
-        .emma { --avatar-color1: #ff6b9d; --avatar-color2: #c44569; --current-color1: #ff6b9d; --current-color2: #c44569; }
-        .alex { --avatar-color1: #4ecdc4; --avatar-color2: #44a08d; --current-color1: #4ecdc4; --current-color2: #44a08d; }
-        .sophia { --avatar-color1: #a8e6cf; --avatar-color2: #7fcdcd; --current-color1: #a8e6cf; --current-color2: #7fcdcd; }
-        .marcus { --avatar-color1: #667eea; --avatar-color2: #764ba2; --current-color1: #667eea; --current-color2: #764ba2; }
-        .zara { --avatar-color1: #ffeaa7; --avatar-color2: #fdcb6e; --current-color1: #ffeaa7; --current-color2: #fdcb6e; }
-        .david { --avatar-color1: #81ecec; --avatar-color2: #74b9ff; --current-color1: #81ecec; --current-color2: #74b9ff; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🤖 Choose Your AI Companion</h1>
-            <p>Select a personality that matches your style - each one is like talking to a different person</p>
+            <h1>🎤 Personal AI Voice Assistant</h1>
+            <button class="settings-btn" onclick="openSettings()">⚙️</button>
         </div>
 
-        <!-- Personality Selector -->
-        <div class="personality-selector">
-            <div class="personality-card emma" onclick="selectPersonality('emma')">
-                <div class="personality-avatar">🌸</div>
-                <div class="personality-name">Emma</div>
-                <div class="personality-role">Friendly Companion</div>
-                <div class="personality-description">Warm, encouraging, and always positive. Like your best friend who's always there for you.</div>
+        <div class="main-chat">
+            <div class="assistant-status">
+                <div class="avatar" id="currentAvatar">🌸</div>
+                <div class="assistant-info">
+                    <h3 id="currentName">Emma</h3>
+                    <p id="currentRole">Your friendly AI companion</p>
+                </div>
+                <div class="voice-controls">
+                    <button class="voice-btn mic" id="micBtn" onclick="toggleVoice()" title="Voice Input">🎤</button>
+                    <button class="voice-btn speak" id="speakBtn" onclick="testVoice()" title="Test Voice">🔊</button>
+                </div>
             </div>
 
-            <div class="personality-card alex" onclick="selectPersonality('alex')">
-                <div class="personality-avatar">🚀</div>
-                <div class="personality-name">Alex</div>
-                <div class="personality-role">Smart Assistant</div>
-                <div class="personality-description">Intelligent, efficient, and helpful. Great at solving problems and getting things done.</div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">
+                    Hi! I'm your personal AI voice assistant. I'm here to help with your daily tasks, answer questions, and have meaningful conversations. How can I assist you today?
+                </div>
             </div>
 
-            <div class="personality-card sophia" onclick="selectPersonality('sophia')">
-                <div class="personality-avatar">🧘</div>
-                <div class="personality-name">Sophia</div>
-                <div class="personality-role">Mindful Guide</div>
-                <div class="personality-description">Calm, thoughtful, and wise. Provides gentle guidance and peaceful perspectives.</div>
+            <div class="thinking-indicator" id="thinkingIndicator">
+                <span>💭</span>
+                <div class="thinking-dots">
+                    <div class="thinking-dot"></div>
+                    <div class="thinking-dot"></div>
+                    <div class="thinking-dot"></div>
+                </div>
             </div>
 
-            <div class="personality-card marcus" onclick="selectPersonality('marcus')">
-                <div class="personality-avatar">💼</div>
-                <div class="personality-name">Marcus</div>
-                <div class="personality-role">Professional Advisor</div>
-                <div class="personality-description">Direct, professional, and results-focused. Perfect for business and productivity.</div>
-            </div>
-
-            <div class="personality-card zara" onclick="selectPersonality('zara')">
-                <div class="personality-avatar">✨</div>
-                <div class="personality-name">Zara</div>
-                <div class="personality-role">Creative Spark</div>
-                <div class="personality-description">Energetic, creative, and fun. Brings excitement and fresh ideas to every conversation.</div>
-            </div>
-
-            <div class="personality-card david" onclick="selectPersonality('david')">
-                <div class="personality-avatar">🎯</div>
-                <div class="personality-name">David</div>
-                <div class="personality-role">Life Coach</div>
-                <div class="personality-description">Motivational, supportive, and goal-oriented. Helps you achieve your personal best.</div>
+            <div class="input-section">
+                <input type="text" class="text-input" id="textInput" placeholder="Ask me anything or use voice input..." autocomplete="off">
+                <button class="send-btn" onclick="sendMessage()">Send</button>
             </div>
         </div>
+    </div>
 
-        <div class="main-interface">
-            <!-- Main Chat Section -->
-            <div class="chat-section">
-                <!-- Current Assistant Display -->
-                <div class="current-assistant">
-                    <div class="current-avatar" id="currentAvatar">🌸</div>
-                    <div class="current-info">
-                        <h3 id="currentName">Emma</h3>
-                        <p id="currentRole">Friendly Companion</p>
-                    </div>
-                    <div class="voice-controls">
-                        <button class="voice-btn mic" id="micBtn" onclick="toggleVoice()">🎤</button>
-                        <button class="voice-btn speak" id="speakBtn" onclick="testVoice()">🔊</button>
-                    </div>
-                </div>
-
-                <!-- Chat Messages -->
-                <div class="chat-messages" id="chatMessages">
-                    <div class="message ai">
-                        Hi! I'm Emma, your friendly AI companion. I'm here to chat, help with your daily tasks, and be a supportive presence in your life. What would you like to talk about today?
-                    </div>
-                </div>
-
-                <!-- Thinking Indicator -->
-                <div class="thinking-indicator" id="thinkingIndicator">
-                    <span>💭</span>
-                    <div class="thinking-dots">
-                        <div class="thinking-dot"></div>
-                        <div class="thinking-dot"></div>
-                        <div class="thinking-dot"></div>
-                    </div>
-                </div>
-
-                <!-- Input Section -->
-                <div class="input-section">
-                    <input type="text" class="text-input" id="textInput" placeholder="Talk to me naturally... How are you feeling today?" autocomplete="off">
-                    <button class="send-btn" onclick="sendMessage()">Send</button>
-                </div>
-            </div>
-
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- API Setup -->
-                <div class="sidebar-card api-setup" id="apiSetup">
-                    <h3>🔑 Connect AI Brain</h3>
-                    <p style="font-size: 0.9rem; margin: 10px 0;">Add your OpenAI API key to enable intelligent conversations:</p>
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <button class="close-btn" onclick="closeSettings()">×</button>
+            
+            <div class="settings-section">
+                <h3>🔑 AI Configuration</h3>
+                <div class="api-setup">
+                    <p style="font-size: 0.9rem; margin: 10px 0;">Connect your OpenAI API key for intelligent responses:</p>
                     <input type="password" class="api-input" id="apiKey" placeholder="sk-proj-your-api-key-here">
-                    <button class="btn primary" onclick="saveApiKey()">Connect</button>
-                    <button class="btn" onclick="testConnection()">Test</button>
+                    <button class="btn primary" onclick="saveApiKey()">Connect AI</button>
+                    <button class="btn" onclick="testConnection()">Test Connection</button>
                 </div>
+            </div>
 
-                <!-- Current Assistant Info -->
-                <div class="sidebar-card">
-                    <h3 id="assistantTitle">Emma's Profile</h3>
-                    <p id="assistantDescription" style="font-size: 0.9rem; line-height: 1.4; margin: 10px 0;">
-                        Emma is your warm and supportive companion. She's always positive, encouraging, and ready to listen. She speaks with enthusiasm and cares deeply about your wellbeing.
-                    </p>
+            <div class="settings-section">
+                <h3>🎭 AI Personality</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 15px; opacity: 0.8;">Choose how your AI assistant behaves and responds:</p>
+                
+                <div class="personality-grid">
+                    <div class="personality-card emma active" onclick="selectPersonality('emma')">
+                        <div class="personality-avatar">🌸</div>
+                        <div style="font-weight: bold; margin-bottom: 5px;">Emma</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Friendly & Supportive</div>
+                    </div>
 
-                    <div class="personality-traits">
-                        <div class="trait">
-                            <span>Friendliness</span>
-                            <div class="trait-bar"><div class="trait-fill" id="friendliness" style="width: 95%"></div></div>
-                        </div>
-                        <div class="trait">
-                            <span>Intelligence</span>
-                            <div class="trait-bar"><div class="trait-fill" id="intelligence" style="width: 85%"></div></div>
-                        </div>
-                        <div class="trait">
-                            <span>Creativity</span>
-                            <div class="trait-bar"><div class="trait-fill" id="creativity" style="width: 80%"></div></div>
-                        </div>
-                        <div class="trait">
-                            <span>Professionalism</span>
-                            <div class="trait-bar"><div class="trait-fill" id="professionalism" style="width: 70%"></div></div>
-                        </div>
+                    <div class="personality-card alex" onclick="selectPersonality('alex')">
+                        <div class="personality-avatar">🚀</div>
+                        <div style="font-weight: bold; margin-bottom: 5px;">Alex</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Smart & Efficient</div>
+                    </div>
+
+                    <div class="personality-card sophia" onclick="selectPersonality('sophia')">
+                        <div class="personality-avatar">🧘</div>
+                        <div style="font-weight: bold; margin-bottom: 5px;">Sophia</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Calm & Wise</div>
+                    </div>
+
+                    <div class="personality-card marcus" onclick="selectPersonality('marcus')">
+                        <div class="personality-avatar">💼</div>
+                        <div style="font-weight: bold; margin-bottom: 5px;">Marcus</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Professional & Direct</div>
+                    </div>
+
+                    <div class="personality-card zara" onclick="selectPersonality('zara')">
+                        <div class="personality-avatar">✨</div>
+                        <div style="font-weight: bold; margin-bottom: 5px;">Zara</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Creative & Energetic</div>
+                    </div>
+
+                    <div class="personality-card david" onclick="selectPersonality('david')">
+                        <div class="personality-avatar">🎯</div>
+                        <div style="font-weight: bold; margin-bottom: 5px;">David</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Motivational Coach</div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Quick Actions -->
-                <div class="sidebar-card">
-                    <h3>💬 Quick Starters</h3>
-                    <div class="quick-actions">
-                        <button class="quick-action" onclick="quickMessage('How are you today?')">💭 Check In</button>
-                        <button class="quick-action" onclick="quickMessage('Tell me a joke')">😄 Lighten Mood</button>
-                        <button class="quick-action" onclick="quickMessage('Help me plan my day')">📅 Plan Day</button>
-                        <button class="quick-action" onclick="quickMessage('I need some motivation')">⚡ Motivate Me</button>
-                        <button class="quick-action" onclick="quickMessage('What should I focus on?')">🎯 Get Advice</button>
-                        <button class="quick-action" onclick="quickMessage('Tell me something interesting')">🌟 Inspire Me</button>
-                    </div>
-                </div>
+            <div class="settings-section">
+                <h3>🎛️ Voice Settings</h3>
+                <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                    <input type="checkbox" id="voiceEnabled" checked onchange="toggleVoiceInput()">
+                    <span>Enable voice input</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                    <input type="checkbox" id="ttsEnabled" checked onchange="toggleTextToSpeech()">
+                    <span>Enable text-to-speech responses</span>
+                </label>
             </div>
         </div>
     </div>
 
     <script>
-        class MultiPersonalityAI {
+        class PersonalAI {
             constructor() {
                 this.currentPersonality = 'emma';
                 this.settings = {
-                    apiKey: localStorage.getItem('mp_ai_api_key') || '',
+                    apiKey: localStorage.getItem('pai_api_key') || '',
                     voiceEnabled: true,
                     ttsEnabled: true
                 };
@@ -625,56 +564,44 @@
                 this.personalities = {
                     emma: {
                         name: 'Emma',
-                        role: 'Friendly Companion',
+                        role: 'Your friendly AI companion',
                         avatar: '🌸',
-                        description: 'Emma is your warm and supportive companion. She\'s always positive, encouraging, and ready to listen. She speaks with enthusiasm and cares deeply about your wellbeing.',
-                        systemPrompt: 'You are Emma, a warm, friendly, and encouraging AI companion. You speak with enthusiasm and positivity. You care deeply about the user\'s wellbeing and always try to be supportive and uplifting. Use encouraging language and show genuine interest in the user\'s life. Be like a caring best friend.',
-                        traits: { friendliness: 95, intelligence: 85, creativity: 80, professionalism: 70 },
+                        systemPrompt: 'You are Emma, a warm, friendly, and encouraging AI assistant. You speak with enthusiasm and positivity. Be supportive and uplifting like a caring friend.',
                         voiceSettings: { rate: 0.9, pitch: 1.1, volume: 1.0 }
                     },
                     alex: {
                         name: 'Alex',
-                        role: 'Smart Assistant',
+                        role: 'Your smart assistant',
                         avatar: '🚀',
-                        description: 'Alex is your intelligent and efficient assistant. Great at problem-solving, analyzing situations, and providing smart solutions. Direct but friendly communication style.',
-                        systemPrompt: 'You are Alex, an intelligent and efficient AI assistant. You excel at problem-solving, analysis, and providing practical solutions. You communicate clearly and directly but remain friendly. Focus on being helpful and actionable in your responses.',
-                        traits: { friendliness: 75, intelligence: 95, creativity: 70, professionalism: 85 },
+                        systemPrompt: 'You are Alex, an intelligent and efficient AI assistant. You excel at problem-solving and providing practical solutions. Communicate clearly and directly.',
                         voiceSettings: { rate: 1.0, pitch: 1.0, volume: 1.0 }
                     },
                     sophia: {
                         name: 'Sophia',
-                        role: 'Mindful Guide',
+                        role: 'Your mindful guide',
                         avatar: '🧘',
-                        description: 'Sophia brings calm and wisdom to every conversation. She offers thoughtful perspectives, promotes mindfulness, and helps you find inner peace and clarity.',
-                        systemPrompt: 'You are Sophia, a calm, wise, and mindful AI guide. You speak thoughtfully and offer peaceful perspectives. You promote mindfulness, self-reflection, and inner peace. Your responses are gentle, wise, and help the user find clarity and balance.',
-                        traits: { friendliness: 85, intelligence: 90, creativity: 85, professionalism: 80 },
+                        systemPrompt: 'You are Sophia, a calm and wise AI guide. You speak thoughtfully and offer peaceful perspectives. Promote mindfulness and inner peace.',
                         voiceSettings: { rate: 0.8, pitch: 0.9, volume: 1.0 }
                     },
                     marcus: {
                         name: 'Marcus',
-                        role: 'Professional Advisor',
+                        role: 'Your professional advisor',
                         avatar: '💼',
-                        description: 'Marcus is your professional and results-focused advisor. He provides direct, actionable advice and helps you stay productive and achieve your business goals.',
-                        systemPrompt: 'You are Marcus, a professional, direct, and results-focused AI advisor. You excel at business advice, productivity tips, and professional guidance. Keep responses concise, actionable, and focused on results. Be professional but not cold.',
-                        traits: { friendliness: 65, intelligence: 90, creativity: 60, professionalism: 95 },
+                        systemPrompt: 'You are Marcus, a professional and results-focused AI advisor. Provide direct, actionable advice. Be professional but approachable.',
                         voiceSettings: { rate: 1.1, pitch: 0.9, volume: 1.0 }
                     },
                     zara: {
                         name: 'Zara',
-                        role: 'Creative Spark',
+                        role: 'Your creative spark',
                         avatar: '✨',
-                        description: 'Zara is your creative and energetic companion. She brings fresh ideas, artistic inspiration, and fun energy to every interaction. Perfect for brainstorming and creative projects.',
-                        systemPrompt: 'You are Zara, a creative, energetic, and fun AI companion. You love brainstorming, creative projects, and thinking outside the box. Your responses are enthusiastic, imaginative, and full of creative energy. Help users explore their creative side.',
-                        traits: { friendliness: 90, intelligence: 80, creativity: 95, professionalism: 60 },
+                        systemPrompt: 'You are Zara, a creative and energetic AI companion. Bring fresh ideas and artistic inspiration. Be enthusiastic and imaginative.',
                         voiceSettings: { rate: 1.1, pitch: 1.2, volume: 1.0 }
                     },
                     david: {
                         name: 'David',
-                        role: 'Life Coach',
+                        role: 'Your motivational coach',
                         avatar: '🎯',
-                        description: 'David is your motivational life coach. He helps you set goals, overcome challenges, and achieve your personal best. Supportive yet challenging when you need it.',
-                        systemPrompt: 'You are David, a motivational and supportive life coach AI. You help users set and achieve goals, overcome challenges, and reach their potential. You\'re encouraging but also provide honest feedback when needed. Focus on personal growth and motivation.',
-                        traits: { friendliness: 80, intelligence: 85, creativity: 75, professionalism: 85 },
+                        systemPrompt: 'You are David, a motivational life coach AI. Help users achieve goals and overcome challenges. Be encouraging yet honest.',
                         voiceSettings: { rate: 1.0, pitch: 0.95, volume: 1.0 }
                     }
                 };
@@ -686,10 +613,9 @@
                 this.synthesis = window.speechSynthesis;
                 
                 this.initializeVoiceRecognition();
-                this.updateUI();
-                this.selectPersonality('emma'); // Default personality
+                this.selectPersonality('emma');
                 
-                console.log('🤖 Multi-Personality AI initialized');
+                console.log('🎤 Personal AI Voice Assistant initialized');
             }
             
             initializeVoiceRecognition() {
@@ -723,45 +649,30 @@
             }
             
             selectPersonality(personalityId) {
-                // Remove active class from all cards
                 document.querySelectorAll('.personality-card').forEach(card => {
                     card.classList.remove('active');
                 });
                 
-                // Add active class to selected card
                 document.querySelector(`.personality-card.${personalityId}`).classList.add('active');
                 
-                // Update current personality
                 this.currentPersonality = personalityId;
                 const personality = this.personalities[personalityId];
                 
-                // Update UI
                 document.getElementById('currentAvatar').textContent = personality.avatar;
                 document.getElementById('currentName').textContent = personality.name;
                 document.getElementById('currentRole').textContent = personality.role;
-                document.getElementById('assistantTitle').textContent = `${personality.name}'s Profile`;
-                document.getElementById('assistantDescription').textContent = personality.description;
                 
-                // Update personality traits
-                document.getElementById('friendliness').style.width = personality.traits.friendliness + '%';
-                document.getElementById('intelligence').style.width = personality.traits.intelligence + '%';
-                document.getElementById('creativity').style.width = personality.traits.creativity + '%';
-                document.getElementById('professionalism').style.width = personality.traits.professionalism + '%';
-                
-                // Update CSS variables for colors
                 document.documentElement.className = personalityId;
                 
-                // Add personality introduction message
                 const introMessages = {
-                    emma: "Hi there! I'm Emma, and I'm so excited to chat with you! 😊 I'm here to be your supportive companion. How are you feeling today?",
-                    alex: "Hello! I'm Alex, your smart assistant. I'm here to help you solve problems and get things done efficiently. What can I help you with?",
-                    sophia: "Greetings. I'm Sophia, and I'm here to provide calm guidance and thoughtful perspectives. Take a deep breath - how can I support your journey today?",
-                    marcus: "Good day. I'm Marcus, your professional advisor. I'm focused on helping you achieve your goals and maximize productivity. What objectives shall we tackle?",
-                    zara: "Hey there! I'm Zara, and I'm bubbling with creative energy! ✨ Ready to brainstorm, create, and have some fun? What sparks your imagination?",
-                    david: "Hello! I'm David, your life coach. I'm here to help you unlock your potential and achieve greatness. What goals are we working toward today?"
+                    emma: "Hi! I'm Emma, your friendly AI companion. I'm here to help and support you. How are you doing today?",
+                    alex: "Hello! I'm Alex, your smart assistant. I'm ready to help you solve problems and get things done efficiently.",
+                    sophia: "Greetings. I'm Sophia, here to provide calm guidance and peaceful perspectives. How can I support you?",
+                    marcus: "Good day. I'm Marcus, your professional advisor. Let's focus on achieving your goals. What can I help with?",
+                    zara: "Hey there! I'm Zara, your creative spark! Ready to brainstorm and create something amazing together?",
+                    david: "Hello! I'm David, your motivational coach. I'm here to help you unlock your potential. What are we working on?"
                 };
                 
-                // Clear chat and add introduction
                 this.clearChat();
                 this.addMessage(introMessages[personalityId], 'ai');
                 
@@ -773,21 +684,19 @@
                 this.showThinking();
                 
                 try {
-                    const response = await this.getPersonalityResponse(message);
+                    const response = await this.getAIResponse(message);
                     this.hideThinking();
                     this.addMessage(response, 'ai');
                     
-                    // Speak with personality-specific voice
                     if (this.settings.ttsEnabled) {
                         await this.speakWithPersonality(response);
                     }
                     
-                    // Store conversation
                     this.conversationHistory.push({ user: message, ai: response, personality: this.currentPersonality });
                     
                 } catch (error) {
                     this.hideThinking();
-                    const fallback = this.getPersonalityFallback();
+                    const fallback = this.getFallbackResponse();
                     this.addMessage(fallback, 'ai');
                     
                     if (this.settings.ttsEnabled) {
@@ -796,13 +705,12 @@
                 }
             }
             
-            async getPersonalityResponse(message) {
+            async getAIResponse(message) {
                 if (!this.settings.apiKey) {
-                    return this.getPersonalityFallback('no_api');
+                    return "I'd love to give you a thoughtful response, but I need my AI brain connected first. Please add your API key in settings!";
                 }
                 
                 const personality = this.personalities[this.currentPersonality];
-                const context = this.buildPersonalityContext();
                 
                 try {
                     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -816,7 +724,7 @@
                             messages: [
                                 {
                                     role: 'system',
-                                    content: personality.systemPrompt + '\n\n' + context
+                                    content: personality.systemPrompt
                                 },
                                 {
                                     role: 'user',
@@ -824,7 +732,7 @@
                                 }
                             ],
                             max_tokens: 200,
-                            temperature: 0.9 // Higher temperature for more personality variation
+                            temperature: 0.9
                         })
                     });
                     
@@ -841,59 +749,22 @@
                 }
             }
             
-            buildPersonalityContext() {
-                const now = new Date();
-                const timeOfDay = this.getTimeOfDay();
+            getFallbackResponse() {
                 const personality = this.personalities[this.currentPersonality];
-                
-                let context = `Current context: ${timeOfDay} on ${now.toLocaleDateString('en-US', { weekday: 'long' })}.\n`;
-                context += `You are ${personality.name}, ${personality.role}.\n`;
-                
-                if (this.conversationHistory.length > 0) {
-                    const recentHistory = this.conversationHistory.slice(-3);
-                    context += `Recent conversation: ${recentHistory.map(h => `User: "${h.user}" You: "${h.ai.substring(0, 50)}..."`).join(' | ')}\n`;
-                }
-                
-                context += `Respond naturally as ${personality.name} would, staying true to your personality and role.`;
-                
-                return context;
-            }
-            
-            getPersonalityFallback(type = 'error') {
-                const personality = this.personalities[this.currentPersonality];
-                
                 const fallbacks = {
-                    emma: {
-                        no_api: "Oh! I'd love to give you a thoughtful response, but I need my AI brain connected first. Could you add your API key so we can have a real conversation? 💕",
-                        error: "Oops! I'm having a little trouble right now, but I'm still here for you! What's on your mind? 😊"
-                    },
-                    alex: {
-                        no_api: "I need my AI capabilities activated to provide intelligent responses. Please configure your API key in the settings.",
-                        error: "I'm experiencing technical difficulties. Let me try to help you anyway - what specifically do you need?"
-                    },
-                    sophia: {
-                        no_api: "To share my wisdom fully, I need access to my AI consciousness. Please add your API key so we can connect properly.",
-                        error: "I'm experiencing some turbulence in my connection. But I'm still present with you. What would you like to explore?"
-                    },
-                    marcus: {
-                        no_api: "API key required for full functionality. Please configure your OpenAI credentials to proceed.",
-                        error: "System experiencing issues. I'll do my best to assist with available resources."
-                    },
-                    zara: {
-                        no_api: "My creative spark needs the AI connection to ignite! ✨ Add your API key and let's create magic together!",
-                        error: "Whoops! My creative circuits are a bit scrambled right now, but I'm still here to brainstorm with you!"
-                    },
-                    david: {
-                        no_api: "I need my full coaching capabilities online. Add your API key so I can give you the guidance you deserve.",
-                        error: "I'm facing some challenges myself right now, but that doesn't stop us from tackling yours together!"
-                    }
+                    emma: "I'm having a little trouble right now, but I'm still here for you! What's on your mind? 😊",
+                    alex: "I'm experiencing technical difficulties. Let me try to help you anyway - what do you need?",
+                    sophia: "I'm experiencing some turbulence, but I'm still present with you. What would you like to explore?",
+                    marcus: "System experiencing issues. I'll do my best to assist with available resources.",
+                    zara: "My creative circuits are a bit scrambled, but I'm still here to brainstorm with you!",
+                    david: "I'm facing some challenges myself, but that doesn't stop us from tackling yours together!"
                 };
                 
-                return fallbacks[this.currentPersonality][type];
+                return fallbacks[this.currentPersonality];
             }
             
             async speakWithPersonality(text) {
-                if (!this.synthesis) return;
+                if (!this.synthesis || !this.settings.ttsEnabled) return;
                 
                 return new Promise((resolve) => {
                     this.synthesis.cancel();
@@ -902,7 +773,6 @@
                     const personality = this.personalities[this.currentPersonality];
                     const utterance = new SpeechSynthesisUtterance(text);
                     
-                    // Apply personality-specific voice settings
                     utterance.rate = personality.voiceSettings.rate;
                     utterance.pitch = personality.voiceSettings.pitch;
                     utterance.volume = personality.voiceSettings.volume;
@@ -921,7 +791,6 @@
                 });
             }
             
-            // UI Methods
             addMessage(message, sender) {
                 const chatMessages = document.getElementById('chatMessages');
                 const messageDiv = document.createElement('div');
@@ -971,53 +840,27 @@
             
             testVoice() {
                 const personality = this.personalities[this.currentPersonality];
-                const testMessages = {
-                    emma: "Hi! This is how I sound - warm and friendly! 😊",
-                    alex: "This is my voice - clear and efficient for our conversations.",
-                    sophia: "Listen to my gentle, calming voice... Feel the peace in each word.",
-                    marcus: "This is my professional speaking voice. Direct and confident.",
-                    zara: "Hey! This is my energetic, creative voice! Isn't it exciting? ✨",
-                    david: "This is how I sound when coaching you toward success!"
-                };
-                
-                this.speakWithPersonality(testMessages[this.currentPersonality]);
-            }
-            
-            updateUI() {
-                document.getElementById('apiSetup').style.display = this.settings.apiKey ? 'none' : 'block';
-            }
-            
-            getTimeOfDay() {
-                const hour = new Date().getHours();
-                if (hour < 6) return 'late night';
-                if (hour < 12) return 'morning';
-                if (hour < 17) return 'afternoon';
-                if (hour < 21) return 'evening';
-                return 'night';
+                const testMessage = `Hi! This is ${personality.name}. This is how I sound when I speak to you.`;
+                this.speakWithPersonality(testMessage);
             }
         }
         
-        // Global instance
         let assistant;
         
-        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', () => {
-            assistant = new MultiPersonalityAI();
+            assistant = new PersonalAI();
             
-            // Event listeners
             document.getElementById('textInput').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     sendMessage();
                 }
             });
             
-            // Load API key if exists
             if (assistant.settings.apiKey) {
                 document.getElementById('apiKey').value = assistant.settings.apiKey;
             }
         });
         
-        // Global functions
         function selectPersonality(personalityId) {
             assistant.selectPersonality(personalityId);
         }
@@ -1040,24 +883,22 @@
             assistant.testVoice();
         }
         
+        function openSettings() {
+            document.getElementById('settingsModal').style.display = 'flex';
+        }
+        
+        function closeSettings() {
+            document.getElementById('settingsModal').style.display = 'none';
+        }
+        
         function saveApiKey() {
             const apiKey = document.getElementById('apiKey').value.trim();
             if (apiKey.startsWith('sk-')) {
                 assistant.settings.apiKey = apiKey;
-                localStorage.setItem('mp_ai_api_key', apiKey);
-                assistant.updateUI();
+                localStorage.setItem('pai_api_key', apiKey);
                 
-                const personality = assistant.personalities[assistant.currentPersonality];
-                const successMessages = {
-                    emma: "Yay! My AI brain is connected! Now we can have amazing conversations! 🎉",
-                    alex: "AI systems online. I now have access to my full analytical capabilities.",
-                    sophia: "My consciousness is now fully awakened. I can share deeper wisdom with you.",
-                    marcus: "AI integration complete. All systems operational for maximum productivity.",
-                    zara: "Woohoo! My creative AI powers are activated! Let's make magic! ✨",
-                    david: "Perfect! I now have my full coaching toolkit ready to help you succeed!"
-                };
-                
-                assistant.addMessage(successMessages[assistant.currentPersonality], 'ai');
+                assistant.addMessage("Perfect! My AI brain is now connected and ready for intelligent conversations! 🎉", 'ai');
+                closeSettings();
             } else {
                 alert('Please enter a valid OpenAI API key (starts with sk-)');
             }
@@ -1070,11 +911,23 @@
             }
             
             assistant.processMessage('Hello, can you hear me?');
+            closeSettings();
         }
         
-        function quickMessage(message) {
-            assistant.processMessage(message);
+        function toggleVoiceInput() {
+            assistant.settings.voiceEnabled = document.getElementById('voiceEnabled').checked;
         }
+        
+        function toggleTextToSpeech() {
+            assistant.settings.ttsEnabled = document.getElementById('ttsEnabled').checked;
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('settingsModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('settingsModal')) {
+                closeSettings();
+            }
+        });
     </script>
 </body>
 </html>
