@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -204,6 +202,79 @@
 
         .link-button:active {
             transform: translateY(-1px) scale(1.02);
+        }
+
+        .link-button.launching {
+            animation: buttonLaunch 2s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes buttonLaunch {
+            0% {
+                transform: translateY(0) scale(1);
+                box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+                opacity: 1;
+            }
+            25% {
+                transform: translateY(-10px) scale(1.2);
+                box-shadow: 0 20px 60px rgba(255, 107, 157, 0.8);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-20px) scale(1.5);
+                box-shadow: 0 30px 100px rgba(255, 107, 157, 1);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(-40px) scale(2);
+                box-shadow: 0 50px 150px rgba(255, 107, 157, 1);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100px) scale(3);
+                box-shadow: 0 100px 200px rgba(255, 107, 157, 0.8);
+                opacity: 0;
+            }
+        }
+
+        .link-button.launching::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 100px;
+            background: linear-gradient(to top, 
+                rgba(255, 107, 157, 0.8) 0%,
+                rgba(255, 165, 0, 0.6) 50%, 
+                transparent 100%);
+            border-radius: 50px;
+            animation: rocketTrail 2s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes rocketTrail {
+            0% {
+                height: 0px;
+                opacity: 0;
+            }
+            25% {
+                height: 50px;
+                opacity: 1;
+            }
+            50% {
+                height: 150px;
+                opacity: 0.8;
+            }
+            75% {
+                height: 300px;
+                opacity: 0.4;
+            }
+            100% {
+                height: 500px;
+                opacity: 0;
+            }
         }
 
         .icon {
@@ -574,33 +645,39 @@
             const aiInterface = document.getElementById('aiInterface');
             const soundWaves = document.getElementById('soundWaves');
             const aiMessage = document.getElementById('aiMessage');
+            const launchButton = document.querySelector('.link-button');
+
+            // Step 0: Button launch animation
+            launchButton.classList.add('launching');
 
             // Step 1: Fade out main content (3 seconds)
-            mainContainer.classList.add('fade-out');
-            floatingElements.classList.add('fade-out');
+            setTimeout(() => {
+                mainContainer.classList.add('fade-out');
+                floatingElements.classList.add('fade-out');
+            }, 500);
             
-            // Step 2: Transition to space (4 seconds, starts at 1 second)
+            // Step 2: Transition to space (4 seconds, starts at 1.5 seconds)
             setTimeout(() => {
                 auroraBg.style.opacity = '0';
                 spaceBg.classList.add('active');
                 stars.classList.add('active');
-            }, 1000);
+            }, 1500);
 
-            // Step 3: Show AI interface (starts at 5 seconds)
+            // Step 3: Show AI interface (starts at 5.5 seconds)
             setTimeout(() => {
                 aiInterface.classList.add('active');
-            }, 5000);
+            }, 5500);
 
-            // Step 4: Start sound waves and speaking (starts at 6 seconds)
+            // Step 4: Start sound waves and speaking (starts at 6.5 seconds)
             setTimeout(() => {
                 soundWaves.classList.add('active');
                 speakWelcomeMessage();
-            }, 6000);
+            }, 6500);
 
-            // Step 5: Show message (starts at 7 seconds)
+            // Step 5: Show message (starts at 7.5 seconds)
             setTimeout(() => {
                 aiMessage.classList.add('active');
-            }, 7000);
+            }, 7500);
         }
 
         // Text-to-speech welcome message
@@ -663,287 +740,5 @@
             }
         });
     </script>
-</body>
-</html>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatGPT Voice Assistant</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            min-height: 100vh;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .aurora-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 107, 157, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(30, 144, 255, 0.4) 0%, transparent 50%);
-            animation: aurora 15s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes aurora {
-            0%, 100% { opacity: 0.6; transform: scale(1) rotate(0deg); }
-            33% { opacity: 0.8; transform: scale(1.1) rotate(1deg); }
-            66% { opacity: 0.4; transform: scale(0.9) rotate(-1deg); }
-        }
-
-        .container {
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            max-width: 600px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .title {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ff6b9d, #c44bd1, #4a90e2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { filter: hue-rotate(0deg); }
-            50% { filter: hue-rotate(30deg); }
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            color: #ff6b9d;
-            font-style: italic;
-        }
-
-        .description {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            opacity: 0.8;
-            color: #e0e0e0;
-        }
-
-        .link-button {
-            display: inline-block;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, #ff6b9d, #c44bd1);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .link-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .link-button:hover::before {
-            left: 100%;
-        }
-
-        .link-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
-            background: linear-gradient(135deg, #ff7ba3, #d056d9);
-        }
-
-        .link-button:active {
-            transform: translateY(-1px) scale(1.02);
-        }
-
-        .icon {
-            margin-right: 10px;
-            font-size: 1.3rem;
-        }
-
-        .features {
-            margin-top: 40px;
-            text-align: left;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .features h3 {
-            color: #ff6b9d;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            text-align: center;
-        }
-
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .feature-list li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        .feature-list li::before {
-            content: '✨';
-            position: absolute;
-            left: 0;
-            color: #ff6b9d;
-        }
-
-        .floating-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .floating-element {
-            position: absolute;
-            color: rgba(255, 107, 157, 0.3);
-            font-size: 2rem;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-element:nth-child(1) {
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-element:nth-child(2) {
-            top: 20%;
-            right: 15%;
-            animation-delay: 2s;
-        }
-
-        .floating-element:nth-child(3) {
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
-        }
-
-        .floating-element:nth-child(4) {
-            bottom: 15%;
-            right: 10%;
-            animation-delay: 1s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-                opacity: 0.3;
-            }
-            50% {
-                transform: translateY(-20px) rotate(180deg);
-                opacity: 0.8;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 20px;
-                padding: 30px 20px;
-            }
-            
-            .title {
-                font-size: 2.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .link-button {
-                padding: 15px 30px;
-                font-size: 1rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="aurora-bg"></div>
-    
-    <div class="floating-elements">
-        <div class="floating-element">🎤</div>
-        <div class="floating-element">💕</div>
-        <div class="floating-element">🤖</div>
-        <div class="floating-element">✨</div>
-    </div>
-    
-    <div class="container">
-        <h1 class="title">AI Voice Assistant</h1>
-        
-        <p class="subtitle">Your intelligent companion with a gentle voice</p>
-        
-        <p class="description">
-            Experience a personalized AI assistant designed for natural conversation with a soft, clean female voice. 
-            Perfect for intelligent discussions, personal assistance, and meaningful interactions.
-        </p>
-        
-        <a href="https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418" 
-           target="_blank" 
-           class="link-button">
-            <span class="icon">🚀</span>
-            Launch AI Assistant
-        </a>
-        
-        <div class="features">
-            <h3>✨ Features</h3>
-            <ul class="feature-list">
-                <li>Intelligent conversation with personality</li>
-                <li>Soft, gentle female voice optimized for comfort</li>
-                <li>Personal and caring interaction style</li>
-                <li>Voice recognition and natural speech</li>
-                <li>Thoughtful, measured responses</li>
-                <li>Emotional intelligence and empathy</li>
-                <li>Customizable voice settings</li>
-                <li>Always ready to listen and help</li>
-            </ul>
-        </div>
-    </div>
 </body>
 </html>
