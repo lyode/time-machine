@@ -1,6 +1,670 @@
 <!DOCTYPE html>
 <html lang="en">
+<head><!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Assistant - Cinematic Launch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .aurora-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 157, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(30, 144, 255, 0.4) 0%, transparent 50%);
+            animation: aurora 15s ease-in-out infinite;
+            pointer-events: none;
+            transition: opacity 3s ease-out;
+        }
+
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%),
+                linear-gradient(135deg, #000428 0%, #004e92 100%);
+            opacity: 0;
+            transition: opacity 4s ease-in-out;
+            pointer-events: none;
+        }
+
+        .space-bg.active {
+            opacity: 1;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 4s ease-in-out 1s;
+        }
+
+        .stars.active {
+            opacity: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        .star.small {
+            width: 1px;
+            height: 1px;
+        }
+
+        .star.medium {
+            width: 2px;
+            height: 2px;
+            box-shadow: 0 0 6px white;
+        }
+
+        .star.large {
+            width: 3px;
+            height: 3px;
+            box-shadow: 0 0 10px white, 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes aurora {
+            0%, 100% { opacity: 0.6; transform: scale(1) rotate(0deg); }
+            33% { opacity: 0.8; transform: scale(1.1) rotate(1deg); }
+            66% { opacity: 0.4; transform: scale(0.9) rotate(-1deg); }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 3s ease-out;
+        }
+
+        .container.fade-out {
+            opacity: 0;
+            transform: scale(0.8) translateY(50px);
+            pointer-events: none;
+        }
+
+        .title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff6b9d, #c44bd1, #4a90e2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            animation: shimmer 3s ease-in-out infinite;
+            transition: all 2s ease-out;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(30deg); }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            color: #ff6b9d;
+            font-style: italic;
+            transition: all 2s ease-out;
+        }
+
+        .description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            color: #e0e0e0;
+            transition: all 2s ease-out;
+        }
+
+        .link-button {
+            display: inline-block;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, #ff6b9d, #c44bd1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+        }
+
+        .link-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .link-button:hover::before {
+            left: 100%;
+        }
+
+        .link-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
+            background: linear-gradient(135deg, #ff7ba3, #d056d9);
+        }
+
+        .link-button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .icon {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+
+        .features {
+            margin-top: 40px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 2s ease-out;
+        }
+
+        .features h3 {
+            color: #ff6b9d;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .feature-list li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            color: #ff6b9d;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            transition: opacity 3s ease-out;
+        }
+
+        .floating-elements.fade-out {
+            opacity: 0;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(255, 107, 157, 0.3);
+            font-size: 2rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        .floating-element:nth-child(4) {
+            bottom: 15%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* AI Interface Styles */
+        .ai-interface {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 2s ease-in-out 5s;
+            z-index: 20;
+        }
+
+        .ai-interface.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .ai-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b9d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 100px rgba(102, 126, 234, 0.8);
+            animation: aiPulse 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-avatar::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: aiBreath 3s ease-in-out infinite;
+        }
+
+        @keyframes aiPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 100px rgba(102, 126, 234, 0.8); }
+            50% { transform: scale(1.05); box-shadow: 0 0 150px rgba(255, 107, 157, 1); }
+        }
+
+        @keyframes aiBreath {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .sound-waves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .sound-waves.active {
+            opacity: 1;
+        }
+
+        .wave {
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(to top, #ff6b9d, #c44bd1);
+            margin: 0 3px;
+            border-radius: 2px;
+            animation: soundWave 1.2s ease-in-out infinite;
+        }
+
+        .wave:nth-child(1) { animation-delay: 0s; }
+        .wave:nth-child(2) { animation-delay: 0.1s; }
+        .wave:nth-child(3) { animation-delay: 0.2s; }
+        .wave:nth-child(4) { animation-delay: 0.3s; }
+        .wave:nth-child(5) { animation-delay: 0.4s; }
+        .wave:nth-child(6) { animation-delay: 0.5s; }
+        .wave:nth-child(7) { animation-delay: 0.4s; }
+        .wave:nth-child(8) { animation-delay: 0.3s; }
+        .wave:nth-child(9) { animation-delay: 0.2s; }
+        .wave:nth-child(10) { animation-delay: 0.1s; }
+
+        @keyframes soundWave {
+            0%, 100% { height: 20px; opacity: 0.5; }
+            50% { height: 60px; opacity: 1; }
+        }
+
+        .ai-message {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 20px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 80%;
+            opacity: 0;
+            transform: translateX(-50%) translateY(50px);
+            transition: all 1s ease-out 7s;
+        }
+
+        .ai-message.active {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .typing-animation {
+            display: inline-block;
+            animation: typing 2s steps(40) 1s forwards, blink 1s step-end infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #ff6b9d;
+            width: 0;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .link-button {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+
+            .ai-avatar {
+                width: 150px;
+                height: 150px;
+                font-size: 4rem;
+            }
+
+            .ai-message {
+                font-size: 1rem;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-bg" id="auroraBg"></div>
+    <div class="space-bg" id="spaceBg"></div>
+    
+    <div class="stars" id="stars"></div>
+    
+    <div class="floating-elements" id="floatingElements">
+        <div class="floating-element">🎤</div>
+        <div class="floating-element">💕</div>
+        <div class="floating-element">🤖</div>
+        <div class="floating-element">✨</div>
+    </div>
+    
+    <div class="container" id="mainContainer">
+        <h1 class="title">AI Voice Assistant</h1>
+        
+        <p class="subtitle">Your intelligent companion with a gentle voice</p>
+        
+        <p class="description">
+            Experience a personalized AI assistant designed for natural conversation with a soft, clean female voice. 
+            Perfect for intelligent discussions, personal assistance, and meaningful interactions.
+        </p>
+        
+        <button class="link-button" onclick="launchAI()">
+            <span class="icon">🚀</span>
+            Launch AI Assistant
+        </button>
+        
+        <div class="features">
+            <h3>✨ Features</h3>
+            <ul class="feature-list">
+                <li>Intelligent conversation with personality</li>
+                <li>Soft, gentle female voice optimized for comfort</li>
+                <li>Personal and caring interaction style</li>
+                <li>Voice recognition and natural speech</li>
+                <li>Thoughtful, measured responses</li>
+                <li>Emotional intelligence and empathy</li>
+                <li>Customizable voice settings</li>
+                <li>Always ready to listen and help</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- AI Interface -->
+    <div class="ai-interface" id="aiInterface">
+        <div class="ai-avatar" id="aiAvatar">
+            👩‍💼
+            <div class="sound-waves" id="soundWaves">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+        </div>
+        
+        <div class="ai-message" id="aiMessage">
+            <div class="typing-animation">Hi dear, I'm here with you... Let's have a quality conversation now! 💕</div>
+        </div>
+    </div>
+
+    <script>
+        // Generate random stars
+        function generateStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 200;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random size
+                const sizes = ['small', 'medium', 'large'];
+                const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+                star.classList.add(randomSize);
+                
+                // Random position
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                
+                // Random animation delay
+                star.style.animationDelay = Math.random() * 3 + 's';
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Launch AI with cinematic effects
+        function launchAI() {
+            const mainContainer = document.getElementById('mainContainer');
+            const floatingElements = document.getElementById('floatingElements');
+            const auroraBg = document.getElementById('auroraBg');
+            const spaceBg = document.getElementById('spaceBg');
+            const stars = document.getElementById('stars');
+            const aiInterface = document.getElementById('aiInterface');
+            const soundWaves = document.getElementById('soundWaves');
+            const aiMessage = document.getElementById('aiMessage');
+
+            // Step 1: Fade out main content (3 seconds)
+            mainContainer.classList.add('fade-out');
+            floatingElements.classList.add('fade-out');
+            
+            // Step 2: Transition to space (4 seconds, starts at 1 second)
+            setTimeout(() => {
+                auroraBg.style.opacity = '0';
+                spaceBg.classList.add('active');
+                stars.classList.add('active');
+            }, 1000);
+
+            // Step 3: Show AI interface (starts at 5 seconds)
+            setTimeout(() => {
+                aiInterface.classList.add('active');
+            }, 5000);
+
+            // Step 4: Start sound waves and speaking (starts at 6 seconds)
+            setTimeout(() => {
+                soundWaves.classList.add('active');
+                speakWelcomeMessage();
+            }, 6000);
+
+            // Step 5: Show message (starts at 7 seconds)
+            setTimeout(() => {
+                aiMessage.classList.add('active');
+            }, 7000);
+        }
+
+        // Text-to-speech welcome message
+        function speakWelcomeMessage() {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance("Hi dear, I'm here with you. Let's have a quality conversation now!");
+                
+                // Try to find a female voice
+                const voices = speechSynthesis.getVoices();
+                const femaleVoice = voices.find(voice => 
+                    voice.name.toLowerCase().includes('female') ||
+                    voice.name.toLowerCase().includes('woman') ||
+                    voice.name.toLowerCase().includes('samantha') ||
+                    voice.name.toLowerCase().includes('victoria')
+                );
+                
+                if (femaleVoice) {
+                    utterance.voice = femaleVoice;
+                }
+                
+                utterance.rate = 0.9;
+                utterance.pitch = 0.8;
+                utterance.volume = 0.8;
+                
+                utterance.onstart = () => {
+                    console.log('AI is speaking...');
+                };
+                
+                utterance.onend = () => {
+                    console.log('AI finished speaking');
+                    // Could add more interactions here
+                };
+                
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Initialize stars when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            generateStars();
+            
+            // Load voices for speech synthesis
+            if ('speechSynthesis' in window) {
+                speechSynthesis.getVoices();
+                window.speechSynthesis.onvoiceschanged = () => {
+                    speechSynthesis.getVoices();
+                };
+            }
+        });
+
+        // Add click interaction to AI avatar
+        document.getElementById('aiAvatar').addEventListener('click', () => {
+            if (document.getElementById('aiInterface').classList.contains('active')) {
+                speakWelcomeMessage();
+                document.getElementById('soundWaves').classList.add('active');
+                
+                setTimeout(() => {
+                    document.getElementById('soundWaves').classList.remove('active');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatGPT Voice Assistant</title>
