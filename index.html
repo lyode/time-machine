@@ -34,7 +34,7 @@
             --shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
 
-        /* Light mode adjustments */
+        /* Light Mode Colors */
         [data-mode="light"] {
             --background-gradient: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 50%, #ddeeff 100%);
             --card-background: rgba(255, 255, 255, 0.9);
@@ -50,15 +50,6 @@
             --wave-color-5: #99ccff;
             
             --shadow: 0 8px 32px rgba(0,0,0,0.1);
-        }
-
-        /* Force light mode background coverage */
-        [data-mode="light"] html {
-            background: var(--background-gradient);
-        }
-
-        [data-mode="light"] body::before {
-            background: var(--background-gradient);
         }
 
         [data-theme="blue"] {
@@ -106,40 +97,8 @@
             touch-action: manipulation;
             overflow: hidden;
             color: var(--text-color);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: 0;
-            padding: 0;
-            /* Ensure background covers safe areas */
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
-            padding-left: env(safe-area-inset-left);
-            padding-right: env(safe-area-inset-right);
-        }
-
-        /* Force background to cover entire viewport including safe areas */
-        html {
-            background: var(--background-gradient);
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        /* Additional background layer to ensure coverage */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--background-gradient);
-            z-index: -1;
+            position: relative;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
 
         /* Top Controls */
@@ -204,36 +163,35 @@
             display: none; /* Hidden - replaced by canvas */
         }
 
-        /* Canvas glow effects for energy sphere */
+        /* Canvas glow effects */
         .audio-canvas {
-            filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.4));
+            filter: drop-shadow(0 0 20px rgba(255, 100, 0, 0.3));
         }
 
         .wave-container.listening .audio-canvas {
-            filter: drop-shadow(0 0 35px rgba(147, 51, 234, 0.6));
+            filter: drop-shadow(0 0 30px rgba(255, 150, 0, 0.5));
         }
 
         .wave-container.speaking .audio-canvas {
-            filter: drop-shadow(0 0 50px rgba(147, 51, 234, 0.8));
-            animation: sphereGlow 1.2s infinite alternate ease-in-out;
+            filter: drop-shadow(0 0 40px rgba(255, 50, 0, 0.8));
+            animation: speakingGlow 0.6s infinite alternate;
         }
 
         .wave-container.wake-detected .audio-canvas {
-            animation: sphereBurst 3s ease;
+            animation: wakeGlow 0.8s ease;
         }
 
-        @keyframes sphereGlow {
-            0% { filter: drop-shadow(0 0 50px rgba(147, 51, 234, 0.8)); }
-            100% { filter: drop-shadow(0 0 80px rgba(200, 150, 255, 1)) drop-shadow(0 0 120px rgba(147, 51, 234, 0.6)); }
+        @keyframes speakingGlow {
+            0% { filter: drop-shadow(0 0 40px rgba(255, 50, 0, 0.8)); }
+            100% { filter: drop-shadow(0 0 60px rgba(255, 0, 0, 1)); }
         }
 
-        @keyframes sphereBurst {
-            0% { filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.4)); }
-            15% { filter: drop-shadow(0 0 100px rgba(255, 255, 255, 1)) drop-shadow(0 0 150px rgba(147, 51, 234, 0.8)); }
-            30% { filter: drop-shadow(0 0 60px rgba(200, 150, 255, 0.7)); }
-            50% { filter: drop-shadow(0 0 80px rgba(147, 51, 234, 0.9)); }
-            70% { filter: drop-shadow(0 0 40px rgba(147, 51, 234, 0.6)); }
-            100% { filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.4)); }
+        @keyframes wakeGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(255, 100, 0, 0.3)); }
+            25% { filter: drop-shadow(0 0 50px rgba(255, 200, 0, 0.8)) hue-rotate(90deg); }
+            50% { filter: drop-shadow(0 0 80px rgba(255, 255, 0, 1)) hue-rotate(180deg); }
+            75% { filter: drop-shadow(0 0 50px rgba(255, 200, 0, 0.8)) hue-rotate(270deg); }
+            100% { filter: drop-shadow(0 0 20px rgba(255, 100, 0, 0.3)) hue-rotate(360deg); }
         }
 
         /* Settings Panel */
@@ -479,85 +437,6 @@
             margin: 15px 0;
         }
 
-        .audio-test-controls {
-            background: rgba(76, 175, 80, 0.1);
-            border: 1px solid rgba(76, 175, 80, 0.3);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-
-        .mic-test-section {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.3);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-
-        .speaker-test-section {
-            background: rgba(33, 150, 243, 0.1);
-            border: 1px solid rgba(33, 150, 243, 0.3);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-
-        .audio-level-meter {
-            width: 100%;
-            height: 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 10px 0;
-            position: relative;
-        }
-
-        .audio-level-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #FFEB3B, #FF5722);
-            width: 0%;
-            transition: width 0.1s ease;
-            border-radius: 10px;
-        }
-
-        .audio-level-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 12px;
-            font-weight: bold;
-            color: var(--text-color);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-        }
-
-        .test-status {
-            padding: 10px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-size: 14px;
-            text-align: center;
-        }
-
-        .test-status.success {
-            background: rgba(76, 175, 80, 0.2);
-            border: 1px solid var(--success-color);
-            color: var(--success-color);
-        }
-
-        .test-status.error {
-            background: rgba(255, 59, 48, 0.2);
-            border: 1px solid var(--danger-color);
-            color: var(--danger-color);
-        }
-
-        .test-status.info {
-            background: rgba(33, 150, 243, 0.2);
-            border: 1px solid #2196F3;
-            color: #2196F3;
-        }
-
         .privacy-controls {
             background: rgba(255, 59, 48, 0.1);
             border: 1px solid rgba(255, 59, 48, 0.3);
@@ -779,24 +658,6 @@
 
         /* iPhone 15 Pro Max Specific Optimizations */
         @media (max-width: 430px) and (max-height: 932px) {
-            html, body {
-                height: 100vh;
-                height: 100dvh;
-                background: var(--background-gradient);
-                margin: 0;
-                padding: 0;
-            }
-            
-            body {
-                /* Ensure full coverage on iPhone */
-                min-height: -webkit-fill-available;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-            }
-            
             .settings-panel { 
                 width: 100vw;
                 padding: 15px;
@@ -870,7 +731,7 @@
         }
     </style>
 </head>
-    <body data-theme="default" data-mode="dark" class="purple-wave">
+<body data-theme="default" data-mode="dark" class="rainbow-wave">
     <!-- Top Controls -->
     <div class="top-controls">
         <button class="control-btn" id="settingsBtn" title="Settings">⚙️</button>
@@ -895,53 +756,6 @@
         <div class="settings-header">
             <h2>⚙️ AI Assistant Settings</h2>
             <button class="close-settings" id="closeSettings">✕</button>
-        </div>
-
-        <!-- Audio Testing Section -->
-        <div class="setting-group">
-            <label class="setting-label">🎧 Audio Hardware Testing</label>
-            
-            <!-- Microphone Test Section -->
-            <div class="mic-test-section">
-                <label style="font-size: 14px; display: block; margin-bottom: 10px;">🎤 Microphone Test</label>
-                <div id="micTestStatus" class="test-status info">Click "Test Microphone" to check your mic</div>
-                
-                <div class="audio-level-meter">
-                    <div class="audio-level-bar" id="micLevelBar"></div>
-                    <div class="audio-level-text" id="micLevelText">0%</div>
-                </div>
-                
-                <div style="margin: 15px 0;">
-                    <button class="btn btn-primary" id="testMicBtn">🎤 Test Microphone</button>
-                    <button class="btn btn-danger" id="stopMicTestBtn" style="display: none;">⏹️ Stop Test</button>
-                </div>
-                
-                <div style="font-size: 12px; opacity: 0.8; margin-top: 10px;">
-                    Speak into your microphone to see the level meter. Good levels should stay in the green/yellow range.
-                </div>
-            </div>
-
-            <!-- Speaker Test Section -->
-            <div class="speaker-test-section">
-                <label style="font-size: 14px; display: block; margin-bottom: 10px;">🔊 Speaker/Headphone Test</label>
-                <div id="speakerTestStatus" class="test-status info">Click "Test Speakers" to check your audio output</div>
-                
-                <div style="margin: 15px 0;">
-                    <button class="btn btn-success" id="testSpeakerBtn">🔊 Test Speakers</button>
-                    <button class="btn btn-secondary" id="testVoiceBtn">🗣️ Test Voice Settings</button>
-                </div>
-                
-                <div style="margin: 15px 0;">
-                    <label style="font-size: 12px; display: block; margin-bottom: 5px;">Quick Test Phrases:</label>
-                    <button class="btn btn-secondary" style="font-size: 12px; padding: 8px 15px;" onclick="window.voiceAssistant?.speakTestPhrase('Test one two three')">📢 "Test 1-2-3"</button>
-                    <button class="btn btn-secondary" style="font-size: 12px; padding: 8px 15px;" onclick="window.voiceAssistant?.speakTestPhrase('Hello, this is a microphone check')">📢 "Mic Check"</button>
-                    <button class="btn btn-secondary" style="font-size: 12px; padding: 8px 15px;" onclick="window.voiceAssistant?.speakTestPhrase('The quick brown fox jumps over the lazy dog')">📢 "Quick Brown Fox"</button>
-                </div>
-                
-                <div style="font-size: 12px; opacity: 0.8; margin-top: 10px;">
-                    You should hear clear audio from your speakers or headphones. Adjust volume if needed.
-                </div>
-            </div>
         </div>
 
         <!-- AI Configuration -->
@@ -1201,31 +1015,33 @@
                     <option value="ko-KR">🇰🇷 Korean</option>
                     <option value="zh-CN">🇨🇳 Chinese</option>
                 </select>
+                
+                <button class="btn btn-success" id="testSpeechBtn" style="margin-top: 15px;">🎤 Test Voice</button>
             </div>
         </div>
 
-        <!-- Energy Sphere Visualization -->
+        <!-- Wave Visualization Settings -->
         <div class="setting-group">
-            <label class="setting-label">🔮 Energy Sphere Visualization</label>
+            <label class="setting-label">🌊 Wave Visualization</label>
             <div class="wave-controls">
                 <label style="font-size: 14px; display: block; margin-bottom: 5px;">
-                    🌌 Sphere Complexity: <span id="waveCountValue">120</span>
+                    📊 Wave Bar Count: <span id="waveCountValue">120</span>
                 </label>
                 <input type="range" class="setting-range" id="waveCount" min="50" max="200" step="10" value="120">
                 
                 <label style="font-size: 14px; display: block; margin: 15px 0 5px;">
-                    ✨ Energy Intensity: <span id="responsiveValue">1.5</span>
+                    🎭 Wave Responsiveness: <span id="responsiveValue">1.5</span>
                 </label>
                 <input type="range" class="setting-range" id="waveResponsive" min="0.5" max="3.0" step="0.1" value="1.5">
                 
-                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Energy Color Schemes:</label>
+                <label style="font-size: 14px; display: block; margin: 15px 0 5px;">Wave Color Schemes:</label>
                 <div class="color-picker">
-                    <div class="wave-color-option active" data-wave-scheme="purple" style="background: radial-gradient(circle, #ffffff 0%, #c084fc 30%, #9333ea 70%, #581c87 100%);"></div>
-                    <div class="wave-color-option" data-wave-scheme="ocean" style="background: radial-gradient(circle, #ffffff 0%, #67e8f9 30%, #0891b2 70%, #164e63 100%);"></div>
-                    <div class="wave-color-option" data-wave-scheme="fire" style="background: radial-gradient(circle, #ffffff 0%, #fed7aa 30%, #ea580c 70%, #9a3412 100%);"></div>
-                    <div class="wave-color-option" data-wave-scheme="neon" style="background: radial-gradient(circle, #ffffff 0%, #f0abfc 30%, #d946ef 50%, #a21caf 100%);"></div>
-                    <div class="wave-color-option" data-wave-scheme="rainbow" style="background: radial-gradient(circle, #ffffff 0%, #fbbf24 20%, #f59e0b 40%, #10b981 60%, #3b82f6 80%, #8b5cf6 100%);"></div>
-                    <div class="wave-color-option" data-wave-scheme="blue" style="background: radial-gradient(circle, #ffffff 0%, #93c5fd 30%, #3b82f6 70%, #1e40af 100%);"></div>
+                    <div class="wave-color-option active" data-wave-scheme="rainbow" style="background: linear-gradient(to right, #ff0080, #ff8000, #80ff00, #00ff80, #8000ff);"></div>
+                    <div class="wave-color-option" data-wave-scheme="ocean" style="background: linear-gradient(to right, #006994, #13a6b7, #20c0db, #4dd7fa, #9cecfb);"></div>
+                    <div class="wave-color-option" data-wave-scheme="fire" style="background: linear-gradient(to right, #ff0000, #ff4500, #ff8c00, #ffd700, #ffff00);"></div>
+                    <div class="wave-color-option" data-wave-scheme="neon" style="background: linear-gradient(to right, #ff00ff, #00ffff, #ffff00, #ff0080, #80ff00);"></div>
+                    <div class="wave-color-option" data-wave-scheme="purple" style="background: linear-gradient(to right, #a855f7, #c084fc, #ddd6fe, #8b5cf6, #7c3aed);"></div>
+                    <div class="wave-color-option" data-wave-scheme="blue" style="background: linear-gradient(to right, #00d4ff, #0099ff, #0066ff, #3399ff, #66ccff);"></div>
                 </div>
             </div>
         </div>
@@ -1294,7 +1110,7 @@
                     temperature: 0.7,
                     waveCount: 120,
                     waveResponsive: 1.5,
-                    waveScheme: 'purple',
+                    waveScheme: 'rainbow',
                     wakeWordEnabled: true,
                     wakeWord: 'Hey Assistant',
                     wakeResponse: "Hi! I'm here to help you.",
@@ -1334,14 +1150,8 @@
                 this.audioEnabled = false;
                 this.wakeListening = false;
                 
-                // Mic testing properties
-                this.micTestActive = false;
-                this.micTestStream = null;
-                this.micTestAnalyser = null;
-                
                 this.waveAnimationId = null;
                 this.idleAnimationId = null;
-                this.micTestAnimationId = null;
 
                 this.initializeElements();
                 this.setupEventListeners();
@@ -1357,7 +1167,6 @@
                 // Initialize canvas after a brief delay to ensure DOM is ready
                 setTimeout(() => {
                     this.setupCanvas();
-                    this.startAdvancedIdleAnimation();
                 }, 100);
 
                 // Start wake word listening immediately
@@ -1381,16 +1190,6 @@
                 this.settingsPanel = document.getElementById('settingsPanel');
                 this.settingsOverlay = document.getElementById('settingsOverlay');
                 this.closeSettings = document.getElementById('closeSettings');
-
-                // Audio test elements
-                this.testMicBtn = document.getElementById('testMicBtn');
-                this.stopMicTestBtn = document.getElementById('stopMicTestBtn');
-                this.testSpeakerBtn = document.getElementById('testSpeakerBtn');
-                this.testVoiceBtn = document.getElementById('testVoiceBtn');
-                this.micTestStatus = document.getElementById('micTestStatus');
-                this.speakerTestStatus = document.getElementById('speakerTestStatus');
-                this.micLevelBar = document.getElementById('micLevelBar');
-                this.micLevelText = document.getElementById('micLevelText');
 
                 // Privacy elements
                 this.privacyLocked = document.getElementById('privacyLocked');
@@ -1432,6 +1231,7 @@
                 // Buttons and toggles
                 this.saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
                 this.testApiKeyBtn = document.getElementById('testApiKeyBtn');
+                this.testSpeechBtn = document.getElementById('testSpeechBtn');
                 this.showResponseToggle = document.getElementById('showResponseToggle');
                 this.wakeWordToggle = document.getElementById('wakeWordToggle');
                 this.autoRestartToggle = document.getElementById('autoRestartToggle');
@@ -1467,12 +1267,6 @@
                 });
                 this.settingsOverlay.addEventListener('click', () => this.closeSettingsPanel());
 
-                // Audio test controls
-                this.testMicBtn.addEventListener('click', () => this.startMicrophoneTest());
-                this.stopMicTestBtn.addEventListener('click', () => this.stopMicrophoneTest());
-                this.testSpeakerBtn.addEventListener('click', () => this.testSpeakers());
-                this.testVoiceBtn.addEventListener('click', () => this.testVoiceSettings());
-
                 // Privacy unlock/lock
                 this.unlockPrivacyBtn.addEventListener('click', () => this.unlockPrivacySettings());
                 this.lockPrivacyBtn.addEventListener('click', () => this.lockPrivacySettings());
@@ -1480,6 +1274,7 @@
                 // Settings controls
                 this.saveApiKeyBtn.addEventListener('click', () => this.saveApiKey());
                 this.testApiKeyBtn.addEventListener('click', () => this.testApiKey());
+                this.testSpeechBtn.addEventListener('click', () => this.testSpeech());
 
                 // Wake word settings
                 this.wakeWordInput.addEventListener('input', (e) => {
@@ -1534,10 +1329,6 @@
                 this.waveResponsive.addEventListener('input', (e) => {
                     this.responsiveValue.textContent = e.target.value;
                     this.saveSetting('waveResponsive', parseFloat(e.target.value));
-                    // Update lightning intensity in real-time
-                    if (this.lightningIntensity !== undefined) {
-                        this.lightningIntensity = parseFloat(e.target.value);
-                    }
                 });
 
                 this.wakeSensitivity.addEventListener('input', (e) => {
@@ -1599,198 +1390,6 @@
                 this.privacyLockAll.addEventListener('click', () => this.lockAllPrivacy());
                 this.privacyUnlockSafe.addEventListener('click', () => this.unlockSafePrivacy());
                 this.privacyReset.addEventListener('click', () => this.resetPrivacy());
-            }
-
-            // Audio Testing Methods
-            async startMicrophoneTest() {
-                try {
-                    this.micTestStatus.textContent = '🎤 Starting microphone test...';
-                    this.micTestStatus.className = 'test-status info';
-                    
-                    // Get microphone access
-                    this.micTestStream = await navigator.mediaDevices.getUserMedia({ 
-                        audio: { 
-                            echoCancellation: false,
-                            noiseSuppression: false,
-                            autoGainControl: false
-                        } 
-                    });
-                    
-                    // Create audio context for testing
-                    const testAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    const source = testAudioContext.createMediaStreamSource(this.micTestStream);
-                    this.micTestAnalyser = testAudioContext.createAnalyser();
-                    this.micTestAnalyser.fftSize = 256;
-                    
-                    source.connect(this.micTestAnalyser);
-                    
-                    this.micTestActive = true;
-                    this.testMicBtn.style.display = 'none';
-                    this.stopMicTestBtn.style.display = 'inline-block';
-                    
-                    this.micTestStatus.textContent = '🎤 Microphone test active - Speak now!';
-                    this.micTestStatus.className = 'test-status success';
-                    
-                    this.animateMicTest();
-                    
-                } catch (error) {
-                    this.micTestStatus.textContent = `❌ Microphone access failed: ${error.message}`;
-                    this.micTestStatus.className = 'test-status error';
-                    console.error('Microphone test error:', error);
-                }
-            }
-
-            animateMicTest() {
-                if (!this.micTestActive || !this.micTestAnalyser) return;
-                
-                const dataArray = new Uint8Array(this.micTestAnalyser.frequencyBinCount);
-                
-                const updateLevel = () => {
-                    if (!this.micTestActive) return;
-                    
-                    this.micTestAnalyser.getByteFrequencyData(dataArray);
-                    
-                    // Calculate average volume
-                    let sum = 0;
-                    for (let i = 0; i < dataArray.length; i++) {
-                        sum += dataArray[i];
-                    }
-                    const average = sum / dataArray.length;
-                    const percentage = Math.min(100, (average / 128) * 100);
-                    
-                    // Update visual meter
-                    this.micLevelBar.style.width = percentage + '%';
-                    this.micLevelText.textContent = Math.round(percentage) + '%';
-                    
-                    // Update status based on level
-                    if (percentage > 50) {
-                        this.micTestStatus.textContent = '🎤 Excellent! Microphone is working great!';
-                        this.micTestStatus.className = 'test-status success';
-                    } else if (percentage > 20) {
-                        this.micTestStatus.textContent = '🎤 Good! Microphone is detecting audio.';
-                        this.micTestStatus.className = 'test-status success';
-                    } else if (percentage > 5) {
-                        this.micTestStatus.textContent = '🎤 Microphone working but speak louder.';
-                        this.micTestStatus.className = 'test-status info';
-                    } else {
-                        this.micTestStatus.textContent = '🎤 Microphone ready - try speaking louder.';
-                        this.micTestStatus.className = 'test-status info';
-                    }
-                    
-                    this.micTestAnimationId = requestAnimationFrame(updateLevel);
-                };
-                
-                updateLevel();
-            }
-
-            stopMicrophoneTest() {
-                this.micTestActive = false;
-                
-                if (this.micTestAnimationId) {
-                    cancelAnimationFrame(this.micTestAnimationId);
-                }
-                
-                if (this.micTestStream) {
-                    this.micTestStream.getTracks().forEach(track => track.stop());
-                    this.micTestStream = null;
-                }
-                
-                this.micTestAnalyser = null;
-                
-                this.testMicBtn.style.display = 'inline-block';
-                this.stopMicTestBtn.style.display = 'none';
-                
-                this.micLevelBar.style.width = '0%';
-                this.micLevelText.textContent = '0%';
-                
-                this.micTestStatus.textContent = '✅ Microphone test completed.';
-                this.micTestStatus.className = 'test-status success';
-            }
-
-            testSpeakers() {
-                this.speakerTestStatus.textContent = '🔊 Testing speakers...';
-                this.speakerTestStatus.className = 'test-status info';
-                
-                // Test with a series of tones and speech
-                const testSequence = [
-                    { type: 'speech', text: 'Testing speakers. You should hear this clearly.' },
-                    { type: 'speech', text: 'This is a left channel test.' },
-                    { type: 'speech', text: 'This is a right channel test.' },
-                    { type: 'speech', text: 'Speaker test completed successfully.' }
-                ];
-                
-                let currentTest = 0;
-                
-                const runNextTest = () => {
-                    if (currentTest >= testSequence.length) {
-                        this.speakerTestStatus.textContent = '✅ Speaker test completed! Did you hear clear audio?';
-                        this.speakerTestStatus.className = 'test-status success';
-                        return;
-                    }
-                    
-                    const test = testSequence[currentTest];
-                    
-                    if (test.type === 'speech') {
-                        this.speakTestPhrase(test.text);
-                        
-                        // Wait for speech to complete before next test
-                        const checkComplete = () => {
-                            if (!this.synthesis.speaking) {
-                                currentTest++;
-                                setTimeout(runNextTest, 500);
-                            } else {
-                                setTimeout(checkComplete, 100);
-                            }
-                        };
-                        checkComplete();
-                    }
-                };
-                
-                // Cancel any existing speech
-                this.synthesis.cancel();
-                setTimeout(runNextTest, 500);
-            }
-
-            testVoiceSettings() {
-                const testText = `Hello! I am testing the voice settings. 
-                        Speech rate is set to ${this.settings.speechRate}, 
-                        pitch is ${this.settings.speechPitch}, 
-                        and volume is ${this.settings.speechVolume}. 
-                        This should demonstrate the current voice configuration.`;
-                
-                this.speakerTestStatus.textContent = '🗣️ Testing voice settings...';
-                this.speakerTestStatus.className = 'test-status info';
-                
-                this.speakTestPhrase(testText);
-                
-                setTimeout(() => {
-                    this.speakerTestStatus.textContent = '✅ Voice settings test completed!';
-                    this.speakerTestStatus.className = 'test-status success';
-                }, 1000);
-            }
-
-            speakTestPhrase(text) {
-                if (!this.audioEnabled) {
-                    this.enableAudio();
-                }
-                
-                this.synthesis.cancel();
-                
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = this.settings.speechRate;
-                utterance.pitch = this.settings.speechPitch;
-                utterance.volume = this.settings.speechVolume;
-                utterance.lang = this.settings.language;
-
-                // Use selected voice if available
-                if (this.settings.selectedVoice) {
-                    const voice = this.availableVoices.find(v => v.name === this.settings.selectedVoice);
-                    if (voice) {
-                        utterance.voice = voice;
-                    }
-                }
-
-                this.synthesis.speak(utterance);
             }
 
             toggleMode() {
@@ -1952,10 +1551,6 @@
                 this.barCount = Math.floor(this.canvasWidth / 3); // More bars for smoother effect
                 this.barWidth = this.canvasWidth / this.barCount;
                 this.maxBarHeight = this.canvasHeight * 0.4;
-                this.lightningIntensity = this.settings.waveResponsive || 1.5;
-                
-                // Reset rotation timer for smooth animation
-                this.startTime = Date.now();
             }
 
             initializeAudioVisualizer() {
@@ -1967,14 +1562,13 @@
                 this.animationSpeed = 0.1;
                 this.smoothingFactor = 0.8;
                 
-                // Sphere rotation properties
-                this.rotationSpeed = 0.0003; // Very slow rotation
-                this.startTime = Date.now();
+                // Start idle animation
+                this.startAdvancedIdleAnimation();
             }
 
             applyWaveScheme() {
-                // Energy sphere scheme now handled by canvas gradients
-                // Color changes are applied in createSphereGradient method
+                // Wave scheme now handled by canvas gradients
+                // Color changes are applied in createFireGradient method
                 document.body.className = document.body.className.replace(/\b\w+-wave\b/g, '') + ` ${this.settings.waveScheme}-wave`;
             }
 
@@ -1983,20 +1577,16 @@
                 
                 const animate = () => {
                     if (!this.isListening && !this.isProcessing && !this.isSpeaking) {
-                        // Generate gentle sphere pulsing effect
-                        const baseIntensity = 0.15;
-                        const pulseIntensity = Math.sin(time * 0.5) * 0.1;
-                        
+                        // Generate smooth idle waveform
                         for (let i = 0; i < this.barCount; i++) {
-                            // Subtle energy fluctuation
-                            const noise = (Math.random() - 0.5) * 0.05;
-                            const wave = Math.sin(time + i * 0.1) * 0.08;
-                            
-                            this.frequencyData[i] = Math.abs(baseIntensity + pulseIntensity + wave + noise);
+                            const wave1 = Math.sin(time + i * 0.1) * 0.3;
+                            const wave2 = Math.sin(time * 0.7 + i * 0.05) * 0.2;
+                            const wave3 = Math.sin(time * 1.3 + i * 0.15) * 0.1;
+                            this.frequencyData[i] = (wave1 + wave2 + wave3) * 0.3 + 0.1;
                         }
                         
                         this.drawAdvancedWaveform();
-                        time += 0.02; // Very slow animation
+                        time += 0.03;
                     }
                     
                     this.idleAnimationId = requestAnimationFrame(animate);
@@ -2015,274 +1605,195 @@
                                          this.frequencyData[i] * (1 - this.smoothingFactor);
                 }
                 
-                // Draw energy sphere
-                this.drawEnergySphere();
-            }
-
-            drawEnergySphere() {
-                const centerX = this.canvasWidth / 2;
-                const centerY = this.canvasHeight / 2;
-                const baseRadius = Math.min(this.canvasWidth, this.canvasHeight) * 0.25;
-                
-                // Get average intensity for sphere size
-                const avgIntensity = this.smoothedData.reduce((a, b) => a + b, 0) / this.smoothedData.length;
-                
-                // Add subtle breathing effect during idle
-                const currentTime = Date.now();
-                const breathingEffect = Math.sin((currentTime - this.startTime) * 0.001) * 0.05 + 1;
-                
-                const sphereRadius = (baseRadius + (avgIntensity * 50 * this.lightningIntensity)) * breathingEffect;
-                
-                // Draw sphere structure
-                this.drawSphereStructure(centerX, centerY, sphereRadius, avgIntensity);
-                
-                // Draw radiating energy lines
-                this.drawRadiatingEnergy(centerX, centerY, sphereRadius, avgIntensity);
-                
-                // Draw core glow
-                this.drawSphereCore(centerX, centerY, sphereRadius * 0.3, avgIntensity);
-            }
-
-            drawSphereStructure(centerX, centerY, radius, intensity) {
-                const currentTime = Date.now();
-                const time = (currentTime - this.startTime) * this.rotationSpeed; // Continuous smooth rotation
-                
-                // Number of meridian lines (longitude)
-                const meridians = 12;
-                // Number of parallel lines (latitude)  
-                const parallels = 8;
-                
-                // Set line properties
-                this.canvasCtx.lineWidth = 1.5 + (intensity * 2);
-                this.canvasCtx.lineCap = 'round';
-                
-                // Draw meridian lines (vertical curves)
-                for (let m = 0; m < meridians; m++) {
-                    const angle = (m / meridians) * Math.PI * 2 + time;
-                    this.drawMeridianLine(centerX, centerY, radius, angle, intensity, time);
-                }
-                
-                // Draw parallel lines (horizontal curves)
-                for (let p = 1; p < parallels; p++) {
-                    const latAngle = (p / parallels) * Math.PI - Math.PI / 2;
-                    this.drawParallelLine(centerX, centerY, radius, latAngle, intensity, time);
-                }
-            }
-
-            drawMeridianLine(centerX, centerY, radius, baseAngle, intensity, time) {
-                this.canvasCtx.beginPath();
-                
-                const segments = 50;
-                let firstPoint = true;
-                
-                for (let i = 0; i <= segments; i++) {
-                    const t = (i / segments) * Math.PI; // 0 to π
+                // Draw waveform with fire effect
+                for (let i = 0; i < this.barCount; i++) {
+                    const barHeight = Math.abs(this.smoothedData[i]) * this.maxBarHeight;
+                    const x = i * this.barWidth;
                     
-                    // 3D sphere coordinates
-                    const phi = baseAngle;
-                    const theta = t - Math.PI / 2; // -π/2 to π/2
+                    // Create fire gradient based on intensity
+                    const intensity = Math.abs(this.smoothedData[i]);
+                    const gradient = this.createFireGradient(x, this.centerY - barHeight, x, this.centerY + barHeight, intensity);
                     
-                    // Convert to 2D with perspective
-                    const x3d = Math.cos(theta) * Math.cos(phi);
-                    const y3d = Math.sin(theta);
-                    const z3d = Math.cos(theta) * Math.sin(phi);
+                    this.canvasCtx.fillStyle = gradient;
                     
-                    // Apply slow rotation around Y axis
-                    const rotY = time * 0.5;
-                    const xRot = x3d * Math.cos(rotY) - z3d * Math.sin(rotY);
-                    const zRot = x3d * Math.sin(rotY) + z3d * Math.cos(rotY);
+                    // Draw upper bar (positive)
+                    this.canvasCtx.fillRect(x, this.centerY - barHeight, this.barWidth - 0.5, barHeight);
                     
-                    // Project to 2D with perspective
-                    const perspective = 0.6 + (zRot + 1) * 0.2; // Simple perspective
-                    const x2d = centerX + (xRot * radius * perspective);
-                    const y2d = centerY + (y3d * radius * perspective);
+                    // Draw lower bar (mirror)
+                    this.canvasCtx.fillRect(x, this.centerY, this.barWidth - 0.5, barHeight);
                     
-                    // Add slight energy fluctuation
-                    const fluctuation = Math.sin(time * 3 + i * 0.2) * intensity * 5;
-                    const finalX = x2d + fluctuation;
-                    const finalY = y2d + fluctuation * 0.5;
-                    
-                    if (firstPoint) {
-                        this.canvasCtx.moveTo(finalX, finalY);
-                        firstPoint = false;
-                    } else {
-                        this.canvasCtx.lineTo(finalX, finalY);
+                    // Add glow effect for high intensity
+                    if (intensity > 0.5) {
+                        this.canvasCtx.shadowColor = intensity > 0.8 ? '#ff0000' : '#ff8800';
+                        this.canvasCtx.shadowBlur = intensity * 20;
+                        this.canvasCtx.fillRect(x, this.centerY - barHeight, this.barWidth - 0.5, barHeight * 2);
+                        this.canvasCtx.shadowBlur = 0;
                     }
                 }
-                
-                // Apply gradient and glow
-                const gradient = this.createSphereGradient(centerX, centerY, radius);
-                this.canvasCtx.strokeStyle = gradient;
-                this.canvasCtx.shadowColor = this.getSphereGlowColor();
-                this.canvasCtx.shadowBlur = 15 + (intensity * 20);
-                this.canvasCtx.stroke();
-                this.canvasCtx.shadowBlur = 0;
             }
 
-            drawParallelLine(centerX, centerY, radius, latAngle, intensity, time) {
-                this.canvasCtx.beginPath();
-                
-                const segments = 60;
-                const circleRadius = Math.cos(latAngle) * radius;
-                const yOffset = Math.sin(latAngle) * radius;
-                
-                let firstPoint = true;
-                
-                for (let i = 0; i <= segments; i++) {
-                    const angle = (i / segments) * Math.PI * 2 + time;
-                    
-                    // Apply rotation
-                    const rotY = time * 0.5;
-                    const x3d = Math.cos(angle) * circleRadius;
-                    const z3d = Math.sin(angle) * circleRadius;
-                    
-                    const xRot = x3d * Math.cos(rotY) - z3d * Math.sin(rotY);
-                    const zRot = x3d * Math.sin(rotY) + z3d * Math.cos(rotY);
-                    
-                    // Perspective and position
-                    const perspective = 0.6 + (zRot / radius + 1) * 0.2;
-                    const x2d = centerX + (xRot * perspective);
-                    const y2d = centerY + (yOffset * perspective);
-                    
-                    // Add energy fluctuation
-                    const fluctuation = Math.sin(time * 2 + angle * 3) * intensity * 3;
-                    const finalX = x2d + fluctuation;
-                    const finalY = y2d + fluctuation * 0.5;
-                    
-                    if (firstPoint) {
-                        this.canvasCtx.moveTo(finalX, finalY);
-                        firstPoint = false;
-                    } else {
-                        this.canvasCtx.lineTo(finalX, finalY);
-                    }
-                }
-                
-                // Style the line
-                const gradient = this.createSphereGradient(centerX, centerY, radius);
-                this.canvasCtx.strokeStyle = gradient;
-                this.canvasCtx.shadowColor = this.getSphereGlowColor();
-                this.canvasCtx.shadowBlur = 10 + (intensity * 15);
-                this.canvasCtx.stroke();
-                this.canvasCtx.shadowBlur = 0;
-            }
-
-            drawRadiatingEnergy(centerX, centerY, radius, intensity) {
-                if (intensity < 0.2) return;
-                
-                const currentTime = Date.now();
-                const time = (currentTime - this.startTime) * this.rotationSpeed * 2; // Slightly faster rotation for energy rays
-                const rays = 16;
-                
-                for (let i = 0; i < rays; i++) {
-                    const angle = (i / rays) * Math.PI * 2 + time;
-                    const rayLength = radius * (2 + intensity * 2);
-                    
-                    // Calculate ray end points
-                    const startX = centerX + Math.cos(angle) * radius;
-                    const startY = centerY + Math.sin(angle) * radius;
-                    const endX = centerX + Math.cos(angle) * rayLength;
-                    const endY = centerY + Math.sin(angle) * rayLength;
-                    
-                    // Draw ray with fade effect
-                    const rayGradient = this.canvasCtx.createLinearGradient(startX, startY, endX, endY);
-                    rayGradient.addColorStop(0, this.getSphereGlowColor());
-                    rayGradient.addColorStop(1, 'rgba(147, 51, 234, 0)');
-                    
-                    this.canvasCtx.beginPath();
-                    this.canvasCtx.moveTo(startX, startY);
-                    this.canvasCtx.lineTo(endX, endY);
-                    this.canvasCtx.strokeStyle = rayGradient;
-                    this.canvasCtx.lineWidth = 2 + intensity * 3;
-                    this.canvasCtx.shadowColor = this.getSphereGlowColor();
-                    this.canvasCtx.shadowBlur = 8 + intensity * 12;
-                    this.canvasCtx.stroke();
-                    this.canvasCtx.shadowBlur = 0;
-                }
-            }
-
-            drawSphereCore(centerX, centerY, coreRadius, intensity) {
-                // Create core glow effect
-                const coreGradient = this.canvasCtx.createRadialGradient(
-                    centerX, centerY, 0,
-                    centerX, centerY, coreRadius
-                );
-                
-                const coreIntensity = 0.3 + intensity * 0.7;
-                coreGradient.addColorStop(0, `rgba(255, 255, 255, ${coreIntensity})`);
-                coreGradient.addColorStop(0.3, `rgba(200, 150, 255, ${coreIntensity * 0.8})`);
-                coreGradient.addColorStop(0.7, `rgba(147, 51, 234, ${coreIntensity * 0.4})`);
-                coreGradient.addColorStop(1, 'rgba(147, 51, 234, 0)');
-                
-                this.canvasCtx.beginPath();
-                this.canvasCtx.arc(centerX, centerY, coreRadius, 0, Math.PI * 2);
-                this.canvasCtx.fillStyle = coreGradient;
-                this.canvasCtx.fill();
-            }
-
-            createSphereGradient(centerX, centerY, radius) {
-                const gradient = this.canvasCtx.createRadialGradient(
-                    centerX, centerY, 0,
-                    centerX, centerY, radius
-                );
+            createFireGradient(x1, y1, x2, y2, intensity) {
+                const gradient = this.canvasCtx.createLinearGradient(x1, y1, x2, y2);
                 
                 // Apply different color schemes based on wave scheme setting
                 switch(this.settings.waveScheme) {
                     case 'ocean':
-                        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-                        gradient.addColorStop(0.3, 'rgba(100, 255, 255, 0.8)');
-                        gradient.addColorStop(0.7, 'rgba(0, 200, 255, 0.6)');
-                        gradient.addColorStop(1, 'rgba(0, 100, 200, 0.3)');
-                        break;
+                        return this.createOceanGradient(gradient, intensity);
                     case 'fire':
-                        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-                        gradient.addColorStop(0.3, 'rgba(255, 200, 100, 0.8)');
-                        gradient.addColorStop(0.7, 'rgba(255, 100, 50, 0.6)');
-                        gradient.addColorStop(1, 'rgba(200, 50, 0, 0.3)');
-                        break;
+                        return this.createFireGradientColors(gradient, intensity);
                     case 'neon':
-                        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-                        gradient.addColorStop(0.2, 'rgba(255, 0, 255, 0.8)');
-                        gradient.addColorStop(0.5, 'rgba(0, 255, 255, 0.6)');
-                        gradient.addColorStop(0.8, 'rgba(255, 255, 0, 0.4)');
-                        gradient.addColorStop(1, 'rgba(255, 0, 128, 0.2)');
-                        break;
-                    case 'blue':
-                        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-                        gradient.addColorStop(0.3, 'rgba(150, 200, 255, 0.8)');
-                        gradient.addColorStop(0.7, 'rgba(100, 150, 255, 0.6)');
-                        gradient.addColorStop(1, 'rgba(50, 100, 200, 0.3)');
-                        break;
+                        return this.createNeonGradient(gradient, intensity);
                     case 'purple':
-                    default:
-                        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-                        gradient.addColorStop(0.3, 'rgba(200, 150, 255, 0.8)');
-                        gradient.addColorStop(0.7, 'rgba(147, 51, 234, 0.6)');
-                        gradient.addColorStop(1, 'rgba(88, 28, 135, 0.3)');
-                        break;
+                        return this.createPurpleGradient(gradient, intensity);
+                    case 'blue':
+                        return this.createBlueGradient(gradient, intensity);
                     case 'rainbow':
-                        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-                        gradient.addColorStop(0.16, 'rgba(255, 100, 150, 0.8)');
-                        gradient.addColorStop(0.33, 'rgba(255, 150, 50, 0.7)');
-                        gradient.addColorStop(0.5, 'rgba(150, 255, 50, 0.6)');
-                        gradient.addColorStop(0.66, 'rgba(50, 255, 150, 0.5)');
-                        gradient.addColorStop(0.83, 'rgba(150, 50, 255, 0.4)');
-                        gradient.addColorStop(1, 'rgba(255, 50, 150, 0.3)');
-                        break;
+                    default:
+                        return this.createRainbowGradient(gradient, intensity);
                 }
-                
+            }
+
+            createFireGradientColors(gradient, intensity) {
+                if (intensity < 0.2) {
+                    gradient.addColorStop(0, 'rgba(255, 200, 100, 0.8)');
+                    gradient.addColorStop(0.5, 'rgba(255, 150, 50, 0.9)');
+                    gradient.addColorStop(1, 'rgba(255, 100, 0, 1)');
+                } else if (intensity < 0.5) {
+                    gradient.addColorStop(0, 'rgba(255, 255, 100, 0.9)');
+                    gradient.addColorStop(0.3, 'rgba(255, 200, 50, 1)');
+                    gradient.addColorStop(0.7, 'rgba(255, 100, 0, 1)');
+                    gradient.addColorStop(1, 'rgba(255, 50, 0, 1)');
+                } else if (intensity < 0.8) {
+                    gradient.addColorStop(0, 'rgba(255, 255, 200, 1)');
+                    gradient.addColorStop(0.2, 'rgba(255, 255, 100, 1)');
+                    gradient.addColorStop(0.5, 'rgba(255, 150, 0, 1)');
+                    gradient.addColorStop(0.8, 'rgba(255, 50, 0, 1)');
+                    gradient.addColorStop(1, 'rgba(200, 0, 0, 1)');
+                } else {
+                    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                    gradient.addColorStop(0.1, 'rgba(255, 255, 150, 1)');
+                    gradient.addColorStop(0.3, 'rgba(255, 200, 50, 1)');
+                    gradient.addColorStop(0.6, 'rgba(255, 100, 0, 1)');
+                    gradient.addColorStop(0.9, 'rgba(255, 0, 0, 1)');
+                    gradient.addColorStop(1, 'rgba(150, 0, 0, 1)');
+                }
                 return gradient;
             }
 
-            getSphereGlowColor() {
-                switch(this.settings.waveScheme) {
-                    case 'ocean': return '#00ccff';
-                    case 'fire': return '#ff6600';
-                    case 'neon': return '#ff00ff';
-                    case 'blue': return '#4080ff';
-                    case 'rainbow': return '#ff80c0';
-                    case 'purple':
-                    default: return '#9333ea';
+            createOceanGradient(gradient, intensity) {
+                const alpha = Math.max(0.6, intensity);
+                if (intensity < 0.3) {
+                    gradient.addColorStop(0, `rgba(156, 236, 251, ${alpha})`);
+                    gradient.addColorStop(0.5, `rgba(32, 192, 219, ${alpha})`);
+                    gradient.addColorStop(1, `rgba(0, 105, 148, ${alpha})`);
+                } else if (intensity < 0.7) {
+                    gradient.addColorStop(0, `rgba(200, 255, 255, ${alpha})`);
+                    gradient.addColorStop(0.3, `rgba(156, 236, 251, ${alpha})`);
+                    gradient.addColorStop(0.7, `rgba(32, 192, 219, ${alpha})`);
+                    gradient.addColorStop(1, `rgba(0, 105, 148, ${alpha})`);
+                } else {
+                    gradient.addColorStop(0, `rgba(255, 255, 255, 1)`);
+                    gradient.addColorStop(0.2, `rgba(200, 255, 255, 1)`);
+                    gradient.addColorStop(0.5, `rgba(156, 236, 251, 1)`);
+                    gradient.addColorStop(0.8, `rgba(32, 192, 219, 1)`);
+                    gradient.addColorStop(1, `rgba(0, 105, 148, 1)`);
                 }
+                return gradient;
+            }
+
+            createNeonGradient(gradient, intensity) {
+                const alpha = Math.max(0.7, intensity);
+                if (intensity < 0.3) {
+                    gradient.addColorStop(0, `rgba(255, 0, 255, ${alpha})`);
+                    gradient.addColorStop(0.5, `rgba(0, 255, 255, ${alpha})`);
+                    gradient.addColorStop(1, `rgba(255, 255, 0, ${alpha})`);
+                } else if (intensity < 0.7) {
+                    gradient.addColorStop(0, `rgba(255, 100, 255, ${alpha})`);
+                    gradient.addColorStop(0.25, `rgba(255, 0, 255, ${alpha})`);
+                    gradient.addColorStop(0.5, `rgba(0, 255, 255, ${alpha})`);
+                    gradient.addColorStop(0.75, `rgba(255, 255, 0, ${alpha})`);
+                    gradient.addColorStop(1, `rgba(255, 0, 128, ${alpha})`);
+                } else {
+                    gradient.addColorStop(0, `rgba(255, 255, 255, 1)`);
+                    gradient.addColorStop(0.2, `rgba(255, 100, 255, 1)`);
+                    gradient.addColorStop(0.4, `rgba(0, 255, 255, 1)`);
+                    gradient.addColorStop(0.6, `rgba(255, 255, 0, 1)`);
+                    gradient.addColorStop(0.8, `rgba(255, 0, 128, 1)`);
+                    gradient.addColorStop(1, `rgba(128, 0, 255, 1)`);
+                }
+                return gradient;
+            }
+
+            createPurpleGradient(gradient, intensity) {
+                const alpha = Math.max(0.6, intensity);
+                if (intensity < 0.3) {
+                    gradient.addColorStop(0, `rgba(221, 214, 254, ${alpha})`);
+                    gradient.addColorStop(0.5, `rgba(192, 132, 252, ${alpha})`);
+                    gradient.addColorStop(1, `rgba(168, 85, 247, ${alpha})`);
+                } else if (intensity < 0.7) {
+                    gradient.addColorStop(0, `rgba(245, 243, 255, ${alpha})`);
+                    gradient.addColorStop(0.3, `rgba(221, 214, 254, ${alpha})`);
+                    gradient.addColorStop(0.7, `rgba(192, 132, 252, ${alpha})`);
+                    gradient.addColorStop(1, `rgba(124, 58, 237, ${alpha})`);
+                } else {
+                    gradient.addColorStop(0, `rgba(255, 255, 255, 1)`);
+                    gradient.addColorStop(0.2, `rgba(245, 243, 255, 1)`);
+                    gradient.addColorStop(0.5, `rgba(221, 214, 254, 1)`);
+                    gradient.addColorStop(0.8, `rgba(168, 85, 247, 1)`);
+                    gradient.addColorStop(1, `rgba(124, 58, 237, 1)`);
+                }
+                return gradient;
+            }
+
+            createBlueGradient(gradient, intensity) {
+                const alpha = Math.max(0.6, intensity);
+                if (intensity < 0.3) {
+                    gradient.addColorStop(0, `rgba(102, 204, 255, ${alpha})`);
+                    gradient.addColorStop(0.5, `rgba(51, 153, 255, ${alpha})`);
+                    gradient.addColorStop(1, `rgba(0, 212, 255, ${alpha})`);
+                } else if (intensity < 0.7) {
+                    gradient.addColorStop(0, `rgba(200, 240, 255, ${alpha})`);
+                    gradient.addColorStop(0.3, `rgba(102, 204, 255, ${alpha})`);
+                    gradient.addColorStop(0.7, `rgba(0, 153, 255, ${alpha})`);
+                    gradient.addColorStop(1, `rgba(0, 102, 255, ${alpha})`);
+                } else {
+                    gradient.addColorStop(0, `rgba(255, 255, 255, 1)`);
+                    gradient.addColorStop(0.2, `rgba(200, 240, 255, 1)`);
+                    gradient.addColorStop(0.5, `rgba(102, 204, 255, 1)`);
+                    gradient.addColorStop(0.8, `rgba(0, 153, 255, 1)`);
+                    gradient.addColorStop(1, `rgba(0, 102, 255, 1)`);
+                }
+                return gradient;
+            }
+
+            createRainbowGradient(gradient, intensity) {
+                const alpha = Math.max(0.7, intensity);
+                if (intensity < 0.3) {
+                    gradient.addColorStop(0, `rgba(255, 0, 128, ${alpha})`);
+                    gradient.addColorStop(0.2, `rgba(255, 128, 0, ${alpha})`);
+                    gradient.addColorStop(0.4, `rgba(128, 255, 0, ${alpha})`);
+                    gradient.addColorStop(0.6, `rgba(0, 255, 128, ${alpha})`);
+                    gradient.addColorStop(0.8, `rgba(128, 0, 255, ${alpha})`);
+                    gradient.addColorStop(1, `rgba(255, 0, 128, ${alpha})`);
+                } else if (intensity < 0.7) {
+                    gradient.addColorStop(0, `rgba(255, 100, 150, ${alpha})`);
+                    gradient.addColorStop(0.16, `rgba(255, 150, 50, ${alpha})`);
+                    gradient.addColorStop(0.33, `rgba(150, 255, 50, ${alpha})`);
+                    gradient.addColorStop(0.5, `rgba(50, 255, 150, ${alpha})`);
+                    gradient.addColorStop(0.66, `rgba(50, 150, 255, ${alpha})`);
+                    gradient.addColorStop(0.83, `rgba(150, 50, 255, ${alpha})`);
+                    gradient.addColorStop(1, `rgba(255, 50, 150, ${alpha})`);
+                } else {
+                    gradient.addColorStop(0, `rgba(255, 255, 255, 1)`);
+                    gradient.addColorStop(0.14, `rgba(255, 100, 150, 1)`);
+                    gradient.addColorStop(0.28, `rgba(255, 150, 50, 1)`);
+                    gradient.addColorStop(0.42, `rgba(150, 255, 50, 1)`);
+                    gradient.addColorStop(0.56, `rgba(50, 255, 150, 1)`);
+                    gradient.addColorStop(0.7, `rgba(50, 150, 255, 1)`);
+                    gradient.addColorStop(0.84, `rgba(150, 50, 255, 1)`);
+                    gradient.addColorStop(1, `rgba(255, 50, 150, 1)`);
+                }
+                return gradient;
             }
 
             setupSpeechRecognition() {
@@ -2507,21 +2018,14 @@
                 
                 this.analyser.getByteFrequencyData(this.dataArray);
                 
-                // Process audio data for lightning visualization
+                // Process audio data for canvas visualization
                 const step = Math.floor(this.dataArray.length / this.barCount);
                 for (let i = 0; i < this.barCount; i++) {
                     const dataIndex = i * step;
                     const audioValue = this.dataArray[dataIndex] || 0;
                     
-                    // Normalize and apply responsiveness with electrical spikes
-                    let normalizedValue = (audioValue / 255) * this.settings.waveResponsive;
-                    
-                    // Add electrical randomness for lightning effect
-                    if (normalizedValue > 0.3) {
-                        normalizedValue += (Math.random() - 0.5) * 0.2;
-                    }
-                    
-                    this.frequencyData[i] = Math.max(0, normalizedValue);
+                    // Normalize and apply responsiveness
+                    this.frequencyData[i] = (audioValue / 255) * this.settings.waveResponsive;
                 }
                 
                 this.drawAdvancedWaveform();
@@ -2734,6 +2238,10 @@
                     
                     this.audioEnabled = true;
                 }
+            }
+
+            testSpeech() {
+                this.speakResponse('Hello! I am your AI voice assistant. My speech synthesis is working perfectly with your selected voice settings.');
             }
 
             // Privacy Control Methods
@@ -3053,7 +2561,7 @@
                         temperature: 0.7,
                         waveCount: 120,
                         waveResponsive: 1.5,
-                        waveScheme: 'purple',
+                        waveScheme: 'rainbow',
                         wakeWordEnabled: true,
                         wakeWord: 'Hey Assistant',
                         wakeResponse: "Hi! I'm here to help you.",
