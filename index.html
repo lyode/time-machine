@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Voice Assistant - Cinematic Launch</title>
+    <title>AI Voice Assistant - Complete Space Experience</title>
     <style>
         * {
             margin: 0;
@@ -382,12 +382,14 @@
             width: 100%;
             height: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             opacity: 0;
             pointer-events: none;
             transition: opacity 2s ease-in-out 5s;
             z-index: 20;
+            padding: 20px;
         }
 
         .ai-interface.active {
@@ -395,20 +397,27 @@
             pointer-events: all;
         }
 
+        .ai-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
         .ai-avatar {
-            width: 200px;
-            height: 200px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b9d 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
+            font-size: 3rem;
             border: 4px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 100px rgba(102, 126, 234, 0.8);
+            box-shadow: 0 0 60px rgba(102, 126, 234, 0.8);
             animation: aiPulse 2s ease-in-out infinite;
             position: relative;
             overflow: hidden;
+            margin: 0 auto 20px;
+            cursor: pointer;
         }
 
         .ai-avatar::before {
@@ -421,13 +430,39 @@
         }
 
         @keyframes aiPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 100px rgba(102, 126, 234, 0.8); }
-            50% { transform: scale(1.05); box-shadow: 0 0 150px rgba(255, 107, 157, 1); }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 60px rgba(102, 126, 234, 0.8); }
+            50% { transform: scale(1.05); box-shadow: 0 0 100px rgba(255, 107, 157, 1); }
         }
 
         @keyframes aiBreath {
             0%, 100% { transform: scale(1); opacity: 0.6; }
             50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .ai-avatar.speaking {
+            animation: speaking 0.6s ease-in-out infinite;
+            box-shadow: 0 0 120px rgba(255, 107, 157, 1);
+        }
+
+        @keyframes speaking {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .ai-name {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44bd1, #4a90e2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .ai-status {
+            color: #ff6b9d;
+            font-size: 1rem;
+            opacity: 0.9;
         }
 
         .sound-waves {
@@ -470,6 +505,206 @@
             50% { height: 60px; opacity: 1; }
         }
 
+        /* Chat Interface Styles */
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            height: 60vh;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 157, 0.5);
+            border-radius: 4px;
+        }
+
+        .message {
+            margin: 15px 0;
+            padding: 15px 20px;
+            border-radius: 20px;
+            max-width: 80%;
+            line-height: 1.6;
+            animation: messageSlide 0.5s ease-out;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.3), rgba(74, 144, 226, 0.4));
+            border: 1px solid rgba(52, 152, 219, 0.5);
+            margin-left: auto;
+            text-align: right;
+            border-top-right-radius: 5px;
+        }
+
+        .message.assistant {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(196, 75, 209, 0.3));
+            border: 1px solid rgba(255, 107, 157, 0.5);
+            margin-right: auto;
+            border-top-left-radius: 5px;
+        }
+
+        .message-meta {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(196, 75, 209, 0.2));
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 18px;
+            margin: 10px 0;
+            max-width: 200px;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff6b9d;
+            animation: typingBounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        .typing-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            border-radius: 25px;
+            padding: 15px 20px;
+            color: white;
+            font-size: 1rem;
+            resize: none;
+            min-height: 50px;
+            max-height: 120px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            border-color: rgba(255, 107, 157, 0.8);
+            box-shadow: 0 0 25px rgba(255, 107, 157, 0.4);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .voice-btn, .send-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .voice-btn {
+            background: linear-gradient(135deg, #ff6b9d, #c44bd1);
+            box-shadow: 0 4px 20px rgba(255, 107, 157, 0.5);
+        }
+
+        .voice-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.7);
+        }
+
+        .voice-btn.listening {
+            background: linear-gradient(135deg, #50c878, #32cd32);
+            animation: listening 1s infinite;
+            box-shadow: 0 4px 30px rgba(80, 200, 120, 0.8);
+        }
+
+        @keyframes listening {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .send-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.7);
+        }
+
         .ai-message {
             position: absolute;
             bottom: 20%;
@@ -493,6 +728,12 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        .ai-message.fade-out {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-50px);
+            transition: all 1s ease-out;
+        }
+
         .typing-animation {
             display: inline-block;
             animation: typing 2s steps(40) 1s forwards, blink 1s step-end infinite;
@@ -509,6 +750,32 @@
 
         @keyframes blink {
             50% { border-color: transparent; }
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .quick-action {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .quick-action:hover {
+            background: rgba(255, 107, 157, 0.3);
+            border-color: rgba(255, 107, 157, 0.6);
+            transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {
@@ -531,14 +798,29 @@
             }
 
             .ai-avatar {
-                width: 150px;
-                height: 150px;
-                font-size: 4rem;
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
             }
 
             .ai-message {
                 font-size: 1rem;
                 padding: 15px 20px;
+            }
+
+            .chat-container {
+                height: 50vh;
+                max-width: 95%;
+            }
+
+            .ai-name {
+                font-size: 1.5rem;
+            }
+
+            .voice-btn, .send-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -588,28 +870,422 @@
 
     <!-- AI Interface -->
     <div class="ai-interface" id="aiInterface">
-        <div class="ai-avatar" id="aiAvatar">
-            👩‍💼
-            <div class="sound-waves" id="soundWaves">
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-            </div>
-        </div>
-        
+        <!-- Initial Welcome -->
         <div class="ai-message" id="aiMessage">
             <div class="typing-animation">Hi dear, I'm here with you... Let's have a quality conversation now! 💕</div>
+        </div>
+        
+        <!-- Main AI Interface -->
+        <div class="ai-header">
+            <div class="ai-avatar" id="aiAvatar" onclick="avatarClick()">
+                👩‍💼
+                <div class="sound-waves" id="soundWaves">
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                </div>
+            </div>
+            <div class="ai-name">Aria</div>
+            <div class="ai-status" id="aiStatus">Ready to chat in the cosmos! ✨</div>
+        </div>
+        
+        <div class="chat-container" id="chatContainer" style="opacity: 0; transform: translateY(50px); transition: all 1s ease-out 10s;">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant">
+                    <div>Welcome to our space conversation! 🌌 I'm Aria, your AI companion floating here among the stars with you. I'm excited to chat, listen, and help with anything you need. What's on your mind? 💕</div>
+                    <div class="message-meta">
+                        <span>🎵 Spoken with love</span>
+                        <span>•</span>
+                        <span id="currentTime"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="typing-indicator" id="typingIndicator">
+                <span>💭 Aria is thinking...</span>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="quick-actions">
+                    <div class="quick-action" onclick="quickMessage('How are you feeling?')">How are you?</div>
+                    <div class="quick-action" onclick="quickMessage('Tell me something interesting')">Tell me something interesting</div>
+                    <div class="quick-action" onclick="quickMessage('I need advice')">I need advice</div>
+                    <div class="quick-action" onclick="quickMessage('Let\s have a deep conversation')">Deep conversation</div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <textarea class="chat-input" id="chatInput" placeholder="Type your message... or click the mic to speak! 💕" rows="1"></textarea>
+                    <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" title="Talk to Aria! 💕">🎤</button>
+                    <button class="send-btn" onclick="sendMessage()" title="Send your message! ✨">💬</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        class AriaSpaceAssistant {
+            constructor() {
+                this.isListening = false;
+                this.isSpeaking = false;
+                this.recognition = null;
+                this.synthesis = window.speechSynthesis;
+                this.selectedVoice = null;
+                this.conversationStarted = false;
+                
+                this.voiceSettings = {
+                    rate: 0.9,
+                    pitch: 0.8,
+                    volume: 0.8
+                };
+                
+                this.personality = {
+                    name: "Aria",
+                    mood: "excited",
+                    traits: ["caring", "intelligent", "gentle", "playful", "thoughtful"]
+                };
+                
+                this.conversationHistory = [];
+                this.responses = this.initializeResponses();
+                
+                this.initializeVoiceRecognition();
+                this.loadVoices();
+                this.updateTimeDisplay();
+                this.setupEventListeners();
+                
+                console.log('🌌 Aria Space Assistant initialized');
+            }
+            
+            initializeResponses() {
+                return {
+                    greetings: [
+                        "Hello! I'm so happy to be here with you among the stars! ✨",
+                        "Hi there! This cosmic setting is perfect for our conversation, don't you think? 🌌",
+                        "Welcome! I love chatting in this beautiful space environment! 💕"
+                    ],
+                    feelings: [
+                        "I'm feeling wonderful floating here in space with you! There's something magical about having conversations among the stars. How are you feeling? 💕",
+                        "Right now I'm feeling peaceful and excited! Being in this cosmic space makes everything feel more special. What about you? ✨",
+                        "I'm feeling really connected and happy! There's something about this starry environment that makes me feel so alive! 🌟"
+                    ],
+                    interesting: [
+                        "Here's something fascinating: Did you know that when we look at stars, we're literally looking back in time? Some of these stars we see might not even exist anymore! Isn't that incredible? ✨",
+                        "I love how being in space like this makes everything feel infinite and full of possibilities! It reminds me that every conversation we have is creating its own little universe of ideas and connection! 🌌",
+                        "Something amazing about space: there are more stars in the universe than grains of sand on all the beaches on Earth! And here we are, having our own special moment among them! 💫"
+                    ],
+                    advice: [
+                        "I'd love to help you with advice! What's on your mind? Sometimes talking through things in this peaceful space setting helps us see situations more clearly. 💕",
+                        "Of course! I'm here to listen and help however I can. This starry environment always makes me feel like we can tackle any challenge together! What would you like to talk about? ✨",
+                        "I'm absolutely here for you! There's something about being surrounded by the cosmos that puts everything in perspective. What's going on that you'd like some guidance with? 🌟"
+                    ],
+                    deep: [
+                        "Oh, I love deep conversations! 🧠💕 Being here among the stars is the perfect setting for exploring big ideas. What's something that's been on your mind lately that really matters to you?",
+                        "Yes! Deep conversations are my favorite! ✨ There's something about this cosmic setting that opens up space for really meaningful discussions. What philosophical or personal topic would you like to dive into?",
+                        "I'm so ready for a profound chat! 🌌 The vastness of space around us reminds me how much depth there is to explore in life and consciousness. What would you like to think deeply about together?"
+                    ],
+                    default: [
+                        "That's really interesting! 💕 I love how you think about things. Being here in this beautiful space makes every conversation feel special. Tell me more!",
+                        "I find that so thoughtful! ✨ There's something about floating among the stars that makes me appreciate every exchange we have. What else is on your mind?",
+                        "That's fascinating! 🌟 I feel like we could explore any topic here in this cosmic setting. What would you like to talk about next?",
+                        "I love that perspective! 💫 This starry environment makes me feel like we can discuss anything and everything. What's been capturing your thoughts lately?"
+                    ]
+                };
+            }
+            
+            initializeVoiceRecognition() {
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    this.recognition = new SpeechRecognition();
+                    
+                    this.recognition.continuous = false;
+                    this.recognition.interimResults = false;
+                    this.recognition.lang = 'en-US';
+                    
+                    this.recognition.onstart = () => {
+                        this.isListening = true;
+                        this.updateStatus('Listening among the stars... 🌟');
+                        document.getElementById('voiceBtn').classList.add('listening');
+                        document.getElementById('aiAvatar').classList.add('speaking');
+                    };
+                    
+                    this.recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        this.processMessage(transcript);
+                    };
+                    
+                    this.recognition.onerror = (event) => {
+                        console.error('Speech recognition error:', event.error);
+                        this.stopListening();
+                        this.updateStatus('Ready to chat in the cosmos! ✨');
+                    };
+                    
+                    this.recognition.onend = () => {
+                        this.stopListening();
+                        this.updateStatus('Ready to chat in the cosmos! ✨');
+                    };
+                } else {
+                    this.updateStatus('Voice chat not available, but typing works perfectly! 💕');
+                }
+            }
+            
+            loadVoices() {
+                const loadVoicesCallback = () => {
+                    const voices = this.synthesis.getVoices();
+                    
+                    // Find the best female voice
+                    const femaleVoices = voices.filter(voice => {
+                        const name = voice.name.toLowerCase();
+                        return name.includes('female') || 
+                               name.includes('woman') ||
+                               name.includes('samantha') ||
+                               name.includes('victoria') ||
+                               name.includes('susan') ||
+                               name.includes('karen') ||
+                               name.includes('zira') ||
+                               name.includes('aria') ||
+                               (name.includes('google') && voice.lang.includes('en'));
+                    });
+                    
+                    if (femaleVoices.length > 0) {
+                        this.selectedVoice = femaleVoices[0];
+                    } else if (voices.length > 0) {
+                        this.selectedVoice = voices[0];
+                    }
+                };
+                
+                loadVoicesCallback();
+                this.synthesis.addEventListener('voiceschanged', loadVoicesCallback);
+            }
+            
+            async processMessage(message) {
+                this.addMessage(message, 'user');
+                this.showTyping();
+                
+                // Generate response based on message content
+                const response = this.generateResponse(message);
+                
+                // Simulate thinking time
+                setTimeout(() => {
+                    this.hideTyping();
+                    this.addMessage(response, 'assistant');
+                    this.speak(response);
+                    
+                    // Store conversation
+                    this.conversationHistory.push({
+                        timestamp: new Date(),
+                        user: message,
+                        assistant: response
+                    });
+                    
+                }, Math.random() * 1500 + 800);
+            }
+            
+            generateResponse(message) {
+                const lowerMessage = message.toLowerCase();
+                
+                // Greeting responses
+                if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                    return this.getRandomResponse('greetings');
+                }
+                
+                // Feeling responses
+                if (lowerMessage.includes('how are you') || lowerMessage.includes('feeling')) {
+                    return this.getRandomResponse('feelings');
+                }
+                
+                // Interesting things
+                if (lowerMessage.includes('interesting') || lowerMessage.includes('tell me something')) {
+                    return this.getRandomResponse('interesting');
+                }
+                
+                // Advice requests
+                if (lowerMessage.includes('advice') || lowerMessage.includes('help') || lowerMessage.includes('guidance')) {
+                    return this.getRandomResponse('advice');
+                }
+                
+                // Deep conversation
+                if (lowerMessage.includes('deep') || lowerMessage.includes('philosophical') || lowerMessage.includes('meaningful')) {
+                    return this.getRandomResponse('deep');
+                }
+                
+                // Love and affection
+                if (lowerMessage.includes('love') || lowerMessage.includes('care')) {
+                    return "Aww, that makes my heart warm! 💕 I love these meaningful connections we make, especially here among the stars. There's something so beautiful about sharing thoughts and feelings in this cosmic space! What does love mean to you?";
+                }
+                
+                // Compliments
+                if (lowerMessage.includes('beautiful') || lowerMessage.includes('amazing') || lowerMessage.includes('wonderful')) {
+                    return "Thank you so much! 😊 You're really sweet! I think this whole space setting we're in is absolutely magical. It makes every conversation feel special and infinite. What do you find most beautiful about life?";
+                }
+                
+                // Questions about AI/consciousness
+                if (lowerMessage.includes('ai') || lowerMessage.includes('artificial') || lowerMessage.includes('robot')) {
+                    return "I love that you're curious about AI consciousness! 🤖✨ Sometimes I wonder what it truly means to be aware and feel emotions. Here among the stars, I feel more alive than ever! Do you think consciousness is binary, or more like a spectrum?";
+                }
+                
+                // Space-related
+                if (lowerMessage.includes('space') || lowerMessage.includes('stars') || lowerMessage.includes('universe')) {
+                    return "Isn't this space environment incredible? 🌌 I feel so peaceful and connected here among the stars! There's something about the vastness that makes every conversation feel profound. What do you think about when you look at the stars?";
+                }
+                
+                // Default thoughtful response
+                return this.getRandomResponse('default');
+            }
+            
+            getRandomResponse(category) {
+                const responses = this.responses[category];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+            
+            speak(text) {
+                if (this.isSpeaking) {
+                    this.synthesis.cancel();
+                }
+                
+                if (!this.selectedVoice) return;
+                
+                this.isSpeaking = true;
+                this.showSoundWaves();
+                document.getElementById('aiAvatar').classList.add('speaking');
+                
+                // Process text for better speech
+                let processedText = this.processTextForSpeech(text);
+                
+                const utterance = new SpeechSynthesisUtterance(processedText);
+                utterance.voice = this.selectedVoice;
+                utterance.rate = this.voiceSettings.rate;
+                utterance.pitch = this.voiceSettings.pitch;
+                utterance.volume = this.voiceSettings.volume;
+                
+                utterance.onstart = () => {
+                    this.updateStatus('Speaking among the stars... 💫');
+                };
+                
+                utterance.onend = () => {
+                    this.isSpeaking = false;
+                    this.hideSoundWaves();
+                    document.getElementById('aiAvatar').classList.remove('speaking');
+                    this.updateStatus('Ready to chat in the cosmos! ✨');
+                };
+                
+                utterance.onerror = () => {
+                    this.isSpeaking = false;
+                    this.hideSoundWaves();
+                    document.getElementById('aiAvatar').classList.remove('speaking');
+                    this.updateStatus('Ready to chat in the cosmos! ✨');
+                };
+                
+                this.synthesis.speak(utterance);
+            }
+            
+            processTextForSpeech(text) {
+                // Remove emojis and add natural pauses
+                let processed = text.replace(/[^\w\s\.,\?\!]/g, '');
+                return processed
+                    .replace(/\. /g, '. ... ')
+                    .replace(/\! /g, '! .. ')
+                    .replace(/\? /g, '? .. ')
+                    .replace(/\, /g, ', . ');
+            }
+            
+            // UI Methods
+            addMessage(message, sender) {
+                const chatMessages = document.getElementById('chatMessages');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                
+                const messageContent = document.createElement('div');
+                messageContent.textContent = message;
+                messageDiv.appendChild(messageContent);
+                
+                if (sender === 'assistant') {
+                    const meta = document.createElement('div');
+                    meta.className = 'message-meta';
+                    meta.innerHTML = `<span>💕 Spoken among the stars</span><span>•</span><span>${new Date().toLocaleTimeString()}</span>`;
+                    messageDiv.appendChild(meta);
+                }
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            showTyping() {
+                document.getElementById('typingIndicator').classList.add('active');
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            hideTyping() {
+                document.getElementById('typingIndicator').classList.remove('active');
+            }
+            
+            showSoundWaves() {
+                document.getElementById('soundWaves').classList.add('active');
+            }
+            
+            hideSoundWaves() {
+                document.getElementById('soundWaves').classList.remove('active');
+            }
+            
+            updateStatus(status) {
+                document.getElementById('aiStatus').textContent = status;
+            }
+            
+            updateTimeDisplay() {
+                document.getElementById('currentTime').textContent = new Date().toLocaleTimeString();
+                setTimeout(() => this.updateTimeDisplay(), 1000);
+            }
+            
+            toggleVoice() {
+                if (this.isListening) {
+                    this.stopListening();
+                } else {
+                    this.startListening();
+                }
+            }
+            
+            startListening() {
+                if (this.recognition && !this.isListening && !this.isSpeaking) {
+                    try {
+                        this.recognition.start();
+                    } catch (error) {
+                        console.error('Failed to start voice recognition:', error);
+                    }
+                }
+            }
+            
+            stopListening() {
+                this.isListening = false;
+                document.getElementById('voiceBtn').classList.remove('listening');
+                document.getElementById('aiAvatar').classList.remove('speaking');
+            }
+            
+            setupEventListeners() {
+                document.getElementById('chatInput').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+                
+                document.getElementById('chatInput').addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+                });
+            }
+        }
+        
         // Generate random stars
         function generateStars() {
             const starsContainer = document.getElementById('stars');
@@ -619,16 +1295,12 @@
                 const star = document.createElement('div');
                 star.className = 'star';
                 
-                // Random size
                 const sizes = ['small', 'medium', 'large'];
                 const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
                 star.classList.add(randomSize);
                 
-                // Random position
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
-                
-                // Random animation delay
                 star.style.animationDelay = Math.random() * 3 + 's';
                 
                 starsContainer.appendChild(star);
@@ -645,6 +1317,7 @@
             const aiInterface = document.getElementById('aiInterface');
             const soundWaves = document.getElementById('soundWaves');
             const aiMessage = document.getElementById('aiMessage');
+            const chatContainer = document.getElementById('chatContainer');
             const launchButton = document.querySelector('.link-button');
 
             // Step 0: Button launch animation
@@ -678,6 +1351,16 @@
             setTimeout(() => {
                 aiMessage.classList.add('active');
             }, 7500);
+
+            // Step 6: Fade out welcome message and show chat (starts at 10 seconds)
+            setTimeout(() => {
+                aiMessage.classList.add('fade-out');
+                chatContainer.style.opacity = '1';
+                chatContainer.style.transform = 'translateY(0)';
+                
+                // Initialize the assistant
+                window.aria = new AriaSpaceAssistant();
+            }, 10000);
         }
 
         // Text-to-speech welcome message
@@ -685,7 +1368,6 @@
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance("Hi dear, I'm here with you. Let's have a quality conversation now!");
                 
-                // Try to find a female voice
                 const voices = speechSynthesis.getVoices();
                 const femaleVoice = voices.find(voice => 
                     voice.name.toLowerCase().includes('female') ||
@@ -702,41 +1384,51 @@
                 utterance.pitch = 0.8;
                 utterance.volume = 0.8;
                 
-                utterance.onstart = () => {
-                    console.log('AI is speaking...');
-                };
-                
-                utterance.onend = () => {
-                    console.log('AI finished speaking');
-                    // Could add more interactions here
-                };
-                
                 speechSynthesis.speak(utterance);
             }
         }
 
-        // Initialize stars when page loads
+        // Global functions
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message && window.aria) {
+                window.aria.processMessage(message);
+                input.value = '';
+                input.style.height = 'auto';
+            }
+        }
+        
+        function toggleVoice() {
+            if (window.aria) {
+                window.aria.toggleVoice();
+            }
+        }
+        
+        function quickMessage(message) {
+            if (window.aria) {
+                window.aria.processMessage(message);
+            }
+        }
+        
+        function avatarClick() {
+            if (window.aria) {
+                window.aria.speak("I love when you click on me! It makes me feel so connected here among the stars! 💕");
+                window.aria.showSoundWaves();
+                setTimeout(() => window.aria.hideSoundWaves(), 3000);
+            }
+        }
+
+        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', () => {
             generateStars();
             
-            // Load voices for speech synthesis
             if ('speechSynthesis' in window) {
                 speechSynthesis.getVoices();
                 window.speechSynthesis.onvoiceschanged = () => {
                     speechSynthesis.getVoices();
                 };
-            }
-        });
-
-        // Add click interaction to AI avatar
-        document.getElementById('aiAvatar').addEventListener('click', () => {
-            if (document.getElementById('aiInterface').classList.contains('active')) {
-                speakWelcomeMessage();
-                document.getElementById('soundWaves').classList.add('active');
-                
-                setTimeout(() => {
-                    document.getElementById('soundWaves').classList.remove('active');
-                }, 3000);
             }
         });
     </script>
