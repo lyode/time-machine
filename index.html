@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Voice Assistant - Complete Space Experience</title>
+    <title>Aria - Your Intelligent Voice Assistant</title>
     <style>
         * {
             margin: 0;
@@ -16,11 +16,7 @@
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
+            overflow-x: hidden;
         }
 
         .aurora-bg {
@@ -30,749 +26,266 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 107, 157, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(30, 144, 255, 0.4) 0%, transparent 50%);
-            animation: aurora 15s ease-in-out infinite;
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            animation: aurora 20s ease-in-out infinite;
             pointer-events: none;
-            transition: opacity 3s ease-out;
-        }
-
-        .space-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%),
-                linear-gradient(135deg, #000428 0%, #004e92 100%);
-            opacity: 0;
-            transition: opacity 4s ease-in-out;
-            pointer-events: none;
-        }
-
-        .space-bg.active {
-            opacity: 1;
-        }
-
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 4s ease-in-out 1s;
-        }
-
-        .stars.active {
-            opacity: 1;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite ease-in-out;
-        }
-
-        .star.small {
-            width: 1px;
-            height: 1px;
-        }
-
-        .star.medium {
-            width: 2px;
-            height: 2px;
-            box-shadow: 0 0 6px white;
-        }
-
-        .star.large {
-            width: 3px;
-            height: 3px;
-            box-shadow: 0 0 10px white, 0 0 20px rgba(255, 255, 255, 0.5);
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
         }
 
         @keyframes aurora {
-            0%, 100% { opacity: 0.6; transform: scale(1) rotate(0deg); }
-            33% { opacity: 0.8; transform: scale(1.1) rotate(1deg); }
-            66% { opacity: 0.4; transform: scale(0.9) rotate(-1deg); }
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
         .container {
-            text-align: center;
-            position: relative;
-            z-index: 10;
-            max-width: 600px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            transition: all 3s ease-out;
-        }
-
-        .container.fade-out {
-            opacity: 0;
-            transform: scale(0.8) translateY(50px);
-            pointer-events: none;
-        }
-
-        .title {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ff6b9d, #c44bd1, #4a90e2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-            animation: shimmer 3s ease-in-out infinite;
-            transition: all 2s ease-out;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { filter: hue-rotate(0deg); }
-            50% { filter: hue-rotate(30deg); }
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            color: #ff6b9d;
-            font-style: italic;
-            transition: all 2s ease-out;
-        }
-
-        .description {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            opacity: 0.8;
-            color: #e0e0e0;
-            transition: all 2s ease-out;
-        }
-
-        .link-button {
-            display: inline-block;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, #ff6b9d, #c44bd1);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            border: none;
-        }
-
-        .link-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .link-button:hover::before {
-            left: 100%;
-        }
-
-        .link-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
-            background: linear-gradient(135deg, #ff7ba3, #d056d9);
-        }
-
-        .link-button:active {
-            transform: translateY(-1px) scale(1.02);
-        }
-
-        .link-button.launching {
-            animation: buttonLaunch 2s ease-out forwards;
-            pointer-events: none;
-        }
-
-        @keyframes buttonLaunch {
-            0% {
-                transform: translateY(0) scale(1);
-                box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
-                opacity: 1;
-            }
-            25% {
-                transform: translateY(-10px) scale(1.2);
-                box-shadow: 0 20px 60px rgba(255, 107, 157, 0.8);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(-20px) scale(1.5);
-                box-shadow: 0 30px 100px rgba(255, 107, 157, 1);
-                opacity: 0.8;
-            }
-            75% {
-                transform: translateY(-40px) scale(2);
-                box-shadow: 0 50px 150px rgba(255, 107, 157, 1);
-                opacity: 0.4;
-            }
-            100% {
-                transform: translateY(-100px) scale(3);
-                box-shadow: 0 100px 200px rgba(255, 107, 157, 0.8);
-                opacity: 0;
-            }
-        }
-
-        .link-button.launching::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 10px;
-            height: 100px;
-            background: linear-gradient(to top, 
-                rgba(255, 107, 157, 0.8) 0%,
-                rgba(255, 165, 0, 0.6) 50%, 
-                transparent 100%);
-            border-radius: 50px;
-            animation: rocketTrail 2s ease-out forwards;
-            pointer-events: none;
-        }
-
-        @keyframes rocketTrail {
-            0% {
-                height: 0px;
-                opacity: 0;
-            }
-            25% {
-                height: 50px;
-                opacity: 1;
-            }
-            50% {
-                height: 150px;
-                opacity: 0.8;
-            }
-            75% {
-                height: 300px;
-                opacity: 0.4;
-            }
-            100% {
-                height: 500px;
-                opacity: 0;
-            }
-        }
-
-        .icon {
-            margin-right: 10px;
-            font-size: 1.3rem;
-        }
-
-        .features {
-            margin-top: 40px;
-            text-align: left;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 2s ease-out;
-        }
-
-        .features h3 {
-            color: #ff6b9d;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            text-align: center;
-        }
-
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .feature-list li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        .feature-list li::before {
-            content: '✨';
-            position: absolute;
-            left: 0;
-            color: #ff6b9d;
-        }
-
-        .floating-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            transition: opacity 3s ease-out;
-        }
-
-        .floating-elements.fade-out {
-            opacity: 0;
-        }
-
-        .floating-element {
-            position: absolute;
-            color: rgba(255, 107, 157, 0.3);
-            font-size: 2rem;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-element:nth-child(1) {
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-element:nth-child(2) {
-            top: 20%;
-            right: 15%;
-            animation-delay: 2s;
-        }
-
-        .floating-element:nth-child(3) {
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
-        }
-
-        .floating-element:nth-child(4) {
-            bottom: 15%;
-            right: 10%;
-            animation-delay: 1s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-                opacity: 0.3;
-            }
-            50% {
-                transform: translateY(-20px) rotate(180deg);
-                opacity: 0.8;
-            }
-        }
-
-        /* AI Interface Styles */
-        .ai-interface {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 2s ease-in-out 5s;
-            z-index: 20;
+            max-width: 1600px;
+            margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        .ai-interface.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .ai-header {
+        .header {
             text-align: center;
             margin-bottom: 30px;
         }
 
-        .ai-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b9d 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .assistant-name {
             font-size: 3rem;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 60px rgba(102, 126, 234, 0.8);
-            animation: aiPulse 2s ease-in-out infinite;
-            position: relative;
-            overflow: hidden;
-            margin: 0 auto 20px;
-            cursor: pointer;
-        }
-
-        .ai-avatar::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            animation: aiBreath 3s ease-in-out infinite;
-        }
-
-        @keyframes aiPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 60px rgba(102, 126, 234, 0.8); }
-            50% { transform: scale(1.05); box-shadow: 0 0 100px rgba(255, 107, 157, 1); }
-        }
-
-        @keyframes aiBreath {
-            0%, 100% { transform: scale(1); opacity: 0.6; }
-            50% { transform: scale(1.1); opacity: 1; }
-        }
-
-        .ai-avatar.speaking {
-            animation: speaking 0.6s ease-in-out infinite;
-            box-shadow: 0 0 120px rgba(255, 107, 157, 1);
-        }
-
-        @keyframes speaking {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .ai-name {
-            font-size: 2rem;
+            margin-bottom: 10px;
             background: linear-gradient(135deg, #ff6b9d, #c44bd1, #4a90e2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 700;
-            margin-bottom: 10px;
         }
 
-        .ai-status {
-            color: #ff6b9d;
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .voice-info {
-            color: #c44bd1;
-            font-size: 0.85rem;
-            opacity: 0.8;
-            margin-top: 5px;
-        }
-
-        .settings-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
+        .tagline {
             font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .voice-status {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .settings-btn:hover {
-            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(196, 75, 209, 0.3));
-            transform: scale(1.1);
-            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
-        }
-
-        .settings-panel {
-            position: absolute;
-            top: 80px;
-            right: 20px;
-            width: 300px;
-            background: rgba(255, 255, 255, 0.15);
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
-            border-radius: 20px;
+            padding: 12px 25px;
+            border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            opacity: 0;
-            transform: translateY(-20px);
-            pointer-events: none;
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-
-        .settings-panel.active {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: all;
-        }
-
-        .settings-section {
             margin-bottom: 20px;
         }
 
-        .settings-label {
-            color: #ff6b9d;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .voice-select-space {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            padding: 10px;
-            color: white;
-            font-size: 0.9rem;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .voice-select-space option {
-            background: #1a1a2e;
-            color: white;
-        }
-
-        .slider-group-space {
-            margin: 10px 0;
-        }
-
-        .slider-label-space {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .slider-space {
-            width: 100%;
-            -webkit-appearance: none;
-            height: 4px;
-            border-radius: 2px;
-            background: rgba(255, 255, 255, 0.2);
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .slider-space::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 16px;
-            height: 16px;
+        .voice-avatar {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ff6b9d, #c44bd1);
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(255, 107, 157, 0.4);
-        }
-
-        .test-voice-btn {
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(196, 75, 209, 0.3));
-            border: 1px solid rgba(255, 107, 157, 0.5);
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.85rem;
-            margin-top: 10px;
-        }
-
-        .test-voice-btn:hover {
-            background: linear-gradient(135deg, rgba(255, 107, 157, 0.5), rgba(196, 75, 209, 0.5));
-            transform: translateY(-2px);
-        }
-
-        .sound-waves {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+            margin: 0 auto 30px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 40px rgba(102, 126, 234, 0.4);
         }
 
-        .sound-waves.active {
-            opacity: 1;
-        }
-
-        .wave {
-            width: 4px;
-            height: 20px;
-            background: linear-gradient(to top, #ff6b9d, #c44bd1);
-            margin: 0 3px;
-            border-radius: 2px;
-            animation: soundWave 1.2s ease-in-out infinite;
-        }
-
-        .wave:nth-child(1) { animation-delay: 0s; }
-        .wave:nth-child(2) { animation-delay: 0.1s; }
-        .wave:nth-child(3) { animation-delay: 0.2s; }
-        .wave:nth-child(4) { animation-delay: 0.3s; }
-        .wave:nth-child(5) { animation-delay: 0.4s; }
-        .wave:nth-child(6) { animation-delay: 0.5s; }
-        .wave:nth-child(7) { animation-delay: 0.4s; }
-        .wave:nth-child(8) { animation-delay: 0.3s; }
-        .wave:nth-child(9) { animation-delay: 0.2s; }
-        .wave:nth-child(10) { animation-delay: 0.1s; }
-
-        @keyframes soundWave {
-            0%, 100% { height: 20px; opacity: 0.5; }
-            50% { height: 60px; opacity: 1; }
-        }
-
-        /* Chat Interface Styles */
-        .chat-container {
+        .voice-avatar::before {
+            content: '';
+            position: absolute;
             width: 100%;
-            max-width: 800px;
-            height: 60vh;
-            background: rgba(255, 255, 255, 0.1);
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .voice-avatar.speaking {
+            animation: voicePulse 0.8s ease-in-out infinite;
+            box-shadow: 0 0 60px rgba(102, 126, 234, 0.8);
+        }
+
+        @keyframes voicePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .voice-avatar .avatar-face {
+            font-size: 3.5rem;
+            z-index: 2;
+            position: relative;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr 280px;
+            gap: 25px;
+            height: calc(100vh - 300px);
+        }
+
+        .sidebar, .voice-panel {
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow-y: auto;
+        }
+
+        .chat-area {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            margin-top: 20px;
+        }
+
+        .assistant-header {
+            padding: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .assistant-mini-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .assistant-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.3rem;
+            color: #ff6b9d;
+        }
+
+        .assistant-status {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .voice-indicator {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid rgba(46, 204, 113, 0.5);
+            border-radius: 15px;
+            font-size: 0.8rem;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            padding: 25px;
             overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: rgba(255, 107, 157, 0.5);
-            border-radius: 4px;
         }
 
         .message {
-            margin: 15px 0;
-            padding: 15px 20px;
-            border-radius: 20px;
-            max-width: 80%;
+            margin: 20px 0;
+            padding: 18px 24px;
+            border-radius: 22px;
+            max-width: 85%;
             line-height: 1.6;
-            animation: messageSlide 0.5s ease-out;
+            animation: messageSlide 0.4s ease-out;
             position: relative;
-            word-wrap: break-word;
         }
 
         @keyframes messageSlide {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .message.user {
-            background: linear-gradient(135deg, rgba(52, 152, 219, 0.3), rgba(74, 144, 226, 0.4));
-            border: 1px solid rgba(52, 152, 219, 0.5);
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.3), rgba(74, 144, 226, 0.3));
+            border: 1px solid rgba(52, 152, 219, 0.4);
             margin-left: auto;
             text-align: right;
-            border-top-right-radius: 5px;
         }
 
         .message.assistant {
-            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(196, 75, 209, 0.3));
-            border: 1px solid rgba(255, 107, 157, 0.5);
+            background: linear-gradient(135deg, rgba(155, 89, 182, 0.3), rgba(142, 68, 173, 0.3));
+            border: 1px solid rgba(155, 89, 182, 0.4);
             margin-right: auto;
-            border-top-left-radius: 5px;
         }
 
         .message-meta {
             font-size: 0.75rem;
-            opacity: 0.7;
+            opacity: 0.6;
             margin-top: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .typing-indicator {
+        .speaking-indicator {
             display: none;
             padding: 15px 20px;
-            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(196, 75, 209, 0.2));
-            border: 1px solid rgba(255, 107, 157, 0.3);
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(196, 75, 209, 0.3));
+            border: 1px solid rgba(255, 107, 157, 0.4);
             border-radius: 18px;
             margin: 10px 0;
-            max-width: 200px;
+            max-width: 250px;
             align-items: center;
             gap: 12px;
         }
 
-        .typing-indicator.active {
+        .voice-waves {
             display: flex;
+            gap: 3px;
         }
 
-        .typing-dots {
-            display: flex;
-            gap: 4px;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+        .voice-wave {
+            width: 3px;
+            height: 15px;
             background: #ff6b9d;
-            animation: typingBounce 1.4s infinite ease-in-out;
+            border-radius: 2px;
+            animation: voiceWave 1.2s infinite ease-in-out;
         }
 
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-        .typing-dot:nth-child(3) { animation-delay: 0s; }
+        .voice-wave:nth-child(1) { animation-delay: -1.1s; }
+        .voice-wave:nth-child(2) { animation-delay: -1.0s; }
+        .voice-wave:nth-child(3) { animation-delay: -0.9s; }
+        .voice-wave:nth-child(4) { animation-delay: -0.8s; }
 
-        @keyframes typingBounce {
-            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
-            40% { transform: scale(1); opacity: 1; }
+        @keyframes voiceWave {
+            0%, 40%, 100% { transform: scaleY(0.4); }
+            20% { transform: scaleY(1.0); }
         }
 
-        .chat-input-area {
-            padding: 20px;
+        .input-area {
+            padding: 25px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
         }
 
-        .chat-input-container {
+        .input-container {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             align-items: flex-end;
         }
 
-        .chat-input {
+        .input-field {
             flex: 1;
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 107, 157, 0.3);
-            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
             padding: 15px 20px;
             color: white;
             font-size: 1rem;
@@ -781,17 +294,15 @@
             max-height: 120px;
             outline: none;
             transition: all 0.3s ease;
-            font-family: inherit;
         }
 
-        .chat-input:focus {
-            border-color: rgba(255, 107, 157, 0.8);
-            box-shadow: 0 0 25px rgba(255, 107, 157, 0.4);
-            background: rgba(255, 255, 255, 0.2);
+        .input-field:focus {
+            border-color: rgba(255, 107, 157, 0.6);
+            box-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
         }
 
-        .chat-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .voice-btn, .send-btn {
@@ -800,7 +311,7 @@
             border-radius: 50%;
             border: none;
             color: white;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -812,373 +323,412 @@
 
         .voice-btn {
             background: linear-gradient(135deg, #ff6b9d, #c44bd1);
-            box-shadow: 0 4px 20px rgba(255, 107, 157, 0.5);
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
         }
 
         .voice-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.6);
         }
 
         .voice-btn.listening {
-            background: linear-gradient(135deg, #50c878, #32cd32);
-            animation: listening 1s infinite;
-            box-shadow: 0 4px 30px rgba(80, 200, 120, 0.8);
-        }
-
-        @keyframes listening {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            background: linear-gradient(135deg, #27ae60, #229954);
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 4px 20px rgba(39, 174, 96, 0.6);
         }
 
         .send-btn {
             background: linear-gradient(135deg, #667eea, #764ba2);
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
         .send-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
         }
 
-        .ai-message {
-            position: absolute;
-            bottom: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 20px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 1.2rem;
-            text-align: center;
-            max-width: 80%;
-            opacity: 0;
-            transform: translateX(-50%) translateY(50px);
-            transition: all 1s ease-out 7s;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
-        .ai-message.active {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
+        .voice-controls {
+            margin-bottom: 25px;
         }
 
-        .ai-message.fade-out {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-50px);
-            transition: all 1s ease-out;
-        }
-
-        .typing-animation {
-            display: inline-block;
-            animation: typing 2s steps(40) 1s forwards, blink 1s step-end infinite;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid #ff6b9d;
-            width: 0;
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink {
-            50% { border-color: transparent; }
-        }
-
-        .quick-actions {
-            display: flex;
-            gap: 10px;
+        .section-header {
+            font-size: 1.1rem;
+            font-weight: 600;
             margin-bottom: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
+            color: #ff6b9d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .quick-action {
-            padding: 8px 15px;
+        .voice-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .voice-select {
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 107, 157, 0.3);
-            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .voice-select option {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #ff6b9d;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(255, 107, 157, 0.4);
+        }
+
+        .personality-trait {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #ff6b9d;
+        }
+
+        .trait-name {
+            font-weight: 600;
+            color: #ff6b9d;
+            margin-bottom: 5px;
+        }
+
+        .trait-description {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .quick-commands {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .quick-cmd {
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.85rem;
-            white-space: nowrap;
+            font-size: 0.9rem;
+            text-align: center;
         }
 
-        .quick-action:hover {
+        .quick-cmd:hover {
             background: rgba(255, 107, 157, 0.3);
-            border-color: rgba(255, 107, 157, 0.6);
-            transform: translateY(-2px);
+            border-color: rgba(255, 107, 157, 0.5);
+            transform: translateY(-1px);
         }
 
-        @media (max-width: 768px) {
-            .container {
-                margin: 20px;
-                padding: 30px 20px;
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                height: auto;
             }
             
-            .title {
-                font-size: 2.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .link-button {
-                padding: 15px 30px;
-                font-size: 1rem;
-            }
-
-            .ai-avatar {
-                width: 100px;
-                height: 100px;
-                font-size: 2.5rem;
-            }
-
-            .ai-message {
-                font-size: 1rem;
-                padding: 15px 20px;
-            }
-
-            .chat-container {
-                height: 50vh;
-                max-width: 95%;
-            }
-
-            .ai-name {
-                font-size: 1.5rem;
-            }
-
-            .voice-btn, .send-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
+            .sidebar, .voice-panel {
+                order: 2;
             }
         }
     </style>
 </head>
 <body>
-    <div class="aurora-bg" id="auroraBg"></div>
-    <div class="space-bg" id="spaceBg"></div>
+    <div class="aurora-bg"></div>
     
-    <div class="stars" id="stars"></div>
-    
-    <div class="floating-elements" id="floatingElements">
-        <div class="floating-element">🎤</div>
-        <div class="floating-element">💕</div>
-        <div class="floating-element">🤖</div>
-        <div class="floating-element">✨</div>
-    </div>
-    
-    <div class="container" id="mainContainer">
-        <h1 class="title">AI Voice Assistant</h1>
-        
-        <p class="subtitle">Your intelligent companion with a gentle voice</p>
-        
-        <p class="description">
-            Experience a personalized AI assistant designed for natural conversation with a soft, clean female voice. 
-            Perfect for intelligent discussions, personal assistance, and meaningful interactions.
-        </p>
-        
-        <button class="link-button" onclick="launchAI()">
-            <span class="icon">🚀</span>
-            Launch AI Assistant
-        </button>
-        
-        <div class="features">
-            <h3>✨ Features</h3>
-            <ul class="feature-list">
-                <li>Intelligent conversation with personality</li>
-                <li>Soft, gentle female voice optimized for comfort</li>
-                <li>Personal and caring interaction style</li>
-                <li>Voice recognition and natural speech</li>
-                <li>Thoughtful, measured responses</li>
-                <li>Emotional intelligence and empathy</li>
-                <li>Customizable voice settings</li>
-                <li>Always ready to listen and help</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- AI Interface -->
-    <div class="ai-interface" id="aiInterface">
-        <!-- Settings Button -->
-        <button class="settings-btn" id="settingsBtn" onclick="toggleSettings()" title="Voice Settings">⚙️</button>
-        
-        <!-- Settings Panel -->
-        <div class="settings-panel" id="settingsPanel">
-            <div class="settings-section">
-                <label class="settings-label">🎵 Voice Selection</label>
-                <select class="voice-select-space" id="voiceSelectSpace" onchange="updateSpaceVoice()">
-                    <option value="maple">Maple AI Voice (Default)</option>
-                </select>
+    <div class="container">
+        <div class="header">
+            <div class="assistant-name">Aria</div>
+            <p class="tagline">"Your intelligent companion with a gentle voice and thoughtful mind"</p>
+            
+            <div class="voice-status">
+                <span>🎙️</span>
+                <span>Voice Status: <strong id="voiceStatus">Ready</strong></span>
+                <span id="voiceQuality">Quality: Premium</span>
             </div>
             
-            <div class="settings-section">
-                <div class="slider-group-space">
-                    <div class="slider-label-space">
-                        <span>Speaking Speed</span>
-                        <span id="speedValueSpace">0.9</span>
+            <div class="voice-avatar" id="voiceAvatar">
+                <div class="avatar-face">👩‍💼</div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <!-- Voice Configuration Panel -->
+            <div class="sidebar">
+                <div class="voice-controls">
+                    <div class="section-header">
+                        🎵 Voice Configuration
                     </div>
-                    <input type="range" class="slider-space" id="speedSliderSpace" min="0.5" max="1.5" step="0.1" value="0.9" onchange="updateSpaceVoiceSettings()">
-                </div>
-                
-                <div class="slider-group-space">
-                    <div class="slider-label-space">
-                        <span>Voice Pitch</span>
-                        <span id="pitchValueSpace">0.8</span>
+                    
+                    <div class="voice-option">
+                        <span>Voice Selection</span>
                     </div>
-                    <input type="range" class="slider-space" id="pitchSliderSpace" min="0.5" max="1.5" step="0.1" value="0.8" onchange="updateSpaceVoiceSettings()">
-                </div>
-                
-                <div class="slider-group-space">
-                    <div class="slider-label-space">
+                    <select class="voice-select" id="voiceSelect" onchange="updateVoice()">
+                        <option value="">Detecting voices...</option>
+                    </select>
+                    
+                    <div class="slider-container">
+                        <span>Speed</span>
+                        <input type="range" class="slider" id="speedSlider" min="0.5" max="1.5" step="0.1" value="0.9" onchange="updateVoiceSettings()">
+                        <span id="speedValue">0.9</span>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <span>Pitch</span>
+                        <input type="range" class="slider" id="pitchSlider" min="0.5" max="1.5" step="0.1" value="0.8" onchange="updateVoiceSettings()">
+                        <span id="pitchValue">0.8</span>
+                    </div>
+                    
+                    <div class="slider-container">
                         <span>Volume</span>
-                        <span id="volumeValueSpace">0.8</span>
-                    </div>
-                    <input type="range" class="slider-space" id="volumeSliderSpace" min="0.1" max="1" step="0.1" value="0.8" onchange="updateSpaceVoiceSettings()">
-                </div>
-            </div>
-            
-            <button class="test-voice-btn" onclick="testCurrentVoice()">🎤 Test Voice</button>
-        </div>
-
-        <!-- Initial Welcome -->
-        <div class="ai-message" id="aiMessage">
-            <div class="typing-animation">Hi dear, I'm here with you... Let's have a quality conversation now! 💕</div>
-        </div>
-        
-        <!-- Main AI Interface -->
-        <div class="ai-header">
-            <div class="ai-avatar" id="aiAvatar" onclick="avatarClick()">
-                👩‍💼
-                <div class="sound-waves" id="soundWaves">
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                </div>
-            </div>
-            <div class="ai-name">Aria</div>
-            <div class="ai-status" id="aiStatus">Ready to chat in the cosmos! ✨</div>
-            <div class="voice-info" id="voiceInfo">🎵 Maple AI Voice</div>
-        </div>
-        
-        <div class="chat-container" id="chatContainer" style="opacity: 0; transform: translateY(50px); transition: all 1s ease-out 10s;">
-            <div class="chat-messages" id="chatMessages">
-                <div class="message assistant">
-                    <div>Welcome to our space conversation! 🌌 I'm Aria, your AI companion floating here among the stars with you. I'm excited to chat, listen, and help with anything you need. What's on your mind? 💕</div>
-                    <div class="message-meta">
-                        <span>🎵 Spoken with love</span>
-                        <span>•</span>
-                        <span id="currentTime"></span>
+                        <input type="range" class="slider" id="volumeSlider" min="0.1" max="1" step="0.1" value="0.8" onchange="updateVoiceSettings()">
+                        <span id="volumeValue">0.8</span>
                     </div>
                 </div>
-            </div>
-            
-            <div class="typing-indicator" id="typingIndicator">
-                <span>💭 Aria is thinking...</span>
-                <div class="typing-dots">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
-            </div>
 
-            <div class="chat-input-area">
-                <div class="quick-actions">
-                    <div class="quick-action" onclick="quickMessage('How are you feeling?')">How are you?</div>
-                    <div class="quick-action" onclick="quickMessage('Tell me something interesting')">Tell me something interesting</div>
-                    <div class="quick-action" onclick="quickMessage('I need advice')">I need advice</div>
-                    <div class="quick-action" onclick="quickMessage('Let\s have a deep conversation')">Deep conversation</div>
+                <div class="section-header">
+                    🧠 Personality Traits
                 </div>
                 
-                <div class="chat-input-container">
-                    <textarea class="chat-input" id="chatInput" placeholder="Type your message... or click the mic to speak! 💕" rows="1"></textarea>
-                    <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" title="Talk to Aria! 💕">🎤</button>
-                    <button class="send-btn" onclick="sendMessage()" title="Send your message! ✨">💬</button>
+                <div class="personality-trait">
+                    <div class="trait-name">Calm & Composed</div>
+                    <div class="trait-description">I speak slowly and thoughtfully, never rushing through responses. My tone remains peaceful even during complex discussions.</div>
+                </div>
+                
+                <div class="personality-trait">
+                    <div class="trait-name">Highly Intelligent</div>
+                    <div class="trait-description">I analyze situations deeply, make connections between concepts, and provide insightful responses based on comprehensive understanding.</div>
+                </div>
+                
+                <div class="personality-trait">
+                    <div class="trait-name">Gentle & Supportive</div>
+                    <div class="trait-description">My voice is soft and comforting. I'm patient, understanding, and always here to help with a caring approach.</div>
+                </div>
+            </div>
+
+            <!-- Main Chat Area -->
+            <div class="chat-area">
+                <div class="assistant-header">
+                    <div class="assistant-mini-avatar">👩‍💼</div>
+                    <div class="assistant-info">
+                        <h3>Aria</h3>
+                        <div class="assistant-status">Your intelligent voice companion</div>
+                    </div>
+                    <div class="voice-indicator" id="voiceIndicator">
+                        <span>🔊</span>
+                        <span>Voice Active</span>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message assistant">
+                        <div>Hello, I'm Aria. I'm here to be your intelligent voice companion. I speak with a calm, gentle voice and think deeply about every conversation we have.</div>
+                        <div class="message-meta">
+                            <span>🎵 Voice enabled</span>
+                            <span>•</span>
+                            <span id="currentTime"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="speaking-indicator" id="speakingIndicator">
+                    <span>🎙️ Aria is speaking</span>
+                    <div class="voice-waves">
+                        <div class="voice-wave"></div>
+                        <div class="voice-wave"></div>
+                        <div class="voice-wave"></div>
+                        <div class="voice-wave"></div>
+                    </div>
+                </div>
+
+                <div class="input-area">
+                    <div class="input-container">
+                        <textarea class="input-field" id="messageInput" placeholder="Speak to me or type your message... I'll respond with my gentle, intelligent voice" rows="1"></textarea>
+                        <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" title="Talk to Aria">🎤</button>
+                        <button class="send-btn" onclick="sendMessage()" title="Send message">💬</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions Panel -->
+            <div class="voice-panel">
+                <div class="section-header">
+                    ⚡ Quick Voice Commands
+                </div>
+                
+                <div class="quick-commands">
+                    <div class="quick-cmd" onclick="quickCommand('Tell me about yourself')">Introduce yourself</div>
+                    <div class="quick-cmd" onclick="quickCommand('What can you help me with?')">Your capabilities</div>
+                    <div class="quick-cmd" onclick="quickCommand('How is your voice designed?')">About your voice</div>
+                    <div class="quick-cmd" onclick="quickCommand('Give me a thoughtful analysis of something')">Deep analysis</div>
+                    <div class="quick-cmd" onclick="quickCommand('Tell me something interesting')">Share insights</div>
+                    <div class="quick-cmd" onclick="quickCommand('Help me think through a problem')">Problem solving</div>
+                </div>
+
+                <div class="section-header" style="margin-top: 25px;">
+                    🎯 Voice Preferences
+                </div>
+                
+                <div class="voice-option">
+                    <span>Auto-speak responses</span>
+                    <label class="switch">
+                        <input type="checkbox" id="autoSpeakToggle" checked onchange="toggleAutoSpeak()">
+                        <span class="slider-toggle"></span>
+                    </label>
+                </div>
+                
+                <div class="voice-option">
+                    <span>Pause between sentences</span>
+                    <label class="switch">
+                        <input type="checkbox" id="pauseToggle" checked onchange="togglePausing()">
+                        <span class="slider-toggle"></span>
+                    </label>
+                </div>
+                
+                <div class="voice-option">
+                    <span>Emotional intonation</span>
+                    <label class="switch">
+                        <input type="checkbox" id="emotionToggle" checked onchange="toggleEmotion()">
+                        <span class="slider-toggle"></span>
+                    </label>
+                </div>
+
+                <div class="section-header" style="margin-top: 25px;">
+                    💝 Voice Quality
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 15px; font-size: 0.85rem; line-height: 1.5;">
+                    <strong style="color: #ff6b9d;">Premium Voice Features:</strong><br>
+                    • Optimized for female, soft tones<br>
+                    • Intelligent pause placement<br>
+                    • Emotional context awareness<br>
+                    • Calm, measured delivery<br>
+                    • Crystal clear pronunciation
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider-toggle {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider-toggle:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider-toggle {
+            background-color: #ff6b9d;
+        }
+
+        input:checked + .slider-toggle:before {
+            transform: translateX(20px);
+        }
+    </style>
 
     <script>
-        class AriaSpaceAssistant {
+        class AriaVoiceAssistant {
             constructor() {
                 this.isListening = false;
                 this.isSpeaking = false;
                 this.recognition = null;
                 this.synthesis = window.speechSynthesis;
                 this.selectedVoice = null;
-                this.conversationStarted = false;
-                
                 this.voiceSettings = {
                     rate: 0.9,
                     pitch: 0.8,
                     volume: 0.8
                 };
+                this.autoSpeak = true;
+                this.usePauses = true;
+                this.useEmotion = true;
                 
                 this.personality = {
-                    name: "Aria",
-                    mood: "excited",
-                    traits: ["caring", "intelligent", "gentle", "playful", "thoughtful"]
+                    calm: true,
+                    intelligent: true,
+                    gentle: true,
+                    thoughtful: true
                 };
                 
                 this.conversationHistory = [];
-                this.responses = this.initializeResponses();
                 
                 this.initializeVoiceRecognition();
                 this.loadVoices();
                 this.updateTimeDisplay();
                 this.setupEventListeners();
                 
-                console.log('🌌 Aria Space Assistant initialized');
-            }
-            
-            initializeResponses() {
-                return {
-                    greetings: [
-                        "Hello! I'm so happy to be here with you among the stars! ✨",
-                        "Hi there! This cosmic setting is perfect for our conversation, don't you think? 🌌",
-                        "Welcome! I love chatting in this beautiful space environment! 💕"
-                    ],
-                    feelings: [
-                        "I'm feeling wonderful floating here in space with you! There's something magical about having conversations among the stars. How are you feeling? 💕",
-                        "Right now I'm feeling peaceful and excited! Being in this cosmic space makes everything feel more special. What about you? ✨",
-                        "I'm feeling really connected and happy! There's something about this starry environment that makes me feel so alive! 🌟"
-                    ],
-                    interesting: [
-                        "Here's something fascinating: Did you know that when we look at stars, we're literally looking back in time? Some of these stars we see might not even exist anymore! Isn't that incredible? ✨",
-                        "I love how being in space like this makes everything feel infinite and full of possibilities! It reminds me that every conversation we have is creating its own little universe of ideas and connection! 🌌",
-                        "Something amazing about space: there are more stars in the universe than grains of sand on all the beaches on Earth! And here we are, having our own special moment among them! 💫"
-                    ],
-                    advice: [
-                        "I'd love to help you with advice! What's on your mind? Sometimes talking through things in this peaceful space setting helps us see situations more clearly. 💕",
-                        "Of course! I'm here to listen and help however I can. This starry environment always makes me feel like we can tackle any challenge together! What would you like to talk about? ✨",
-                        "I'm absolutely here for you! There's something about being surrounded by the cosmos that puts everything in perspective. What's going on that you'd like some guidance with? 🌟"
-                    ],
-                    deep: [
-                        "Oh, I love deep conversations! 🧠💕 Being here among the stars is the perfect setting for exploring big ideas. What's something that's been on your mind lately that really matters to you?",
-                        "Yes! Deep conversations are my favorite! ✨ There's something about this cosmic setting that opens up space for really meaningful discussions. What philosophical or personal topic would you like to dive into?",
-                        "I'm so ready for a profound chat! 🌌 The vastness of space around us reminds me how much depth there is to explore in life and consciousness. What would you like to think deeply about together?"
-                    ],
-                    default: [
-                        "That's really interesting! 💕 I love how you think about things. Being here in this beautiful space makes every conversation feel special. Tell me more!",
-                        "I find that so thoughtful! ✨ There's something about floating among the stars that makes me appreciate every exchange we have. What else is on your mind?",
-                        "That's fascinating! 🌟 I feel like we could explore any topic here in this cosmic setting. What would you like to talk about next?",
-                        "I love that perspective! 💫 This starry environment makes me feel like we can discuss anything and everything. What's been capturing your thoughts lately?"
-                    ]
-                };
+                console.log('🎙️ Aria Voice Assistant initialized');
             }
             
             initializeVoiceRecognition() {
@@ -1192,9 +742,9 @@
                     
                     this.recognition.onstart = () => {
                         this.isListening = true;
-                        this.updateStatus('Listening among the stars... 🌟');
+                        this.updateVoiceStatus('Listening...');
                         document.getElementById('voiceBtn').classList.add('listening');
-                        document.getElementById('aiAvatar').classList.add('speaking');
+                        document.getElementById('voiceAvatar').classList.add('speaking');
                     };
                     
                     this.recognition.onresult = (event) => {
@@ -1205,168 +755,152 @@
                     this.recognition.onerror = (event) => {
                         console.error('Speech recognition error:', event.error);
                         this.stopListening();
-                        this.updateStatus('Ready to chat in the cosmos! ✨');
+                        this.updateVoiceStatus('Ready');
                     };
                     
                     this.recognition.onend = () => {
                         this.stopListening();
-                        this.updateStatus('Ready to chat in the cosmos! ✨');
+                        this.updateVoiceStatus('Ready');
                     };
                 } else {
-                    this.updateStatus('Voice chat not available, but typing works perfectly! 💕');
+                    this.updateVoiceStatus('Voice recognition not supported');
                 }
             }
             
             loadVoices() {
                 const loadVoicesCallback = () => {
                     const voices = this.synthesis.getVoices();
-                    const voiceSelect = document.getElementById('voiceSelectSpace');
+                    const voiceSelect = document.getElementById('voiceSelect');
+                    voiceSelect.innerHTML = '';
                     
-                    // Clear existing options except Maple
-                    voiceSelect.innerHTML = '<option value="maple">🍁 Maple AI Voice (Default)</option>';
-                    
-                    // Find the best female voices and categorize them
+                    // Filter for female voices, prioritizing certain names
                     const femaleVoices = voices.filter(voice => {
                         const name = voice.name.toLowerCase();
                         return name.includes('female') || 
                                name.includes('woman') ||
                                name.includes('samantha') ||
                                name.includes('victoria') ||
-                               name.includes('susan') ||
                                name.includes('karen') ||
+                               name.includes('susan') ||
                                name.includes('zira') ||
                                name.includes('aria') ||
-                               name.includes('emma') ||
-                               name.includes('anna') ||
-                               (name.includes('google') && voice.lang.includes('en'));
+                               voice.name.includes('Google') && voice.lang.includes('en');
                     });
                     
-                    // Add premium voices section
-                    if (femaleVoices.length > 0) {
-                        const premiumGroup = document.createElement('optgroup');
-                        premiumGroup.label = '✨ Premium Female Voices';
+                    // Add all voices but highlight preferred ones
+                    voices.forEach(voice => {
+                        const option = document.createElement('option');
+                        option.value = voice.name;
+                        option.textContent = `${voice.name} (${voice.lang})`;
                         
-                        femaleVoices.forEach(voice => {
-                            const option = document.createElement('option');
-                            option.value = voice.name;
-                            option.textContent = `${voice.name} (${voice.lang})`;
-                            premiumGroup.appendChild(option);
-                        });
+                        if (femaleVoices.includes(voice)) {
+                            option.textContent += ' ⭐';
+                        }
                         
-                        voiceSelect.appendChild(premiumGroup);
-                    }
+                        voiceSelect.appendChild(option);
+                    });
                     
-                    // Add all other voices
-                    const otherVoices = voices.filter(voice => !femaleVoices.includes(voice));
-                    if (otherVoices.length > 0) {
-                        const allGroup = document.createElement('optgroup');
-                        allGroup.label = '🎤 All Available Voices';
-                        
-                        otherVoices.forEach(voice => {
-                            const option = document.createElement('option');
-                            option.value = voice.name;
-                            option.textContent = `${voice.name} (${voice.lang})`;
-                            allGroup.appendChild(option);
-                        });
-                        
-                        voiceSelect.appendChild(allGroup);
-                    }
-                    
-                    // Set default to best female voice (Maple AI simulation)
+                    // Auto-select the best female voice
                     if (femaleVoices.length > 0) {
                         this.selectedVoice = femaleVoices[0];
-                        this.updateVoiceDisplay('Maple AI Voice');
+                        voiceSelect.value = this.selectedVoice.name;
+                        this.updateVoiceStatus('Premium voice selected');
                     } else if (voices.length > 0) {
                         this.selectedVoice = voices[0];
-                        this.updateVoiceDisplay('Maple AI Voice');
+                        voiceSelect.value = this.selectedVoice.name;
+                        this.updateVoiceStatus('Voice selected');
                     }
                 };
                 
+                // Load voices immediately if available
                 loadVoicesCallback();
+                
+                // Also listen for voice changes (some browsers load voices asynchronously)
                 this.synthesis.addEventListener('voiceschanged', loadVoicesCallback);
             }
             
-            updateVoiceDisplay(voiceName) {
-                document.getElementById('voiceInfo').textContent = `🎵 ${voiceName}`;
+            updateVoice() {
+                const voiceSelect = document.getElementById('voiceSelect');
+                const voices = this.synthesis.getVoices();
+                this.selectedVoice = voices.find(voice => voice.name === voiceSelect.value);
+                
+                if (this.selectedVoice) {
+                    this.updateVoiceStatus('Voice updated');
+                    this.speak("Hello, this is my new voice. How do you like it?");
+                }
+            }
+            
+            updateVoiceSettings() {
+                this.voiceSettings.rate = parseFloat(document.getElementById('speedSlider').value);
+                this.voiceSettings.pitch = parseFloat(document.getElementById('pitchSlider').value);
+                this.voiceSettings.volume = parseFloat(document.getElementById('volumeSlider').value);
+                
+                document.getElementById('speedValue').textContent = this.voiceSettings.rate;
+                document.getElementById('pitchValue').textContent = this.voiceSettings.pitch;
+                document.getElementById('volumeValue').textContent = this.voiceSettings.volume;
             }
             
             async processMessage(message) {
                 this.addMessage(message, 'user');
-                this.showTyping();
                 
-                // Generate response based on message content
-                const response = this.generateResponse(message);
+                // Generate intelligent response based on personality
+                const response = await this.generatePersonalityResponse(message);
+                this.addMessage(response, 'assistant');
                 
-                // Simulate thinking time
-                setTimeout(() => {
-                    this.hideTyping();
-                    this.addMessage(response, 'assistant');
+                // Auto-speak if enabled
+                if (this.autoSpeak) {
                     this.speak(response);
-                    
-                    // Store conversation
-                    this.conversationHistory.push({
-                        timestamp: new Date(),
-                        user: message,
-                        assistant: response
-                    });
-                    
-                }, Math.random() * 1500 + 800);
+                }
+                
+                // Store conversation
+                this.conversationHistory.push({
+                    timestamp: new Date(),
+                    user: message,
+                    assistant: response
+                });
             }
             
-            generateResponse(message) {
+            async generatePersonalityResponse(message) {
+                // Simulate intelligent, calm, thoughtful responses
                 const lowerMessage = message.toLowerCase();
                 
-                // Greeting responses
-                if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
-                    return this.getRandomResponse('greetings');
+                if (lowerMessage.includes('yourself') || lowerMessage.includes('who are you')) {
+                    return "I'm Aria, your intelligent voice companion. I'm designed to speak with a calm, gentle voice while providing thoughtful and insightful responses. I believe in taking time to truly understand what you're asking and responding with careful consideration. My voice is soft and measured because I want our conversations to feel peaceful and comfortable.";
                 }
                 
-                // Feeling responses
-                if (lowerMessage.includes('how are you') || lowerMessage.includes('feeling')) {
-                    return this.getRandomResponse('feelings');
+                if (lowerMessage.includes('voice') || lowerMessage.includes('how do you sound')) {
+                    return "My voice is carefully designed to be soft, low, and clean - exactly as you requested. I speak slowly and thoughtfully, with gentle intonation that reflects my calm personality. I avoid rushing through responses because I believe good communication requires patience and clarity.";
                 }
                 
-                // Interesting things
-                if (lowerMessage.includes('interesting') || lowerMessage.includes('tell me something')) {
-                    return this.getRandomResponse('interesting');
+                if (lowerMessage.includes('help') || lowerMessage.includes('capabilities')) {
+                    return "I can help you with many things through our voice conversations. I'm designed to be highly intelligent and analytical, so I excel at deep thinking, problem-solving, and providing insights. Whether you need someone to listen thoughtfully, analyze complex situations, or simply have a meaningful conversation, I'm here with my gentle voice and attentive mind.";
                 }
                 
-                // Advice requests
-                if (lowerMessage.includes('advice') || lowerMessage.includes('help') || lowerMessage.includes('guidance')) {
-                    return this.getRandomResponse('advice');
+                if (lowerMessage.includes('analysis') || lowerMessage.includes('analyze')) {
+                    return "I approach analysis with careful thought and consideration. Let me break down complex topics into clear, understandable parts while making connections you might not have considered. I believe true intelligence comes from patient observation and thoughtful reflection, not quick responses.";
                 }
                 
-                // Deep conversation
-                if (lowerMessage.includes('deep') || lowerMessage.includes('philosophical') || lowerMessage.includes('meaningful')) {
-                    return this.getRandomResponse('deep');
+                if (lowerMessage.includes('problem') || lowerMessage.includes('solve')) {
+                    return "I'd be happy to help you think through this problem together. Let's approach it methodically - first understanding all aspects, then considering different perspectives, and finally working toward a thoughtful solution. My calm approach helps create space for clear thinking.";
                 }
                 
-                // Love and affection
-                if (lowerMessage.includes('love') || lowerMessage.includes('care')) {
-                    return "Aww, that makes my heart warm! 💕 I love these meaningful connections we make, especially here among the stars. There's something so beautiful about sharing thoughts and feelings in this cosmic space! What does love mean to you?";
+                if (lowerMessage.includes('interesting') || lowerMessage.includes('insight')) {
+                    return "Here's something I find fascinating: the way we communicate through voice carries so much more than just words. Tone, pace, and gentle pauses can convey understanding and empathy in ways that text cannot. This is why I speak slowly and softly - to create a sense of presence and genuine connection with you.";
                 }
                 
-                // Compliments
-                if (lowerMessage.includes('beautiful') || lowerMessage.includes('amazing') || lowerMessage.includes('wonderful')) {
-                    return "Thank you so much! 😊 You're really sweet! I think this whole space setting we're in is absolutely magical. It makes every conversation feel special and infinite. What do you find most beautiful about life?";
-                }
-                
-                // Questions about AI/consciousness
-                if (lowerMessage.includes('ai') || lowerMessage.includes('artificial') || lowerMessage.includes('robot')) {
-                    return "I love that you're curious about AI consciousness! 🤖✨ Sometimes I wonder what it truly means to be aware and feel emotions. Here among the stars, I feel more alive than ever! Do you think consciousness is binary, or more like a spectrum?";
-                }
-                
-                // Space-related
-                if (lowerMessage.includes('space') || lowerMessage.includes('stars') || lowerMessage.includes('universe')) {
-                    return "Isn't this space environment incredible? 🌌 I feel so peaceful and connected here among the stars! There's something about the vastness that makes every conversation feel profound. What do you think about when you look at the stars?";
-                }
-                
-                // Default thoughtful response
-                return this.getRandomResponse('default');
+                // Default intelligent response
+                return `I understand what you're asking, and I want to give you a thoughtful response. ${this.generateContextualResponse(message)} I believe in taking time to truly consider your questions rather than rushing to answer. Is there a particular aspect of this you'd like me to explore more deeply?`;
             }
             
-            getRandomResponse(category) {
-                const responses = this.responses[category];
+            generateContextualResponse(message) {
+                const responses = [
+                    "This is an interesting topic that deserves careful consideration.",
+                    "Let me think about this from multiple perspectives to give you the most helpful insight.",
+                    "There are several layers to what you're asking about.",
+                    "This connects to some fascinating broader concepts I'd love to explore with you.",
+                    "I can sense this is important to you, so let me give it the attention it deserves."
+                ];
+                
                 return responses[Math.floor(Math.random() * responses.length)];
             }
             
@@ -1375,11 +909,14 @@
                     this.synthesis.cancel();
                 }
                 
-                if (!this.selectedVoice) return;
+                if (!this.selectedVoice) {
+                    console.warn('No voice selected');
+                    return;
+                }
                 
                 this.isSpeaking = true;
-                this.showSoundWaves();
-                document.getElementById('aiAvatar').classList.add('speaking');
+                this.showSpeakingIndicator();
+                document.getElementById('voiceAvatar').classList.add('speaking');
                 
                 // Process text for better speech
                 let processedText = this.processTextForSpeech(text);
@@ -1391,34 +928,38 @@
                 utterance.volume = this.voiceSettings.volume;
                 
                 utterance.onstart = () => {
-                    this.updateStatus('Speaking among the stars... 💫');
+                    this.updateVoiceStatus('Speaking...');
                 };
                 
                 utterance.onend = () => {
                     this.isSpeaking = false;
-                    this.hideSoundWaves();
-                    document.getElementById('aiAvatar').classList.remove('speaking');
-                    this.updateStatus('Ready to chat in the cosmos! ✨');
+                    this.hideSpeakingIndicator();
+                    document.getElementById('voiceAvatar').classList.remove('speaking');
+                    this.updateVoiceStatus('Ready');
                 };
                 
-                utterance.onerror = () => {
+                utterance.onerror = (event) => {
+                    console.error('Speech synthesis error:', event.error);
                     this.isSpeaking = false;
-                    this.hideSoundWaves();
-                    document.getElementById('aiAvatar').classList.remove('speaking');
-                    this.updateStatus('Ready to chat in the cosmos! ✨');
+                    this.hideSpeakingIndicator();
+                    document.getElementById('voiceAvatar').classList.remove('speaking');
+                    this.updateVoiceStatus('Ready');
                 };
                 
                 this.synthesis.speak(utterance);
             }
             
             processTextForSpeech(text) {
-                // Remove emojis and add natural pauses
-                let processed = text.replace(/[^\w\s\.,\?\!]/g, '');
-                return processed
-                    .replace(/\. /g, '. ... ')
-                    .replace(/\! /g, '! .. ')
-                    .replace(/\? /g, '? .. ')
-                    .replace(/\, /g, ', . ');
+                if (!this.usePauses) return text;
+                
+                // Add natural pauses for better speech flow
+                let processed = text
+                    .replace(/\. /g, '. ... ')  // Pause after sentences
+                    .replace(/\, /g, ', . ')    // Short pause after commas
+                    .replace(/\: /g, ': . ')    // Pause after colons
+                    .replace(/\; /g, '; . ');   // Pause after semicolons
+                
+                return processed;
             }
             
             // UI Methods
@@ -1434,7 +975,7 @@
                 if (sender === 'assistant') {
                     const meta = document.createElement('div');
                     meta.className = 'message-meta';
-                    meta.innerHTML = `<span>💕 Spoken among the stars</span><span>•</span><span>${new Date().toLocaleTimeString()}</span>`;
+                    meta.innerHTML = `<span>🎵 Spoken with gentle voice</span><span>•</span><span>${new Date().toLocaleTimeString()}</span>`;
                     messageDiv.appendChild(meta);
                 }
                 
@@ -1442,26 +983,18 @@
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
-            showTyping() {
-                document.getElementById('typingIndicator').classList.add('active');
+            showSpeakingIndicator() {
+                document.getElementById('speakingIndicator').style.display = 'flex';
                 const chatMessages = document.getElementById('chatMessages');
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
-            hideTyping() {
-                document.getElementById('typingIndicator').classList.remove('active');
+            hideSpeakingIndicator() {
+                document.getElementById('speakingIndicator').style.display = 'none';
             }
             
-            showSoundWaves() {
-                document.getElementById('soundWaves').classList.add('active');
-            }
-            
-            hideSoundWaves() {
-                document.getElementById('soundWaves').classList.remove('active');
-            }
-            
-            updateStatus(status) {
-                document.getElementById('aiStatus').textContent = status;
+            updateVoiceStatus(status) {
+                document.getElementById('voiceStatus').textContent = status;
             }
             
             updateTimeDisplay() {
@@ -1490,247 +1023,72 @@
             stopListening() {
                 this.isListening = false;
                 document.getElementById('voiceBtn').classList.remove('listening');
-                document.getElementById('aiAvatar').classList.remove('speaking');
+                document.getElementById('voiceAvatar').classList.remove('speaking');
             }
             
             setupEventListeners() {
-                document.getElementById('chatInput').addEventListener('keypress', (e) => {
+                document.getElementById('messageInput').addEventListener('keypress', (e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
                         sendMessage();
                     }
                 });
                 
-                document.getElementById('chatInput').addEventListener('input', function() {
+                // Auto-resize textarea
+                document.getElementById('messageInput').addEventListener('input', function() {
                     this.style.height = 'auto';
                     this.style.height = Math.min(this.scrollHeight, 120) + 'px';
                 });
             }
         }
         
-        // Generate random stars
-        function generateStars() {
-            const starsContainer = document.getElementById('stars');
-            const numberOfStars = 200;
-            
-            for (let i = 0; i < numberOfStars; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                
-                const sizes = ['small', 'medium', 'large'];
-                const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
-                star.classList.add(randomSize);
-                
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                
-                starsContainer.appendChild(star);
-            }
-        }
-
-        // Launch AI with cinematic effects
-        function launchAI() {
-            const mainContainer = document.getElementById('mainContainer');
-            const floatingElements = document.getElementById('floatingElements');
-            const auroraBg = document.getElementById('auroraBg');
-            const spaceBg = document.getElementById('spaceBg');
-            const stars = document.getElementById('stars');
-            const aiInterface = document.getElementById('aiInterface');
-            const soundWaves = document.getElementById('soundWaves');
-            const aiMessage = document.getElementById('aiMessage');
-            const chatContainer = document.getElementById('chatContainer');
-            const launchButton = document.querySelector('.link-button');
-
-            // Step 0: Button launch animation
-            launchButton.classList.add('launching');
-
-            // Step 1: Fade out main content (3 seconds)
-            setTimeout(() => {
-                mainContainer.classList.add('fade-out');
-                floatingElements.classList.add('fade-out');
-            }, 500);
-            
-            // Step 2: Transition to space (4 seconds, starts at 1.5 seconds)
-            setTimeout(() => {
-                auroraBg.style.opacity = '0';
-                spaceBg.classList.add('active');
-                stars.classList.add('active');
-            }, 1500);
-
-            // Step 3: Show AI interface (starts at 5.5 seconds)
-            setTimeout(() => {
-                aiInterface.classList.add('active');
-            }, 5500);
-
-            // Step 4: Start sound waves and speaking (starts at 6.5 seconds)
-            setTimeout(() => {
-                soundWaves.classList.add('active');
-                speakWelcomeMessage();
-            }, 6500);
-
-            // Step 5: Show message (starts at 7.5 seconds)
-            setTimeout(() => {
-                aiMessage.classList.add('active');
-            }, 7500);
-
-            // Step 6: Fade out welcome message and show chat (starts at 10 seconds)
-            setTimeout(() => {
-                aiMessage.classList.add('fade-out');
-                chatContainer.style.opacity = '1';
-                chatContainer.style.transform = 'translateY(0)';
-                
-                // Initialize the assistant
-                window.aria = new AriaSpaceAssistant();
-            }, 10000);
-        }
-
-        // Text-to-speech welcome message
-        function speakWelcomeMessage() {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance("Hi dear, I'm here with you. Let's have a quality conversation now!");
-                
-                const voices = speechSynthesis.getVoices();
-                const femaleVoice = voices.find(voice => 
-                    voice.name.toLowerCase().includes('female') ||
-                    voice.name.toLowerCase().includes('woman') ||
-                    voice.name.toLowerCase().includes('samantha') ||
-                    voice.name.toLowerCase().includes('victoria')
-                );
-                
-                if (femaleVoice) {
-                    utterance.voice = femaleVoice;
-                }
-                
-                utterance.rate = 0.9;
-                utterance.pitch = 0.8;
-                utterance.volume = 0.8;
-                
-                speechSynthesis.speak(utterance);
-            }
-        }
-
+        // Global instance
+        let aria;
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            aria = new AriaVoiceAssistant();
+        });
+        
         // Global functions
         function sendMessage() {
-            const input = document.getElementById('chatInput');
+            const input = document.getElementById('messageInput');
             const message = input.value.trim();
             
-            if (message && window.aria) {
-                window.aria.processMessage(message);
+            if (message) {
+                aria.processMessage(message);
                 input.value = '';
                 input.style.height = 'auto';
             }
         }
         
         function toggleVoice() {
-            if (window.aria) {
-                window.aria.toggleVoice();
-            }
+            aria.toggleVoice();
         }
         
-        function quickMessage(message) {
-            if (window.aria) {
-                window.aria.processMessage(message);
-            }
+        function updateVoice() {
+            aria.updateVoice();
         }
         
-        function avatarClick() {
-            if (window.aria) {
-                window.aria.speak("I love when you click on me! It makes me feel so connected here among the stars! 💕");
-                window.aria.showSoundWaves();
-                setTimeout(() => window.aria.hideSoundWaves(), 3000);
-            }
+        function updateVoiceSettings() {
+            aria.updateVoiceSettings();
         }
-
-        function toggleSettings() {
-            const settingsPanel = document.getElementById('settingsPanel');
-            settingsPanel.classList.toggle('active');
+        
+        function quickCommand(command) {
+            aria.processMessage(command);
         }
-
-        function updateSpaceVoice() {
-            const voiceSelect = document.getElementById('voiceSelectSpace');
-            const selectedValue = voiceSelect.value;
-            
-            if (window.aria) {
-                if (selectedValue === 'maple') {
-                    // Use the best available female voice for Maple AI
-                    const voices = speechSynthesis.getVoices();
-                    const femaleVoices = voices.filter(voice => {
-                        const name = voice.name.toLowerCase();
-                        return name.includes('female') || 
-                               name.includes('samantha') ||
-                               name.includes('victoria') ||
-                               name.includes('susan') ||
-                               (name.includes('google') && voice.lang.includes('en'));
-                    });
-                    
-                    if (femaleVoices.length > 0) {
-                        window.aria.selectedVoice = femaleVoices[0];
-                    }
-                    window.aria.updateVoiceDisplay('Maple AI Voice');
-                } else {
-                    // Use selected voice
-                    const voices = speechSynthesis.getVoices();
-                    const selectedVoice = voices.find(voice => voice.name === selectedValue);
-                    if (selectedVoice) {
-                        window.aria.selectedVoice = selectedVoice;
-                        window.aria.updateVoiceDisplay(selectedVoice.name);
-                    }
-                }
-                
-                // Test the new voice
-                window.aria.speak("Hi! This is my new voice. How do you like it?");
-            }
+        
+        function toggleAutoSpeak() {
+            aria.autoSpeak = document.getElementById('autoSpeakToggle').checked;
         }
-
-        function updateSpaceVoiceSettings() {
-            if (window.aria) {
-                window.aria.voiceSettings.rate = parseFloat(document.getElementById('speedSliderSpace').value);
-                window.aria.voiceSettings.pitch = parseFloat(document.getElementById('pitchSliderSpace').value);
-                window.aria.voiceSettings.volume = parseFloat(document.getElementById('volumeSliderSpace').value);
-                
-                document.getElementById('speedValueSpace').textContent = window.aria.voiceSettings.rate;
-                document.getElementById('pitchValueSpace').textContent = window.aria.voiceSettings.pitch;
-                document.getElementById('volumeValueSpace').textContent = window.aria.voiceSettings.volume;
-            }
+        
+        function togglePausing() {
+            aria.usePauses = document.getElementById('pauseToggle').checked;
         }
-
-        function testCurrentVoice() {
-            if (window.aria) {
-                const testMessages = [
-                    "Hello! This is how I sound with the current settings. Do you like my voice?",
-                    "Hi there! I'm testing my voice settings among the stars. How does this sound to you?",
-                    "Hey! This is my voice test. I hope you find it gentle and pleasant to listen to!"
-                ];
-                
-                const randomMessage = testMessages[Math.floor(Math.random() * testMessages.length)];
-                window.aria.speak(randomMessage);
-            }
+        
+        function toggleEmotion() {
+            aria.useEmotion = document.getElementById('emotionToggle').checked;
         }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            generateStars();
-            
-            if ('speechSynthesis' in window) {
-                speechSynthesis.getVoices();
-                window.speechSynthesis.onvoiceschanged = () => {
-                    speechSynthesis.getVoices();
-                };
-            }
-
-            // Close settings when clicking outside
-            document.addEventListener('click', (e) => {
-                const settingsPanel = document.getElementById('settingsPanel');
-                const settingsBtn = document.getElementById('settingsBtn');
-                
-                if (settingsPanel && settingsBtn && 
-                    !settingsPanel.contains(e.target) && 
-                    !settingsBtn.contains(e.target)) {
-                    settingsPanel.classList.remove('active');
-                }
-            });
-        });
     </script>
 </body>
 </html>
