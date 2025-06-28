@@ -192,6 +192,15 @@
             animation: wakeDetected 0.5s ease;
         }
 
+        .wave-bar.mic-test {
+            background: linear-gradient(to top, #ff9800, #ffc107) !important;
+            box-shadow: 0 0 8px #ff9800 !important;
+        }
+
+        .wave-bar.mic-test.active {
+            box-shadow: 0 0 15px #ff9800, 0 0 30px #ff9800 !important;
+        }
+
         @keyframes wakeDetected {
             0% { transform: scaleY(1); }
             50% { transform: scaleY(2); }
@@ -1111,6 +1120,7 @@
             <button class="btn btn-primary" id="testMicBtn">🎤 Test Microphone</button>
             <button class="btn btn-secondary" id="testWaveBtn">🌊 Test Wave Animation</button>
             <button class="btn" id="testWakeWordBtn" style="background: #00bcd4; color: white;">👂 Test Wake Word</button>
+            <button class="btn btn-warning" id="testFullSystemBtn">🔧 Full System Test</button>
         </div>
 
         <!-- Export/Import -->
@@ -1387,6 +1397,7 @@
                 this.testMicBtn = document.getElementById('testMicBtn');
                 this.testWaveBtn = document.getElementById('testWaveBtn');
                 this.testWakeWordBtn = document.getElementById('testWakeWordBtn');
+                this.testFullSystemBtn = document.getElementById('testFullSystemBtn');
                 this.continuousToggle = document.getElementById('continuousToggle');
                 this.autoAudioToggle = document.getElementById('autoAudioToggle');
                 this.showResponseToggle = document.getElementById('showResponseToggle');
@@ -1427,6 +1438,7 @@
                 this.testMicBtn.addEventListener('click', () => this.testMicrophone());
                 this.testWaveBtn.addEventListener('click', () => this.testWaveAnimation());
                 this.testWakeWordBtn.addEventListener('click', () => this.testWakeWord());
+                this.testFullSystemBtn.addEventListener('click', () => this.testFullSystem());
 
                 // Wake word settings
                 this.wakeWordInput.addEventListener('input', (e) => {
@@ -2718,7 +2730,122 @@
             }
 
             testMicrophone() {
-                this.showMessage('🎤 Click the microphone to test speech recognition', 'info');
+                this.showMessage('🎤 Testing microphone...', 'info');
+                this.testMicrophoneAccess();
+            }
+
+            async testMicrophoneAccess() {
+                try {
+                    // Request microphone access
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    
+                    // Create audio context for testing
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const source = audioContext.createMediaStreamSource(stream);
+                    const analyser = audioContext.createAnalyser();
+                    analyser.fftSize = 256;
+                    
+                    source.connect(analyser);
+                    
+                    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+                    let maxLevel = 0;
+                    let testDuration = 0;
+                    const maxTestTime = 3000; // 3 seconds
+                    
+                    // Create visual feedback during test
+                    this.showMicrophoneLevelTest(true);
+                    
+                    const checkAudioLevel = () => {
+                        analyser.getByteFrequencyData(dataArray);
+                        const currentLevel = Math.max(...dataArray);
+                        maxLevel = Math.max(maxLevel, currentLevel);
+                        
+                        // Update visual level indicator
+                        this.updateMicrophoneLevel(currentLevel);
+                        
+                        testDuration += 100;
+                        
+                        if (testDuration < maxTestTime) {
+                            setTimeout(checkAudioLevel, 100);
+                        } else {
+                            // Test complete
+                            stream.getTracks().forEach(track => track.stop());
+                            audioContext.close();
+                            this.showMicrophoneLevelTest(false);
+                            
+                            if (maxLevel > 30) {
+                                this.showMessage(`✅ Microphone working! Max level: ${maxLevel}/255`, 'success');
+                                this.logAccess('Microphone test successful');
+                            } else if (maxLevel > 0) {
+                                this.showMessage(`⚠️ Microphone detected but very quiet. Max level: ${maxLevel}/255. Try speaking louder or check volume.`, 'warning');
+                                this.logAccess('Microphone test - low volume detected');
+                            } else {
+                                this.showMessage(`❌ No audio detected. Check microphone permissions and try speaking during the test.`, 'error');
+                                this.logAccess('Microphone test - no audio detected');
+                            }
+                        }
+                    };
+                    
+                    this.showMessage('🎤 Microphone access granted! Please speak for 3 seconds...', 'info');
+                    checkAudioLevel();
+                    
+                } catch (error) {
+                    console.error('Microphone test failed:', error);
+                    
+                    let errorMessage = '❌ Microphone test failed: ';
+                    
+                    if (error.name === 'NotAllowedError') {
+                        errorMessage += 'Permission denied. Please allow microphone access.';
+                    } else if (error.name === 'NotFoundError') {
+                        errorMessage += 'No microphone found. Please connect a microphone.';
+                    } else if (error.name === 'NotReadableError') {
+                        errorMessage += 'Microphone is busy or unavailable.';
+                    } else {
+                        errorMessage += error.message || 'Unknown error occurred.';
+                    }
+                    
+                    this.showMessage(errorMessage, 'error');
+                    this.logAccess('Microphone test failed', error.message, false);
+                    
+                    // Additional mobile-specific guidance
+                    if (this.isMobile) {
+                        setTimeout(() => {
+                            this.showMessage('📱 Mobile tip: Ensure microphone access is enabled in browser settings and try refreshing the page.', 'warning');
+                        }, 3000);
+                    }
+                }
+            }
+
+            showMicrophoneLevelTest(show) {
+                const bars = this.soundWave.querySelectorAll('.wave-bar');
+                if (show) {
+                    bars.forEach(bar => {
+                        bar.style.background = 'linear-gradient(to top, #ff9800, #ffc107)';
+                        bar.classList.add('mic-test');
+                    });
+                } else {
+                    bars.forEach(bar => {
+                        bar.style.background = '';
+                        bar.classList.remove('mic-test');
+                    });
+                    this.applyWaveColor();
+                }
+            }
+
+            updateMicrophoneLevel(level) {
+                const bars = this.soundWave.querySelectorAll('.wave-bar');
+                const percentage = level / 255;
+                const activeBars = Math.floor(bars.length * percentage);
+                
+                bars.forEach((bar, index) => {
+                    if (index < activeBars) {
+                        bar.style.height = '80px';
+                        bar.classList.add('active');
+                    } else {
+                        bar.style.height = '4px';
+                        bar.classList.remove('active');
+                    }
+                });
             }
 
             testWaveAnimation() {
@@ -2746,6 +2873,104 @@
             testWakeWord() {
                 this.showMessage(`Testing wake word detection with: "${this.settings.wakeWord}"`, 'info');
                 this.handleWakeWordDetected();
+            }
+
+            async testFullSystem() {
+                this.showMessage('🔧 Starting full system test...', 'info');
+                const results = [];
+                
+                try {
+                    // Test 1: API Key
+                    if (this.settings.apiKey) {
+                        results.push('✅ API Key: Configured');
+                    } else {
+                        results.push('❌ API Key: Not configured');
+                    }
+                    
+                    // Test 2: Speech Synthesis
+                    if ('speechSynthesis' in window) {
+                        const voices = this.synthesis.getVoices();
+                        if (voices.length > 0) {
+                            results.push(`✅ Speech Synthesis: ${voices.length} voices available`);
+                        } else {
+                            results.push('⚠️ Speech Synthesis: No voices loaded');
+                        }
+                    } else {
+                        results.push('❌ Speech Synthesis: Not supported');
+                    }
+                    
+                    // Test 3: Speech Recognition
+                    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                        results.push('✅ Speech Recognition: Supported');
+                    } else {
+                        results.push('❌ Speech Recognition: Not supported');
+                    }
+                    
+                    // Test 4: Microphone Access
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                        results.push('✅ Microphone: Access granted');
+                        stream.getTracks().forEach(track => track.stop());
+                    } catch (error) {
+                        results.push(`❌ Microphone: ${error.name}`);
+                    }
+                    
+                    // Test 5: Audio Context
+                    try {
+                        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        if (audioContext.state === 'suspended') {
+                            await audioContext.resume();
+                        }
+                        results.push(`✅ Audio Context: ${audioContext.state}`);
+                        audioContext.close();
+                    } catch (error) {
+                        results.push('❌ Audio Context: Failed');
+                    }
+                    
+                    // Test 6: Local Storage
+                    try {
+                        localStorage.setItem('test', 'test');
+                        localStorage.removeItem('test');
+                        results.push('✅ Local Storage: Working');
+                    } catch (error) {
+                        results.push('❌ Local Storage: Failed');
+                    }
+                    
+                    // Test 7: Privacy System
+                    if (this.auditLog !== undefined) {
+                        results.push('✅ Privacy System: Active');
+                    } else {
+                        results.push('❌ Privacy System: Failed');
+                    }
+                    
+                    // Test 8: Mobile Optimization
+                    if (this.isMobile) {
+                        results.push(`✅ Mobile Mode: ${this.isIOS ? 'iOS' : 'Android'} detected`);
+                    } else {
+                        results.push('✅ Desktop Mode: Detected');
+                    }
+                    
+                    // Compile results
+                    const passedTests = results.filter(r => r.startsWith('✅')).length;
+                    const totalTests = results.length;
+                    const score = Math.round((passedTests / totalTests) * 100);
+                    
+                    const report = `
+🔧 System Test Results (${score}% passed):
+
+${results.join('\n')}
+
+📊 Overall Status: ${score >= 80 ? 'EXCELLENT' : score >= 60 ? 'GOOD' : score >= 40 ? 'FAIR' : 'POOR'}
+
+${score < 80 ? '💡 Tip: Check failed items and browser permissions.' : '🎉 All systems operational!'}
+                    `;
+                    
+                    this.showPrivacyModal('Full System Test', report);
+                    this.logAccess(`Full system test completed: ${score}% passed`);
+                    
+                } catch (error) {
+                    this.showMessage('❌ System test failed: ' + error.message, 'error');
+                }
             }
 
             exportSettings() {
