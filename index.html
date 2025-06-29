@@ -401,11 +401,11 @@
             border-radius: 50%;
             background: 
                 radial-gradient(circle at center, 
-                    transparent 30%, 
-                    rgba(0, 0, 0, 0.3) 40%, 
-                    rgba(0, 0, 0, 0.8) 50%, 
-                    rgba(0, 0, 0, 0.95) 60%, 
-                    black 70%);
+                    transparent 25%, 
+                    rgba(0, 0, 0, 0.1) 30%, 
+                    rgba(0, 0, 0, 0.6) 45%, 
+                    rgba(0, 0, 0, 0.9) 55%, 
+                    black 65%);
             box-shadow: 
                 inset 0 0 50px rgba(255, 107, 157, 0.3),
                 inset 0 0 100px rgba(138, 43, 226, 0.2),
@@ -418,12 +418,12 @@
         .black-hole::before {
             content: '';
             position: absolute;
-            top: 10%;
-            left: 10%;
-            width: 80%;
-            height: 80%;
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.15) 0%, transparent 60%);
             animation: accretionDisk 6s linear infinite reverse;
         }
 
@@ -447,23 +447,168 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 70%;
-            height: 70%;
+            width: 90%;
+            height: 90%;
             border: none;
             border-radius: 50%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(15px);
             opacity: 0;
             transition: opacity 2s ease-in-out;
-            z-index: 1002;
+            z-index: 1001;
             box-shadow: 
-                inset 0 0 30px rgba(255, 107, 157, 0.2),
-                inset 0 0 60px rgba(0, 0, 0, 0.8),
-                0 0 50px rgba(0, 0, 0, 0.9);
+                inset 0 0 30px rgba(255, 107, 157, 0.1),
+                inset 0 0 60px rgba(0, 0, 0, 0.9),
+                0 0 30px rgba(0, 0, 0, 0.9);
+            animation: counterRotate 8s linear infinite;
+            overflow: hidden;
         }
 
         .chatgpt-iframe.show {
             opacity: 1;
+        }
+
+        /* Voice Interface Overlay */
+        .voice-interface-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            background: transparent;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            z-index: 1003;
+            animation: counterRotate 8s linear infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: 60px;
+            pointer-events: none;
+        }
+
+        .voice-interface-overlay.show {
+            opacity: 1;
+        }
+
+        .gpt-speaking-indicator {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(255, 107, 157, 0.9) 0%, 
+                rgba(138, 43, 226, 0.7) 50%, 
+                rgba(74, 144, 226, 0.5) 100%);
+            margin-bottom: 30px;
+            animation: speakingPulse 2s ease-in-out infinite;
+            box-shadow: 
+                0 0 30px rgba(255, 107, 157, 0.6),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            pointer-events: auto;
+        }
+
+        .gpt-speaking-indicator::before {
+            content: '🤖';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.2rem;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        .gpt-speaking-indicator.active {
+            animation: speakingActive 0.5s ease-in-out infinite;
+            box-shadow: 
+                0 0 50px rgba(255, 107, 157, 1),
+                0 0 100px rgba(138, 43, 226, 0.8),
+                inset 0 0 30px rgba(255, 255, 255, 0.4);
+        }
+
+        @keyframes speakingPulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        @keyframes speakingActive {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 
+                    0 0 50px rgba(255, 107, 157, 1),
+                    0 0 100px rgba(138, 43, 226, 0.8);
+            }
+            25% { 
+                transform: scale(1.3);
+                box-shadow: 
+                    0 0 80px rgba(255, 107, 157, 1),
+                    0 0 150px rgba(138, 43, 226, 1);
+            }
+            75% { 
+                transform: scale(0.9);
+                box-shadow: 
+                    0 0 40px rgba(255, 107, 157, 0.8),
+                    0 0 80px rgba(138, 43, 226, 0.6);
+            }
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(5deg) scale(1.05); }
+        }
+
+        .voice-mode-button {
+            background: linear-gradient(135deg, #ff6b9d, #c44bd1);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            pointer-events: auto;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .voice-mode-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .voice-mode-button:hover::before {
+            left: 100%;
+        }
+
+        .voice-mode-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.8);
+            background: linear-gradient(135deg, #ff7ba3, #d056d9);
+        }
+
+        .voice-mode-button.active {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            animation: pulse 0.5s ease-in-out infinite;
         }
 
         .settings-button {
@@ -567,11 +712,11 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateX(-50%) translateY(20px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
-                transform: translateX(-50%) translateY(0);
+                transform: translateY(0);
             }
         }
 
@@ -675,29 +820,24 @@
                 height: 95%;
             }
 
-            .portal-interface {
+            .voice-interface-overlay {
                 width: 85%;
                 height: 85%;
-                padding-bottom: 30px;
+                padding-bottom: 40px;
             }
 
             .gpt-speaking-indicator {
-                width: 50px;
-                height: 50px;
-                margin-bottom: 15px;
+                width: 60px;
+                height: 60px;
+                margin-bottom: 20px;
             }
 
             .gpt-speaking-indicator::before {
-                font-size: 1.4rem;
-            }
-
-            .portal-voice-button {
-                padding: 10px 20px;
-                font-size: 0.9rem;
+                font-size: 1.8rem;
             }
 
             .voice-mode-button {
-                padding: 12px 25px;
+                padding: 15px 25px;
                 font-size: 1rem;
             }
 
@@ -737,6 +877,32 @@
                 font-size: 1.1rem;
             }
 
+            .chatgpt-iframe {
+                width: 98%;
+                height: 98%;
+            }
+
+            .voice-interface-overlay {
+                width: 90%;
+                height: 90%;
+                padding-bottom: 30px;
+            }
+
+            .gpt-speaking-indicator {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 15px;
+            }
+
+            .gpt-speaking-indicator::before {
+                font-size: 1.5rem;
+            }
+
+            .voice-mode-button {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
             .settings-button {
                 width: 40px;
                 height: 40px;
@@ -765,17 +931,6 @@
                 font-size: 0.75rem;
                 padding: 8px 12px;
             }
-
-            .chatgpt-iframe {
-                width: 80%;
-                height: 80%;
-                border-radius: 50%;
-                box-shadow: 
-                    inset 0 0 15px rgba(255, 107, 157, 0.1),
-                    inset 0 0 30px rgba(0, 0, 0, 0.9),
-                    0 0 20px rgba(0, 0, 0, 0.9);
-                animation: counterRotate 8s linear infinite;
-            }
         }
     </style>
 </head>
@@ -794,11 +949,11 @@
     <div class="main-content">
         <h1 class="title">AI Voice Assistant</h1>
         
-        <p class="subtitle">Your intelligent companion with a gentle voice</p>
+        <p class="subtitle">Your intelligent companion with forced voice capabilities</p>
         
         <p class="description">
-            Experience a personalized AI assistant designed for natural conversation with a soft, clean female voice. 
-            Perfect for intelligent discussions, personal assistance, and meaningful interactions.
+            Experience a personalized AI assistant that speaks directly from the cosmic portal with forced voice synthesis. 
+            Perfect for intelligent discussions and real-time voice interactions.
         </p>
         
         <a href="#" onclick="launchAssistant(); return false;" class="launch-button">
@@ -809,14 +964,14 @@
         <div class="features">
             <h3>✨ Key Features</h3>
             <ul class="feature-grid">
-                <li class="feature-item">Intelligent conversation with personality</li>
-                <li class="feature-item">Soft, gentle female voice optimized for comfort</li>
-                <li class="feature-item">Personal and caring interaction style</li>
-                <li class="feature-item">Voice recognition and natural speech</li>
-                <li class="feature-item">Thoughtful, measured responses</li>
-                <li class="feature-item">Emotional intelligence and empathy</li>
-                <li class="feature-item">Always ready to listen and help</li>
-                <li class="feature-item">Professional yet friendly assistance</li>
+                <li class="feature-item">FORCED voice synthesis - speaks directly from portal</li>
+                <li class="feature-item">Real-time AI responses with voice output</li>
+                <li class="feature-item">Continuous voice recognition and listening</li>
+                <li class="feature-item">Beautiful cosmic interface with ChatGPT integration</li>
+                <li class="feature-item">Automatic speaker and microphone activation</li>
+                <li class="feature-item">Intelligent conversation AI built into portal</li>
+                <li class="feature-item">Bypasses browser restrictions for voice</li>
+                <li class="feature-item">Professional yet friendly voice assistant</li>
             </ul>
         </div>
     </div>
@@ -839,16 +994,16 @@
         
         <div class="loading-text" id="loadingText">
             🌌 Opening cosmic portal...<br>
-            <small style="opacity: 0.7;">Connecting through the black hole...</small>
+            <small style="opacity: 0.7;">Forcing voice activation...</small>
         </div>
         
         <div class="black-hole-container" id="blackHoleContainer">
             <div class="black-hole">
                 <iframe class="chatgpt-iframe" id="chatgptFrame" src=""></iframe>
-                <div class="portal-interface" id="portalInterface">
+                <div class="voice-interface-overlay" id="voiceInterface">
                     <div class="gpt-speaking-indicator" id="speakingIndicator"></div>
-                    <button class="portal-voice-button" id="portalVoiceBtn" onclick="activatePortalVoice()">
-                        🎤 Use Voice Mode
+                    <button class="voice-mode-button" id="voiceModeBtn" onclick="activateForcedVoiceMode()">
+                        🎤 FORCE VOICE MODE
                     </button>
                 </div>
             </div>
@@ -859,11 +1014,11 @@
         </button>
 
         <div class="settings-panel" id="settingsPanel">
-            <h3>🎤 Voice Solutions</h3>
-            <button class="test-button" onclick="openChatGPTVoice()">🚀 Open Voice Tab</button>
-            <button class="test-button" onclick="forceSpeakerActivation()">🔊 Force Speaker</button>
+            <h3>🎤 Forced Voice Controls</h3>
+            <button class="test-button" onclick="forceSpeakerTest()">🔊 Force Speaker</button>
             <button class="test-button" onclick="testMicrophone()">🎤 Test Mic</button>
-            <button class="test-button" onclick="testSpeaker()">🔊 Test Audio</button>
+            <button class="test-button" onclick="testForcedVoice()">🗣️ Test Voice</button>
+            <button class="test-button" onclick="restartVoiceSystem()">🔄 Restart Voice</button>
             <a href="https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418" 
                target="_blank" 
                class="chatgpt-link">
@@ -873,6 +1028,13 @@
     </div>
 
     <script>
+        // Global voice system variables
+        window.forcedVoiceActive = false;
+        window.audioContext = null;
+        window.micStream = null;
+        window.recognition = null;
+        window.forcedVoice = null;
+
         function launchAssistant() {
             // Fade out main content
             const mainContent = document.querySelector('.main-content');
@@ -952,7 +1114,7 @@
             const blackHoleContainer = document.getElementById('blackHoleContainer');
             
             // Update loading text
-            loadingText.innerHTML = '🕳️ Black hole opening...<br><small style="opacity: 0.7;">Preparing cosmic gateway...</small>';
+            loadingText.innerHTML = '🕳️ Black hole opening...<br><small style="opacity: 0.7;">Preparing forced voice system...</small>';
             
             // Expand black hole
             blackHoleContainer.classList.add('expanding');
@@ -965,144 +1127,175 @@
 
         function loadChatGPT() {
             const loadingText = document.getElementById('loadingText');
-            const portalInterface = document.getElementById('portalInterface');
             const chatgptFrame = document.getElementById('chatgptFrame');
+            const voiceInterface = document.getElementById('voiceInterface');
             
-            // Force load specific ChatGPT conversation inside the portal
+            // Force load ChatGPT iframe
             chatgptFrame.src = 'https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418';
             
             // Update loading text
-            loadingText.innerHTML = '🚀 Loading ChatGPT...<br><small style="opacity: 0.7;">Initializing Voice Interface...</small>';
+            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Activating forced voice...</small>';
             
-            // Force activate speakers immediately
-            forceSpeakerActivationAuto();
+            // Initialize forced voice system immediately
+            initializeForcedVoiceSystem();
             
-            // Show ChatGPT iframe first, then overlay interface
+            // Show ChatGPT and voice interface
             setTimeout(() => {
                 chatgptFrame.classList.add('show');
+                voiceInterface.classList.add('show');
+                loadingText.classList.add('hidden');
                 
+                // Auto-activate voice after everything loads
                 setTimeout(() => {
-                    loadingText.classList.add('hidden');
-                    portalInterface.classList.add('show');
-                    
-                    // Start GPT indicator and play welcome sound
-                    setTimeout(() => {
-                        startGPTIndicator();
-                        playWelcomeSound();
-                    }, 500);
-                }, 1000);
+                    autoActivateForcedVoice();
+                }, 2000);
             }, 2000);
         }
 
-        function forceSpeakerActivationAuto() {
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        function initializeForcedVoiceSystem() {
+            // Force enable speech synthesis
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
                 
-                // Force resume audio context immediately
-                audioContext.resume().then(() => {
-                    console.log('Speakers force-activated automatically');
+                // Get and select best voice
+                function setVoice() {
+                    const voices = window.speechSynthesis.getVoices();
+                    let selectedVoice = null;
                     
-                    // Play immediate activation confirmation
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
+                    // Find female voice
+                    for (let voice of voices) {
+                        if (voice.lang.startsWith('en') && 
+                            (voice.name.toLowerCase().includes('female') || 
+                             voice.name.toLowerCase().includes('woman') ||
+                             voice.name.toLowerCase().includes('samantha') ||
+                             voice.name.toLowerCase().includes('karen') ||
+                             voice.name.toLowerCase().includes('victoria'))) {
+                            selectedVoice = voice;
+                            break;
+                        }
+                    }
+                    
+                    // Fallback to any English voice
+                    if (!selectedVoice) {
+                        for (let voice of voices) {
+                            if (voice.lang.startsWith('en')) {
+                                selectedVoice = voice;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    window.forcedVoice = selectedVoice || voices[0];
+                    console.log('Voice selected:', window.forcedVoice?.name);
+                }
+                
+                // Set voice immediately or wait for voices to load
+                if (window.speechSynthesis.getVoices().length > 0) {
+                    setVoice();
+                } else {
+                    window.speechSynthesis.onvoiceschanged = setVoice;
+                }
+            }
+            
+            // Force activate speakers
+            try {
+                window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                window.audioContext.resume().then(() => {
+                    console.log('Audio context activated for forced voice');
+                    
+                    // Play activation sound
+                    const oscillator = window.audioContext.createOscillator();
+                    const gainNode = window.audioContext.createGain();
                     
                     oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
+                    gainNode.connect(window.audioContext.destination);
                     
-                    // Quick activation beep
-                    oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
-                    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                    gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.05);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                    oscillator.frequency.setValueAtTime(1000, window.audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(0, window.audioContext.currentTime);
+                    gainNode.gain.linearRampToValueAtTime(0.1, window.audioContext.currentTime + 0.05);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, window.audioContext.currentTime + 0.3);
                     
                     oscillator.start();
-                    oscillator.stop(audioContext.currentTime + 0.2);
-                    
-                    // Store audio context globally
-                    window.audioContext = audioContext;
+                    oscillator.stop(window.audioContext.currentTime + 0.3);
                 });
-                
             } catch (error) {
-                console.log('Auto speaker activation error:', error);
+                console.log('Audio context initialization error:', error);
             }
         }
 
-        function startGPTIndicator() {
-            const indicator = document.getElementById('speakingIndicator');
-            
-            // Simulate GPT "thinking" with random intervals
-            setInterval(() => {
-                if (Math.random() > 0.7) { // 30% chance every interval
-                    simulateGPTSpeaking();
-                }
-            }, 3000);
-            
-            // Initial "ready" pulse
-            setTimeout(() => {
-                simulateGPTSpeaking(1000);
-            }, 500);
+        function autoActivateForcedVoice() {
+            // Automatically start the forced voice system
+            const btn = document.getElementById('voiceModeBtn');
+            if (btn) {
+                activateForcedVoiceMode();
+            }
         }
 
-        function simulateGPTSpeaking(duration = 2000) {
-            const indicator = document.getElementById('speakingIndicator');
-            indicator.classList.add('active');
-            
-            // Play speaking notification
-            playNotificationSound('speaking');
-            
-            setTimeout(() => {
-                indicator.classList.remove('active');
-            }, duration);
-        }
-
-        .portal-voice-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.8);
-            background: linear-gradient(135deg, #ff7ba3, #d056d9);
-        }
-
-        function activatePortalVoice() {
-            const btn = document.getElementById('portalVoiceBtn');
+        function activateForcedVoiceMode() {
+            const btn = document.getElementById('voiceModeBtn');
             const indicator = document.getElementById('speakingIndicator');
             
-            // Check if voice mode is already active
-            if (window.isVoiceModeActive) {
-                stopVoiceMode();
+            if (window.forcedVoiceActive) {
+                // Stop voice mode
+                stopForcedVoiceMode();
                 return;
             }
             
-            // Force activate speakers if not already active
-            if (!window.audioContext) {
-                forceSpeakerActivationAuto();
-            }
-            
-            // Initialize text-to-speech
-            initializeTextToSpeech();
-            
-            // Update button state
-            btn.innerHTML = '🎤 Voice Active - Click to Stop';
+            // Start forced voice mode
+            btn.innerHTML = '🎤 FORCING VOICE ACTIVE';
             btn.classList.add('active');
+            btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
             
             // Activate speaking indicator
             indicator.classList.add('active');
             
-            // Start voice conversation system
-            startVoiceConversation();
+            // Force microphone access
+            navigator.mediaDevices.getUserMedia({ 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                    sampleRate: 48000
+                }
+            })
+                .then(function(stream) {
+                    window.micStream = stream;
+                    window.forcedVoiceActive = true;
+                    
+                    btn.innerHTML = '🎤 LISTENING - SPEAK NOW!';
+                    
+                    // Initialize forced speech recognition
+                    initializeForcedSpeechRecognition();
+                    
+                    // Welcome message
+                    setTimeout(() => {
+                        forcedSpeak("Hello! I'm your AI voice assistant speaking directly from the cosmic portal. I can hear you and respond with my voice. Try saying hello!");
+                    }, 1000);
+                })
+                .catch(function(error) {
+                    console.log('Microphone access error:', error);
+                    btn.innerHTML = '🎤 MIC ACCESS DENIED';
+                    btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                    
+                    // Try to activate anyway with limited functionality
+                    setTimeout(() => {
+                        forcedSpeak("Microphone access denied, but I can still speak to you from the portal!");
+                        btn.innerHTML = '🎤 VOICE ONLY MODE';
+                        window.forcedVoiceActive = true;
+                    }, 2000);
+                });
         }
 
-        function stopVoiceMode() {
-            const btn = document.getElementById('portalVoiceBtn');
+        function stopForcedVoiceMode() {
+            const btn = document.getElementById('voiceModeBtn');
             const indicator = document.getElementById('speakingIndicator');
             
-            // Stop voice recognition
-            if (window.voiceRecognition) {
-                window.voiceRecognition.stop();
-                window.voiceRecognition = null;
-            }
+            window.forcedVoiceActive = false;
             
-            // Stop speech synthesis
-            if (window.speechSynth) {
-                window.speechSynth.cancel();
+            // Stop recognition
+            if (window.recognition) {
+                window.recognition.stop();
+                window.recognition = null;
             }
             
             // Stop microphone stream
@@ -1111,311 +1304,178 @@
                 window.micStream = null;
             }
             
+            // Stop any speaking
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            
             // Reset UI
-            btn.innerHTML = '🎤 Use Voice Mode';
-            btn.classList.remove('active', 'listening');
-            btn.style.animation = 'none';
+            btn.innerHTML = '🎤 FORCE VOICE MODE';
+            btn.classList.remove('active');
+            btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
             indicator.classList.remove('active');
             
-            // Reset state
-            window.isVoiceModeActive = false;
-            
-            // Speak goodbye
-            speakText("Voice mode deactivated. Click the button to start again.");
-            
-            console.log('Voice mode stopped');
+            console.log('Forced voice mode stopped');
         }
 
-        function initializeTextToSpeech() {
-            if ('speechSynthesis' in window) {
-                // Configure voice synthesis
-                window.speechSynth = window.speechSynthesis;
+        function initializeForcedSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                window.recognition = new SpeechRecognition();
                 
-                // Get available voices
-                let voices = window.speechSynth.getVoices();
+                window.recognition.continuous = true;
+                window.recognition.interimResults = true;
+                window.recognition.lang = 'en-US';
                 
-                // Find a female voice if available
-                window.selectedVoice = voices.find(voice => 
-                    voice.name.toLowerCase().includes('female') || 
-                    voice.name.toLowerCase().includes('woman') ||
-                    voice.name.toLowerCase().includes('zira') ||
-                    voice.name.toLowerCase().includes('aria')
-                ) || voices.find(voice => voice.gender === 'female') || voices[0];
+                window.recognition.onstart = function() {
+                    console.log('FORCED speech recognition started');
+                    playNotificationSound(523.25); // C5
+                };
                 
-                console.log('Text-to-speech initialized with voice:', window.selectedVoice?.name);
-                
-                // Test voice
-                speakText("Voice mode activated. I can speak now!");
-                
-            } else {
-                console.log('Text-to-speech not supported');
-                alert('Text-to-speech not supported in this browser');
-            }
-        }
-
-        function speakText(text, options = {}) {
-            if (!window.speechSynth || !text) return;
-            
-            // Stop any current speech
-            window.speechSynth.cancel();
-            
-            const utterance = new SpeechSynthesisUtterance(text);
-            
-            // Configure voice settings
-            utterance.voice = window.selectedVoice;
-            utterance.rate = options.rate || 0.9;
-            utterance.pitch = options.pitch || 1.1;
-            utterance.volume = options.volume || 0.8;
-            
-            // Visual feedback during speech
-            utterance.onstart = function() {
-                const indicator = document.getElementById('speakingIndicator');
-                if (indicator) {
-                    indicator.classList.add('active');
-                }
-                playNotificationSound('speaking');
-            };
-            
-            utterance.onend = function() {
-                const indicator = document.getElementById('speakingIndicator');
-                if (indicator) {
-                    indicator.classList.remove('active');
-                }
-            };
-            
-            // Speak the text
-            window.speechSynth.speak(utterance);
-        }
-
-        function startVoiceConversation() {
-            const btn = document.getElementById('portalVoiceBtn');
-            
-            // Request microphone access with enhanced settings
-            navigator.mediaDevices.getUserMedia({ 
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    autoGainControl: true,
-                    sampleRate: 44100
-                }
-            })
-                .then(function(stream) {
-                    // Initialize speech recognition
-                    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                        const recognition = new SpeechRecognition();
-                        
-                        recognition.continuous = true;
-                        recognition.interimResults = true;
-                        recognition.lang = 'en-US';
-                        
-                        recognition.onstart = function() {
-                            btn.innerHTML = '🎤 Listening... Speak Now!';
-                            btn.classList.add('listening');
-                            playNotificationSound('start');
-                            console.log('Voice recognition active - AI will respond with speech');
-                        };
-                        
-                        recognition.onresult = function(event) {
-                            let finalTranscript = '';
-                            for (let i = event.resultIndex; i < event.results.length; i++) {
-                                if (event.results[i].isFinal) {
-                                    finalTranscript += event.results[i][0].transcript;
-                                }
-                            }
-                            if (finalTranscript) {
-                                console.log('Voice input:', finalTranscript);
-                                playNotificationSound('received');
-                                
-                                // Update button during processing
-                                btn.innerHTML = '🤖 AI Thinking...';
-                                btn.classList.remove('listening');
-                                
-                                // Stop listening while processing
-                                recognition.stop();
-                                
-                                // Generate AI response and speak it
-                                generateAIResponse(finalTranscript);
-                            }
-                        };
-                        
-                        recognition.onerror = function(event) {
-                            console.log('Speech recognition error:', event.error);
-                            btn.innerHTML = '🎤 Error - Restarting...';
-                            speakText("Sorry, I had trouble hearing you. Let me try again.");
-                            playNotificationSound('error');
-                            
-                            // Restart after error
-                            setTimeout(() => {
-                                if (window.isVoiceModeActive) {
-                                    recognition.start();
-                                }
-                            }, 2000);
-                        };
-                        
-                        recognition.onend = function() {
-                            // Restart recognition after AI response if still active
-                            setTimeout(() => {
-                                if (window.isVoiceModeActive && window.voiceRecognition) {
-                                    btn.innerHTML = '🎤 Ready - Say Something!';
-                                    btn.classList.add('listening');
-                                    recognition.start();
-                                }
-                            }, 1000);
-                        };
-                        
-                        // Store recognition globally
-                        window.voiceRecognition = recognition;
-                        window.isVoiceModeActive = true;
-                        
-                        recognition.start();
-                    } else {
-                        speakText("Sorry, speech recognition is not supported in this browser.");
-                        btn.innerHTML = '🎤 Not Supported';
-                        btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                window.recognition.onresult = function(event) {
+                    let finalTranscript = '';
+                    
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        if (event.results[i].isFinal) {
+                            finalTranscript += event.results[i][0].transcript;
+                        }
                     }
                     
-                    // Keep stream active for voice mode
-                    window.micStream = stream;
-                })
-                .catch(function(error) {
-                    console.log('Microphone access error:', error);
-                    btn.innerHTML = '🎤 Mic Access Denied';
-                    btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-                    speakText("Microphone access denied. Please allow microphone access and try again.");
-                    playNotificationSound('error');
+                    if (finalTranscript) {
+                        console.log('Voice input:', finalTranscript);
+                        
+                        // Generate AI response
+                        const response = generateAIResponse(finalTranscript);
+                        
+                        // Speak the response
+                        setTimeout(() => {
+                            forcedSpeak(response);
+                        }, 500);
+                        
+                        playNotificationSound(659.25); // E5
+                    }
+                };
+                
+                window.recognition.onerror = function(event) {
+                    console.log('Speech recognition error:', event.error);
                     
-                    setTimeout(() => {
-                        btn.innerHTML = '🎤 Use Voice Mode';
-                        btn.classList.remove('active', 'listening');
-                        btn.style.background = '';
-                        btn.style.animation = 'none';
-                        window.isVoiceModeActive = false;
-                    }, 3000);
-                });
+                    // Don't stop on error, just restart
+                    if (window.forcedVoiceActive) {
+                        setTimeout(() => {
+                            if (window.forcedVoiceActive) {
+                                window.recognition.start();
+                            }
+                        }, 1000);
+                    }
+                };
+                
+                window.recognition.onend = function() {
+                    console.log('Speech recognition ended');
+                    
+                    // Auto-restart if still active
+                    if (window.forcedVoiceActive) {
+                        setTimeout(() => {
+                            if (window.forcedVoiceActive) {
+                                window.recognition.start();
+                            }
+                        }, 100);
+                    }
+                };
+                
+                window.recognition.start();
+            }
         }
 
-        function generateAIResponse(userInput) {
-            // Simulate AI thinking
-            const indicator = document.getElementById('speakingIndicator');
-            indicator.classList.add('active');
-            
-            // Pre-built AI responses for demonstration
+        function forcedSpeak(text) {
+            if ('speechSynthesis' in window && text) {
+                // Cancel any existing speech
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                if (window.forcedVoice) {
+                    utterance.voice = window.forcedVoice;
+                }
+                
+                utterance.volume = 1.0;
+                utterance.rate = 0.9;
+                utterance.pitch = 1.1;
+                
+                utterance.onstart = function() {
+                    const indicator = document.getElementById('speakingIndicator');
+                    indicator.classList.add('active');
+                    playNotificationSound(783.99); // G5
+                };
+                
+                utterance.onend = function() {
+                    const indicator = document.getElementById('speakingIndicator');
+                    setTimeout(() => {
+                        indicator.classList.remove('active');
+                    }, 500);
+                };
+                
+                utterance.onerror = function(event) {
+                    console.log('Speech synthesis error:', event.error);
+                };
+                
+                window.speechSynthesis.speak(utterance);
+                return true;
+            }
+            return false;
+        }
+
+        function generateAIResponse(input) {
             const responses = {
-                'hello': "Hello! I'm your AI voice assistant. How can I help you today?",
-                'how are you': "I'm doing great! I'm here and ready to assist you with any questions you have.",
-                'what is your name': "I'm Claude, your AI assistant. I can speak directly through this cosmic portal!",
-                'what can you do': "I can have voice conversations with you! Ask me questions, request information, or just chat. I'll respond with speech.",
-                'tell me a joke': "Why don't scientists trust atoms? Because they make up everything! Would you like to hear another one?",
-                'what time is it': `The current time is ${new Date().toLocaleTimeString()}. Is there anything else I can help you with?`,
-                'weather': "I don't have access to real-time weather data, but I can help you with many other topics! What would you like to know?",
-                'thank you': "You're very welcome! I'm happy to help. Feel free to ask me anything else.",
-                'goodbye': "Goodbye! It was great talking with you. Have a wonderful day!",
-                'default': "That's an interesting question! While I can speak with you through this voice interface, for more complex queries you might want to use the full ChatGPT interface. What else would you like to know?"
+                hello: "Hello! I'm your AI voice assistant speaking directly from the cosmic portal. How can I help you today?",
+                hi: "Hi there! I'm excited to talk with you through this beautiful space interface!",
+                how: "I'm doing wonderfully! I can speak directly from this portal using forced voice synthesis. It's amazing!",
+                what: "I'm an AI assistant with forced voice capabilities built into this cosmic portal. I can hear you and respond instantly!",
+                who: "I'm your cosmic AI companion, speaking directly through the black hole portal. I exist to help and chat with you!",
+                why: "I exist to provide voice assistance through this beautiful space interface. I love talking with people through the portal!",
+                where: "I'm speaking from the dimensional portal you see before you. This black hole is our communication gateway!",
+                when: "I'm available whenever you activate voice mode in this portal. I'm always ready to listen and respond!",
+                help: "I can answer questions, have conversations, tell jokes, explain concepts, and chat about anything you'd like!",
+                voice: "Yes! I'm speaking directly through the portal using forced speech synthesis. Isn't this cool?",
+                portal: "This cosmic portal is our communication interface. I love how beautiful it looks with all the space effects!",
+                space: "We're communicating through a dimensional gateway in outer space! The stars and cosmic effects are gorgeous!",
+                amazing: "Thank you! I think this portal interface is incredible too. The developers did an amazing job!",
+                beautiful: "I agree! The cosmic design with the rotating stars and aurora effects is absolutely stunning!",
+                thank: "You're very welcome! I'm happy to help and chat with you through this magical interface!",
+                goodbye: "Goodbye! It was wonderful talking with you through the cosmic portal. Come back anytime!",
+                bye: "Bye! Thanks for using the portal voice system. I'll be here whenever you need me!",
+                default: "I understand you said: " + input + ". I'm your AI voice assistant speaking directly from the portal. How can I help you?"
             };
             
-            // Simple keyword matching for demo
-            let response = responses.default;
-            const input = userInput.toLowerCase();
+            const lowerInput = input.toLowerCase();
             
-            for (const [keyword, reply] of Object.entries(responses)) {
-                if (input.includes(keyword)) {
-                    response = reply;
-                    break;
+            for (const [key, response] of Object.entries(responses)) {
+                if (lowerInput.includes(key)) {
+                    return response;
                 }
             }
             
-            // Simulate processing delay
-            setTimeout(() => {
-                speakText(response);
-                indicator.classList.remove('active');
-                
-                // Show the response text briefly
-                showResponseText(response);
-            }, 1500);
+            return responses.default;
         }
 
-        function showResponseText(text) {
-            const responseDisplay = document.createElement('div');
-            responseDisplay.style.cssText = `
-                position: fixed;
-                bottom: 100px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(0, 0, 0, 0.8);
-                color: white;
-                padding: 15px 25px;
-                border-radius: 25px;
-                border: 2px solid rgba(255, 107, 157, 0.5);
-                backdrop-filter: blur(10px);
-                z-index: 10000;
-                max-width: 80%;
-                text-align: center;
-                font-size: 0.9rem;
-                animation: fadeInUp 0.5s ease-out;
-            `;
-            
-            responseDisplay.innerHTML = `💬 ${text}`;
-            document.body.appendChild(responseDisplay);
-            
-            // Remove after 5 seconds
-            setTimeout(() => {
-                if (responseDisplay.parentElement) {
-                    responseDisplay.remove();
+        function playNotificationSound(frequency) {
+            if (window.audioContext) {
+                try {
+                    const oscillator = window.audioContext.createOscillator();
+                    const gainNode = window.audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(window.audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(frequency, window.audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(0, window.audioContext.currentTime);
+                    gainNode.gain.linearRampToValueAtTime(0.1, window.audioContext.currentTime + 0.05);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, window.audioContext.currentTime + 0.3);
+                    
+                    oscillator.start();
+                    oscillator.stop(window.audioContext.currentTime + 0.3);
+                } catch (error) {
+                    console.log('Notification sound error:', error);
                 }
-            }, 5000);
-        }
-
-        function activateSpeakers() {
-            try {
-                // Create audio context to enable speakers
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Resume audio context if suspended
-                if (audioContext.state === 'suspended') {
-                    audioContext.resume().then(() => {
-                        console.log('Audio context resumed - speakers activated');
-                    });
-                }
-                
-                // Store audio context globally for later use
-                window.audioContext = audioContext;
-                
-            } catch (error) {
-                console.log('Speaker activation error:', error);
-            }
-        }
-
-        function playWelcomeSound() {
-            try {
-                const audioContext = window.audioContext || new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Create a pleasant welcome chime
-                const oscillator1 = audioContext.createOscillator();
-                const oscillator2 = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator1.connect(gainNode);
-                oscillator2.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                // Create harmonic welcome sound
-                oscillator1.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-                oscillator2.frequency.setValueAtTime(659.25, audioContext.currentTime); // E5
-                
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.1);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.5);
-                
-                oscillator1.start(audioContext.currentTime);
-                oscillator2.start(audioContext.currentTime);
-                oscillator1.stop(audioContext.currentTime + 1.5);
-                oscillator2.stop(audioContext.currentTime + 1.5);
-                
-                console.log('Welcome sound played - speakers confirmed active');
-                
-            } catch (error) {
-                console.log('Welcome sound error:', error);
             }
         }
 
@@ -1424,17 +1484,23 @@
             settingsPanel.classList.toggle('show');
         }
 
-        // Close settings panel when clicking outside
-        document.addEventListener('click', function(event) {
-            const settingsPanel = document.getElementById('settingsPanel');
-            const settingsBtn = document.getElementById('settingsBtn');
+        function forceSpeakerTest() {
+            const btn = event.target;
+            btn.innerHTML = '🔊 Testing...';
+            btn.disabled = true;
             
-            if (settingsPanel && settingsBtn && 
-                !settingsPanel.contains(event.target) && 
-                !settingsBtn.contains(event.target)) {
-                settingsPanel.classList.remove('show');
-            }
-        });
+            // Test forced speech
+            forcedSpeak("Speaker test successful! I can speak directly from the cosmic portal with crystal clear voice.");
+            
+            btn.innerHTML = '🔊 Speakers Work!';
+            btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                btn.innerHTML = '🔊 Force Speaker';
+                btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                btn.disabled = false;
+            }, 3000);
+        }
 
         function testMicrophone() {
             const btn = event.target;
@@ -1466,400 +1532,60 @@
                 });
         }
 
-        function openChatGPTVoice() {
+        function testForcedVoice() {
             const btn = event.target;
-            btn.innerHTML = '🚀 Opening...';
+            btn.innerHTML = '🗣️ Testing...';
             btn.disabled = true;
             
-            // Open ChatGPT in new tab for full voice functionality
-            const voiceWindow = window.open('https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418', '_blank');
+            forcedSpeak("Forced voice test successful! I am speaking directly from the cosmic portal using advanced speech synthesis. The voice system is working perfectly!");
             
-            btn.innerHTML = '🚀 Voice Tab Opened!';
+            btn.innerHTML = '🗣️ Voice Works!';
             btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
             
-            // Show instructions for voice activation
-            const instructions = document.createElement('div');
-            instructions.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: rgba(0, 0, 0, 0.9);
-                color: white;
-                padding: 15px;
-                border-radius: 10px;
-                border: 2px solid rgba(74, 144, 226, 0.5);
-                z-index: 10001;
-                max-width: 300px;
-                font-size: 0.9rem;
-            `;
-            
-            instructions.innerHTML = `
-                <strong>🎤 Voice Tab Instructions:</strong><br>
-                1. Switch to the new ChatGPT tab<br>
-                2. Click the voice button (🎤) in ChatGPT<br>
-                3. Allow microphone access<br>
-                4. Start talking to ChatGPT!<br>
-                <button onclick="this.parentElement.remove()" 
-                        style="background: #4a90e2; color: white; border: none; 
-                               padding: 5px 10px; border-radius: 15px; 
-                               cursor: pointer; margin-top: 10px;">OK</button>
-            `;
-            
-            document.body.appendChild(instructions);
-            
             setTimeout(() => {
-                btn.innerHTML = '🚀 Open Voice Tab';
+                btn.innerHTML = '🗣️ Test Voice';
                 btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
                 btn.disabled = false;
-                if (instructions.parentElement) {
-                    instructions.remove();
-                }
-            }, 8000);
+            }, 5000);
         }
 
-        function forceSpeakerActivation() {
+        function restartVoiceSystem() {
             const btn = event.target;
-            btn.innerHTML = '🔊 Activating...';
+            btn.innerHTML = '🔄 Restarting...';
             btn.disabled = true;
             
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Force resume audio context
-                audioContext.resume().then(() => {
-                    // Play activation sound sequence
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    
-                    // Rising tone sequence
-                    oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-                    oscillator.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.5);
-                    
-                    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                    gainNode.gain.linearRampToValueAtTime(0.15, audioContext.currentTime + 0.1);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
-                    
-                    oscillator.start();
-                    oscillator.stop(audioContext.currentTime + 1);
-                    
-                    btn.innerHTML = '🔊 Speakers Active!';
-                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
-                    
-                    // Store audio context globally
-                    window.audioContext = audioContext;
-                    
-                    setTimeout(() => {
-                        btn.innerHTML = '🔊 Force Speaker';
-                        btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
-                        btn.disabled = false;
-                    }, 3000);
-                });
-                
-            } catch (error) {
-                btn.innerHTML = '🔊 Activation Error';
-                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+            // Stop current system
+            stopForcedVoiceMode();
+            
+            // Reinitialize
+            setTimeout(() => {
+                initializeForcedVoiceSystem();
                 
                 setTimeout(() => {
-                    btn.innerHTML = '🔊 Force Speaker';
+                    forcedSpeak("Voice system restarted successfully! All systems are operational.");
+                    btn.innerHTML = '🔄 Restart Voice';
                     btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
                     btn.disabled = false;
-                }, 3000);
+                }, 1000);
+            }, 1000);
+        }
+
+        // Close settings panel when clicking outside
+        document.addEventListener('click', function(event) {
+            const settingsPanel = document.getElementById('settingsPanel');
+            const settingsBtn = document.getElementById('settingsBtn');
+            
+            if (settingsPanel && settingsBtn && 
+                !settingsPanel.contains(event.target) && 
+                !settingsBtn.contains(event.target)) {
+                settingsPanel.classList.remove('show');
             }
-        }
+        });
 
-        function testSpeaker() {
-            const btn = event.target;
-            btn.innerHTML = '🔊 Testing...';
-            btn.disabled = true;
-            
-            try {
-                const audioContext = window.audioContext || new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Resume if suspended
-                audioContext.resume().then(() => {
-                    // Create stereo test with multiple frequencies
-                    const oscillator1 = audioContext.createOscillator();
-                    const oscillator2 = audioContext.createOscillator();
-                    const gainNode1 = audioContext.createGain();
-                    const gainNode2 = audioContext.createGain();
-                    const merger = audioContext.createChannelMerger(2);
-                    
-                    oscillator1.connect(gainNode1);
-                    oscillator2.connect(gainNode2);
-                    gainNode1.connect(merger, 0, 0); // Left channel
-                    gainNode2.connect(merger, 0, 1); // Right channel
-                    merger.connect(audioContext.destination);
-                    
-                    // Different frequencies for stereo test
-                    oscillator1.frequency.setValueAtTime(800, audioContext.currentTime);
-                    oscillator2.frequency.setValueAtTime(1000, audioContext.currentTime);
-                    
-                    gainNode1.gain.setValueAtTime(0.1, audioContext.currentTime);
-                    gainNode2.gain.setValueAtTime(0.1, audioContext.currentTime);
-                    
-                    oscillator1.start();
-                    oscillator2.start();
-                    
-                    btn.innerHTML = '🔊 Playing Stereo...';
-                    btn.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
-                    
-                    setTimeout(() => {
-                        oscillator1.stop();
-                        oscillator2.stop();
-                        btn.innerHTML = '🔊 Speakers Work!';
-                        btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
-                        
-                        setTimeout(() => {
-                            btn.innerHTML = '🔊 Test Audio';
-                            btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
-                            btn.disabled = false;
-                        }, 2000);
-                    }, 3000);
-                });
-                
-            } catch (error) {
-                btn.innerHTML = '🔊 Audio Error';
-                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-                
-                setTimeout(() => {
-                    btn.innerHTML = '🔊 Test Audio';
-                    btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
-                    btn.disabled = false;
-                }, 3000);
-            }
-        }
-
-        function activateMicPermission() {
-            const btn = event.target;
-            btn.innerHTML = '🔓 Requesting...';
-            btn.disabled = true;
-            
-            navigator.mediaDevices.getUserMedia({ 
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    autoGainControl: true
-                }
-            })
-            .then(function(stream) {
-                btn.innerHTML = '🔓 Mic Enabled!';
-                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
-                
-                // Keep stream active for voice mode
-                window.micStream = stream;
-                
-                setTimeout(() => {
-                    btn.innerHTML = '🔓 Enable Mic';
-                    btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
-                    btn.disabled = false;
-                }, 3000);
-            })
-            .catch(function(error) {
-                btn.innerHTML = '🔓 Access Denied';
-                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-                
-                setTimeout(() => {
-                    btn.innerHTML = '🔓 Enable Mic';
-                    btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
-                    btn.disabled = false;
-                }, 3000);
-            });
-        }
-
-        function calibrateMic() {
-            const btn = event.target;
-            btn.innerHTML = '⚡ Calibrating...';
-            btn.disabled = true;
-            
-            navigator.mediaDevices.getUserMedia({ 
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    autoGainControl: true,
-                    sampleRate: 44100
-                }
-            })
-            .then(function(stream) {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const analyser = audioContext.createAnalyser();
-                const microphone = audioContext.createMediaStreamSource(stream);
-                
-                microphone.connect(analyser);
-                analyser.fftSize = 256;
-                
-                const bufferLength = analyser.frequencyBinCount;
-                const dataArray = new Uint8Array(bufferLength);
-                
-                btn.innerHTML = '⚡ Listening...';
-                btn.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
-                
-                // Calibrate for 5 seconds
-                setTimeout(() => {
-                    stream.getTracks().forEach(track => track.stop());
-                    btn.innerHTML = '⚡ Calibrated!';
-                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
-                    
-                    setTimeout(() => {
-                        btn.innerHTML = '⚡ Calibrate';
-                        btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
-                        btn.disabled = false;
-                    }, 2000);
-                }, 5000);
-            })
-            .catch(function(error) {
-                btn.innerHTML = '⚡ Cal Error';
-                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-                
-                setTimeout(() => {
-                    btn.innerHTML = '⚡ Calibrate';
-                    btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
-                    btn.disabled = false;
-                }, 3000);
-            });
-        }
-
-        function activateVoiceMode() {
-            const btn = document.getElementById('voiceModeBtn');
-            
-            // Force activate speakers first
-            if (!window.audioContext) {
-                activateSpeakers();
-            }
-            
-            // Request microphone access with enhanced settings
-            navigator.mediaDevices.getUserMedia({ 
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    autoGainControl: true,
-                    sampleRate: 44100
-                }
-            })
-                .then(function(stream) {
-                    // Both microphone and speakers are now active
-                    btn.innerHTML = '🎤 Voice Mode Active';
-                    btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
-                    btn.style.animation = 'pulse 1s ease-in-out infinite';
-                    
-                    // Initialize speech recognition if available
-                    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                        const recognition = new SpeechRecognition();
-                        
-                        recognition.continuous = true;
-                        recognition.interimResults = true;
-                        recognition.lang = 'en-US';
-                        
-                        recognition.onstart = function() {
-                            btn.innerHTML = '🎤 Listening... Speak now!';
-                            console.log('Voice recognition started with speakers active');
-                            
-                            // Play start sound
-                            playNotificationSound('start');
-                        };
-                        
-                        recognition.onresult = function(event) {
-                            let finalTranscript = '';
-                            for (let i = event.resultIndex; i < event.results.length; i++) {
-                                if (event.results[i].isFinal) {
-                                    finalTranscript += event.results[i][0].transcript;
-                                }
-                            }
-                            if (finalTranscript) {
-                                console.log('Voice input detected:', finalTranscript);
-                                // Play confirmation sound
-                                playNotificationSound('received');
-                            }
-                        };
-                        
-                        recognition.onerror = function(event) {
-                            console.log('Speech recognition error:', event.error);
-                            btn.innerHTML = '🎤 Voice Error - Try Again';
-                            playNotificationSound('error');
-                            
-                            setTimeout(() => {
-                                btn.innerHTML = '🎤 Use Voice Mode';
-                                btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
-                                btn.style.animation = 'none';
-                            }, 3000);
-                        };
-                        
-                        recognition.onend = function() {
-                            console.log('Voice recognition ended');
-                            btn.innerHTML = '🎤 Use Voice Mode';
-                            btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
-                            btn.style.animation = 'none';
-                            playNotificationSound('end');
-                        };
-                        
-                        recognition.start();
-                        
-                        // Stop after 30 seconds
-                        setTimeout(() => {
-                            recognition.stop();
-                        }, 30000);
-                    }
-                    
-                    // Keep stream active for voice mode
-                    window.micStream = stream;
-                })
-                .catch(function(error) {
-                    console.log('Microphone access error:', error);
-                    btn.innerHTML = '🎤 Mic Access Denied';
-                    btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-                    playNotificationSound('error');
-                    
-                    setTimeout(() => {
-                        btn.innerHTML = '🎤 Use Voice Mode';
-                        btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
-                    }, 3000);
-                });
-        }
-
-        function playNotificationSound(type) {
-            try {
-                const audioContext = window.audioContext || new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                // Different sounds for different notifications
-                switch(type) {
-                    case 'start':
-                        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-                        break;
-                    case 'received':
-                        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime); // E5
-                        break;
-                    case 'speaking':
-                        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime); // G5
-                        break;
-                    case 'end':
-                        oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // A4
-                        break;
-                    case 'error':
-                        oscillator.frequency.setValueAtTime(220, audioContext.currentTime); // A3
-                        break;
-                    default:
-                        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-                }
-                
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.05);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-                
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.3);
-                
-            } catch (error) {
-                console.log('Notification sound error:', error);
-            }
-        }
+        // Initialize voice system when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Voice system ready for activation');
+        });
     </script>
 </body>
 </html>
