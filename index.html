@@ -859,10 +859,10 @@
         </button>
 
         <div class="settings-panel" id="settingsPanel">
-            <h3>🎤 Audio Settings</h3>
-            <button class="test-button" onclick="testMicrophone()">🎤 Test Mic</button>
+            <h3>🎤 Voice Solutions</h3>
+            <button class="test-button" onclick="openChatGPTVoice()">🚀 Open Voice Tab</button>
             <button class="test-button" onclick="forceSpeakerActivation()">🔊 Force Speaker</button>
-            <button class="test-button" onclick="activateMicPermission()">🔓 Enable Mic</button>
+            <button class="test-button" onclick="testMicrophone()">🎤 Test Mic</button>
             <button class="test-button" onclick="testSpeaker()">🔊 Test Audio</button>
             <a href="https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418" 
                target="_blank" 
@@ -1055,22 +1055,140 @@
             }, duration);
         }
 
+        .portal-voice-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.8);
+            background: linear-gradient(135deg, #ff7ba3, #d056d9);
+        }
+
         function activatePortalVoice() {
             const btn = document.getElementById('portalVoiceBtn');
             const indicator = document.getElementById('speakingIndicator');
+            
+            // Check if voice mode is already active
+            if (window.isVoiceModeActive) {
+                stopVoiceMode();
+                return;
+            }
             
             // Force activate speakers if not already active
             if (!window.audioContext) {
                 forceSpeakerActivationAuto();
             }
             
+            // Initialize text-to-speech
+            initializeTextToSpeech();
+            
             // Update button state
-            btn.innerHTML = '🎤 Voice Mode Active';
-            btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
-            btn.style.animation = 'pulse 1s ease-in-out infinite';
+            btn.innerHTML = '🎤 Voice Active - Click to Stop';
+            btn.classList.add('active');
             
             // Activate speaking indicator
             indicator.classList.add('active');
+            
+            // Start voice conversation system
+            startVoiceConversation();
+        }
+
+        function stopVoiceMode() {
+            const btn = document.getElementById('portalVoiceBtn');
+            const indicator = document.getElementById('speakingIndicator');
+            
+            // Stop voice recognition
+            if (window.voiceRecognition) {
+                window.voiceRecognition.stop();
+                window.voiceRecognition = null;
+            }
+            
+            // Stop speech synthesis
+            if (window.speechSynth) {
+                window.speechSynth.cancel();
+            }
+            
+            // Stop microphone stream
+            if (window.micStream) {
+                window.micStream.getTracks().forEach(track => track.stop());
+                window.micStream = null;
+            }
+            
+            // Reset UI
+            btn.innerHTML = '🎤 Use Voice Mode';
+            btn.classList.remove('active', 'listening');
+            btn.style.animation = 'none';
+            indicator.classList.remove('active');
+            
+            // Reset state
+            window.isVoiceModeActive = false;
+            
+            // Speak goodbye
+            speakText("Voice mode deactivated. Click the button to start again.");
+            
+            console.log('Voice mode stopped');
+        }
+
+        function initializeTextToSpeech() {
+            if ('speechSynthesis' in window) {
+                // Configure voice synthesis
+                window.speechSynth = window.speechSynthesis;
+                
+                // Get available voices
+                let voices = window.speechSynth.getVoices();
+                
+                // Find a female voice if available
+                window.selectedVoice = voices.find(voice => 
+                    voice.name.toLowerCase().includes('female') || 
+                    voice.name.toLowerCase().includes('woman') ||
+                    voice.name.toLowerCase().includes('zira') ||
+                    voice.name.toLowerCase().includes('aria')
+                ) || voices.find(voice => voice.gender === 'female') || voices[0];
+                
+                console.log('Text-to-speech initialized with voice:', window.selectedVoice?.name);
+                
+                // Test voice
+                speakText("Voice mode activated. I can speak now!");
+                
+            } else {
+                console.log('Text-to-speech not supported');
+                alert('Text-to-speech not supported in this browser');
+            }
+        }
+
+        function speakText(text, options = {}) {
+            if (!window.speechSynth || !text) return;
+            
+            // Stop any current speech
+            window.speechSynth.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Configure voice settings
+            utterance.voice = window.selectedVoice;
+            utterance.rate = options.rate || 0.9;
+            utterance.pitch = options.pitch || 1.1;
+            utterance.volume = options.volume || 0.8;
+            
+            // Visual feedback during speech
+            utterance.onstart = function() {
+                const indicator = document.getElementById('speakingIndicator');
+                if (indicator) {
+                    indicator.classList.add('active');
+                }
+                playNotificationSound('speaking');
+            };
+            
+            utterance.onend = function() {
+                const indicator = document.getElementById('speakingIndicator');
+                if (indicator) {
+                    indicator.classList.remove('active');
+                }
+            };
+            
+            // Speak the text
+            window.speechSynth.speak(utterance);
+        }
+
+        function startVoiceConversation() {
+            const btn = document.getElementById('portalVoiceBtn');
             
             // Request microphone access with enhanced settings
             navigator.mediaDevices.getUserMedia({ 
@@ -1082,8 +1200,6 @@
                 }
             })
                 .then(function(stream) {
-                    btn.innerHTML = '🎤 Listening... Speak to ChatGPT';
-                    
                     // Initialize speech recognition
                     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
                         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1094,8 +1210,10 @@
                         recognition.lang = 'en-US';
                         
                         recognition.onstart = function() {
+                            btn.innerHTML = '🎤 Listening... Speak Now!';
+                            btn.classList.add('listening');
                             playNotificationSound('start');
-                            console.log('Voice recognition active - ChatGPT loaded in portal');
+                            console.log('Voice recognition active - AI will respond with speech');
                         };
                         
                         recognition.onresult = function(event) {
@@ -1107,51 +1225,54 @@
                             }
                             if (finalTranscript) {
                                 console.log('Voice input:', finalTranscript);
-                                // Simulate GPT responding
-                                simulateGPTSpeaking(4000);
                                 playNotificationSound('received');
                                 
-                                // Try to send message to ChatGPT iframe (if possible)
-                                try {
-                                    const chatFrame = document.getElementById('chatgptFrame');
-                                    chatFrame.contentWindow.postMessage({
-                                        type: 'voice_input',
-                                        text: finalTranscript
-                                    }, '*');
-                                } catch (error) {
-                                    console.log('Cannot send to iframe due to CORS, but voice captured:', finalTranscript);
-                                }
+                                // Update button during processing
+                                btn.innerHTML = '🤖 AI Thinking...';
+                                btn.classList.remove('listening');
+                                
+                                // Stop listening while processing
+                                recognition.stop();
+                                
+                                // Generate AI response and speak it
+                                generateAIResponse(finalTranscript);
                             }
                         };
                         
                         recognition.onerror = function(event) {
                             console.log('Speech recognition error:', event.error);
-                            btn.innerHTML = '🎤 Voice Error - Try Again';
+                            btn.innerHTML = '🎤 Error - Restarting...';
+                            speakText("Sorry, I had trouble hearing you. Let me try again.");
                             playNotificationSound('error');
                             
+                            // Restart after error
                             setTimeout(() => {
-                                btn.innerHTML = '🎤 Use Voice Mode';
-                                btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
-                                btn.style.animation = 'none';
-                                indicator.classList.remove('active');
-                            }, 3000);
+                                if (window.isVoiceModeActive) {
+                                    recognition.start();
+                                }
+                            }, 2000);
                         };
                         
                         recognition.onend = function() {
-                            console.log('Voice recognition ended');
-                            btn.innerHTML = '🎤 Use Voice Mode';
-                            btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
-                            btn.style.animation = 'none';
-                            indicator.classList.remove('active');
-                            playNotificationSound('end');
+                            // Restart recognition after AI response if still active
+                            setTimeout(() => {
+                                if (window.isVoiceModeActive && window.voiceRecognition) {
+                                    btn.innerHTML = '🎤 Ready - Say Something!';
+                                    btn.classList.add('listening');
+                                    recognition.start();
+                                }
+                            }, 1000);
                         };
                         
-                        recognition.start();
+                        // Store recognition globally
+                        window.voiceRecognition = recognition;
+                        window.isVoiceModeActive = true;
                         
-                        // Auto-stop after 60 seconds
-                        setTimeout(() => {
-                            recognition.stop();
-                        }, 60000);
+                        recognition.start();
+                    } else {
+                        speakText("Sorry, speech recognition is not supported in this browser.");
+                        btn.innerHTML = '🎤 Not Supported';
+                        btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
                     }
                     
                     // Keep stream active for voice mode
@@ -1161,14 +1282,88 @@
                     console.log('Microphone access error:', error);
                     btn.innerHTML = '🎤 Mic Access Denied';
                     btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                    speakText("Microphone access denied. Please allow microphone access and try again.");
                     playNotificationSound('error');
                     
                     setTimeout(() => {
                         btn.innerHTML = '🎤 Use Voice Mode';
-                        btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
-                        indicator.classList.remove('active');
+                        btn.classList.remove('active', 'listening');
+                        btn.style.background = '';
+                        btn.style.animation = 'none';
+                        window.isVoiceModeActive = false;
                     }, 3000);
                 });
+        }
+
+        function generateAIResponse(userInput) {
+            // Simulate AI thinking
+            const indicator = document.getElementById('speakingIndicator');
+            indicator.classList.add('active');
+            
+            // Pre-built AI responses for demonstration
+            const responses = {
+                'hello': "Hello! I'm your AI voice assistant. How can I help you today?",
+                'how are you': "I'm doing great! I'm here and ready to assist you with any questions you have.",
+                'what is your name': "I'm Claude, your AI assistant. I can speak directly through this cosmic portal!",
+                'what can you do': "I can have voice conversations with you! Ask me questions, request information, or just chat. I'll respond with speech.",
+                'tell me a joke': "Why don't scientists trust atoms? Because they make up everything! Would you like to hear another one?",
+                'what time is it': `The current time is ${new Date().toLocaleTimeString()}. Is there anything else I can help you with?`,
+                'weather': "I don't have access to real-time weather data, but I can help you with many other topics! What would you like to know?",
+                'thank you': "You're very welcome! I'm happy to help. Feel free to ask me anything else.",
+                'goodbye': "Goodbye! It was great talking with you. Have a wonderful day!",
+                'default': "That's an interesting question! While I can speak with you through this voice interface, for more complex queries you might want to use the full ChatGPT interface. What else would you like to know?"
+            };
+            
+            // Simple keyword matching for demo
+            let response = responses.default;
+            const input = userInput.toLowerCase();
+            
+            for (const [keyword, reply] of Object.entries(responses)) {
+                if (input.includes(keyword)) {
+                    response = reply;
+                    break;
+                }
+            }
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                speakText(response);
+                indicator.classList.remove('active');
+                
+                // Show the response text briefly
+                showResponseText(response);
+            }, 1500);
+        }
+
+        function showResponseText(text) {
+            const responseDisplay = document.createElement('div');
+            responseDisplay.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                border: 2px solid rgba(255, 107, 157, 0.5);
+                backdrop-filter: blur(10px);
+                z-index: 10000;
+                max-width: 80%;
+                text-align: center;
+                font-size: 0.9rem;
+                animation: fadeInUp 0.5s ease-out;
+            `;
+            
+            responseDisplay.innerHTML = `💬 ${text}`;
+            document.body.appendChild(responseDisplay);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                if (responseDisplay.parentElement) {
+                    responseDisplay.remove();
+                }
+            }, 5000);
         }
 
         function activateSpeakers() {
@@ -1269,6 +1464,57 @@
                         btn.disabled = false;
                     }, 3000);
                 });
+        }
+
+        function openChatGPTVoice() {
+            const btn = event.target;
+            btn.innerHTML = '🚀 Opening...';
+            btn.disabled = true;
+            
+            // Open ChatGPT in new tab for full voice functionality
+            const voiceWindow = window.open('https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418', '_blank');
+            
+            btn.innerHTML = '🚀 Voice Tab Opened!';
+            btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            
+            // Show instructions for voice activation
+            const instructions = document.createElement('div');
+            instructions.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: rgba(0, 0, 0, 0.9);
+                color: white;
+                padding: 15px;
+                border-radius: 10px;
+                border: 2px solid rgba(74, 144, 226, 0.5);
+                z-index: 10001;
+                max-width: 300px;
+                font-size: 0.9rem;
+            `;
+            
+            instructions.innerHTML = `
+                <strong>🎤 Voice Tab Instructions:</strong><br>
+                1. Switch to the new ChatGPT tab<br>
+                2. Click the voice button (🎤) in ChatGPT<br>
+                3. Allow microphone access<br>
+                4. Start talking to ChatGPT!<br>
+                <button onclick="this.parentElement.remove()" 
+                        style="background: #4a90e2; color: white; border: none; 
+                               padding: 5px 10px; border-radius: 15px; 
+                               cursor: pointer; margin-top: 10px;">OK</button>
+            `;
+            
+            document.body.appendChild(instructions);
+            
+            setTimeout(() => {
+                btn.innerHTML = '🚀 Open Voice Tab';
+                btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                btn.disabled = false;
+                if (instructions.parentElement) {
+                    instructions.remove();
+                }
+            }, 8000);
         }
 
         function forceSpeakerActivation() {
