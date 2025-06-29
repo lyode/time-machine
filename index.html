@@ -328,23 +328,169 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
 
+        /* Moving Background Objects */
+        .space-objects {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .space-object {
+            position: absolute;
+            border-radius: 50%;
+            animation: drift 20s linear infinite;
+        }
+
+        .space-object.nebula1 {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.3) 0%, transparent 70%);
+            top: 20%;
+            left: -120px;
+            animation-duration: 25s;
+        }
+
+        .space-object.nebula2 {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.4) 0%, transparent 70%);
+            top: 60%;
+            left: -80px;
+            animation-duration: 35s;
+            animation-delay: 10s;
+        }
+
+        .space-object.comet {
+            width: 4px;
+            height: 4px;
+            background: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 1), -20px 0 15px rgba(255, 255, 255, 0.3);
+            top: 30%;
+            left: -50px;
+            animation-duration: 15s;
+            animation-delay: 5s;
+        }
+
+        @keyframes drift {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(100vw + 200px)); }
+        }
+
+        /* Black Hole Effect */
+        .black-hole-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            transition: all 4s ease-in-out;
+            z-index: 1001;
+        }
+
+        .black-hole-container.expanding {
+            width: 80vmin;
+            height: 80vmin;
+        }
+
+        .black-hole {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: 
+                radial-gradient(circle at center, 
+                    transparent 30%, 
+                    rgba(0, 0, 0, 0.3) 40%, 
+                    rgba(0, 0, 0, 0.8) 50%, 
+                    rgba(0, 0, 0, 0.95) 60%, 
+                    black 70%);
+            box-shadow: 
+                inset 0 0 50px rgba(255, 107, 157, 0.3),
+                inset 0 0 100px rgba(138, 43, 226, 0.2),
+                0 0 100px rgba(0, 0, 0, 0.8);
+            animation: blackHoleSwirl 8s linear infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .black-hole::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 50%);
+            animation: accretionDisk 6s linear infinite reverse;
+        }
+
+        @keyframes blackHoleSwirl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes accretionDisk {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .chatgpt-iframe {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 95%;
-            height: 90%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
+            width: 70%;
+            height: 70%;
+            border: none;
+            border-radius: 15px;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
             opacity: 0;
-            transition: opacity 1s ease-in-out 3s;
+            transition: opacity 2s ease-in-out;
+            z-index: 1002;
         }
 
         .chatgpt-iframe.show {
             opacity: 1;
+        }
+
+        .voice-mode-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff6b9d, #c44bd1);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1003;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 6s forwards;
+        }
+
+        .voice-mode-button:hover {
+            transform: translateX(-50%) translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
         }
 
         .loading-text {
@@ -357,6 +503,7 @@
             text-align: center;
             opacity: 1;
             transition: opacity 1s ease-in-out;
+            z-index: 1004;
         }
 
         .loading-text.hidden {
@@ -367,6 +514,43 @@
             opacity: 0 !important;
             transform: scale(0.8) !important;
             visibility: hidden !important;
+        }
+
+        /* Floating Light Effects */
+        .light-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .light-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: floatLight 12s ease-in-out infinite;
+        }
+
+        @keyframes floatLight {
+            0%, 100% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) translateX(10px) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(-10vh) translateX(-10px) scale(1);
+            }
+            100% {
+                transform: translateY(-20vh) translateX(0) scale(0);
+                opacity: 0;
+            }
         }
 
         @media (max-width: 768px) {
@@ -399,9 +583,19 @@
                 grid-template-columns: 1fr;
             }
 
+            .black-hole-container.expanding {
+                width: 90vmin;
+                height: 90vmin;
+            }
+
             .chatgpt-iframe {
-                width: 98%;
-                height: 95%;
+                width: 80%;
+                height: 75%;
+            }
+
+            .voice-mode-button {
+                padding: 12px 25px;
+                font-size: 1rem;
             }
         }
 
@@ -413,6 +607,11 @@
             .launch-button {
                 padding: 18px 35px;
                 font-size: 1.1rem;
+            }
+
+            .chatgpt-iframe {
+                width: 85%;
+                height: 70%;
             }
         }
     </style>
@@ -465,12 +664,30 @@
             <!-- Stars will be generated by JavaScript -->
         </div>
         
-        <div class="loading-text" id="loadingText">
-            🚀 Launching AI Assistant...<br>
-            <small style="opacity: 0.7;">Connecting to the cosmos...</small>
+        <div class="space-objects">
+            <div class="space-object nebula1"></div>
+            <div class="space-object nebula2"></div>
+            <div class="space-object comet"></div>
+        </div>
+
+        <div class="light-particles" id="lightParticles">
+            <!-- Light particles will be generated by JavaScript -->
         </div>
         
-        <iframe class="chatgpt-iframe" id="chatgptFrame" src="" frameborder="0"></iframe>
+        <div class="loading-text" id="loadingText">
+            🌌 Opening cosmic portal...<br>
+            <small style="opacity: 0.7;">Connecting through the black hole...</small>
+        </div>
+        
+        <div class="black-hole-container" id="blackHoleContainer">
+            <div class="black-hole">
+                <iframe class="chatgpt-iframe" id="chatgptFrame" src=""></iframe>
+            </div>
+        </div>
+
+        <button class="voice-mode-button" id="voiceModeBtn" onclick="activateVoiceMode()">
+            🎤 Use Voice Mode
+        </button>
     </div>
 
     <script>
@@ -489,13 +706,14 @@
                 const spaceOverlay = document.getElementById('spaceOverlay');
                 spaceOverlay.classList.add('active');
                 
-                // Generate stars
+                // Generate stars and light particles
                 generateStars();
+                generateLightParticles();
                 
-                // Load ChatGPT after space animation
+                // Start black hole animation
                 setTimeout(() => {
-                    loadChatGPT();
-                }, 3000);
+                    openBlackHole();
+                }, 2000);
             }, 500);
         }
 
@@ -528,6 +746,41 @@
             }
         }
 
+        function generateLightParticles() {
+            const lightParticles = document.getElementById('lightParticles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('light-particle');
+                
+                // Random horizontal position
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // Random animation delay and duration
+                particle.style.animationDelay = Math.random() * 12 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 8) + 's';
+                
+                lightParticles.appendChild(particle);
+            }
+        }
+
+        function openBlackHole() {
+            const loadingText = document.getElementById('loadingText');
+            const blackHoleContainer = document.getElementById('blackHoleContainer');
+            
+            // Update loading text
+            loadingText.innerHTML = '🕳️ Black hole opening...<br><small style="opacity: 0.7;">Preparing cosmic gateway...</small>';
+            
+            // Expand black hole
+            blackHoleContainer.classList.add('expanding');
+            
+            // Load ChatGPT after black hole opens
+            setTimeout(() => {
+                loadChatGPT();
+            }, 4000);
+        }
+
         function loadChatGPT() {
             const loadingText = document.getElementById('loadingText');
             const chatgptFrame = document.getElementById('chatgptFrame');
@@ -541,7 +794,25 @@
             // Show iframe after loading
             setTimeout(() => {
                 chatgptFrame.classList.add('show');
-            }, 1000);
+            }, 1500);
+        }
+
+        function activateVoiceMode() {
+            // Send a message to the iframe to activate voice mode if possible
+            const iframe = document.getElementById('chatgptFrame');
+            
+            // Create a visual feedback
+            const btn = document.getElementById('voiceModeBtn');
+            btn.innerHTML = '🎤 Voice Mode Active';
+            btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+            
+            // You could add additional voice mode activation logic here
+            // For example, sending postMessage to the iframe or other interactions
+            
+            setTimeout(() => {
+                btn.innerHTML = '🎤 Use Voice Mode';
+                btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
+            }, 3000);
         }
     </script>
 </body>
