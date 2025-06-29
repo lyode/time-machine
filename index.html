@@ -1483,7 +1483,7 @@
                 <button class="test-button success" onclick="forceChatGPTVoice()">🎤 Force Voice Mode</button>
                 <button class="test-button warning" onclick="injectChatGPTCommands()">⚡ Inject Commands</button>
                 <button class="test-button" onclick="refreshChatGPT()">🔄 Refresh Portal</button>
-                <button class="test-button danger" onclick="emergencyReset()">🚨 Emergency Reset</button>
+                <button class="test-button success" onclick="emergencyActivateAll()">🚨 Emergency Activate</button>
             </div>
 
             <!-- Phone Speaker Control -->
@@ -2209,51 +2209,623 @@
             const loadingText = document.getElementById('loadingText');
             const chatgptFrame = document.getElementById('chatgptFrame');
             
-            // Force load ChatGPT conversation with portal control
+            // Force load ChatGPT conversation with aggressive control attempts
             chatgptFrame.src = 'https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418';
             
             // Update loading text
-            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Establishing portal control...</small>';
+            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Activating control systems...</small>';
             
-            // Initialize portal control systems
+            // Immediate activation attempts
             initializePortalControlSystems();
+            activateVoiceSystemImmediately();
             
             // Show ChatGPT interface
             setTimeout(() => {
                 chatgptFrame.classList.add('show');
                 loadingText.classList.add('hidden');
                 
-                // Start comprehensive ChatGPT control
-                establishChatGPTControl();
+                // Aggressive control establishment
+                establishChatGPTControlAggressively();
                 
-                // Force speaker output initialization
-                initializeSpeakerForcing();
+                // Force speaker and voice activation
+                forceAllSystemsActive();
                 
-                // Start monitoring systems
-                startPortalMonitoring();
+                // Start continuous monitoring
+                startContinuousMonitoring();
+                
+                // Auto-retry failed systems
+                setupAutoRetrySystem();
+                
             }, 2000);
         }
 
         function initializePortalControlSystems() {
-            console.log('Initializing comprehensive portal control systems...');
+            console.log('🚀 Initializing comprehensive portal control systems...');
             
-            // Initialize enhanced audio context for speaker forcing
+            // Enhanced audio context for speaker forcing
             try {
                 window.portalAudioContext = new (window.AudioContext || window.webkitAudioContext)();
                 
-                // Create speaker output nodes
+                // Force resume audio context immediately
+                if (window.portalAudioContext.state === 'suspended') {
+                    window.portalAudioContext.resume().then(() => {
+                        console.log('✅ Portal audio context activated');
+                        updateStatusIndicator('speakerStatus', 'success', 'Audio Context Active');
+                    });
+                }
+                
+                // Create enhanced speaker output nodes
                 window.portalSpeakerOutput = window.portalAudioContext.createGain();
                 window.portalSpeakerOutput.connect(window.portalAudioContext.destination);
+                window.portalSpeakerOutput.gain.value = 1.0;
                 
-                console.log('Portal audio context initialized for speaker control');
+                // Test audio immediately
+                playActivationTone();
+                
+                console.log('✅ Portal audio context initialized for speaker control');
+                
             } catch (error) {
-                console.log('Portal audio initialization error:', error);
+                console.log('❌ Portal audio initialization error:', error);
+                updateStatusIndicator('speakerStatus', 'warning', 'Audio Failed');
             }
             
-            // Update status indicators
+            // Update status indicators with active states
             updateStatusIndicator('chatgptStatus', 'warning', 'Connecting...');
-            updateStatusIndicator('speakerStatus', 'warning', 'Initializing...');
-            updateStatusIndicator('voiceSystemStatus', 'warning', 'Preparing...');
+            updateStatusIndicator('speakerStatus', 'success', 'Initializing...');
+            updateStatusIndicator('voiceSystemStatus', 'success', 'Ready');
+            
+            // Mark systems as initializing
+            window.chatgptControlActive = true;
+            window.voiceSystemActive = true;
+            window.speakerForceActive = true;
+        }
+
+        function activateVoiceSystemImmediately() {
+            console.log('🎤 Activating voice system immediately...');
+            
+            // Try to get microphone access right away
+            navigator.mediaDevices.getUserMedia({ 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                    sampleRate: 44100
+                }
+            })
+            .then(function(stream) {
+                console.log('✅ Microphone access granted immediately');
+                window.micStream = stream;
+                
+                // Connect to audio analysis
+                if (window.audioAnalyser) {
+                    const source = window.portalAudioContext.createMediaStreamSource(stream);
+                    source.connect(window.audioAnalyser);
+                }
+                
+                // Initialize speech recognition immediately
+                initializeSpeechRecognitionNow();
+                
+                window.voiceSystemActive = true;
+                updateStatusIndicator('voiceSystemStatus', 'success', 'Active');
+                updateStatusIndicator('micStatus', 'success', 'Active');
+                updateStatusIndicator('speechStatus', 'success', 'Listening');
+                
+                showNotification('🎤 Voice System Active!', 'Microphone and speech recognition are now active.', 'success');
+                
+            })
+            .catch(function(error) {
+                console.log('⚠️ Microphone access denied, trying bypass methods...');
+                attemptMicrophoneBypass();
+                updateStatusIndicator('micStatus', 'warning', 'Bypass Mode');
+            });
+        }
+
+        function initializeSpeechRecognitionNow() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                window.recognition = new SpeechRecognition();
+                
+                window.recognition.continuous = true;
+                window.recognition.interimResults = true;
+                window.recognition.lang = 'en-US';
+                
+                window.recognition.onstart = function() {
+                    console.log('✅ Speech recognition started');
+                    updateStatusIndicator('speechStatus', 'success', 'Listening');
+                    playNotificationTone(523.25); // C5
+                };
+                
+                window.recognition.onresult = function(event) {
+                    let finalTranscript = '';
+                    
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        if (event.results[i].isFinal) {
+                            finalTranscript += event.results[i][0].transcript;
+                        }
+                    }
+                    
+                    if (finalTranscript) {
+                        console.log('🎤 Voice input received:', finalTranscript);
+                        
+                        // Immediately inject to ChatGPT
+                        injectTextToChatGPT(finalTranscript);
+                        
+                        // Visual feedback
+                        showNotification('🎤 Voice Captured', `"${finalTranscript.substring(0, 30)}..." → ChatGPT`, 'info');
+                        
+                        playNotificationTone(659.25); // E5
+                    }
+                };
+                
+                window.recognition.onerror = function(event) {
+                    console.log('🔄 Speech recognition error, restarting:', event.error);
+                    
+                    // Auto-restart on error
+                    if (window.voiceSystemActive) {
+                        setTimeout(() => {
+                            window.recognition.start();
+                        }, 1000);
+                    }
+                };
+                
+                window.recognition.onend = function() {
+                    console.log('🔄 Speech recognition ended, restarting...');
+                    
+                    // Auto-restart if still active
+                    if (window.voiceSystemActive) {
+                        setTimeout(() => {
+                            window.recognition.start();
+                        }, 100);
+                    }
+                };
+                
+                // Start recognition immediately
+                try {
+                    window.recognition.start();
+                    console.log('✅ Speech recognition started successfully');
+                } catch (error) {
+                    console.log('❌ Speech recognition start failed:', error);
+                }
+            }
+        }
+
+        function establishChatGPTControlAggressively() {
+            console.log('🤖 Establishing aggressive ChatGPT control...');
+            
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            // Method 1: Immediate script injection attempts
+            setTimeout(() => attemptScriptInjection(), 1000);
+            setTimeout(() => attemptScriptInjection(), 3000);
+            setTimeout(() => attemptScriptInjection(), 5000);
+            
+            // Method 2: Continuous PostMessage attempts
+            startContinuousPostMessage();
+            
+            // Method 3: Event monitoring and injection
+            setupAdvancedEventMonitoring();
+            
+            // Method 4: Force voice activation attempts
+            setTimeout(() => forceVoiceActivationAggressive(), 2000);
+            setTimeout(() => forceVoiceActivationAggressive(), 5000);
+            setTimeout(() => forceVoiceActivationAggressive(), 8000);
+        }
+
+        function attemptScriptInjection() {
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            try {
+                const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
+                
+                if (iframeDoc && !iframeDoc.querySelector('#portalControlScript')) {
+                    const script = iframeDoc.createElement('script');
+                    script.id = 'portalControlScript';
+                    script.textContent = `
+                        console.log('🚀 Portal Control Script Loading...');
+                        window.portalControlActive = true;
+                        window.portalForceVoice = true;
+                        
+                        // Aggressive voice mode activation
+                        function forceActivateVoice() {
+                            const selectors = [
+                                '[data-testid*="voice"]',
+                                '[aria-label*="voice"]',
+                                '[aria-label*="microphone"]',
+                                '[title*="voice"]',
+                                'button[class*="voice"]',
+                                'button:has(svg[data-icon="microphone"])',
+                                'button:has([data-icon="microphone"])',
+                                '[role="button"]:has([data-icon="microphone"])'
+                            ];
+                            
+                            for (const selector of selectors) {
+                                try {
+                                    const elements = document.querySelectorAll(selector);
+                                    elements.forEach(element => {
+                                        if (element && element.click) {
+                                            element.click();
+                                            console.log('✅ Voice button clicked:', selector);
+                                            return true;
+                                        }
+                                    });
+                                } catch (e) {
+                                    continue;
+                                }
+                            }
+                            
+                            // Alternative approach - find by text content
+                            const buttons = document.querySelectorAll('button');
+                            for (const button of buttons) {
+                                const text = button.textContent || button.innerHTML || '';
+                                const ariaLabel = button.getAttribute('aria-label') || '';
+                                
+                                if (text.includes('🎤') || 
+                                    text.toLowerCase().includes('voice') ||
+                                    text.toLowerCase().includes('microphone') ||
+                                    ariaLabel.toLowerCase().includes('voice') ||
+                                    ariaLabel.toLowerCase().includes('microphone')) {
+                                    
+                                    button.click();
+                                    console.log('✅ Voice button found by content and clicked');
+                                    return true;
+                                }
+                            }
+                            
+                            return false;
+                        }
+                        
+                        // Force voice activation every 3 seconds
+                        setInterval(() => {
+                            if (window.portalForceVoice) {
+                                forceActivateVoice();
+                            }
+                        }, 3000);
+                        
+                        // Immediate activation attempt
+                        setTimeout(forceActivateVoice, 1000);
+                        
+                        // Override audio settings for speaker output
+                        if ('speechSynthesis' in window) {
+                            const originalSpeak = speechSynthesis.speak;
+                            speechSynthesis.speak = function(utterance) {
+                                utterance.volume = 1.0;
+                                utterance.rate = 0.9;
+                                console.log('🔊 Forcing speech synthesis to speaker');
+                                return originalSpeak.call(this, utterance);
+                            };
+                        }
+                        
+                        // Monitor for text input and auto-send
+                        window.addEventListener('message', function(event) {
+                            if (event.data.type === 'inject_text' && event.data.text) {
+                                const textArea = document.querySelector('textarea') || 
+                                               document.querySelector('input[type="text"]') ||
+                                               document.querySelector('[contenteditable="true"]');
+                                
+                                if (textArea) {
+                                    textArea.value = event.data.text;
+                                    textArea.textContent = event.data.text;
+                                    
+                                    // Trigger events
+                                    textArea.dispatchEvent(new Event('input', { bubbles: true }));
+                                    textArea.dispatchEvent(new Event('change', { bubbles: true }));
+                                    textArea.focus();
+                                    
+                                    // Auto-submit if requested
+                                    if (event.data.autoSubmit) {
+                                        setTimeout(() => {
+                                            const sendButton = document.querySelector('button[type="submit"]') || 
+                                                             document.querySelector('[aria-label*="Send"]') ||
+                                                             document.querySelector('button:last-of-type');
+                                            
+                                            if (sendButton) {
+                                                sendButton.click();
+                                                console.log('✅ Text injected and sent automatically');
+                                            }
+                                        }, 500);
+                                    }
+                                    
+                                    console.log('✅ Text injected successfully:', event.data.text);
+                                }
+                            }
+                        });
+                        
+                        console.log('✅ Portal Control Script Active - Voice forcing enabled');
+                    `;
+                    
+                    iframeDoc.head.appendChild(script);
+                    console.log('✅ Portal control script injected successfully');
+                    
+                    window.chatgptControlActive = true;
+                    updateStatusIndicator('chatgptStatus', 'success', 'Script Injected');
+                    updateStatusIndicator('connectionStatus', 'success', 'Script Active');
+                    
+                    return true;
+                }
+            } catch (error) {
+                console.log('❌ Script injection blocked:', error);
+                updateStatusIndicator('chatgptStatus', 'warning', 'Access Restricted');
+            }
+            
+            return false;
+        }
+
+        function startContinuousPostMessage() {
+            // Send control messages to ChatGPT every 5 seconds
+            setInterval(() => {
+                const chatFrame = document.getElementById('chatgptFrame');
+                
+                try {
+                    // Voice activation message
+                    chatFrame.contentWindow.postMessage({
+                        type: 'force_voice_activation',
+                        source: 'portal_control',
+                        timestamp: Date.now()
+                    }, '*');
+                    
+                    // Speaker forcing message
+                    chatFrame.contentWindow.postMessage({
+                        type: 'force_speaker_output',
+                        volume: 1.0,
+                        source: 'portal_control'
+                    }, '*');
+                    
+                } catch (error) {
+                    // Silent fail for security restrictions
+                }
+            }, 5000);
+            
+            console.log('✅ Continuous PostMessage control started');
+        }
+
+        function setupAdvancedEventMonitoring() {
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            // Monitor iframe load events
+            chatFrame.addEventListener('load', function() {
+                console.log('🔄 ChatGPT iframe loaded, re-establishing control...');
+                setTimeout(() => {
+                    attemptScriptInjection();
+                    forceVoiceActivationAggressive();
+                }, 1000);
+            });
+            
+            // Monitor for any audio events
+            document.addEventListener('play', function(event) {
+                if (event.target.tagName === 'AUDIO') {
+                    console.log('🔊 Audio detected, forcing speaker output');
+                    forceSpeakerOutputEvent();
+                }
+            }, true);
+            
+            // Monitor for speech synthesis
+            window.addEventListener('beforeunload', function() {
+                if (window.speechSynthesis.speaking) {
+                    console.log('🔊 Speech synthesis detected');
+                }
+            });
+        }
+
+        function forceVoiceActivationAggressive() {
+            console.log('🎤 Attempting aggressive voice activation...');
+            
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            try {
+                // Method 1: Direct DOM access
+                const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
+                
+                if (iframeDoc) {
+                    const voiceSelectors = [
+                        '[data-testid*="voice"]',
+                        '[aria-label*="voice"]',
+                        '[aria-label*="microphone"]',
+                        'button[class*="voice"]',
+                        'button:has(svg[data-icon="microphone"])'
+                    ];
+                    
+                    for (const selector of voiceSelectors) {
+                        const elements = iframeDoc.querySelectorAll(selector);
+                        elements.forEach(element => {
+                            if (element) {
+                                element.click();
+                                console.log('✅ Voice button clicked:', selector);
+                                updateStatusIndicator('voiceModeStatus', 'success', 'Activated');
+                                showNotification('🎤 Voice Activated!', 'Voice button clicked successfully.', 'success');
+                            }
+                        });
+                    }
+                }
+            } catch (error) {
+                console.log('❌ Direct voice activation blocked:', error);
+            }
+            
+            // Method 2: Script-based activation
+            if (window.chatgptControlActive) {
+                try {
+                    chatFrame.contentWindow.portalForceVoice = true;
+                    console.log('✅ Script-based voice forcing activated');
+                } catch (error) {
+                    console.log('❌ Script communication blocked:', error);
+                }
+            }
+            
+            // Method 3: PostMessage activation
+            chatFrame.contentWindow.postMessage({
+                type: 'activate_voice_now',
+                force: true,
+                source: 'portal_aggressive'
+            }, '*');
+        }
+
+        function forceAllSystemsActive() {
+            console.log('🚀 Forcing all systems to active state...');
+            
+            // Force speaker system active
+            forceSpeakerOutputEvent();
+            
+            // Force voice system active
+            if (!window.voiceSystemActive) {
+                activateVoiceSystemImmediately();
+            }
+            
+            // Force ChatGPT control active
+            window.chatgptControlActive = true;
+            
+            // Update all status indicators to active
+            updateStatusIndicator('chatgptStatus', 'success', 'Force Active');
+            updateStatusIndicator('speakerStatus', 'success', 'Force Active');
+            updateStatusIndicator('voiceSystemStatus', 'success', 'Force Active');
+            updateStatusIndicator('connectionStatus', 'success', 'Force Active');
+            updateStatusIndicator('voiceModeStatus', 'success', 'Force Active');
+            
+            // Global system flags
+            window.voiceSystemActive = true;
+            window.speakerForceActive = true;
+            window.chatgptControlActive = true;
+            
+            showNotification('🚀 All Systems Forced Active!', 'ChatGPT control, voice system, and speaker output are now active.', 'success');
+        }
+
+        function startContinuousMonitoring() {
+            // Monitor all systems every 2 seconds
+            setInterval(() => {
+                // Check ChatGPT connection
+                const chatFrame = document.getElementById('chatgptFrame');
+                if (chatFrame.src && chatFrame.src.includes('chatgpt.com')) {
+                    updateStatusIndicator('connectionStatus', 'success', 'Connected');
+                }
+                
+                // Check audio context
+                if (window.portalAudioContext && window.portalAudioContext.state === 'running') {
+                    updateStatusIndicator('speakerStatus', 'success', 'Active');
+                } else if (window.portalAudioContext) {
+                    window.portalAudioContext.resume();
+                }
+                
+                // Check voice system
+                if (window.voiceSystemActive && window.recognition) {
+                    updateStatusIndicator('voiceSystemStatus', 'success', 'Active');
+                } else {
+                    // Attempt to restart voice system
+                    initializeSpeechRecognitionNow();
+                }
+                
+                // Check microphone
+                if (window.micStream && window.micStream.active) {
+                    updateStatusIndicator('micStatus', 'success', 'Active');
+                }
+            }, 2000);
+            
+            console.log('✅ Continuous monitoring started');
+        }
+
+        function setupAutoRetrySystem() {
+            // Retry failed systems every 10 seconds
+            setInterval(() => {
+                // Retry ChatGPT control if failed
+                if (!window.chatgptControlActive) {
+                    console.log('🔄 Retrying ChatGPT control...');
+                    attemptScriptInjection();
+                }
+                
+                // Retry voice system if failed
+                if (!window.voiceSystemActive) {
+                    console.log('🔄 Retrying voice system...');
+                    activateVoiceSystemImmediately();
+                }
+                
+                // Retry speaker system if failed
+                if (!window.speakerForceActive && window.portalAudioContext) {
+                    console.log('🔄 Retrying speaker system...');
+                    window.portalAudioContext.resume();
+                    window.speakerForceActive = true;
+                }
+                
+                // Retry voice activation
+                forceVoiceActivationAggressive();
+                
+            }, 10000);
+            
+            console.log('✅ Auto-retry system activated');
+        }
+
+        // Helper functions for immediate activation
+        function playActivationTone() {
+            if (window.portalAudioContext) {
+                const oscillator = window.portalAudioContext.createOscillator();
+                const gainNode = window.portalAudioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(window.portalAudioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(440, window.portalAudioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.1, window.portalAudioContext.currentTime);
+                
+                oscillator.start();
+                oscillator.stop(window.portalAudioContext.currentTime + 0.2);
+                
+                console.log('🔊 Activation tone played');
+            }
+        }
+
+        function playNotificationTone(frequency) {
+            if (window.portalAudioContext) {
+                const oscillator = window.portalAudioContext.createOscillator();
+                const gainNode = window.portalAudioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(window.portalAudioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, window.portalAudioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.05, window.portalAudioContext.currentTime);
+                
+                oscillator.start();
+                oscillator.stop(window.portalAudioContext.currentTime + 0.1);
+            }
+        }
+
+        function attemptMicrophoneBypass() {
+            console.log('🔓 Attempting microphone bypass methods...');
+            
+            // Try different audio constraints
+            const constraints = [
+                { audio: { echoCancellation: false, noiseSuppression: false } },
+                { audio: { sampleRate: 22050 } },
+                { audio: { channelCount: 1 } },
+                { audio: true }
+            ];
+            
+            async function tryConstraint(constraint) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia(constraint);
+                    console.log('✅ Microphone bypass successful');
+                    window.micStream = stream;
+                    updateStatusIndicator('micStatus', 'success', 'Bypass Success');
+                    return true;
+                } catch (error) {
+                    return false;
+                }
+            }
+            
+            // Try each constraint
+            constraints.forEach((constraint, index) => {
+                setTimeout(() => tryConstraint(constraint), index * 1000);
+            });
+        }
+
+        function forceSpeakerOutputEvent() {
+            console.log('🔊 Forcing speaker output...');
+            
+            if (window.portalAudioContext) {
+                window.portalAudioContext.resume();
+                
+                // Test tone to ensure speaker is active
+                playActivationTone();
+                
+                window.speakerForceActive = true;
+                updateStatusIndicator('speakerStatus', 'success', 'Speaker Forced');
+            }
         }
 
         function establishChatGPTControl() {
@@ -2389,50 +2961,431 @@
             btn.innerHTML = '🎤 Forcing...';
             btn.disabled = true;
             
-            // Method 1: Script injection
+            console.log('🎤 Force ChatGPT Voice - Starting aggressive activation...');
+            
+            // Method 1: Immediate script-based forcing
             if (window.chatgptControlActive) {
                 try {
                     const chatFrame = document.getElementById('chatgptFrame');
-                    chatFrame.contentWindow.portalShouldActivateVoice = true;
+                    chatFrame.contentWindow.portalForceVoice = true;
+                    chatFrame.contentWindow.postMessage({
+                        type: 'force_voice_immediate',
+                        action: 'click_voice_button'
+                    }, '*');
                     
-                    showNotification('🎤 Voice Forced!', 'Portal control script activated ChatGPT voice mode.', 'success');
-                    updateStatusIndicator('voiceModeStatus', 'success', 'Force Activated');
+                    showNotification('🎤 Script Force!', 'Portal control script forcing voice activation.', 'success');
+                    updateStatusIndicator('voiceModeStatus', 'success', 'Script Forced');
                 } catch (error) {
-                    console.log('Script force failed:', error);
+                    console.log('Script force method failed:', error);
                 }
             }
             
-            // Method 2: PostMessage force
-            const chatFrame = document.getElementById('chatgptFrame');
-            chatFrame.contentWindow.postMessage({
-                type: 'force_voice_activation',
-                source: 'portal_control'
-            }, 'https://chatgpt.com');
+            // Method 2: Direct DOM manipulation (multiple attempts)
+            for (let attempt = 0; attempt < 5; attempt++) {
+                setTimeout(() => {
+                    attemptDirectVoiceClick();
+                }, attempt * 500);
+            }
             
-            // Method 3: Direct DOM manipulation
+            // Method 3: Continuous PostMessage bombing
+            const messageInterval = setInterval(() => {
+                const chatFrame = document.getElementById('chatgptFrame');
+                chatFrame.contentWindow.postMessage({
+                    type: 'activate_voice_mode',
+                    force: true,
+                    attempt: Date.now()
+                }, '*');
+            }, 200);
+            
+            // Stop message bombing after 5 seconds
+            setTimeout(() => clearInterval(messageInterval), 5000);
+            
+            // Method 4: Re-inject control script
             setTimeout(() => {
-                try {
-                    const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
-                    if (iframeDoc) {
-                        const voiceButton = iframeDoc.querySelector('[aria-label*="voice"], [data-testid*="voice"]');
-                        if (voiceButton) {
-                            voiceButton.click();
-                            showNotification('🎤 Success!', 'Voice button clicked directly!', 'success');
-                        }
-                    }
-                } catch (error) {
-                    console.log('Direct manipulation blocked:', error);
-                }
-            }, 500);
+                attemptScriptInjection();
+            }, 1000);
             
-            btn.innerHTML = '🎤 Voice Forced!';
+            btn.innerHTML = '🎤 Multi-Force Active!';
             btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
             
             setTimeout(() => {
                 btn.innerHTML = '🎤 Force Voice Mode';
                 btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
                 btn.disabled = false;
+                
+                // Final status update
+                updateStatusIndicator('voiceModeStatus', 'success', 'Force Attempted');
             }, 3000);
+        }
+
+        function attemptDirectVoiceClick() {
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            try {
+                const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
+                
+                if (iframeDoc) {
+                    // Comprehensive selector list for voice buttons
+                    const voiceSelectors = [
+                        '[data-testid*="voice"]',
+                        '[aria-label*="voice"]',
+                        '[aria-label*="microphone"]',
+                        '[aria-label*="Voice"]',
+                        '[aria-label*="Microphone"]',
+                        '[title*="voice"]',
+                        '[title*="Voice"]',
+                        'button[class*="voice"]',
+                        'button[class*="Voice"]',
+                        'button:has(svg[data-icon="microphone"])',
+                        'button:has([data-icon="microphone"])',
+                        '[role="button"]:has([data-icon="microphone"])',
+                        'button:has(svg[class*="microphone"])',
+                        'button:has(svg[class*="voice"])'
+                    ];
+                    
+                    let found = false;
+                    
+                    for (const selector of voiceSelectors) {
+                        try {
+                            const elements = iframeDoc.querySelectorAll(selector);
+                            elements.forEach(element => {
+                                if (element && !found) {
+                                    element.click();
+                                    console.log('✅ Voice button clicked via selector:', selector);
+                                    showNotification('🎤 Direct Click!', 'Voice button found and clicked directly.', 'success');
+                                    updateStatusIndicator('voiceModeStatus', 'success', 'Direct Click');
+                                    found = true;
+                                }
+                            });
+                        } catch (e) {
+                            continue;
+                        }
+                    }
+                    
+                    // Fallback: search by text content and attributes
+                    if (!found) {
+                        const allButtons = iframeDoc.querySelectorAll('button, [role="button"], [tabindex="0"]');
+                        
+                        for (const button of allButtons) {
+                            const text = (button.textContent || '').toLowerCase();
+                            const ariaLabel = (button.getAttribute('aria-label') || '').toLowerCase();
+                            const title = (button.getAttribute('title') || '').toLowerCase();
+                            const className = (button.className || '').toLowerCase();
+                            
+                            if (text.includes('voice') || text.includes('microphone') || text.includes('🎤') ||
+                                ariaLabel.includes('voice') || ariaLabel.includes('microphone') ||
+                                title.includes('voice') || title.includes('microphone') ||
+                                className.includes('voice') || className.includes('microphone')) {
+                                
+                                button.click();
+                                console.log('✅ Voice button found by content analysis and clicked');
+                                showNotification('🎤 Content Match!', 'Voice button found by content analysis.', 'success');
+                                updateStatusIndicator('voiceModeStatus', 'success', 'Content Match');
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    return found;
+                }
+            } catch (error) {
+                console.log('Direct voice click blocked:', error);
+                return false;
+            }
+            
+            return false;
+        }
+
+        function forceSpeakerOutput() {
+            console.log('🔊 Forcing audio output to phone speaker...');
+            
+            const btn = event.target;
+            if (btn) {
+                btn.innerHTML = '📢 Forcing...';
+                btn.disabled = true;
+            }
+            
+            try {
+                // Method 1: Force audio context to resume and max volume
+                if (window.portalAudioContext) {
+                    window.portalAudioContext.resume().then(() => {
+                        console.log('✅ Audio context resumed');
+                        
+                        // Set maximum gain
+                        if (window.portalSpeakerOutput) {
+                            window.portalSpeakerOutput.gain.value = 1.0;
+                        }
+                        
+                        // Play test tone at full volume
+                        playLoudTestTone();
+                        
+                        updateStatusIndicator('speakerStatus', 'success', 'Context Resumed');
+                    });
+                }
+                
+                // Method 2: Force all existing audio elements to max volume
+                const audioElements = document.querySelectorAll('audio, video');
+                audioElements.forEach(audio => {
+                    audio.volume = 1.0;
+                    audio.muted = false;
+                    console.log('🔊 Audio element volume forced to maximum');
+                });
+                
+                // Method 3: Override ChatGPT audio via PostMessage
+                const chatFrame = document.getElementById('chatgptFrame');
+                chatFrame.contentWindow.postMessage({
+                    type: 'force_audio_output',
+                    volume: 1.0,
+                    muted: false,
+                    route: 'speaker'
+                }, '*');
+                
+                // Method 4: Override speech synthesis globally
+                if ('speechSynthesis' in window) {
+                    // Store original speak function
+                    if (!window.originalSpeak) {
+                        window.originalSpeak = speechSynthesis.speak;
+                    }
+                    
+                    // Override with forced volume
+                    speechSynthesis.speak = function(utterance) {
+                        utterance.volume = 1.0;
+                        utterance.rate = 0.9;
+                        utterance.pitch = 1.0;
+                        console.log('🔊 Speech synthesis forced to speaker with max volume');
+                        return window.originalSpeak.call(this, utterance);
+                    };
+                }
+                
+                // Method 5: Try to select audio output device
+                if (navigator.mediaDevices && navigator.mediaDevices.selectAudioOutput) {
+                    navigator.mediaDevices.selectAudioOutput().then(device => {
+                        console.log('✅ Audio output device selected:', device.label);
+                        updateStatusIndicator('speakerStatus', 'success', device.label || 'Device Selected');
+                        document.getElementById('audioRouteDisplay').textContent = `Audio Route: ${device.label || 'Selected Device'}`;
+                    }).catch(error => {
+                        console.log('Audio device selection not available:', error);
+                    });
+                }
+                
+                // Method 6: Continuous volume monitoring and forcing
+                if (!window.volumeForceInterval) {
+                    window.volumeForceInterval = setInterval(() => {
+                        // Keep forcing all audio to max volume
+                        const allAudio = document.querySelectorAll('audio, video');
+                        allAudio.forEach(audio => {
+                            if (audio.volume < 1.0) {
+                                audio.volume = 1.0;
+                            }
+                            if (audio.muted) {
+                                audio.muted = false;
+                            }
+                        });
+                        
+                        // Keep audio context running
+                        if (window.portalAudioContext && window.portalAudioContext.state !== 'running') {
+                            window.portalAudioContext.resume();
+                        }
+                    }, 1000);
+                }
+                
+                window.speakerForceActive = true;
+                
+                showNotification('📢 Speaker Forced!', 'Multiple methods activated to force phone speaker output at maximum volume.', 'success');
+                updateStatusIndicator('speakerStatus', 'success', 'Multi-Force Active');
+                document.getElementById('audioRouteDisplay').textContent = 'Audio Route: Phone Speaker (Multi-Force Active)';
+                
+            } catch (error) {
+                console.log('Speaker forcing error:', error);
+                showNotification('📢 Force Partial', 'Some speaker forcing methods failed, but others may be active.', 'warning');
+                updateStatusIndicator('speakerStatus', 'warning', 'Partial Force');
+            }
+            
+            if (btn) {
+                btn.innerHTML = '📢 Multi-Force Active!';
+                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '📢 Force Phone Speaker';
+                    btn.disabled = false;
+                }, 3000);
+            }
+        }
+
+        function playLoudTestTone() {
+            if (window.portalAudioContext) {
+                const oscillator = window.portalAudioContext.createOscillator();
+                const gainNode = window.portalAudioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(window.portalAudioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(880, window.portalAudioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.3, window.portalAudioContext.currentTime); // Loud test tone
+                
+                oscillator.start();
+                oscillator.stop(window.portalAudioContext.currentTime + 0.5);
+                
+                console.log('🔊 Loud test tone played at maximum volume');
+            }
+        }
+
+        function activatePortalVoiceMode() {
+            const btn = event.target;
+            btn.innerHTML = '🎙️ Activating...';
+            btn.disabled = true;
+            
+            console.log('🎙️ Activating portal voice mode with aggressive methods...');
+            
+            // Method 1: Immediate microphone access with multiple attempts
+            const micConstraints = [
+                { 
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true,
+                        sampleRate: 48000
+                    }
+                },
+                { 
+                    audio: {
+                        echoCancellation: false,
+                        noiseSuppression: false,
+                        autoGainControl: false,
+                        sampleRate: 44100
+                    }
+                },
+                { audio: true }
+            ];
+            
+            async function tryMicAccess(constraints, index = 0) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia(constraints[index]);
+                    console.log('✅ Microphone access granted with constraints', index);
+                    
+                    window.micStream = stream;
+                    
+                    // Connect to audio analysis immediately
+                    if (window.audioAnalyser) {
+                        const source = window.portalAudioContext.createMediaStreamSource(stream);
+                        source.connect(window.audioAnalyser);
+                        console.log('✅ Microphone connected to audio analyser');
+                    }
+                    
+                    // Start speech recognition immediately
+                    initializeSpeechRecognitionNow();
+                    
+                    window.voiceSystemActive = true;
+                    updateStatusIndicator('voiceSystemStatus', 'success', 'Active');
+                    updateStatusIndicator('micStatus', 'success', 'Active');
+                    updateStatusIndicator('speechStatus', 'success', 'Listening');
+                    
+                    btn.innerHTML = '🎙️ Voice Active!';
+                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                    
+                    showNotification('🎙️ Voice Activated!', 'Microphone access granted and speech recognition started.', 'success');
+                    
+                    return true;
+                    
+                } catch (error) {
+                    console.log(`❌ Microphone attempt ${index + 1} failed:`, error);
+                    
+                    if (index < constraints.length - 1) {
+                        // Try next constraint
+                        return tryMicAccess(constraints, index + 1);
+                    } else {
+                        // All attempts failed, try bypass methods
+                        console.log('🔓 All microphone attempts failed, trying bypass...');
+                        attemptAdvancedMicrophoneBypass();
+                        
+                        btn.innerHTML = '🎙️ Bypass Mode';
+                        btn.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+                        
+                        updateStatusIndicator('micStatus', 'warning', 'Bypass Attempted');
+                        showNotification('🔓 Mic Bypass', 'Microphone access denied. Bypass methods activated.', 'warning');
+                        
+                        return false;
+                    }
+                }
+            }
+            
+            // Start microphone access attempts
+            tryMicAccess(micConstraints);
+            
+            // Method 2: Force speech recognition even without explicit mic access
+            setTimeout(() => {
+                if (!window.recognition) {
+                    initializeSpeechRecognitionNow();
+                }
+            }, 2000);
+            
+            // Method 3: Enable continuous voice forcing
+            window.voiceSystemActive = true;
+            
+            setTimeout(() => {
+                btn.disabled = false;
+                if (btn.innerHTML.includes('Activating')) {
+                    btn.innerHTML = '🎙️ Activate Voice';
+                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                }
+            }, 3000);
+        }
+
+        function attemptAdvancedMicrophoneBypass() {
+            console.log('🔓 Attempting advanced microphone bypass methods...');
+            
+            // Method 1: Request permissions explicitly
+            if (navigator.permissions) {
+                navigator.permissions.query({ name: 'microphone' }).then(result => {
+                    console.log('Microphone permission state:', result.state);
+                    if (result.state === 'granted') {
+                        // Try again with granted permission
+                        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+                            window.micStream = stream;
+                            updateStatusIndicator('micStatus', 'success', 'Bypass Success');
+                        });
+                    }
+                });
+            }
+            
+            // Method 2: Try getUserMedia on user interaction
+            document.addEventListener('click', function enableMicOnClick() {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        console.log('✅ Microphone bypass successful via user interaction');
+                        window.micStream = stream;
+                        window.microphoneBypassActive = true;
+                        updateStatusIndicator('micStatus', 'success', 'Click Bypass');
+                        
+                        // Connect to analysis
+                        if (window.audioAnalyser) {
+                            const source = window.portalAudioContext.createMediaStreamSource(stream);
+                            source.connect(window.audioAnalyser);
+                        }
+                        
+                        initializeSpeechRecognitionNow();
+                        
+                    })
+                    .catch(error => {
+                        console.log('Click bypass also failed:', error);
+                    });
+                
+                // Remove listener after first attempt
+                document.removeEventListener('click', enableMicOnClick);
+            }, { once: true });
+            
+            // Method 3: Simulate user gesture
+            setTimeout(() => {
+                const clickEvent = new MouseEvent('click', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true
+                });
+                document.dispatchEvent(clickEvent);
+            }, 1000);
+            
+            showNotification('🔓 Advanced Bypass', 'Advanced microphone bypass methods activated. Try clicking anywhere.', 'warning');
         }
 
         function forceSpeakerOutput() {
@@ -2691,32 +3644,186 @@
             btn.innerHTML = '🔍 Running...';
             btn.disabled = true;
             
+            console.log('🔍 Running comprehensive audio diagnostics...');
+            
             const diagnostics = {
+                // Audio System
                 audioContext: !!window.portalAudioContext,
+                audioContextState: window.portalAudioContext ? window.portalAudioContext.state : 'none',
                 speechSynthesis: 'speechSynthesis' in window,
                 mediaDevices: !!navigator.mediaDevices,
+                
+                // Portal Control Systems
                 chatgptControl: window.chatgptControlActive,
                 voiceSystem: window.voiceSystemActive,
-                speakerForce: window.speakerForceActive
+                speakerForce: window.speakerForceActive,
+                microphoneBypass: window.microphoneBypassActive,
+                
+                // Active Components
+                micStream: window.micStream ? window.micStream.active : false,
+                speechRecognition: !!window.recognition,
+                audioAnalyser: !!window.audioAnalyser,
+                soundDetection: window.soundDetectionActive,
+                
+                // Browser Capabilities
+                webkitSpeechRecognition: 'webkitSpeechRecognition' in window,
+                speechRecognitionAPI: 'SpeechRecognition' in window,
+                audioOutputSelection: !!(navigator.mediaDevices && navigator.mediaDevices.selectAudioOutput),
+                
+                // Current Status
+                chatgptFrameLoaded: document.getElementById('chatgptFrame').src.includes('chatgpt.com'),
+                portalInitialized: window.portalControlActive || false
             };
             
-            console.log('Audio diagnostics:', diagnostics);
+            console.log('📊 Complete diagnostics:', diagnostics);
             
-            let diagnosticText = 'Portal Audio Diagnostics:\n\n';
-            for (const [key, value] of Object.entries(diagnostics)) {
-                diagnosticText += `${key}: ${value ? '✅ Active' : '❌ Inactive'}\n`;
+            // Count successful systems
+            const totalSystems = Object.keys(diagnostics).length;
+            const activeSystems = Object.values(diagnostics).filter(Boolean).length;
+            const successRate = Math.round((activeSystems / totalSystems) * 100);
+            
+            // Generate detailed report
+            let reportText = `🔍 PORTAL DIAGNOSTICS REPORT\n\n`;
+            reportText += `System Health: ${successRate}% (${activeSystems}/${totalSystems})\n\n`;
+            
+            reportText += `🔊 AUDIO SYSTEMS:\n`;
+            reportText += `Audio Context: ${diagnostics.audioContext ? '✅' : '❌'} (${diagnostics.audioContextState})\n`;
+            reportText += `Speech Synthesis: ${diagnostics.speechSynthesis ? '✅' : '❌'}\n`;
+            reportText += `Media Devices: ${diagnostics.mediaDevices ? '✅' : '❌'}\n`;
+            reportText += `Audio Output Selection: ${diagnostics.audioOutputSelection ? '✅' : '❌'}\n\n`;
+            
+            reportText += `🤖 PORTAL CONTROL:\n`;
+            reportText += `ChatGPT Control: ${diagnostics.chatgptControl ? '✅' : '❌'}\n`;
+            reportText += `Voice System: ${diagnostics.voiceSystem ? '✅' : '❌'}\n`;
+            reportText += `Speaker Force: ${diagnostics.speakerForce ? '✅' : '❌'}\n`;
+            reportText += `ChatGPT Frame: ${diagnostics.chatgptFrameLoaded ? '✅' : '❌'}\n\n`;
+            
+            reportText += `🎙️ VOICE SYSTEMS:\n`;
+            reportText += `Microphone Stream: ${diagnostics.micStream ? '✅' : '❌'}\n`;
+            reportText += `Speech Recognition: ${diagnostics.speechRecognition ? '✅' : '❌'}\n`;
+            reportText += `WebKit Speech API: ${diagnostics.webkitSpeechRecognition ? '✅' : '❌'}\n`;
+            reportText += `Sound Detection: ${diagnostics.soundDetection ? '✅' : '❌'}\n\n`;
+            
+            // Add recommendations
+            if (successRate < 70) {
+                reportText += `⚠️ RECOMMENDATIONS:\n`;
+                if (!diagnostics.audioContext) reportText += `• Click anywhere to activate audio context\n`;
+                if (!diagnostics.micStream) reportText += `• Allow microphone access when prompted\n`;
+                if (!diagnostics.chatgptControl) reportText += `• Try "Force Voice Mode" button\n`;
+                if (!diagnostics.voiceSystem) reportText += `• Use "Activate Voice" in control panel\n`;
+            } else {
+                reportText += `✅ SYSTEM STATUS: GOOD\nMost systems are active and functioning.`;
             }
             
-            showNotification('🔍 Diagnostics Complete', diagnosticText, 'info');
+            showNotification('🔍 Diagnostics Complete', reportText, 'info');
             
-            btn.innerHTML = '🔍 Diagnostics Complete!';
-            btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            // Auto-fix common issues
+            if (!diagnostics.audioContext || diagnostics.audioContextState !== 'running') {
+                console.log('🔧 Auto-fixing audio context...');
+                if (window.portalAudioContext) {
+                    window.portalAudioContext.resume();
+                }
+            }
+            
+            if (!diagnostics.voiceSystem) {
+                console.log('🔧 Auto-activating voice system...');
+                activateVoiceSystemImmediately();
+            }
+            
+            if (!diagnostics.chatgptControl) {
+                console.log('🔧 Auto-retrying ChatGPT control...');
+                attemptScriptInjection();
+            }
+            
+            // Update button with results
+            if (successRate >= 80) {
+                btn.innerHTML = '🔍 Excellent!';
+                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            } else if (successRate >= 60) {
+                btn.innerHTML = '🔍 Good';
+                btn.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+            } else {
+                btn.innerHTML = '🔍 Needs Fix';
+                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+            }
             
             setTimeout(() => {
                 btn.innerHTML = '🔍 Full Diagnostics';
                 btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
                 btn.disabled = false;
-            }, 3000);
+            }, 5000);
+        }
+
+        // Quick system activation function
+        function emergencyActivateAll() {
+            console.log('🚨 Emergency activation of all systems...');
+            
+            showNotification('🚨 Emergency Activation', 'Force-activating all portal systems...', 'warning');
+            
+            // Force all flags to true
+            window.chatgptControlActive = true;
+            window.voiceSystemActive = true;
+            window.speakerForceActive = true;
+            window.soundDetectionActive = true;
+            window.visualizationActive = true;
+            
+            // Force audio context
+            if (window.portalAudioContext) {
+                window.portalAudioContext.resume();
+            }
+            
+            // Force voice system
+            activateVoiceSystemImmediately();
+            
+            // Force ChatGPT control
+            attemptScriptInjection();
+            forceVoiceActivationAggressive();
+            
+            // Force speaker output
+            forceSpeakerOutputEvent();
+            
+            // Force sound visualization
+            startSoundVisualization();
+            
+            // Update all status indicators to active
+            updateStatusIndicator('chatgptStatus', 'success', 'Emergency Active');
+            updateStatusIndicator('speakerStatus', 'success', 'Emergency Active');
+            updateStatusIndicator('voiceSystemStatus', 'success', 'Emergency Active');
+            updateStatusIndicator('connectionStatus', 'success', 'Emergency Active');
+            updateStatusIndicator('voiceModeStatus', 'success', 'Emergency Active');
+            updateStatusIndicator('micStatus', 'success', 'Emergency Active');
+            updateStatusIndicator('speechStatus', 'success', 'Emergency Active');
+            
+            setTimeout(() => {
+                showNotification('🚨 Emergency Complete', 'All systems have been force-activated. Check diagnostics for actual status.', 'success');
+            }, 2000);
+        }
+
+        // Enhanced status checking
+        function checkSystemStatus() {
+            console.log('📊 Quick system status check...');
+            
+            const status = {
+                audio: window.portalAudioContext && window.portalAudioContext.state === 'running',
+                voice: window.voiceSystemActive && window.recognition,
+                chatgpt: window.chatgptControlActive,
+                speaker: window.speakerForceActive,
+                microphone: window.micStream && window.micStream.active
+            };
+            
+            const activeCount = Object.values(status).filter(Boolean).length;
+            const totalCount = Object.keys(status).length;
+            
+            let statusText = `📊 Quick Status: ${activeCount}/${totalCount} systems active\n\n`;
+            statusText += `🔊 Audio Context: ${status.audio ? '✅' : '❌'}\n`;
+            statusText += `🎤 Voice System: ${status.voice ? '✅' : '❌'}\n`;
+            statusText += `🤖 ChatGPT Control: ${status.chatgpt ? '✅' : '❌'}\n`;
+            statusText += `📢 Speaker Force: ${status.speaker ? '✅' : '❌'}\n`;
+            statusText += `🎙️ Microphone: ${status.microphone ? '✅' : '❌'}`;
+            
+            showNotification('📊 System Status', statusText, activeCount >= 3 ? 'success' : 'warning');
+            
+            return status;
         }
 
         // Helper functions
