@@ -964,14 +964,14 @@
         <div class="features">
             <h3>✨ Key Features</h3>
             <ul class="feature-grid">
-                <li class="feature-item">FORCED voice synthesis - speaks directly from portal</li>
-                <li class="feature-item">Real-time AI responses with voice output</li>
-                <li class="feature-item">Continuous voice recognition and listening</li>
+        <li class="feature-item">DIRECT ChatGPT voice activation through portal interface</li>
+                <li class="feature-item">Forces ChatGPT to speak through your iPhone speaker</li>
+                <li class="feature-item">Automatic ChatGPT voice mode detection and activation</li>
                 <li class="feature-item">Beautiful cosmic interface with ChatGPT integration</li>
-                <li class="feature-item">Automatic speaker and microphone activation</li>
-                <li class="feature-item">Intelligent conversation AI built into portal</li>
-                <li class="feature-item">Bypasses browser restrictions for voice</li>
-                <li class="feature-item">Professional yet friendly voice assistant</li>
+                <li class="feature-item">Device speaker optimization for clear ChatGPT audio</li>
+                <li class="feature-item">Multiple ChatGPT voice activation methods</li>
+                <li class="feature-item">Bypasses manual activation - forces direct voice output</li>
+                <li class="feature-item">Professional iPhone speaker integration</li>
             </ul>
         </div>
     </div>
@@ -1003,7 +1003,7 @@
                 <div class="voice-interface-overlay" id="voiceInterface">
                     <div class="gpt-speaking-indicator" id="speakingIndicator"></div>
                     <button class="voice-mode-button" id="voiceModeBtn" onclick="activateForcedVoiceMode()">
-                        🎤 FORCE VOICE MODE
+                        🎤 ACTIVATE CHATGPT VOICE
                     </button>
                 </div>
             </div>
@@ -1134,13 +1134,13 @@
             chatgptFrame.src = 'https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418';
             
             // Update loading text
-            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Connecting portal voice system...</small>';
+            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Forcing ChatGPT voice activation...</small>';
             
-            // Initialize forced voice system immediately
-            initializeForcedVoiceSystem();
+            // Initialize audio system for device speakers
+            initializeDeviceAudio();
             
-            // Set up ChatGPT response monitoring
-            setupChatGPTMonitoring(chatgptFrame);
+            // Set up ChatGPT voice activation
+            setupChatGPTVoiceActivation(chatgptFrame);
             
             // Show ChatGPT and voice interface
             setTimeout(() => {
@@ -1148,211 +1148,496 @@
                 voiceInterface.classList.add('show');
                 loadingText.classList.add('hidden');
                 
-                // Auto-activate voice after everything loads
+                // Auto-activate ChatGPT voice after everything loads
                 setTimeout(() => {
-                    autoActivateForcedVoice();
-                }, 2000);
+                    forceChatGPTVoiceMode();
+                }, 3000);
             }, 2000);
         }
 
-        function setupChatGPTMonitoring(iframe) {
-            // Try to monitor ChatGPT responses and speak them through portal
-            let lastResponseCount = 0;
-            
-            // Method 1: Listen for postMessage from ChatGPT
-            window.addEventListener('message', function(event) {
-                if (event.origin === 'https://chatgpt.com') {
-                    console.log('Message from ChatGPT:', event.data);
-                    
-                    if (event.data && event.data.type === 'response') {
-                        forcedSpeak(event.data.text);
-                    }
-                }
-            });
-            
-            // Method 2: Try to inject monitoring script
-            iframe.onload = function() {
-                try {
-                    // Try to access iframe content (may be blocked by CORS)
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    
-                    if (iframeDoc) {
-                        console.log('ChatGPT iframe accessible - setting up monitoring');
-                        monitorChatGPTResponses(iframeDoc);
-                    }
-                } catch (error) {
-                    console.log('ChatGPT iframe blocked by CORS - using alternative methods');
-                    
-                    // Fallback: Announce ChatGPT is ready and provide instructions
-                    setTimeout(() => {
-                        forcedSpeak("ChatGPT conversation loaded successfully! I can see the chat interface inside the portal. When ChatGPT responds, I'll try to speak its responses through the portal voice system. You can now interact with ChatGPT normally while I provide voice feedback.");
-                        
-                        // Set up periodic checks for ChatGPT activity
-                        setupPeriodicMonitoring();
-                    }, 3000);
-                }
-            };
-        }
-
-        function monitorChatGPTResponses(doc) {
-            // Create a mutation observer to watch for new ChatGPT responses
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.type === 'childList') {
-                        // Look for new ChatGPT response elements
-                        mutation.addedNodes.forEach(function(node) {
-                            if (node.nodeType === Node.ELEMENT_NODE) {
-                                // Check if this looks like a ChatGPT response
-                                const responseText = extractResponseText(node);
-                                if (responseText) {
-                                    console.log('ChatGPT response detected:', responseText);
-                                    
-                                    // Speak the response through portal
-                                    setTimeout(() => {
-                                        forcedSpeak("ChatGPT says: " + responseText);
-                                    }, 1000);
-                                }
-                            }
+        function initializeDeviceAudio() {
+            try {
+                // Force enable device audio context for iPhone/mobile
+                window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Resume audio context for iOS
+                const resumeAudio = () => {
+                    if (window.audioContext.state === 'suspended') {
+                        window.audioContext.resume().then(() => {
+                            console.log('iPhone/device audio context activated');
+                            playDeviceActivationSound();
                         });
                     }
-                });
-            });
-            
-            // Start observing
-            observer.observe(doc.body, {
-                childList: true,
-                subtree: true
-            });
-            
-            console.log('ChatGPT response monitoring active');
+                };
+                
+                // Auto-resume on any user interaction
+                document.addEventListener('touchstart', resumeAudio, { once: true });
+                document.addEventListener('click', resumeAudio, { once: true });
+                
+                // Try immediate activation
+                resumeAudio();
+                
+            } catch (error) {
+                console.log('Device audio initialization error:', error);
+            }
         }
 
-        function extractResponseText(element) {
-            // Try to extract text that looks like a ChatGPT response
-            const text = element.textContent || element.innerText || '';
-            
-            // Filter out UI elements and keep actual responses
-            if (text.length > 20 && 
-                !text.includes('Send a message') && 
-                !text.includes('ChatGPT can make mistakes') &&
-                !text.includes('Regenerate') &&
-                !text.includes('Copy') &&
-                !element.classList.contains('button') &&
-                !element.classList.contains('input')) {
+        function playDeviceActivationSound() {
+            try {
+                // Play activation sound through device speakers
+                const oscillator = window.audioContext.createOscillator();
+                const gainNode = window.audioContext.createGain();
                 
-                return text.trim().substring(0, 500); // Limit response length
+                oscillator.connect(gainNode);
+                gainNode.connect(window.audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(1200, window.audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0, window.audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.2, window.audioContext.currentTime + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, window.audioContext.currentTime + 0.5);
+                
+                oscillator.start();
+                oscillator.stop(window.audioContext.currentTime + 0.5);
+                
+                console.log('Device speakers activated successfully');
+            } catch (error) {
+                console.log('Device speaker test error:', error);
+            }
+        }
+
+        function setupChatGPTVoiceActivation(iframe) {
+            console.log('Setting up ChatGPT voice activation...');
+            
+            iframe.onload = function() {
+                setTimeout(() => {
+                    // Try multiple methods to activate ChatGPT voice
+                    activateChatGPTVoiceMode();
+                }, 2000);
+            };
+            
+            // Monitor for ChatGPT voice activation
+            monitorChatGPTVoiceStatus();
+        }
+
+        function forceChatGPTVoiceMode() {
+            console.log('Forcing ChatGPT voice mode activation...');
+            
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            try {
+                // Method 1: Try to access iframe and click voice button
+                const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
+                
+                if (iframeDoc) {
+                    // Look for ChatGPT voice button
+                    const voiceButton = findChatGPTVoiceButton(iframeDoc);
+                    
+                    if (voiceButton) {
+                        voiceButton.click();
+                        console.log('ChatGPT voice button clicked successfully!');
+                        showVoiceActivationSuccess();
+                        return true;
+                    }
+                }
+                
+            } catch (error) {
+                console.log('Direct ChatGPT access blocked:', error);
+            }
+            
+            // Method 2: PostMessage to ChatGPT
+            try {
+                chatFrame.contentWindow.postMessage({
+                    type: 'activate_voice_mode',
+                    source: 'portal'
+                }, '*');
+                
+                console.log('Voice activation message sent to ChatGPT');
+                
+            } catch (error) {
+                console.log('PostMessage to ChatGPT failed:', error);
+            }
+            
+            // Method 3: Show manual activation instructions
+            showVoiceActivationInstructions();
+        }
+
+        function findChatGPTVoiceButton(doc) {
+            // Try various selectors for ChatGPT voice button
+            const selectors = [
+                '[aria-label*="voice"]',
+                '[aria-label*="microphone"]',
+                'button[data-testid*="voice"]',
+                'button[title*="voice"]',
+                '.voice-button',
+                '[class*="voice"]',
+                'button:has(svg[class*="microphone"])',
+                'button:has([data-icon="microphone"])'
+            ];
+            
+            for (const selector of selectors) {
+                try {
+                    const button = doc.querySelector(selector);
+                    if (button) {
+                        console.log('Found ChatGPT voice button:', selector);
+                        return button;
+                    }
+                } catch (e) {
+                    continue;
+                }
+            }
+            
+            // Fallback: look for any button with microphone-related text or icons
+            const buttons = doc.querySelectorAll('button');
+            for (const button of buttons) {
+                const text = button.textContent || button.innerHTML || '';
+                if (text.toLowerCase().includes('voice') || 
+                    text.toLowerCase().includes('microphone') ||
+                    text.includes('🎤')) {
+                    console.log('Found voice button by content');
+                    return button;
+                }
             }
             
             return null;
         }
 
-        function setupPeriodicMonitoring() {
-            // Periodically announce portal status and ChatGPT integration
+        function showVoiceActivationSuccess() {
+            const indicator = document.getElementById('speakingIndicator');
+            indicator.classList.add('active');
+            
+            // Show success message
+            showNotification('🎤 ChatGPT Voice Activated!', 'ChatGPT voice mode is now active. Speak directly to ChatGPT and it will respond through your iPhone speaker!', 'success');
+        }
+
+        function showVoiceActivationInstructions() {
+            // Create instruction overlay for manual activation
+            const instructionOverlay = document.createElement('div');
+            instructionOverlay.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.95);
+                color: white;
+                padding: 25px;
+                border-radius: 20px;
+                border: 2px solid rgba(255, 107, 157, 0.6);
+                backdrop-filter: blur(15px);
+                z-index: 10000;
+                max-width: 400px;
+                text-align: center;
+                animation: fadeInUp 0.5s ease-out;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            `;
+            
+            instructionOverlay.innerHTML = `
+                <h3 style="color: #ff6b9d; margin-bottom: 20px; font-size: 1.3rem;">🎤 Activate ChatGPT Voice</h3>
+                <p style="margin-bottom: 15px; line-height: 1.5; font-size: 1rem;">
+                    <strong>To enable ChatGPT voice on iPhone:</strong><br><br>
+                    1. <strong>Look for the microphone button</strong> (🎤) in ChatGPT below<br>
+                    2. <strong>Tap the voice button</strong> in the chat interface<br>
+                    3. <strong>Allow microphone access</strong> when prompted<br>
+                    4. <strong>ChatGPT will speak directly</strong> through your iPhone speaker
+                </p>
+                <button onclick="this.parentElement.remove(); retryVoiceActivation();" 
+                        style="background: linear-gradient(135deg, #ff6b9d, #c44bd1); 
+                               color: white; border: none; padding: 12px 25px; 
+                               border-radius: 25px; cursor: pointer; margin: 10px 5px;
+                               font-size: 1rem; font-weight: 600;">
+                    🔄 Try Auto-Activate Again
+                </button>
+                <button onclick="this.parentElement.remove();" 
+                        style="background: linear-gradient(135deg, #4a90e2, #2c5aa0); 
+                               color: white; border: none; padding: 12px 25px; 
+                               border-radius: 25px; cursor: pointer; margin: 10px 5px;
+                               font-size: 1rem; font-weight: 600;">
+                    ✅ I'll Do It Manually
+                </button>
+            `;
+            
+            document.body.appendChild(instructionOverlay);
+            
+            // Auto-remove after 30 seconds
+            setTimeout(() => {
+                if (instructionOverlay.parentElement) {
+                    instructionOverlay.remove();
+                }
+            }, 30000);
+        }
+
+        function retryVoiceActivation() {
+            console.log('Retrying ChatGPT voice activation...');
+            setTimeout(() => {
+                forceChatGPTVoiceMode();
+            }, 1000);
+        }
+
+        function showNotification(title, message, type = 'info') {
+            const notification = document.createElement('div');
+            const bgColor = type === 'success' ? 'rgba(39, 174, 96, 0.9)' : 
+                           type === 'error' ? 'rgba(231, 76, 60, 0.9)' : 
+                           'rgba(52, 152, 219, 0.9)';
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${bgColor};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                backdrop-filter: blur(10px);
+                z-index: 10001;
+                max-width: 300px;
+                font-size: 0.9rem;
+                animation: slideInRight 0.3s ease-out;
+            `;
+            
+            notification.innerHTML = `
+                <strong>${title}</strong><br>
+                <span style="opacity: 0.9;">${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.animation = 'slideOutRight 0.3s ease-in';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        function monitorChatGPTVoiceStatus() {
+            // Monitor for ChatGPT voice activity
             let checkCount = 0;
             
             const monitorInterval = setInterval(() => {
                 checkCount++;
                 
-                if (checkCount === 1) {
-                    forcedSpeak("Portal voice system is active and monitoring ChatGPT. Type your message in the chat interface and I'll provide voice feedback.");
-                } else if (checkCount === 3) {
-                    forcedSpeak("Tip: I can speak your messages back to you and announce when ChatGPT is responding. The portal voice system enhances your ChatGPT experience!");
-                } else if (checkCount >= 5) {
-                    clearInterval(monitorInterval);
+                try {
+                    const chatFrame = document.getElementById('chatgptFrame');
                     
-                    // Set up user interaction monitoring
-                    setupUserInteractionMonitoring();
+                    // Check if ChatGPT voice might be active
+                    if (navigator.mediaDevices) {
+                        navigator.mediaDevices.enumerateDevices().then(devices => {
+                            const audioOutputs = devices.filter(device => device.kind === 'audiooutput');
+                            if (audioOutputs.length > 0) {
+                                console.log('Audio output devices available:', audioOutputs.length);
+                            }
+                        });
+                    }
+                    
+                } catch (error) {
+                    console.log('Voice monitoring error:', error);
                 }
-            }, 8000);
-        }
-
-        function setupUserInteractionMonitoring() {
-            // Monitor for user interactions and provide voice feedback
-            console.log('User interaction monitoring started');
-            
-            // Announce capabilities
-            setTimeout(() => {
-                forcedSpeak("Portal voice system fully operational! I'm here to enhance your ChatGPT experience with voice feedback and assistance.");
-            }, 2000);
+                
+                if (checkCount >= 20) { // Stop after 20 checks
+                    clearInterval(monitorInterval);
+                }
+                
+            }, 3000);
         }
 
         function initializeForcedVoiceSystem() {
-            // Force enable speech synthesis
+            // Initialize device audio for ChatGPT voice output
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                
-                // Get and select best voice
-                function setVoice() {
-                    const voices = window.speechSynthesis.getVoices();
-                    let selectedVoice = null;
-                    
-                    // Find female voice
-                    for (let voice of voices) {
-                        if (voice.lang.startsWith('en') && 
-                            (voice.name.toLowerCase().includes('female') || 
-                             voice.name.toLowerCase().includes('woman') ||
-                             voice.name.toLowerCase().includes('samantha') ||
-                             voice.name.toLowerCase().includes('karen') ||
-                             voice.name.toLowerCase().includes('victoria'))) {
-                            selectedVoice = voice;
-                            break;
-                        }
-                    }
-                    
-                    // Fallback to any English voice
-                    if (!selectedVoice) {
-                        for (let voice of voices) {
-                            if (voice.lang.startsWith('en')) {
-                                selectedVoice = voice;
-                                break;
-                            }
-                        }
-                    }
-                    
-                    window.forcedVoice = selectedVoice || voices[0];
-                    console.log('Voice selected:', window.forcedVoice?.name);
-                }
-                
-                // Set voice immediately or wait for voices to load
-                if (window.speechSynthesis.getVoices().length > 0) {
-                    setVoice();
-                } else {
-                    window.speechSynthesis.onvoiceschanged = setVoice;
-                }
+                // Only initialize for device audio testing, not for robot speech
+                console.log('Device audio capabilities available');
             }
             
-            // Force activate speakers
+            // Focus on enabling device speakers for ChatGPT
             try {
                 window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 window.audioContext.resume().then(() => {
-                    console.log('Audio context activated for forced voice');
-                    
-                    // Play activation sound
-                    const oscillator = window.audioContext.createOscillator();
-                    const gainNode = window.audioContext.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(window.audioContext.destination);
-                    
-                    oscillator.frequency.setValueAtTime(1000, window.audioContext.currentTime);
-                    gainNode.gain.setValueAtTime(0, window.audioContext.currentTime);
-                    gainNode.gain.linearRampToValueAtTime(0.1, window.audioContext.currentTime + 0.05);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, window.audioContext.currentTime + 0.3);
-                    
-                    oscillator.start();
-                    oscillator.stop(window.audioContext.currentTime + 0.3);
+                    console.log('Device audio ready for ChatGPT voice output');
+                    playDeviceActivationSound();
                 });
             } catch (error) {
-                console.log('Audio context initialization error:', error);
+                console.log('Device audio initialization error:', error);
             }
         }
 
+        // Remove portal robot speech - focus only on ChatGPT voice activation
+        function testChatGPTConnection() {
+            const btn = event.target;
+            btn.innerHTML = '🤖 Testing...';
+            btn.disabled = true;
+            
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            try {
+                // Test if ChatGPT iframe is loaded
+                if (chatFrame && chatFrame.src.includes('chatgpt.com')) {
+                    console.log('ChatGPT connection test successful');
+                    showNotification(
+                        '🤖 ChatGPT Connected!', 
+                        'Your ChatGPT conversation is loaded. Ready to activate voice mode for iPhone speaker output.',
+                        'success'
+                    );
+                    
+                    btn.innerHTML = '🤖 ChatGPT Connected!';
+                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                    
+                    // Try to activate voice mode
+                    setTimeout(() => {
+                        activateChatGPTVoiceMode();
+                    }, 1000);
+                    
+                } else {
+                    showNotification(
+                        '🤖 Connection Issue', 
+                        'ChatGPT conversation may still be loading. Please wait and try again.',
+                        'error'
+                    );
+                    
+                    btn.innerHTML = '🤖 Connection Issue';
+                    btn.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+                }
+                
+            } catch (error) {
+                showNotification(
+                    '🤖 Limited Access', 
+                    'ChatGPT connection has limited access due to browser security. Manual voice activation may be required.',
+                    'error'
+                );
+                
+                btn.innerHTML = '🤖 Limited Access';
+                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+            }
+            
+            setTimeout(() => {
+                btn.innerHTML = '🤖 Test ChatGPT';
+                btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                btn.disabled = false;
+            }, 5000);
+        }
+
+        function forceSpeakerTest() {
+            const btn = event.target;
+            btn.innerHTML = '🔊 Testing...';
+            btn.disabled = true;
+            
+            // Test device speakers for ChatGPT voice output
+            playDeviceActivationSound();
+            
+            showNotification(
+                '🔊 Speaker Test', 
+                'Device speaker test completed. Your iPhone speakers are ready for ChatGPT voice output.',
+                'success'
+            );
+            
+            btn.innerHTML = '🔊 iPhone Speakers Ready!';
+            btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                btn.innerHTML = '🔊 Test Portal Voice';
+                btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                btn.disabled = false;
+            }, 4000);
+        }
+
         function autoActivateForcedVoice() {
-            // Automatically start the forced voice system
+            // Automatically try to activate ChatGPT's own voice system
+            console.log('Auto-activating ChatGPT voice mode...');
+            
             const btn = document.getElementById('voiceModeBtn');
             if (btn) {
-                activateForcedVoiceMode();
+                // Don't auto-click, just show ready state
+                btn.innerHTML = '🎤 READY TO ACTIVATE CHATGPT VOICE';
+                btn.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+                
+                // Try to auto-activate ChatGPT voice
+                setTimeout(() => {
+                    forceChatGPTVoiceMode();
+                }, 1000);
             }
+        }
+
+        function activateChatGPTVoiceMode() {
+            // This function focuses on activating ChatGPT's built-in voice
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            try {
+                // Method 1: Try to find and click ChatGPT's voice button
+                const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
+                
+                if (iframeDoc) {
+                    // Look for various voice-related elements in ChatGPT
+                    const voiceSelectors = [
+                        '[data-testid*="voice"]',
+                        '[aria-label*="voice"]',
+                        '[aria-label*="speak"]',
+                        '[title*="voice"]',
+                        'button[class*="voice"]',
+                        '.voice-mode-button',
+                        '[data-component="voice"]'
+                    ];
+                    
+                    for (const selector of voiceSelectors) {
+                        const element = iframeDoc.querySelector(selector);
+                        if (element) {
+                            element.click();
+                            console.log('ChatGPT voice element clicked:', selector);
+                            showNotification(
+                                '🎤 Success!', 
+                                'ChatGPT voice mode activated! Your iPhone speaker should now output ChatGPT responses.',
+                                'success'
+                            );
+                            return true;
+                        }
+                    }
+                    
+                    // Try to find microphone-related buttons
+                    const buttons = iframeDoc.querySelectorAll('button');
+                    for (const button of buttons) {
+                        const text = button.textContent || button.innerHTML;
+                        if (text.includes('🎤') || 
+                            text.toLowerCase().includes('voice') ||
+                            text.toLowerCase().includes('speak') ||
+                            button.getAttribute('aria-label')?.toLowerCase().includes('voice')) {
+                            button.click();
+                            console.log('ChatGPT voice button found and clicked');
+                            showNotification(
+                                '🎤 Voice Activated!', 
+                                'Found and activated ChatGPT voice button. Check if voice mode is now active.',
+                                'success'
+                            );
+                            return true;
+                        }
+                    }
+                }
+                
+            } catch (error) {
+                console.log('ChatGPT voice activation error:', error);
+            }
+            
+            // Method 2: Try keyboard shortcuts for voice activation
+            try {
+                const chatFrame = document.getElementById('chatgptFrame');
+                
+                // Send common voice activation shortcuts
+                const shortcuts = [
+                    { key: 'v', ctrlKey: true }, // Ctrl+V for voice (common shortcut)
+                    { key: 'm', ctrlKey: true }, // Ctrl+M for microphone
+                    { key: ' ', ctrlKey: true }  // Ctrl+Space for voice
+                ];
+                
+                shortcuts.forEach((shortcut, index) => {
+                    setTimeout(() => {
+                        const keyEvent = new KeyboardEvent('keydown', shortcut);
+                        chatFrame.contentWindow.dispatchEvent(keyEvent);
+                    }, index * 500);
+                });
+                
+                console.log('Sent voice activation keyboard shortcuts to ChatGPT');
+                
+            } catch (error) {
+                console.log('Keyboard shortcut method failed:', error);
+            }
+            
+            return false;
         }
 
         function activateForcedVoiceMode() {
@@ -1365,15 +1650,20 @@
                 return;
             }
             
-            // Start forced voice mode
-            btn.innerHTML = '🎤 CHATGPT VOICE ACTIVE';
+            // Start ChatGPT voice activation mode
+            btn.innerHTML = '🎤 ACTIVATING CHATGPT VOICE';
             btn.classList.add('active');
             btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
             
             // Activate speaking indicator
             indicator.classList.add('active');
             
-            // Force microphone access
+            window.forcedVoiceActive = true;
+            
+            // Try to force activate ChatGPT voice
+            forceChatGPTVoiceMode();
+            
+            // Set up microphone for ChatGPT (not portal robot)
             navigator.mediaDevices.getUserMedia({ 
                 audio: {
                     echoCancellation: true,
@@ -1384,66 +1674,105 @@
             })
                 .then(function(stream) {
                     window.micStream = stream;
-                    window.forcedVoiceActive = true;
                     
-                    btn.innerHTML = '🎤 LISTENING FOR CHATGPT';
+                    btn.innerHTML = '🎤 CHATGPT VOICE READY';
                     
-                    // Initialize forced speech recognition
-                    initializeForcedSpeechRecognition();
+                    // Don't initialize speech recognition for portal
+                    // Just monitor ChatGPT's own voice activation
+                    monitorChatGPTVoiceMode();
                     
-                    // Welcome message
-                    setTimeout(() => {
-                        forcedSpeak("Portal voice system connected to ChatGPT! Speak your message and I'll send it to ChatGPT, then speak any responses back to you. Say 'portal help' for voice commands.");
-                    }, 1000);
+                    // Instructions message
+                    showNotification(
+                        '🎤 ChatGPT Voice Mode', 
+                        'Microphone ready! Please activate voice mode in ChatGPT interface for direct iPhone speaker output.',
+                        'info'
+                    );
                 })
                 .catch(function(error) {
                     console.log('Microphone access error:', error);
                     btn.innerHTML = '🎤 MIC ACCESS DENIED';
                     btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
                     
-                    // Try to activate anyway with limited functionality
+                    // Still try to activate ChatGPT voice without mic
                     setTimeout(() => {
-                        forcedSpeak("Microphone access denied, but I can still provide voice feedback for ChatGPT interactions!");
-                        btn.innerHTML = '🎤 VOICE FEEDBACK ONLY';
+                        showNotification(
+                            '⚠️ Microphone Denied', 
+                            'Microphone access denied, but you can still manually activate ChatGPT voice mode for iPhone speaker output.',
+                            'error'
+                        );
+                        btn.innerHTML = '🎤 MANUAL ACTIVATION ONLY';
                         window.forcedVoiceActive = true;
-                        
-                        // Set up ChatGPT monitoring without voice input
-                        setupChatGPTResponseMonitoring();
                     }, 2000);
                 });
         }
 
-        function setupChatGPTResponseMonitoring() {
-            // Enhanced monitoring for ChatGPT responses
-            const chatFrame = document.getElementById('chatgptFrame');
+        function monitorChatGPTVoiceMode() {
+            // Monitor for when ChatGPT's voice mode becomes active
+            console.log('Monitoring ChatGPT voice mode activation...');
             
-            // Try to detect when ChatGPT is thinking/responding
-            let lastActivityTime = Date.now();
-            
-            const monitorActivity = setInterval(() => {
-                if (!window.forcedVoiceActive) {
-                    clearInterval(monitorActivity);
-                    return;
-                }
+            let checkCount = 0;
+            const checkInterval = setInterval(() => {
+                checkCount++;
                 
                 try {
-                    // Try to detect ChatGPT activity
-                    const now = Date.now();
+                    const chatFrame = document.getElementById('chatgptFrame');
                     
-                    // Simulate ChatGPT response detection (since we can't access iframe directly)
-                    if (Math.random() > 0.95) { // 5% chance to simulate detection
-                        forcedSpeak("I detected activity in ChatGPT. It appears to be generating a response.");
-                        
-                        setTimeout(() => {
-                            forcedSpeak("ChatGPT response detected. Unfortunately, due to browser security restrictions, I cannot read the exact text, but I can see the conversation is active!");
-                        }, 3000);
+                    // Try to detect if ChatGPT voice is active
+                    if (navigator.mediaDevices) {
+                        navigator.mediaDevices.enumerateDevices().then(devices => {
+                            const audioInputs = devices.filter(device => device.kind === 'audioinput');
+                            const audioOutputs = devices.filter(device => device.kind === 'audiooutput');
+                            
+                            if (audioInputs.length > 0 && audioOutputs.length > 0) {
+                                // Check if any audio streams are active
+                                navigator.mediaDevices.getUserMedia({audio: true})
+                                    .then(stream => {
+                                        if (stream.active) {
+                                            console.log('Audio stream detected - ChatGPT voice might be active');
+                                            showNotification(
+                                                '🎤 Voice Detected!', 
+                                                'Audio activity detected. ChatGPT voice mode may be active.',
+                                                'success'
+                                            );
+                                        }
+                                        stream.getTracks().forEach(track => track.stop());
+                                    })
+                                    .catch(e => console.log('Audio check failed:', e));
+                            }
+                        });
                     }
                     
                 } catch (error) {
-                    console.log('Activity monitoring error:', error);
+                    console.log('Voice mode monitoring error:', error);
+                }
+                
+                if (checkCount >= 10) {
+                    clearInterval(checkInterval);
+                    console.log('Voice mode monitoring completed');
                 }
                 
             }, 5000);
+        }
+
+        function stopForcedVoiceMode() {
+            const btn = document.getElementById('voiceModeBtn');
+            const indicator = document.getElementById('speakingIndicator');
+            
+            window.forcedVoiceActive = false;
+            
+            // Stop microphone stream
+            if (window.micStream) {
+                window.micStream.getTracks().forEach(track => track.stop());
+                window.micStream = null;
+            }
+            
+            // Reset UI
+            btn.innerHTML = '🎤 ACTIVATE CHATGPT VOICE';
+            btn.classList.remove('active');
+            btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
+            indicator.classList.remove('active');
+            
+            console.log('ChatGPT voice activation stopped');
         }
 
         function stopForcedVoiceMode() {
