@@ -486,6 +486,103 @@
             box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
         }
 
+        .settings-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 1003;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 6.5s forwards;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .settings-panel {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1004;
+        }
+
+        .settings-panel.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .settings-panel h3 {
+            color: #ff6b9d;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .test-button {
+            background: linear-gradient(135deg, #4a90e2, #2c5aa0);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+            width: calc(50% - 10px);
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+        }
+
+        .chatgpt-link {
+            background: linear-gradient(135deg, #ff6b9d, #c44bd1);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .chatgpt-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -606,6 +703,31 @@
                 padding: 12px 25px;
                 font-size: 1rem;
             }
+
+            .settings-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .settings-panel {
+                width: 280px;
+                bottom: 70px;
+                right: 15px;
+                padding: 15px;
+            }
+
+            .test-button {
+                font-size: 0.8rem;
+                padding: 8px 12px;
+            }
+
+            .chatgpt-link {
+                font-size: 0.8rem;
+                padding: 10px 15px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -616,6 +738,35 @@
             .launch-button {
                 padding: 18px 35px;
                 font-size: 1.1rem;
+            }
+
+            .settings-button {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .settings-panel {
+                width: 260px;
+                bottom: 60px;
+                right: 10px;
+                padding: 12px;
+            }
+
+            .settings-panel h3 {
+                font-size: 1rem;
+            }
+
+            .test-button {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+
+            .chatgpt-link {
+                font-size: 0.75rem;
+                padding: 8px 12px;
             }
 
             .chatgpt-iframe {
@@ -702,6 +853,21 @@
         <button class="voice-mode-button" id="voiceModeBtn" onclick="activateVoiceMode()">
             🎤 Use Voice Mode
         </button>
+
+        <button class="settings-button" id="settingsBtn" onclick="toggleSettings()">
+            ⚙️
+        </button>
+
+        <div class="settings-panel" id="settingsPanel">
+            <h3>🎛️ Audio Settings</h3>
+            <button class="test-button" onclick="testMicrophone()">🎤 Test Mic</button>
+            <button class="test-button" onclick="testSpeaker()">🔊 Test Speaker</button>
+            <a href="https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418" 
+               target="_blank" 
+               class="chatgpt-link">
+                🚀 Open ChatGPT Direct
+            </a>
+        </div>
     </div>
 
     <script>
@@ -799,16 +965,109 @@
             const loadingText = document.getElementById('loadingText');
             const chatgptFrame = document.getElementById('chatgptFrame');
             
-            // Hide loading text
-            loadingText.classList.add('hidden');
-            
-            // Load ChatGPT iframe
+            // Force load ChatGPT iframe immediately
             chatgptFrame.src = 'https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418';
             
-            // Show iframe after loading
+            // Update loading text
+            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Activating AI Assistant...</small>';
+            
+            // Show iframe after a short delay
             setTimeout(() => {
+                loadingText.classList.add('hidden');
                 chatgptFrame.classList.add('show');
-            }, 1500);
+            }, 2000);
+        }
+
+        function toggleSettings() {
+            const settingsPanel = document.getElementById('settingsPanel');
+            settingsPanel.classList.toggle('show');
+        }
+
+        // Close settings panel when clicking outside
+        document.addEventListener('click', function(event) {
+            const settingsPanel = document.getElementById('settingsPanel');
+            const settingsBtn = document.getElementById('settingsBtn');
+            
+            if (settingsPanel && settingsBtn && 
+                !settingsPanel.contains(event.target) && 
+                !settingsBtn.contains(event.target)) {
+                settingsPanel.classList.remove('show');
+            }
+        });
+
+        function testMicrophone() {
+            const btn = event.target;
+            btn.innerHTML = '🎤 Testing...';
+            btn.disabled = true;
+            
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function(stream) {
+                    btn.innerHTML = '🎤 Mic Works!';
+                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                    
+                    // Test recording for 3 seconds
+                    setTimeout(() => {
+                        stream.getTracks().forEach(track => track.stop());
+                        btn.innerHTML = '🎤 Test Mic';
+                        btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                        btn.disabled = false;
+                    }, 3000);
+                })
+                .catch(function(error) {
+                    btn.innerHTML = '🎤 Mic Error';
+                    btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = '🎤 Test Mic';
+                        btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                        btn.disabled = false;
+                    }, 3000);
+                });
+        }
+
+        function testSpeaker() {
+            const btn = event.target;
+            btn.innerHTML = '🔊 Testing...';
+            btn.disabled = true;
+            
+            // Create audio context for speaker test
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                
+                oscillator.start();
+                
+                btn.innerHTML = '🔊 Playing...';
+                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                
+                setTimeout(() => {
+                    oscillator.stop();
+                    btn.innerHTML = '🔊 Speaker Works!';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = '🔊 Test Speaker';
+                        btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                        btn.disabled = false;
+                    }, 2000);
+                }, 2000);
+                
+            } catch (error) {
+                btn.innerHTML = '🔊 Speaker Error';
+                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '🔊 Test Speaker';
+                    btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                    btn.disabled = false;
+                }, 3000);
+            }
         }
 
         function activateVoiceMode() {
