@@ -466,31 +466,6 @@
             opacity: 1;
         }
 
-        .voice-mode-button {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #ff6b9d, #c44bd1);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
-            transition: all 0.3s ease;
-            z-index: 1003;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 6s forwards;
-        }
-
-        .voice-mode-button:hover {
-            transform: translateX(-50%) translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
-        }
-
         .settings-button {
             position: absolute;
             bottom: 20px;
@@ -696,14 +671,29 @@
             }
 
             .chatgpt-iframe {
-                width: 75%;
-                height: 75%;
-                border-radius: 50%;
-                box-shadow: 
-                    inset 0 0 20px rgba(255, 107, 157, 0.1),
-                    inset 0 0 40px rgba(0, 0, 0, 0.9),
-                    0 0 25px rgba(0, 0, 0, 0.9);
-                animation: counterRotate 8s linear infinite;
+                width: 95%;
+                height: 95%;
+            }
+
+            .portal-interface {
+                width: 85%;
+                height: 85%;
+                padding-bottom: 30px;
+            }
+
+            .gpt-speaking-indicator {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 15px;
+            }
+
+            .gpt-speaking-indicator::before {
+                font-size: 1.4rem;
+            }
+
+            .portal-voice-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
             }
 
             .voice-mode-button {
@@ -855,12 +845,14 @@
         <div class="black-hole-container" id="blackHoleContainer">
             <div class="black-hole">
                 <iframe class="chatgpt-iframe" id="chatgptFrame" src=""></iframe>
+                <div class="portal-interface" id="portalInterface">
+                    <div class="gpt-speaking-indicator" id="speakingIndicator"></div>
+                    <button class="portal-voice-button" id="portalVoiceBtn" onclick="activatePortalVoice()">
+                        🎤 Use Voice Mode
+                    </button>
+                </div>
             </div>
         </div>
-
-        <button class="voice-mode-button" id="voiceModeBtn" onclick="activateVoiceMode()">
-            🎤 Use Voice Mode
-        </button>
 
         <button class="settings-button" id="settingsBtn" onclick="toggleSettings()">
             ⚙️
@@ -973,27 +965,210 @@
 
         function loadChatGPT() {
             const loadingText = document.getElementById('loadingText');
+            const portalInterface = document.getElementById('portalInterface');
             const chatgptFrame = document.getElementById('chatgptFrame');
             
-            // Force load ChatGPT iframe immediately
+            // Force load specific ChatGPT conversation inside the portal
             chatgptFrame.src = 'https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418';
             
             // Update loading text
-            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Activating AI Assistant...</small>';
+            loadingText.innerHTML = '🚀 Loading ChatGPT...<br><small style="opacity: 0.7;">Initializing Voice Interface...</small>';
             
-            // Auto-activate speakers
-            activateSpeakers();
+            // Force activate speakers immediately
+            forceSpeakerActivationAuto();
             
-            // Show iframe after a short delay
+            // Show ChatGPT iframe first, then overlay interface
             setTimeout(() => {
-                loadingText.classList.add('hidden');
                 chatgptFrame.classList.add('show');
                 
-                // Test speakers once ChatGPT is loaded
                 setTimeout(() => {
-                    playWelcomeSound();
+                    loadingText.classList.add('hidden');
+                    portalInterface.classList.add('show');
+                    
+                    // Start GPT indicator and play welcome sound
+                    setTimeout(() => {
+                        startGPTIndicator();
+                        playWelcomeSound();
+                    }, 500);
                 }, 1000);
             }, 2000);
+        }
+
+        function forceSpeakerActivationAuto() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Force resume audio context immediately
+                audioContext.resume().then(() => {
+                    console.log('Speakers force-activated automatically');
+                    
+                    // Play immediate activation confirmation
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    // Quick activation beep
+                    oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                    gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.05);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.2);
+                    
+                    // Store audio context globally
+                    window.audioContext = audioContext;
+                });
+                
+            } catch (error) {
+                console.log('Auto speaker activation error:', error);
+            }
+        }
+
+        function startGPTIndicator() {
+            const indicator = document.getElementById('speakingIndicator');
+            
+            // Simulate GPT "thinking" with random intervals
+            setInterval(() => {
+                if (Math.random() > 0.7) { // 30% chance every interval
+                    simulateGPTSpeaking();
+                }
+            }, 3000);
+            
+            // Initial "ready" pulse
+            setTimeout(() => {
+                simulateGPTSpeaking(1000);
+            }, 500);
+        }
+
+        function simulateGPTSpeaking(duration = 2000) {
+            const indicator = document.getElementById('speakingIndicator');
+            indicator.classList.add('active');
+            
+            // Play speaking notification
+            playNotificationSound('speaking');
+            
+            setTimeout(() => {
+                indicator.classList.remove('active');
+            }, duration);
+        }
+
+        function activatePortalVoice() {
+            const btn = document.getElementById('portalVoiceBtn');
+            const indicator = document.getElementById('speakingIndicator');
+            
+            // Force activate speakers if not already active
+            if (!window.audioContext) {
+                forceSpeakerActivationAuto();
+            }
+            
+            // Update button state
+            btn.innerHTML = '🎤 Voice Mode Active';
+            btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+            btn.style.animation = 'pulse 1s ease-in-out infinite';
+            
+            // Activate speaking indicator
+            indicator.classList.add('active');
+            
+            // Request microphone access with enhanced settings
+            navigator.mediaDevices.getUserMedia({ 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                    sampleRate: 44100
+                }
+            })
+                .then(function(stream) {
+                    btn.innerHTML = '🎤 Listening... Speak to ChatGPT';
+                    
+                    // Initialize speech recognition
+                    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                        const recognition = new SpeechRecognition();
+                        
+                        recognition.continuous = true;
+                        recognition.interimResults = true;
+                        recognition.lang = 'en-US';
+                        
+                        recognition.onstart = function() {
+                            playNotificationSound('start');
+                            console.log('Voice recognition active - ChatGPT loaded in portal');
+                        };
+                        
+                        recognition.onresult = function(event) {
+                            let finalTranscript = '';
+                            for (let i = event.resultIndex; i < event.results.length; i++) {
+                                if (event.results[i].isFinal) {
+                                    finalTranscript += event.results[i][0].transcript;
+                                }
+                            }
+                            if (finalTranscript) {
+                                console.log('Voice input:', finalTranscript);
+                                // Simulate GPT responding
+                                simulateGPTSpeaking(4000);
+                                playNotificationSound('received');
+                                
+                                // Try to send message to ChatGPT iframe (if possible)
+                                try {
+                                    const chatFrame = document.getElementById('chatgptFrame');
+                                    chatFrame.contentWindow.postMessage({
+                                        type: 'voice_input',
+                                        text: finalTranscript
+                                    }, '*');
+                                } catch (error) {
+                                    console.log('Cannot send to iframe due to CORS, but voice captured:', finalTranscript);
+                                }
+                            }
+                        };
+                        
+                        recognition.onerror = function(event) {
+                            console.log('Speech recognition error:', event.error);
+                            btn.innerHTML = '🎤 Voice Error - Try Again';
+                            playNotificationSound('error');
+                            
+                            setTimeout(() => {
+                                btn.innerHTML = '🎤 Use Voice Mode';
+                                btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
+                                btn.style.animation = 'none';
+                                indicator.classList.remove('active');
+                            }, 3000);
+                        };
+                        
+                        recognition.onend = function() {
+                            console.log('Voice recognition ended');
+                            btn.innerHTML = '🎤 Use Voice Mode';
+                            btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
+                            btn.style.animation = 'none';
+                            indicator.classList.remove('active');
+                            playNotificationSound('end');
+                        };
+                        
+                        recognition.start();
+                        
+                        // Auto-stop after 60 seconds
+                        setTimeout(() => {
+                            recognition.stop();
+                        }, 60000);
+                    }
+                    
+                    // Keep stream active for voice mode
+                    window.micStream = stream;
+                })
+                .catch(function(error) {
+                    console.log('Microphone access error:', error);
+                    btn.innerHTML = '🎤 Mic Access Denied';
+                    btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                    playNotificationSound('error');
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = '🎤 Use Voice Mode';
+                        btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
+                        indicator.classList.remove('active');
+                    }, 3000);
+                });
         }
 
         function activateSpeakers() {
@@ -1414,6 +1589,9 @@
                         break;
                     case 'received':
                         oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime); // E5
+                        break;
+                    case 'speaking':
+                        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime); // G5
                         break;
                     case 'end':
                         oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // A4
