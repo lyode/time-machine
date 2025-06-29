@@ -816,29 +816,26 @@
             }
 
             .chatgpt-iframe {
-                width: 95%;
-                height: 95%;
-            }
-
-            .voice-interface-overlay {
                 width: 85%;
                 height: 85%;
-                padding-bottom: 40px;
             }
 
-            .gpt-speaking-indicator {
-                width: 60px;
-                height: 60px;
-                margin-bottom: 20px;
+            .portal-indicator {
+                width: 30px;
+                height: 30px;
             }
 
-            .gpt-speaking-indicator::before {
-                font-size: 1.8rem;
+            .voice-status-indicator {
+                font-size: 0.8rem;
+                padding: 8px 15px;
+                top: -40px;
             }
 
-            .voice-mode-button {
-                padding: 15px 25px;
-                font-size: 1rem;
+            .portal-instructions {
+                font-size: 0.75rem;
+                padding: 10px 15px;
+                max-width: 250px;
+                bottom: -60px;
             }
 
             .settings-button {
@@ -878,29 +875,26 @@
             }
 
             .chatgpt-iframe {
-                width: 98%;
-                height: 98%;
-            }
-
-            .voice-interface-overlay {
                 width: 90%;
                 height: 90%;
-                padding-bottom: 30px;
             }
 
-            .gpt-speaking-indicator {
-                width: 50px;
-                height: 50px;
-                margin-bottom: 15px;
+            .portal-indicator {
+                width: 25px;
+                height: 25px;
             }
 
-            .gpt-speaking-indicator::before {
-                font-size: 1.5rem;
+            .voice-status-indicator {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+                top: -35px;
             }
 
-            .voice-mode-button {
-                padding: 12px 20px;
-                font-size: 0.9rem;
+            .portal-instructions {
+                font-size: 0.7rem;
+                padding: 8px 12px;
+                max-width: 220px;
+                bottom: -50px;
             }
 
             .settings-button {
@@ -931,6 +925,22 @@
                 font-size: 0.75rem;
                 padding: 8px 12px;
             }
+        }
+
+        /* Animation keyframes */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
@@ -999,12 +1009,26 @@
         
         <div class="black-hole-container" id="blackHoleContainer">
             <div class="black-hole">
+                <!-- ChatGPT as interactive base layer -->
                 <iframe class="chatgpt-iframe" id="chatgptFrame" src=""></iframe>
-                <div class="voice-interface-overlay" id="voiceInterface">
-                    <div class="gpt-speaking-indicator" id="speakingIndicator"></div>
-                    <button class="voice-mode-button" id="voiceModeBtn" onclick="activateForcedVoiceMode()">
-                        🎤 ACTIVATE CHATGPT VOICE
-                    </button>
+                
+                <!-- Portal frame overlay for visual effects -->
+                <div class="portal-frame-overlay"></div>
+                
+                <!-- Floating corner indicators -->
+                <div class="portal-indicator top-left"></div>
+                <div class="portal-indicator top-right"></div>
+                <div class="portal-indicator bottom-left"></div>
+                <div class="portal-indicator bottom-right"></div>
+                
+                <!-- Voice status indicator -->
+                <div class="voice-status-indicator" id="voiceStatus">
+                    🎤 Click Voice Button in ChatGPT Below
+                </div>
+                
+                <!-- Instructions overlay -->
+                <div class="portal-instructions" id="portalInstructions">
+                    Look for the 🎤 microphone button inside ChatGPT and click it to activate voice mode!
                 </div>
             </div>
         </div>
@@ -1014,15 +1038,15 @@
         </button>
 
         <div class="settings-panel" id="settingsPanel">
-            <h3>🎤 ChatGPT Voice Controls</h3>
-            <button class="test-button" onclick="forceSpeakerTest()">🔊 Test Portal Voice</button>
-            <button class="test-button" onclick="testMicrophone()">🎤 Test Mic</button>
-            <button class="test-button" onclick="testChatGPTConnection()">🤖 Test ChatGPT</button>
-            <button class="test-button" onclick="restartVoiceSystem()">🔄 Restart Voice</button>
+            <h3>🎤 Portal Voice Guide</h3>
+            <button class="test-button" onclick="showVoiceGuide()">📋 Voice Guide</button>
+            <button class="test-button" onclick="testDeviceAudio()">🔊 Test Audio</button>
+            <button class="test-button" onclick="refreshChatGPT()">🔄 Refresh ChatGPT</button>
+            <button class="test-button" onclick="toggleInstructions()">💡 Show Tips</button>
             <a href="https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418" 
                target="_blank" 
                class="chatgpt-link">
-                🚀 Open ChatGPT Direct
+                🚀 Open in New Tab
             </a>
         </div>
     </div>
