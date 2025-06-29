@@ -442,7 +442,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Sound Wave Visualization */
+        /* Dynamic Sound Wave Visualization */
         .sound-wave-container {
             position: absolute;
             top: 50%;
@@ -463,50 +463,215 @@
             border-radius: 50%;
             opacity: 0;
             animation: soundWavePulse 2s ease-out infinite;
+            transition: all 0.1s ease-out;
         }
 
         .sound-wave.active {
             opacity: 1;
         }
 
+        .sound-wave.bouncing {
+            animation: soundWaveBounce 0.8s ease-in-out infinite;
+        }
+
+        .sound-wave.fast-ring {
+            animation: fastRingOut 0.5s ease-out infinite;
+        }
+
+        .sound-wave.slow-ring {
+            animation: slowRingOut 3s ease-out infinite;
+        }
+
+        .sound-wave.bass-responsive {
+            animation: bassWave 1.2s ease-in-out infinite;
+        }
+
+        .sound-wave.treble-responsive {
+            animation: trebleWave 0.3s ease-in-out infinite;
+        }
+
         .sound-wave:nth-child(1) {
-            width: 60%;
-            height: 60%;
+            width: 50%;
+            height: 50%;
             animation-delay: 0s;
+            border-color: rgba(255, 107, 157, 0.8);
         }
 
         .sound-wave:nth-child(2) {
-            width: 70%;
-            height: 70%;
-            animation-delay: 0.3s;
-            border-color: rgba(138, 43, 226, 0.5);
+            width: 65%;
+            height: 65%;
+            animation-delay: 0.15s;
+            border-color: rgba(255, 140, 180, 0.7);
         }
 
         .sound-wave:nth-child(3) {
             width: 80%;
             height: 80%;
-            animation-delay: 0.6s;
-            border-color: rgba(74, 144, 226, 0.4);
+            animation-delay: 0.3s;
+            border-color: rgba(138, 43, 226, 0.6);
         }
 
         .sound-wave:nth-child(4) {
-            width: 90%;
-            height: 90%;
-            animation-delay: 0.9s;
-            border-color: rgba(255, 107, 157, 0.3);
+            width: 95%;
+            height: 95%;
+            animation-delay: 0.45s;
+            border-color: rgba(74, 144, 226, 0.5);
         }
 
+        /* Dynamic Ring Animations */
         @keyframes soundWavePulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0.7);
+                opacity: 0;
+                border-width: 3px;
+            }
+            30% {
+                opacity: 0.9;
+                border-width: 2px;
+            }
+            70% {
+                opacity: 0.6;
+                border-width: 1px;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 0;
+                border-width: 1px;
+            }
+        }
+
+        @keyframes soundWaveBounce {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                border-width: 2px;
+            }
+            25% {
+                transform: translate(-50%, -50%) scale(1.15) scaleY(0.9);
+                border-width: 3px;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(0.95) scaleY(1.1);
+                border-width: 1px;
+            }
+            75% {
+                transform: translate(-50%, -50%) scale(1.05) scaleY(0.95);
+                border-width: 2px;
+            }
+        }
+
+        @keyframes fastRingOut {
+            0% {
+                transform: translate(-50%, -50%) scale(0.3);
+                opacity: 1;
+                border-width: 4px;
+                filter: blur(0px);
+            }
+            60% {
+                opacity: 0.8;
+                border-width: 2px;
+                filter: blur(1px);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+                border-width: 1px;
+                filter: blur(2px);
+            }
+        }
+
+        @keyframes slowRingOut {
             0% {
                 transform: translate(-50%, -50%) scale(0.8);
                 opacity: 0;
+                border-width: 1px;
+            }
+            15% {
+                opacity: 0.7;
+                border-width: 3px;
             }
             50% {
-                opacity: 0.8;
+                opacity: 0.5;
+                border-width: 2px;
+            }
+            85% {
+                opacity: 0.2;
+                border-width: 1px;
             }
             100% {
-                transform: translate(-50%, -50%) scale(1.2);
+                transform: translate(-50%, -50%) scale(1.8);
                 opacity: 0;
+                border-width: 1px;
+            }
+        }
+
+        @keyframes bassWave {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                border-radius: 50%;
+                opacity: 0.6;
+            }
+            25% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(1deg);
+                border-radius: 45%;
+                opacity: 0.9;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(0.9) rotate(0deg);
+                border-radius: 55%;
+                opacity: 0.7;
+            }
+            75% {
+                transform: translate(-50%, -50%) scale(1.1) rotate(-1deg);
+                border-radius: 47%;
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes trebleWave {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.4;
+                filter: brightness(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                opacity: 0.8;
+                filter: brightness(1.3);
+            }
+        }
+
+        /* Ripple Effect Rings */
+        .ripple-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ripple-ring.active {
+            animation: rippleEffect 2s ease-out forwards;
+        }
+
+        @keyframes rippleEffect {
+            0% {
+                width: 10px;
+                height: 10px;
+                opacity: 1;
+                border-width: 2px;
+            }
+            50% {
+                opacity: 0.6;
+                border-width: 1px;
+            }
+            100% {
+                width: 400px;
+                height: 400px;
+                opacity: 0;
+                border-width: 0px;
             }
         }
 
@@ -1202,7 +1367,7 @@
         <p class="subtitle">Complete portal control with forced phone speaker output</p>
         
         <p class="description">
-            Experience ChatGPT with complete portal control! Force voice activation, direct phone speaker output, comprehensive audio controls, and real-time sound wave visualization - all controlled from within this cosmic interface.
+            Experience ChatGPT with intelligent dynamic audio visualization! The portal detects different audio patterns and responds with bouncing waves for bass, fast rings for treble, slow waves for music, and ripple effects for audio spikes - all while maintaining complete ChatGPT control and forced phone speaker output.
         </p>
         
         <a href="#" onclick="launchAssistant(); return false;" class="launch-button">
@@ -1215,12 +1380,12 @@
             <ul class="feature-grid">
                 <li class="feature-item">Complete ChatGPT portal control with voice forcing</li>
                 <li class="feature-item">Direct phone speaker output with volume control</li>
-                <li class="feature-item">28 animated audio bars that dance up and down with frequency data</li>
-                <li class="feature-item">Real-time sound wave detection and visualization</li>
-                <li class="feature-item">Advanced voice activation with microphone bypass</li>
-                <li class="feature-item">Text injection directly into ChatGPT conversation</li>
-                <li class="feature-item">Comprehensive audio diagnostics and monitoring</li>
-                <li class="feature-item">All controls integrated within the portal interface</li>
+                <li class="feature-item">28 intelligent audio bars with dynamic bounce and wave patterns</li>
+                <li class="feature-item">Smart wave detection: fast rings, slow rings, bouncing effects</li>
+                <li class="feature-item">Advanced frequency analysis: bass, mid, treble responsiveness</li>
+                <li class="feature-item">Automatic pattern detection: speech, music, rhythmic audio</li>
+                <li class="feature-item">Dynamic ripple effects and variable speed visualizations</li>
+                <li class="feature-item">All controls integrated with intelligent audio response</li>
             </ul>
         </div>
     </div>
@@ -1598,31 +1763,304 @@
         function animateSoundWaves() {
             if (!window.visualizationActive) return;
             
-            // Analyze audio data
+            // Analyze audio data with enhanced frequency analysis
             if (window.audioAnalyser && window.audioData && window.soundDetectionActive) {
                 window.audioAnalyser.getByteFrequencyData(window.audioData);
                 
-                // Calculate average audio level
-                let sum = 0;
-                for (let i = 0; i < window.audioData.length; i++) {
-                    sum += window.audioData[i];
-                }
-                const average = sum / window.audioData.length;
+                // Advanced frequency analysis
+                const freqAnalysis = analyzeFrequencySpectrum(window.audioData);
                 
-                // Update visualizations based on audio level
-                updateSoundWaveVisuals(average);
+                // Update visualizations with intelligent responses
+                updateDynamicSoundWaves(freqAnalysis);
                 updateAudioBars(window.audioData);
                 
-                // Detect if significant audio activity (speech/sound)
-                if (average > 15) { // Threshold for audio activity
-                    activateSpeechVisualization();
-                } else {
-                    deactivateSpeechVisualization();
-                }
+                // Generate dynamic effects based on audio characteristics
+                generateDynamicEffects(freqAnalysis);
+                
+                // Update black hole responsiveness
+                updateBlackHoleEffects(freqAnalysis);
+                
+            } else {
+                // Simulate realistic audio patterns for demonstration
+                const simulatedAnalysis = generateSimulatedAudioAnalysis();
+                updateDynamicSoundWaves(simulatedAnalysis);
+                updateAudioBars(window.audioData || new Uint8Array(256));
             }
             
             // Continue animation loop
             window.animationFrameId = requestAnimationFrame(animateSoundWaves);
+        }
+
+        function analyzeFrequencySpectrum(audioData) {
+            const dataLength = audioData.length;
+            
+            // Analyze different frequency ranges
+            const bassRange = audioData.slice(0, Math.floor(dataLength * 0.1)); // 0-10%
+            const midRange = audioData.slice(Math.floor(dataLength * 0.1), Math.floor(dataLength * 0.4)); // 10-40%
+            const trebleRange = audioData.slice(Math.floor(dataLength * 0.4), dataLength); // 40-100%
+            
+            // Calculate averages and peaks
+            const bassAvg = bassRange.reduce((a, b) => a + b, 0) / bassRange.length;
+            const midAvg = midRange.reduce((a, b) => a + b, 0) / midRange.length;
+            const trebleAvg = trebleRange.reduce((a, b) => a + b, 0) / trebleRange.length;
+            
+            const bassPeak = Math.max(...bassRange);
+            const midPeak = Math.max(...midRange);
+            const treblePeak = Math.max(...trebleRange);
+            
+            // Overall audio characteristics
+            const totalAvg = audioData.reduce((a, b) => a + b, 0) / dataLength;
+            const totalPeak = Math.max(...audioData);
+            
+            // Detect audio patterns
+            const isRhythmic = detectRhythmicPattern(audioData);
+            const isSpeech = detectSpeechPattern(bassAvg, midAvg, trebleAvg);
+            const isMusic = detectMusicPattern(bassAvg, midAvg, trebleAvg);
+            
+            return {
+                bass: { avg: bassAvg, peak: bassPeak },
+                mid: { avg: midAvg, peak: midPeak },
+                treble: { avg: trebleAvg, peak: treblePeak },
+                total: { avg: totalAvg, peak: totalPeak },
+                patterns: { isRhythmic, isSpeech, isMusic },
+                intensity: calculateIntensity(totalAvg, totalPeak)
+            };
+        }
+
+        function updateDynamicSoundWaves(analysis) {
+            const soundWaves = document.querySelectorAll('.sound-wave');
+            const blackHoleContainer = document.getElementById('blackHoleContainer');
+            
+            // Base activation threshold
+            const activationThreshold = 8;
+            
+            if (analysis.total.avg > activationThreshold) {
+                // Activate waves with different behaviors based on audio type
+                soundWaves.forEach((wave, index) => {
+                    wave.classList.add('active');
+                    
+                    // Remove previous animation classes
+                    wave.classList.remove('bouncing', 'fast-ring', 'slow-ring', 'bass-responsive', 'treble-responsive');
+                    
+                    // Apply dynamic behaviors based on frequency analysis
+                    if (analysis.patterns.isRhythmic && analysis.bass.avg > 20) {
+                        // Bouncing effect for rhythmic bass
+                        wave.classList.add('bouncing');
+                        wave.style.borderColor = `rgba(255, ${107 + analysis.bass.avg}, 157, ${0.3 + analysis.bass.avg / 255})`;
+                    } else if (analysis.treble.peak > 100) {
+                        // Fast rings for high treble activity
+                        wave.classList.add('fast-ring', 'treble-responsive');
+                        wave.style.borderColor = `rgba(${74 + analysis.treble.avg}, 144, 226, ${0.4 + analysis.treble.avg / 255})`;
+                    } else if (analysis.bass.peak > 80) {
+                        // Slow, powerful waves for strong bass
+                        wave.classList.add('slow-ring', 'bass-responsive');
+                        wave.style.borderColor = `rgba(255, ${107 + analysis.bass.avg * 0.5}, ${157 + analysis.bass.avg * 0.3}, 0.7)`;
+                    } else if (analysis.patterns.isSpeech) {
+                        // Gentle pulsing for speech
+                        wave.style.animationDuration = '1.5s';
+                        wave.style.borderColor = `rgba(138, ${43 + analysis.mid.avg}, 226, ${0.5 + analysis.mid.avg / 255})`;
+                    } else {
+                        // Default responsive behavior
+                        wave.style.animationDuration = `${2 - (analysis.intensity * 1.5)}s`;
+                    }
+                    
+                    // Dynamic sizing based on frequency ranges
+                    const sizeMultiplier = 1 + (analysis.total.avg / 255) * 0.4;
+                    wave.style.transform = `translate(-50%, -50%) scale(${sizeMultiplier})`;
+                    
+                    // Staggered delays for wave propagation effect
+                    wave.style.animationDelay = `${index * 0.1 + (analysis.intensity * 0.05)}s`;
+                });
+                
+                blackHoleContainer.classList.add('speaking');
+                
+                // Generate ripple effects for audio spikes
+                if (analysis.total.peak > 150) {
+                    generateRippleEffect(analysis.total.peak);
+                }
+                
+            } else {
+                // Deactivate waves gradually
+                soundWaves.forEach(wave => {
+                    wave.classList.remove('active', 'bouncing', 'fast-ring', 'slow-ring', 'bass-responsive', 'treble-responsive');
+                });
+                blackHoleContainer.classList.remove('speaking');
+            }
+        }
+
+        function generateDynamicEffects(analysis) {
+            const soundWaveContainer = document.getElementById('soundWaveContainer');
+            
+            // Create additional dynamic waves based on audio characteristics
+            if (analysis.patterns.isRhythmic && analysis.bass.avg > 30) {
+                createDynamicWave('bass-blast', {
+                    size: 120 + analysis.bass.avg,
+                    color: `rgba(255, ${80 + analysis.bass.avg}, 100, 0.6)`,
+                    duration: 800,
+                    pattern: 'bounce'
+                });
+            }
+            
+            if (analysis.treble.peak > 120) {
+                createDynamicWave('treble-burst', {
+                    size: 60 + analysis.treble.avg,
+                    color: `rgba(100, ${150 + analysis.treble.avg * 0.4}, 255, 0.7)`,
+                    duration: 300,
+                    pattern: 'fast-ring'
+                });
+            }
+            
+            if (analysis.patterns.isMusic && analysis.mid.avg > 25) {
+                createDynamicWave('music-flow', {
+                    size: 90 + analysis.mid.avg,
+                    color: `rgba(${120 + analysis.mid.avg}, 100, 220, 0.5)`,
+                    duration: 1500,
+                    pattern: 'flow'
+                });
+            }
+        }
+
+        function createDynamicWave(type, properties) {
+            const container = document.getElementById('soundWaveContainer');
+            
+            // Limit number of dynamic waves
+            const existingWaves = container.querySelectorAll(`.dynamic-wave-${type}`);
+            if (existingWaves.length > 3) return;
+            
+            const dynamicWave = document.createElement('div');
+            dynamicWave.className = `sound-wave dynamic-wave-${type} active`;
+            dynamicWave.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: ${properties.size}%;
+                height: ${properties.size}%;
+                border: 2px solid ${properties.color};
+                border-radius: 50%;
+                opacity: 1;
+                animation: ${getDynamicAnimation(properties.pattern)} ${properties.duration}ms ease-out;
+                pointer-events: none;
+            `;
+            
+            container.appendChild(dynamicWave);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (dynamicWave.parentElement) {
+                    dynamicWave.remove();
+                }
+            }, properties.duration);
+        }
+
+        function getDynamicAnimation(pattern) {
+            switch (pattern) {
+                case 'bounce': return 'soundWaveBounce';
+                case 'fast-ring': return 'fastRingOut';
+                case 'flow': return 'slowRingOut';
+                default: return 'soundWavePulse';
+            }
+        }
+
+        function generateRippleEffect(intensity) {
+            const blackHole = document.querySelector('.black-hole');
+            
+            // Create ripple ring
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple-ring active';
+            
+            // Dynamic ripple properties based on intensity
+            const speed = Math.max(500, 2000 - intensity * 8);
+            const opacity = Math.min(1, intensity / 255);
+            
+            ripple.style.animationDuration = `${speed}ms`;
+            ripple.style.opacity = opacity;
+            
+            blackHole.appendChild(ripple);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (ripple.parentElement) {
+                    ripple.remove();
+                }
+            }, speed);
+        }
+
+        function updateBlackHoleEffects(analysis) {
+            const blackHole = document.querySelector('.black-hole');
+            
+            // Dynamic black hole effects based on audio
+            if (analysis.total.avg > 20) {
+                const intensity = analysis.intensity;
+                const hue = analysis.bass.avg > analysis.treble.avg ? 320 : 240; // Purple for bass, blue for treble
+                
+                blackHole.style.boxShadow = `
+                    inset 0 0 ${50 + intensity * 30}px hsla(${hue}, 70%, 60%, ${0.3 + intensity * 0.5}),
+                    inset 0 0 ${100 + intensity * 50}px hsla(${hue}, 50%, 40%, ${0.2 + intensity * 0.4}),
+                    0 0 ${100 + intensity * 100}px hsla(${hue}, 60%, 50%, ${0.1 + intensity * 0.3})
+                `;
+                
+                // Rhythmic pulsing for the accretion disk
+                if (analysis.patterns.isRhythmic) {
+                    blackHole.style.animationDuration = `${4 - intensity * 2}s`;
+                }
+            } else {
+                // Reset to default
+                blackHole.style.boxShadow = '';
+                blackHole.style.animationDuration = '8s';
+            }
+        }
+
+        // Pattern detection functions
+        function detectRhythmicPattern(audioData) {
+            // Simple rhythm detection based on consistent peaks
+            let peakCount = 0;
+            const threshold = 60;
+            
+            for (let i = 0; i < audioData.length; i++) {
+                if (audioData[i] > threshold) {
+                    peakCount++;
+                }
+            }
+            
+            return peakCount > audioData.length * 0.1 && peakCount < audioData.length * 0.3;
+        }
+
+        function detectSpeechPattern(bass, mid, treble) {
+            // Speech typically has strong mid-range with moderate bass and treble
+            return mid > bass && mid > treble && mid > 15 && treble > 10;
+        }
+
+        function detectMusicPattern(bass, mid, treble) {
+            // Music typically has a more balanced frequency distribution
+            const total = bass + mid + treble;
+            return total > 40 && bass > 10 && treble > 10;
+        }
+
+        function calculateIntensity(avg, peak) {
+            // Normalized intensity from 0 to 1
+            return Math.min(1, (avg * 0.7 + peak * 0.3) / 255);
+        }
+
+        function generateSimulatedAudioAnalysis() {
+            // Enhanced simulation for demonstration
+            const time = Date.now() / 1000;
+            const bassWave = Math.sin(time * 2) * 30 + 30;
+            const midWave = Math.sin(time * 3) * 25 + 25;
+            const trebleWave = Math.sin(time * 5) * 20 + 15;
+            
+            return {
+                bass: { avg: bassWave, peak: bassWave * 1.5 },
+                mid: { avg: midWave, peak: midWave * 1.3 },
+                treble: { avg: trebleWave, peak: trebleWave * 1.2 },
+                total: { avg: (bassWave + midWave + trebleWave) / 3, peak: Math.max(bassWave, midWave, trebleWave) },
+                patterns: { 
+                    isRhythmic: Math.sin(time) > 0.5,
+                    isSpeech: Math.sin(time * 0.7) > 0.3,
+                    isMusic: Math.sin(time * 1.2) > 0
+                },
+                intensity: (Math.sin(time * 1.5) + 1) / 2
+            };
         }
 
         function updateSoundWaveVisuals(audioLevel) {
@@ -2380,7 +2818,53 @@
             }
         }
 
-        // Additional control functions for compatibility
+        // Legacy compatibility functions
+        function updateSoundWaveVisuals(audioLevel) {
+            // Convert old simple audio level to new analysis format
+            const simulatedAnalysis = {
+                bass: { avg: audioLevel * 0.6, peak: audioLevel * 0.8 },
+                mid: { avg: audioLevel * 0.8, peak: audioLevel },
+                treble: { avg: audioLevel * 0.4, peak: audioLevel * 0.6 },
+                total: { avg: audioLevel, peak: audioLevel * 1.2 },
+                patterns: { 
+                    isRhythmic: audioLevel > 30,
+                    isSpeech: audioLevel > 15 && audioLevel < 60,
+                    isMusic: audioLevel > 25
+                },
+                intensity: Math.min(1, audioLevel / 255)
+            };
+            
+            updateDynamicSoundWaves(simulatedAnalysis);
+        }
+
+        function activateSpeechVisualization() {
+            const blackHoleContainer = document.getElementById('blackHoleContainer');
+            blackHoleContainer.classList.add('speaking');
+            
+            // Trigger speech-like wave patterns
+            const speechAnalysis = {
+                bass: { avg: 20, peak: 30 },
+                mid: { avg: 40, peak: 60 },
+                treble: { avg: 25, peak: 35 },
+                total: { avg: 30, peak: 50 },
+                patterns: { isRhythmic: false, isSpeech: true, isMusic: false },
+                intensity: 0.4
+            };
+            
+            updateDynamicSoundWaves(speechAnalysis);
+        }
+
+        function deactivateSpeechVisualization() {
+            const blackHoleContainer = document.getElementById('blackHoleContainer');
+            const soundWaves = document.querySelectorAll('.sound-wave');
+            
+            setTimeout(() => {
+                blackHoleContainer.classList.remove('speaking');
+                soundWaves.forEach(wave => {
+                    wave.classList.remove('active', 'bouncing', 'fast-ring', 'slow-ring', 'bass-responsive', 'treble-responsive');
+                });
+            }, 500);
+        }
         function toggleSoundDetection() { 
             if (window.soundDetectionActive) {
                 window.soundDetectionActive = false;
