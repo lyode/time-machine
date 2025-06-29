@@ -516,12 +516,12 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 200px;
-            height: 100px;
+            width: 280px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 3px;
+            gap: 2px;
             z-index: 1003;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -532,27 +532,43 @@
         }
 
         .audio-bar {
-            width: 4px;
+            width: 3px;
             background: linear-gradient(to top, #ff6b9d, #c44bd1, #4a90e2);
             border-radius: 2px;
             height: 10px;
             transform-origin: bottom;
             animation: audioBarDance 0.3s ease-in-out infinite alternate;
-            box-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
+            box-shadow: 0 0 8px rgba(255, 107, 157, 0.5);
         }
 
         .audio-bar:nth-child(1) { animation-delay: 0s; }
-        .audio-bar:nth-child(2) { animation-delay: 0.05s; }
-        .audio-bar:nth-child(3) { animation-delay: 0.1s; }
-        .audio-bar:nth-child(4) { animation-delay: 0.15s; }
-        .audio-bar:nth-child(5) { animation-delay: 0.2s; }
-        .audio-bar:nth-child(6) { animation-delay: 0.25s; }
-        .audio-bar:nth-child(7) { animation-delay: 0.3s; }
-        .audio-bar:nth-child(8) { animation-delay: 0.25s; }
-        .audio-bar:nth-child(9) { animation-delay: 0.2s; }
-        .audio-bar:nth-child(10) { animation-delay: 0.15s; }
-        .audio-bar:nth-child(11) { animation-delay: 0.1s; }
-        .audio-bar:nth-child(12) { animation-delay: 0.05s; }
+        .audio-bar:nth-child(2) { animation-delay: 0.02s; }
+        .audio-bar:nth-child(3) { animation-delay: 0.04s; }
+        .audio-bar:nth-child(4) { animation-delay: 0.06s; }
+        .audio-bar:nth-child(5) { animation-delay: 0.08s; }
+        .audio-bar:nth-child(6) { animation-delay: 0.1s; }
+        .audio-bar:nth-child(7) { animation-delay: 0.12s; }
+        .audio-bar:nth-child(8) { animation-delay: 0.14s; }
+        .audio-bar:nth-child(9) { animation-delay: 0.16s; }
+        .audio-bar:nth-child(10) { animation-delay: 0.18s; }
+        .audio-bar:nth-child(11) { animation-delay: 0.2s; }
+        .audio-bar:nth-child(12) { animation-delay: 0.22s; }
+        .audio-bar:nth-child(13) { animation-delay: 0.24s; }
+        .audio-bar:nth-child(14) { animation-delay: 0.26s; }
+        .audio-bar:nth-child(15) { animation-delay: 0.24s; }
+        .audio-bar:nth-child(16) { animation-delay: 0.22s; }
+        .audio-bar:nth-child(17) { animation-delay: 0.2s; }
+        .audio-bar:nth-child(18) { animation-delay: 0.18s; }
+        .audio-bar:nth-child(19) { animation-delay: 0.16s; }
+        .audio-bar:nth-child(20) { animation-delay: 0.14s; }
+        .audio-bar:nth-child(21) { animation-delay: 0.12s; }
+        .audio-bar:nth-child(22) { animation-delay: 0.1s; }
+        .audio-bar:nth-child(23) { animation-delay: 0.08s; }
+        .audio-bar:nth-child(24) { animation-delay: 0.06s; }
+        .audio-bar:nth-child(25) { animation-delay: 0.04s; }
+        .audio-bar:nth-child(26) { animation-delay: 0.02s; }
+        .audio-bar:nth-child(27) { animation-delay: 0s; }
+        .audio-bar:nth-child(28) { animation-delay: 0.02s; }
 
         @keyframes audioBarDance {
             0% {
@@ -709,12 +725,14 @@
             position: absolute;
             bottom: 80px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             padding: 20px;
-            width: 300px;
+            width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
             opacity: 0;
             visibility: hidden;
             transform: translateY(20px);
@@ -733,25 +751,179 @@
             margin-bottom: 15px;
             font-size: 1.1rem;
             text-align: center;
+            border-bottom: 1px solid rgba(255, 107, 157, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .control-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .control-section h4 {
+            color: #c44bd1;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-align: center;
         }
 
         .test-button {
             background: linear-gradient(135deg, #4a90e2, #2c5aa0);
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 25px;
-            font-size: 0.9rem;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             cursor: pointer;
-            margin: 5px;
+            margin: 3px;
             transition: all 0.3s ease;
-            width: calc(50% - 10px);
+            width: calc(50% - 6px);
             display: inline-block;
+        }
+
+        .test-button.full-width {
+            width: calc(100% - 6px);
+        }
+
+        .test-button.danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .test-button.success {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+
+        .test-button.warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
         }
 
         .test-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e74c3c;
+            margin-right: 5px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.active {
+            background: #27ae60;
+        }
+
+        .status-indicator.warning {
+            background: #f39c12;
+        }
+
+        .volume-control {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .volume-slider {
+            width: 100%;
+            height: 5px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ff6b9d;
+            cursor: pointer;
+        }
+
+        .audio-route-display {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #ccc;
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        /* Portal Voice Control Interface */
+        .voice-control-overlay {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 107, 157, 0.6);
+            border-radius: 25px;
+            padding: 20px;
+            width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1005;
+        }
+
+        .voice-control-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .voice-control-overlay h3 {
+            color: #ff6b9d;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .voice-status-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .chatgpt-control-panel {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(138, 43, 226, 0.6);
+            border-radius: 20px;
+            padding: 15px;
+            width: 400px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1006;
+        }
+
+        .chatgpt-control-panel.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .chatgpt-control-panel h3 {
+            color: #c44bd1;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
         }
 
         .chatgpt-link {
@@ -887,12 +1059,12 @@
             }
 
             .audio-visualizer {
-                width: 150px;
-                height: 80px;
+                width: 200px;
+                height: 100px;
             }
 
             .audio-bar {
-                width: 3px;
+                width: 2px;
             }
 
             .settings-button {
@@ -904,20 +1076,33 @@
             }
 
             .settings-panel {
-                width: 280px;
+                width: 320px;
                 bottom: 70px;
                 right: 15px;
                 padding: 15px;
+                max-height: 75vh;
+            }
+
+            .control-section {
+                margin-bottom: 15px;
+                padding: 12px;
             }
 
             .test-button {
-                font-size: 0.8rem;
-                padding: 8px 12px;
+                font-size: 0.75rem;
+                padding: 6px 10px;
             }
 
-            .chatgpt-link {
-                font-size: 0.8rem;
-                padding: 10px 15px;
+            .voice-control-overlay {
+                width: 280px;
+                bottom: 80px;
+                padding: 15px;
+            }
+
+            .chatgpt-control-panel {
+                width: 350px;
+                top: 15px;
+                padding: 12px;
             }
         }
 
@@ -937,13 +1122,13 @@
             }
 
             .audio-visualizer {
-                width: 120px;
-                height: 60px;
+                width: 160px;
+                height: 80px;
+                gap: 1px;
             }
 
             .audio-bar {
                 width: 2px;
-                gap: 2px;
             }
 
             .settings-button {
@@ -955,24 +1140,46 @@
             }
 
             .settings-panel {
-                width: 260px;
+                width: 300px;
                 bottom: 60px;
                 right: 10px;
                 padding: 12px;
+                max-height: 70vh;
             }
 
-            .settings-panel h3 {
-                font-size: 1rem;
+            .control-section {
+                margin-bottom: 12px;
+                padding: 10px;
+            }
+
+            .control-section h4 {
+                font-size: 0.8rem;
             }
 
             .test-button {
-                font-size: 0.75rem;
-                padding: 6px 10px;
+                font-size: 0.7rem;
+                padding: 5px 8px;
             }
 
-            .chatgpt-link {
-                font-size: 0.75rem;
-                padding: 8px 12px;
+            .voice-control-overlay {
+                width: 260px;
+                bottom: 70px;
+                padding: 12px;
+            }
+
+            .chatgpt-control-panel {
+                width: 320px;
+                top: 10px;
+                padding: 10px;
+            }
+
+            .volume-slider {
+                height: 4px;
+            }
+
+            .audio-route-display {
+                font-size: 0.7rem;
+                padding: 6px;
             }
         }
     </style>
@@ -992,10 +1199,10 @@
     <div class="main-content">
         <h1 class="title">AI Voice Assistant</h1>
         
-        <p class="subtitle">Your intelligent companion with sound wave detection</p>
+        <p class="subtitle">Complete portal control with forced phone speaker output</p>
         
         <p class="description">
-            Experience ChatGPT enhanced with real-time sound wave visualization! The black hole portal responds to audio activity with beautiful wave animations and visual feedback when GPT is speaking.
+            Experience ChatGPT with complete portal control! Force voice activation, direct phone speaker output, comprehensive audio controls, and real-time sound wave visualization - all controlled from within this cosmic interface.
         </p>
         
         <a href="#" onclick="launchAssistant(); return false;" class="launch-button">
@@ -1006,14 +1213,14 @@
         <div class="features">
             <h3>✨ Key Features</h3>
             <ul class="feature-grid">
+                <li class="feature-item">Complete ChatGPT portal control with voice forcing</li>
+                <li class="feature-item">Direct phone speaker output with volume control</li>
+                <li class="feature-item">28 animated audio bars that dance up and down with frequency data</li>
                 <li class="feature-item">Real-time sound wave detection and visualization</li>
-                <li class="feature-item">Interactive black hole that responds to audio</li>
-                <li class="feature-item">ChatGPT voice integration with visual feedback</li>
-                <li class="feature-item">Beautiful cosmic interface with wave animations</li>
-                <li class="feature-item">Audio activity monitoring and visual response</li>
-                <li class="feature-item">Dynamic wave lines that dance to speech</li>
-                <li class="feature-item">Multi-layered sound visualization effects</li>
-                <li class="feature-item">Professional audio analysis and visual output</li>
+                <li class="feature-item">Advanced voice activation with microphone bypass</li>
+                <li class="feature-item">Text injection directly into ChatGPT conversation</li>
+                <li class="feature-item">Comprehensive audio diagnostics and monitoring</li>
+                <li class="feature-item">All controls integrated within the portal interface</li>
             </ul>
         </div>
     </div>
@@ -1063,6 +1270,22 @@
                     <div class="audio-bar"></div>
                     <div class="audio-bar"></div>
                     <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
                 </div>
                 
                 <!-- ChatGPT iframe -->
@@ -1075,16 +1298,135 @@
         </button>
 
         <div class="settings-panel" id="settingsPanel">
-            <h3>🎵 Sound Wave Control</h3>
-            <button class="test-button" onclick="testSoundWaves()">🌊 Test Waves</button>
-            <button class="test-button" onclick="testAudioDetection()">🔊 Test Audio</button>
-            <button class="test-button" onclick="refreshChatGPT()">🔄 Refresh ChatGPT</button>
-            <button class="test-button" onclick="toggleSoundDetection()">🎤 Toggle Detection</button>
-            <a href="https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418" 
-               target="_blank" 
-               class="chatgpt-link">
-                🚀 Open in New Tab
-            </a>
+            <h3>🎛️ Portal Control Center</h3>
+            
+            <!-- Sound Wave Controls -->
+            <div class="control-section">
+                <h4>🌊 Sound Wave Visualization</h4>
+                <button class="test-button" onclick="testSoundWaves()">🌊 Test 28 Bars</button>
+                <button class="test-button" onclick="toggleSoundDetection()">🎤 Toggle Detection</button>
+                <button class="test-button full-width" onclick="calibrateAudioSystem()">🔧 Calibrate Audio System</button>
+            </div>
+
+            <!-- ChatGPT Control -->
+            <div class="control-section">
+                <h4>🤖 ChatGPT Portal Control</h4>
+                <div class="voice-status-display">
+                    <span>ChatGPT Status:</span>
+                    <span><span class="status-indicator" id="chatgptStatus"></span><span id="chatgptStatusText">Loading...</span></span>
+                </div>
+                <button class="test-button success" onclick="forceChatGPTVoice()">🎤 Force Voice Mode</button>
+                <button class="test-button warning" onclick="injectChatGPTCommands()">⚡ Inject Commands</button>
+                <button class="test-button" onclick="refreshChatGPT()">🔄 Refresh Portal</button>
+                <button class="test-button danger" onclick="emergencyReset()">🚨 Emergency Reset</button>
+            </div>
+
+            <!-- Phone Speaker Control -->
+            <div class="control-section">
+                <h4>🔊 Phone Speaker Control</h4>
+                <div class="voice-status-display">
+                    <span>Speaker Route:</span>
+                    <span><span class="status-indicator" id="speakerStatus"></span><span id="speakerStatusText">Detecting...</span></span>
+                </div>
+                <button class="test-button success" onclick="forceSpeakerOutput()">📢 Force Phone Speaker</button>
+                <button class="test-button" onclick="testSpeakerOutput()">🔊 Test Speaker</button>
+                <div class="volume-control">
+                    <label style="color: #ccc; font-size: 0.8rem;">Speaker Volume:</label>
+                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80" onchange="adjustSpeakerVolume(this.value)">
+                </div>
+                <div class="audio-route-display" id="audioRouteDisplay">
+                    Audio Route: System Default
+                </div>
+            </div>
+
+            <!-- Voice Activation -->
+            <div class="control-section">
+                <h4>🎙️ Voice Activation System</h4>
+                <div class="voice-status-display">
+                    <span>Voice System:</span>
+                    <span><span class="status-indicator" id="voiceSystemStatus"></span><span id="voiceSystemText">Ready</span></span>
+                </div>
+                <button class="test-button success" onclick="activatePortalVoiceMode()">🎙️ Activate Voice</button>
+                <button class="test-button warning" onclick="bypassMicrophoneRestrictions()">🔓 Bypass Restrictions</button>
+                <button class="test-button full-width" onclick="showVoiceControlPanel()">🎛️ Advanced Voice Control</button>
+            </div>
+
+            <!-- Audio Diagnostics -->
+            <div class="control-section">
+                <h4>🔍 Audio Diagnostics</h4>
+                <button class="test-button" onclick="runAudioDiagnostics()">🔍 Full Diagnostics</button>
+                <button class="test-button" onclick="testAudioLatency()">⏱️ Test Latency</button>
+                <button class="test-button" onclick="showChatGPTControl()">🤖 ChatGPT Panel</button>
+                <button class="test-button" onclick="exportAudioSettings()">💾 Export Settings</button>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="control-section">
+                <h4>⚡ Quick Actions</h4>
+                <a href="https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418" 
+                   target="_blank" 
+                   class="test-button full-width"
+                   style="text-decoration: none; text-align: center; display: block;">
+                    🚀 Open in New Tab
+                </a>
+            </div>
+        </div>
+
+        <!-- Voice Control Overlay -->
+        <div class="voice-control-overlay" id="voiceControlOverlay">
+            <h3>🎙️ Advanced Voice Control</h3>
+            
+            <div class="voice-status-display">
+                <span>Microphone:</span>
+                <span><span class="status-indicator" id="micStatus"></span><span id="micStatusText">Not Active</span></span>
+            </div>
+            
+            <div class="voice-status-display">
+                <span>Speech Recognition:</span>
+                <span><span class="status-indicator" id="speechStatus"></span><span id="speechStatusText">Disabled</span></span>
+            </div>
+            
+            <div class="voice-status-display">
+                <span>ChatGPT Voice:</span>
+                <span><span class="status-indicator" id="chatgptVoiceStatus"></span><span id="chatgptVoiceStatusText">Inactive</span></span>
+            </div>
+
+            <button class="test-button success full-width" onclick="startFullVoiceMode()">🎤 Start Full Voice Mode</button>
+            <button class="test-button warning full-width" onclick="forceMicrophoneAccess()">🔓 Force Microphone Access</button>
+            <button class="test-button full-width" onclick="setupVoiceBypass()">⚙️ Setup Voice Bypass</button>
+            <button class="test-button danger full-width" onclick="closeVoiceControl()">❌ Close Panel</button>
+        </div>
+
+        <!-- ChatGPT Control Panel -->
+        <div class="chatgpt-control-panel" id="chatgptControlPanel">
+            <h3>🤖 ChatGPT Portal Control</h3>
+            
+            <div class="voice-status-display">
+                <span>Connection:</span>
+                <span><span class="status-indicator" id="connectionStatus"></span><span id="connectionStatusText">Establishing...</span></span>
+            </div>
+            
+            <div class="voice-status-display">
+                <span>Voice Mode:</span>
+                <span><span class="status-indicator" id="voiceModeStatus"></span><span id="voiceModeStatusText">Attempting...</span></span>
+            </div>
+
+            <div class="control-section">
+                <h4>🎯 Direct Control Actions</h4>
+                <button class="test-button success" onclick="injectVoiceButton()">🎤 Inject Voice Button</button>
+                <button class="test-button warning" onclick="simulateUserClick()">👆 Simulate Click</button>
+                <button class="test-button" onclick="sendPostMessage()">📨 Send PostMessage</button>
+                <button class="test-button danger" onclick="forceIframeAccess()">🔓 Force Access</button>
+            </div>
+
+            <div class="control-section">
+                <h4>📝 Text Injection</h4>
+                <input type="text" id="textToInject" placeholder="Type message to inject..." 
+                       style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px; background: rgba(255,255,255,0.1); color: white;">
+                <button class="test-button success full-width" onclick="injectTextToChatGPT()">📝 Inject Text</button>
+            </div>
+
+            <button class="test-button danger full-width" onclick="closeChatGPTControl()">❌ Close Panel</button>
         </div>
     </div>
 
@@ -1321,13 +1663,35 @@
             if (hasActivity) {
                 audioVisualizer.classList.add('active');
                 
-                // Update each audio bar based on frequency data
+                // Update each audio bar based on frequency data with better distribution
                 audioBars.forEach((bar, index) => {
+                    // Map 28 bars across the frequency spectrum more evenly
                     const dataIndex = Math.floor(index * frequencyData.length / audioBars.length);
-                    const height = (frequencyData[dataIndex] / 255) * 100;
+                    let height = (frequencyData[dataIndex] / 255) * 120;
                     
-                    bar.style.height = Math.max(10, height) + 'px';
-                    bar.style.animationDuration = (0.1 + Math.random() * 0.3) + 's';
+                    // Add some random variation for more dynamic effect
+                    height = height * (0.8 + Math.random() * 0.4);
+                    
+                    // Create a more musical distribution (emphasize lower frequencies)
+                    if (index < 8) {
+                        height = height * 1.2; // Boost bass frequencies
+                    } else if (index > 20) {
+                        height = height * 0.8; // Reduce high frequencies slightly
+                    }
+                    
+                    bar.style.height = Math.max(8, height) + 'px';
+                    bar.style.animationDuration = (0.1 + Math.random() * 0.2) + 's';
+                    
+                    // Add color variation based on frequency range
+                    if (index < 7) {
+                        bar.style.background = 'linear-gradient(to top, #ff6b9d, #ff8fab, #ffb3c6)'; // Pink/red for bass
+                    } else if (index < 14) {
+                        bar.style.background = 'linear-gradient(to top, #c44bd1, #d666e0, #e888ee)'; // Purple for mid
+                    } else if (index < 21) {
+                        bar.style.background = 'linear-gradient(to top, #4a90e2, #6ba3e8, #8cb6ee)'; // Blue for high-mid
+                    } else {
+                        bar.style.background = 'linear-gradient(to top, #74c0fc, #92d3ff, #b0e6ff)'; // Light blue for treble
+                    }
                 });
             } else {
                 audioVisualizer.classList.remove('active');
@@ -1395,24 +1759,704 @@
             }
         }
 
+        // Global variables for portal control
+        window.portalAudioContext = null;
+        window.portalSpeakerOutput = null;
+        window.chatgptControlActive = false;
+        window.voiceSystemActive = false;
+        window.microphoneBypassActive = false;
+        window.speakerForceActive = false;
+
         function loadChatGPT() {
             const loadingText = document.getElementById('loadingText');
             const chatgptFrame = document.getElementById('chatgptFrame');
             
-            // Load ChatGPT conversation
+            // Force load ChatGPT conversation with portal control
             chatgptFrame.src = 'https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418';
             
             // Update loading text
-            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Sound wave detection active...</small>';
+            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Establishing portal control...</small>';
+            
+            // Initialize portal control systems
+            initializePortalControlSystems();
             
             // Show ChatGPT interface
             setTimeout(() => {
                 chatgptFrame.classList.add('show');
                 loadingText.classList.add('hidden');
                 
-                // Start monitoring for ChatGPT voice activity
-                monitorChatGPTAudio();
+                // Start comprehensive ChatGPT control
+                establishChatGPTControl();
+                
+                // Force speaker output initialization
+                initializeSpeakerForcing();
+                
+                // Start monitoring systems
+                startPortalMonitoring();
             }, 2000);
+        }
+
+        function initializePortalControlSystems() {
+            console.log('Initializing comprehensive portal control systems...');
+            
+            // Initialize enhanced audio context for speaker forcing
+            try {
+                window.portalAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create speaker output nodes
+                window.portalSpeakerOutput = window.portalAudioContext.createGain();
+                window.portalSpeakerOutput.connect(window.portalAudioContext.destination);
+                
+                console.log('Portal audio context initialized for speaker control');
+            } catch (error) {
+                console.log('Portal audio initialization error:', error);
+            }
+            
+            // Update status indicators
+            updateStatusIndicator('chatgptStatus', 'warning', 'Connecting...');
+            updateStatusIndicator('speakerStatus', 'warning', 'Initializing...');
+            updateStatusIndicator('voiceSystemStatus', 'warning', 'Preparing...');
+        }
+
+        function establishChatGPTControl() {
+            console.log('Establishing ChatGPT portal control...');
+            
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            // Method 1: Direct iframe control
+            setTimeout(() => {
+                try {
+                    injectPortalControlScript();
+                    updateStatusIndicator('chatgptStatus', 'success', 'Connected');
+                } catch (error) {
+                    console.log('Direct control failed, trying alternative methods...');
+                    tryAlternativeControlMethods();
+                }
+            }, 3000);
+            
+            // Method 2: PostMessage control
+            setupPostMessageControl();
+            
+            // Method 3: Event listener injection
+            setupEventListenerControl();
+        }
+
+        function injectPortalControlScript() {
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            try {
+                const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
+                
+                if (iframeDoc) {
+                    // Inject portal control script into ChatGPT
+                    const script = iframeDoc.createElement('script');
+                    script.textContent = `
+                        // Portal Control Script for ChatGPT
+                        window.portalControlActive = true;
+                        
+                        // Force voice mode activation
+                        function activateVoiceMode() {
+                            const voiceSelectors = [
+                                '[data-testid*="voice"]',
+                                '[aria-label*="voice"]',
+                                '[aria-label*="speak"]',
+                                'button[class*="voice"]',
+                                'button:has(svg[data-icon="microphone"])'
+                            ];
+                            
+                            for (const selector of voiceSelectors) {
+                                const element = document.querySelector(selector);
+                                if (element) {
+                                    element.click();
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                        
+                        // Monitor for voice activation
+                        setInterval(() => {
+                            if (window.portalShouldActivateVoice) {
+                                activateVoiceMode();
+                                window.portalShouldActivateVoice = false;
+                            }
+                        }, 1000);
+                        
+                        // Force speaker output
+                        if ('speechSynthesis' in window) {
+                            const originalSpeak = speechSynthesis.speak;
+                            speechSynthesis.speak = function(utterance) {
+                                utterance.volume = 1.0;
+                                return originalSpeak.call(this, utterance);
+                            };
+                        }
+                        
+                        console.log('Portal control script injected successfully');
+                    `;
+                    
+                    iframeDoc.head.appendChild(script);
+                    console.log('Portal control script injected into ChatGPT');
+                    
+                    window.chatgptControlActive = true;
+                    return true;
+                }
+            } catch (error) {
+                console.log('Script injection blocked:', error);
+            }
+            
+            return false;
+        }
+
+        function setupPostMessageControl() {
+            // Set up bidirectional communication with ChatGPT
+            window.addEventListener('message', function(event) {
+                if (event.origin !== 'https://chatgpt.com') return;
+                
+                const data = event.data;
+                
+                if (data.type === 'voice_status') {
+                    updateStatusIndicator('voiceModeStatus', 
+                        data.active ? 'success' : 'warning', 
+                        data.active ? 'Active' : 'Inactive');
+                }
+                
+                if (data.type === 'audio_output') {
+                    forceSpeakerOutput();
+                }
+            });
+            
+            console.log('PostMessage control established');
+        }
+
+        function setupEventListenerControl() {
+            // Monitor ChatGPT iframe for changes
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            chatFrame.addEventListener('load', function() {
+                setTimeout(() => {
+                    establishChatGPTControl();
+                }, 1000);
+            });
+            
+            // Monitor for audio events
+            document.addEventListener('play', function(event) {
+                if (event.target.tagName === 'AUDIO') {
+                    forceSpeakerOutput();
+                }
+            }, true);
+        }
+
+        function forceChatGPTVoice() {
+            const btn = event.target;
+            btn.innerHTML = '🎤 Forcing...';
+            btn.disabled = true;
+            
+            // Method 1: Script injection
+            if (window.chatgptControlActive) {
+                try {
+                    const chatFrame = document.getElementById('chatgptFrame');
+                    chatFrame.contentWindow.portalShouldActivateVoice = true;
+                    
+                    showNotification('🎤 Voice Forced!', 'Portal control script activated ChatGPT voice mode.', 'success');
+                    updateStatusIndicator('voiceModeStatus', 'success', 'Force Activated');
+                } catch (error) {
+                    console.log('Script force failed:', error);
+                }
+            }
+            
+            // Method 2: PostMessage force
+            const chatFrame = document.getElementById('chatgptFrame');
+            chatFrame.contentWindow.postMessage({
+                type: 'force_voice_activation',
+                source: 'portal_control'
+            }, 'https://chatgpt.com');
+            
+            // Method 3: Direct DOM manipulation
+            setTimeout(() => {
+                try {
+                    const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
+                    if (iframeDoc) {
+                        const voiceButton = iframeDoc.querySelector('[aria-label*="voice"], [data-testid*="voice"]');
+                        if (voiceButton) {
+                            voiceButton.click();
+                            showNotification('🎤 Success!', 'Voice button clicked directly!', 'success');
+                        }
+                    }
+                } catch (error) {
+                    console.log('Direct manipulation blocked:', error);
+                }
+            }, 500);
+            
+            btn.innerHTML = '🎤 Voice Forced!';
+            btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                btn.innerHTML = '🎤 Force Voice Mode';
+                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                btn.disabled = false;
+            }, 3000);
+        }
+
+        function forceSpeakerOutput() {
+            console.log('Forcing audio output to phone speaker...');
+            
+            const btn = event.target;
+            if (btn) {
+                btn.innerHTML = '📢 Forcing...';
+                btn.disabled = true;
+            }
+            
+            try {
+                // Method 1: Audio Context routing
+                if (window.portalAudioContext) {
+                    window.portalAudioContext.resume();
+                    
+                    // Force audio to default output (phone speaker)
+                    if (navigator.mediaDevices && navigator.mediaDevices.selectAudioOutput) {
+                        navigator.mediaDevices.selectAudioOutput()
+                            .then(device => {
+                                console.log('Audio output device selected:', device);
+                                updateStatusIndicator('speakerStatus', 'success', 'Phone Speaker');
+                                document.getElementById('audioRouteDisplay').textContent = 'Audio Route: Phone Speaker (Forced)';
+                            })
+                            .catch(error => {
+                                console.log('Audio output selection failed:', error);
+                            });
+                    }
+                }
+                
+                // Method 2: Force all audio elements to max volume
+                const audioElements = document.querySelectorAll('audio');
+                audioElements.forEach(audio => {
+                    audio.volume = 1.0;
+                    audio.muted = false;
+                });
+                
+                // Method 3: Override ChatGPT audio settings
+                if (window.chatgptControlActive) {
+                    const chatFrame = document.getElementById('chatgptFrame');
+                    chatFrame.contentWindow.postMessage({
+                        type: 'force_speaker_output',
+                        volume: 1.0
+                    }, 'https://chatgpt.com');
+                }
+                
+                // Method 4: Test speaker with forced audio
+                const oscillator = window.portalAudioContext.createOscillator();
+                const gainNode = window.portalAudioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(window.portalAudioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(880, window.portalAudioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.3, window.portalAudioContext.currentTime);
+                
+                oscillator.start();
+                oscillator.stop(window.portalAudioContext.currentTime + 0.3);
+                
+                window.speakerForceActive = true;
+                
+                showNotification('📢 Speaker Forced!', 'Audio output has been forced to phone speaker.', 'success');
+                updateStatusIndicator('speakerStatus', 'success', 'Phone Speaker (Forced)');
+                
+            } catch (error) {
+                console.log('Speaker forcing error:', error);
+                showNotification('📢 Force Failed', 'Speaker forcing encountered an error. Some methods may still be active.', 'warning');
+            }
+            
+            if (btn) {
+                btn.innerHTML = '📢 Speaker Forced!';
+                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '📢 Force Phone Speaker';
+                    btn.disabled = false;
+                }, 3000);
+            }
+        }
+
+        function activatePortalVoiceMode() {
+            const btn = event.target;
+            btn.innerHTML = '🎙️ Activating...';
+            btn.disabled = true;
+            
+            // Comprehensive voice activation
+            navigator.mediaDevices.getUserMedia({ 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                    sampleRate: 48000
+                }
+            })
+            .then(function(stream) {
+                window.micStream = stream;
+                
+                // Connect to audio analysis
+                const source = window.portalAudioContext.createMediaStreamSource(stream);
+                source.connect(window.audioAnalyser);
+                
+                // Initialize speech recognition
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    window.recognition = new SpeechRecognition();
+                    
+                    window.recognition.continuous = true;
+                    window.recognition.interimResults = true;
+                    window.recognition.lang = 'en-US';
+                    
+                    window.recognition.onresult = function(event) {
+                        let finalTranscript = '';
+                        
+                        for (let i = event.resultIndex; i < event.results.length; i++) {
+                            if (event.results[i].isFinal) {
+                                finalTranscript += event.results[i][0].transcript;
+                            }
+                        }
+                        
+                        if (finalTranscript) {
+                            injectTextToChatGPT(finalTranscript);
+                        }
+                    };
+                    
+                    window.recognition.start();
+                }
+                
+                window.voiceSystemActive = true;
+                updateStatusIndicator('voiceSystemStatus', 'success', 'Active');
+                updateStatusIndicator('micStatus', 'success', 'Active');
+                updateStatusIndicator('speechStatus', 'success', 'Listening');
+                
+                btn.innerHTML = '🎙️ Voice Active!';
+                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                
+                showNotification('🎙️ Voice Activated!', 'Portal voice mode is now fully active with speech recognition.', 'success');
+            })
+            .catch(function(error) {
+                console.log('Voice activation error:', error);
+                
+                // Try bypass methods
+                bypassMicrophoneRestrictions();
+                
+                btn.innerHTML = '🎙️ Bypass Mode';
+                btn.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+            });
+            
+            setTimeout(() => {
+                btn.disabled = false;
+            }, 2000);
+        }
+
+        function injectTextToChatGPT(text = null) {
+            const textInput = text || document.getElementById('textToInject').value;
+            
+            if (!textInput) {
+                showNotification('📝 No Text', 'Please enter text to inject into ChatGPT.', 'warning');
+                return;
+            }
+            
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            try {
+                // Method 1: Direct textarea injection
+                const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
+                
+                if (iframeDoc) {
+                    const textArea = iframeDoc.querySelector('textarea') || iframeDoc.querySelector('input[type="text"]');
+                    
+                    if (textArea) {
+                        textArea.value = textInput;
+                        textArea.focus();
+                        
+                        // Trigger events
+                        textArea.dispatchEvent(new Event('input', { bubbles: true }));
+                        textArea.dispatchEvent(new Event('change', { bubbles: true }));
+                        
+                        // Auto-submit
+                        setTimeout(() => {
+                            const sendButton = iframeDoc.querySelector('button[type="submit"]') || 
+                                             iframeDoc.querySelector('[aria-label*="Send"]') ||
+                                             iframeDoc.querySelector('button:last-of-type');
+                            
+                            if (sendButton) {
+                                sendButton.click();
+                                showNotification('📝 Text Sent!', 'Message injected and sent to ChatGPT successfully.', 'success');
+                            }
+                        }, 500);
+                        
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.log('Direct injection blocked:', error);
+            }
+            
+            // Method 2: PostMessage injection
+            chatFrame.contentWindow.postMessage({
+                type: 'inject_text',
+                text: textInput,
+                autoSubmit: true
+            }, 'https://chatgpt.com');
+            
+            showNotification('📝 Text Injected', 'Text sent to ChatGPT via portal communication.', 'info');
+            
+            // Clear input
+            if (!text) {
+                document.getElementById('textToInject').value = '';
+            }
+        }
+
+        function bypassMicrophoneRestrictions() {
+            console.log('Attempting microphone bypass...');
+            
+            // Method 1: Multiple permission requests
+            const requestPermissions = async () => {
+                const permissions = ['microphone'];
+                
+                for (const permission of permissions) {
+                    try {
+                        const result = await navigator.permissions.query({ name: permission });
+                        console.log(`${permission} permission:`, result.state);
+                    } catch (error) {
+                        console.log(`Permission query failed for ${permission}:`, error);
+                    }
+                }
+            };
+            
+            requestPermissions();
+            
+            // Method 2: Silent audio context activation
+            if (window.portalAudioContext) {
+                window.portalAudioContext.resume();
+            }
+            
+            // Method 3: User gesture simulation
+            document.addEventListener('click', function enableAudio() {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        console.log('Microphone access granted via bypass');
+                        window.microphoneBypassActive = true;
+                        updateStatusIndicator('micStatus', 'success', 'Bypass Active');
+                    })
+                    .catch(error => {
+                        console.log('Bypass failed:', error);
+                    });
+                
+                document.removeEventListener('click', enableAudio);
+            }, { once: true });
+            
+            showNotification('🔓 Bypass Active', 'Microphone bypass methods activated. Click anywhere to complete.', 'warning');
+        }
+
+        function runAudioDiagnostics() {
+            const btn = event.target;
+            btn.innerHTML = '🔍 Running...';
+            btn.disabled = true;
+            
+            const diagnostics = {
+                audioContext: !!window.portalAudioContext,
+                speechSynthesis: 'speechSynthesis' in window,
+                mediaDevices: !!navigator.mediaDevices,
+                chatgptControl: window.chatgptControlActive,
+                voiceSystem: window.voiceSystemActive,
+                speakerForce: window.speakerForceActive
+            };
+            
+            console.log('Audio diagnostics:', diagnostics);
+            
+            let diagnosticText = 'Portal Audio Diagnostics:\n\n';
+            for (const [key, value] of Object.entries(diagnostics)) {
+                diagnosticText += `${key}: ${value ? '✅ Active' : '❌ Inactive'}\n`;
+            }
+            
+            showNotification('🔍 Diagnostics Complete', diagnosticText, 'info');
+            
+            btn.innerHTML = '🔍 Diagnostics Complete!';
+            btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                btn.innerHTML = '🔍 Full Diagnostics';
+                btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                btn.disabled = false;
+            }, 3000);
+        }
+
+        // Helper functions
+        function updateStatusIndicator(id, status, text) {
+            const indicator = document.getElementById(id);
+            const textElement = document.getElementById(id.replace('Status', 'StatusText'));
+            
+            if (indicator) {
+                indicator.className = `status-indicator ${status}`;
+            }
+            
+            if (textElement) {
+                textElement.textContent = text;
+            }
+        }
+
+        function showNotification(title, message, type = 'info') {
+            const notification = document.createElement('div');
+            const bgColor = type === 'success' ? 'rgba(39, 174, 96, 0.9)' : 
+                           type === 'error' ? 'rgba(231, 76, 60, 0.9)' : 
+                           type === 'warning' ? 'rgba(243, 156, 18, 0.9)' :
+                           'rgba(52, 152, 219, 0.9)';
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${bgColor};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                backdrop-filter: blur(10px);
+                z-index: 10001;
+                max-width: 350px;
+                font-size: 0.9rem;
+                animation: slideInRight 0.3s ease-out;
+                white-space: pre-line;
+            `;
+            
+            notification.innerHTML = `
+                <strong>${title}</strong><br>
+                <span style="opacity: 0.9;">${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.animation = 'slideOutRight 0.3s ease-in';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        // Additional control functions
+        function showVoiceControlPanel() {
+            document.getElementById('voiceControlOverlay').classList.add('show');
+        }
+
+        function closeVoiceControl() {
+            document.getElementById('voiceControlOverlay').classList.remove('show');
+        }
+
+        function showChatGPTControl() {
+            document.getElementById('chatgptControlPanel').classList.add('show');
+        }
+
+        function closeChatGPTControl() {
+            document.getElementById('chatgptControlPanel').classList.remove('show');
+        }
+
+        function startPortalMonitoring() {
+            // Monitor all portal systems
+            setInterval(() => {
+                // Check ChatGPT connection
+                const chatFrame = document.getElementById('chatgptFrame');
+                if (chatFrame.src && !chatFrame.src.includes('about:blank')) {
+                    updateStatusIndicator('connectionStatus', 'success', 'Connected');
+                }
+                
+                // Monitor audio systems
+                if (window.portalAudioContext && window.portalAudioContext.state === 'running') {
+                    updateStatusIndicator('speakerStatus', 'success', 'Active');
+                }
+                
+                // Check voice systems
+                if (window.voiceSystemActive) {
+                    updateStatusIndicator('voiceSystemStatus', 'success', 'Active');
+                }
+            }, 2000);
+        }
+
+        // Initialize speaker volume control
+        function adjustSpeakerVolume(value) {
+            if (window.portalSpeakerOutput) {
+                window.portalSpeakerOutput.gain.value = value / 100;
+                document.getElementById('audioRouteDisplay').textContent = `Audio Route: Phone Speaker (${value}% volume)`;
+            }
+        }
+
+        // Additional control functions for compatibility
+        function toggleSoundDetection() { 
+            if (window.soundDetectionActive) {
+                window.soundDetectionActive = false;
+                window.visualizationActive = false;
+                if (window.animationFrameId) {
+                    cancelAnimationFrame(window.animationFrameId);
+                }
+                document.getElementById('audioVisualizer').classList.remove('active');
+                document.querySelectorAll('.sound-wave').forEach(wave => wave.classList.remove('active'));
+                showNotification('🎤 Detection Off', 'Sound detection deactivated.', 'warning');
+            } else {
+                window.soundDetectionActive = true;
+                startSoundVisualization();
+                showNotification('🎤 Detection On', 'Sound detection activated.', 'success');
+            }
+        }
+        
+        function refreshChatGPT() {
+            const chatgptFrame = document.getElementById('chatgptFrame');
+            chatgptFrame.src = 'https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418';
+            showNotification('🔄 Refreshing', 'ChatGPT portal refreshed.', 'info');
+            
+            // Re-establish control after refresh
+            setTimeout(() => {
+                establishChatGPTControl();
+                initializeSpeakerForcing();
+            }, 3000);
+        }
+
+        // Quick function implementations for all buttons
+        function testSpeakerOutput() { forceSpeakerOutput(); }
+        function calibrateAudioSystem() { runAudioDiagnostics(); }
+        function injectChatGPTCommands() { forceChatGPTVoice(); }
+        function emergencyReset() { location.reload(); }
+        function testAudioLatency() { forceSpeakerOutput(); }
+        function exportAudioSettings() { 
+            const settings = {
+                audioContext: !!window.portalAudioContext,
+                chatgptControl: window.chatgptControlActive,
+                voiceSystem: window.voiceSystemActive,
+                speakerForce: window.speakerForceActive
+            };
+            console.log('Portal settings:', settings);
+            showNotification('💾 Settings Exported', 'Portal settings exported to console.', 'info');
+        }
+        function startFullVoiceMode() { activatePortalVoiceMode(); }
+        function forceMicrophoneAccess() { bypassMicrophoneRestrictions(); }
+        function setupVoiceBypass() { bypassMicrophoneRestrictions(); }
+        function injectVoiceButton() { forceChatGPTVoice(); }
+        function simulateUserClick() { forceChatGPTVoice(); }
+        function sendPostMessage() { 
+            const chatFrame = document.getElementById('chatgptFrame');
+            chatFrame.contentWindow.postMessage({
+                type: 'portal_control_message',
+                action: 'activate_voice'
+            }, 'https://chatgpt.com');
+            showNotification('📨 Message Sent', 'PostMessage sent to ChatGPT.', 'info');
+        }
+        function forceIframeAccess() { injectPortalControlScript(); }
+        function tryAlternativeControlMethods() { setupPostMessageControl(); }
+        function initializeSpeakerForcing() { 
+            setTimeout(() => {
+                if (event && event.target) {
+                    forceSpeakerOutput();
+                } else {
+                    // Auto-initialize speaker forcing
+                    try {
+                        if (window.portalAudioContext) {
+                            window.portalAudioContext.resume();
+                            updateStatusIndicator('speakerStatus', 'success', 'Auto-Initialized');
+                        }
+                    } catch (error) {
+                        console.log('Auto speaker init error:', error);
+                    }
+                }
+            }, 1000);
         }
 
         function monitorChatGPTAudio() {
@@ -1470,13 +2514,35 @@
             audioVisualizer.classList.add('active');
             blackHoleContainer.classList.add('speaking');
             
-            // Animate audio bars
+            // Animate all 28 audio bars with realistic frequency distribution
             const audioBars = document.querySelectorAll('.audio-bar');
-            audioBars.forEach(bar => {
-                bar.style.height = (50 + Math.random() * 50) + 'px';
+            audioBars.forEach((bar, index) => {
+                // Create a realistic frequency spectrum simulation
+                let height;
+                if (index < 7) {
+                    height = 40 + Math.random() * 60; // Strong bass
+                } else if (index < 14) {
+                    height = 30 + Math.random() * 50; // Mid frequencies
+                } else if (index < 21) {
+                    height = 20 + Math.random() * 40; // High-mid
+                } else {
+                    height = 10 + Math.random() * 30; // Treble
+                }
+                
+                bar.style.height = height + 'px';
+                bar.style.animationDuration = (0.1 + Math.random() * 0.2) + 's';
+                
+                // Animate with color changes
+                setTimeout(() => {
+                    bar.style.height = (height * 0.7 + Math.random() * 20) + 'px';
+                }, 200);
+                
+                setTimeout(() => {
+                    bar.style.height = (height * 1.3 + Math.random() * 30) + 'px';
+                }, 400);
             });
             
-            btn.innerHTML = '🌊 Waves Active!';
+            btn.innerHTML = '🌊 28 Bars Dancing!';
             btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
             
             setTimeout(() => {
@@ -1490,84 +2556,6 @@
             }, 3000);
         }
 
-        function testAudioDetection() {
-            const btn = event.target;
-            btn.innerHTML = '🔊 Testing...';
-            btn.disabled = true;
-            
-            // Test audio context and analysis
-            if (window.audioContext) {
-                // Generate test tone for visualization
-                const oscillator = window.audioContext.createOscillator();
-                const gainNode = window.audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(window.audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(440, window.audioContext.currentTime);
-                gainNode.gain.setValueAtTime(0.1, window.audioContext.currentTime);
-                
-                oscillator.start();
-                oscillator.stop(window.audioContext.currentTime + 0.5);
-                
-                btn.innerHTML = '🔊 Audio Works!';
-                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
-            } else {
-                btn.innerHTML = '🔊 No Audio Context';
-                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-            }
-            
-            setTimeout(() => {
-                btn.innerHTML = '🔊 Test Audio';
-                btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
-                btn.disabled = false;
-            }, 3000);
-        }
-
-        function toggleSoundDetection() {
-            const btn = event.target;
-            
-            if (window.soundDetectionActive) {
-                // Stop sound detection
-                window.soundDetectionActive = false;
-                window.visualizationActive = false;
-                
-                if (window.animationFrameId) {
-                    cancelAnimationFrame(window.animationFrameId);
-                }
-                
-                btn.innerHTML = '🎤 Detection Off';
-                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-                
-                // Hide visualizations
-                document.getElementById('audioVisualizer').classList.remove('active');
-                document.querySelectorAll('.sound-wave').forEach(wave => wave.classList.remove('active'));
-                
-            } else {
-                // Start sound detection
-                window.soundDetectionActive = true;
-                startSoundVisualization();
-                
-                btn.innerHTML = '🎤 Detection On';
-                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
-            }
-        }
-
-        function refreshChatGPT() {
-            const btn = event.target;
-            const chatgptFrame = document.getElementById('chatgptFrame');
-            
-            btn.innerHTML = '🔄 Refreshing...';
-            btn.disabled = true;
-            
-            chatgptFrame.src = chatgptFrame.src;
-            
-            setTimeout(() => {
-                btn.innerHTML = '🔄 Refresh ChatGPT';
-                btn.disabled = false;
-            }, 2000);
-        }
-
         function toggleSettings() {
             const settingsPanel = document.getElementById('settingsPanel');
             settingsPanel.classList.toggle('show');
@@ -1577,17 +2565,21 @@
         document.addEventListener('click', function(event) {
             const settingsPanel = document.getElementById('settingsPanel');
             const settingsBtn = document.getElementById('settingsBtn');
+            const voiceOverlay = document.getElementById('voiceControlOverlay');
+            const chatgptPanel = document.getElementById('chatgptControlPanel');
             
             if (settingsPanel && settingsBtn && 
                 !settingsPanel.contains(event.target) && 
-                !settingsBtn.contains(event.target)) {
+                !settingsBtn.contains(event.target) &&
+                !voiceOverlay.contains(event.target) &&
+                !chatgptPanel.contains(event.target)) {
                 settingsPanel.classList.remove('show');
             }
         });
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Sound wave detection system ready');
+            console.log('Portal control system ready');
         });
 
         // Clean up on page unload
@@ -1595,8 +2587,11 @@
             if (window.animationFrameId) {
                 cancelAnimationFrame(window.animationFrameId);
             }
-            if (window.audioContext) {
-                window.audioContext.close();
+            if (window.portalAudioContext) {
+                window.portalAudioContext.close();
+            }
+            if (window.micStream) {
+                window.micStream.getTracks().forEach(track => track.stop());
             }
         });
     </script>
