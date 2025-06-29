@@ -432,6 +432,11 @@
             to { transform: rotate(360deg); }
         }
 
+        @keyframes counterRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+
         @keyframes accretionDisk {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -555,6 +560,7 @@
             margin: 5px;
             transition: all 0.3s ease;
             width: calc(50% - 10px);
+            display: inline-block;
         }
 
         .test-button:hover {
@@ -690,13 +696,14 @@
             }
 
             .chatgpt-iframe {
-                width: 85%;
-                height: 85%;
+                width: 75%;
+                height: 75%;
                 border-radius: 50%;
                 box-shadow: 
-                    inset 0 0 20px rgba(255, 107, 157, 0.2),
-                    inset 0 0 40px rgba(0, 0, 0, 0.8),
-                    0 0 30px rgba(0, 0, 0, 0.9);
+                    inset 0 0 20px rgba(255, 107, 157, 0.1),
+                    inset 0 0 40px rgba(0, 0, 0, 0.9),
+                    0 0 25px rgba(0, 0, 0, 0.9);
+                animation: counterRotate 8s linear infinite;
             }
 
             .voice-mode-button {
@@ -770,13 +777,14 @@
             }
 
             .chatgpt-iframe {
-                width: 90%;
-                height: 90%;
+                width: 80%;
+                height: 80%;
                 border-radius: 50%;
                 box-shadow: 
-                    inset 0 0 15px rgba(255, 107, 157, 0.2),
-                    inset 0 0 30px rgba(0, 0, 0, 0.8),
-                    0 0 25px rgba(0, 0, 0, 0.9);
+                    inset 0 0 15px rgba(255, 107, 157, 0.1),
+                    inset 0 0 30px rgba(0, 0, 0, 0.9),
+                    0 0 20px rgba(0, 0, 0, 0.9);
+                animation: counterRotate 8s linear infinite;
             }
         }
     </style>
@@ -859,9 +867,11 @@
         </button>
 
         <div class="settings-panel" id="settingsPanel">
-            <h3>🎛️ Audio Settings</h3>
+            <h3>🎤 Audio Settings</h3>
             <button class="test-button" onclick="testMicrophone()">🎤 Test Mic</button>
-            <button class="test-button" onclick="testSpeaker()">🔊 Test Speaker</button>
+            <button class="test-button" onclick="forceSpeakerActivation()">🔊 Force Speaker</button>
+            <button class="test-button" onclick="activateMicPermission()">🔓 Enable Mic</button>
+            <button class="test-button" onclick="testSpeaker()">🔊 Test Audio</button>
             <a href="https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418" 
                target="_blank" 
                class="chatgpt-link">
@@ -971,11 +981,72 @@
             // Update loading text
             loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Activating AI Assistant...</small>';
             
+            // Auto-activate speakers
+            activateSpeakers();
+            
             // Show iframe after a short delay
             setTimeout(() => {
                 loadingText.classList.add('hidden');
                 chatgptFrame.classList.add('show');
+                
+                // Test speakers once ChatGPT is loaded
+                setTimeout(() => {
+                    playWelcomeSound();
+                }, 1000);
             }, 2000);
+        }
+
+        function activateSpeakers() {
+            try {
+                // Create audio context to enable speakers
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Resume audio context if suspended
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume().then(() => {
+                        console.log('Audio context resumed - speakers activated');
+                    });
+                }
+                
+                // Store audio context globally for later use
+                window.audioContext = audioContext;
+                
+            } catch (error) {
+                console.log('Speaker activation error:', error);
+            }
+        }
+
+        function playWelcomeSound() {
+            try {
+                const audioContext = window.audioContext || new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create a pleasant welcome chime
+                const oscillator1 = audioContext.createOscillator();
+                const oscillator2 = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator1.connect(gainNode);
+                oscillator2.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Create harmonic welcome sound
+                oscillator1.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                oscillator2.frequency.setValueAtTime(659.25, audioContext.currentTime); // E5
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.5);
+                
+                oscillator1.start(audioContext.currentTime);
+                oscillator2.start(audioContext.currentTime);
+                oscillator1.stop(audioContext.currentTime + 1.5);
+                oscillator2.stop(audioContext.currentTime + 1.5);
+                
+                console.log('Welcome sound played - speakers confirmed active');
+                
+            } catch (error) {
+                console.log('Welcome sound error:', error);
+            }
         }
 
         function toggleSettings() {
@@ -1025,59 +1096,230 @@
                 });
         }
 
-        function testSpeaker() {
+        function forceSpeakerActivation() {
             const btn = event.target;
-            btn.innerHTML = '🔊 Testing...';
+            btn.innerHTML = '🔊 Activating...';
             btn.disabled = true;
             
-            // Create audio context for speaker test
             try {
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
                 
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                
-                oscillator.start();
-                
-                btn.innerHTML = '🔊 Playing...';
-                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
-                
-                setTimeout(() => {
-                    oscillator.stop();
-                    btn.innerHTML = '🔊 Speaker Works!';
+                // Force resume audio context
+                audioContext.resume().then(() => {
+                    // Play activation sound sequence
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    // Rising tone sequence
+                    oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.5);
+                    
+                    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                    gainNode.gain.linearRampToValueAtTime(0.15, audioContext.currentTime + 0.1);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 1);
+                    
+                    btn.innerHTML = '🔊 Speakers Active!';
+                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                    
+                    // Store audio context globally
+                    window.audioContext = audioContext;
                     
                     setTimeout(() => {
-                        btn.innerHTML = '🔊 Test Speaker';
+                        btn.innerHTML = '🔊 Force Speaker';
                         btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
                         btn.disabled = false;
-                    }, 2000);
-                }, 2000);
+                    }, 3000);
+                });
                 
             } catch (error) {
-                btn.innerHTML = '🔊 Speaker Error';
+                btn.innerHTML = '🔊 Activation Error';
                 btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
                 
                 setTimeout(() => {
-                    btn.innerHTML = '🔊 Test Speaker';
+                    btn.innerHTML = '🔊 Force Speaker';
                     btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
                     btn.disabled = false;
                 }, 3000);
             }
         }
 
+        function testSpeaker() {
+            const btn = event.target;
+            btn.innerHTML = '🔊 Testing...';
+            btn.disabled = true;
+            
+            try {
+                const audioContext = window.audioContext || new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Resume if suspended
+                audioContext.resume().then(() => {
+                    // Create stereo test with multiple frequencies
+                    const oscillator1 = audioContext.createOscillator();
+                    const oscillator2 = audioContext.createOscillator();
+                    const gainNode1 = audioContext.createGain();
+                    const gainNode2 = audioContext.createGain();
+                    const merger = audioContext.createChannelMerger(2);
+                    
+                    oscillator1.connect(gainNode1);
+                    oscillator2.connect(gainNode2);
+                    gainNode1.connect(merger, 0, 0); // Left channel
+                    gainNode2.connect(merger, 0, 1); // Right channel
+                    merger.connect(audioContext.destination);
+                    
+                    // Different frequencies for stereo test
+                    oscillator1.frequency.setValueAtTime(800, audioContext.currentTime);
+                    oscillator2.frequency.setValueAtTime(1000, audioContext.currentTime);
+                    
+                    gainNode1.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode2.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    
+                    oscillator1.start();
+                    oscillator2.start();
+                    
+                    btn.innerHTML = '🔊 Playing Stereo...';
+                    btn.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+                    
+                    setTimeout(() => {
+                        oscillator1.stop();
+                        oscillator2.stop();
+                        btn.innerHTML = '🔊 Speakers Work!';
+                        btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                        
+                        setTimeout(() => {
+                            btn.innerHTML = '🔊 Test Audio';
+                            btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                            btn.disabled = false;
+                        }, 2000);
+                    }, 3000);
+                });
+                
+            } catch (error) {
+                btn.innerHTML = '🔊 Audio Error';
+                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '🔊 Test Audio';
+                    btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                    btn.disabled = false;
+                }, 3000);
+            }
+        }
+
+        function activateMicPermission() {
+            const btn = event.target;
+            btn.innerHTML = '🔓 Requesting...';
+            btn.disabled = true;
+            
+            navigator.mediaDevices.getUserMedia({ 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true
+                }
+            })
+            .then(function(stream) {
+                btn.innerHTML = '🔓 Mic Enabled!';
+                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                
+                // Keep stream active for voice mode
+                window.micStream = stream;
+                
+                setTimeout(() => {
+                    btn.innerHTML = '🔓 Enable Mic';
+                    btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                    btn.disabled = false;
+                }, 3000);
+            })
+            .catch(function(error) {
+                btn.innerHTML = '🔓 Access Denied';
+                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '🔓 Enable Mic';
+                    btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                    btn.disabled = false;
+                }, 3000);
+            });
+        }
+
+        function calibrateMic() {
+            const btn = event.target;
+            btn.innerHTML = '⚡ Calibrating...';
+            btn.disabled = true;
+            
+            navigator.mediaDevices.getUserMedia({ 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                    sampleRate: 44100
+                }
+            })
+            .then(function(stream) {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const analyser = audioContext.createAnalyser();
+                const microphone = audioContext.createMediaStreamSource(stream);
+                
+                microphone.connect(analyser);
+                analyser.fftSize = 256;
+                
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                
+                btn.innerHTML = '⚡ Listening...';
+                btn.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+                
+                // Calibrate for 5 seconds
+                setTimeout(() => {
+                    stream.getTracks().forEach(track => track.stop());
+                    btn.innerHTML = '⚡ Calibrated!';
+                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = '⚡ Calibrate';
+                        btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                        btn.disabled = false;
+                    }, 2000);
+                }, 5000);
+            })
+            .catch(function(error) {
+                btn.innerHTML = '⚡ Cal Error';
+                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '⚡ Calibrate';
+                    btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
+                    btn.disabled = false;
+                }, 3000);
+            });
+        }
+
         function activateVoiceMode() {
             const btn = document.getElementById('voiceModeBtn');
             
-            // Request microphone access
-            navigator.mediaDevices.getUserMedia({ audio: true })
+            // Force activate speakers first
+            if (!window.audioContext) {
+                activateSpeakers();
+            }
+            
+            // Request microphone access with enhanced settings
+            navigator.mediaDevices.getUserMedia({ 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                    sampleRate: 44100
+                }
+            })
                 .then(function(stream) {
-                    // Microphone access granted
-                    btn.innerHTML = '🎤 Voice Mode Active - Listening...';
+                    // Both microphone and speakers are now active
+                    btn.innerHTML = '🎤 Voice Mode Active';
                     btn.style.background = 'linear-gradient(135deg, #4a90e2, #2c5aa0)';
                     btn.style.animation = 'pulse 1s ease-in-out infinite';
                     
@@ -1091,8 +1333,11 @@
                         recognition.lang = 'en-US';
                         
                         recognition.onstart = function() {
-                            btn.innerHTML = '🎤 Listening... Say something!';
-                            console.log('Voice recognition started');
+                            btn.innerHTML = '🎤 Listening... Speak now!';
+                            console.log('Voice recognition started with speakers active');
+                            
+                            // Play start sound
+                            playNotificationSound('start');
                         };
                         
                         recognition.onresult = function(event) {
@@ -1103,14 +1348,17 @@
                                 }
                             }
                             if (finalTranscript) {
-                                console.log('Voice input:', finalTranscript);
-                                // You can send this to ChatGPT or handle it as needed
+                                console.log('Voice input detected:', finalTranscript);
+                                // Play confirmation sound
+                                playNotificationSound('received');
                             }
                         };
                         
                         recognition.onerror = function(event) {
                             console.log('Speech recognition error:', event.error);
                             btn.innerHTML = '🎤 Voice Error - Try Again';
+                            playNotificationSound('error');
+                            
                             setTimeout(() => {
                                 btn.innerHTML = '🎤 Use Voice Mode';
                                 btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
@@ -1123,6 +1371,7 @@
                             btn.innerHTML = '🎤 Use Voice Mode';
                             btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
                             btn.style.animation = 'none';
+                            playNotificationSound('end');
                         };
                         
                         recognition.start();
@@ -1133,30 +1382,59 @@
                         }, 30000);
                     }
                     
-                    // Stop the stream after showing it's active
-                    setTimeout(() => {
-                        stream.getTracks().forEach(track => track.stop());
-                        if (!btn.innerHTML.includes('Error')) {
-                            btn.innerHTML = '🎤 Voice Mode Ready';
-                            setTimeout(() => {
-                                btn.innerHTML = '🎤 Use Voice Mode';
-                                btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
-                                btn.style.animation = 'none';
-                            }, 2000);
-                        }
-                    }, 3000);
+                    // Keep stream active for voice mode
+                    window.micStream = stream;
                 })
                 .catch(function(error) {
-                    // Microphone access denied or not available
                     console.log('Microphone access error:', error);
                     btn.innerHTML = '🎤 Mic Access Denied';
                     btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                    playNotificationSound('error');
                     
                     setTimeout(() => {
                         btn.innerHTML = '🎤 Use Voice Mode';
                         btn.style.background = 'linear-gradient(135deg, #ff6b9d, #c44bd1)';
                     }, 3000);
                 });
+        }
+
+        function playNotificationSound(type) {
+            try {
+                const audioContext = window.audioContext || new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Different sounds for different notifications
+                switch(type) {
+                    case 'start':
+                        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                        break;
+                    case 'received':
+                        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime); // E5
+                        break;
+                    case 'end':
+                        oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // A4
+                        break;
+                    case 'error':
+                        oscillator.frequency.setValueAtTime(220, audioContext.currentTime); // A3
+                        break;
+                    default:
+                        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+                }
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.05);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.3);
+                
+            } catch (error) {
+                console.log('Notification sound error:', error);
+            }
         }
     </script>
 </body>
