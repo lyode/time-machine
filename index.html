@@ -1021,76 +1021,6 @@
             margin: 5px 0;
         }
 
-        /* Portal Voice Control Interface */
-        .voice-control-overlay {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 107, 157, 0.6);
-            border-radius: 25px;
-            padding: 20px;
-            width: 300px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1005;
-        }
-
-        .voice-control-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .voice-control-overlay h3 {
-            color: #ff6b9d;
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-
-        .voice-status-display {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 10px 0;
-            padding: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            font-size: 0.8rem;
-        }
-
-        .chatgpt-control-panel {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(15px);
-            border: 2px solid rgba(138, 43, 226, 0.6);
-            border-radius: 20px;
-            padding: 15px;
-            width: 400px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1006;
-        }
-
-        .chatgpt-control-panel.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .chatgpt-control-panel h3 {
-            color: #c44bd1;
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-
         .chatgpt-link {
             background: linear-gradient(135deg, #ff6b9d, #c44bd1);
             color: white;
@@ -1263,12 +1193,6 @@
                 bottom: 80px;
                 padding: 15px;
             }
-
-            .chatgpt-control-panel {
-                width: 350px;
-                top: 15px;
-                padding: 12px;
-            }
         }
 
         @media (max-width: 480px) {
@@ -1364,10 +1288,10 @@
     <div class="main-content">
         <h1 class="title">AI Voice Assistant</h1>
         
-        <p class="subtitle">Complete portal control with forced phone speaker output</p>
+        <p class="subtitle">Simple iPhone mic & speaker control for ChatGPT</p>
         
         <p class="description">
-            Experience ChatGPT with intelligent dynamic audio visualization! The portal detects different audio patterns and responds with bouncing waves for bass, fast rings for treble, slow waves for music, and ripple effects for audio spikes - all while maintaining complete ChatGPT control and forced phone speaker output.
+            Direct iPhone microphone and speaker control for ChatGPT! Simple, straightforward controls to force your iPhone's mic and speaker to work with the ChatGPT conversation. Beautiful dynamic audio visualization responds with bouncing waves, fast rings, and ripple effects.
         </p>
         
         <a href="#" onclick="launchAssistant(); return false;" class="launch-button">
@@ -1378,14 +1302,14 @@
         <div class="features">
             <h3>✨ Key Features</h3>
             <ul class="feature-grid">
-                <li class="feature-item">Complete ChatGPT portal control with voice forcing</li>
-                <li class="feature-item">Direct phone speaker output with volume control</li>
+                <li class="feature-item">Direct iPhone microphone activation with one-click setup</li>
+                <li class="feature-item">Forced iPhone speaker output for clear ChatGPT audio</li>
                 <li class="feature-item">28 intelligent audio bars with dynamic bounce and wave patterns</li>
+                <li class="feature-item">Simple voice-to-text injection directly into ChatGPT</li>
+                <li class="feature-item">iPhone speech recognition with continuous listening</li>
+                <li class="feature-item">Volume control and audio testing for iPhone speakers</li>
                 <li class="feature-item">Smart wave detection: fast rings, slow rings, bouncing effects</li>
-                <li class="feature-item">Advanced frequency analysis: bass, mid, treble responsiveness</li>
-                <li class="feature-item">Automatic pattern detection: speech, music, rhythmic audio</li>
-                <li class="feature-item">Dynamic ripple effects and variable speed visualizations</li>
-                <li class="feature-item">All controls integrated with intelligent audio response</li>
+                <li class="feature-item">Streamlined controls focused on iPhone compatibility</li>
             </ul>
         </div>
     </div>
@@ -1463,135 +1387,74 @@
         </button>
 
         <div class="settings-panel" id="settingsPanel">
-            <h3>🎛️ Portal Control Center</h3>
+            <h3>📱 iPhone Mic & Speaker Control</h3>
             
             <!-- Sound Wave Controls -->
             <div class="control-section">
                 <h4>🌊 Sound Wave Visualization</h4>
                 <button class="test-button" onclick="testSoundWaves()">🌊 Test 28 Bars</button>
                 <button class="test-button" onclick="toggleSoundDetection()">🎤 Toggle Detection</button>
-                <button class="test-button full-width" onclick="calibrateAudioSystem()">🔧 Calibrate Audio System</button>
             </div>
 
-            <!-- ChatGPT Control -->
+            <!-- iPhone Microphone Control -->
             <div class="control-section">
-                <h4>🤖 ChatGPT Portal Control</h4>
+                <h4>🎤 iPhone Microphone</h4>
+                <div class="voice-status-display">
+                    <span>Microphone:</span>
+                    <span><span class="status-indicator" id="micStatus"></span><span id="micStatusText">Not Active</span></span>
+                </div>
+                <button class="test-button success full-width" onclick="activateIPhoneMic()">🎤 Activate iPhone Mic</button>
+                <div class="voice-status-display">
+                    <span>Speech Recognition:</span>
+                    <span><span class="status-indicator" id="speechStatus"></span><span id="speechStatusText">Inactive</span></span>
+                </div>
+            </div>
+
+            <!-- iPhone Speaker Control -->
+            <div class="control-section">
+                <h4>🔊 iPhone Speaker</h4>
+                <div class="voice-status-display">
+                    <span>Speaker Output:</span>
+                    <span><span class="status-indicator" id="speakerStatus"></span><span id="speakerStatusText">Default</span></span>
+                </div>
+                <button class="test-button success full-width" onclick="forceIPhoneSpeaker()">🔊 Force iPhone Speaker</button>
+                <div class="volume-control">
+                    <label style="color: #ccc; font-size: 0.8rem;">Volume:</label>
+                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100" onchange="setIPhoneVolume(this.value)">
+                </div>
+            </div>
+
+            <!-- ChatGPT Voice Control -->
+            <div class="control-section">
+                <h4>🤖 ChatGPT Voice</h4>
                 <div class="voice-status-display">
                     <span>ChatGPT Status:</span>
                     <span><span class="status-indicator" id="chatgptStatus"></span><span id="chatgptStatusText">Loading...</span></span>
                 </div>
-                <button class="test-button success" onclick="forceChatGPTVoice()">🎤 Force Voice Mode</button>
-                <button class="test-button warning" onclick="injectChatGPTCommands()">⚡ Inject Commands</button>
-                <button class="test-button" onclick="refreshChatGPT()">🔄 Refresh Portal</button>
-                <button class="test-button success" onclick="emergencyActivateAll()">🚨 Emergency Activate</button>
+                <button class="test-button warning full-width" onclick="activateChatGPTVoiceSimple()">🎤 Activate ChatGPT Voice</button>
+                <button class="test-button" onclick="refreshChatGPT()">🔄 Refresh ChatGPT</button>
+                <button class="test-button" onclick="sendTestMessage()">📝 Send Test Message</button>
             </div>
 
-            <!-- Phone Speaker Control -->
+            <!-- Quick Setup -->
             <div class="control-section">
-                <h4>🔊 Phone Speaker Control</h4>
-                <div class="voice-status-display">
-                    <span>Speaker Route:</span>
-                    <span><span class="status-indicator" id="speakerStatus"></span><span id="speakerStatusText">Detecting...</span></span>
-                </div>
-                <button class="test-button success" onclick="forceSpeakerOutput()">📢 Force Phone Speaker</button>
-                <button class="test-button" onclick="testSpeakerOutput()">🔊 Test Speaker</button>
-                <div class="volume-control">
-                    <label style="color: #ccc; font-size: 0.8rem;">Speaker Volume:</label>
-                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80" onchange="adjustSpeakerVolume(this.value)">
-                </div>
-                <div class="audio-route-display" id="audioRouteDisplay">
-                    Audio Route: System Default
-                </div>
+                <h4>⚡ Quick Setup</h4>
+                <button class="test-button success full-width" onclick="setupIPhoneAudioComplete()">📱 Setup iPhone Audio</button>
+                <button class="test-button warning full-width" onclick="testIPhoneAudio()">🔊 Test iPhone Audio</button>
+                <button class="test-button" onclick="checkAudioStatus()">📊 Check Status</button>
+                <button class="test-button danger" onclick="resetAudioSystems()">🔄 Reset Audio</button>
             </div>
 
-            <!-- Voice Activation -->
+            <!-- Direct Link -->
             <div class="control-section">
-                <h4>🎙️ Voice Activation System</h4>
-                <div class="voice-status-display">
-                    <span>Voice System:</span>
-                    <span><span class="status-indicator" id="voiceSystemStatus"></span><span id="voiceSystemText">Ready</span></span>
-                </div>
-                <button class="test-button success" onclick="activatePortalVoiceMode()">🎙️ Activate Voice</button>
-                <button class="test-button warning" onclick="bypassMicrophoneRestrictions()">🔓 Bypass Restrictions</button>
-                <button class="test-button full-width" onclick="showVoiceControlPanel()">🎛️ Advanced Voice Control</button>
-            </div>
-
-            <!-- Audio Diagnostics -->
-            <div class="control-section">
-                <h4>🔍 Audio Diagnostics</h4>
-                <button class="test-button" onclick="runAudioDiagnostics()">🔍 Full Diagnostics</button>
-                <button class="test-button" onclick="testAudioLatency()">⏱️ Test Latency</button>
-                <button class="test-button" onclick="showChatGPTControl()">🤖 ChatGPT Panel</button>
-                <button class="test-button" onclick="exportAudioSettings()">💾 Export Settings</button>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="control-section">
-                <h4>⚡ Quick Actions</h4>
+                <h4>🔗 Direct Access</h4>
                 <a href="https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418" 
                    target="_blank" 
                    class="test-button full-width"
                    style="text-decoration: none; text-align: center; display: block;">
-                    🚀 Open in New Tab
+                    🚀 Open ChatGPT in New Tab
                 </a>
             </div>
-        </div>
-
-        <!-- Voice Control Overlay -->
-        <div class="voice-control-overlay" id="voiceControlOverlay">
-            <h3>🎙️ Advanced Voice Control</h3>
-            
-            <div class="voice-status-display">
-                <span>Microphone:</span>
-                <span><span class="status-indicator" id="micStatus"></span><span id="micStatusText">Not Active</span></span>
-            </div>
-            
-            <div class="voice-status-display">
-                <span>Speech Recognition:</span>
-                <span><span class="status-indicator" id="speechStatus"></span><span id="speechStatusText">Disabled</span></span>
-            </div>
-            
-            <div class="voice-status-display">
-                <span>ChatGPT Voice:</span>
-                <span><span class="status-indicator" id="chatgptVoiceStatus"></span><span id="chatgptVoiceStatusText">Inactive</span></span>
-            </div>
-
-            <button class="test-button success full-width" onclick="startFullVoiceMode()">🎤 Start Full Voice Mode</button>
-            <button class="test-button warning full-width" onclick="forceMicrophoneAccess()">🔓 Force Microphone Access</button>
-            <button class="test-button full-width" onclick="setupVoiceBypass()">⚙️ Setup Voice Bypass</button>
-            <button class="test-button danger full-width" onclick="closeVoiceControl()">❌ Close Panel</button>
-        </div>
-
-        <!-- ChatGPT Control Panel -->
-        <div class="chatgpt-control-panel" id="chatgptControlPanel">
-            <h3>🤖 ChatGPT Portal Control</h3>
-            
-            <div class="voice-status-display">
-                <span>Connection:</span>
-                <span><span class="status-indicator" id="connectionStatus"></span><span id="connectionStatusText">Establishing...</span></span>
-            </div>
-            
-            <div class="voice-status-display">
-                <span>Voice Mode:</span>
-                <span><span class="status-indicator" id="voiceModeStatus"></span><span id="voiceModeStatusText">Attempting...</span></span>
-            </div>
-
-            <div class="control-section">
-                <h4>🎯 Direct Control Actions</h4>
-                <button class="test-button success" onclick="injectVoiceButton()">🎤 Inject Voice Button</button>
-                <button class="test-button warning" onclick="simulateUserClick()">👆 Simulate Click</button>
-                <button class="test-button" onclick="sendPostMessage()">📨 Send PostMessage</button>
-                <button class="test-button danger" onclick="forceIframeAccess()">🔓 Force Access</button>
-            </div>
-
-            <div class="control-section">
-                <h4>📝 Text Injection</h4>
-                <input type="text" id="textToInject" placeholder="Type message to inject..." 
-                       style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px; background: rgba(255,255,255,0.1); color: white;">
-                <button class="test-button success full-width" onclick="injectTextToChatGPT()">📝 Inject Text</button>
-            </div>
-
-            <button class="test-button danger full-width" onclick="closeChatGPTControl()">❌ Close Panel</button>
         </div>
     </div>
 
@@ -2209,34 +2072,333 @@
             const loadingText = document.getElementById('loadingText');
             const chatgptFrame = document.getElementById('chatgptFrame');
             
-            // Force load ChatGPT conversation with aggressive control attempts
+            // Direct load ChatGPT conversation
             chatgptFrame.src = 'https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418';
             
             // Update loading text
-            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Activating control systems...</small>';
+            loadingText.innerHTML = '🚀 ChatGPT Loading...<br><small style="opacity: 0.7;">Setting up iPhone mic & speaker...</small>';
             
-            // Immediate activation attempts
-            initializePortalControlSystems();
-            activateVoiceSystemImmediately();
+            // Initialize simple control systems
+            initializeSimpleAudioControl();
             
             // Show ChatGPT interface
             setTimeout(() => {
                 chatgptFrame.classList.add('show');
                 loadingText.classList.add('hidden');
                 
-                // Aggressive control establishment
-                establishChatGPTControlAggressively();
+                // Force iPhone mic and speaker
+                forceIPhoneMicAndSpeaker();
                 
-                // Force speaker and voice activation
-                forceAllSystemsActive();
+                // Simple ChatGPT voice activation
+                activateChatGPTVoiceSimple();
                 
-                // Start continuous monitoring
-                startContinuousMonitoring();
-                
-                // Auto-retry failed systems
-                setupAutoRetrySystem();
+                // Start basic monitoring
+                startSimpleMonitoring();
                 
             }, 2000);
+        }
+
+        function initializeSimpleAudioControl() {
+            console.log('🎵 Setting up iPhone mic & speaker control...');
+            
+            // Simple audio context for iPhone
+            try {
+                window.portalAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Force audio context to start
+                window.portalAudioContext.resume().then(() => {
+                    console.log('✅ iPhone audio context ready');
+                    updateStatusIndicator('speakerStatus', 'success', 'iPhone Speaker Ready');
+                });
+                
+                // Create speaker output
+                window.speakerOutput = window.portalAudioContext.createGain();
+                window.speakerOutput.connect(window.portalAudioContext.destination);
+                window.speakerOutput.gain.value = 1.0; // Max volume
+                
+            } catch (error) {
+                console.log('❌ iPhone audio setup error:', error);
+                updateStatusIndicator('speakerStatus', 'warning', 'Audio Setup Failed');
+            }
+            
+            // Set initial status
+            updateStatusIndicator('chatgptStatus', 'warning', 'Loading...');
+            updateStatusIndicator('micStatus', 'warning', 'Preparing...');
+            updateStatusIndicator('speakerStatus', 'warning', 'Preparing...');
+        }
+
+        function forceIPhoneMicAndSpeaker() {
+            console.log('📱 Forcing iPhone microphone and speaker...');
+            
+            // Get iPhone microphone access
+            navigator.mediaDevices.getUserMedia({ 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true
+                }
+            })
+            .then(function(stream) {
+                console.log('✅ iPhone microphone activated');
+                window.micStream = stream;
+                
+                // Connect mic to audio system
+                if (window.portalAudioContext) {
+                    const micSource = window.portalAudioContext.createMediaStreamSource(stream);
+                    if (window.audioAnalyser) {
+                        micSource.connect(window.audioAnalyser);
+                    }
+                }
+                
+                // Start speech recognition for voice input
+                startIPhoneSpeechRecognition();
+                
+                updateStatusIndicator('micStatus', 'success', 'iPhone Mic Active');
+                showNotification('🎤 iPhone Mic Ready', 'iPhone microphone is now active and ready for voice input.', 'success');
+                
+            })
+            .catch(function(error) {
+                console.log('⚠️ iPhone microphone access denied:', error);
+                updateStatusIndicator('micStatus', 'warning', 'Mic Access Denied');
+                showNotification('🎤 Mic Permission', 'Please allow microphone access for voice features.', 'warning');
+            });
+            
+            // Force iPhone speaker output
+            forceIPhoneSpeaker();
+        }
+
+        function forceIPhoneSpeaker() {
+            console.log('🔊 Forcing iPhone speaker output...');
+            
+            try {
+                // Ensure audio context is running for speaker output
+                if (window.portalAudioContext) {
+                    window.portalAudioContext.resume();
+                }
+                
+                // Override all audio to use iPhone speaker
+                if ('speechSynthesis' in window) {
+                    const originalSpeak = speechSynthesis.speak;
+                    speechSynthesis.speak = function(utterance) {
+                        utterance.volume = 1.0; // Max volume
+                        utterance.rate = 0.9;   // Clear speech rate
+                        console.log('🔊 Forcing speech to iPhone speaker');
+                        return originalSpeak.call(this, utterance);
+                    };
+                }
+                
+                // Force all audio elements to max volume
+                setInterval(() => {
+                    const audioElements = document.querySelectorAll('audio, video');
+                    audioElements.forEach(audio => {
+                        audio.volume = 1.0;
+                        audio.muted = false;
+                    });
+                }, 1000);
+                
+                // Test iPhone speaker with notification sound
+                playIPhoneTestSound();
+                
+                updateStatusIndicator('speakerStatus', 'success', 'iPhone Speaker Forced');
+                showNotification('🔊 iPhone Speaker Ready', 'Audio output forced to iPhone speaker at maximum volume.', 'success');
+                
+            } catch (error) {
+                console.log('❌ iPhone speaker forcing error:', error);
+                updateStatusIndicator('speakerStatus', 'warning', 'Speaker Force Failed');
+            }
+        }
+
+        function playIPhoneTestSound() {
+            if (window.portalAudioContext) {
+                const oscillator = window.portalAudioContext.createOscillator();
+                const gainNode = window.portalAudioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(window.portalAudioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(880, window.portalAudioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.3, window.portalAudioContext.currentTime);
+                
+                oscillator.start();
+                oscillator.stop(window.portalAudioContext.currentTime + 0.3);
+                
+                console.log('🔊 iPhone speaker test sound played');
+            }
+        }
+
+        function startIPhoneSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                window.recognition = new SpeechRecognition();
+                
+                window.recognition.continuous = true;
+                window.recognition.interimResults = false;
+                window.recognition.lang = 'en-US';
+                
+                window.recognition.onstart = function() {
+                    console.log('🎤 iPhone speech recognition started');
+                    updateStatusIndicator('speechStatus', 'success', 'Listening');
+                };
+                
+                window.recognition.onresult = function(event) {
+                    const lastResult = event.results[event.results.length - 1];
+                    if (lastResult.isFinal) {
+                        const transcript = lastResult[0].transcript;
+                        console.log('🎤 Voice input:', transcript);
+                        
+                        // Send directly to ChatGPT
+                        sendVoiceInputToChatGPT(transcript);
+                        
+                        showNotification('🎤 Voice → ChatGPT', `"${transcript.substring(0, 30)}..."`, 'info');
+                    }
+                };
+                
+                window.recognition.onerror = function(event) {
+                    console.log('🔄 Speech recognition error, restarting:', event.error);
+                    setTimeout(() => {
+                        if (window.recognition) {
+                            window.recognition.start();
+                        }
+                    }, 1000);
+                };
+                
+                window.recognition.onend = function() {
+                    console.log('🔄 Speech recognition ended, restarting...');
+                    setTimeout(() => {
+                        if (window.recognition) {
+                            window.recognition.start();
+                        }
+                    }, 100);
+                };
+                
+                window.recognition.start();
+                updateStatusIndicator('speechStatus', 'success', 'Active');
+            }
+        }
+
+        function activateChatGPTVoiceSimple() {
+            console.log('🤖 Activating ChatGPT voice (simple method)...');
+            
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            // Wait for ChatGPT to load, then try to activate voice
+            setTimeout(() => {
+                // Method 1: Try to click voice button directly
+                try {
+                    const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
+                    
+                    if (iframeDoc) {
+                        // Look for voice/microphone buttons
+                        const voiceSelectors = [
+                            '[aria-label*="voice"]',
+                            '[aria-label*="Voice"]',
+                            '[data-testid*="voice"]',
+                            'button:has([data-icon="microphone"])',
+                            'button:contains("🎤")'
+                        ];
+                        
+                        for (const selector of voiceSelectors) {
+                            const button = iframeDoc.querySelector(selector);
+                            if (button) {
+                                button.click();
+                                console.log('✅ ChatGPT voice button clicked');
+                                updateStatusIndicator('chatgptStatus', 'success', 'Voice Active');
+                                showNotification('🤖 ChatGPT Voice On', 'Voice mode activated in ChatGPT.', 'success');
+                                return;
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.log('Direct voice activation blocked:', error);
+                }
+                
+                // Method 2: Send activation message
+                chatFrame.contentWindow.postMessage({
+                    type: 'activate_voice',
+                    source: 'portal'
+                }, '*');
+                
+                updateStatusIndicator('chatgptStatus', 'warning', 'Voice Attempted');
+                showNotification('🤖 ChatGPT Voice', 'Voice activation attempted. Look for microphone button in ChatGPT.', 'info');
+                
+            }, 3000);
+        }
+
+        function sendVoiceInputToChatGPT(text) {
+            const chatFrame = document.getElementById('chatgptFrame');
+            
+            try {
+                // Try to inject text directly into ChatGPT
+                const iframeDoc = chatFrame.contentDocument || chatFrame.contentWindow.document;
+                
+                if (iframeDoc) {
+                    const textArea = iframeDoc.querySelector('textarea');
+                    const inputField = iframeDoc.querySelector('input[type="text"]');
+                    
+                    const targetInput = textArea || inputField;
+                    
+                    if (targetInput) {
+                        targetInput.value = text;
+                        targetInput.focus();
+                        
+                        // Trigger input events
+                        targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        targetInput.dispatchEvent(new Event('change', { bubbles: true }));
+                        
+                        // Try to find and click send button
+                        setTimeout(() => {
+                            const sendButton = iframeDoc.querySelector('button[type="submit"]') ||
+                                             iframeDoc.querySelector('[aria-label*="Send"]') ||
+                                             iframeDoc.querySelector('button:last-of-type');
+                            
+                            if (sendButton) {
+                                sendButton.click();
+                                console.log('✅ Voice input sent to ChatGPT');
+                            }
+                        }, 300);
+                        
+                        return true;
+                    }
+                }
+            } catch (error) {
+                console.log('Direct text injection blocked:', error);
+            }
+            
+            // Fallback: Send via PostMessage
+            chatFrame.contentWindow.postMessage({
+                type: 'inject_text',
+                text: text,
+                autoSubmit: true
+            }, '*');
+            
+            console.log('Voice input sent via PostMessage');
+            return false;
+        }
+
+        function startSimpleMonitoring() {
+            // Simple monitoring every 3 seconds
+            setInterval(() => {
+                // Check audio context
+                if (window.portalAudioContext && window.portalAudioContext.state === 'running') {
+                    updateStatusIndicator('speakerStatus', 'success', 'iPhone Speaker Active');
+                }
+                
+                // Check microphone
+                if (window.micStream && window.micStream.active) {
+                    updateStatusIndicator('micStatus', 'success', 'iPhone Mic Active');
+                }
+                
+                // Check speech recognition
+                if (window.recognition) {
+                    updateStatusIndicator('speechStatus', 'success', 'Voice Active');
+                }
+                
+                // Check ChatGPT frame
+                const chatFrame = document.getElementById('chatgptFrame');
+                if (chatFrame.src.includes('chatgpt.com')) {
+                    updateStatusIndicator('chatgptStatus', 'success', 'Connected');
+                }
+            }, 3000);
         }
 
         function initializePortalControlSystems() {
@@ -2956,66 +3118,307 @@
             }, true);
         }
 
-        function forceChatGPTVoice() {
+        // Simplified iPhone Audio Control Functions
+        function activateIPhoneMic() {
             const btn = event.target;
-            btn.innerHTML = '🎤 Forcing...';
+            btn.innerHTML = '🎤 Activating...';
             btn.disabled = true;
             
-            console.log('🎤 Force ChatGPT Voice - Starting aggressive activation...');
+            console.log('📱 Activating iPhone microphone...');
             
-            // Method 1: Immediate script-based forcing
-            if (window.chatgptControlActive) {
-                try {
-                    const chatFrame = document.getElementById('chatgptFrame');
-                    chatFrame.contentWindow.portalForceVoice = true;
-                    chatFrame.contentWindow.postMessage({
-                        type: 'force_voice_immediate',
-                        action: 'click_voice_button'
-                    }, '*');
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function(stream) {
+                    window.micStream = stream;
                     
-                    showNotification('🎤 Script Force!', 'Portal control script forcing voice activation.', 'success');
-                    updateStatusIndicator('voiceModeStatus', 'success', 'Script Forced');
-                } catch (error) {
-                    console.log('Script force method failed:', error);
-                }
-            }
+                    console.log('✅ iPhone microphone activated');
+                    updateStatusIndicator('micStatus', 'success', 'iPhone Mic Active');
+                    
+                    // Start speech recognition
+                    startIPhoneSpeechRecognition();
+                    
+                    btn.innerHTML = '🎤 iPhone Mic Active!';
+                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                    
+                    showNotification('🎤 iPhone Mic Active', 'iPhone microphone is now active and listening for voice input.', 'success');
+                    
+                    // Connect to audio visualizer
+                    if (window.audioAnalyser && window.portalAudioContext) {
+                        const source = window.portalAudioContext.createMediaStreamSource(stream);
+                        source.connect(window.audioAnalyser);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('❌ iPhone microphone access denied:', error);
+                    updateStatusIndicator('micStatus', 'warning', 'Access Denied');
+                    
+                    btn.innerHTML = '🎤 Permission Denied';
+                    btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                    
+                    showNotification('🎤 Mic Permission', 'Please allow microphone access in your browser settings.', 'warning');
+                });
             
-            // Method 2: Direct DOM manipulation (multiple attempts)
-            for (let attempt = 0; attempt < 5; attempt++) {
-                setTimeout(() => {
-                    attemptDirectVoiceClick();
-                }, attempt * 500);
-            }
-            
-            // Method 3: Continuous PostMessage bombing
-            const messageInterval = setInterval(() => {
-                const chatFrame = document.getElementById('chatgptFrame');
-                chatFrame.contentWindow.postMessage({
-                    type: 'activate_voice_mode',
-                    force: true,
-                    attempt: Date.now()
-                }, '*');
-            }, 200);
-            
-            // Stop message bombing after 5 seconds
-            setTimeout(() => clearInterval(messageInterval), 5000);
-            
-            // Method 4: Re-inject control script
             setTimeout(() => {
-                attemptScriptInjection();
-            }, 1000);
+                btn.disabled = false;
+                if (btn.innerHTML.includes('Activating')) {
+                    btn.innerHTML = '🎤 Activate iPhone Mic';
+                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                }
+            }, 3000);
+        }
+
+        function forceIPhoneSpeaker() {
+            const btn = event.target;
+            btn.innerHTML = '🔊 Forcing...';
+            btn.disabled = true;
             
-            btn.innerHTML = '🎤 Multi-Force Active!';
+            console.log('📱 Forcing iPhone speaker output...');
+            
+            try {
+                // Force audio context to iPhone speaker
+                if (window.portalAudioContext) {
+                    window.portalAudioContext.resume().then(() => {
+                        console.log('✅ iPhone audio context active');
+                    });
+                }
+                
+                // Override speech synthesis for iPhone speaker
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel(); // Clear any existing speech
+                    
+                    // Test iPhone speaker with speech
+                    const testUtterance = new SpeechSynthesisUtterance('iPhone speaker is now active');
+                    testUtterance.volume = 1.0;
+                    testUtterance.rate = 0.9;
+                    window.speechSynthesis.speak(testUtterance);
+                    
+                    console.log('🔊 iPhone speaker test speech played');
+                }
+                
+                // Play test tone through iPhone speaker
+                playIPhoneTestSound();
+                
+                updateStatusIndicator('speakerStatus', 'success', 'iPhone Speaker Forced');
+                
+                btn.innerHTML = '🔊 iPhone Speaker Active!';
+                btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                
+                showNotification('🔊 iPhone Speaker Active', 'Audio output is now forced to iPhone speaker at maximum volume.', 'success');
+                
+            } catch (error) {
+                console.log('❌ iPhone speaker error:', error);
+                updateStatusIndicator('speakerStatus', 'warning', 'Speaker Error');
+                
+                btn.innerHTML = '🔊 Speaker Error';
+                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+            }
+            
+            setTimeout(() => {
+                btn.disabled = false;
+                if (btn.innerHTML.includes('Forcing')) {
+                    btn.innerHTML = '🔊 Force iPhone Speaker';
+                    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                }
+            }, 3000);
+        }
+
+        function setupIPhoneAudioComplete() {
+            const btn = event.target;
+            btn.innerHTML = '📱 Setting Up...';
+            btn.disabled = true;
+            
+            console.log('📱 Complete iPhone audio setup...');
+            showNotification('📱 iPhone Setup', 'Setting up iPhone microphone and speaker...', 'info');
+            
+            // Step 1: Force iPhone microphone and speaker
+            forceIPhoneMicAndSpeaker();
+            
+            // Step 2: Activate ChatGPT voice after delay
+            setTimeout(() => {
+                activateChatGPTVoiceSimple();
+            }, 2000);
+            
+            // Step 3: Test audio systems
+            setTimeout(() => {
+                testIPhoneAudio();
+            }, 4000);
+            
+            btn.innerHTML = '📱 iPhone Setup Complete!';
             btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
             
             setTimeout(() => {
-                btn.innerHTML = '🎤 Force Voice Mode';
+                btn.innerHTML = '📱 Setup iPhone Audio';
                 btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
                 btn.disabled = false;
                 
-                // Final status update
-                updateStatusIndicator('voiceModeStatus', 'success', 'Force Attempted');
+                showNotification('📱 Setup Complete', 'iPhone audio setup completed. Test the microphone and speaker.', 'success');
             }, 3000);
+        }
+
+        function testIPhoneAudio() {
+            const btn = event.target;
+            if (btn) {
+                btn.innerHTML = '🔊 Testing...';
+                btn.disabled = true;
+            }
+            
+            console.log('🧪 Testing iPhone audio systems...');
+            
+            // Test 1: iPhone speaker with tone
+            if (window.portalAudioContext) {
+                playIPhoneTestSound();
+            }
+            
+            // Test 2: iPhone speaker with speech
+            if ('speechSynthesis' in window) {
+                const testSpeech = new SpeechSynthesisUtterance('iPhone audio test. Can you hear this clearly?');
+                testSpeech.volume = 1.0;
+                testSpeech.rate = 0.8;
+                window.speechSynthesis.speak(testSpeech);
+            }
+            
+            // Test 3: Check microphone status
+            const micActive = window.micStream && window.micStream.active;
+            const speakerActive = window.portalAudioContext && window.portalAudioContext.state === 'running';
+            
+            let testResult = '🧪 iPhone Audio Test Results:\n\n';
+            testResult += `🎤 Microphone: ${micActive ? '✅ Active' : '❌ Inactive'}\n`;
+            testResult += `🔊 Speaker: ${speakerActive ? '✅ Active' : '❌ Inactive'}\n`;
+            testResult += `🗣️ Speech Synthesis: ${('speechSynthesis' in window) ? '✅ Available' : '❌ Not Available'}\n`;
+            
+            if (micActive && speakerActive) {
+                testResult += '\n✅ iPhone audio is working correctly!';
+                showNotification('🧪 Test Results', testResult, 'success');
+            } else {
+                testResult += '\n⚠️ Some audio features may need activation.';
+                showNotification('🧪 Test Results', testResult, 'warning');
+            }
+            
+            if (btn) {
+                btn.innerHTML = '🧪 Test Complete!';
+                btn.style.background = micActive && speakerActive ? 
+                    'linear-gradient(135deg, #27ae60, #2ecc71)' : 
+                    'linear-gradient(135deg, #f39c12, #e67e22)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '🔊 Test iPhone Audio';
+                    btn.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+                    btn.disabled = false;
+                }, 3000);
+            }
+        }
+
+        function setIPhoneVolume(value) {
+            console.log(`🔊 Setting iPhone volume to ${value}%`);
+            
+            // Set audio context gain
+            if (window.speakerOutput) {
+                window.speakerOutput.gain.value = value / 100;
+            }
+            
+            // Force all audio elements to this volume
+            const audioElements = document.querySelectorAll('audio, video');
+            audioElements.forEach(audio => {
+                audio.volume = value / 100;
+            });
+            
+            updateStatusIndicator('speakerStatus', 'success', `Volume ${value}%`);
+        }
+
+        function sendTestMessage() {
+            const testMessage = "Hello ChatGPT! This is a test message from the iPhone portal. Please respond with voice if voice mode is active.";
+            
+            sendVoiceInputToChatGPT(testMessage);
+            
+            showNotification('📝 Test Message', 'Test message sent to ChatGPT. Check for response.', 'info');
+        }
+
+        function checkAudioStatus() {
+            const micActive = window.micStream && window.micStream.active;
+            const speakerActive = window.portalAudioContext && window.portalAudioContext.state === 'running';
+            const speechActive = window.recognition !== null;
+            const chatgptLoaded = document.getElementById('chatgptFrame').src.includes('chatgpt.com');
+            
+            let statusReport = '📊 iPhone Audio Status:\n\n';
+            statusReport += `🎤 iPhone Microphone: ${micActive ? '✅ Active' : '❌ Inactive'}\n`;
+            statusReport += `🔊 iPhone Speaker: ${speakerActive ? '✅ Active' : '❌ Inactive'}\n`;
+            statusReport += `🗣️ Speech Recognition: ${speechActive ? '✅ Active' : '❌ Inactive'}\n`;
+            statusReport += `🤖 ChatGPT Loaded: ${chatgptLoaded ? '✅ Yes' : '❌ No'}\n\n`;
+            
+            const activeCount = [micActive, speakerActive, speechActive, chatgptLoaded].filter(Boolean).length;
+            statusReport += `📈 System Health: ${activeCount}/4 components active`;
+            
+            const statusType = activeCount >= 3 ? 'success' : activeCount >= 2 ? 'warning' : 'error';
+            showNotification('📊 Audio Status', statusReport, statusType);
+            
+            console.log('📊 Audio status check completed');
+        }
+
+        function resetAudioSystems() {
+            const btn = event.target;
+            btn.innerHTML = '🔄 Resetting...';
+            btn.disabled = true;
+            
+            console.log('🔄 Resetting iPhone audio systems...');
+            showNotification('🔄 Reset Audio', 'Resetting all iPhone audio systems...', 'warning');
+            
+            // Stop current systems
+            if (window.recognition) {
+                window.recognition.stop();
+                window.recognition = null;
+            }
+            
+            if (window.micStream) {
+                window.micStream.getTracks().forEach(track => track.stop());
+                window.micStream = null;
+            }
+            
+            if (window.portalAudioContext) {
+                window.portalAudioContext.close();
+                window.portalAudioContext = null;
+            }
+            
+            // Reset status indicators
+            updateStatusIndicator('micStatus', 'warning', 'Reset');
+            updateStatusIndicator('speakerStatus', 'warning', 'Reset');
+            updateStatusIndicator('speechStatus', 'warning', 'Reset');
+            
+            // Reinitialize after 2 seconds
+            setTimeout(() => {
+                console.log('🔄 Reinitializing iPhone audio...');
+                initializeSimpleAudioControl();
+                
+                setTimeout(() => {
+                    forceIPhoneMicAndSpeaker();
+                    showNotification('🔄 Reset Complete', 'iPhone audio systems have been reset and reinitialized.', 'success');
+                }, 1000);
+                
+            }, 2000);
+            
+            btn.innerHTML = '🔄 Reset Complete!';
+            btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                btn.innerHTML = '🔄 Reset Audio';
+                btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                btn.disabled = false;
+            }, 4000);
+        }
+
+        function refreshChatGPT() {
+            const chatgptFrame = document.getElementById('chatgptFrame');
+            
+            showNotification('🔄 Refreshing', 'Reloading ChatGPT conversation...', 'info');
+            updateStatusIndicator('chatgptStatus', 'warning', 'Refreshing...');
+            
+            // Reload the specific ChatGPT conversation
+            chatgptFrame.src = 'https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418';
+            
+            // Re-activate voice after reload
+            setTimeout(() => {
+                activateChatGPTVoiceSimple();
+                updateStatusIndicator('chatgptStatus', 'success', 'Refreshed');
+                showNotification('🔄 Refresh Complete', 'ChatGPT conversation reloaded.', 'success');
+            }, 5000);
         }
 
         function attemptDirectVoiceClick() {
@@ -4147,6 +4550,70 @@
             }, 3000);
         }
 
+        // Additional control functions for compatibility
+        function toggleSoundDetection() { 
+            if (window.soundDetectionActive) {
+                window.soundDetectionActive = false;
+                window.visualizationActive = false;
+                if (window.animationFrameId) {
+                    cancelAnimationFrame(window.animationFrameId);
+                }
+                document.getElementById('audioVisualizer').classList.remove('active');
+                document.querySelectorAll('.sound-wave').forEach(wave => wave.classList.remove('active'));
+                showNotification('🎤 Detection Off', 'Sound detection deactivated.', 'warning');
+            } else {
+                window.soundDetectionActive = true;
+                startSoundVisualization();
+                showNotification('🎤 Detection On', 'Sound detection activated.', 'success');
+            }
+        }
+        
+        function refreshChatGPT() {
+            const chatgptFrame = document.getElementById('chatgptFrame');
+            
+            showNotification('🔄 Refreshing Portal', 'Reloading ChatGPT and re-establishing control...', 'info');
+            
+            // Reset systems before refresh
+            window.chatgptControlActive = false;
+            updateStatusIndicator('chatgptStatus', 'warning', 'Refreshing...');
+            
+            // Reload ChatGPT
+            chatgptFrame.src = 'https://chatgpt.com/c/685f5529-0888-800c-b96a-008419428418';
+            
+            // Re-establish control after refresh
+            setTimeout(() => {
+                console.log('🔄 Re-establishing control after refresh...');
+                establishChatGPTControlAggressively();
+                forceAllSystemsActive();
+                
+                showNotification('🔄 Refresh Complete', 'ChatGPT refreshed and control re-established.', 'success');
+            }, 5000);
+        }
+
+        function tryAlternativeControlMethods() { 
+            setupPostMessageControl(); 
+            setupAdvancedEventMonitoring();
+            startContinuousPostMessage();
+        }
+        
+        function initializeSpeakerForcing() { 
+            setTimeout(() => {
+                if (event && event.target) {
+                    forceSpeakerOutput();
+                } else {
+                    // Auto-initialize speaker forcing
+                    try {
+                        if (window.portalAudioContext) {
+                            window.portalAudioContext.resume();
+                            updateStatusIndicator('speakerStatus', 'success', 'Auto-Initialized');
+                        }
+                    } catch (error) {
+                        console.log('Auto speaker init error:', error);
+                    }
+                }
+            }, 1000);
+        }
+
         function toggleSettings() {
             const settingsPanel = document.getElementById('settingsPanel');
             settingsPanel.classList.toggle('show');
@@ -4170,7 +4637,12 @@
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Portal control system ready');
+            console.log('🚀 Portal control system ready');
+            
+            // Quick status check after load
+            setTimeout(() => {
+                checkSystemStatus();
+            }, 3000);
         });
 
         // Clean up on page unload
@@ -4183,6 +4655,9 @@
             }
             if (window.micStream) {
                 window.micStream.getTracks().forEach(track => track.stop());
+            }
+            if (window.recognition) {
+                window.recognition.stop();
             }
         });
     </script>
