@@ -14,48 +14,48 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 30%, #0f1419 100%);
-            min-height: 100vh;
+            height: 100vh;
             color: white;
             overflow: hidden;
         }
 
-        /* Language Selector */
+        /* Language Selector - Positioned absolutely at top */
         .language-selector {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            right: 10px;
             z-index: 3000;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(186, 85, 211, 0.2);
             border-radius: 15px;
-            padding: 10px;
+            padding: 8px;
         }
 
         .language-btn {
             background: rgba(186, 85, 211, 0.2);
             border: 1px solid rgba(186, 85, 211, 0.5);
             color: #e8e8e8;
-            padding: 8px 15px;
-            border-radius: 10px;
-            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 0 5px;
+            margin: 0 3px;
         }
 
         .language-btn:hover, .language-btn.active {
             background: rgba(186, 85, 211, 0.4);
             border-color: rgba(186, 85, 211, 0.8);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
-        /* Main Oracle Container - Full Screen */
+        /* Main Oracle Container - True Full Screen */
         .oracle-container {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 30%, #0f1419 100%);
             overflow: hidden;
@@ -909,163 +909,76 @@
     </div>
 
     <script>
-        // Current language
+        // Current language and tracking systems
         let currentLanguage = 'en';
+        let usedWords = new Set();
+        let usedMessages = new Set();
+        let usedWishes = new Set();
 
-        // Enhanced Oracle System with Black Hole Effects
-        const oracleWords = {
+        // AI-Generated Word Creation System
+        const wordPrefixes = {
+            en: ['neo', 'echo', 'astra', 'lumi', 'nova', 'zen', 'flux', 'arc', 'void', 'meta', 'sync', 'vibe', 'flow', 'drift', 'pulse'],
+            zh: ['靈', '魂', '幻', '夢', '星', '月', '雲', '風', '空', '神', '妙', '禪', '境', '覺', '悟']
+        };
+
+        const wordSuffixes = {
+            en: ['ance', 'ence', 'ism', 'ity', 'ness', 'ion', 'ment', 'ship', 'ward', 'wise', 'like', 'form', 'way', 'path', 'gate'],
+            zh: ['性', '態', '境', '感', '意', '念', '象', '相', '理', '法', '道', '源', '流', '韻', '氣']
+        };
+
+        const wordRoots = {
+            en: ['lumina', 'spectral', 'ethereal', 'temporal', 'celestial', 'quantum', 'cosmic', 'primal', 'transcend', 'infinite', 'mystic', 'radiant', 'sublime', 'profound', 'sacred'],
+            zh: ['靈魂', '神秘', '天象', '時空', '量子', '無限', '永恆', '超越', '深層', '神聖', '純淨', '光明', '智慧', '覺醒', '圓滿']
+        };
+
+        // AI Story Templates for Dynamic Message Generation
+        const storyTemplates = {
             en: [
-                'journey', 'shadow', 'light', 'whisper', 'mirror', 'river', 'mountain', 
-                'ocean', 'star', 'moon', 'fire', 'wind', 'door', 'key', 'bridge', 
-                'garden', 'forest', 'dawn', 'thunder', 'silence', 'dream', 'echo',
-                'feather', 'pearl', 'crystal', 'spiral', 'compass', 'lantern', 'butterfly',
-                'hourglass', 'seed', 'horizon', 'tide', 'ember', 'veil', 'prism',
-                'labyrinth', 'constellation', 'dewdrop', 'cascade', 'sanctuary', 'phoenix'
+                "In the {realm} where {element} {action}, a {entity} discovers that {revelation}... {wisdom} teaches us that {truth}. The {metaphor} reminds you that {personal_insight}.",
+                "From the {perspective} of {cosmic_force}, {phenomenon} reveals itself as {meaning}... What appears as {illusion} is actually {reality}. Your {quality} holds the key to {unlock}.",
+                "Between the {boundary_1} and {boundary_2}, {discovery} unfolds like {simile}... The {teacher} knows that {lesson}. When {condition}, {transformation} becomes possible.",
+                "Through the lens of {viewpoint}, {subject} transforms into {new_form}... {ancient_wisdom} whispers that {secret}. The art of {skill} lies in understanding {principle}.",
+                "In the dance between {force_1} and {force_2}, {creation} emerges with {quality}... {observer} watches as {process} reveals {hidden_truth}. Your journey toward {destination} begins with {first_step}."
             ],
             zh: [
-                '旅程', '影子', '光', '低語', '鏡子', '河流', '山', 
-                '海洋', '星', '月', '火', '風', '門', '鑰匙', '橋', 
-                '花園', '森林', '黎明', '雷聲', '寂靜', '夢', '回聲',
-                '羽毛', '珍珠', '水晶', '螺旋', '指南針', '燈籠', '蝴蝶',
-                '沙漏', '種子', '地平線', '潮汐', '餘燼', '面紗', '稜鏡',
-                '迷宮', '星座', '露珠', '瀑布', '聖所', '鳳凰'
+                "在{境界}中，{元素}{動作}時，{存在}發現{啟示}... {智慧}教導我們{真理}。{比喻}提醒你{個人洞察}。",
+                "從{宇宙力量}的{視角}，{現象}顯現為{意義}... 看似{幻象}的實際上是{實相}。你的{品質}擁有{解鎖}的鑰匙。",
+                "在{邊界一}與{邊界二}之間，{發現}如{比擬}般展開... {導師}知道{課程}。當{條件}時，{轉化}成為可能。",
+                "透過{觀點}的鏡頭，{主體}轉化為{新形式}... {古老智慧}低語著{秘密}。{技能}的藝術在於理解{原則}。",
+                "在{力量一}與{力量二}的舞蹈中，{創造}以{品質}出現... {觀察者}看著{過程}揭示{隱藏真理}。你通往{目的地}的旅程始於{第一步}。"
             ]
         };
 
-        const brightMessages = {
+        // Dynamic content pools for story generation
+        const storyElements = {
             en: {
-                journey: "A path unfolds where footprints have never been... The compass spins not to confuse, but to remind you that true direction comes from within. Three steps forward, one glance back - the rhythm of those who change worlds.",
-                shadow: "In the valley where light fears to tread, a figure walks who knows both darkness and dawn... What follows you may not be chasing - it might be learning to dance. The shadow teaches the light how to shine.",
-                light: "Through the crack in the wooden shutters, something golden spills onto the floor... It carries no weight, yet lifts everything it touches. The lantern in your window has been waiting for someone to notice it was always lit.",
-                whisper: "Between the thunder and the silence, words float on currents you cannot see... The mountain hears what the valley speaks. Listen not for answers, but for the questions you forgot you asked.",
-                mirror: "A surface that shows not what is, but what could be... The reflection winks first, and you realize you've been following, not leading. Sometimes the clearest view is when you're not looking directly.",
-                river: "It remembers every stone it has kissed, every bridge it has supported... Moving forward while staying the same, it whispers ancient secrets to the willows. The current knows where you need to go, even when you don't.",
-                mountain: "Silent witness to a thousand sunrises, keeper of clouds and dreams... It does not move, yet everything around it shifts. What appears immovable often holds the greatest power to transform.",
-                ocean: "Tides turn not by force, but by ancient agreement with the moon... In its depths, treasures wait not to be found, but to find the right moment to surface. The waves have been practicing your name.",
-                star: "Light that traveled eons to reach this moment, this glance upward... It burns bright not for itself, but for the wishes it will carry. Distance makes the heart grow fonder, and the soul grow wiser.",
-                moon: "She waxes and wanes, yet never truly disappears... In her phases, the secret of renewal - that completeness comes through cycles, not straight lines. The night sky has been saving your favorite constellation.",
-                fire: "It dances without music, speaks without words... Born from the meeting of spark and breath, it transforms everything it touches. What you thought was destruction might be the forge of something magnificent.",
-                wind: "Invisible mover of visible things, carrier of seeds and secrets... It knows no borders, recognizes no walls. The message you've been waiting for rides on currents you haven't felt yet.",
-                door: "Every ending is a beginning wearing a different coat... Behind it, not just a room, but a possibility. The key you seek might already be in your pocket, worn smooth by overthinking.",
-                key: "It opens not just locks, but moments when everything clicks into place... Some are made of metal, others of understanding. The door that needs opening may not be the one you're standing in front of.",
-                bridge: "It exists in the space between here and there, now and then... Built not just of stone and steel, but of hope and determination. The crossing happens one step at a time, but the courage to begin happens in an instant.",
-                garden: "What grows here was planted by hands you've never shaken... Seasons change the scenery but not the soil. The seeds you scattered in forgotten moments are closer to bloom than you imagine.",
-                forest: "Ancient parliament of roots and branches, where decisions are made in decades, not moments... It holds space for both the acorn and the oak. You are both the seedling and the shelter you seek.",
-                dawn: "Not the sun's first performance, but the daily miracle of light remembering how to begin... Darkness retreats not in defeat, but in trust that its time will come again. The horizon blushes because it knows what's coming.",
-                thunder: "The sky's heartbeat made audible, its passion impossible to contain... It speaks in a language older than words, younger than silence. What sounds like chaos might be the universe clearing its throat to speak your name.",
-                silence: "The space between notes where music becomes meaning... It does not empty rooms, it fills them with possibility. In the pause between breaths, infinite conversations wait to begin.",
-                dream: "The night shift of the soul, where impossible things clock in for work... Reality takes a break to let imagination stretch its legs. The strangest visions often carry the most practical wisdom.",
-                echo: "Not just repetition, but transformation - the same voice returning as someone new... Mountains teach words to become songs. What you spoke into the void has been traveling, gathering wisdom, preparing to return with gifts.",
-                feather: "What fell from the sky carries more than just lightness... It remembers the heights it has seen, the winds it has danced with. Sometimes the softest touch leaves the deepest impression.",
-                pearl: "Born from irritation, polished by patience... The oyster knows that some treasures require both pressure and time. What troubles you today might be tomorrow's most precious gift.",
-                crystal: "Light enters confused and leaves as rainbows... It holds ancient memories in its geometric heart. Clarity comes not from absence of color, but from the courage to let all colors shine through.",
-                spiral: "Neither circle nor line, but the marriage of both... It ascends while returning, moves forward while looking back. The path that seems to repeat is actually climbing.",
-                compass: "Its needle trembles not from uncertainty, but from the magnetic pull of purpose... True north exists not just in geography, but in the geography of the heart.",
-                lantern: "Small flame that refuses to be intimidated by infinite darkness... It does not compete with the sun, yet guides the lost home. Sometimes the smallest light casts the longest shadow.",
-                butterfly: "From caterpillar to chrysalis to wings - the art of becoming... What appears as death is merely rehearsal for flight. The transformation was always the destination.",
-                hourglass: "Sand falls not to hurry, but to remind... Each grain matters, yet none can stop the flow. Time is not the enemy of dreams, but their dance partner.",
-                seed: "In its small darkness lies the blueprint of forests... It waits not for perfect conditions, but for the moment when waiting becomes growing. Potential sleeps lightly.",
-                horizon: "The place where earth kisses sky, where today meets tomorrow... It moves as you move, always present, never reached. The line that teaches us that boundaries are invitations to explore.",
-                tide: "The ocean's breath made visible, the moon's influence made tangible... It takes away and brings back, but never quite the same treasures. Rhythm is the heartbeat of change.",
-                ember: "The fire's last whisper, its final gift before sleep... It glows not to burn, but to remember warmth. In its orange heart, the promise that flames can always return.",
-                veil: "Thin barrier between the seen and unseen, the known and mysterious... It conceals not to hide, but to make the revelation more precious. Some truths are worth unwrapping slowly.",
-                prism: "Takes white light and reveals its hidden orchestra... Truth is often simpler than it appears, yet more complex than we imagine. Sometimes breaking apart leads to greater beauty.",
-                labyrinth: "Not a maze to confuse, but a path to center... Every turn has purpose, every wall has meaning. The way in is the way out, but you are not the same traveler.",
-                constellation: "Stars that agreed to tell a story together... Separated by vast distances, yet united in purpose. Your scattered moments form patterns others will navigate by.",
-                dewdrop: "Morning's tiny mirror, holding the world in miniature... It exists in the space between night and day, darkness and light. Perfect spheres that teach us how to hold everything while grasping nothing.",
-                cascade: "Water that found the art of falling gracefully... Each drop follows the one before, yet creates its own music. Sometimes the most beautiful descents lead to the most powerful rivers.",
-                sanctuary: "Not just a place, but a pause in the storm... It exists wherever peace decides to rest for a moment. The most sacred spaces are often the ones we create by simply being still.",
-                phoenix: "Death was just the intermission between acts... It burns not to destroy, but to discover what cannot be consumed. From ashes comes not just rebirth, but transformation."
+                realm: ['dimension', 'void', 'cosmos', 'infinity', 'consciousness', 'dreamscape', 'quantum field', 'astral plane'],
+                element: ['light', 'shadow', 'energy', 'time', 'space', 'vibration', 'frequency', 'essence'],
+                action: ['dances', 'flows', 'pulses', 'resonates', 'transforms', 'awakens', 'merges', 'ascends'],
+                entity: ['seeker', 'wanderer', 'soul', 'consciousness', 'spirit', 'being', 'traveler', 'observer'],
+                revelation: ['truth transcends perception', 'reality is layered infinitely', 'connection binds all existence', 'change is the only constant'],
+                wisdom: ['Ancient knowledge', 'The universe', 'Cosmic intelligence', 'Sacred geometry', 'The eternal flow'],
+                truth: ['everything is interconnected', 'timing reveals purpose', 'growth requires surrender', 'clarity emerges from stillness'],
+                metaphor: ['spiral of existence', 'mirror of consciousness', 'river of time', 'web of destiny', 'garden of possibilities'],
+                personal_insight: ['your path is uniquely yours', 'inner wisdom never lies', 'transformation awaits your permission', 'the answer lives within you']
             },
             zh: {
-                旅程: "在從未有足跡踏過的地方，一條道路展開... 指南針旋轉不是為了迷惑，而是提醒你真正的方向來自內心。三步向前，一瞥回望——這是改變世界者的節奏。",
-                影子: "在光都不敢踏足的山谷裡，有個身影行走，它既懂黑暗也懂黎明... 跟隨你的也許不是在追趕，而是在學習舞蹈。影子教會光如何閃耀。",
-                光: "從木百葉窗的縫隙中，金色的東西灑在地板上... 它沒有重量，卻能舉起所觸及的一切。你窗台上的燈籠一直在等著有人注意到它一直亮著。",
-                低語: "在雷聲與寂靜之間，話語漂浮在你看不見的氣流上... 山聽見了谷說的話。不要聽尋答案，而要聽你忘記問過的問題。",
-                鏡子: "一個表面，顯示的不是現在，而是可能... 倒影先眨眼，你意識到你一直在跟隨，而不是領導。有時最清晰的視野是在你不直視的時候。",
-                河流: "它記得每一塊它吻過的石頭，每一座它支撐過的橋... 向前流動的同時保持不變，它向柳樹低語古老的秘密。水流知道你需要去哪裡，即使你不知道。",
-                山: "千次日出的無聲見證者，雲朵與夢想的守護者... 它不動，但周圍的一切都在變化。看似不可移動的往往擁有最大的轉化力量。",
-                海洋: "潮汐轉動不是靠力量，而是與月亮的古老約定... 在它的深處，寶藏等待的不是被發現，而是找到浮出水面的正確時機。海浪一直在練習你的名字。",
-                星: "光芒穿越億萬年到達這一刻，這一次仰望... 它燃燒光亮不是為了自己，而是為了它將承載的願望。距離讓心更深情，讓靈魂更智慧。",
-                月: "她盈虧變化，卻從未真正消失... 在她的週期中，蘊含著更新的秘密——完整通過循環而來，不是直線。夜空一直在為你保存最愛的星座。",
-                火: "它無樂而舞，無言而語... 生於火花與呼吸的相遇，它轉化所觸及的一切。你以為是毀滅的，可能是什麼宏偉事物的鍛造。",
-                風: "看不見的事物的移動者，種子與秘密的載體... 它不知國界，不認圍牆。你一直等待的消息乘著你還未感受到的氣流而來。",
-                門: "每個結束都是穿著不同外衣的開始... 在它後面，不只是一個房間，而是一種可能。你尋找的鑰匙也許已經在你口袋裡，被過度思考磨得光滑。",
-                鑰匙: "它打開的不只是鎖，還有一切都咔嗒一聲到位的時刻... 有些是金屬製的，有些是理解製的。需要打開的門也許不是你面前的那扇。",
-                橋: "它存在於此處與彼處、現在與未來之間的空間... 不只是用石頭和鋼鐵建造，還有希望和決心。穿越一步一步發生，但開始的勇氣在瞬間發生。",
-                花園: "這裡生長的是你從未握過手的人種下的... 季節改變風景但不改變土壤。你在被遺忘的時刻撒下的種子比你想像的更接近開花。",
-                森林: "根系與枝葉的古老議會，決策以十年計而非瞬間... 它為橡子和橡樹都留有空間。你既是幼苗也是你尋求的庇護。",
-                黎明: "不是太陽的首次表演，而是光記起如何開始的日常奇蹟... 黑暗的退卻不是失敗，而是相信它的時間會再次到來。地平線臉紅是因為它知道將要發生什麼。",
-                雷聲: "天空的心跳變得可聽見，它的激情無法遏制... 它說著比文字更古老、比寂靜更年輕的語言。聽起來像混亂的也許是宇宙清嗓子要說你的名字。",
-                寂靜: "音符之間的空間，音樂變成意義的地方... 它不清空房間，而是用可能性填滿它們。在呼吸間的停頓中，無限的對話等待開始。",
-                夢: "靈魂的夜班，不可能的事物上班工作的地方... 現實休息讓想像力伸展腿腳。最奇怪的幻象往往承載最實用的智慧。",
-                回聲: "不只是重複，而是轉化——同一個聲音以新的身份歸來... 山教會話語變成歌曲。你向虛空說的話一直在旅行，收集智慧，準備帶著禮物歸來。",
-                羽毛: "從天空墜落的帶來的不只是輕盈... 它記得看過的高度，與之共舞的風。有時最輕柔的觸碰留下最深的印象。",
-                珍珠: "生於刺激，經耐心打磨... 牡蠣知道有些寶藏需要壓力和時間。今天困擾你的也許是明天最珍貴的禮物。",
-                水晶: "光困惑地進入，以彩虹的形式離開... 它在幾何的心中保存著古老的記憶。清晰不是來自色彩的缺失，而是來自讓所有色彩閃耀的勇氣。",
-                螺旋: "既不是圓也不是線，而是兩者的結合... 它上升的同時回歸，向前的同時回望。看似重複的路徑實際上在攀登。",
-                指南針: "它的指針顫抖不是因為不確定，而是因為目標的磁性吸引... 真正的北方不只存在於地理上，還存在於心的地理中。",
-                燈籠: "小火焰拒絕被無限黑暗嚇倒... 它不與太陽競爭，卻引導迷失者回家。有時最小的光投下最長的影子。",
-                蝴蝶: "從毛蟲到蛹到翅膀——成為的藝術... 看似死亡的只是飛行的排練。轉化一直是目的地。",
-                沙漏: "沙子落下不是為了催促，而是為了提醒... 每一粒都重要，但沒有一粒能阻止流動。時間不是夢想的敵人，而是它們的舞伴。",
-                種子: "在它小小的黑暗中躺著森林的藍圖... 它等待的不是完美的條件，而是等待變成生長的時刻。潛能睡得很輕。",
-                地平線: "大地親吻天空的地方，今天遇見明天的地方... 它隨你移動，總是存在，永遠無法到達。教會我們邊界是探索邀請的線。",
-                潮汐: "海洋的呼吸變得可見，月亮的影響變得有形... 它帶走又帶回，但從來不是完全相同的寶藏。節律是變化的心跳。",
-                餘燼: "火的最後低語，它睡前的最後禮物... 它發光不是為了燃燒，而是為了記住溫暖。在它橙色的心中，火焰總能回歸的承諾。",
-                面紗: "看見與看不見、已知與神秘之間的薄薄屏障... 它遮蓋不是為了隱藏，而是為了讓揭示更珍貴。有些真理值得慢慢揭開。",
-                稜鏡: "接受白光並揭示其隱藏的管弦樂團... 真理往往比看起來簡單，卻比我們想像的複雜。有時分解導致更大的美。",
-                迷宮: "不是迷惑的迷宮，而是通向中心的路徑... 每個轉彎都有目的，每堵牆都有意義。進入的路就是出去的路，但你不再是同一個旅行者。",
-                星座: "同意一起講故事的星星... 被巨大距離分開，卻因目標團結。你散落的時刻形成別人將借以導航的圖案。",
-                露珠: "清晨的小鏡子，以微縮形式保存世界... 它存在於夜與日、黑暗與光明之間的空間。完美的球體教會我們如何握住一切而不抓緊任何東西。",
-                瀑布: "發現優雅墜落藝術的水... 每一滴都跟隨前一滴，卻創造自己的音樂。有時最美的下降導致最強大的河流。",
-                聖所: "不只是一個地方，而是風暴中的停頓... 它存在於和平決定暫時休息的任何地方。最神聖的空間往往是我們簡單地保持靜止而創造的。",
-                鳳凰: "死亡只是幕間休息... 它燃燒不是為了毀滅，而是為了發現什麼無法被消耗。從灰燼中來的不只是重生，而是轉化。"
+                境界: ['維度', '虛空', '宇宙', '無限', '意識', '夢境', '量子場', '星光界'],
+                元素: ['光', '影', '能量', '時間', '空間', '振動', '頻率', '本質'],
+                動作: ['舞動', '流動', '脈動', '共鳴', '轉化', '覺醒', '融合', '昇華'],
+                存在: ['求道者', '漫遊者', '靈魂', '意識', '精神', '存在', '旅行者', '觀察者'],
+                啟示: ['真理超越知覺', '實相是無限層次的', '連結綁定所有存在', '變化是唯一的常數'],
+                智慧: ['古老知識', '宇宙', '宇宙智慧', '神聖幾何', '永恆之流'],
+                真理: ['一切都是互聯的', '時機揭示目的', '成長需要臣服', '清晰從寧靜中顯現'],
+                比喻: ['存在的螺旋', '意識的鏡子', '時間之河', '命運之網', '可能性花園'],
+                個人洞察: ['你的道路是獨一無二的', '內在智慧永不說謊', '轉化等待你的許可', '答案就在你心中']
             }
         };
 
-        const brightWishes = {
-            en: [
-                "May your next step find solid ground and your next breath find peace...",
-                "The universe conspires in whispers - may you hear them clearly...",
-                "What you seek is already seeking you across time and space...",
-                "May the path rise to meet you, and the wind be always at your back...",
-                "In the garden of possibility, may your dreams take root and bloom...",
-                "The stars have aligned in your favor - trust the cosmic timing...",
-                "May clarity come like dawn - slowly, then all at once...",
-                "Your story is still being written in the ink of starlight...",
-                "May synchronicity be your constant companion on this journey...",
-                "The bridges you need are already being built by invisible hands...",
-                "May you find magic in the mundane and miracles in the ordinary...",
-                "Your intuition is a compass that never lies - may you trust its direction...",
-                "The universe is rearranging itself in your favor - be patient with the process...",
-                "May your heart be a sanctuary and your spirit a lighthouse...",
-                "What is meant for you will never pass you by - this is cosmic law...",
-                "May you dance with uncertainty and find rhythm in the unknown..."
-            ],
-            zh: [
-                "願你的下一步找到堅實的土地，下一次呼吸找到平靜...",
-                "宇宙在低語中密謀——願你聽得清晰...",
-                "你尋找的正在穿越時空尋找你...",
-                "願道路升起迎接你，風永遠在你背後...",
-                "在可能性的花園中，願你的夢想扎根開花...",
-                "星星已為你排列——相信宇宙的時機...",
-                "願清晰如黎明到來——緩慢，然後突然全部...",
-                "你的故事仍在用星光的墨水書寫...",
-                "願同步性成為你這趟旅程的恆常夥伴...",
-                "你需要的橋樑已在被看不見的手建造...",
-                "願你在平凡中發現魔法，在尋常中發現奇蹟...",
-                "你的直覺是永不說謊的指南針——願你信任它的方向...",
-                "宇宙正在為你重新排列——對過程保持耐心...",
-                "願你的心是聖所，你的靈魂是燈塔...",
-                "屬於你的永遠不會錯過你——這是宇宙法則...",
-                "願你與不確定性共舞，在未知中找到節拍..."
-            ]
-        };
-
+        // Greetings without the removed phrase
         const oracleGreetings = {
             en: [
                 "What seeks to be known?",
-                "The cosmos stirs with your questions...",
                 "Ancient wisdom awaits your touch...",
                 "The universe has been expecting you...",
                 "Your soul's inquiry echoes through eternity...",
@@ -1073,7 +986,6 @@
             ],
             zh: [
                 "什麼渴望被知曉？",
-                "宇宙因你的問題而騷動...",
                 "古老的智慧等待你的觸碰...",
                 "宇宙一直在等待你...",
                 "你靈魂的詢問在永恆中回響...",
@@ -1098,27 +1010,202 @@
             });
             
             // Set new random greeting
-            const subtitle = document.querySelector('.oracle-subtitle');
-            if (subtitle) {
-                const greetings = oracleGreetings[lang];
-                const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-                subtitle.textContent = randomGreeting;
-                subtitle.setAttribute('data-' + lang, randomGreeting);
-            }
+            setRandomGreeting();
         }
 
-        // Initialize Oracle on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            generateEnhancedMysticalParticles();
-            activateBlackHoleEffects();
-            
-            // Set random greeting
+        function setRandomGreeting() {
             const subtitle = document.querySelector('.oracle-subtitle');
             if (subtitle) {
                 const greetings = oracleGreetings[currentLanguage];
                 const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
                 subtitle.textContent = randomGreeting;
             }
+        }
+
+        // AI Word Generation
+        function generateUniqueWord() {
+            const lang = currentLanguage;
+            let attempts = 0;
+            let word;
+            
+            do {
+                const type = Math.random();
+                
+                if (type < 0.4) {
+                    // Prefix + Root combination
+                    const prefix = wordPrefixes[lang][Math.floor(Math.random() * wordPrefixes[lang].length)];
+                    const root = wordRoots[lang][Math.floor(Math.random() * wordRoots[lang].length)];
+                    word = lang === 'en' ? prefix + root.toLowerCase() : prefix + root;
+                } else if (type < 0.7) {
+                    // Root + Suffix combination
+                    const root = wordRoots[lang][Math.floor(Math.random() * wordRoots[lang].length)];
+                    const suffix = wordSuffixes[lang][Math.floor(Math.random() * wordSuffixes[lang].length)];
+                    word = lang === 'en' ? root.toLowerCase() + suffix : root + suffix;
+                } else {
+                    // Pure root words with variations
+                    const root = wordRoots[lang][Math.floor(Math.random() * wordRoots[lang].length)];
+                    word = root;
+                }
+                
+                attempts++;
+            } while (usedWords.has(word) && attempts < 50);
+            
+            usedWords.add(word);
+            return word;
+        }
+
+        // AI Message Generation
+        function generateDynamicMessage(word) {
+            const lang = currentLanguage;
+            let attempts = 0;
+            let message;
+            
+            do {
+                const template = storyTemplates[lang][Math.floor(Math.random() * storyTemplates[lang].length)];
+                const elements = storyElements[lang];
+                
+                message = template.replace(/\{(\w+)\}/g, (match, key) => {
+                    if (elements[key]) {
+                        return elements[key][Math.floor(Math.random() * elements[key].length)];
+                    }
+                    return match;
+                });
+                
+                // Add word-specific personalization
+                const personalizations = {
+                    en: [
+                        ` The essence of "${word}" vibrates through this revelation.`,
+                        ` Your connection to "${word}" illuminates the path forward.`,
+                        ` In choosing "${word}", you have unlocked a cosmic gateway.`,
+                        ` The universe speaks through "${word}" at this precise moment.`
+                    ],
+                    zh: [
+                        ` "${word}"的本質在這個啟示中振動。`,
+                        ` 你與"${word}"的連結照亮了前進的道路。`,
+                        ` 在選擇"${word}"時，你已解鎖了一個宇宙門戶。`,
+                        ` 宇宙在這個精確時刻通過"${word}"說話。`
+                    ]
+                };
+                
+                const personalization = personalizations[lang][Math.floor(Math.random() * personalizations[lang].length)];
+                message += personalization;
+                
+                attempts++;
+            } while (usedMessages.has(message) && attempts < 20);
+            
+            usedMessages.add(message);
+            return message;
+        }
+
+        // AI Wish Generation
+        function generateDynamicWish() {
+            const lang = currentLanguage;
+            let attempts = 0;
+            let wish;
+            
+            do {
+                const wishTemplates = {
+                    en: [
+                        "May the {cosmic_force} of {quality} flow through your {path}, bringing {blessing} to every {moment} you encounter...",
+                        "In the {dimension} of {possibility}, may your {essence} find {harmony} with the {universal_principle} that guides all {creation}...",
+                        "Let the {energy} of {transformation} awaken the {dormant_power} within, as {cosmic_alignment} opens doorways to {infinite_potential}...",
+                        "Through the {mystery} of {existence}, may {divine_grace} illuminate your {journey} with {celestial_light} and {sacred_wisdom}...",
+                        "As {time} and {space} dance around your {consciousness}, may {synchronicity} weave {golden_threads} through the tapestry of your {destiny}..."
+                    ],
+                    zh: [
+                        "願{宇宙力量}的{品質}流過你的{道路}，為你遇到的每個{時刻}帶來{祝福}...",
+                        "在{可能性}的{維度}中，願你的{本質}與指導所有{創造}的{宇宙原則}找到{和諧}...",
+                        "讓{轉化}的{能量}喚醒內在的{潛在力量}，當{宇宙對齊}打開通往{無限潛能}的門戶...",
+                        "通過{存在}的{奧秘}，願{神聖恩典}以{天體之光}和{神聖智慧}照亮你的{旅程}...",
+                        "當{時間}和{空間}圍繞你的{意識}舞蹈時，願{同步性}在你{命運}的織錦中編織{金線}..."
+                    ]
+                };
+                
+                const wishElements = {
+                    en: {
+                        cosmic_force: ['stellar energy', 'quantum field', 'celestial current', 'universal flow', 'ethereal stream'],
+                        quality: ['love', 'wisdom', 'clarity', 'strength', 'peace', 'abundance', 'joy', 'balance'],
+                        path: ['journey', 'quest', 'adventure', 'pilgrimage', 'odyssey', 'voyage', 'expedition'],
+                        blessing: ['miracles', 'grace', 'wonder', 'magic', 'serenity', 'fulfillment', 'awakening'],
+                        moment: ['breath', 'heartbeat', 'sunrise', 'encounter', 'discovery', 'realization', 'touch'],
+                        dimension: ['realm', 'sphere', 'plane', 'field', 'matrix', 'web', 'tapestry'],
+                        possibility: ['dreams', 'visions', 'potential', 'hope', 'manifestation', 'creation', 'becoming'],
+                        essence: ['soul', 'spirit', 'consciousness', 'being', 'heart', 'core', 'truth'],
+                        harmony: ['resonance', 'alignment', 'unity', 'balance', 'symphony', 'confluence', 'merger'],
+                        universal_principle: ['cosmic law', 'divine order', 'sacred geometry', 'eternal rhythm', 'natural flow'],
+                        creation: ['existence', 'life', 'reality', 'manifestation', 'beauty', 'wonder', 'cosmos'],
+                        energy: ['vibration', 'frequency', 'current', 'pulse', 'wave', 'emanation', 'radiance'],
+                        transformation: ['evolution', 'metamorphosis', 'awakening', 'rebirth', 'renewal', 'alchemy', 'transcendence'],
+                        dormant_power: ['hidden strength', 'inner fire', 'latent magic', 'sleeping giant', 'untapped potential'],
+                        cosmic_alignment: ['stellar convergence', 'universal synchrony', 'celestial harmony', 'quantum entanglement'],
+                        infinite_potential: ['boundless possibility', 'limitless creation', 'endless becoming', 'eternal growth'],
+                        mystery: ['enigma', 'secret', 'riddle', 'paradox', 'wonder', 'miracle', 'magic'],
+                        existence: ['being', 'life', 'reality', 'presence', 'consciousness', 'experience', 'journey'],
+                        divine_grace: ['cosmic blessing', 'universal love', 'celestial favor', 'sacred gift', 'heavenly touch'],
+                        journey: ['path', 'quest', 'adventure', 'pilgrimage', 'voyage', 'expedition', 'odyssey'],
+                        celestial_light: ['starfire', 'moonbeam', 'cosmic radiance', 'stellar brilliance', 'divine illumination'],
+                        sacred_wisdom: ['ancient knowledge', 'eternal truth', 'divine insight', 'cosmic understanding', 'spiritual clarity'],
+                        time: ['eternity', 'infinity', 'the eternal now', 'cosmic rhythm', 'universal pulse'],
+                        space: ['the void', 'infinity', 'the cosmos', 'universal expanse', 'celestial dance'],
+                        consciousness: ['awareness', 'mind', 'spirit', 'being', 'essence', 'soul', 'presence'],
+                        synchronicity: ['meaningful coincidence', 'cosmic timing', 'universal orchestration', 'divine providence'],
+                        golden_threads: ['luminous connections', 'sacred bonds', 'cosmic filaments', 'ethereal links'],
+                        destiny: ['fate', 'purpose', 'calling', 'mission', 'path', 'future', 'becoming']
+                    },
+                    zh: {
+                        宇宙力量: ['星體能量', '量子場', '天體流', '宇宙之流', '以太流'],
+                        品質: ['愛', '智慧', '清晰', '力量', '和平', '豐盛', '喜悅', '平衡'],
+                        道路: ['旅程', '探索', '冒險', '朝聖', '奧德賽', '航行', '遠征'],
+                        祝福: ['奇蹟', '恩典', '奇觀', '魔法', '寧靜', '圓滿', '覺醒'],
+                        時刻: ['呼吸', '心跳', '日出', '相遇', '發現', '領悟', '觸碰'],
+                        維度: ['境界', '領域', '層面', '場域', '矩陣', '網絡', '織錦'],
+                        可能性: ['夢想', '願景', '潛能', '希望', '顯化', '創造', '成為'],
+                        本質: ['靈魂', '精神', '意識', '存在', '心', '核心', '真理'],
+                        和諧: ['共鳴', '對齊', '統一', '平衡', '交響', '匯流', '融合'],
+                        宇宙原則: ['宇宙法則', '神聖秩序', '神聖幾何', '永恆節奏', '自然之流'],
+                        創造: ['存在', '生命', '實相', '顯化', '美', '奇觀', '宇宙'],
+                        能量: ['振動', '頻率', '流', '脈動', '波', '散發', '光芒'],
+                        轉化: ['進化', '變形', '覺醒', '重生', '更新', '煉金', '超越'],
+                        潛在力量: ['隱藏力量', '內在之火', '潛在魔法', '沉睡巨人', '未開發潛能'],
+                        宇宙對齊: ['星體匯聚', '宇宙同步', '天體和諧', '量子糾纏'],
+                        無限潛能: ['無邊可能', '無限創造', '無盡成為', '永恆成長'],
+                        奧秘: ['謎', '秘密', '謎題', '悖論', '奇觀', '奇蹟', '魔法'],
+                        存在: ['存在', '生命', '實相', '臨在', '意識', '體驗', '旅程'],
+                        神聖恩典: ['宇宙祝福', '宇宙愛', '天體恩寵', '神聖禮物', '天堂觸碰'],
+                        旅程: ['道路', '探索', '冒險', '朝聖', '航行', '遠征', '奧德賽'],
+                        天體之光: ['星火', '月光', '宇宙光輝', '星體光輝', '神聖照明'],
+                        神聖智慧: ['古老知識', '永恆真理', '神聖洞察', '宇宙理解', '靈性清晰'],
+                        時間: ['永恆', '無限', '永恆的現在', '宇宙節奏', '宇宙脈動'],
+                        空間: ['虛空', '無限', '宇宙', '宇宙廣袤', '天體舞蹈'],
+                        意識: ['覺知', '心', '精神', '存在', '本質', '靈魂', '臨在'],
+                        同步性: ['有意義的巧合', '宇宙時機', '宇宙編排', '神聖天意'],
+                        金線: ['光明連結', '神聖紐帶', '宇宙絲線', '以太連結'],
+                        命運: ['命運', '目的', '召喚', '使命', '道路', '未來', '成為']
+                    }
+                };
+                
+                const template = wishTemplates[lang][Math.floor(Math.random() * wishTemplates[lang].length)];
+                const elements = wishElements[lang];
+                
+                wish = template.replace(/\{(\w+)\}/g, (match, key) => {
+                    if (elements[key]) {
+                        return elements[key][Math.floor(Math.random() * elements[key].length)];
+                    }
+                    return match;
+                });
+                
+                attempts++;
+            } while (usedWishes.has(wish) && attempts < 20);
+            
+            usedWishes.add(wish);
+            return wish;
+        }
+
+        // Initialize Oracle on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            generateEnhancedMysticalParticles();
+            activateBlackHoleEffects();
+            setRandomGreeting();
         });
 
         function generateEnhancedMysticalParticles() {
@@ -1214,21 +1301,12 @@
                 // Clear any existing words
                 wordsContainer.innerHTML = '';
                 
-                // Generate 10-14 random words for more variety
+                // Generate 10-14 unique AI words
                 const wordCount = 10 + Math.floor(Math.random() * 5);
-                const selectedWords = [];
-                const currentWords = oracleWords[currentLanguage];
-                
-                // Select unique random words
-                while (selectedWords.length < wordCount) {
-                    const randomWord = currentWords[Math.floor(Math.random() * currentWords.length)];
-                    if (!selectedWords.includes(randomWord)) {
-                        selectedWords.push(randomWord);
-                    }
-                }
                 
                 // Create floating word elements with enhanced positioning
-                selectedWords.forEach((word, index) => {
+                for (let i = 0; i < wordCount; i++) {
+                    const word = generateUniqueWord();
                     const wordElement = document.createElement('div');
                     wordElement.classList.add('floating-word');
                     
@@ -1246,7 +1324,7 @@
                     wordElement.onclick = () => showBrightMessage(word);
                     
                     // Better distribution algorithm to avoid overlapping
-                    const angle = (index / wordCount) * 2 * Math.PI;
+                    const angle = (i / wordCount) * 2 * Math.PI;
                     const radiusX = 25 + Math.random() * 20;
                     const radiusY = 20 + Math.random() * 15;
                     const centerX = 50;
@@ -1259,11 +1337,11 @@
                     wordElement.style.top = Math.max(10, Math.min(80, y)) + '%';
                     
                     // Staggered animation with more variety
-                    wordElement.style.animationDelay = (index * 0.2 + Math.random() * 0.3) + 's';
+                    wordElement.style.animationDelay = (i * 0.2 + Math.random() * 0.3) + 's';
                     wordElement.style.animationDuration = (6 + Math.random() * 4) + 's';
                     
                     wordsContainer.appendChild(wordElement);
-                });
+                }
                 
                 // Deactivate black hole after words appear
                 setTimeout(() => {
@@ -1297,25 +1375,8 @@
                 
                 messageContainer.classList.add('active');
                 
-                // Get message for the word (enhanced fallback messages)
-                const fallbackMessages = {
-                    en: [
-                        "The universe speaks in symbols older than words... This moment carries a message meant just for you. Listen with your heart, not just your ears.",
-                        "In the space between heartbeats, wisdom whispers... What you've chosen echoes through dimensions you cannot see but always feel.",
-                        "Ancient energies stir when certain words are spoken... The cosmos has been waiting for you to ask this exact question at this precise moment.",
-                        "From the stellar nurseries to the quantum realm, your choice reverberates... The answer was always within you, wearing the mask of a question."
-                    ],
-                    zh: [
-                        "宇宙用比文字更古老的符號說話... 這一刻承載著專門為你準備的訊息。用心聆聽，不只用耳朵。",
-                        "在心跳之間的空間中，智慧低語... 你的選擇在你看不見但總能感受到的維度中回響。",
-                        "當某些詞語被說出時，古老的能量開始攪動... 宇宙一直在等待你在這個精確的時刻問這個確切的問題。",
-                        "從恆星搖籃到量子領域，你的選擇產生共鳴... 答案一直在你心中，戴著問題的面具。"
-                    ]
-                };
-                
-                const currentMessages = brightMessages[currentLanguage];
-                const currentFallbacks = fallbackMessages[currentLanguage];
-                const message = currentMessages[word] || currentFallbacks[Math.floor(Math.random() * currentFallbacks.length)];
+                // Generate AI message
+                const message = generateDynamicMessage(word);
                 
                 // Add typing effect to message
                 typeMessage(messageElement, message);
@@ -1369,12 +1430,11 @@
                 
                 wishesContainer.classList.add('active');
                 
-                // Select random wish
-                const currentWishes = brightWishes[currentLanguage];
-                const randomWish = currentWishes[Math.floor(Math.random() * currentWishes.length)];
+                // Generate AI wish
+                const wish = generateDynamicWish();
                 
                 // Add gentle typing effect to wishes too
-                typeMessage(wishesElement, randomWish);
+                typeMessage(wishesElement, wish);
                 
                 // Deactivate black hole after wishes appear
                 setTimeout(() => {
@@ -1401,11 +1461,7 @@
             
             // Show landing screen after transition with new greeting
             setTimeout(() => {
-                const subtitle = document.querySelector('.oracle-subtitle');
-                const greetings = oracleGreetings[currentLanguage];
-                const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-                subtitle.textContent = randomGreeting;
-                
+                setRandomGreeting();
                 resetOracleScreens();
             }, 500);
         }
