@@ -62,75 +62,199 @@
             --hole-glow: rgba(255, 255, 255, 0.3);
         }
 
-        /* Enhanced Control Panel - Minimalist */
-        .control-panel {
+        /* Minimalist Settings Button */
+        .settings-trigger {
             position: fixed;
-            top: 15px;
-            right: 15px;
-            z-index: 3000;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            opacity: 0.4;
-            transition: opacity 0.3s ease;
-        }
-
-        .control-panel:hover {
-            opacity: 1;
-        }
-
-        .control-section {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .control-label {
-            font-size: 0.6rem;
+            top: 20px;
+            right: 20px;
+            z-index: 4000;
+            background: transparent;
+            border: none;
             color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            opacity: 0.4;
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .settings-trigger:hover {
+            opacity: 1;
+            color: var(--text-primary);
+            transform: rotate(45deg) scale(1.1);
+        }
+
+        /* Settings Overlay */
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 5000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .settings-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .settings-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 90%;
+            max-width: 500px;
+            background: transparent;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+        }
+
+        .settings-overlay.active .settings-container {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            transition-delay: 0.2s;
+        }
+
+        .settings-header {
             text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .settings-title {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-weight: 200;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px var(--hole-glow);
+        }
+
+        .settings-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+
+        /* Settings Sections */
+        .settings-section {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .settings-overlay.active .settings-section {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .settings-overlay.active .settings-section:nth-child(2) { transition-delay: 0.4s; }
+        .settings-overlay.active .settings-section:nth-child(3) { transition-delay: 0.6s; }
+        .settings-overlay.active .settings-section:nth-child(4) { transition-delay: 0.8s; }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            font-family: 'Georgia', serif;
+            font-style: italic;
             font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 20px var(--hole-glow);
         }
 
-        .control-row {
-            display: flex;
-            gap: 3px;
-            justify-content: center;
+        /* Language Grid */
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .control-btn {
+        .language-btn {
             background: transparent;
             border: 1px solid var(--text-secondary);
             color: var(--text-secondary);
-            padding: 6px 8px;
-            font-size: 0.65rem;
+            padding: 12px 8px;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 30px;
+            transition: all 0.4s ease;
             text-align: center;
             font-weight: 300;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            border-radius: 0;
         }
 
-        .control-btn:hover, .control-btn.active {
+        .language-btn:hover, .language-btn.active {
             color: var(--text-primary);
             border-color: var(--text-primary);
             background: rgba(255, 255, 255, 0.05);
             transform: scale(1.05);
+            text-shadow: 0 0 10px var(--hole-glow);
         }
 
-        /* Size Control Slider */
+        /* Background Grid */
+        .background-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .background-btn {
+            background: transparent;
+            border: 1px solid var(--text-secondary);
+            color: var(--text-secondary);
+            padding: 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-align: center;
+            border-radius: 0;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .background-btn:hover, .background-btn.active {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--hole-glow);
+        }
+
+        /* Black Hole Size Control */
         .size-control {
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-top: 4px;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .size-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            min-width: 60px;
+            text-align: center;
         }
 
         .size-slider {
-            width: 80px;
+            width: 200px;
             height: 2px;
             background: var(--text-secondary);
             border: none;
@@ -138,26 +262,54 @@
             cursor: pointer;
             appearance: none;
             -webkit-appearance: none;
+            border-radius: 0;
         }
 
         .size-slider::-webkit-slider-thumb {
             appearance: none;
             -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
+            width: 16px;
+            height: 16px;
             background: var(--text-primary);
-            border-radius: 50%;
+            border-radius: 0;
             cursor: pointer;
             border: 1px solid var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .size-slider::-webkit-slider-thumb:hover {
+            background: var(--text-primary);
+            box-shadow: 0 0 10px var(--hole-glow);
+            transform: scale(1.2);
         }
 
         .size-slider::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
+            width: 16px;
+            height: 16px;
             background: var(--text-primary);
-            border-radius: 50%;
+            border-radius: 0;
             cursor: pointer;
             border: 1px solid var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        /* Close Button */
+        .settings-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            padding: 10px;
+        }
+
+        .settings-close:hover {
+            color: var(--text-primary);
+            transform: rotate(90deg) scale(1.2);
         }
 
         /* Main Oracle Container - No borders or frames */
@@ -660,10 +812,39 @@
 
         /* Mobile Optimizations */
         @media (max-width: 768px) {
-            .control-panel {
-                top: 10px;
-                right: 10px;
-                transform: scale(0.9);
+            .settings-trigger {
+                top: 15px;
+                right: 15px;
+                font-size: 1rem;
+            }
+
+            .settings-container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .settings-title {
+                font-size: 2rem;
+                letter-spacing: 3px;
+            }
+
+            .language-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .background-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            .size-control {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .size-slider {
+                width: 250px;
             }
 
             .ask-text {
@@ -704,6 +885,19 @@
         }
 
         @media (max-width: 480px) {
+            .settings-title {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+
+            .language-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .background-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
             .ask-text {
                 font-size: 2.5rem;
                 letter-spacing: 4px;
@@ -734,6 +928,22 @@
 
         /* Landscape Mobile */
         @media (max-height: 500px) and (orientation: landscape) {
+            .settings-container {
+                width: 95%;
+                max-width: 700px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .settings-title {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            .settings-section {
+                margin-bottom: 25px;
+            }
+
             .ask-text {
                 font-size: 2.2rem;
             }
@@ -762,54 +972,58 @@
     </style>
 </head>
 <body>
-    <!-- Enhanced Control Panel -->
-    <div class="control-panel">
-        <!-- Language Selection -->
-        <div class="control-section">
-            <div class="control-label">Language</div>
-            <div class="control-row">
-                <button class="control-btn active" onclick="switchLanguage('en')" data-lang="en">EN</button>
-                <button class="control-btn" onclick="switchLanguage('zh')" data-lang="zh">中文</button>
-                <button class="control-btn" onclick="switchLanguage('ja')" data-lang="ja">日本語</button>
-            </div>
-            <div class="control-row">
-                <button class="control-btn" onclick="switchLanguage('fr')" data-lang="fr">FR</button>
-                <button class="control-btn" onclick="switchLanguage('de')" data-lang="de">DE</button>
-                <button class="control-btn" onclick="switchLanguage('es')" data-lang="es">ES</button>
-            </div>
-            <div class="control-row">
-                <button class="control-btn" onclick="switchLanguage('ar')" data-lang="ar">عربي</button>
-                <button class="control-btn" onclick="switchLanguage('hi')" data-lang="hi">हिन्दी</button>
-                <button class="control-btn" onclick="switchLanguage('ru')" data-lang="ru">RU</button>
-            </div>
-        </div>
+    <!-- Minimalist Settings Trigger -->
+    <button class="settings-trigger" onclick="openSettings()">⚙</button>
+
+    <!-- Settings Overlay -->
+    <div class="settings-overlay" id="settingsOverlay">
+        <button class="settings-close" onclick="closeSettings()">✕</button>
         
-        <!-- Background Selection -->
-        <div class="control-section">
-            <div class="control-label">Void</div>
-            <div class="control-row">
-                <button class="control-btn active" onclick="switchBackground('void')" data-bg="void">●</button>
-                <button class="control-btn" onclick="switchBackground('deep-space')" data-bg="deep-space">◐</button>
-                <button class="control-btn" onclick="switchBackground('midnight')" data-bg="midnight">◑</button>
+        <div class="settings-container">
+            <div class="settings-header">
+                <div class="settings-title" data-text="settings">settings</div>
+                <div class="settings-subtitle" data-text="configure your void">configure your void</div>
             </div>
-            <div class="control-row">
-                <button class="control-btn" onclick="switchBackground('abyss')" data-bg="abyss">◒</button>
-                <button class="control-btn" onclick="switchBackground('shadow')" data-bg="shadow">◓</button>
-                <button class="control-btn" onclick="switchBackground('crimson')" data-bg="crimson">◔</button>
+
+            <!-- Language Selection -->
+            <div class="settings-section">
+                <div class="section-title" data-text="language">language</div>
+                <div class="language-grid">
+                    <button class="language-btn active" onclick="switchLanguage('en')" data-lang="en">English</button>
+                    <button class="language-btn" onclick="switchLanguage('zh')" data-lang="zh">中文</button>
+                    <button class="language-btn" onclick="switchLanguage('ja')" data-lang="ja">日本語</button>
+                    <button class="language-btn" onclick="switchLanguage('fr')" data-lang="fr">Français</button>
+                    <button class="language-btn" onclick="switchLanguage('de')" data-lang="de">Deutsch</button>
+                    <button class="language-btn" onclick="switchLanguage('es')" data-lang="es">Español</button>
+                    <button class="language-btn" onclick="switchLanguage('ar')" data-lang="ar">العربية</button>
+                    <button class="language-btn" onclick="switchLanguage('hi')" data-lang="hi">हिन्दी</button>
+                    <button class="language-btn" onclick="switchLanguage('ru')" data-lang="ru">Русский</button>
+                </div>
             </div>
-            <div class="control-row">
-                <button class="control-btn" onclick="switchBackground('ocean')" data-bg="ocean">◕</button>
-                <button class="control-btn" onclick="switchBackground('forest')" data-bg="forest">◖</button>
+
+            <!-- Background Selection -->
+            <div class="settings-section">
+                <div class="section-title" data-text="void aesthetic">void aesthetic</div>
+                <div class="background-grid">
+                    <button class="background-btn active" onclick="switchBackground('void')" data-bg="void" title="Pure Void">●</button>
+                    <button class="background-btn" onclick="switchBackground('deep-space')" data-bg="deep-space" title="Deep Space">◐</button>
+                    <button class="background-btn" onclick="switchBackground('midnight')" data-bg="midnight" title="Midnight">◑</button>
+                    <button class="background-btn" onclick="switchBackground('abyss')" data-bg="abyss" title="Abyss">◒</button>
+                    <button class="background-btn" onclick="switchBackground('shadow')" data-bg="shadow" title="Shadow">◓</button>
+                    <button class="background-btn" onclick="switchBackground('crimson')" data-bg="crimson" title="Crimson">◔</button>
+                    <button class="background-btn" onclick="switchBackground('ocean')" data-bg="ocean" title="Ocean">◕</button>
+                    <button class="background-btn" onclick="switchBackground('forest')" data-bg="forest" title="Forest">◖</button>
+                </div>
             </div>
-        </div>
-        
-        <!-- Black Hole Size -->
-        <div class="control-section">
-            <div class="control-label">Hole Size</div>
-            <div class="size-control">
-                <span style="font-size: 0.6rem;">●</span>
-                <input type="range" class="size-slider" min="40" max="120" value="70" onInput="adjustBlackHoleSize(this.value)">
-                <span style="font-size: 0.8rem;">●</span>
+
+            <!-- Black Hole Size -->
+            <div class="settings-section">
+                <div class="section-title" data-text="singularity scale">singularity scale</div>
+                <div class="size-control">
+                    <span class="size-label">small</span>
+                    <input type="range" class="size-slider" min="40" max="120" value="70" onInput="adjustBlackHoleSize(this.value)">
+                    <span class="size-label">vast</span>
+                </div>
             </div>
         </div>
     </div>
@@ -863,11 +1077,12 @@
     </div>
 
     <script>
-        // Enhanced Oracle System with Multi-language Support
+        // Enhanced Oracle System with Settings Page
         let currentLanguage = 'en';
         let currentBackground = 'void';
         let currentStep = 0;
         let blackHoleSize = 70;
+        let settingsOpen = false;
         let sessionMemory = {
             usedWords: new Set(),
             usedMessages: new Set(),
@@ -882,6 +1097,11 @@
                 ask: "ask",
                 noted: "noted", 
                 more: "more",
+                settings: "settings",
+                "configure your void": "configure your void",
+                language: "language",
+                "void aesthetic": "void aesthetic",
+                "singularity scale": "singularity scale",
                 greeting: "What seeks to be known?",
                 words: [
                     'void', 'shadow', 'whisper', 'echo', 'dream', 'silence', 'infinity', 'mystery',
@@ -903,6 +1123,11 @@
                 ask: "問",
                 noted: "記下",
                 more: "更多",
+                settings: "設置",
+                "configure your void": "配置你的虛空",
+                language: "語言",
+                "void aesthetic": "虛空美學",
+                "singularity scale": "奇點規模",
                 greeting: "什麼渴望被知曉？",
                 words: [
                     '虛空', '影子', '低語', '回音', '夢境', '靜默', '無限', '奧秘',
@@ -924,6 +1149,11 @@
                 ask: "問う",
                 noted: "記録",
                 more: "もっと",
+                settings: "設定",
+                "configure your void": "あなたの虚空を設定",
+                language: "言語",
+                "void aesthetic": "虚空の美学",
+                "singularity scale": "特異点のスケール",
                 greeting: "何が知られることを求めているのか？",
                 words: [
                     '空虚', '影', 'ささやき', 'こだま', '夢', '静寂', '無限', '神秘',
@@ -945,6 +1175,11 @@
                 ask: "demander",
                 noted: "noté",
                 more: "plus",
+                settings: "paramètres",
+                "configure your void": "configurez votre vide",
+                language: "langue",
+                "void aesthetic": "esthétique du vide",
+                "singularity scale": "échelle de singularité",
                 greeting: "Qu'est-ce qui cherche à être connu?",
                 words: [
                     'vide', 'ombre', 'murmure', 'écho', 'rêve', 'silence', 'infini', 'mystère',
@@ -966,6 +1201,11 @@
                 ask: "fragen",
                 noted: "notiert",
                 more: "mehr",
+                settings: "einstellungen",
+                "configure your void": "konfiguriere deine leere",
+                language: "sprache",
+                "void aesthetic": "leere-ästhetik",
+                "singularity scale": "singularitätsskala",
                 greeting: "Was sucht bekannt zu werden?",
                 words: [
                     'Leere', 'Schatten', 'Flüstern', 'Echo', 'Traum', 'Stille', 'Unendlichkeit', 'Geheimnis',
@@ -987,6 +1227,11 @@
                 ask: "preguntar",
                 noted: "notado",
                 more: "más",
+                settings: "configuración",
+                "configure your void": "configura tu vacío",
+                language: "idioma",
+                "void aesthetic": "estética del vacío",
+                "singularity scale": "escala de singularidad",
                 greeting: "¿Qué busca ser conocido?",
                 words: [
                     'vacío', 'sombra', 'susurro', 'eco', 'sueño', 'silencio', 'infinito', 'misterio',
@@ -1008,6 +1253,11 @@
                 ask: "اسأل",
                 noted: "مُلاحظ",
                 more: "المزيد",
+                settings: "الإعدادات",
+                "configure your void": "اضبط فراغك",
+                language: "اللغة",
+                "void aesthetic": "جمالية الفراغ",
+                "singularity scale": "مقياس التفرد",
                 greeting: "ما الذي يسعى لأن يُعرف؟",
                 words: [
                     'فراغ', 'ظل', 'همس', 'صدى', 'حلم', 'صمت', 'لانهاية', 'غموض',
@@ -1029,6 +1279,11 @@
                 ask: "पूछना",
                 noted: "नोट किया",
                 more: "और",
+                settings: "सेटिंग्स",
+                "configure your void": "अपना शून्य कॉन्फ़िगर करें",
+                language: "भाषा",
+                "void aesthetic": "शून्य सौंदर्य",
+                "singularity scale": "एकलता पैमाना",
                 greeting: "क्या जानना चाहता है?",
                 words: [
                     'शून्य', 'छाया', 'फुसफुसाहट', 'गूंज', 'स्वप्न', 'मौनता', 'अनंत', 'रहस्य',
@@ -1050,6 +1305,11 @@
                 ask: "спросить",
                 noted: "отмечено",
                 more: "больше",
+                settings: "настройки",
+                "configure your void": "настройте вашу пустоту",
+                language: "язык",
+                "void aesthetic": "эстетика пустоты",
+                "singularity scale": "масштаб сингулярности",
                 greeting: "Что стремится быть познанным?",
                 words: [
                     'пустота', 'тень', 'шепот', 'эхо', 'сон', 'тишина', 'бесконечность', 'тайна',
@@ -1081,6 +1341,27 @@
             'forest': '--bg-forest'
         };
 
+        // Settings Functions
+        function openSettings() {
+            settingsOpen = true;
+            const overlay = document.getElementById('settingsOverlay');
+            overlay.classList.add('active');
+            
+            // Prevent interaction with main oracle
+            document.querySelector('.oracle-container').style.pointerEvents = 'none';
+        }
+
+        function closeSettings() {
+            settingsOpen = false;
+            const overlay = document.getElementById('settingsOverlay');
+            overlay.classList.remove('active');
+            
+            // Re-enable interaction with main oracle
+            setTimeout(() => {
+                document.querySelector('.oracle-container').style.pointerEvents = 'auto';
+            }, 600);
+        }
+
         // Enhanced language switching
         function switchLanguage(lang) {
             if (!translations[lang]) return;
@@ -1098,8 +1379,6 @@
                 const key = element.getAttribute('data-text');
                 if (translations[lang][key]) {
                     element.textContent = translations[lang][key];
-                } else if (key === 'greeting') {
-                    element.textContent = translations[lang].greeting;
                 }
             });
             
@@ -1389,11 +1668,26 @@
             updateProgress(0);
         });
 
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (settingsOpen) {
+                    closeSettings();
+                }
+            } else if (e.key === ',') {
+                if (!settingsOpen) {
+                    openSettings();
+                }
+            }
+        });
+
         // Touch support
         document.addEventListener('touchstart', function(e) {
             if (e.target.classList.contains('oracle-button') || 
                 e.target.classList.contains('floating-word') || 
-                e.target.classList.contains('floating-ask')) {
+                e.target.classList.contains('floating-ask') ||
+                e.target.classList.contains('language-btn') ||
+                e.target.classList.contains('background-btn')) {
                 createRippleEffect(e.target, e.touches[0]);
             }
         });
@@ -1401,6 +1695,13 @@
         // Resize handler
         window.addEventListener('resize', function() {
             generateParticles();
+        });
+
+        // Close settings when clicking outside
+        document.getElementById('settingsOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSettings();
+            }
         });
     </script>
 </body>
