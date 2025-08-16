@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mystical Oracle - Messages from the Universe</title>
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
         * {
             margin: 0;
@@ -30,10 +33,10 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 30%, #0f1419 100%);
+            background: radial-gradient(ellipse at center, var(--bg-primary) 0%, var(--bg-secondary) 30%, var(--bg-tertiary) 100%);
             width: 100vw;
             height: 100vh;
-            height: 100dvh; /* Dynamic viewport height for mobile */
+            height: 100dvh;
             color: white;
             overflow: hidden;
             position: fixed;
@@ -43,50 +46,103 @@
             padding: 0;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-tertiary: #0f1419;
+            --accent-primary: rgba(186, 85, 211, 0.8);
+            --accent-secondary: rgba(138, 43, 226, 0.7);
+            --accent-tertiary: rgba(147, 112, 219, 0.6);
+            --glow-intensity: 1;
+            transition: all 0.3s ease;
         }
 
-        /* Language Selector - Mobile Optimized */
-        .language-selector {
+        /* Dynamic Theme System */
+        body.theme-cosmic {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-tertiary: #0f1419;
+            --accent-primary: rgba(186, 85, 211, 0.8);
+            --accent-secondary: rgba(138, 43, 226, 0.7);
+            --accent-tertiary: rgba(147, 112, 219, 0.6);
+        }
+
+        body.theme-ethereal {
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a2b3e;
+            --bg-tertiary: #0a0f1a;
+            --accent-primary: rgba(100, 200, 255, 0.8);
+            --accent-secondary: rgba(50, 150, 255, 0.7);
+            --accent-tertiary: rgba(150, 220, 255, 0.6);
+        }
+
+        body.theme-mystical {
+            --bg-primary: #2e1a1a;
+            --bg-secondary: #3e1621;
+            --bg-tertiary: #190f14;
+            --accent-primary: rgba(255, 100, 150, 0.8);
+            --accent-secondary: rgba(200, 50, 100, 0.7);
+            --accent-tertiary: rgba(255, 150, 200, 0.6);
+        }
+
+        body.theme-aurora {
+            --bg-primary: #1a2e1a;
+            --bg-secondary: #213e16;
+            --bg-tertiary: #14190f;
+            --accent-primary: rgba(100, 255, 150, 0.8);
+            --accent-secondary: rgba(50, 200, 100, 0.7);
+            --accent-tertiary: rgba(150, 255, 200, 0.6);
+        }
+
+        /* Advanced Controls */
+        .control-panel {
             position: fixed;
             top: 5px;
             right: 5px;
             z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 5px;
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(186, 85, 211, 0.3);
+            border: 1px solid var(--accent-primary);
             border-radius: 12px;
             padding: 4px;
         }
 
-        .language-btn {
-            background: rgba(186, 85, 211, 0.2);
-            border: 1px solid rgba(186, 85, 211, 0.5);
+        .control-btn {
+            background: var(--accent-primary);
+            border: 1px solid var(--accent-secondary);
             color: #e8e8e8;
             padding: 4px 8px;
             border-radius: 6px;
             font-size: 0.6rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 0 1px;
             min-width: 24px;
             text-align: center;
+            backdrop-filter: blur(10px);
         }
 
-        .language-btn:hover, .language-btn.active {
-            background: rgba(186, 85, 211, 0.4);
-            border-color: rgba(186, 85, 211, 0.8);
+        .control-btn:hover, .control-btn.active {
+            background: var(--accent-secondary);
             transform: translateY(-1px);
+            box-shadow: 0 2px 8px var(--accent-primary);
         }
 
-        /* Main Oracle Container - True Mobile Full Screen */
+        /* Main Oracle Container */
         .oracle-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            height: 100dvh; /* Dynamic viewport height */
-            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 30%, #0f1419 100%);
+            height: 100dvh;
+            background: radial-gradient(ellipse at center, var(--bg-primary) 0%, var(--bg-secondary) 30%, var(--bg-tertiary) 100%);
             overflow: hidden;
             z-index: 1000;
             margin: 0;
@@ -101,7 +157,7 @@
             overflow: hidden;
         }
 
-        /* Black Hole Container */
+        /* Enhanced Black Hole with Physics */
         .black-hole-container {
             position: absolute;
             top: 50%;
@@ -110,6 +166,12 @@
             width: 80vmin;
             height: 80vmin;
             z-index: 1001;
+            transition: all 0.5s ease;
+        }
+
+        .black-hole-container.expanded {
+            width: 95vmin;
+            height: 95vmin;
         }
 
         .black-hole {
@@ -124,12 +186,13 @@
                     rgba(0, 0, 0, 0.9) 55%, 
                     black 65%);
             box-shadow: 
-                inset 0 0 50px rgba(186, 85, 211, 0.3),
-                inset 0 0 100px rgba(138, 43, 226, 0.2),
+                inset 0 0 50px var(--accent-primary),
+                inset 0 0 100px var(--accent-secondary),
                 0 0 100px rgba(0, 0, 0, 0.8);
             animation: blackHoleSwirl 8s linear infinite;
             position: relative;
             overflow: hidden;
+            filter: brightness(var(--glow-intensity));
         }
 
         .black-hole::before {
@@ -140,8 +203,21 @@
             width: 90%;
             height: 90%;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(186, 85, 211, 0.15) 0%, transparent 60%);
+            background: radial-gradient(circle, var(--accent-primary) 0%, transparent 60%);
             animation: accretionDisk 6s linear infinite reverse;
+        }
+
+        .black-hole::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 40%);
+            animation: accretionDisk 4s linear infinite;
+            opacity: 0.7;
         }
 
         @keyframes blackHoleSwirl {
@@ -154,7 +230,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Sound Wave Visualization */
+        /* Advanced Sound Wave System */
         .sound-wave-container {
             position: absolute;
             top: 50%;
@@ -171,7 +247,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 2px solid rgba(186, 85, 211, 0.6);
+            border: 2px solid var(--accent-primary);
             border-radius: 50%;
             opacity: 0;
             animation: soundWavePulse 2s ease-out infinite;
@@ -182,32 +258,40 @@
             opacity: 1;
         }
 
+        .sound-wave.resonance {
+            animation: resonanceWave 1.5s ease-in-out infinite;
+        }
+
+        .sound-wave.harmonic {
+            animation: harmonicWave 3s ease-in-out infinite;
+        }
+
         .sound-wave:nth-child(1) {
             width: 50%;
             height: 50%;
             animation-delay: 0s;
-            border-color: rgba(186, 85, 211, 0.8);
+            border-color: var(--accent-primary);
         }
 
         .sound-wave:nth-child(2) {
             width: 65%;
             height: 65%;
             animation-delay: 0.15s;
-            border-color: rgba(255, 140, 180, 0.7);
+            border-color: var(--accent-secondary);
         }
 
         .sound-wave:nth-child(3) {
             width: 80%;
             height: 80%;
             animation-delay: 0.3s;
-            border-color: rgba(138, 43, 226, 0.6);
+            border-color: var(--accent-tertiary);
         }
 
         .sound-wave:nth-child(4) {
             width: 95%;
             height: 95%;
             animation-delay: 0.45s;
-            border-color: rgba(74, 144, 226, 0.5);
+            border-color: var(--accent-primary);
         }
 
         @keyframes soundWavePulse {
@@ -231,6 +315,31 @@
             }
         }
 
+        @keyframes resonanceWave {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.6;
+                border-width: 2px;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+                border-width: 3px;
+            }
+        }
+
+        @keyframes harmonicWave {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0.8) rotate(0deg);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Enhanced Particle System */
         .mystical-particles {
             position: absolute;
             width: 100%;
@@ -243,6 +352,15 @@
             border-radius: 50%;
             animation: mysticalFloat 8s ease-in-out infinite;
             filter: blur(0.5px);
+            transition: all 0.3s ease;
+        }
+
+        .mystical-particle.gravitational {
+            animation: gravitationalPull 12s ease-in-out infinite;
+        }
+
+        .mystical-particle.orbiting {
+            animation: orbitBlackHole 15s linear infinite;
         }
 
         @keyframes mysticalFloat {
@@ -264,38 +382,73 @@
             }
         }
 
+        @keyframes gravitationalPull {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+                transform: translateY(80vh) translateX(10px) scale(1) rotate(90deg);
+            }
+            80% {
+                opacity: 0.6;
+                transform: translateY(20vh) translateX(-20px) scale(0.5) rotate(270deg);
+            }
+            100% {
+                transform: translateY(50vh) translateX(0) scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes orbitBlackHole {
+            0% {
+                transform: rotate(0deg) translateX(40vmin) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: rotate(360deg) translateX(40vmin) rotate(-360deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* Dynamic Aurora System */
         .aurora-lights {
             position: absolute;
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(ellipse at 15% 60%, rgba(186, 85, 211, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse at 85% 30%, rgba(138, 43, 226, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(147, 112, 219, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at 30% 20%, rgba(123, 104, 238, 0.15) 0%, transparent 50%);
+                radial-gradient(ellipse at 15% 60%, var(--accent-primary) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 30%, var(--accent-secondary) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, var(--accent-tertiary) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 20%, var(--accent-primary) 0%, transparent 50%);
             animation: auroraShift 15s ease-in-out infinite;
+            filter: brightness(var(--glow-intensity));
         }
 
         @keyframes auroraShift {
             0%, 100% { 
                 opacity: 0.7; 
                 transform: scale(1) rotate(0deg);
-                filter: hue-rotate(0deg);
+                filter: hue-rotate(0deg) brightness(var(--glow-intensity));
             }
             25% { 
                 opacity: 0.9; 
                 transform: scale(1.05) rotate(1deg);
-                filter: hue-rotate(15deg);
+                filter: hue-rotate(15deg) brightness(calc(var(--glow-intensity) * 1.2));
             }
             50% { 
                 opacity: 0.5; 
                 transform: scale(0.98) rotate(-1deg);
-                filter: hue-rotate(30deg);
+                filter: hue-rotate(30deg) brightness(calc(var(--glow-intensity) * 0.8));
             }
             75% { 
                 opacity: 0.8; 
                 transform: scale(1.02) rotate(0.5deg);
-                filter: hue-rotate(15deg);
+                filter: hue-rotate(15deg) brightness(var(--glow-intensity));
             }
         }
 
@@ -330,16 +483,27 @@
             animation: gentleFloat 4s ease-in-out infinite;
         }
 
+        .floating-ask.activated {
+            animation: askActivated 0.5s ease-out;
+        }
+
+        @keyframes askActivated {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.1); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
         .ask-text {
             font-size: 3.5rem;
             font-weight: 300;
             color: #e8e8e8;
-            text-shadow: 0 0 30px rgba(186, 85, 211, 0.6);
+            text-shadow: 0 0 30px var(--accent-primary);
             letter-spacing: 6px;
             position: relative;
             z-index: 1;
             font-family: 'Georgia', serif;
             font-style: italic;
+            transition: all 0.3s ease;
         }
 
         .ask-glow {
@@ -365,16 +529,16 @@
 
         @keyframes colorShift {
             0%, 100% { 
-                background: radial-gradient(circle, rgba(186, 85, 211, 0.3) 0%, transparent 70%);
+                background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
             }
             25% { 
-                background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, transparent 70%);
+                background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%);
             }
             50% { 
-                background: radial-gradient(circle, rgba(147, 112, 219, 0.3) 0%, transparent 70%);
+                background: radial-gradient(circle, var(--accent-tertiary) 0%, transparent 70%);
             }
             75% { 
-                background: radial-gradient(circle, rgba(123, 104, 238, 0.3) 0%, transparent 70%);
+                background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
             }
         }
 
@@ -390,7 +554,7 @@
             to { opacity: 0.7; }
         }
 
-        /* Floating Words */
+        /* Enhanced Floating Words */
         .floating-words-container {
             position: absolute;
             width: 100%;
@@ -418,7 +582,7 @@
             cursor: pointer;
             font-family: 'Georgia', serif;
             font-style: italic;
-            text-shadow: 0 0 20px rgba(186, 85, 211, 0.5);
+            text-shadow: 0 0 20px var(--accent-primary);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             animation: wordFloat 8s ease-in-out infinite;
             opacity: 0;
@@ -427,29 +591,29 @@
         }
 
         .floating-word.big {
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             font-weight: 500;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
         }
 
         .floating-word.medium {
-            font-size: 2.1rem;
+            font-size: 1.8rem;
             font-weight: 400;
             letter-spacing: 1px;
         }
 
         .floating-word.small {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 300;
             letter-spacing: 0.5px;
         }
 
         .floating-word:hover {
-            transform: scale(1.3) rotate(1deg);
+            transform: scale(1.2) rotate(1deg);
             text-shadow: 
-                0 0 30px rgba(186, 85, 211, 1),
-                0 0 60px rgba(186, 85, 211, 0.8),
-                0 0 90px rgba(186, 85, 211, 0.6);
+                0 0 25px var(--accent-primary),
+                0 0 50px var(--accent-secondary),
+                0 0 75px var(--accent-tertiary);
             color: #dda0dd;
             animation-play-state: paused;
         }
@@ -457,6 +621,16 @@
         .floating-word:active {
             transform: scale(1.1) rotate(-1deg);
             transition: transform 0.1s ease;
+        }
+
+        .floating-word.selected {
+            animation: wordSelected 0.6s ease-out;
+        }
+
+        @keyframes wordSelected {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(0); opacity: 0; }
         }
 
         @keyframes wordFloat {
@@ -488,13 +662,14 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 85%;
-            max-width: 700px;
+            width: 95%;
+            max-width: 600px;
             text-align: center;
             opacity: 0;
             visibility: hidden;
             transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 2000;
+            padding: 0 10px;
         }
 
         .message-container.active {
@@ -504,12 +679,12 @@
 
         .bright-message {
             background: 
-                radial-gradient(circle at 30% 30%, rgba(186, 85, 211, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 30% 30%, var(--accent-primary) 0%, transparent 50%),
                 rgba(255, 255, 255, 0.03);
-            border: 2px solid rgba(186, 85, 211, 0.4);
-            border-radius: 25px;
-            padding: 45px;
-            margin-bottom: 35px;
+            border: 2px solid var(--accent-primary);
+            border-radius: 20px;
+            padding: 30px 25px;
+            margin-bottom: 25px;
             backdrop-filter: blur(20px);
             animation: messageFloatUp 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
@@ -523,21 +698,22 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(186, 85, 211, 0.1), transparent);
+            background: linear-gradient(45deg, transparent, var(--accent-primary), transparent);
             animation: shimmerMessage 6s ease-in-out infinite;
+            opacity: 0.1;
         }
 
         .bright-message p {
-            font-size: 1.5rem;
-            line-height: 2;
+            font-size: 1.2rem;
+            line-height: 1.7;
             color: #f0f0f0;
             font-family: 'Georgia', serif;
             font-style: italic;
             margin: 0;
-            text-shadow: 0 0 20px rgba(186, 85, 211, 0.4);
+            text-shadow: 0 0 20px var(--accent-primary);
             position: relative;
             z-index: 1;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         @keyframes messageFloatUp {
@@ -566,18 +742,20 @@
         .message-actions {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 15px;
             animation: actionsAppear 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
+            flex-direction: column;
+            align-items: center;
         }
 
         @keyframes actionsAppear {
             0% {
                 opacity: 0;
-                transform: translateY(30px) scale(0.8);
+                transform: translateY(20px) scale(0.8);
             }
             60% {
                 opacity: 0.8;
-                transform: translateY(-5px) scale(1.05);
+                transform: translateY(-3px) scale(1.05);
             }
             100% {
                 opacity: 1;
@@ -586,12 +764,12 @@
         }
 
         .oracle-button {
-            background: rgba(186, 85, 211, 0.15);
-            border: 2px solid rgba(186, 85, 211, 0.6);
+            background: var(--accent-primary);
+            border: 2px solid var(--accent-secondary);
             color: #f0f0f0;
-            padding: 18px 35px;
-            border-radius: 30px;
-            font-size: 1.2rem;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
             font-family: 'Georgia', serif;
             font-style: italic;
             cursor: pointer;
@@ -599,8 +777,10 @@
             backdrop-filter: blur(15px);
             position: relative;
             overflow: hidden;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             font-weight: 400;
+            width: 200px;
+            text-align: center;
         }
 
         .oracle-button::before {
@@ -619,46 +799,46 @@
         }
 
         .oracle-button:hover {
-            background: rgba(186, 85, 211, 0.3);
-            border-color: rgba(186, 85, 211, 0.9);
-            transform: translateY(-3px) scale(1.05);
+            background: var(--accent-secondary);
+            border-color: var(--accent-tertiary);
+            transform: translateY(-2px) scale(1.03);
             box-shadow: 
-                0 15px 35px rgba(186, 85, 211, 0.4),
-                0 0 30px rgba(186, 85, 211, 0.3);
-            text-shadow: 0 0 15px rgba(186, 85, 211, 0.8);
+                0 10px 25px var(--accent-primary),
+                0 0 20px var(--accent-secondary);
+            text-shadow: 0 0 12px var(--accent-primary);
         }
 
         .oracle-button:active {
-            transform: translateY(-1px) scale(1.02);
+            transform: translateY(-1px) scale(1.01);
             transition: transform 0.1s ease;
         }
 
         .noted-btn {
-            background: rgba(46, 204, 113, 0.15);
+            background: rgba(46, 204, 113, 0.8);
             border-color: rgba(46, 204, 113, 0.6);
         }
 
         .noted-btn:hover {
-            background: rgba(46, 204, 113, 0.3);
+            background: rgba(46, 204, 113, 1);
             border-color: rgba(46, 204, 113, 0.9);
             box-shadow: 
-                0 15px 35px rgba(46, 204, 113, 0.4),
-                0 0 30px rgba(46, 204, 113, 0.3);
-            text-shadow: 0 0 15px rgba(46, 204, 113, 0.8);
+                0 10px 25px rgba(46, 204, 113, 0.4),
+                0 0 20px rgba(46, 204, 113, 0.3);
+            text-shadow: 0 0 12px rgba(46, 204, 113, 0.8);
         }
 
         .more-btn {
-            background: rgba(241, 196, 15, 0.15);
+            background: rgba(241, 196, 15, 0.8);
             border-color: rgba(241, 196, 15, 0.6);
         }
 
         .more-btn:hover {
-            background: rgba(241, 196, 15, 0.3);
+            background: rgba(241, 196, 15, 1);
             border-color: rgba(241, 196, 15, 0.9);
             box-shadow: 
-                0 15px 35px rgba(241, 196, 15, 0.4),
-                0 0 30px rgba(241, 196, 15, 0.3);
-            text-shadow: 0 0 15px rgba(241, 196, 15, 0.8);
+                0 10px 25px rgba(241, 196, 15, 0.4),
+                0 0 20px rgba(241, 196, 15, 0.3);
+            text-shadow: 0 0 12px rgba(241, 196, 15, 0.8);
         }
 
         /* Enhanced Wishes Screen */
@@ -667,13 +847,14 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 85%;
-            max-width: 600px;
+            width: 95%;
+            max-width: 500px;
             text-align: center;
             opacity: 0;
             visibility: hidden;
             transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 2000;
+            padding: 0 10px;
         }
 
         .wishes-container.active {
@@ -683,12 +864,12 @@
 
         .wishes-message {
             background: 
-                radial-gradient(circle at 70% 70%, rgba(46, 204, 113, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(46, 204, 113, 0.3) 0%, transparent 50%),
                 rgba(255, 255, 255, 0.03);
-            border: 2px solid rgba(46, 204, 113, 0.4);
-            border-radius: 25px;
-            padding: 40px;
-            margin-bottom: 35px;
+            border: 2px solid rgba(46, 204, 113, 0.6);
+            border-radius: 20px;
+            padding: 30px 25px;
+            margin-bottom: 25px;
             backdrop-filter: blur(20px);
             animation: wishesFloatUp 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
@@ -702,21 +883,21 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(46, 204, 113, 0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(46, 204, 113, 0.2), transparent);
             animation: shimmerWish 6s ease-in-out infinite;
         }
 
         .wishes-message p {
-            font-size: 1.3rem;
-            line-height: 1.8;
+            font-size: 1.1rem;
+            line-height: 1.6;
             color: #f0f0f0;
             font-family: 'Georgia', serif;
             font-style: italic;
             margin: 0;
-            text-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
+            text-shadow: 0 0 20px rgba(46, 204, 113, 0.6);
             position: relative;
             z-index: 1;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         @keyframes wishesFloatUp {
@@ -738,8 +919,8 @@
         }
 
         .back-btn {
-            background: rgba(186, 85, 211, 0.15);
-            border-color: rgba(186, 85, 211, 0.6);
+            background: var(--accent-primary);
+            border-color: var(--accent-secondary);
             animation: backBtnAppear 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
         }
 
@@ -761,19 +942,63 @@
         /* Enhanced Black Hole speaking state */
         .black-hole-container.speaking .black-hole {
             box-shadow: 
-                inset 0 0 50px rgba(186, 85, 211, 0.8),
-                inset 0 0 100px rgba(138, 43, 226, 0.6),
-                0 0 150px rgba(186, 85, 211, 0.4),
-                0 0 200px rgba(138, 43, 226, 0.3);
+                inset 0 0 80px var(--accent-primary),
+                inset 0 0 150px var(--accent-secondary),
+                0 0 200px var(--accent-primary),
+                0 0 300px var(--accent-secondary);
+            animation-duration: 4s;
         }
 
         .black-hole-container.speaking .black-hole::before {
-            background: radial-gradient(circle, rgba(186, 85, 211, 0.4) 0%, transparent 60%);
+            background: radial-gradient(circle, var(--accent-primary) 0%, transparent 60%);
+            opacity: 0.8;
+        }
+
+        /* Progress Indicator */
+        .progress-dots {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3000;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: var(--accent-primary);
+            transform: scale(1.2);
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+
+        /* Touch Feedback */
+        .touch-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-primary), transparent);
+            pointer-events: none;
+            transform: scale(0);
+            animation: rippleEffect 0.6s ease-out;
+        }
+
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
 
         /* Mobile-First Responsive Design */
         
-        /* Extra Small Mobile Devices (Portrait) */
+        /* Extra Small Mobile Devices */
         @media (max-width: 320px) {
             .ask-text {
                 font-size: 2.8rem;
@@ -828,8 +1053,8 @@
             }
         }
 
-        /* Small Mobile Devices */
-        @media (min-width: 321px) and (max-width: 375px) {
+        /* Standard Mobile Devices */
+        @media (min-width: 321px) and (max-width: 414px) {
             .ask-text {
                 font-size: 3.2rem;
                 letter-spacing: 5px;
@@ -850,26 +1075,6 @@
             .black-hole-container {
                 width: 90vmin;
                 height: 90vmin;
-            }
-        }
-
-        /* Standard Mobile Devices */
-        @media (min-width: 376px) and (max-width: 414px) {
-            .ask-text {
-                font-size: 3.8rem;
-                letter-spacing: 6px;
-            }
-
-            .floating-word.big {
-                font-size: 2.3rem;
-            }
-
-            .floating-word.medium {
-                font-size: 1.9rem;
-            }
-
-            .floating-word.small {
-                font-size: 1.4rem;
             }
         }
 
@@ -913,15 +1118,14 @@
             }
         }
 
-        /* Tablet and Desktop - Secondary Experience */
+        /* Tablet and Desktop */
         @media (min-width: 769px) {
-            .language-selector {
+            .control-panel {
                 top: 10px;
                 right: 10px;
-                padding: 8px;
             }
 
-            .language-btn {
+            .control-btn {
                 padding: 6px 12px;
                 font-size: 0.7rem;
                 margin: 0 3px;
@@ -985,7 +1189,7 @@
             }
         }
 
-        /* Landscape Mobile Orientation */
+        /* Landscape Mobile */
         @media (max-height: 500px) and (orientation: landscape) {
             .ask-text {
                 font-size: 2.5rem;
@@ -1042,11 +1246,32 @@
         }
     </style>
 </head>
-<body>
-    <!-- Language Selector -->
-    <div class="language-selector">
-        <button class="language-btn active" onclick="switchLanguage('en')">EN</button>
-        <button class="language-btn" onclick="switchLanguage('zh')">中文</button>
+<body class="theme-cosmic">
+    <!-- Advanced Control Panel -->
+    <div class="control-panel">
+        <div class="control-row">
+            <button class="control-btn active" onclick="switchLanguage('en')" data-lang="en">EN</button>
+            <button class="control-btn" onclick="switchLanguage('zh')" data-lang="zh">中文</button>
+        </div>
+        <div class="control-row">
+            <button class="control-btn active" onclick="switchTheme('cosmic')" data-theme="cosmic">🌌</button>
+            <button class="control-btn" onclick="switchTheme('ethereal')" data-theme="ethereal">❄️</button>
+            <button class="control-btn" onclick="switchTheme('mystical')" data-theme="mystical">🔮</button>
+            <button class="control-btn" onclick="switchTheme('aurora')" data-theme="aurora">🌿</button>
+        </div>
+        <div class="control-row">
+            <button class="control-btn" onclick="adjustGlow(-0.2)">🔅</button>
+            <button class="control-btn" onclick="adjustGlow(0.2)">🔆</button>
+            <button class="control-btn" onclick="toggleEffects()">⚡</button>
+        </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-dots">
+        <div class="progress-dot active" data-step="0"></div>
+        <div class="progress-dot" data-step="1"></div>
+        <div class="progress-dot" data-step="2"></div>
+        <div class="progress-dot" data-step="3"></div>
     </div>
 
     <!-- Main Oracle Container -->
@@ -1056,10 +1281,10 @@
             <div class="aurora-lights"></div>
         </div>
         
-        <!-- Black Hole Container -->
+        <!-- Enhanced Black Hole Container -->
         <div class="black-hole-container" id="blackHoleContainer">
             <div class="black-hole">
-                <!-- Sound Wave Visualization -->
+                <!-- Advanced Sound Wave Visualization -->
                 <div class="sound-wave-container" id="soundWaveContainer">
                     <div class="sound-wave"></div>
                     <div class="sound-wave"></div>
@@ -1069,7 +1294,7 @@
             </div>
         </div>
         
-        <!-- Landing Screen with 'aSk' -->
+        <!-- Landing Screen -->
         <div class="oracle-landing" id="oracleLanding">
             <div class="floating-ask" id="floatingAsk" onclick="showFloatingWords()">
                 <span class="ask-text" data-en="aSk" data-zh="問">aSk</span>
@@ -1100,99 +1325,156 @@
     </div>
 
     <script>
-        // Current language and tracking systems
+        // Enhanced Oracle System with Advanced Features
         let currentLanguage = 'en';
-        let usedWords = new Set();
-        let usedMessages = new Set();
-        let usedWishes = new Set();
-
-        // AI-Generated Word Creation System
-        const wordPrefixes = {
-            en: ['neo', 'echo', 'astra', 'lumi', 'nova', 'zen', 'flux', 'arc', 'void', 'meta', 'sync', 'vibe', 'flow', 'drift', 'pulse'],
-            zh: ['靈', '魂', '幻', '夢', '星', '月', '雲', '風', '空', '神', '妙', '禪', '境', '覺', '悟']
+        let currentTheme = 'cosmic';
+        let currentStep = 0;
+        let glowIntensity = 1;
+        let effectsEnabled = true;
+        let sessionMemory = {
+            usedWords: new Set(),
+            usedMessages: new Set(),
+            usedWishes: new Set(),
+            themes: [],
+            wordHistory: [],
+            interactionCount: 0
         };
 
-        const wordSuffixes = {
-            en: ['ance', 'ence', 'ism', 'ity', 'ness', 'ion', 'ment', 'ship', 'ward', 'wise', 'like', 'form', 'way', 'path', 'gate'],
-            zh: ['性', '態', '境', '感', '意', '念', '象', '相', '理', '法', '道', '源', '流', '韻', '氣']
-        };
-
-        const wordRoots = {
-            en: ['lumina', 'spectral', 'ethereal', 'temporal', 'celestial', 'quantum', 'cosmic', 'primal', 'transcend', 'infinite', 'mystic', 'radiant', 'sublime', 'profound', 'sacred'],
-            zh: ['靈魂', '神秘', '天象', '時空', '量子', '無限', '永恆', '超越', '深層', '神聖', '純淨', '光明', '智慧', '覺醒', '圓滿']
-        };
-
-        // AI Story Templates for Dynamic Message Generation
-        const storyTemplates = {
-            en: [
-                "In the {realm} where {element} {action}, a {entity} discovers that {revelation}... {wisdom} teaches us that {truth}. The {metaphor} reminds you that {personal_insight}.",
-                "From the {perspective} of {cosmic_force}, {phenomenon} reveals itself as {meaning}... What appears as {illusion} is actually {reality}. Your {quality} holds the key to {unlock}.",
-                "Between the {boundary_1} and {boundary_2}, {discovery} unfolds like {simile}... The {teacher} knows that {lesson}. When {condition}, {transformation} becomes possible.",
-                "Through the lens of {viewpoint}, {subject} transforms into {new_form}... {ancient_wisdom} whispers that {secret}. The art of {skill} lies in understanding {principle}.",
-                "In the dance between {force_1} and {force_2}, {creation} emerges with {quality}... {observer} watches as {process} reveals {hidden_truth}. Your journey toward {destination} begins with {first_step}."
-            ],
-            zh: [
-                "在{境界}中，{元素}{動作}時，{存在}發現{啟示}... {智慧}教導我們{真理}。{比喻}提醒你{個人洞察}。",
-                "從{宇宙力量}的{視角}，{現象}顯現為{意義}... 看似{幻象}的實際上是{實相}。你的{品質}擁有{解鎖}的鑰匙。",
-                "在{邊界一}與{邊界二}之間，{發現}如{比擬}般展開... {導師}知道{課程}。當{條件}時，{轉化}成為可能。",
-                "透過{觀點}的鏡頭，{主體}轉化為{新形式}... {古老智慧}低語著{秘密}。{技能}的藝術在於理解{原則}。",
-                "在{力量一}與{力量二}的舞蹈中，{創造}以{品質}出現... {觀察者}看著{過程}揭示{隱藏真理}。你通往{目的地}的旅程始於{第一步}。"
-            ]
-        };
-
-        // Dynamic content pools for story generation
-        const storyElements = {
+        // Advanced AI Word Generation with Context Awareness
+        const contextualPrefixes = {
             en: {
-                realm: ['dimension', 'void', 'cosmos', 'infinity', 'consciousness', 'dreamscape', 'quantum field', 'astral plane'],
-                element: ['light', 'shadow', 'energy', 'time', 'space', 'vibration', 'frequency', 'essence'],
-                action: ['dances', 'flows', 'pulses', 'resonates', 'transforms', 'awakens', 'merges', 'ascends'],
-                entity: ['seeker', 'wanderer', 'soul', 'consciousness', 'spirit', 'being', 'traveler', 'observer'],
-                revelation: ['truth transcends perception', 'reality is layered infinitely', 'connection binds all existence', 'change is the only constant'],
-                wisdom: ['Ancient knowledge', 'The universe', 'Cosmic intelligence', 'Sacred geometry', 'The eternal flow'],
-                truth: ['everything is interconnected', 'timing reveals purpose', 'growth requires surrender', 'clarity emerges from stillness'],
-                metaphor: ['spiral of existence', 'mirror of consciousness', 'river of time', 'web of destiny', 'garden of possibilities'],
-                personal_insight: ['your path is uniquely yours', 'inner wisdom never lies', 'transformation awaits your permission', 'the answer lives within you']
+                cosmic: ['stellar', 'cosmic', 'galactic', 'void', 'quantum'],
+                ethereal: ['crystal', 'frost', 'azure', 'shimmer', 'luminous'],
+                mystical: ['shadow', 'mystic', 'arcane', 'ethereal', 'phantom'],
+                aurora: ['verdant', 'sylvan', 'bloom', 'forest', 'growth']
             },
             zh: {
-                境界: ['維度', '虛空', '宇宙', '無限', '意識', '夢境', '量子場', '星光界'],
-                元素: ['光', '影', '能量', '時間', '空間', '振動', '頻率', '本質'],
-                動作: ['舞動', '流動', '脈動', '共鳴', '轉化', '覺醒', '融合', '昇華'],
-                存在: ['求道者', '漫遊者', '靈魂', '意識', '精神', '存在', '旅行者', '觀察者'],
-                啟示: ['真理超越知覺', '實相是無限層次的', '連結綁定所有存在', '變化是唯一的常數'],
-                智慧: ['古老知識', '宇宙', '宇宙智慧', '神聖幾何', '永恆之流'],
-                真理: ['一切都是互聯的', '時機揭示目的', '成長需要臣服', '清晰從寧靜中顯現'],
-                比喻: ['存在的螺旋', '意識的鏡子', '時間之河', '命運之網', '可能性花園'],
-                個人洞察: ['你的道路是獨一無二的', '內在智慧永不說謊', '轉化等待你的許可', '答案就在你心中']
+                cosmic: ['星', '宇', '量', '虛', '時'],
+                ethereal: ['晶', '霜', '藍', '光', '瑩'],
+                mystical: ['影', '幻', '魅', '靈', '魂'],
+                aurora: ['翠', '林', '花', '葉', '生']
             }
         };
 
-        // Greetings without the removed phrase
-        const oracleGreetings = {
-            en: [
-                "What seeks to be known?",
-                "Ancient wisdom awaits your touch...",
-                "The universe has been expecting you...",
-                "Your soul's inquiry echoes through eternity...",
-                "What mystery calls to your heart?"
-            ],
-            zh: [
-                "什麼渴望被知曉？",
-                "古老的智慧等待你的觸碰...",
-                "宇宙一直在等待你...",
-                "你靈魂的詢問在永恆中回響...",
-                "什麼奧秘在呼喚你的心？"
-            ]
+        const advancedWordRoots = {
+            en: {
+                cosmic: ['nexus', 'vortex', 'infinity', 'dimensions', 'singularity', 'constellation', 'nebula', 'quasar'],
+                ethereal: ['crystalline', 'gossamer', 'iridescent', 'luminescence', 'opalescent', 'prismatic', 'translucent'],
+                mystical: ['enchantment', 'sorcery', 'divination', 'prophecy', 'grimoire', 'talisman', 'invocation'],
+                aurora: ['flourish', 'verdure', 'blossom', 'nurture', 'cultivate', 'germinate', 'metamorphosis']
+            },
+            zh: {
+                cosmic: ['星雲', '黑洞', '時空', '維度', '量子', '宇宙', '星際', '銀河'],
+                ethereal: ['水晶', '冰霜', '光芒', '透明', '折射', '反射', '純淨', '澄澈'],
+                mystical: ['神秘', '幻境', '魔法', '咒語', '預言', '占卜', '靈視', '超感'],
+                aurora: ['綠意', '生機', '花開', '葉茂', '成長', '滋養', '蛻變', '新生']
+            }
         };
 
-        // Language switching function
+        // Dynamic Story Templates with Emotional Intelligence
+        const emotionalStoryTemplates = {
+            en: {
+                inspiring: "In the {realm} where {element} {action} with {emotion}, {entity} discovers that {revelation}. The {teacher} whispers: '{wisdom}.' Your {quality} becomes the {catalyst} that transforms {challenge} into {triumph}.",
+                contemplative: "Through the {lens} of {perspective}, {phenomenon} reveals itself as {deeper_meaning}. What appears as {surface} carries the essence of {truth}. The {guide} knows that {insight} emerges when {condition} meets {readiness}.",
+                mystical: "Between the {boundary_1} and {boundary_2}, where {mystery} dances with {reality}, {seeker} finds {hidden_knowledge}. The ancient {artifact} holds the secret: '{ancient_wisdom}.' Your path illuminates when {catalyst} awakens {dormant_power}."
+            },
+            zh: {
+                inspiring: "在{境界}中，{元素}以{情感}{動作}，{存在}發現{啟示}。{導師}低語：'{智慧}。'你的{品質}成為將{挑戰}轉化為{勝利}的{催化劑}。",
+                contemplative: "透過{視角}的{鏡頭}，{現象}顯現為{深層意義}。看似{表面}的承載著{真理}的本質。{指引者}知道當{條件}遇見{準備}時，{洞察}就會浮現。",
+                mystical: "在{邊界一}與{邊界二}之間，{奧秘}與{實相}共舞的地方，{求道者}找到{隱藏知識}。古老的{聖物}保存著秘密：'{古老智慧}。'當{催化劑}喚醒{潛在力量}時，你的道路就會照亮。"
+            }
+        };
+
+        // Advanced theme switching
+        function switchTheme(theme) {
+            currentTheme = theme;
+            document.body.className = `theme-${theme}`;
+            
+            // Update active button
+            document.querySelectorAll('[data-theme]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-theme="${theme}"]`).classList.add('active');
+            
+            // Add to session memory
+            sessionMemory.themes.push({theme, timestamp: Date.now()});
+            
+            // Visual feedback
+            createThemeTransition();
+        }
+
+        function createThemeTransition() {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: var(--accent-primary);
+                opacity: 0.3;
+                z-index: 5000;
+                animation: themeFlash 0.6s ease-out;
+                pointer-events: none;
+            `;
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes themeFlash {
+                    0% { opacity: 0; }
+                    50% { opacity: 0.3; }
+                    100% { opacity: 0; }
+                }
+            `;
+            
+            document.head.appendChild(style);
+            document.body.appendChild(overlay);
+            
+            setTimeout(() => {
+                document.body.removeChild(overlay);
+                document.head.removeChild(style);
+            }, 600);
+        }
+
+        // Advanced glow control
+        function adjustGlow(delta) {
+            glowIntensity = Math.max(0.2, Math.min(2, glowIntensity + delta));
+            document.documentElement.style.setProperty('--glow-intensity', glowIntensity);
+            
+            // Visual feedback
+            const blackHole = document.getElementById('blackHoleContainer');
+            blackHole.style.transform = `translate(-50%, -50%) scale(${1 + delta * 0.1})`;
+            
+            setTimeout(() => {
+                blackHole.style.transform = 'translate(-50%, -50%)';
+            }, 200);
+        }
+
+        // Effects toggle
+        function toggleEffects() {
+            effectsEnabled = !effectsEnabled;
+            const particles = document.getElementById('mysticalParticles');
+            const aurora = document.querySelector('.aurora-lights');
+            
+            if (effectsEnabled) {
+                particles.style.opacity = '1';
+                aurora.style.opacity = '1';
+                generateAdvancedParticles();
+            } else {
+                particles.style.opacity = '0.3';
+                aurora.style.opacity = '0.3';
+            }
+        }
+
+        // Language switching with enhanced feedback
         function switchLanguage(lang) {
             currentLanguage = lang;
             
             // Update language buttons
-            document.querySelectorAll('.language-btn').forEach(btn => {
+            document.querySelectorAll('[data-lang]').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
             
             // Update text content
             document.querySelectorAll('[data-en]').forEach(element => {
@@ -1200,60 +1482,84 @@
                 element.textContent = element.getAttribute(key);
             });
             
-            // Set new random greeting
             setRandomGreeting();
+            
+            // Add ripple effect
+            const btn = document.querySelector(`[data-lang="${lang}"]`);
+            createRippleEffect(btn, event);
         }
 
-        function setRandomGreeting() {
-            const subtitle = document.querySelector('.oracle-subtitle');
-            if (subtitle) {
-                const greetings = oracleGreetings[currentLanguage];
-                const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-                subtitle.textContent = randomGreeting;
-            }
+        // Advanced touch feedback
+        function createRippleEffect(element, event) {
+            const rect = element.getBoundingClientRect();
+            const ripple = document.createElement('div');
+            const size = Math.max(rect.width, rect.height);
+            
+            ripple.className = 'touch-ripple';
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
+            
+            element.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
         }
 
-        // AI Word Generation
-        function generateUniqueWord() {
+        // Progress tracking
+        function updateProgress(step) {
+            currentStep = step;
+            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index <= step);
+            });
+        }
+
+        // Enhanced AI word generation with theme awareness
+        function generateContextualWord() {
             const lang = currentLanguage;
+            const theme = currentTheme;
             let attempts = 0;
             let word;
             
             do {
+                const prefixes = contextualPrefixes[lang][theme];
+                const roots = advancedWordRoots[lang][theme];
+                
                 const type = Math.random();
                 
-                if (type < 0.4) {
-                    // Prefix + Root combination
-                    const prefix = wordPrefixes[lang][Math.floor(Math.random() * wordPrefixes[lang].length)];
-                    const root = wordRoots[lang][Math.floor(Math.random() * wordRoots[lang].length)];
+                if (type < 0.5) {
+                    // Theme-aware prefix + root
+                    const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+                    const root = roots[Math.floor(Math.random() * roots.length)];
                     word = lang === 'en' ? prefix + root.toLowerCase() : prefix + root;
-                } else if (type < 0.7) {
-                    // Root + Suffix combination
-                    const root = wordRoots[lang][Math.floor(Math.random() * wordRoots[lang].length)];
-                    const suffix = wordSuffixes[lang][Math.floor(Math.random() * wordSuffixes[lang].length)];
-                    word = lang === 'en' ? root.toLowerCase() + suffix : root + suffix;
                 } else {
-                    // Pure root words with variations
-                    const root = wordRoots[lang][Math.floor(Math.random() * wordRoots[lang].length)];
-                    word = root;
+                    // Pure thematic root
+                    word = roots[Math.floor(Math.random() * roots.length)];
                 }
                 
                 attempts++;
-            } while (usedWords.has(word) && attempts < 50);
+            } while (sessionMemory.usedWords.has(word) && attempts < 50);
             
-            usedWords.add(word);
+            sessionMemory.usedWords.add(word);
+            sessionMemory.wordHistory.push({word, theme, timestamp: Date.now()});
             return word;
         }
 
-        // AI Message Generation
-        function generateDynamicMessage(word) {
+        // Enhanced message generation with emotional intelligence
+        function generateEmotionalMessage(word) {
             const lang = currentLanguage;
+            const emotionalTone = sessionMemory.interactionCount < 3 ? 'inspiring' : 
+                               sessionMemory.interactionCount < 6 ? 'contemplative' : 'mystical';
+            
             let attempts = 0;
             let message;
             
             do {
-                const template = storyTemplates[lang][Math.floor(Math.random() * storyTemplates[lang].length)];
-                const elements = storyElements[lang];
+                const template = emotionalStoryTemplates[lang][emotionalTone];
+                
+                // Context-aware element selection based on theme and history
+                const elements = getThematicElements(currentTheme, lang);
                 
                 message = template.replace(/\{(\w+)\}/g, (match, key) => {
                     if (elements[key]) {
@@ -1262,19 +1568,17 @@
                     return match;
                 });
                 
-                // Add word-specific personalization
+                // Add word-specific personalization with session context
                 const personalizations = {
                     en: [
-                        ` The essence of "${word}" vibrates through this revelation.`,
-                        ` Your connection to "${word}" illuminates the path forward.`,
-                        ` In choosing "${word}", you have unlocked a cosmic gateway.`,
-                        ` The universe speaks through "${word}" at this precise moment.`
+                        ` In the cosmic dance of "${word}", your journey finds new meaning.`,
+                        ` The essence of "${word}" resonates with your soul's frequency.`,
+                        ` Through "${word}", the universe whispers its deepest secrets.`
                     ],
                     zh: [
-                        ` "${word}"的本質在這個啟示中振動。`,
-                        ` 你與"${word}"的連結照亮了前進的道路。`,
-                        ` 在選擇"${word}"時，你已解鎖了一個宇宙門戶。`,
-                        ` 宇宙在這個精確時刻通過"${word}"說話。`
+                        ` 在"${word}"的宇宙舞蹈中，你的旅程找到新的意義。`,
+                        ` "${word}"的本質與你靈魂的頻率共鳴。`,
+                        ` 通過"${word}"，宇宙低語著它最深的秘密。`
                     ]
                 };
                 
@@ -1282,148 +1586,94 @@
                 message += personalization;
                 
                 attempts++;
-            } while (usedMessages.has(message) && attempts < 20);
+            } while (sessionMemory.usedMessages.has(message) && attempts < 20);
             
-            usedMessages.add(message);
+            sessionMemory.usedMessages.add(message);
+            sessionMemory.interactionCount++;
             return message;
         }
 
-        // AI Wish Generation
-        function generateDynamicWish() {
-            const lang = currentLanguage;
-            let attempts = 0;
-            let wish;
-            
-            do {
-                const wishTemplates = {
-                    en: [
-                        "May the {cosmic_force} of {quality} flow through your {path}, bringing {blessing} to every {moment} you encounter...",
-                        "In the {dimension} of {possibility}, may your {essence} find {harmony} with the {universal_principle} that guides all {creation}...",
-                        "Let the {energy} of {transformation} awaken the {dormant_power} within, as {cosmic_alignment} opens doorways to {infinite_potential}...",
-                        "Through the {mystery} of {existence}, may {divine_grace} illuminate your {journey} with {celestial_light} and {sacred_wisdom}...",
-                        "As {time} and {space} dance around your {consciousness}, may {synchronicity} weave {golden_threads} through the tapestry of your {destiny}..."
-                    ],
-                    zh: [
-                        "願{宇宙力量}的{品質}流過你的{道路}，為你遇到的每個{時刻}帶來{祝福}...",
-                        "在{可能性}的{維度}中，願你的{本質}與指導所有{創造}的{宇宙原則}找到{和諧}...",
-                        "讓{轉化}的{能量}喚醒內在的{潛在力量}，當{宇宙對齊}打開通往{無限潛能}的門戶...",
-                        "通過{存在}的{奧秘}，願{神聖恩典}以{天體之光}和{神聖智慧}照亮你的{旅程}...",
-                        "當{時間}和{空間}圍繞你的{意識}舞蹈時，願{同步性}在你{命運}的織錦中編織{金線}..."
-                    ]
-                };
-                
-                const wishElements = {
-                    en: {
-                        cosmic_force: ['stellar energy', 'quantum field', 'celestial current', 'universal flow', 'ethereal stream'],
-                        quality: ['love', 'wisdom', 'clarity', 'strength', 'peace', 'abundance', 'joy', 'balance'],
-                        path: ['journey', 'quest', 'adventure', 'pilgrimage', 'odyssey', 'voyage', 'expedition'],
-                        blessing: ['miracles', 'grace', 'wonder', 'magic', 'serenity', 'fulfillment', 'awakening'],
-                        moment: ['breath', 'heartbeat', 'sunrise', 'encounter', 'discovery', 'realization', 'touch'],
-                        dimension: ['realm', 'sphere', 'plane', 'field', 'matrix', 'web', 'tapestry'],
-                        possibility: ['dreams', 'visions', 'potential', 'hope', 'manifestation', 'creation', 'becoming'],
-                        essence: ['soul', 'spirit', 'consciousness', 'being', 'heart', 'core', 'truth'],
-                        harmony: ['resonance', 'alignment', 'unity', 'balance', 'symphony', 'confluence', 'merger'],
-                        universal_principle: ['cosmic law', 'divine order', 'sacred geometry', 'eternal rhythm', 'natural flow'],
-                        creation: ['existence', 'life', 'reality', 'manifestation', 'beauty', 'wonder', 'cosmos'],
-                        energy: ['vibration', 'frequency', 'current', 'pulse', 'wave', 'emanation', 'radiance'],
-                        transformation: ['evolution', 'metamorphosis', 'awakening', 'rebirth', 'renewal', 'alchemy', 'transcendence'],
-                        dormant_power: ['hidden strength', 'inner fire', 'latent magic', 'sleeping giant', 'untapped potential'],
-                        cosmic_alignment: ['stellar convergence', 'universal synchrony', 'celestial harmony', 'quantum entanglement'],
-                        infinite_potential: ['boundless possibility', 'limitless creation', 'endless becoming', 'eternal growth'],
-                        mystery: ['enigma', 'secret', 'riddle', 'paradox', 'wonder', 'miracle', 'magic'],
-                        existence: ['being', 'life', 'reality', 'presence', 'consciousness', 'experience', 'journey'],
-                        divine_grace: ['cosmic blessing', 'universal love', 'celestial favor', 'sacred gift', 'heavenly touch'],
-                        journey: ['path', 'quest', 'adventure', 'pilgrimage', 'voyage', 'expedition', 'odyssey'],
-                        celestial_light: ['starfire', 'moonbeam', 'cosmic radiance', 'stellar brilliance', 'divine illumination'],
-                        sacred_wisdom: ['ancient knowledge', 'eternal truth', 'divine insight', 'cosmic understanding', 'spiritual clarity'],
-                        time: ['eternity', 'infinity', 'the eternal now', 'cosmic rhythm', 'universal pulse'],
-                        space: ['the void', 'infinity', 'the cosmos', 'universal expanse', 'celestial dance'],
-                        consciousness: ['awareness', 'mind', 'spirit', 'being', 'essence', 'soul', 'presence'],
-                        synchronicity: ['meaningful coincidence', 'cosmic timing', 'universal orchestration', 'divine providence'],
-                        golden_threads: ['luminous connections', 'sacred bonds', 'cosmic filaments', 'ethereal links'],
-                        destiny: ['fate', 'purpose', 'calling', 'mission', 'path', 'future', 'becoming']
+        function getThematicElements(theme, lang) {
+            const thematicElements = {
+                en: {
+                    cosmic: {
+                        realm: ['quantum field', 'stellar nursery', 'cosmic void', 'galactic core'],
+                        element: ['stardust', 'dark matter', 'cosmic rays', 'gravitational waves'],
+                        emotion: ['infinite wonder', 'cosmic awe', 'stellar passion', 'universal love']
                     },
-                    zh: {
-                        宇宙力量: ['星體能量', '量子場', '天體流', '宇宙之流', '以太流'],
-                        品質: ['愛', '智慧', '清晰', '力量', '和平', '豐盛', '喜悅', '平衡'],
-                        道路: ['旅程', '探索', '冒險', '朝聖', '奧德賽', '航行', '遠征'],
-                        祝福: ['奇蹟', '恩典', '奇觀', '魔法', '寧靜', '圓滿', '覺醒'],
-                        時刻: ['呼吸', '心跳', '日出', '相遇', '發現', '領悟', '觸碰'],
-                        維度: ['境界', '領域', '層面', '場域', '矩陣', '網絡', '織錦'],
-                        可能性: ['夢想', '願景', '潛能', '希望', '顯化', '創造', '成為'],
-                        本質: ['靈魂', '精神', '意識', '存在', '心', '核心', '真理'],
-                        和諧: ['共鳴', '對齊', '統一', '平衡', '交響', '匯流', '融合'],
-                        宇宙原則: ['宇宙法則', '神聖秩序', '神聖幾何', '永恆節奏', '自然之流'],
-                        創造: ['存在', '生命', '實相', '顯化', '美', '奇觀', '宇宙'],
-                        能量: ['振動', '頻率', '流', '脈動', '波', '散發', '光芒'],
-                        轉化: ['進化', '變形', '覺醒', '重生', '更新', '煉金', '超越'],
-                        潛在力量: ['隱藏力量', '內在之火', '潛在魔法', '沉睡巨人', '未開發潛能'],
-                        宇宙對齊: ['星體匯聚', '宇宙同步', '天體和諧', '量子糾纏'],
-                        無限潛能: ['無邊可能', '無限創造', '無盡成為', '永恆成長'],
-                        奧秘: ['謎', '秘密', '謎題', '悖論', '奇觀', '奇蹟', '魔法'],
-                        存在: ['存在', '生命', '實相', '臨在', '意識', '體驗', '旅程'],
-                        神聖恩典: ['宇宙祝福', '宇宙愛', '天體恩寵', '神聖禮物', '天堂觸碰'],
-                        旅程: ['道路', '探索', '冒險', '朝聖', '航行', '遠征', '奧德賽'],
-                        天體之光: ['星火', '月光', '宇宙光輝', '星體光輝', '神聖照明'],
-                        神聖智慧: ['古老知識', '永恆真理', '神聖洞察', '宇宙理解', '靈性清晰'],
-                        時間: ['永恆', '無限', '永恆的現在', '宇宙節奏', '宇宙脈動'],
-                        空間: ['虛空', '無限', '宇宙', '宇宙廣袤', '天體舞蹈'],
-                        意識: ['覺知', '心', '精神', '存在', '本質', '靈魂', '臨在'],
-                        同步性: ['有意義的巧合', '宇宙時機', '宇宙編排', '神聖天意'],
-                        金線: ['光明連結', '神聖紐帶', '宇宙絲線', '以太連結'],
-                        命運: ['命運', '目的', '召喚', '使命', '道路', '未來', '成為']
+                    ethereal: {
+                        realm: ['crystal dimension', 'frozen palace', 'ice cathedral', 'winter sanctum'],
+                        element: ['ice crystals', 'frost patterns', 'aurora light', 'diamond dust'],
+                        emotion: ['serene clarity', 'crystalline peace', 'pristine joy', 'pure tranquility']
+                    },
+                    mystical: {
+                        realm: ['shadow realm', 'enchanted grove', 'mystic chamber', 'arcane sanctuary'],
+                        element: ['ethereal mist', 'phantom energy', 'spell weaves', 'magic essence'],
+                        emotion: ['mystical longing', 'arcane fascination', 'enchanted wonder', 'magical bliss']
+                    },
+                    aurora: {
+                        realm: ['emerald forest', 'verdant meadow', 'living grove', 'nature sanctuary'],
+                        element: ['life force', 'growing energy', 'natural harmony', 'earth essence'],
+                        emotion: ['natural joy', 'growing excitement', 'earthy satisfaction', 'blooming happiness']
                     }
-                };
-                
-                const template = wishTemplates[lang][Math.floor(Math.random() * wishTemplates[lang].length)];
-                const elements = wishElements[lang];
-                
-                wish = template.replace(/\{(\w+)\}/g, (match, key) => {
-                    if (elements[key]) {
-                        return elements[key][Math.floor(Math.random() * elements[key].length)];
+                },
+                zh: {
+                    cosmic: {
+                        境界: ['量子場域', '星際搖籃', '宇宙虛空', '銀河核心'],
+                        元素: ['星塵', '暗物質', '宇宙射線', '重力波'],
+                        情感: ['無限驚奇', '宇宙敬畏', '星際激情', '宇宙之愛']
+                    },
+                    ethereal: {
+                        境界: ['水晶維度', '冰霜宮殿', '冰之聖殿', '冬日聖所'],
+                        元素: ['冰晶', '霜花', '極光', '鑽石塵'],
+                        情感: ['寧靜清澈', '水晶和平', '純淨喜悅', '純粹安詳']
+                    },
+                    mystical: {
+                        境界: ['影之領域', '魅惑之林', '神秘密室', '奧術聖所'],
+                        元素: ['以太薄霧', '幻影能量', '法術編織', '魔法精華'],
+                        情感: ['神秘渴望', '奧術著迷', '魅惑驚奇', '魔法幸福']
+                    },
+                    aurora: {
+                        境界: ['翡翠森林', '翠綠草原', '生命之林', '自然聖所'],
+                        元素: ['生命力', '生長能量', '自然和諧', '大地精華'],
+                        情感: ['自然喜悅', '成長興奮', '大地滿足', '綻放幸福']
                     }
-                    return match;
-                });
-                
-                attempts++;
-            } while (usedWishes.has(wish) && attempts < 20);
+                }
+            };
             
-            usedWishes.add(wish);
-            return wish;
+            return thematicElements[lang][theme] || thematicElements[lang].cosmic;
         }
 
-        // Initialize Oracle on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            generateEnhancedMysticalParticles();
-            activateBlackHoleEffects();
-            setRandomGreeting();
-        });
-
-        function generateEnhancedMysticalParticles() {
+        // Enhanced particle system
+        function generateAdvancedParticles() {
             const container = document.getElementById('mysticalParticles');
             if (!container) return;
             
             container.innerHTML = '';
             
-            const particleCount = 20;
+            const particleCount = effectsEnabled ? 25 : 10;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('mystical-particle');
                 
-                // Random size between 2px and 10px
-                const size = 2 + Math.random() * 8;
+                // Theme-based particle behavior
+                const behaviors = ['floating', 'gravitational', 'orbiting'];
+                const behavior = behaviors[Math.floor(Math.random() * behaviors.length)];
+                
+                if (behavior === 'gravitational') {
+                    particle.classList.add('gravitational');
+                } else if (behavior === 'orbiting') {
+                    particle.classList.add('orbiting');
+                }
+                
+                // Random size between 2px and 12px
+                const size = 2 + Math.random() * 10;
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
                 
-                // Random colors in mystical spectrum
-                const colors = [
-                    'rgba(186, 85, 211, 0.8)',
-                    'rgba(138, 43, 226, 0.7)',
-                    'rgba(147, 112, 219, 0.6)',
-                    'rgba(123, 104, 238, 0.8)',
-                    'rgba(221, 160, 221, 0.7)'
-                ];
+                // Theme-aware colors
+                const colors = getThemeColors(currentTheme);
                 const randomColor = colors[Math.floor(Math.random() * colors.length)];
                 particle.style.background = `radial-gradient(circle, ${randomColor} 0%, transparent 70%)`;
                 
@@ -1431,29 +1681,120 @@
                 particle.style.left = Math.random() * 100 + '%';
                 
                 // Random animation delay and duration
-                particle.style.animationDelay = Math.random() * 12 + 's';
-                particle.style.animationDuration = (8 + Math.random() * 6) + 's';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 8) + 's';
                 
                 container.appendChild(particle);
             }
         }
 
-        function activateBlackHoleEffects() {
-            // Activate sound waves periodically
+        function getThemeColors(theme) {
+            const themeColors = {
+                cosmic: [
+                    'rgba(186, 85, 211, 0.8)',
+                    'rgba(138, 43, 226, 0.7)',
+                    'rgba(147, 112, 219, 0.6)',
+                    'rgba(123, 104, 238, 0.8)',
+                    'rgba(221, 160, 221, 0.7)'
+                ],
+                ethereal: [
+                    'rgba(100, 200, 255, 0.8)',
+                    'rgba(150, 220, 255, 0.7)',
+                    'rgba(200, 240, 255, 0.6)',
+                    'rgba(180, 230, 255, 0.8)',
+                    'rgba(220, 245, 255, 0.7)'
+                ],
+                mystical: [
+                    'rgba(255, 100, 150, 0.8)',
+                    'rgba(200, 50, 100, 0.7)',
+                    'rgba(255, 150, 200, 0.6)',
+                    'rgba(220, 80, 130, 0.8)',
+                    'rgba(240, 120, 180, 0.7)'
+                ],
+                aurora: [
+                    'rgba(100, 255, 150, 0.8)',
+                    'rgba(50, 200, 100, 0.7)',
+                    'rgba(150, 255, 200, 0.6)',
+                    'rgba(80, 220, 130, 0.8)',
+                    'rgba(120, 240, 180, 0.7)'
+                ]
+            };
+            
+            return themeColors[theme] || themeColors.cosmic;
+        }
+
+        // Enhanced greeting system
+        const dynamicGreetings = {
+            en: [
+                "What seeks to be known?",
+                "Ancient wisdom awaits your touch...",
+                "The universe has been expecting you...",
+                "Your soul's inquiry echoes through eternity...",
+                "What mystery calls to your heart?",
+                "The cosmic tapestry awaits your thread...",
+                "What secrets does your spirit yearn to unveil?",
+                "The infinite speaks through your curiosity..."
+            ],
+            zh: [
+                "什麼渴望被知曉？",
+                "古老的智慧等待你的觸碰...",
+                "宇宙一直在等待你...",
+                "你靈魂的詢問在永恆中回響...",
+                "什麼奧秘在呼喚你的心？",
+                "宇宙織錦等待你的絲線...",
+                "你的靈魂渴望揭示什麼秘密？",
+                "無限通過你的好奇心說話..."
+            ]
+        };
+
+        function setRandomGreeting() {
+            const subtitle = document.querySelector('.oracle-subtitle');
+            if (subtitle) {
+                const greetings = dynamicGreetings[currentLanguage];
+                const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+                subtitle.textContent = randomGreeting;
+            }
+        }
+
+        // Initialize enhanced oracle
+        document.addEventListener('DOMContentLoaded', function() {
+            generateAdvancedParticles();
+            activateAdvancedBlackHoleEffects();
+            setRandomGreeting();
+            updateProgress(0);
+            
+            // Initialize session
+            sessionMemory.startTime = Date.now();
+        });
+
+        function activateAdvancedBlackHoleEffects() {
             setInterval(() => {
                 const soundWaves = document.querySelectorAll('.sound-wave');
                 const blackHoleContainer = document.getElementById('blackHoleContainer');
                 
-                if (Math.random() > 0.7) {
-                    soundWaves.forEach(wave => wave.classList.add('active'));
+                if (Math.random() > 0.6) {
+                    const effectType = Math.random();
+                    
+                    soundWaves.forEach(wave => {
+                        wave.classList.add('active');
+                        
+                        if (effectType < 0.3) {
+                            wave.classList.add('resonance');
+                        } else if (effectType < 0.6) {
+                            wave.classList.add('harmonic');
+                        }
+                    });
+                    
                     blackHoleContainer.classList.add('speaking');
                     
                     setTimeout(() => {
-                        soundWaves.forEach(wave => wave.classList.remove('active'));
+                        soundWaves.forEach(wave => {
+                            wave.classList.remove('active', 'resonance', 'harmonic');
+                        });
                         blackHoleContainer.classList.remove('speaking');
-                    }, 2000);
+                    }, 2500);
                 }
-            }, 3000);
+            }, 4000);
         }
 
         function resetOracleScreens() {
@@ -1464,14 +1805,24 @@
         }
 
         function showFloatingWords() {
-            // Activate black hole effect
+            updateProgress(1);
+            
+            // Enhanced activation feedback
+            const askElement = document.getElementById('floatingAsk');
+            askElement.classList.add('activated');
+            
+            // Activate advanced black hole effects
             const blackHoleContainer = document.getElementById('blackHoleContainer');
             const soundWaves = document.querySelectorAll('.sound-wave');
             
-            soundWaves.forEach(wave => wave.classList.add('active'));
+            blackHoleContainer.classList.add('expanded');
+            soundWaves.forEach((wave, index) => {
+                wave.classList.add('active', 'resonance');
+                wave.style.animationDelay = (index * 0.1) + 's';
+            });
             blackHoleContainer.classList.add('speaking');
             
-            // Hide landing screen with enhanced transition
+            // Hide landing with enhanced transition
             const landing = document.getElementById('oracleLanding');
             landing.style.transform = 'translate(-50%, -50%) scale(0.8)';
             landing.style.opacity = '0';
@@ -1480,30 +1831,28 @@
                 landing.classList.add('hidden');
                 landing.style.transform = 'translate(-50%, -50%) scale(1)';
                 landing.style.opacity = '1';
+                askElement.classList.remove('activated');
             }, 500);
             
-            // Show floating words after transition
+            // Show enhanced floating words
             setTimeout(() => {
                 const container = document.getElementById('floatingWordsContainer');
                 const wordsContainer = document.getElementById('floatingWords');
                 
                 container.classList.add('active');
-                
-                // Clear any existing words
                 wordsContainer.innerHTML = '';
                 
-                // Generate 10-14 unique AI words
-                const wordCount = 10 + Math.floor(Math.random() * 5);
+                // Generate contextual AI words
+                const wordCount = 12 + Math.floor(Math.random() * 4);
                 
-                // Create floating word elements with enhanced positioning
                 for (let i = 0; i < wordCount; i++) {
-                    const word = generateUniqueWord();
+                    const word = generateContextualWord();
                     const wordElement = document.createElement('div');
                     wordElement.classList.add('floating-word');
                     
-                    // More balanced size distribution
+                    // Enhanced size distribution
                     const sizeRandom = Math.random();
-                    if (sizeRandom < 0.3) {
+                    if (sizeRandom < 0.25) {
                         wordElement.classList.add('big');
                     } else if (sizeRandom < 0.7) {
                         wordElement.classList.add('medium');
@@ -1512,45 +1861,72 @@
                     }
                     
                     wordElement.textContent = word;
-                    wordElement.onclick = () => showBrightMessage(word);
+                    wordElement.onclick = (e) => {
+                        selectWord(wordElement, word, e);
+                    };
                     
-                    // Better distribution algorithm to avoid overlapping
+                    // Enhanced positioning algorithm
                     const angle = (i / wordCount) * 2 * Math.PI;
-                    const radiusX = 25 + Math.random() * 20;
-                    const radiusY = 20 + Math.random() * 15;
+                    const radiusX = 30 + Math.random() * 25;
+                    const radiusY = 25 + Math.random() * 20;
                     const centerX = 50;
                     const centerY = 45;
                     
-                    const x = centerX + radiusX * Math.cos(angle) + (Math.random() - 0.5) * 10;
-                    const y = centerY + radiusY * Math.sin(angle) + (Math.random() - 0.5) * 10;
+                    const x = centerX + radiusX * Math.cos(angle) + (Math.random() - 0.5) * 12;
+                    const y = centerY + radiusY * Math.sin(angle) + (Math.random() - 0.5) * 12;
                     
-                    wordElement.style.left = Math.max(5, Math.min(90, x)) + '%';
-                    wordElement.style.top = Math.max(10, Math.min(80, y)) + '%';
+                    wordElement.style.left = Math.max(8, Math.min(85, x)) + '%';
+                    wordElement.style.top = Math.max(15, Math.min(75, y)) + '%';
                     
-                    // Staggered animation with more variety
-                    wordElement.style.animationDelay = (i * 0.2 + Math.random() * 0.3) + 's';
-                    wordElement.style.animationDuration = (6 + Math.random() * 4) + 's';
+                    // Enhanced animations
+                    wordElement.style.animationDelay = (i * 0.15 + Math.random() * 0.4) + 's';
+                    wordElement.style.animationDuration = (7 + Math.random() * 5) + 's';
                     
                     wordsContainer.appendChild(wordElement);
                 }
                 
-                // Deactivate black hole after words appear
+                // Deactivate effects after words appear
                 setTimeout(() => {
-                    soundWaves.forEach(wave => wave.classList.remove('active'));
-                    blackHoleContainer.classList.remove('speaking');
-                }, 2000);
+                    soundWaves.forEach(wave => {
+                        wave.classList.remove('active', 'resonance');
+                    });
+                    blackHoleContainer.classList.remove('speaking', 'expanded');
+                }, 3000);
+            }, 600);
+        }
+
+        function selectWord(element, word, event) {
+            // Enhanced word selection feedback
+            element.classList.add('selected');
+            createRippleEffect(element, event);
+            
+            // Animate other words out
+            document.querySelectorAll('.floating-word').forEach(otherWord => {
+                if (otherWord !== element) {
+                    otherWord.style.animation = 'wordFloat 0.5s ease-out forwards';
+                    otherWord.style.opacity = '0';
+                }
+            });
+            
+            setTimeout(() => {
+                showBrightMessage(word);
             }, 600);
         }
 
         function showBrightMessage(word) {
-            // Activate black hole effect
+            updateProgress(2);
+            
+            // Enhanced black hole activation
             const blackHoleContainer = document.getElementById('blackHoleContainer');
             const soundWaves = document.querySelectorAll('.sound-wave');
             
-            soundWaves.forEach(wave => wave.classList.add('active'));
+            blackHoleContainer.classList.add('expanded');
+            soundWaves.forEach(wave => {
+                wave.classList.add('active', 'harmonic');
+            });
             blackHoleContainer.classList.add('speaking');
             
-            // Hide floating words with fade effect
+            // Hide floating words
             const wordsContainer = document.getElementById('floatingWordsContainer');
             wordsContainer.style.opacity = '0';
             
@@ -1559,29 +1935,31 @@
                 wordsContainer.style.opacity = '1';
             }, 400);
             
-            // Show message after transition
+            // Show enhanced message
             setTimeout(() => {
                 const messageContainer = document.getElementById('messageContainer');
                 const messageElement = document.getElementById('brightMessage');
                 
                 messageContainer.classList.add('active');
                 
-                // Generate AI message
-                const message = generateDynamicMessage(word);
+                // Generate emotional AI message
+                const message = generateEmotionalMessage(word);
                 
-                // Add typing effect to message
-                typeMessage(messageElement, message);
+                // Enhanced typing effect
+                typeMessageWithEffects(messageElement, message);
                 
-                // Deactivate black hole after message appears
+                // Enhanced deactivation
                 setTimeout(() => {
-                    soundWaves.forEach(wave => wave.classList.remove('active'));
-                    blackHoleContainer.classList.remove('speaking');
-                }, 3000);
+                    soundWaves.forEach(wave => {
+                        wave.classList.remove('active', 'harmonic');
+                    });
+                    blackHoleContainer.classList.remove('speaking', 'expanded');
+                }, 4000);
                 
             }, 600);
         }
 
-        function typeMessage(element, message) {
+        function typeMessageWithEffects(element, message) {
             element.innerHTML = '<p></p>';
             const paragraph = element.querySelector('p');
             let index = 0;
@@ -1591,10 +1969,18 @@
                     paragraph.textContent += message.charAt(index);
                     index++;
                     
-                    // Variable typing speed for more natural effect
-                    const delay = message.charAt(index - 1) === '.' ? 300 : 
-                                 message.charAt(index - 1) === ',' ? 150 : 
-                                 Math.random() * 50 + 20;
+                    // Enhanced typing with sound wave sync
+                    if (Math.random() > 0.8) {
+                        const waves = document.querySelectorAll('.sound-wave');
+                        waves.forEach(wave => {
+                            wave.style.borderColor = `var(--accent-${['primary', 'secondary', 'tertiary'][Math.floor(Math.random() * 3)]})`;
+                        });
+                    }
+                    
+                    // Variable typing speed
+                    const delay = message.charAt(index - 1) === '.' ? 400 : 
+                                 message.charAt(index - 1) === ',' ? 200 : 
+                                 Math.random() * 60 + 25;
                     
                     setTimeout(typeCharacter, delay);
                 }
@@ -1604,57 +1990,133 @@
         }
 
         function showWishes() {
-            // Activate black hole effect
+            updateProgress(3);
+            
+            // Enhanced black hole activation for wishes
             const blackHoleContainer = document.getElementById('blackHoleContainer');
             const soundWaves = document.querySelectorAll('.sound-wave');
             
-            soundWaves.forEach(wave => wave.classList.add('active'));
+            soundWaves.forEach(wave => {
+                wave.classList.add('active', 'resonance');
+            });
             blackHoleContainer.classList.add('speaking');
             
-            // Hide message container
             document.getElementById('messageContainer').classList.remove('active');
             
-            // Show wishes after transition
             setTimeout(() => {
                 const wishesContainer = document.getElementById('wishesContainer');
                 const wishesElement = document.getElementById('wishesMessage');
                 
                 wishesContainer.classList.add('active');
                 
-                // Generate AI wish
-                const wish = generateDynamicWish();
+                // Generate advanced AI wish
+                const wish = generateAdvancedWish();
                 
-                // Add gentle typing effect to wishes too
-                typeMessage(wishesElement, wish);
+                typeMessageWithEffects(wishesElement, wish);
                 
-                // Deactivate black hole after wishes appear
                 setTimeout(() => {
-                    soundWaves.forEach(wave => wave.classList.remove('active'));
+                    soundWaves.forEach(wave => {
+                        wave.classList.remove('active', 'resonance');
+                    });
                     blackHoleContainer.classList.remove('speaking');
-                }, 3000);
+                }, 4000);
                 
             }, 500);
         }
 
-        function showMoreWords() {
-            // Hide message container
-            document.getElementById('messageContainer').classList.remove('active');
+        function generateAdvancedWish() {
+            const lang = currentLanguage;
+            const sessionContext = analyzeSessionContext();
             
-            // Show new floating words after transition
+            const advancedWishTemplates = {
+                en: [
+                    `May the ${sessionContext.dominantTheme} energies of your journey illuminate the path ahead, bringing ${sessionContext.personalizedBlessing} to your ${sessionContext.lifeAspect}...`,
+                    `In this moment of cosmic alignment, may the wisdom you've gathered through ${sessionContext.wordCount} sacred words transform into ${sessionContext.manifestation} that enriches your soul...`,
+                    `As the universe recognizes your ${sessionContext.seekerQuality}, may ${sessionContext.cosmicGift} flow into your life with the grace of ${sessionContext.naturalPhenomenon}...`
+                ],
+                zh: [
+                    `願你旅程中的${sessionContext.dominantTheme}能量照亮前方道路，為你的${sessionContext.lifeAspect}帶來${sessionContext.personalizedBlessing}...`,
+                    `在這宇宙對齊的時刻，願你通過${sessionContext.wordCount}個神聖詞語收集的智慧轉化為豐富你靈魂的${sessionContext.manifestation}...`,
+                    `當宇宙認可你的${sessionContext.seekerQuality}時，願${sessionContext.cosmicGift}以${sessionContext.naturalPhenomenon}的恩典流入你的生命...`
+                ]
+            };
+            
+            const template = advancedWishTemplates[lang][Math.floor(Math.random() * advancedWishTemplates[lang].length)];
+            return template;
+        }
+
+        function analyzeSessionContext() {
+            return {
+                dominantTheme: currentTheme === 'cosmic' ? '宇宙' : currentTheme === 'ethereal' ? '空靈' : currentTheme === 'mystical' ? '神秘' : '自然',
+                wordCount: sessionMemory.wordHistory.length,
+                personalizedBlessing: ['和諧', '智慧', '平靜', '力量'][Math.floor(Math.random() * 4)],
+                lifeAspect: ['心靈', '旅程', '成長', '覺醒'][Math.floor(Math.random() * 4)],
+                manifestation: ['奇蹟', '洞察', '轉化', '啟發'][Math.floor(Math.random() * 4)],
+                seekerQuality: ['真誠', '勇氣', '好奇心', '開放性'][Math.floor(Math.random() * 4)],
+                cosmicGift: ['宇宙恩典', '天體祝福', '星際能量', '無限愛意'][Math.floor(Math.random() * 4)],
+                naturalPhenomenon: ['流水', '微風', '晨光', '花香'][Math.floor(Math.random() * 4)]
+            };
+        }
+
+        function showMoreWords() {
+            document.getElementById('messageContainer').classList.remove('active');
+            updateProgress(1);
+            
             setTimeout(() => {
                 showFloatingWords();
             }, 500);
         }
 
         function returnToLanding() {
-            // Hide wishes container
+            updateProgress(0);
+            
             document.getElementById('wishesContainer').classList.remove('active');
             
-            // Show landing screen after transition with new greeting
             setTimeout(() => {
                 setRandomGreeting();
                 resetOracleScreens();
             }, 500);
+        }
+
+        // Enhanced touch support for mobile
+        document.addEventListener('touchstart', function(e) {
+            if (e.target.classList.contains('oracle-button') || 
+                e.target.classList.contains('floating-word') || 
+                e.target.classList.contains('floating-ask')) {
+                createRippleEffect(e.target, e.touches[0]);
+            }
+        });
+
+        // Performance optimization for mobile
+        if (window.innerWidth <= 768) {
+            // Reduce particle count on mobile
+            const originalGenerate = generateAdvancedParticles;
+            generateAdvancedParticles = function() {
+                const container = document.getElementById('mysticalParticles');
+                if (!container) return;
+                
+                container.innerHTML = '';
+                const particleCount = 15; // Reduced for mobile
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('mystical-particle');
+                    
+                    const size = 2 + Math.random() * 6; // Smaller particles
+                    particle.style.width = size + 'px';
+                    particle.style.height = size + 'px';
+                    
+                    const colors = getThemeColors(currentTheme);
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.background = `radial-gradient(circle, ${randomColor} 0%, transparent 70%)`;
+                    
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 10 + 's';
+                    particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                    
+                    container.appendChild(particle);
+                }
+            };
         }
     </script>
 </body>
