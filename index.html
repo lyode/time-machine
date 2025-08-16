@@ -39,7 +39,8 @@
             color: var(--text-primary);
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             
-            /* Dark Background Variations */
+            /* Original Dark Purple-Black Gradients */
+            --bg-cosmic: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 30%, #0f1419 100%);
             --bg-void: radial-gradient(ellipse at center, #000000 0%, #111111 30%, #000000 100%);
             --bg-deep-space: radial-gradient(ellipse at center, #0a0a0f 0%, #1a1a2e 30%, #000000 100%);
             --bg-midnight: radial-gradient(ellipse at center, #0f0f1a 0%, #1e1e3f 30%, #050505 100%);
@@ -49,8 +50,8 @@
             --bg-ocean: radial-gradient(ellipse at center, #0a0a1a 0%, #1a1a3e 30%, #000000 100%);
             --bg-forest: radial-gradient(ellipse at center, #0a1a0a 0%, #1a3e1a 30%, #000000 100%);
             
-            /* Default background */
-            --bg-gradient: var(--bg-void);
+            /* Default: Original cosmic purple-black */
+            --bg-gradient: var(--bg-cosmic);
             
             /* Text colors */
             --text-primary: rgba(255, 255, 255, 0.9);
@@ -59,7 +60,8 @@
             
             /* Black hole properties */
             --hole-size: 70vmin;
-            --hole-glow: rgba(255, 255, 255, 0.3);
+            --ring-size: 1;
+            --hole-glow: rgba(186, 85, 211, 0.6);
         }
 
         /* Minimalist Settings Button */
@@ -162,6 +164,7 @@
         .settings-overlay.active .settings-section:nth-child(2) { transition-delay: 0.4s; }
         .settings-overlay.active .settings-section:nth-child(3) { transition-delay: 0.6s; }
         .settings-overlay.active .settings-section:nth-child(4) { transition-delay: 0.8s; }
+        .settings-overlay.active .settings-section:nth-child(5) { transition-delay: 1.0s; }
 
         .section-title {
             font-size: 1.3rem;
@@ -200,7 +203,7 @@
         .language-btn:hover, .language-btn.active {
             color: var(--text-primary);
             border-color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(186, 85, 211, 0.1);
             transform: scale(1.05);
             text-shadow: 0 0 10px var(--hole-glow);
         }
@@ -208,7 +211,7 @@
         /* Background Grid */
         .background-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
         }
 
@@ -217,7 +220,7 @@
             border: 1px solid var(--text-secondary);
             color: var(--text-secondary);
             padding: 15px;
-            font-size: 1.2rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.4s ease;
             text-align: center;
@@ -226,18 +229,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .background-btn:hover, .background-btn.active {
             color: var(--text-primary);
             border-color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(186, 85, 211, 0.1);
             transform: scale(1.1);
             box-shadow: 0 0 20px var(--hole-glow);
         }
 
-        /* Black Hole Size Control */
-        .size-control {
+        .background-btn .bg-name {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Control Sliders */
+        .control-group {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -245,7 +256,7 @@
             margin-top: 20px;
         }
 
-        .size-label {
+        .control-label {
             font-size: 0.9rem;
             color: var(--text-secondary);
             letter-spacing: 1px;
@@ -253,7 +264,7 @@
             text-align: center;
         }
 
-        .size-slider {
+        .control-slider {
             width: 200px;
             height: 2px;
             background: var(--text-secondary);
@@ -265,7 +276,7 @@
             border-radius: 0;
         }
 
-        .size-slider::-webkit-slider-thumb {
+        .control-slider::-webkit-slider-thumb {
             appearance: none;
             -webkit-appearance: none;
             width: 16px;
@@ -277,13 +288,13 @@
             transition: all 0.3s ease;
         }
 
-        .size-slider::-webkit-slider-thumb:hover {
+        .control-slider::-webkit-slider-thumb:hover {
             background: var(--text-primary);
             box-shadow: 0 0 10px var(--hole-glow);
             transform: scale(1.2);
         }
 
-        .size-slider::-moz-range-thumb {
+        .control-slider::-moz-range-thumb {
             width: 16px;
             height: 16px;
             background: var(--text-primary);
@@ -312,7 +323,7 @@
             transform: rotate(90deg) scale(1.2);
         }
 
-        /* Main Oracle Container - No borders or frames */
+        /* Main Oracle Container */
         .oracle-container {
             position: fixed;
             top: 0;
@@ -332,7 +343,7 @@
             overflow: hidden;
         }
 
-        /* Enhanced Black Hole - Dynamic Sizing */
+        /* Enhanced Black Hole with Multiple Rings */
         .black-hole-container {
             position: absolute;
             top: 50%;
@@ -360,9 +371,105 @@
                 0 0 200px rgba(0, 0, 0, 0.8);
             animation: blackHoleSwirl 12s linear infinite;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
+        /* Multiple Animated Rings */
+        .orbital-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid var(--hole-glow);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.6;
+            animation: ringRotate linear infinite;
+        }
+
+        .orbital-ring:nth-child(1) {
+            width: calc(120% * var(--ring-size));
+            height: calc(120% * var(--ring-size));
+            animation-duration: 8s;
+            border-width: 1px;
+            opacity: 0.8;
+        }
+
+        .orbital-ring:nth-child(2) {
+            width: calc(140% * var(--ring-size));
+            height: calc(140% * var(--ring-size));
+            animation-duration: 12s;
+            animation-direction: reverse;
+            border-width: 1px;
+            opacity: 0.6;
+        }
+
+        .orbital-ring:nth-child(3) {
+            width: calc(160% * var(--ring-size));
+            height: calc(160% * var(--ring-size));
+            animation-duration: 16s;
+            border-width: 1px;
+            opacity: 0.4;
+        }
+
+        .orbital-ring:nth-child(4) {
+            width: calc(180% * var(--ring-size));
+            height: calc(180% * var(--ring-size));
+            animation-duration: 20s;
+            animation-direction: reverse;
+            border-width: 1px;
+            opacity: 0.3;
+        }
+
+        .orbital-ring:nth-child(5) {
+            width: calc(200% * var(--ring-size));
+            height: calc(200% * var(--ring-size));
+            animation-duration: 24s;
+            border-width: 1px;
+            opacity: 0.2;
+        }
+
+        /* Ring particles */
+        .orbital-ring::before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--hole-glow);
+            border-radius: 50%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: particleGlow 2s ease-in-out infinite alternate;
+        }
+
+        .orbital-ring::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--hole-glow);
+            border-radius: 50%;
+            bottom: 0;
+            right: 25%;
+            animation: particleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes blackHoleSwirl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes ringRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes particleGlow {
+            0% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.5); }
+        }
+
+        /* Accretion Disk Effects */
         .black-hole::before {
             content: '';
             position: absolute;
@@ -389,17 +496,48 @@
             opacity: 0.4;
         }
 
-        @keyframes blackHoleSwirl {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
         @keyframes accretionDisk {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
-        /* Subtle Particle System - No containers */
+        /* Aurora Lights */
+        .aurora-lights {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 15% 60%, rgba(186, 85, 211, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 30%, rgba(138, 43, 226, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(147, 112, 219, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 20%, rgba(123, 104, 238, 0.15) 0%, transparent 50%);
+            animation: auroraShift 15s ease-in-out infinite;
+        }
+
+        @keyframes auroraShift {
+            0%, 100% { 
+                opacity: 0.7; 
+                transform: scale(1) rotate(0deg);
+                filter: hue-rotate(0deg);
+            }
+            25% { 
+                opacity: 0.9; 
+                transform: scale(1.05) rotate(1deg);
+                filter: hue-rotate(15deg);
+            }
+            50% { 
+                opacity: 0.5; 
+                transform: scale(0.98) rotate(-1deg);
+                filter: hue-rotate(30deg);
+            }
+            75% { 
+                opacity: 0.8; 
+                transform: scale(1.02) rotate(0.5deg);
+                filter: hue-rotate(15deg);
+            }
+        }
+
+        /* Subtle Particle System */
         .mystical-particles {
             position: absolute;
             width: 100%;
@@ -434,7 +572,7 @@
             }
         }
 
-        /* Oracle Landing - No containers */
+        /* Oracle Landing */
         .oracle-landing {
             position: absolute;
             top: 50%;
@@ -488,7 +626,7 @@
             letter-spacing: 2px;
         }
 
-        /* Enhanced Floating Words - No containers */
+        /* Enhanced Floating Words */
         .floating-words-container {
             position: absolute;
             width: 100%;
@@ -592,7 +730,7 @@
             }
         }
 
-        /* Message Display - No containers or frames */
+        /* Message Display */
         .message-container {
             position: absolute;
             top: 50%;
@@ -670,7 +808,7 @@
             }
         }
 
-        /* Minimalist Buttons - No shapes, colors, or borders */
+        /* Minimalist Buttons */
         .oracle-button {
             background: transparent;
             border: none;
@@ -713,7 +851,7 @@
             transform: translateY(-1px);
         }
 
-        /* Wishes Screen - No containers */
+        /* Wishes Screen */
         .wishes-container {
             position: absolute;
             top: 50%;
@@ -766,7 +904,7 @@
             }
         }
 
-        /* Progress Indicator - Minimalist */
+        /* Progress Indicator */
         .progress-dots {
             position: fixed;
             bottom: 30px;
@@ -834,16 +972,16 @@
             }
 
             .background-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
 
-            .size-control {
+            .control-group {
                 flex-direction: column;
                 gap: 15px;
             }
 
-            .size-slider {
+            .control-slider {
                 width: 250px;
             }
 
@@ -895,7 +1033,7 @@
             }
 
             .background-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
             }
 
             .ask-text {
@@ -982,12 +1120,12 @@
         <div class="settings-container">
             <div class="settings-header">
                 <div class="settings-title" data-text="settings">settings</div>
-                <div class="settings-subtitle" data-text="configure your void">configure your void</div>
+                <div class="settings-subtitle" data-text="configure your cosmic void">configure your cosmic void</div>
             </div>
 
             <!-- Language Selection -->
             <div class="settings-section">
-                <div class="section-title" data-text="language">language</div>
+                <div class="section-title" data-text="cosmic language">cosmic language</div>
                 <div class="language-grid">
                     <button class="language-btn active" onclick="switchLanguage('en')" data-lang="en">English</button>
                     <button class="language-btn" onclick="switchLanguage('zh')" data-lang="zh">中文</button>
@@ -1005,24 +1143,62 @@
             <div class="settings-section">
                 <div class="section-title" data-text="void aesthetic">void aesthetic</div>
                 <div class="background-grid">
-                    <button class="background-btn active" onclick="switchBackground('void')" data-bg="void" title="Pure Void">●</button>
-                    <button class="background-btn" onclick="switchBackground('deep-space')" data-bg="deep-space" title="Deep Space">◐</button>
-                    <button class="background-btn" onclick="switchBackground('midnight')" data-bg="midnight" title="Midnight">◑</button>
-                    <button class="background-btn" onclick="switchBackground('abyss')" data-bg="abyss" title="Abyss">◒</button>
-                    <button class="background-btn" onclick="switchBackground('shadow')" data-bg="shadow" title="Shadow">◓</button>
-                    <button class="background-btn" onclick="switchBackground('crimson')" data-bg="crimson" title="Crimson">◔</button>
-                    <button class="background-btn" onclick="switchBackground('ocean')" data-bg="ocean" title="Ocean">◕</button>
-                    <button class="background-btn" onclick="switchBackground('forest')" data-bg="forest" title="Forest">◖</button>
+                    <button class="background-btn active" onclick="switchBackground('cosmic')" data-bg="cosmic">
+                        <div>◉</div>
+                        <div class="bg-name">cosmic</div>
+                    </button>
+                    <button class="background-btn" onclick="switchBackground('void')" data-bg="void">
+                        <div>●</div>
+                        <div class="bg-name">pure void</div>
+                    </button>
+                    <button class="background-btn" onclick="switchBackground('deep-space')" data-bg="deep-space">
+                        <div>◐</div>
+                        <div class="bg-name">deep space</div>
+                    </button>
+                    <button class="background-btn" onclick="switchBackground('midnight')" data-bg="midnight">
+                        <div>◑</div>
+                        <div class="bg-name">midnight</div>
+                    </button>
+                    <button class="background-btn" onclick="switchBackground('abyss')" data-bg="abyss">
+                        <div>◒</div>
+                        <div class="bg-name">abyss</div>
+                    </button>
+                    <button class="background-btn" onclick="switchBackground('shadow')" data-bg="shadow">
+                        <div>◓</div>
+                        <div class="bg-name">shadow</div>
+                    </button>
+                    <button class="background-btn" onclick="switchBackground('crimson')" data-bg="crimson">
+                        <div>◔</div>
+                        <div class="bg-name">crimson</div>
+                    </button>
+                    <button class="background-btn" onclick="switchBackground('ocean')" data-bg="ocean">
+                        <div>◕</div>
+                        <div class="bg-name">ocean</div>
+                    </button>
+                    <button class="background-btn" onclick="switchBackground('forest')" data-bg="forest">
+                        <div>◖</div>
+                        <div class="bg-name">forest</div>
+                    </button>
                 </div>
             </div>
 
             <!-- Black Hole Size -->
             <div class="settings-section">
                 <div class="section-title" data-text="singularity scale">singularity scale</div>
-                <div class="size-control">
-                    <span class="size-label">small</span>
-                    <input type="range" class="size-slider" min="40" max="120" value="70" onInput="adjustBlackHoleSize(this.value)">
-                    <span class="size-label">vast</span>
+                <div class="control-group">
+                    <span class="control-label">small</span>
+                    <input type="range" class="control-slider" min="40" max="120" value="70" onInput="adjustBlackHoleSize(this.value)">
+                    <span class="control-label">vast</span>
+                </div>
+            </div>
+
+            <!-- Ring Size -->
+            <div class="settings-section">
+                <div class="section-title" data-text="orbital rings">orbital rings</div>
+                <div class="control-group">
+                    <span class="control-label">subtle</span>
+                    <input type="range" class="control-slider" min="0.5" max="2" step="0.1" value="1" onInput="adjustRingSize(this.value)">
+                    <span class="control-label">prominent</span>
                 </div>
             </div>
         </div>
@@ -1040,11 +1216,19 @@
     <div class="oracle-container">
         <div class="oracle-background">
             <div class="mystical-particles" id="mysticalParticles"></div>
+            <div class="aurora-lights"></div>
         </div>
         
-        <!-- Black Hole -->
+        <!-- Enhanced Black Hole with Orbital Rings -->
         <div class="black-hole-container" id="blackHoleContainer">
-            <div class="black-hole"></div>
+            <div class="black-hole">
+                <!-- Multiple Animated Orbital Rings -->
+                <div class="orbital-ring"></div>
+                <div class="orbital-ring"></div>
+                <div class="orbital-ring"></div>
+                <div class="orbital-ring"></div>
+                <div class="orbital-ring"></div>
+            </div>
         </div>
         
         <!-- Landing Screen -->
@@ -1077,11 +1261,12 @@
     </div>
 
     <script>
-        // Enhanced Oracle System with Settings Page
+        // Enhanced Oracle System with Orbital Rings
         let currentLanguage = 'en';
-        let currentBackground = 'void';
+        let currentBackground = 'cosmic';
         let currentStep = 0;
         let blackHoleSize = 70;
+        let ringSize = 1;
         let settingsOpen = false;
         let sessionMemory = {
             usedWords: new Set(),
@@ -1098,10 +1283,11 @@
                 noted: "noted", 
                 more: "more",
                 settings: "settings",
-                "configure your void": "configure your void",
-                language: "language",
+                "configure your cosmic void": "configure your cosmic void",
+                "cosmic language": "cosmic language",
                 "void aesthetic": "void aesthetic",
                 "singularity scale": "singularity scale",
+                "orbital rings": "orbital rings",
                 greeting: "What seeks to be known?",
                 words: [
                     'void', 'shadow', 'whisper', 'echo', 'dream', 'silence', 'infinity', 'mystery',
@@ -1124,10 +1310,11 @@
                 noted: "記下",
                 more: "更多",
                 settings: "設置",
-                "configure your void": "配置你的虛空",
-                language: "語言",
+                "configure your cosmic void": "配置你的宇宙虛空",
+                "cosmic language": "宇宙語言",
                 "void aesthetic": "虛空美學",
                 "singularity scale": "奇點規模",
+                "orbital rings": "軌道環",
                 greeting: "什麼渴望被知曉？",
                 words: [
                     '虛空', '影子', '低語', '回音', '夢境', '靜默', '無限', '奧秘',
@@ -1150,10 +1337,11 @@
                 noted: "記録",
                 more: "もっと",
                 settings: "設定",
-                "configure your void": "あなたの虚空を設定",
-                language: "言語",
+                "configure your cosmic void": "あなたの宇宙の虚空を設定",
+                "cosmic language": "宇宙言語",
                 "void aesthetic": "虚空の美学",
                 "singularity scale": "特異点のスケール",
+                "orbital rings": "軌道リング",
                 greeting: "何が知られることを求めているのか？",
                 words: [
                     '空虚', '影', 'ささやき', 'こだま', '夢', '静寂', '無限', '神秘',
@@ -1176,10 +1364,11 @@
                 noted: "noté",
                 more: "plus",
                 settings: "paramètres",
-                "configure your void": "configurez votre vide",
-                language: "langue",
+                "configure your cosmic void": "configurez votre vide cosmique",
+                "cosmic language": "langue cosmique",
                 "void aesthetic": "esthétique du vide",
                 "singularity scale": "échelle de singularité",
+                "orbital rings": "anneaux orbitaux",
                 greeting: "Qu'est-ce qui cherche à être connu?",
                 words: [
                     'vide', 'ombre', 'murmure', 'écho', 'rêve', 'silence', 'infini', 'mystère',
@@ -1202,10 +1391,11 @@
                 noted: "notiert",
                 more: "mehr",
                 settings: "einstellungen",
-                "configure your void": "konfiguriere deine leere",
-                language: "sprache",
+                "configure your cosmic void": "konfiguriere deine kosmische leere",
+                "cosmic language": "kosmische sprache",
                 "void aesthetic": "leere-ästhetik",
                 "singularity scale": "singularitätsskala",
+                "orbital rings": "orbitalringe",
                 greeting: "Was sucht bekannt zu werden?",
                 words: [
                     'Leere', 'Schatten', 'Flüstern', 'Echo', 'Traum', 'Stille', 'Unendlichkeit', 'Geheimnis',
@@ -1228,10 +1418,11 @@
                 noted: "notado",
                 more: "más",
                 settings: "configuración",
-                "configure your void": "configura tu vacío",
-                language: "idioma",
+                "configure your cosmic void": "configura tu vacío cósmico",
+                "cosmic language": "idioma cósmico",
                 "void aesthetic": "estética del vacío",
                 "singularity scale": "escala de singularidad",
+                "orbital rings": "anillos orbitales",
                 greeting: "¿Qué busca ser conocido?",
                 words: [
                     'vacío', 'sombra', 'susurro', 'eco', 'sueño', 'silencio', 'infinito', 'misterio',
@@ -1254,10 +1445,11 @@
                 noted: "مُلاحظ",
                 more: "المزيد",
                 settings: "الإعدادات",
-                "configure your void": "اضبط فراغك",
-                language: "اللغة",
+                "configure your cosmic void": "اضبط فراغك الكوني",
+                "cosmic language": "اللغة الكونية",
                 "void aesthetic": "جمالية الفراغ",
                 "singularity scale": "مقياس التفرد",
+                "orbital rings": "الحلقات المدارية",
                 greeting: "ما الذي يسعى لأن يُعرف؟",
                 words: [
                     'فراغ', 'ظل', 'همس', 'صدى', 'حلم', 'صمت', 'لانهاية', 'غموض',
@@ -1280,10 +1472,11 @@
                 noted: "नोट किया",
                 more: "और",
                 settings: "सेटिंग्स",
-                "configure your void": "अपना शून्य कॉन्फ़िगर करें",
-                language: "भाषा",
+                "configure your cosmic void": "अपना ब्रह्मांडीय शून्य कॉन्फ़िगर करें",
+                "cosmic language": "ब्रह्मांडीय भाषा",
                 "void aesthetic": "शून्य सौंदर्य",
                 "singularity scale": "एकलता पैमाना",
+                "orbital rings": "कक्षीय वलय",
                 greeting: "क्या जानना चाहता है?",
                 words: [
                     'शून्य', 'छाया', 'फुसफुसाहट', 'गूंज', 'स्वप्न', 'मौनता', 'अनंत', 'रहस्य',
@@ -1306,10 +1499,11 @@
                 noted: "отмечено",
                 more: "больше",
                 settings: "настройки",
-                "configure your void": "настройте вашу пустоту",
-                language: "язык",
+                "configure your cosmic void": "настройте вашу космическую пустоту",
+                "cosmic language": "космический язык",
                 "void aesthetic": "эстетика пустоты",
                 "singularity scale": "масштаб сингулярности",
+                "orbital rings": "орбитальные кольца",
                 greeting: "Что стремится быть познанным?",
                 words: [
                     'пустота', 'тень', 'шепот', 'эхо', 'сон', 'тишина', 'бесконечность', 'тайна',
@@ -1331,6 +1525,7 @@
 
         // Background definitions
         const backgrounds = {
+            'cosmic': '--bg-cosmic',
             'void': '--bg-void',
             'deep-space': '--bg-deep-space',
             'midnight': '--bg-midnight',
@@ -1406,6 +1601,12 @@
         function adjustBlackHoleSize(size) {
             blackHoleSize = size;
             document.documentElement.style.setProperty('--hole-size', size + 'vmin');
+        }
+
+        // Ring size adjustment
+        function adjustRingSize(size) {
+            ringSize = size;
+            document.documentElement.style.setProperty('--ring-size', size);
         }
 
         // Progress tracking
