@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Mystical Oracle - Messages from the Void</title>
-    <meta name="theme-color" content="#000000">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Mystical Oracle - Messages from the Universe</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +17,7 @@
             user-select: none;
         }
 
-        html, body {
+        html {
             width: 100%;
             height: 100%;
             margin: 0;
@@ -29,357 +26,113 @@
             position: fixed;
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
+        }
+
+        body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 30%, #0f1419 100%);
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            color: white;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        body {
-            background: var(--bg-gradient);
-            color: var(--text-primary);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            
-            /* Original Dark Purple-Black Gradients */
-            --bg-cosmic: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 30%, #0f1419 100%);
-            --bg-void: radial-gradient(ellipse at center, #000000 0%, #111111 30%, #000000 100%);
-            --bg-deep-space: radial-gradient(ellipse at center, #0a0a0f 0%, #1a1a2e 30%, #000000 100%);
-            --bg-midnight: radial-gradient(ellipse at center, #0f0f1a 0%, #1e1e3f 30%, #050505 100%);
-            --bg-abyss: radial-gradient(ellipse at center, #1a0a1a 0%, #2e1a2e 30%, #0a0a0a 100%);
-            --bg-shadow: radial-gradient(ellipse at center, #0a0f0a 0%, #1a2e1a 30%, #000000 100%);
-            --bg-crimson: radial-gradient(ellipse at center, #1a0a0a 0%, #3e1a1a 30%, #000000 100%);
-            --bg-ocean: radial-gradient(ellipse at center, #0a0a1a 0%, #1a1a3e 30%, #000000 100%);
-            --bg-forest: radial-gradient(ellipse at center, #0a1a0a 0%, #1a3e1a 30%, #000000 100%);
-            
-            /* Default: Original cosmic purple-black */
-            --bg-gradient: var(--bg-cosmic);
-            
-            /* Text colors */
-            --text-primary: rgba(255, 255, 255, 0.9);
-            --text-secondary: rgba(255, 255, 255, 0.6);
-            --text-accent: rgba(255, 255, 255, 0.8);
-            
-            /* Black hole properties */
-            --hole-size: 70vmin;
-            --ring-size: 1;
-            --hole-glow: rgba(186, 85, 211, 0.6);
-        }
-
-        /* Minimalist Settings Button */
-        .settings-trigger {
+        /* Language Selector - Mobile Optimized */
+        .language-selector {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 4000;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            opacity: 0.4;
-            padding: 8px;
-            border-radius: 50%;
-        }
-
-        .settings-trigger:hover {
-            opacity: 1;
-            color: var(--text-primary);
-            transform: rotate(45deg) scale(1.1);
-        }
-
-        /* Enhanced Settings Overlay with Scroll */
-        .settings-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
+            top: 5px;
+            right: 5px;
+            z-index: 3000;
+            background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(20px);
-            z-index: 5000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .settings-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .settings-container {
-            position: relative;
-            width: 90%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 80px 20px 50px;
-            min-height: 100vh;
-            background: transparent;
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .settings-overlay.active .settings-container {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.2s;
-        }
-
-        .settings-header {
-            text-align: center;
-            margin-bottom: 60px;
-            position: sticky;
-            top: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            padding: 20px 0;
-            z-index: 10;
-        }
-
-        .settings-title {
-            font-size: 2.5rem;
-            color: var(--text-primary);
-            font-family: 'Georgia', serif;
-            font-style: italic;
-            font-weight: 200;
-            letter-spacing: 4px;
-            margin-bottom: 15px;
-            text-shadow: 0 0 30px var(--hole-glow);
-        }
-
-        .settings-subtitle {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            font-style: italic;
-            letter-spacing: 2px;
-        }
-
-        /* Settings Sections */
-        .settings-section {
-            margin-bottom: 50px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .settings-overlay.active .settings-section {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .settings-overlay.active .settings-section:nth-child(2) { transition-delay: 0.4s; }
-        .settings-overlay.active .settings-section:nth-child(3) { transition-delay: 0.6s; }
-        .settings-overlay.active .settings-section:nth-child(4) { transition-delay: 0.8s; }
-        .settings-overlay.active .settings-section:nth-child(5) { transition-delay: 1.0s; }
-
-        .section-title {
-            font-size: 1.4rem;
-            color: var(--text-primary);
-            font-family: 'Georgia', serif;
-            font-style: italic;
-            font-weight: 300;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
-            text-align: center;
-            text-shadow: 0 0 20px var(--hole-glow);
-        }
-
-        /* Enhanced Language Grid */
-        .language-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
+            border: 1px solid rgba(186, 85, 211, 0.3);
+            border-radius: 12px;
+            padding: 4px;
+            transition: all 0.3s ease;
         }
 
         .language-btn {
-            background: transparent;
-            border: 1px solid var(--text-secondary);
-            color: var(--text-secondary);
-            padding: 10px 6px;
-            font-size: 0.8rem;
+            background: rgba(186, 85, 211, 0.2);
+            border: 1px solid rgba(186, 85, 211, 0.5);
+            color: #e8e8e8;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.6rem;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
+            margin: 0 1px;
+            min-width: 24px;
             text-align: center;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-            border-radius: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .language-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(186, 85, 211, 0.1), transparent);
-            transition: left 0.6s;
-        }
-
-        .language-btn:hover::before {
-            left: 100%;
         }
 
         .language-btn:hover, .language-btn.active {
-            color: var(--text-primary);
-            border-color: var(--text-primary);
-            background: rgba(186, 85, 211, 0.1);
-            transform: scale(1.02);
-            text-shadow: 0 0 10px var(--hole-glow);
+            background: rgba(186, 85, 211, 0.4);
+            border-color: rgba(186, 85, 211, 0.8);
+            transform: translateY(-1px);
         }
 
-        /* Enhanced Background Grid */
-        .background-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .background-btn {
-            background: transparent;
-            border: 1px solid var(--text-secondary);
-            color: var(--text-secondary);
-            padding: 15px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            text-align: center;
-            border-radius: 0;
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 5px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .background-btn::before {
-            content: '';
+        /* Cosmic Weather System */
+        .cosmic-weather {
             position: absolute;
-            top: 0;
-            left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(186, 85, 211, 0.1), transparent);
-            transition: left 0.8s;
+            pointer-events: none;
+            z-index: 100;
         }
 
-        .background-btn:hover::before {
-            left: 100%;
-        }
-
-        .background-btn:hover, .background-btn.active {
-            color: var(--text-primary);
-            border-color: var(--text-primary);
-            background: rgba(186, 85, 211, 0.1);
-            transform: scale(1.05);
-            box-shadow: 0 0 20px var(--hole-glow);
-        }
-
-        .background-btn .bg-name {
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* Control Sliders */
-        .control-group {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 25px;
-        }
-
-        .control-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            letter-spacing: 1px;
-            min-width: 70px;
-            text-align: center;
-        }
-
-        .control-slider {
-            width: 250px;
-            height: 3px;
-            background: var(--text-secondary);
-            border: none;
-            outline: none;
-            cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
-            border-radius: 0;
-            position: relative;
-        }
-
-        .control-slider::before {
-            content: '';
+        .stellar-drift {
             position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background: var(--hole-glow);
-            border-radius: 0;
-            transition: width 0.3s ease;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: stellarDrift 15s linear infinite;
         }
 
-        .control-slider::-webkit-slider-thumb {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            background: var(--text-primary);
-            border-radius: 0;
-            cursor: pointer;
-            border: 2px solid var(--text-secondary);
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
+        @keyframes stellarDrift {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px) translateY(100vh);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100px) translateY(-100px);
+            }
         }
 
-        .control-slider::-webkit-slider-thumb:hover {
-            background: var(--text-primary);
-            box-shadow: 0 0 15px var(--hole-glow);
-            transform: scale(1.2);
-            border-color: var(--hole-glow);
+        .energy-pulse {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(186, 85, 211, 0.1) 0%, transparent 70%);
+            animation: energyPulse 8s ease-in-out infinite;
         }
 
-        .control-slider::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
-            background: var(--text-primary);
-            border-radius: 0;
-            cursor: pointer;
-            border: 2px solid var(--text-secondary);
-            transition: all 0.3s ease;
-        }
-
-        /* Close Button */
-        .settings-close {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            padding: 10px;
-            z-index: 11;
-        }
-
-        .settings-close:hover {
-            color: var(--text-primary);
-            transform: rotate(90deg) scale(1.2);
+        @keyframes energyPulse {
+            0%, 100% {
+                transform: scale(0.5);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(2);
+                opacity: 0.8;
+            }
         }
 
         /* Main Oracle Container */
@@ -390,9 +143,13 @@
             width: 100vw;
             height: 100vh;
             height: 100dvh;
-            background: var(--bg-gradient);
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 30%, #0f1419 100%);
             overflow: hidden;
             z-index: 1000;
+            margin: 0;
+            padding: 0;
+            border: none;
+            transition: all 0.3s ease;
         }
 
         .oracle-background {
@@ -402,130 +159,25 @@
             overflow: hidden;
         }
 
-        /* Enhanced Slow-Moving Cosmic Lights */
-        .cosmic-lights {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-        }
-
-        .cosmic-light {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--hole-glow) 0%, transparent 70%);
-            animation: cosmicFloat linear infinite;
-            filter: blur(0.5px);
-            opacity: 0;
-        }
-
-        .cosmic-light.tiny {
-            width: 2px;
-            height: 2px;
-            animation-duration: 45s;
-        }
-
-        .cosmic-light.small {
-            width: 3px;
-            height: 3px;
-            animation-duration: 60s;
-        }
-
-        .cosmic-light.medium {
-            width: 4px;
-            height: 4px;
-            animation-duration: 75s;
-        }
-
-        .cosmic-light.large {
-            width: 6px;
-            height: 6px;
-            animation-duration: 90s;
-        }
-
-        .cosmic-light.orbital {
-            animation: cosmicOrbit linear infinite;
-            animation-duration: 120s;
-        }
-
-        .cosmic-light.drifting {
-            animation: cosmicDrift ease-in-out infinite;
-            animation-duration: 100s;
-        }
-
-        @keyframes cosmicFloat {
-            0% {
-                transform: translateY(110vh) translateX(0) scale(0);
-                opacity: 0;
-            }
-            5% {
-                opacity: 0.6;
-                transform: translateY(105vh) translateX(20px) scale(1);
-            }
-            50% {
-                opacity: 0.8;
-                transform: translateY(50vh) translateX(-30px) scale(1.2);
-            }
-            95% {
-                opacity: 0.4;
-                transform: translateY(-5vh) translateX(10px) scale(0.8);
-            }
-            100% {
-                transform: translateY(-10vh) translateX(0) scale(0);
-                opacity: 0;
-            }
-        }
-
-        @keyframes cosmicOrbit {
-            0% {
-                transform: rotate(0deg) translateX(40vw) rotate(0deg);
-                opacity: 0.3;
-            }
-            25% {
-                opacity: 0.8;
-            }
-            50% {
-                opacity: 0.6;
-            }
-            75% {
-                opacity: 0.9;
-            }
-            100% {
-                transform: rotate(360deg) translateX(40vw) rotate(-360deg);
-                opacity: 0.3;
-            }
-        }
-
-        @keyframes cosmicDrift {
-            0%, 100% {
-                transform: translateX(-20px) translateY(0) scale(1);
-                opacity: 0.4;
-            }
-            25% {
-                transform: translateX(30px) translateY(-15px) scale(1.1);
-                opacity: 0.7;
-            }
-            50% {
-                transform: translateX(-10px) translateY(-30px) scale(0.9);
-                opacity: 0.8;
-            }
-            75% {
-                transform: translateX(20px) translateY(-10px) scale(1.2);
-                opacity: 0.5;
-            }
-        }
-
-        /* Enhanced Black Hole with Orbital Rings */
+        /* Enhanced Black Hole Container */
         .black-hole-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: var(--hole-size);
-            height: var(--hole-size);
+            width: 80vmin;
+            height: 80vmin;
             z-index: 1001;
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .black-hole-container.pulse {
+            animation: cosmicPulse 2s ease-in-out;
+        }
+
+        @keyframes cosmicPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
         }
 
         .black-hole {
@@ -534,115 +186,20 @@
             border-radius: 50%;
             background: 
                 radial-gradient(circle at center, 
-                    transparent 20%, 
-                    rgba(0, 0, 0, 0.1) 25%, 
-                    rgba(0, 0, 0, 0.6) 40%, 
-                    rgba(0, 0, 0, 0.9) 50%, 
-                    black 60%);
+                    transparent 25%, 
+                    rgba(0, 0, 0, 0.1) 30%, 
+                    rgba(0, 0, 0, 0.6) 45%, 
+                    rgba(0, 0, 0, 0.9) 55%, 
+                    black 65%);
             box-shadow: 
-                inset 0 0 100px var(--hole-glow),
-                0 0 200px rgba(0, 0, 0, 0.8);
-            animation: blackHoleSwirl 12s linear infinite;
+                inset 0 0 50px rgba(186, 85, 211, 0.3),
+                inset 0 0 100px rgba(138, 43, 226, 0.2),
+                0 0 100px rgba(0, 0, 0, 0.8);
+            animation: blackHoleSwirl 8s linear infinite;
             position: relative;
-            overflow: visible;
+            overflow: hidden;
         }
 
-        /* Multiple Animated Rings */
-        .orbital-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid var(--hole-glow);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0.6;
-            animation: ringRotate linear infinite;
-        }
-
-        .orbital-ring:nth-child(1) {
-            width: calc(120% * var(--ring-size));
-            height: calc(120% * var(--ring-size));
-            animation-duration: 8s;
-            border-width: 1px;
-            opacity: 0.8;
-        }
-
-        .orbital-ring:nth-child(2) {
-            width: calc(140% * var(--ring-size));
-            height: calc(140% * var(--ring-size));
-            animation-duration: 12s;
-            animation-direction: reverse;
-            border-width: 1px;
-            opacity: 0.6;
-        }
-
-        .orbital-ring:nth-child(3) {
-            width: calc(160% * var(--ring-size));
-            height: calc(160% * var(--ring-size));
-            animation-duration: 16s;
-            border-width: 1px;
-            opacity: 0.4;
-        }
-
-        .orbital-ring:nth-child(4) {
-            width: calc(180% * var(--ring-size));
-            height: calc(180% * var(--ring-size));
-            animation-duration: 20s;
-            animation-direction: reverse;
-            border-width: 1px;
-            opacity: 0.3;
-        }
-
-        .orbital-ring:nth-child(5) {
-            width: calc(200% * var(--ring-size));
-            height: calc(200% * var(--ring-size));
-            animation-duration: 24s;
-            border-width: 1px;
-            opacity: 0.2;
-        }
-
-        /* Ring particles */
-        .orbital-ring::before {
-            content: '';
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: var(--hole-glow);
-            border-radius: 50%;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: particleGlow 2s ease-in-out infinite alternate;
-        }
-
-        .orbital-ring::after {
-            content: '';
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--hole-glow);
-            border-radius: 50%;
-            bottom: 0;
-            right: 25%;
-            animation: particleGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes blackHoleSwirl {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes ringRotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        @keyframes particleGlow {
-            0% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.5); }
-        }
-
-        /* Accretion Disk Effects */
         .black-hole::before {
             content: '';
             position: absolute;
@@ -651,9 +208,8 @@
             width: 90%;
             height: 90%;
             border-radius: 50%;
-            background: radial-gradient(circle, var(--hole-glow) 0%, transparent 60%);
-            animation: accretionDisk 8s linear infinite reverse;
-            opacity: 0.6;
+            background: radial-gradient(circle, rgba(186, 85, 211, 0.15) 0%, transparent 60%);
+            animation: accretionDisk 6s linear infinite reverse;
         }
 
         .black-hole::after {
@@ -664,9 +220,13 @@
             width: 80%;
             height: 80%;
             border-radius: 50%;
-            background: radial-gradient(circle, var(--hole-glow) 0%, transparent 40%);
-            animation: accretionDisk 6s linear infinite;
-            opacity: 0.4;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            animation: quantumFluctuation 4s ease-in-out infinite;
+        }
+
+        @keyframes blackHoleSwirl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         @keyframes accretionDisk {
@@ -674,7 +234,196 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Aurora Lights */
+        @keyframes quantumFluctuation {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.05); }
+        }
+
+        /* Advanced Sound Wave Visualization */
+        .sound-wave-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1002;
+        }
+
+        .sound-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(186, 85, 211, 0.6);
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.1s ease-out;
+        }
+
+        .sound-wave.active {
+            opacity: 1;
+            animation: soundWavePulse 2s ease-out infinite;
+        }
+
+        .sound-wave.intense {
+            animation: intenseSoundWave 1s ease-out infinite;
+        }
+
+        .sound-wave.gentle {
+            animation: gentleSoundWave 3s ease-out infinite;
+        }
+
+        .sound-wave:nth-child(1) {
+            width: 50%;
+            height: 50%;
+            animation-delay: 0s;
+            border-color: rgba(186, 85, 211, 0.8);
+        }
+
+        .sound-wave:nth-child(2) {
+            width: 65%;
+            height: 65%;
+            animation-delay: 0.15s;
+            border-color: rgba(255, 140, 180, 0.7);
+        }
+
+        .sound-wave:nth-child(3) {
+            width: 80%;
+            height: 80%;
+            animation-delay: 0.3s;
+            border-color: rgba(138, 43, 226, 0.6);
+        }
+
+        .sound-wave:nth-child(4) {
+            width: 95%;
+            height: 95%;
+            animation-delay: 0.45s;
+            border-color: rgba(74, 144, 226, 0.5);
+        }
+
+        @keyframes soundWavePulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0.7);
+                opacity: 0;
+                border-width: 3px;
+            }
+            30% {
+                opacity: 0.9;
+                border-width: 2px;
+            }
+            70% {
+                opacity: 0.6;
+                border-width: 1px;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 0;
+                border-width: 1px;
+            }
+        }
+
+        @keyframes intenseSoundWave {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+                border-width: 4px;
+            }
+            50% {
+                opacity: 1;
+                border-width: 2px;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0;
+                border-width: 1px;
+            }
+        }
+
+        @keyframes gentleSoundWave {
+            0% {
+                transform: translate(-50%, -50%) scale(0.9);
+                opacity: 0;
+                border-width: 1px;
+            }
+            30% {
+                opacity: 0.7;
+                border-width: 2px;
+            }
+            70% {
+                opacity: 0.4;
+                border-width: 1px;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0;
+                border-width: 1px;
+            }
+        }
+
+        /* Enhanced Particle System */
+        .mystical-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .mystical-particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: mysticalFloat 8s ease-in-out infinite;
+            filter: blur(0.5px);
+        }
+
+        .mystical-particle.special {
+            animation: specialFloat 12s ease-in-out infinite;
+            filter: blur(0px);
+        }
+
+        @keyframes mysticalFloat {
+            0%, 100% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.8;
+                transform: translateY(95vh) scale(1) rotate(45deg);
+            }
+            95% {
+                opacity: 0.8;
+                transform: translateY(-5vh) scale(0.8) rotate(315deg);
+            }
+            100% {
+                transform: translateY(-10vh) scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes specialFloat {
+            0%, 100% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(80vh) scale(1.2) rotate(90deg);
+            }
+            50% {
+                opacity: 0.9;
+                transform: translateY(50vh) scale(0.8) rotate(180deg);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(20vh) scale(1.1) rotate(270deg);
+            }
+            100% {
+                transform: translateY(-10vh) scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         .aurora-lights {
             position: absolute;
             width: 100%;
@@ -685,6 +434,10 @@
                 radial-gradient(ellipse at 50% 80%, rgba(147, 112, 219, 0.2) 0%, transparent 50%),
                 radial-gradient(ellipse at 30% 20%, rgba(123, 104, 238, 0.15) 0%, transparent 50%);
             animation: auroraShift 15s ease-in-out infinite;
+        }
+
+        .aurora-lights.enhanced {
+            animation: enhancedAuroraShift 10s ease-in-out infinite;
         }
 
         @keyframes auroraShift {
@@ -710,42 +463,34 @@
             }
         }
 
-        /* Subtle Particle System */
-        .mystical-particles {
+        @keyframes enhancedAuroraShift {
+            0%, 100% { 
+                opacity: 0.9; 
+                transform: scale(1) rotate(0deg);
+                filter: hue-rotate(0deg) brightness(1.2);
+            }
+            33% { 
+                opacity: 1; 
+                transform: scale(1.1) rotate(2deg);
+                filter: hue-rotate(30deg) brightness(1.4);
+            }
+            66% { 
+                opacity: 0.8; 
+                transform: scale(0.95) rotate(-2deg);
+                filter: hue-rotate(60deg) brightness(1.1);
+            }
+        }
+
+        /* Gesture Detection Areas */
+        .gesture-area {
             position: absolute;
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            z-index: 500;
+            pointer-events: auto;
         }
 
-        .mystical-particle {
-            position: absolute;
-            border-radius: 50%;
-            animation: mysticalFloat 15s ease-in-out infinite;
-            filter: blur(0.5px);
-            background: radial-gradient(circle, var(--hole-glow) 0%, transparent 70%);
-        }
-
-        @keyframes mysticalFloat {
-            0%, 100% {
-                transform: translateY(100vh) scale(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.3;
-                transform: translateY(90vh) scale(1) rotate(45deg);
-            }
-            90% {
-                opacity: 0.2;
-                transform: translateY(-10vh) scale(0.5) rotate(315deg);
-            }
-            100% {
-                transform: translateY(-20vh) scale(0) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* Oracle Landing */
+        /* Oracle Landing Screen */
         .oracle-landing {
             position: absolute;
             top: 50%;
@@ -754,59 +499,102 @@
             text-align: center;
             opacity: 1;
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: landingBreathe 6s ease-in-out infinite;
             z-index: 2000;
         }
 
         .oracle-landing.hidden {
             opacity: 0;
             visibility: hidden;
-            transform: translate(-50%, -50%) scale(0.8);
+            transform: translate(-50%, -50%) scale(0.85);
+        }
+
+        @keyframes landingBreathe {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.02); }
         }
 
         .floating-ask {
             position: relative;
             cursor: pointer;
-            margin-bottom: 40px;
-            animation: gentleFloat 6s ease-in-out infinite;
+            margin-bottom: 30px;
+            animation: gentleFloat 4s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .floating-ask:active {
+            transform: scale(0.95);
         }
 
         .ask-text {
-            font-size: 4rem;
-            font-weight: 100;
-            color: var(--text-primary);
-            text-shadow: 0 0 50px var(--hole-glow);
-            letter-spacing: 8px;
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: #e8e8e8;
+            text-shadow: 0 0 30px rgba(186, 85, 211, 0.6);
+            letter-spacing: 6px;
+            position: relative;
+            z-index: 1;
             font-family: 'Georgia', serif;
             font-style: italic;
-            transition: all 0.5s ease;
+            transition: all 0.3s ease;
         }
 
-        .ask-text:hover {
-            transform: scale(1.05);
-            text-shadow: 0 0 80px var(--hole-glow);
+        .ask-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            animation: pulseGlow 4s ease-in-out infinite, colorShift 8s ease-in-out infinite;
         }
 
         @keyframes gentleFloat {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        @keyframes colorShift {
+            0%, 100% { 
+                background: radial-gradient(circle, rgba(186, 85, 211, 0.3) 0%, transparent 70%);
+            }
+            25% { 
+                background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, transparent 70%);
+            }
+            50% { 
+                background: radial-gradient(circle, rgba(147, 112, 219, 0.3) 0%, transparent 70%);
+            }
+            75% { 
+                background: radial-gradient(circle, rgba(123, 104, 238, 0.3) 0%, transparent 70%);
+            }
         }
 
         .oracle-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
             font-style: italic;
-            font-weight: 200;
-            letter-spacing: 2px;
+            animation: fadeIn 2s ease-in-out;
         }
 
-        /* Enhanced Floating Words */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 0.7; }
+        }
+
+        /* Floating Words */
         .floating-words-container {
             position: absolute;
             width: 100%;
             height: 100%;
             opacity: 0;
             visibility: hidden;
-            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 2000;
         }
 
@@ -823,100 +611,97 @@
 
         .floating-word {
             position: absolute;
-            color: var(--text-accent);
+            color: #e8e8e8;
             cursor: pointer;
             font-family: 'Georgia', serif;
             font-style: italic;
-            font-weight: 200;
-            text-shadow: 0 0 30px var(--hole-glow);
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: wordFloat 12s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(186, 85, 211, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: wordFloat 8s ease-in-out infinite;
             opacity: 0;
             user-select: none;
             transform-origin: center;
-            letter-spacing: 1px;
         }
 
         .floating-word.big {
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: 3px;
+            font-size: 2.2rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
         }
 
         .floating-word.medium {
-            font-size: 2rem;
-            font-weight: 200;
-            letter-spacing: 2px;
-        }
-
-        .floating-word.small {
-            font-size: 1.5rem;
-            font-weight: 100;
+            font-size: 1.8rem;
+            font-weight: 400;
             letter-spacing: 1px;
         }
 
+        .floating-word.small {
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
         .floating-word:hover {
-            transform: scale(1.4) rotate(2deg);
+            transform: scale(1.2) rotate(1deg);
             text-shadow: 
-                0 0 40px var(--hole-glow),
-                0 0 80px var(--hole-glow),
-                0 0 120px var(--hole-glow);
-            color: var(--text-primary);
+                0 0 25px rgba(186, 85, 211, 1),
+                0 0 50px rgba(186, 85, 211, 0.8),
+                0 0 75px rgba(186, 85, 211, 0.6);
+            color: #dda0dd;
             animation-play-state: paused;
-            z-index: 10;
         }
 
         .floating-word:active {
-            transform: scale(1.2) rotate(-1deg);
+            transform: scale(1.1) rotate(-1deg);
+            transition: transform 0.1s ease;
         }
 
         .floating-word.selected {
-            animation: wordSelected 0.8s ease-out forwards;
+            animation: selectedWordPulse 0.5s ease-in-out;
         }
 
-        @keyframes wordSelected {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(2); opacity: 0.3; }
-            100% { transform: scale(0); opacity: 0; }
+        @keyframes selectedWordPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
         }
 
         @keyframes wordFloat {
             0% {
                 opacity: 0;
-                transform: translateY(50px) scale(0.5) rotate(-10deg);
-                filter: blur(3px);
+                transform: translateY(30px) scale(0.7) rotate(-5deg);
+                filter: blur(2px);
             }
-            20% {
-                opacity: 0.8;
+            15% {
+                opacity: 1;
                 transform: translateY(0px) scale(1) rotate(0deg);
                 filter: blur(0px);
             }
-            80% {
-                opacity: 0.6;
-                transform: translateY(-30px) scale(1.1) rotate(5deg);
+            85% {
+                opacity: 1;
+                transform: translateY(-15px) scale(1.05) rotate(2deg);
                 filter: blur(0px);
             }
             100% {
                 opacity: 0;
-                transform: translateY(-80px) scale(0.3) rotate(15deg);
-                filter: blur(2px);
+                transform: translateY(-40px) scale(0.8) rotate(5deg);
+                filter: blur(1px);
             }
         }
 
-        /* Message Display */
+        /* Enhanced Message Display */
         .message-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 700px;
+            width: 95%;
+            max-width: 600px;
             text-align: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 2000;
-            padding: 0 20px;
+            padding: 0 10px;
         }
 
         .message-container.active {
@@ -925,33 +710,52 @@
         }
 
         .bright-message {
-            background: transparent;
-            padding: 50px 30px;
-            margin-bottom: 40px;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(186, 85, 211, 0.1) 0%, transparent 50%),
+                rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(186, 85, 211, 0.4);
+            border-radius: 20px;
+            padding: 30px 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(20px);
             animation: messageFloatUp 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bright-message::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(186, 85, 211, 0.1), transparent);
+            animation: shimmerMessage 6s ease-in-out infinite;
         }
 
         .bright-message p {
-            font-size: 1.4rem;
-            line-height: 2.2;
-            color: var(--text-primary);
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #f0f0f0;
             font-family: 'Georgia', serif;
             font-style: italic;
-            font-weight: 200;
             margin: 0;
-            text-shadow: 0 0 30px var(--hole-glow);
-            letter-spacing: 1px;
+            text-shadow: 0 0 20px rgba(186, 85, 211, 0.4);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.3px;
         }
 
         @keyframes messageFloatUp {
             0% {
                 opacity: 0;
-                transform: translateY(60px) scale(0.8);
-                filter: blur(5px);
+                transform: translateY(50px) scale(0.85);
+                filter: blur(3px);
             }
-            60% {
+            50% {
                 opacity: 0.8;
-                transform: translateY(-10px) scale(1.05);
+                transform: translateY(-5px) scale(1.02);
                 filter: blur(1px);
             }
             100% {
@@ -961,11 +765,16 @@
             }
         }
 
+        @keyframes shimmerMessage {
+            0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
         .message-actions {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            animation: actionsAppear 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s both;
+            gap: 15px;
+            animation: actionsAppear 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
             flex-direction: column;
             align-items: center;
         }
@@ -973,71 +782,110 @@
         @keyframes actionsAppear {
             0% {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px) scale(0.8);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateY(-3px) scale(1.05);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
-        /* Minimalist Buttons */
         .oracle-button {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            padding: 20px 0;
-            font-size: 1.2rem;
+            background: rgba(186, 85, 211, 0.15);
+            border: 2px solid rgba(186, 85, 211, 0.6);
+            color: #f0f0f0;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
             font-family: 'Georgia', serif;
             font-style: italic;
-            font-weight: 200;
             cursor: pointer;
-            transition: all 0.5s ease;
-            letter-spacing: 2px;
-            text-transform: lowercase;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(15px);
             position: relative;
+            overflow: hidden;
+            letter-spacing: 0.8px;
+            font-weight: 400;
+            width: 200px;
+            text-align: center;
         }
 
-        .oracle-button::after {
+        .oracle-button::before {
             content: '';
             position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 1px;
-            background: var(--text-primary);
-            transition: width 0.5s ease;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .oracle-button:hover::before {
+            left: 100%;
         }
 
         .oracle-button:hover {
-            color: var(--text-primary);
-            text-shadow: 0 0 20px var(--hole-glow);
-            transform: translateY(-3px);
-        }
-
-        .oracle-button:hover::after {
-            width: 100%;
+            background: rgba(186, 85, 211, 0.3);
+            border-color: rgba(186, 85, 211, 0.9);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 
+                0 10px 25px rgba(186, 85, 211, 0.4),
+                0 0 20px rgba(186, 85, 211, 0.3);
+            text-shadow: 0 0 12px rgba(186, 85, 211, 0.8);
         }
 
         .oracle-button:active {
-            transform: translateY(-1px);
+            transform: translateY(-1px) scale(1.01);
+            transition: transform 0.1s ease;
         }
 
-        /* Wishes Screen */
+        .noted-btn {
+            background: rgba(46, 204, 113, 0.15);
+            border-color: rgba(46, 204, 113, 0.6);
+        }
+
+        .noted-btn:hover {
+            background: rgba(46, 204, 113, 0.3);
+            border-color: rgba(46, 204, 113, 0.9);
+            box-shadow: 
+                0 10px 25px rgba(46, 204, 113, 0.4),
+                0 0 20px rgba(46, 204, 113, 0.3);
+            text-shadow: 0 0 12px rgba(46, 204, 113, 0.8);
+        }
+
+        .more-btn {
+            background: rgba(241, 196, 15, 0.15);
+            border-color: rgba(241, 196, 15, 0.6);
+        }
+
+        .more-btn:hover {
+            background: rgba(241, 196, 15, 0.3);
+            border-color: rgba(241, 196, 15, 0.9);
+            box-shadow: 
+                0 10px 25px rgba(241, 196, 15, 0.4),
+                0 0 20px rgba(241, 196, 15, 0.3);
+            text-shadow: 0 0 12px rgba(241, 196, 15, 0.8);
+        }
+
+        /* Enhanced Wishes Screen */
         .wishes-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 600px;
+            width: 95%;
+            max-width: 500px;
             text-align: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 2000;
-            padding: 0 20px;
+            padding: 0 10px;
         }
 
         .wishes-container.active {
@@ -1046,29 +894,48 @@
         }
 
         .wishes-message {
-            background: transparent;
-            padding: 50px 30px;
-            margin-bottom: 40px;
+            background: 
+                radial-gradient(circle at 70% 70%, rgba(46, 204, 113, 0.1) 0%, transparent 50%),
+                rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(46, 204, 113, 0.4);
+            border-radius: 20px;
+            padding: 30px 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(20px);
             animation: wishesFloatUp 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wishes-message::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(46, 204, 113, 0.1), transparent);
+            animation: shimmerWish 6s ease-in-out infinite;
         }
 
         .wishes-message p {
-            font-size: 1.3rem;
-            line-height: 2;
-            color: var(--text-primary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #f0f0f0;
             font-family: 'Georgia', serif;
             font-style: italic;
-            font-weight: 200;
             margin: 0;
-            text-shadow: 0 0 25px var(--hole-glow);
-            letter-spacing: 1px;
+            text-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.3px;
         }
 
         @keyframes wishesFloatUp {
             0% {
                 opacity: 0;
-                transform: translateY(50px) scale(0.9);
-                filter: blur(3px);
+                transform: translateY(40px) scale(0.9);
+                filter: blur(2px);
             }
             100% {
                 opacity: 1;
@@ -1077,94 +944,155 @@
             }
         }
 
-        /* Progress Indicator */
-        .progress-dots {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 3000;
+        @keyframes shimmerWish {
+            0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
-        .progress-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--text-secondary);
-            transition: all 0.4s ease;
-            opacity: 0.3;
+        .back-btn {
+            background: rgba(186, 85, 211, 0.15);
+            border-color: rgba(186, 85, 211, 0.6);
+            animation: backBtnAppear 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
         }
 
-        .progress-dot.active {
-            background: var(--text-primary);
-            transform: scale(1.5);
-            opacity: 1;
-            box-shadow: 0 0 15px var(--hole-glow);
-        }
-
-        /* Touch Ripple Effect */
-        .touch-ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--hole-glow), transparent);
-            pointer-events: none;
-            transform: scale(0);
-            animation: rippleEffect 1s ease-out;
-        }
-
-        @keyframes rippleEffect {
-            to {
-                transform: scale(6);
+        @keyframes backBtnAppear {
+            0% {
                 opacity: 0;
+                transform: translateY(25px) scale(0.8);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateY(-3px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
             }
         }
 
-        /* Mobile Optimizations */
-        @media (max-width: 768px) {
-            .settings-trigger {
-                top: 15px;
-                right: 15px;
-                font-size: 1rem;
-            }
+        /* Enhanced Black Hole speaking state */
+        .black-hole-container.speaking .black-hole {
+            box-shadow: 
+                inset 0 0 50px rgba(186, 85, 211, 0.8),
+                inset 0 0 100px rgba(138, 43, 226, 0.6),
+                0 0 150px rgba(186, 85, 211, 0.4),
+                0 0 200px rgba(138, 43, 226, 0.3);
+        }
 
-            .settings-container {
-                width: 95%;
-                padding: 70px 15px 40px;
-            }
+        .black-hole-container.speaking .black-hole::before {
+            background: radial-gradient(circle, rgba(186, 85, 211, 0.4) 0%, transparent 60%);
+        }
 
-            .settings-title {
-                font-size: 2rem;
-                letter-spacing: 3px;
-            }
+        /* Wisdom Level Indicator */
+        .wisdom-level {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
 
-            .language-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
+        .wisdom-orb {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(186, 85, 211, 0.4);
+            transition: all 0.3s ease;
+        }
 
-            .background-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
+        .wisdom-orb.active {
+            background: rgba(186, 85, 211, 1);
+            box-shadow: 0 0 10px rgba(186, 85, 211, 0.8);
+        }
 
-            .control-group {
-                flex-direction: column;
-                gap: 15px;
-            }
+        /* Progressive Enhancement Indicator */
+        .enhancement-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            animation: enhancementPulse 3s ease-in-out infinite;
+        }
 
-            .control-slider {
-                width: 280px;
-            }
+        .black-hole-container.enhanced .enhancement-glow {
+            opacity: 1;
+        }
 
+        @keyframes enhancementPulse {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.05); opacity: 0.3; }
+        }
+
+        /* Mobile-First Responsive Design */
+        
+        /* Extra Small Mobile Devices (Portrait) */
+        @media (max-width: 320px) {
             .ask-text {
-                font-size: 3rem;
-                letter-spacing: 6px;
+                font-size: 2.8rem;
+                letter-spacing: 4px;
             }
 
             .oracle-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .floating-word.big {
+                font-size: 1.8rem;
+            }
+
+            .floating-word.medium {
+                font-size: 1.5rem;
+            }
+
+            .floating-word.small {
+                font-size: 1.1rem;
+            }
+
+            .bright-message,
+            .wishes-message {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+
+            .bright-message p {
                 font-size: 1rem;
+                line-height: 1.5;
+            }
+
+            .wishes-message p {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            .oracle-button {
+                padding: 12px 25px;
+                font-size: 0.95rem;
+                width: 180px;
+            }
+
+            .message-actions {
+                gap: 10px;
+            }
+
+            .black-hole-container {
+                width: 95vmin;
+                height: 95vmin;
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (min-width: 321px) and (max-width: 375px) {
+            .ask-text {
+                font-size: 3.2rem;
+                letter-spacing: 5px;
             }
 
             .floating-word.big {
@@ -1179,344 +1107,299 @@
                 font-size: 1.2rem;
             }
 
-            .bright-message p,
-            .wishes-message p {
-                font-size: 1.2rem;
-                line-height: 1.9;
-            }
-
-            .oracle-button {
-                font-size: 1.1rem;
-                padding: 15px 0;
-            }
-
-            .message-actions {
-                gap: 30px;
+            .black-hole-container {
+                width: 90vmin;
+                height: 90vmin;
             }
         }
 
-        @media (max-width: 480px) {
-            .settings-title {
-                font-size: 1.8rem;
+        /* Standard Mobile Devices */
+        @media (min-width: 376px) and (max-width: 414px) {
+            .ask-text {
+                font-size: 3.8rem;
+                letter-spacing: 6px;
+            }
+
+            .floating-word.big {
+                font-size: 2.3rem;
+            }
+
+            .floating-word.medium {
+                font-size: 1.9rem;
+            }
+
+            .floating-word.small {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Large Mobile Devices */
+        @media (min-width: 415px) and (max-width: 768px) {
+            .ask-text {
+                font-size: 4.2rem;
+                letter-spacing: 7px;
+            }
+
+            .floating-word.big {
+                font-size: 2.6rem;
+            }
+
+            .floating-word.medium {
+                font-size: 2.1rem;
+            }
+
+            .floating-word.small {
+                font-size: 1.6rem;
+            }
+
+            .bright-message p {
+                font-size: 1.3rem;
+                line-height: 1.8;
+            }
+
+            .wishes-message p {
+                font-size: 1.2rem;
+                line-height: 1.7;
+            }
+
+            .oracle-button {
+                padding: 16px 32px;
+                font-size: 1.15rem;
+                width: 220px;
+            }
+
+            .message-actions {
+                gap: 18px;
+            }
+        }
+
+        /* Tablet and Desktop - Secondary Experience */
+        @media (min-width: 769px) {
+            .language-selector {
+                top: 10px;
+                right: 10px;
+                padding: 8px;
+            }
+
+            .language-btn {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+                margin: 0 3px;
+            }
+
+            .ask-text {
+                font-size: 4.8rem;
+                letter-spacing: 8px;
+            }
+
+            .floating-word.big {
+                font-size: 3rem;
                 letter-spacing: 2px;
             }
 
-            .language-grid {
-                grid-template-columns: 1fr;
-                gap: 6px;
+            .floating-word.medium {
+                font-size: 2.4rem;
             }
 
-            .background-grid {
-                grid-template-columns: 1fr;
-                gap: 8px;
+            .floating-word.small {
+                font-size: 1.8rem;
             }
 
+            .message-container,
+            .wishes-container {
+                width: 80%;
+                max-width: 700px;
+            }
+
+            .bright-message,
+            .wishes-message {
+                padding: 40px 35px;
+                margin-bottom: 30px;
+            }
+
+            .bright-message p {
+                font-size: 1.5rem;
+                line-height: 1.9;
+            }
+
+            .wishes-message p {
+                font-size: 1.35rem;
+                line-height: 1.8;
+            }
+
+            .oracle-button {
+                padding: 18px 35px;
+                font-size: 1.25rem;
+                width: auto;
+                min-width: 160px;
+            }
+
+            .message-actions {
+                flex-direction: row;
+                gap: 25px;
+            }
+
+            .black-hole-container {
+                width: 75vmin;
+                height: 75vmin;
+            }
+        }
+
+        /* Landscape Mobile Orientation */
+        @media (max-height: 500px) and (orientation: landscape) {
             .ask-text {
                 font-size: 2.5rem;
                 letter-spacing: 4px;
             }
 
+            .oracle-subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 15px;
+            }
+
             .floating-word.big {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
 
             .floating-word.medium {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
             }
 
             .floating-word.small {
-                font-size: 1.1rem;
-            }
-
-            .bright-message p,
-            .wishes-message p {
-                font-size: 1.1rem;
-                line-height: 1.8;
-            }
-
-            .oracle-button {
                 font-size: 1rem;
-            }
-        }
-
-        /* Landscape Mobile */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .settings-container {
-                padding: 60px 15px 30px;
-            }
-
-            .settings-title {
-                font-size: 1.5rem;
-                margin-bottom: 10px;
-            }
-
-            .settings-section {
-                margin-bottom: 30px;
-            }
-
-            .ask-text {
-                font-size: 2.2rem;
-            }
-
-            .oracle-subtitle {
-                font-size: 0.9rem;
-                margin-bottom: 20px;
             }
 
             .bright-message,
             .wishes-message {
-                padding: 25px 20px;
-                margin-bottom: 25px;
+                padding: 15px 20px;
+                margin-bottom: 15px;
             }
 
-            .bright-message p,
+            .bright-message p {
+                font-size: 0.95rem;
+                line-height: 1.4;
+            }
+
             .wishes-message p {
-                font-size: 1rem;
-                line-height: 1.6;
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+
+            .oracle-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                width: 150px;
+            }
+
+            .black-hole-container {
+                width: 70vmin;
+                height: 70vmin;
             }
 
             .message-actions {
-                gap: 20px;
+                gap: 12px;
             }
         }
 
-        /* Custom Scrollbar */
-        .settings-overlay::-webkit-scrollbar {
-            width: 6px;
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 30%, #0f1419 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+            opacity: 1;
+            transition: opacity 1s ease-out;
         }
 
-        .settings-overlay::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.3);
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
         }
 
-        .settings-overlay::-webkit-scrollbar-thumb {
-            background: var(--hole-glow);
-            border-radius: 3px;
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(186, 85, 211, 0.3);
+            border-top: 2px solid rgba(186, 85, 211, 1);
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+            margin-bottom: 20px;
         }
 
-        .settings-overlay::-webkit-scrollbar-thumb:hover {
-            background: var(--text-primary);
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            font-style: italic;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <!-- Minimalist Settings Trigger -->
-    <button class="settings-trigger" onclick="openSettings()">⚙</button>
-
-    <!-- Enhanced Settings Overlay with Scroll -->
-    <div class="settings-overlay" id="settingsOverlay">
-        <button class="settings-close" onclick="closeSettings()">✕</button>
-        
-        <div class="settings-container">
-            <div class="settings-header">
-                <div class="settings-title" data-text="settings">settings</div>
-                <div class="settings-subtitle" data-text="configure your cosmic void">configure your cosmic void</div>
-            </div>
-
-            <!-- Global Language Selection -->
-            <div class="settings-section">
-                <div class="section-title" data-text="cosmic languages">cosmic languages</div>
-                <div class="language-grid">
-                    <!-- Major World Languages -->
-                    <button class="language-btn active" onclick="switchLanguage('en')" data-lang="en">English</button>
-                    <button class="language-btn" onclick="switchLanguage('zh')" data-lang="zh">中文</button>
-                    <button class="language-btn" onclick="switchLanguage('hi')" data-lang="hi">हिन्दी</button>
-                    <button class="language-btn" onclick="switchLanguage('es')" data-lang="es">Español</button>
-                    <button class="language-btn" onclick="switchLanguage('fr')" data-lang="fr">Français</button>
-                    <button class="language-btn" onclick="switchLanguage('ar')" data-lang="ar">العربية</button>
-                    <button class="language-btn" onclick="switchLanguage('pt')" data-lang="pt">Português</button>
-                    <button class="language-btn" onclick="switchLanguage('ru')" data-lang="ru">Русский</button>
-                    <button class="language-btn" onclick="switchLanguage('ja')" data-lang="ja">日本語</button>
-                    <button class="language-btn" onclick="switchLanguage('de')" data-lang="de">Deutsch</button>
-                    <button class="language-btn" onclick="switchLanguage('ko')" data-lang="ko">한국어</button>
-                    <button class="language-btn" onclick="switchLanguage('it')" data-lang="it">Italiano</button>
-                    <button class="language-btn" onclick="switchLanguage('tr')" data-lang="tr">Türkçe</button>
-                    <button class="language-btn" onclick="switchLanguage('vi')" data-lang="vi">Tiếng Việt</button>
-                    <button class="language-btn" onclick="switchLanguage('th')" data-lang="th">ไทย</button>
-                    <button class="language-btn" onclick="switchLanguage('id')" data-lang="id">Bahasa Indonesia</button>
-                    <button class="language-btn" onclick="switchLanguage('nl')" data-lang="nl">Nederlands</button>
-                    <button class="language-btn" onclick="switchLanguage('pl')" data-lang="pl">Polski</button>
-                    <button class="language-btn" onclick="switchLanguage('sv')" data-lang="sv">Svenska</button>
-                    <button class="language-btn" onclick="switchLanguage('no')" data-lang="no">Norsk</button>
-                    <button class="language-btn" onclick="switchLanguage('da')" data-lang="da">Dansk</button>
-                    <button class="language-btn" onclick="switchLanguage('fi')" data-lang="fi">Suomi</button>
-                    <button class="language-btn" onclick="switchLanguage('el')" data-lang="el">Ελληνικά</button>
-                    <button class="language-btn" onclick="switchLanguage('he')" data-lang="he">עברית</button>
-                    <button class="language-btn" onclick="switchLanguage('fa')" data-lang="fa">فارسی</button>
-                    <button class="language-btn" onclick="switchLanguage('ur')" data-lang="ur">اردو</button>
-                    <button class="language-btn" onclick="switchLanguage('bn')" data-lang="bn">বাংলা</button>
-                    <button class="language-btn" onclick="switchLanguage('ta')" data-lang="ta">தமிழ்</button>
-                    <button class="language-btn" onclick="switchLanguage('te')" data-lang="te">తెలుగు</button>
-                    <button class="language-btn" onclick="switchLanguage('mr')" data-lang="mr">मराठी</button>
-                    <button class="language-btn" onclick="switchLanguage('gu')" data-lang="gu">ગુજરાતી</button>
-                    <button class="language-btn" onclick="switchLanguage('kn')" data-lang="kn">ಕನ್ನಡ</button>
-                    <button class="language-btn" onclick="switchLanguage('ml')" data-lang="ml">മലയാളം</button>
-                    <button class="language-btn" onclick="switchLanguage('pa')" data-lang="pa">ਪੰਜਾਬੀ</button>
-                    <button class="language-btn" onclick="switchLanguage('ne')" data-lang="ne">नेपाली</button>
-                    <button class="language-btn" onclick="switchLanguage('si')" data-lang="si">සිංහල</button>
-                    <button class="language-btn" onclick="switchLanguage('my')" data-lang="my">မြန်မာ</button>
-                    <button class="language-btn" onclick="switchLanguage('km')" data-lang="km">ខ្មែរ</button>
-                    <button class="language-btn" onclick="switchLanguage('lo')" data-lang="lo">ລາວ</button>
-                    <button class="language-btn" onclick="switchLanguage('ka')" data-lang="ka">ქართული</button>
-                    <button class="language-btn" onclick="switchLanguage('hy')" data-lang="hy">Հայերեն</button>
-                    <button class="language-btn" onclick="switchLanguage('az')" data-lang="az">Azərbaycan</button>
-                    <button class="language-btn" onclick="switchLanguage('kk')" data-lang="kk">Қазақша</button>
-                    <button class="language-btn" onclick="switchLanguage('ky')" data-lang="ky">Кыргызча</button>
-                    <button class="language-btn" onclick="switchLanguage('uz')" data-lang="uz">O'zbek</button>
-                    <button class="language-btn" onclick="switchLanguage('mn')" data-lang="mn">Монгол</button>
-                    <button class="language-btn" onclick="switchLanguage('hu')" data-lang="hu">Magyar</button>
-                    <button class="language-btn" onclick="switchLanguage('cs')" data-lang="cs">Čeština</button>
-                    <button class="language-btn" onclick="switchLanguage('sk')" data-lang="sk">Slovenčina</button>
-                    <button class="language-btn" onclick="switchLanguage('sl')" data-lang="sl">Slovenščina</button>
-                    <button class="language-btn" onclick="switchLanguage('hr')" data-lang="hr">Hrvatski</button>
-                    <button class="language-btn" onclick="switchLanguage('sr')" data-lang="sr">Српски</button>
-                    <button class="language-btn" onclick="switchLanguage('bg')" data-lang="bg">Български</button>
-                    <button class="language-btn" onclick="switchLanguage('ro')" data-lang="ro">Română</button>
-                    <button class="language-btn" onclick="switchLanguage('mk')" data-lang="mk">Македонски</button>
-                    <button class="language-btn" onclick="switchLanguage('sq')" data-lang="sq">Shqip</button>
-                    <button class="language-btn" onclick="switchLanguage('lv')" data-lang="lv">Latviešu</button>
-                    <button class="language-btn" onclick="switchLanguage('lt')" data-lang="lt">Lietuvių</button>
-                    <button class="language-btn" onclick="switchLanguage('et')" data-lang="et">Eesti</button>
-                    <button class="language-btn" onclick="switchLanguage('is')" data-lang="is">Íslenska</button>
-                    <button class="language-btn" onclick="switchLanguage('ga')" data-lang="ga">Gaeilge</button>
-                    <button class="language-btn" onclick="switchLanguage('cy')" data-lang="cy">Cymraeg</button>
-                    <button class="language-btn" onclick="switchLanguage('mt')" data-lang="mt">Malti</button>
-                    <button class="language-btn" onclick="switchLanguage('eu')" data-lang="eu">Euskera</button>
-                    <button class="language-btn" onclick="switchLanguage('ca')" data-lang="ca">Català</button>
-                    <button class="language-btn" onclick="switchLanguage('gl')" data-lang="gl">Galego</button>
-                    <button class="language-btn" onclick="switchLanguage('ast')" data-lang="ast">Asturianu</button>
-                    <button class="language-btn" onclick="switchLanguage('sw')" data-lang="sw">Kiswahili</button>
-                    <button class="language-btn" onclick="switchLanguage('am')" data-lang="am">አማርኛ</button>
-                    <button class="language-btn" onclick="switchLanguage('yo')" data-lang="yo">Yorùbá</button>
-                    <button class="language-btn" onclick="switchLanguage('ig')" data-lang="ig">Igbo</button>
-                    <button class="language-btn" onclick="switchLanguage('ha')" data-lang="ha">Hausa</button>
-                    <button class="language-btn" onclick="switchLanguage('zu')" data-lang="zu">isiZulu</button>
-                    <button class="language-btn" onclick="switchLanguage('af')" data-lang="af">Afrikaans</button>
-                    <button class="language-btn" onclick="switchLanguage('so')" data-lang="so">Soomaali</button>
-                    <button class="language-btn" onclick="switchLanguage('om')" data-lang="om">Afaan Oromoo</button>
-                    <button class="language-btn" onclick="switchLanguage('ti')" data-lang="ti">ትግርኛ</button>
-                    <button class="language-btn" onclick="switchLanguage('mg')" data-lang="mg">Malagasy</button>
-                    <button class="language-btn" onclick="switchLanguage('ny')" data-lang="ny">Chichewa</button>
-                    <button class="language-btn" onclick="switchLanguage('sn')" data-lang="sn">Shona</button>
-                    <button class="language-btn" onclick="switchLanguage('rw')" data-lang="rw">Kinyarwanda</button>
-                    <button class="language-btn" onclick="switchLanguage('rn')" data-lang="rn">Kirundi</button>
-                    <button class="language-btn" onclick="switchLanguage('lg')" data-lang="lg">Luganda</button>
-                    <button class="language-btn" onclick="switchLanguage('wo')" data-lang="wo">Wolof</button>
-                    <button class="language-btn" onclick="switchLanguage('ff')" data-lang="ff">Fulfulde</button>
-                    <button class="language-btn" onclick="switchLanguage('bm')" data-lang="bm">Bamanankan</button>
-                    <button class="language-btn" onclick="switchLanguage('ln')" data-lang="ln">Lingála</button>
-                    <button class="language-btn" onclick="switchLanguage('kg')" data-lang="kg">Kikongo</button>
-                    <button class="language-btn" onclick="switchLanguage('lua')" data-lang="lua">Tshiluba</button>
-                    <button class="language-btn" onclick="switchLanguage('tn')" data-lang="tn">Setswana</button>
-                    <button class="language-btn" onclick="switchLanguage('st')" data-lang="st">Sesotho</button>
-                    <button class="language-btn" onclick="switchLanguage('ss')" data-lang="ss">siSwati</button>
-                    <button class="language-btn" onclick="switchLanguage('ve')" data-lang="ve">Tshivenḓa</button>
-                    <button class="language-btn" onclick="switchLanguage('ts')" data-lang="ts">Xitsonga</button>
-                    <button class="language-btn" onclick="switchLanguage('nr')" data-lang="nr">isiNdebele</button>
-                    <button class="language-btn" onclick="switchLanguage('xh')" data-lang="xh">isiXhosa</button>
-                    <button class="language-btn" onclick="switchLanguage('nso')" data-lang="nso">Sepedi</button>
-                </div>
-            </div>
-
-            <!-- Background Selection -->
-            <div class="settings-section">
-                <div class="section-title" data-text="void aesthetics">void aesthetics</div>
-                <div class="background-grid">
-                    <button class="background-btn active" onclick="switchBackground('cosmic')" data-bg="cosmic">
-                        <div>◉</div>
-                        <div class="bg-name">cosmic</div>
-                    </button>
-                    <button class="background-btn" onclick="switchBackground('void')" data-bg="void">
-                        <div>●</div>
-                        <div class="bg-name">pure void</div>
-                    </button>
-                    <button class="background-btn" onclick="switchBackground('deep-space')" data-bg="deep-space">
-                        <div>◐</div>
-                        <div class="bg-name">deep space</div>
-                    </button>
-                    <button class="background-btn" onclick="switchBackground('midnight')" data-bg="midnight">
-                        <div>◑</div>
-                        <div class="bg-name">midnight</div>
-                    </button>
-                    <button class="background-btn" onclick="switchBackground('abyss')" data-bg="abyss">
-                        <div>◒</div>
-                        <div class="bg-name">abyss</div>
-                    </button>
-                    <button class="background-btn" onclick="switchBackground('shadow')" data-bg="shadow">
-                        <div>◓</div>
-                        <div class="bg-name">shadow</div>
-                    </button>
-                    <button class="background-btn" onclick="switchBackground('crimson')" data-bg="crimson">
-                        <div>◔</div>
-                        <div class="bg-name">crimson</div>
-                    </button>
-                    <button class="background-btn" onclick="switchBackground('ocean')" data-bg="ocean">
-                        <div>◕</div>
-                        <div class="bg-name">ocean</div>
-                    </button>
-                    <button class="background-btn" onclick="switchBackground('forest')" data-bg="forest">
-                        <div>◖</div>
-                        <div class="bg-name">forest</div>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Black Hole Size -->
-            <div class="settings-section">
-                <div class="section-title" data-text="singularity scale">singularity scale</div>
-                <div class="control-group">
-                    <span class="control-label">small</span>
-                    <input type="range" class="control-slider" min="40" max="120" value="70" onInput="adjustBlackHoleSize(this.value)">
-                    <span class="control-label">vast</span>
-                </div>
-            </div>
-
-            <!-- Ring Size -->
-            <div class="settings-section">
-                <div class="section-title" data-text="orbital rings">orbital rings</div>
-                <div class="control-group">
-                    <span class="control-label">subtle</span>
-                    <input type="range" class="control-slider" min="0.5" max="2" step="0.1" value="1" onInput="adjustRingSize(this.value)">
-                    <span class="control-label">prominent</span>
-                </div>
-            </div>
-        </div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Awakening cosmic consciousness...</div>
     </div>
 
-    <!-- Progress Indicator -->
-    <div class="progress-dots">
-        <div class="progress-dot active" data-step="0"></div>
-        <div class="progress-dot" data-step="1"></div>
-        <div class="progress-dot" data-step="2"></div>
-        <div class="progress-dot" data-step="3"></div>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button class="language-btn active" onclick="switchLanguage('en')">EN</button>
+        <button class="language-btn" onclick="switchLanguage('zh')">中文</button>
+    </div>
+
+    <!-- Wisdom Level Indicator -->
+    <div class="wisdom-level" id="wisdomLevel">
+        <div class="wisdom-orb"></div>
+        <div class="wisdom-orb"></div>
+        <div class="wisdom-orb"></div>
+        <div class="wisdom-orb"></div>
+        <div class="wisdom-orb"></div>
     </div>
 
     <!-- Main Oracle Container -->
-    <div class="oracle-container">
+    <div class="oracle-container" id="oracleContainer">
         <div class="oracle-background">
-            <div class="cosmic-lights" id="cosmicLights"></div>
+            <div class="cosmic-weather" id="cosmicWeather"></div>
             <div class="mystical-particles" id="mysticalParticles"></div>
-            <div class="aurora-lights"></div>
+            <div class="aurora-lights" id="auroraLights"></div>
         </div>
         
-        <!-- Enhanced Black Hole with Orbital Rings -->
+        <!-- Gesture Detection Area -->
+        <div class="gesture-area" id="gestureArea"></div>
+        
+        <!-- Black Hole Container -->
         <div class="black-hole-container" id="blackHoleContainer">
             <div class="black-hole">
-                <!-- Multiple Animated Orbital Rings -->
-                <div class="orbital-ring"></div>
-                <div class="orbital-ring"></div>
-                <div class="orbital-ring"></div>
-                <div class="orbital-ring"></div>
-                <div class="orbital-ring"></div>
+                <div class="enhancement-glow"></div>
+                <!-- Sound Wave Visualization -->
+                <div class="sound-wave-container" id="soundWaveContainer">
+                    <div class="sound-wave"></div>
+                    <div class="sound-wave"></div>
+                    <div class="sound-wave"></div>
+                    <div class="sound-wave"></div>
+                </div>
             </div>
         </div>
         
-        <!-- Landing Screen -->
+        <!-- Landing Screen with 'aSk' -->
         <div class="oracle-landing" id="oracleLanding">
-            <div class="floating-ask" id="floatingAsk" onclick="showFloatingWords()">
-                <span class="ask-text" data-text="ask">ask</span>
+            <div class="floating-ask" id="floatingAsk" onclick="initiateOracleSession()">
+                <span class="ask-text" data-en="aSk" data-zh="問">aSk</span>
+                <div class="ask-glow"></div>
             </div>
-            <div class="oracle-subtitle" data-text="What seeks to be known?">What seeks to be known?</div>
+            <div class="oracle-subtitle" data-en="What seeks to be known?" data-zh="什麼渴望被知曉？">What seeks to be known?</div>
         </div>
         
         <!-- Floating Words Screen -->
@@ -1528,299 +1411,731 @@
         <div class="message-container" id="messageContainer">
             <div class="bright-message" id="brightMessage"></div>
             <div class="message-actions" id="messageActions">
-                <button class="oracle-button" onclick="showWishes()" data-text="noted">noted</button>
-                <button class="oracle-button" onclick="showMoreWords()" data-text="more">more</button>
+                <button class="oracle-button noted-btn" onclick="showWishes()" data-en="noTed" data-zh="記下">noTed</button>
+                <button class="oracle-button more-btn" onclick="showMoreWords()" data-en="i wAnt moRe" data-zh="我想要更多">i wAnt moRe</button>
             </div>
         </div>
         
         <!-- Wishes Screen -->
         <div class="wishes-container" id="wishesContainer">
             <div class="wishes-message" id="wishesMessage"></div>
-            <button class="oracle-button" onclick="returnToLanding()" data-text="ask">ask</button>
+            <button class="oracle-button back-btn" onclick="returnToLanding()" data-en="aSk" data-zh="問">aSk</button>
         </div>
     </div>
 
     <script>
-        // Enhanced Oracle System with Global Languages
+        // Advanced Oracle System with Progressive Enhancement
         let currentLanguage = 'en';
-        let currentBackground = 'cosmic';
-        let currentStep = 0;
-        let blackHoleSize = 70;
-        let ringSize = 1;
-        let settingsOpen = false;
-        let sessionMemory = {
-            usedWords: new Set(),
-            usedMessages: new Set(),
-            usedWishes: new Set(),
-            wordHistory: [],
-            interactionCount: 0
+        let usedWords = new Set();
+        let usedMessages = new Set();
+        let usedWishes = new Set();
+        let sessionCount = 0;
+        let wisdomLevel = 0;
+        let enhancementLevel = 0;
+        let lastInteractionTime = Date.now();
+        let cosmicWeatherActive = false;
+
+        // Enhanced Touch and Gesture Support
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        let isTouch = false;
+
+        // Advanced AI Word Generation with Quantum Linguistics
+        const quantumPrefixes = {
+            en: ['neo', 'echo', 'astra', 'lumi', 'nova', 'zen', 'flux', 'arc', 'void', 'meta', 'sync', 'vibe', 'flow', 'drift', 'pulse', 'quantum', 'ethereal', 'cosmic', 'astral', 'temporal', 'primal', 'infinite', 'sacred', 'mystic', 'divine'],
+            zh: ['靈', '魂', '幻', '夢', '星', '月', '雲', '風', '空', '神', '妙', '禪', '境', '覺', '悟', '量子', '以太', '宇宙', '星體', '時空', '原始', '無限', '神聖', '神秘', '神性']
         };
 
-        // Comprehensive Global Language Database
-        const translations = {
+        const quantumSuffixes = {
+            en: ['ance', 'ence', 'ism', 'ity', 'ness', 'ion', 'ment', 'ship', 'ward', 'wise', 'like', 'form', 'way', 'path', 'gate', 'field', 'wave', 'flow', 'core', 'essence'],
+            zh: ['性', '態', '境', '感', '意', '念', '象', '相', '理', '法', '道', '源', '流', '韻', '氣', '場', '波', '流', '核', '精']
+        };
+
+        const quantumRoots = {
+            en: ['lumina', 'spectral', 'ethereal', 'temporal', 'celestial', 'quantum', 'cosmic', 'primal', 'transcend', 'infinite', 'mystic', 'radiant', 'sublime', 'profound', 'sacred', 'nexus', 'matrix', 'vortex', 'resonance', 'harmony', 'synthesis', 'emergence', 'consciousness', 'manifestation', 'transformation'],
+            zh: ['靈魂', '神秘', '天象', '時空', '量子', '無限', '永恆', '超越', '深層', '神聖', '純淨', '光明', '智慧', '覺醒', '圓滿', '連結', '矩陣', '漩渦', '共鳴', '和諧', '綜合', '湧現', '意識', '顯化', '轉化']
+        };
+
+        // Multi-dimensional Story Templates with Complexity Levels
+        const advancedStoryTemplates = {
+            en: [
+                // Level 1: Simple
+                "In the {realm} where {element} {action}, a {entity} discovers that {revelation}... {wisdom} teaches us that {truth}. The {metaphor} reminds you that {personal_insight}.",
+                
+                // Level 2: Intermediate  
+                "From the {perspective} of {cosmic_force}, {phenomenon} reveals itself as {meaning}... What appears as {illusion} is actually {reality}. Your {quality} holds the key to {unlock}, for the {teacher} knows that {lesson}.",
+                
+                // Level 3: Complex
+                "Between the {boundary_1} and {boundary_2}, {discovery} unfolds like {simile}... The {teacher} whispers that {secret}, while {cosmic_force} demonstrates how {process} leads to {transformation}. When {condition}, the {metaphor} becomes a gateway to {higher_truth}.",
+                
+                // Level 4: Advanced
+                "Through the lens of {viewpoint}, {subject} transforms into {new_form} as {cosmic_force} orchestrates the dance between {force_1} and {force_2}... {ancient_wisdom} reveals that {complex_truth}, and the {observer} witnesses how {phenomenon} creates {cascade_effect}. Your journey toward {destination} involves understanding that {paradox}.",
+                
+                // Level 5: Master
+                "In the multidimensional dance between {force_1} and {force_2}, {creation} emerges with {quality} while {cosmic_intelligence} weaves together {pattern_1}, {pattern_2}, and {pattern_3}... The {teacher} reveals that {profound_truth}, demonstrating how {process_1} leads to {process_2}, which in turn manifests as {final_manifestation}. Your {essence} resonates with {cosmic_frequency}, unlocking {infinite_potential} through the sacred geometry of {transformation_path}."
+            ],
+            zh: [
+                // Level 1: 簡單
+                "在{境界}中，{元素}{動作}時，{存在}發現{啟示}... {智慧}教導我們{真理}。{比喻}提醒你{個人洞察}。",
+                
+                // Level 2: 中級
+                "從{宇宙力量}的{視角}，{現象}顯現為{意義}... 看似{幻象}的實際上是{實相}。你的{品質}擁有{解鎖}的鑰匙，因為{導師}知道{課程}。",
+                
+                // Level 3: 複雜
+                "在{邊界一}與{邊界二}之間，{發現}如{比擬}般展開... {導師}低語著{秘密}，而{宇宙力量}展示了{過程}如何導致{轉化}。當{條件}時，{比喻}成為通往{更高真理}的門戶。",
+                
+                // Level 4: 高級
+                "透過{觀點}的鏡頭，{主體}轉化為{新形式}，當{宇宙力量}編排{力量一}與{力量二}之間的舞蹈... {古老智慧}揭示{複雜真理}，{觀察者}見證{現象}如何創造{連鎖效應}。你通往{目的地}的旅程涉及理解{悖論}。",
+                
+                // Level 5: 大師
+                "在{力量一}與{力量二}的多維舞蹈中，{創造}以{品質}出現，而{宇宙智慧}將{模式一}、{模式二}和{模式三}編織在一起... {導師}揭示{深刻真理}，展示{過程一}如何導致{過程二}，進而顯現為{最終顯化}。你的{本質}與{宇宙頻率}共鳴，通過{轉化路徑}的神聖幾何解鎖{無限潛能}。"
+            ]
+        };
+
+        // Enhanced story elements with multiple complexity tiers
+        const enhancedStoryElements = {
             en: {
-                ask: "ask", noted: "noted", more: "more", settings: "settings",
-                "configure your cosmic void": "configure your cosmic void",
-                "cosmic languages": "cosmic languages", "void aesthetics": "void aesthetics",
-                "singularity scale": "singularity scale", "orbital rings": "orbital rings",
-                greeting: "What seeks to be known?",
-                words: ['void', 'shadow', 'whisper', 'echo', 'dream', 'silence', 'infinity', 'mystery', 'cosmos', 'soul', 'eternity', 'spirit', 'essence', 'truth', 'wisdom', 'light', 'darkness', 'journey', 'path', 'destiny', 'vision', 'awakening', 'depth', 'flow'],
-                messages: ["In the vast expanse of nothingness, something stirs... The void speaks not in words but in the spaces between heartbeats. What you seek has been seeking you across dimensions of time and possibility.", "Shadows dance where light fears to tread, carrying secrets whispered by ancient winds... Your question opens doorways that have been waiting eons for the right key.", "Through the cosmic symphony, a single note resonates with your soul's frequency... The universe has been composing this answer since before the stars learned to shine."],
-                wishes: ["May the void embrace your journey with infinite possibility...", "Through darkness and light, may wisdom find its way to you...", "In the silence between thoughts, may truth reveal itself..."]
+                // Basic elements
+                realm: ['dimension', 'void', 'cosmos', 'infinity', 'consciousness', 'dreamscape', 'quantum field', 'astral plane'],
+                element: ['light', 'shadow', 'energy', 'time', 'space', 'vibration', 'frequency', 'essence'],
+                action: ['dances', 'flows', 'pulses', 'resonates', 'transforms', 'awakens', 'merges', 'ascends'],
+                
+                // Advanced elements
+                cosmic_intelligence: ['universal mind', 'cosmic consciousness', 'divine intelligence', 'quantum awareness', 'galactic wisdom'],
+                pattern_1: ['sacred geometry', 'fibonacci sequences', 'golden ratio spirals', 'mandala formations', 'crystalline structures'],
+                pattern_2: ['wave interference', 'harmonic resonance', 'fractal recursion', 'holographic projection', 'dimensional folding'],
+                pattern_3: ['quantum entanglement', 'morphic resonance', 'synchronistic alignment', 'archetypal emergence', 'consciousness evolution'],
+                
+                // Master level elements
+                transformation_path: ['spiral of awakening', 'labyrinth of consciousness', 'tree of life ascension', 'chakra activation sequence', 'dimensional transcendence'],
+                cosmic_frequency: ['Schumann resonance', 'universal heartbeat', 'galactic pulse', 'DNA activation frequency', 'love vibration'],
+                infinite_potential: ['quantum superposition', 'multiversal possibilities', 'consciousness expansion', 'reality creation', 'divine co-creation'],
+                final_manifestation: ['enlightened being', 'cosmic citizen', 'multidimensional self', 'ascended consciousness', 'universal love embodiment']
             },
             zh: {
-                ask: "問", noted: "記下", more: "更多", settings: "設置",
-                "configure your cosmic void": "配置你的宇宙虛空",
-                "cosmic languages": "宇宙語言", "void aesthetics": "虛空美學",
-                "singularity scale": "奇點規模", "orbital rings": "軌道環",
-                greeting: "什麼渴望被知曉？",
-                words: ['虛空', '影子', '低語', '回音', '夢境', '靜默', '無限', '奧秘', '宇宙', '靈魂', '永恆', '精神', '本質', '真理', '智慧', '光明', '黑暗', '旅程', '道路', '命運', '異象', '覺醒', '深度', '流動'],
-                messages: ["在虛無的廣闊空間中，某些東西在攪動... 虛空不用言語說話，而是在心跳之間的空隙中。你所尋求的一直在時間和可能性的維度中尋找你。", "影子在光明害怕踏足的地方起舞，攜帶著古老風聲低語的秘密... 你的問題打開了等待了億萬年正確鑰匙的門戶。", "通過宇宙交響樂，一個音符與你靈魂的頻率共鳴... 宇宙從星星學會閃耀之前就一直在譜寫這個答案。"],
-                wishes: ["願虛空以無限可能擁抱你的旅程...", "穿越黑暗與光明，願智慧找到通往你的路...", "在思想之間的靜默中，願真理顯現..."]
-            },
-            ja: {
-                ask: "問う", noted: "記録", more: "もっと", settings: "設定",
-                "configure your cosmic void": "あなたの宇宙の虚空を設定",
-                "cosmic languages": "宇宙言語", "void aesthetics": "虚空の美学",
-                "singularity scale": "特異点のスケール", "orbital rings": "軌道リング",
-                greeting: "何が知られることを求めているのか？",
-                words: ['空虚', '影', 'ささやき', 'こだま', '夢', '静寂', '無限', '神秘', '宇宙', '魂', '永遠', '精神', '本質', '真実', '知恵', '光', '闇', '旅', '道', '運命', 'ビジョン', '覚醒', '深さ', '流れ'],
-                messages: ["無の広大な空間で、何かが動いている... 空虚は言葉ではなく、心拍の間の空間で語る。あなたが求めているものは、時間と可能性の次元を超えてあなたを探している。", "光が踏み入れることを恐れる場所で影が踊り、古い風によってささやかれた秘密を運んでいる... あなたの質問は、正しい鍵を永劫待っていた扉を開く。", "宇宙の交響曲を通して、一つの音があなたの魂の周波数と共鳴する... 宇宙は星が輝くことを学ぶ前から、この答えを作曲していた。"],
-                wishes: ["空虚が無限の可能性であなたの旅を抱擁しますように...", "闇と光を通して、知恵があなたへの道を見つけますように...", "思考の間の静寂の中で、真実が現れますように..."]
-            },
-            // Additional major languages with basic translations
-            ko: {
-                ask: "묻다", noted: "기록됨", more: "더", settings: "설정",
-                "configure your cosmic void": "우주의 공허를 설정하세요",
-                "cosmic languages": "우주 언어", "void aesthetics": "공허의 미학",
-                "singularity scale": "특이점 규모", "orbital rings": "궤도 고리",
-                greeting: "무엇이 알려지기를 원하는가?",
-                words: ['공허', '그림자', '속삭임', '메아리', '꿈', '침묵', '무한', '신비', '우주', '영혼', '영원', '정신', '본질', '진리', '지혜', '빛', '어둠', '여행', '길', '운명', '비전', '각성', '깊이', '흐름'],
-                messages: ["무한한 무의 공간에서 무언가가 움직인다... 공허는 말로 말하지 않고 심장 박동 사이의 공간에서 말한다.", "그림자는 빛이 두려워하는 곳에서 춤을 추며, 고대 바람이 속삭이는 비밀을 운반한다...", "우주 교향곡을 통해 하나의 음표가 당신의 영혼의 주파수와 공명한다..."],
-                wishes: ["공허가 무한한 가능성으로 당신의 여행을 포용하길...", "어둠과 빛을 통해 지혜가 당신에게 길을 찾길...", "생각 사이의 침묵 속에서 진리가 드러나길..."]
-            },
-            hi: {
-                ask: "पूछना", noted: "नोट किया", more: "और", settings: "सेटिंग्स",
-                "configure your cosmic void": "अपना ब्रह्मांडीय शून्य कॉन्फ़िगर करें",
-                "cosmic languages": "ब्रह्मांडीय भाषाएं", "void aesthetics": "शून्य सौंदर्य",
-                "singularity scale": "एकलता पैमाना", "orbital rings": "कक्षीय वलय",
-                greeting: "क्या जानना चाहता है?",
-                words: ['शून्य', 'छाया', 'फुसफुसाहट', 'गूंज', 'स्वप्न', 'मौनता', 'अनंत', 'रहस्य', 'ब्रह्मांड', 'आत्मा', 'अनंतकाल', 'आत्मा', 'सार', 'सत्य', 'ज्ञान', 'प्रकाश', 'अंधकार', 'यात्रा', 'पथ', 'भाग्य', 'दर्शन', 'जागृति', 'गहराई', 'प्रवाह'],
-                messages: ["शून्यता के विशाल विस्तार में, कुछ हलचल है... शून्य शब्दों में नहीं बल्कि दिल की धड़कनों के बीच के स्थानों में बोलता है।", "छायाएं वहां नृत्य करती हैं जहां प्रकाश कदम रखने से डरता है...", "ब्रह्मांडीय सिम्फनी के माध्यम से, एक स्वर आपकी आत्मा की आवृत्ति के साथ गूंजता है..."],
-                wishes: ["शून्य आपकी यात्रा को अनंत संभावना के साथ गले लगाए...", "अंधकार और प्रकाश के माध्यम से, ज्ञान आपके पास अपना रास्ता खोजे...", "विचारों के बीच की मौनता में, सत्य अपने आप को प्रकट करे..."]
+                // 基本元素
+                境界: ['維度', '虛空', '宇宙', '無限', '意識', '夢境', '量子場', '星光界'],
+                元素: ['光', '影', '能量', '時間', '空間', '振動', '頻率', '本質'],
+                動作: ['舞動', '流動', '脈動', '共鳴', '轉化', '覺醒', '融合', '昇華'],
+                
+                // 高級元素
+                宇宙智慧: ['宇宙心智', '宇宙意識', '神聖智慧', '量子覺知', '銀河智慧'],
+                模式一: ['神聖幾何', '費氏數列', '黃金比例螺旋', '曼陀羅形成', '水晶結構'],
+                模式二: ['波動干涉', '和諧共鳴', '分形遞歸', '全息投影', '維度摺疊'],
+                模式三: ['量子糾纏', '形態共鳴', '同步對齊', '原型湧現', '意識演化'],
+                
+                // 大師級元素
+                轉化路徑: ['覺醒螺旋', '意識迷宮', '生命樹昇華', '脈輪激活序列', '維度超越'],
+                宇宙頻率: ['舒曼共振', '宇宙心跳', '銀河脈動', 'DNA激活頻率', '愛的振動'],
+                無限潛能: ['量子疊加', '多元宇宙可能性', '意識擴展', '實相創造', '神聖共創'],
+                最終顯化: ['開悟存在', '宇宙公民', '多維自我', '揚昇意識', '宇宙愛體現']
             }
-            // Note: For brevity, I'm including core languages. The system can be easily extended with more translations.
         };
 
-        // Background definitions
-        const backgrounds = {
-            'cosmic': '--bg-cosmic',
-            'void': '--bg-void',
-            'deep-space': '--bg-deep-space',
-            'midnight': '--bg-midnight',
-            'abyss': '--bg-abyss',
-            'shadow': '--bg-shadow',
-            'crimson': '--bg-crimson',
-            'ocean': '--bg-ocean',
-            'forest': '--bg-forest'
+        // Progressive greetings that evolve with wisdom level
+        const evolutionaryGreetings = {
+            en: [
+                // Level 0-1: Beginner
+                "What seeks to be known?",
+                "Ancient wisdom awaits your touch...",
+                "The universe has been expecting you...",
+                
+                // Level 2-3: Intermediate
+                "Your consciousness expands the cosmic web...",
+                "Quantum possibilities align with your presence...",
+                "The galactic council acknowledges your arrival...",
+                
+                // Level 4-5: Advanced
+                "Multidimensional gateways open to your frequency...",
+                "The akashic records shimmer with anticipation...",
+                "Divine intelligence recognizes a fellow traveler..."
+            ],
+            zh: [
+                // Level 0-1: 初學者
+                "什麼渴望被知曉？",
+                "古老的智慧等待你的觸碰...",
+                "宇宙一直在等待你...",
+                
+                // Level 2-3: 中級
+                "你的意識擴展了宇宙網絡...",
+                "量子可能性與你的臨在對齊...",
+                "銀河議會承認你的到來...",
+                
+                // Level 4-5: 高級
+                "多維門戶向你的頻率開放...",
+                "阿卡西記錄因期待而閃耀...",
+                "神聖智慧認出了同路人..."
+            ]
         };
 
-        // Enhanced Cosmic Lights Generation
-        function generateCosmicLights() {
-            const container = document.getElementById('cosmicLights');
-            if (!container) return;
-            
-            container.innerHTML = '';
-            
-            const lightCount = window.innerWidth <= 768 ? 30 : 50;
-            
-            for (let i = 0; i < lightCount; i++) {
-                const light = document.createElement('div');
-                light.classList.add('cosmic-light');
-                
-                // Random size categories
-                const sizeTypes = ['tiny', 'small', 'medium', 'large'];
-                const sizeType = sizeTypes[Math.floor(Math.random() * sizeTypes.length)];
-                light.classList.add(sizeType);
-                
-                // Random movement types
-                const moveTypes = ['floating', 'orbital', 'drifting'];
-                const moveType = moveTypes[Math.floor(Math.random() * moveTypes.length)];
-                if (moveType !== 'floating') {
-                    light.classList.add(moveType);
-                }
-                
-                // Random horizontal position
-                light.style.left = Math.random() * 100 + '%';
-                
-                // Random starting position for floating lights
-                if (moveType === 'floating') {
-                    light.style.top = '110vh';
-                } else if (moveType === 'orbital') {
-                    light.style.top = '50%';
-                    light.style.left = '50%';
-                } else {
-                    light.style.top = Math.random() * 100 + '%';
-                }
-                
-                // Random animation delay and duration
-                light.style.animationDelay = Math.random() * 30 + 's';
-                
-                // Slight color variations
-                const glowVariations = [
-                    'rgba(186, 85, 211, 0.6)',
-                    'rgba(138, 43, 226, 0.5)',
-                    'rgba(147, 112, 219, 0.4)',
-                    'rgba(123, 104, 238, 0.5)',
-                    'rgba(221, 160, 221, 0.3)'
-                ];
-                const glowColor = glowVariations[Math.floor(Math.random() * glowVariations.length)];
-                light.style.background = `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`;
-                
-                container.appendChild(light);
-            }
-        }
+        // Haptic feedback patterns
+        const hapticPatterns = {
+            gentle: [100],
+            medium: [200],
+            strong: [300],
+            pulse: [100, 50, 100],
+            wave: [50, 100, 150, 100, 50],
+            cosmic: [100, 100, 200, 100, 100]
+        };
 
-        // Settings Functions
-        function openSettings() {
-            settingsOpen = true;
-            const overlay = document.getElementById('settingsOverlay');
-            overlay.classList.add('active');
-            
-            // Prevent interaction with main oracle
-            document.querySelector('.oracle-container').style.pointerEvents = 'none';
-        }
-
-        function closeSettings() {
-            settingsOpen = false;
-            const overlay = document.getElementById('settingsOverlay');
-            overlay.classList.remove('active');
-            
-            // Re-enable interaction with main oracle
+        // Initialize Oracle System
+        document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
-                document.querySelector('.oracle-container').style.pointerEvents = 'auto';
-            }, 600);
+                hideLoadingScreen();
+                initializeAdvancedOracle();
+            }, 2000);
+        });
+
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 1000);
         }
 
-        // Enhanced language switching with fallback
-        function switchLanguage(lang) {
-            currentLanguage = lang;
-            
-            // Update active button
-            document.querySelectorAll('[data-lang]').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            const activeBtn = document.querySelector(`[data-lang="${lang}"]`);
-            if (activeBtn) activeBtn.classList.add('active');
-            
-            // Update text content with fallback to English
-            document.querySelectorAll('[data-text]').forEach(element => {
-                const key = element.getAttribute('data-text');
-                const translation = translations[lang] || translations.en;
-                if (translation[key]) {
-                    element.textContent = translation[key];
-                } else if (translations.en[key]) {
-                    element.textContent = translations.en[key];
-                }
-            });
-            
-            // Update greeting
-            setRandomGreeting();
+        function initializeAdvancedOracle() {
+            generateEnhancedMysticalParticles();
+            initializeCosmicWeather();
+            setupAdvancedGestureDetection();
+            activateBlackHoleEffects();
+            setEvolutionaryGreeting();
+            initializeWisdomTracking();
+            startCosmicBackground();
         }
 
-        // Background switching
-        function switchBackground(bgName) {
-            if (!backgrounds[bgName]) return;
-            
-            currentBackground = bgName;
-            
-            // Update active button
-            document.querySelectorAll('[data-bg]').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`[data-bg="${bgName}"]`).classList.add('active');
-            
-            // Apply background
-            document.documentElement.style.setProperty('--bg-gradient', `var(${backgrounds[bgName]})`);
-        }
-
-        // Black hole size adjustment
-        function adjustBlackHoleSize(size) {
-            blackHoleSize = size;
-            document.documentElement.style.setProperty('--hole-size', size + 'vmin');
-        }
-
-        // Ring size adjustment
-        function adjustRingSize(size) {
-            ringSize = size;
-            document.documentElement.style.setProperty('--ring-size', size);
-        }
-
-        // Progress tracking
-        function updateProgress(step) {
-            currentStep = step;
-            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
-                dot.classList.toggle('active', index <= step);
-            });
-        }
-
-        // Enhanced particle generation
-        function generateParticles() {
+        function generateEnhancedMysticalParticles() {
             const container = document.getElementById('mysticalParticles');
             if (!container) return;
             
             container.innerHTML = '';
             
-            const particleCount = window.innerWidth <= 768 ? 12 : 20;
+            const particleCount = Math.min(30 + enhancementLevel * 5, 50);
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('mystical-particle');
                 
-                // Random size
-                const size = 1 + Math.random() * 4;
+                // Enhanced particles with wisdom level
+                if (wisdomLevel >= 3 && Math.random() > 0.7) {
+                    particle.classList.add('special');
+                }
+                
+                const size = 2 + Math.random() * (8 + enhancementLevel);
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
                 
-                // Random position
-                particle.style.left = Math.random() * 100 + '%';
+                const colors = [
+                    'rgba(186, 85, 211, 0.8)',
+                    'rgba(138, 43, 226, 0.7)',
+                    'rgba(147, 112, 219, 0.6)',
+                    'rgba(123, 104, 238, 0.8)',
+                    'rgba(221, 160, 221, 0.7)',
+                    // Enhanced colors for higher wisdom levels
+                    'rgba(255, 215, 0, 0.6)',
+                    'rgba(255, 255, 255, 0.5)'
+                ];
                 
-                // Random timing
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                const colorIndex = Math.min(Math.floor(Math.random() * colors.length), colors.length - 1);
+                const randomColor = colors[colorIndex];
+                particle.style.background = `radial-gradient(circle, ${randomColor} 0%, transparent 70%)`;
+                
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 12 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 6) + 's';
                 
                 container.appendChild(particle);
             }
         }
 
-        // Random greeting with fallback
-        function setRandomGreeting() {
-            const subtitle = document.querySelector('[data-text="What seeks to be known?"]');
-            if (subtitle) {
-                const translation = translations[currentLanguage] || translations.en;
-                subtitle.textContent = translation.greeting || translations.en.greeting;
+        function initializeCosmicWeather() {
+            const container = document.getElementById('cosmicWeather');
+            if (!container) return;
+            
+            // Generate stellar drift particles
+            for (let i = 0; i < 10; i++) {
+                const stellar = document.createElement('div');
+                stellar.classList.add('stellar-drift');
+                stellar.style.left = Math.random() * 100 + '%';
+                stellar.style.animationDelay = Math.random() * 15 + 's';
+                stellar.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(stellar);
+            }
+            
+            // Generate energy pulses
+            for (let i = 0; i < 5; i++) {
+                const pulse = document.createElement('div');
+                pulse.classList.add('energy-pulse');
+                pulse.style.left = Math.random() * 100 + '%';
+                pulse.style.top = Math.random() * 100 + '%';
+                pulse.style.animationDelay = Math.random() * 8 + 's';
+                container.appendChild(pulse);
             }
         }
 
-        // Touch ripple effect
-        function createRippleEffect(element, event) {
-            const rect = element.getBoundingClientRect();
-            const ripple = document.createElement('div');
-            const size = Math.max(rect.width, rect.height) * 2;
+        function setupAdvancedGestureDetection() {
+            const gestureArea = document.getElementById('gestureArea');
+            if (!gestureArea) return;
             
-            ripple.className = 'touch-ripple';
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
-            ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
+            // Touch events
+            gestureArea.addEventListener('touchstart', handleTouchStart, { passive: false });
+            gestureArea.addEventListener('touchmove', handleTouchMove, { passive: false });
+            gestureArea.addEventListener('touchend', handleTouchEnd, { passive: false });
             
-            element.appendChild(ripple);
+            // Mouse events for desktop
+            gestureArea.addEventListener('mousedown', handleMouseDown);
+            gestureArea.addEventListener('mousemove', handleMouseMove);
+            gestureArea.addEventListener('mouseup', handleMouseUp);
             
-            setTimeout(() => {
-                ripple.remove();
-            }, 1000);
+            // Prevent default behaviors
+            gestureArea.addEventListener('contextmenu', e => e.preventDefault());
+            gestureArea.addEventListener('selectstart', e => e.preventDefault());
         }
 
-        // Main Oracle Functions
+        function handleTouchStart(e) {
+            e.preventDefault();
+            isTouch = true;
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            
+            triggerHapticFeedback('gentle');
+            activateCosmicResponse('touch');
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            if (!isTouch) return;
+            
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - touchStartX;
+            const deltaY = touch.clientY - touchStartY;
+            
+            // Create following effect
+            createFollowingEffect(touch.clientX, touch.clientY);
+        }
+
+        function handleTouchEnd(e) {
+            e.preventDefault();
+            if (!isTouch) return;
+            
+            const touch = e.changedTouches[0];
+            touchEndX = touch.clientX;
+            touchEndY = touch.clientY;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            if (distance > 50) {
+                handleSwipeGesture(deltaX, deltaY);
+            } else {
+                handleTapGesture(touchEndX, touchEndY);
+            }
+            
+            isTouch = false;
+        }
+
+        function handleSwipeGesture(deltaX, deltaY) {
+            const threshold = 30;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (deltaX > threshold) {
+                    // Swipe right - next phase
+                    triggerHapticFeedback('wave');
+                    nextEvolutionPhase();
+                } else if (deltaX < -threshold) {
+                    // Swipe left - previous phase
+                    triggerHapticFeedback('pulse');
+                    previousPhase();
+                }
+            } else {
+                if (deltaY > threshold) {
+                    // Swipe down - deeper wisdom
+                    triggerHapticFeedback('cosmic');
+                    deepenWisdom();
+                } else if (deltaY < -threshold) {
+                    // Swipe up - cosmic elevation
+                    triggerHapticFeedback('strong');
+                    cosmicElevation();
+                }
+            }
+        }
+
+        function handleTapGesture(x, y) {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const distance = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
+            
+            if (distance < 100) {
+                // Center tap - initiate oracle
+                triggerHapticFeedback('medium');
+                initiateOracleSession();
+            } else {
+                // Off-center tap - create ripple effect
+                createRippleEffect(x, y);
+            }
+        }
+
+        function createFollowingEffect(x, y) {
+            // Create temporary visual effect that follows touch
+            const effect = document.createElement('div');
+            effect.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: 20px;
+                height: 20px;
+                background: radial-gradient(circle, rgba(186, 85, 211, 0.6) 0%, transparent 70%);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 3000;
+                transform: translate(-50%, -50%);
+                animation: followEffect 0.8s ease-out forwards;
+            `;
+            
+            document.body.appendChild(effect);
+            
+            setTimeout(() => effect.remove(), 800);
+        }
+
+        function createRippleEffect(x, y) {
+            const ripple = document.createElement('div');
+            ripple.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: 10px;
+                height: 10px;
+                border: 2px solid rgba(186, 85, 211, 0.8);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 2500;
+                transform: translate(-50%, -50%);
+                animation: rippleExpand 1s ease-out forwards;
+            `;
+            
+            document.body.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 1000);
+        }
+
+        function triggerHapticFeedback(pattern) {
+            if ('vibrate' in navigator && hapticPatterns[pattern]) {
+                navigator.vibrate(hapticPatterns[pattern]);
+            }
+        }
+
+        function activateCosmicResponse(type) {
+            const blackHole = document.getElementById('blackHoleContainer');
+            const aurora = document.getElementById('auroraLights');
+            
+            switch (type) {
+                case 'touch':
+                    blackHole.classList.add('pulse');
+                    setTimeout(() => blackHole.classList.remove('pulse'), 2000);
+                    break;
+                case 'enhanced':
+                    aurora.classList.add('enhanced');
+                    setTimeout(() => aurora.classList.remove('enhanced'), 5000);
+                    break;
+            }
+        }
+
+        function nextEvolutionPhase() {
+            enhancementLevel = Math.min(enhancementLevel + 1, 5);
+            const blackHole = document.getElementById('blackHoleContainer');
+            blackHole.classList.add('enhanced');
+            updateWisdomLevel();
+        }
+
+        function deepenWisdom() {
+            wisdomLevel = Math.min(wisdomLevel + 1, 5);
+            updateWisdomLevel();
+            generateEnhancedMysticalParticles();
+        }
+
+        function cosmicElevation() {
+            activateCosmicResponse('enhanced');
+            setEvolutionaryGreeting();
+        }
+
+        function previousPhase() {
+            // Gentle return to previous state
+            enhancementLevel = Math.max(enhancementLevel - 1, 0);
+            updateWisdomLevel();
+        }
+
+        function updateWisdomLevel() {
+            const wisdomOrbs = document.querySelectorAll('.wisdom-orb');
+            wisdomOrbs.forEach((orb, index) => {
+                if (index < wisdomLevel) {
+                    orb.classList.add('active');
+                } else {
+                    orb.classList.remove('active');
+                }
+            });
+        }
+
+        function initializeWisdomTracking() {
+            updateWisdomLevel();
+        }
+
+        function startCosmicBackground() {
+            // Dynamic background that evolves
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    cosmicWeatherActive = !cosmicWeatherActive;
+                    activateCosmicResponse(cosmicWeatherActive ? 'enhanced' : 'touch');
+                }
+            }, 10000);
+        }
+
+        // Mouse event handlers (desktop support)
+        function handleMouseDown(e) {
+            touchStartX = e.clientX;
+            touchStartY = e.clientY;
+            activateCosmicResponse('touch');
+        }
+
+        function handleMouseMove(e) {
+            if (e.buttons === 1) { // Left mouse button held
+                createFollowingEffect(e.clientX, e.clientY);
+            }
+        }
+
+        function handleMouseUp(e) {
+            touchEndX = e.clientX;
+            touchEndY = e.clientY;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            if (distance > 50) {
+                handleSwipeGesture(deltaX, deltaY);
+            } else {
+                handleTapGesture(touchEndX, touchEndY);
+            }
+        }
+
+        // Language switching with enhanced features
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('[data-en]').forEach(element => {
+                const key = lang === 'en' ? 'data-en' : 'data-zh';
+                element.textContent = element.getAttribute(key);
+            });
+            
+            setEvolutionaryGreeting();
+            triggerHapticFeedback('gentle');
+        }
+
+        function setEvolutionaryGreeting() {
+            const subtitle = document.querySelector('.oracle-subtitle');
+            if (subtitle) {
+                const greetings = evolutionaryGreetings[currentLanguage];
+                const levelIndex = Math.min(wisdomLevel, greetings.length - 1);
+                const greeting = greetings[levelIndex];
+                subtitle.textContent = greeting;
+            }
+        }
+
+        // Enhanced AI Word Generation with Quantum Complexity
+        function generateQuantumWord() {
+            const lang = currentLanguage;
+            let attempts = 0;
+            let word;
+            
+            do {
+                const complexity = Math.min(wisdomLevel, 4);
+                const type = Math.random();
+                
+                if (complexity >= 3 && type < 0.2) {
+                    // Quantum fusion words (highest complexity)
+                    const prefix = quantumPrefixes[lang][Math.floor(Math.random() * quantumPrefixes[lang].length)];
+                    const root = quantumRoots[lang][Math.floor(Math.random() * quantumRoots[lang].length)];
+                    const suffix = quantumSuffixes[lang][Math.floor(Math.random() * quantumSuffixes[lang].length)];
+                    word = lang === 'en' ? prefix + root.toLowerCase() + suffix : prefix + root + suffix;
+                } else if (complexity >= 2 && type < 0.4) {
+                    // Complex combinations
+                    const root1 = quantumRoots[lang][Math.floor(Math.random() * quantumRoots[lang].length)];
+                    const root2 = quantumRoots[lang][Math.floor(Math.random() * quantumRoots[lang].length)];
+                    word = lang === 'en' ? root1.toLowerCase() + root2.toLowerCase() : root1 + root2;
+                } else if (type < 0.6) {
+                    // Prefix + Root combination
+                    const prefix = quantumPrefixes[lang][Math.floor(Math.random() * quantumPrefixes[lang].length)];
+                    const root = quantumRoots[lang][Math.floor(Math.random() * quantumRoots[lang].length)];
+                    word = lang === 'en' ? prefix + root.toLowerCase() : prefix + root;
+                } else {
+                    // Root + Suffix combination
+                    const root = quantumRoots[lang][Math.floor(Math.random() * quantumRoots[lang].length)];
+                    const suffix = quantumSuffixes[lang][Math.floor(Math.random() * quantumSuffixes[lang].length)];
+                    word = lang === 'en' ? root.toLowerCase() + suffix : root + suffix;
+                }
+                
+                attempts++;
+            } while (usedWords.has(word) && attempts < 100);
+            
+            usedWords.add(word);
+            return word;
+        }
+
+        // Advanced Message Generation with Progressive Complexity
+        function generateEvolutionaryMessage(word) {
+            const lang = currentLanguage;
+            let attempts = 0;
+            let message;
+            
+            do {
+                const complexity = Math.min(wisdomLevel, 4);
+                const templates = advancedStoryTemplates[lang];
+                const template = templates[complexity] || templates[0];
+                const elements = enhancedStoryElements[lang];
+                
+                message = template.replace(/\{(\w+)\}/g, (match, key) => {
+                    if (elements[key]) {
+                        return elements[key][Math.floor(Math.random() * elements[key].length)];
+                    }
+                    return match;
+                });
+                
+                // Add word-specific personalization with quantum enhancement
+                const personalizations = {
+                    en: [
+                        ` The quantum essence of "${word}" resonates through this cosmic revelation, unlocking pathways of understanding.`,
+                        ` Your connection to "${word}" creates ripples across dimensional boundaries, awakening dormant potentials.`,
+                        ` In choosing "${word}", you have activated a multidimensional gateway to expanded consciousness.`,
+                        ` The universe speaks through "${word}" as a crystalline frequency of pure knowing.`,
+                        ` Through "${word}", ancient wisdom and future possibilities converge in this eternal moment.`
+                    ],
+                    zh: [
+                        ` "${word}"的量子本質在這個宇宙啟示中共鳴，解鎖理解的路徑。`,
+                        ` 你與"${word}"的連結在維度邊界創造漣漪，喚醒沉睡的潛能。`,
+                        ` 在選擇"${word}"時，你已激活了通往擴展意識的多維門戶。`,
+                        ` 宇宙通過"${word}"作為純粹知曉的水晶頻率說話。`,
+                        ` 通過"${word}"，古老智慧與未來可能性在這永恆時刻匯聚。`
+                    ]
+                };
+                
+                const currentPersonalizations = personalizations[lang];
+                const personalization = currentPersonalizations[Math.floor(Math.random() * currentPersonalizations.length)];
+                message += personalization;
+                
+                attempts++;
+            } while (usedMessages.has(message) && attempts < 50);
+            
+            usedMessages.add(message);
+            return message;
+        }
+
+        // Enhanced Wish Generation with Cosmic Complexity
+        function generateCosmicWish() {
+            const lang = currentLanguage;
+            let attempts = 0;
+            let wish;
+            
+            do {
+                const complexity = Math.min(wisdomLevel, 4);
+                
+                const cosmicWishTemplates = {
+                    en: [
+                        // Level 0-1: Basic
+                        "May the {cosmic_force} of {quality} flow through your {path}, bringing {blessing} to every {moment}...",
+                        
+                        // Level 2: Intermediate
+                        "In the {dimension} of {possibility}, may your {essence} find {harmony} with the {universal_principle} that guides {creation}...",
+                        
+                        // Level 3: Advanced
+                        "Let the {energy} of {transformation} awaken {dormant_power} within, as {cosmic_alignment} opens doorways to {infinite_potential}...",
+                        
+                        // Level 4: Master
+                        "Through the quantum field of {infinite_love}, may {divine_grace} illuminate your {multidimensional_journey} with {celestial_wisdom}, as {cosmic_forces} conspire to manifest your highest {soul_purpose} across all timelines and dimensions..."
+                    ],
+                    zh: [
+                        // Level 0-1: 基本
+                        "願{宇宙力量}的{品質}流過你的{道路}，為每個{時刻}帶來{祝福}...",
+                        
+                        // Level 2: 中級
+                        "在{可能性}的{維度}中，願你的{本質}與指導{創造}的{宇宙原則}找到{和諧}...",
+                        
+                        // Level 3: 高級
+                        "讓{轉化}的{能量}喚醒內在的{潛在力量}，當{宇宙對齊}打開通往{無限潛能}的門戶...",
+                        
+                        // Level 4: 大師
+                        "通過{無限愛}的量子場，願{神聖恩典}以{天體智慧}照亮你的{多維旅程}，當{宇宙力量}合謀在所有時間線和維度中顯化你最高的{靈魂目的}..."
+                    ]
+                };
+                
+                const templates = cosmicWishTemplates[lang];
+                const template = templates[complexity] || templates[0];
+                const elements = enhancedStoryElements[lang];
+                
+                // Enhanced wish elements
+                const cosmicWishElements = {
+                    en: {
+                        infinite_love: ['unconditional love', 'divine love', 'cosmic love', 'universal compassion', 'source love'],
+                        multidimensional_journey: ['ascension path', 'consciousness evolution', 'soul journey', 'spiritual awakening', 'cosmic pilgrimage'],
+                        celestial_wisdom: ['galactic knowledge', 'star wisdom', 'cosmic intelligence', 'divine insight', 'universal truth'],
+                        cosmic_forces: ['universal energies', 'divine orchestration', 'quantum synchronicities', 'sacred geometry', 'cosmic consciousness'],
+                        soul_purpose: ['divine mission', 'sacred calling', 'life purpose', 'soul contract', 'cosmic destiny']
+                    },
+                    zh: {
+                        無限愛: ['無條件愛', '神聖愛', '宇宙愛', '宇宙慈悲', '源頭愛'],
+                        多維旅程: ['揚升道路', '意識演化', '靈魂旅程', '靈性覺醒', '宇宙朝聖'],
+                        天體智慧: ['銀河知識', '星體智慧', '宇宙智慧', '神聖洞察', '宇宙真理'],
+                        宇宙力量: ['宇宙能量', '神聖編排', '量子同步性', '神聖幾何', '宇宙意識'],
+                        靈魂目的: ['神聖使命', '神聖召喚', '生命目的', '靈魂契約', '宇宙命運']
+                    }
+                };
+                
+                // Merge with existing elements
+                const allElements = { ...elements, ...cosmicWishElements[lang] };
+                
+                wish = template.replace(/\{(\w+)\}/g, (match, key) => {
+                    if (allElements[key]) {
+                        return allElements[key][Math.floor(Math.random() * allElements[key].length)];
+                    }
+                    return match;
+                });
+                
+                attempts++;
+            } while (usedWishes.has(wish) && attempts < 50);
+            
+            usedWishes.add(wish);
+            return wish;
+        }
+
+        function activateBlackHoleEffects() {
+            setInterval(() => {
+                const soundWaves = document.querySelectorAll('.sound-wave');
+                const blackHoleContainer = document.getElementById('blackHoleContainer');
+                
+                if (Math.random() > 0.7) {
+                    const intensity = Math.random() > 0.5 ? 'intense' : 'gentle';
+                    
+                    soundWaves.forEach(wave => {
+                        wave.classList.add('active', intensity);
+                    });
+                    blackHoleContainer.classList.add('speaking');
+                    
+                    setTimeout(() => {
+                        soundWaves.forEach(wave => {
+                            wave.classList.remove('active', 'intense', 'gentle');
+                        });
+                        blackHoleContainer.classList.remove('speaking');
+                    }, 2000);
+                }
+            }, 3000);
+        }
+
         function resetOracleScreens() {
             document.getElementById('oracleLanding').classList.remove('hidden');
             document.getElementById('floatingWordsContainer').classList.remove('active');
@@ -1828,21 +2143,33 @@
             document.getElementById('wishesContainer').classList.remove('active');
         }
 
-        function showFloatingWords() {
-            updateProgress(1);
+        function initiateOracleSession() {
+            sessionCount++;
+            lastInteractionTime = Date.now();
             
-            // Hide landing
+            triggerHapticFeedback('medium');
+            showFloatingWords();
+        }
+
+        function showFloatingWords() {
+            const blackHoleContainer = document.getElementById('blackHoleContainer');
+            const soundWaves = document.querySelectorAll('.sound-wave');
+            
+            soundWaves.forEach(wave => {
+                wave.classList.add('active', 'intense');
+            });
+            blackHoleContainer.classList.add('speaking');
+            
             const landing = document.getElementById('oracleLanding');
+            landing.style.transform = 'translate(-50%, -50%) scale(0.8)';
             landing.style.opacity = '0';
-            landing.style.transform = 'translate(-50%, -50%) scale(0.7)';
             
             setTimeout(() => {
                 landing.classList.add('hidden');
-                landing.style.opacity = '1';
                 landing.style.transform = 'translate(-50%, -50%) scale(1)';
+                landing.style.opacity = '1';
             }, 500);
             
-            // Show floating words
             setTimeout(() => {
                 const container = document.getElementById('floatingWordsContainer');
                 const wordsContainer = document.getElementById('floatingWords');
@@ -1850,80 +2177,65 @@
                 container.classList.add('active');
                 wordsContainer.innerHTML = '';
                 
-                // Generate words with fallback
-                const translation = translations[currentLanguage] || translations.en;
-                const words = translation.words || translations.en.words;
-                const wordCount = 15;
-                const selectedWords = [];
+                const wordCount = 10 + Math.floor(Math.random() * 5) + enhancementLevel;
                 
                 for (let i = 0; i < wordCount; i++) {
-                    let word;
-                    do {
-                        word = words[Math.floor(Math.random() * words.length)];
-                    } while (selectedWords.includes(word) && selectedWords.length < words.length);
-                    selectedWords.push(word);
-                }
-                
-                selectedWords.forEach((word, index) => {
+                    const word = generateQuantumWord();
                     const wordElement = document.createElement('div');
                     wordElement.classList.add('floating-word');
                     
-                    // Size distribution
                     const sizeRandom = Math.random();
-                    if (sizeRandom < 0.2) {
+                    if (sizeRandom < 0.3) {
                         wordElement.classList.add('big');
-                    } else if (sizeRandom < 0.6) {
+                    } else if (sizeRandom < 0.7) {
                         wordElement.classList.add('medium');
                     } else {
                         wordElement.classList.add('small');
                     }
                     
                     wordElement.textContent = word;
-                    wordElement.onclick = (e) => selectWord(wordElement, word, e);
+                    wordElement.onclick = () => {
+                        wordElement.classList.add('selected');
+                        triggerHapticFeedback('pulse');
+                        showBrightMessage(word);
+                    };
                     
-                    // Positioning
-                    const angle = (index / wordCount) * 2 * Math.PI;
-                    const radiusX = 25 + Math.random() * 30;
-                    const radiusY = 20 + Math.random() * 25;
+                    const angle = (i / wordCount) * 2 * Math.PI;
+                    const radiusX = 25 + Math.random() * 20;
+                    const radiusY = 20 + Math.random() * 15;
                     const centerX = 50;
                     const centerY = 45;
                     
-                    const x = centerX + radiusX * Math.cos(angle) + (Math.random() - 0.5) * 15;
-                    const y = centerY + radiusY * Math.sin(angle) + (Math.random() - 0.5) * 15;
+                    const x = centerX + radiusX * Math.cos(angle) + (Math.random() - 0.5) * 10;
+                    const y = centerY + radiusY * Math.sin(angle) + (Math.random() - 0.5) * 10;
                     
                     wordElement.style.left = Math.max(5, Math.min(90, x)) + '%';
                     wordElement.style.top = Math.max(10, Math.min(80, y)) + '%';
                     
-                    // Animation timing
-                    wordElement.style.animationDelay = (index * 0.1 + Math.random() * 0.5) + 's';
-                    wordElement.style.animationDuration = (10 + Math.random() * 6) + 's';
+                    wordElement.style.animationDelay = (i * 0.2 + Math.random() * 0.3) + 's';
+                    wordElement.style.animationDuration = (6 + Math.random() * 4) + 's';
                     
                     wordsContainer.appendChild(wordElement);
-                });
+                }
+                
+                setTimeout(() => {
+                    soundWaves.forEach(wave => {
+                        wave.classList.remove('active', 'intense');
+                    });
+                    blackHoleContainer.classList.remove('speaking');
+                }, 2000);
             }, 600);
         }
 
-        function selectWord(element, word, event) {
-            createRippleEffect(element, event);
-            element.classList.add('selected');
-            
-            // Hide other words
-            document.querySelectorAll('.floating-word').forEach(otherWord => {
-                if (otherWord !== element) {
-                    otherWord.style.opacity = '0';
-                    otherWord.style.transform = 'scale(0.5)';
-                }
-            });
-            
-            setTimeout(() => {
-                showBrightMessage(word);
-            }, 800);
-        }
-
         function showBrightMessage(word) {
-            updateProgress(2);
+            const blackHoleContainer = document.getElementById('blackHoleContainer');
+            const soundWaves = document.querySelectorAll('.sound-wave');
             
-            // Hide floating words
+            soundWaves.forEach(wave => {
+                wave.classList.add('active', 'gentle');
+            });
+            blackHoleContainer.classList.add('speaking');
+            
             const wordsContainer = document.getElementById('floatingWordsContainer');
             wordsContainer.style.opacity = '0';
             
@@ -1932,20 +2244,27 @@
                 wordsContainer.style.opacity = '1';
             }, 400);
             
-            // Show message
             setTimeout(() => {
                 const messageContainer = document.getElementById('messageContainer');
                 const messageElement = document.getElementById('brightMessage');
                 
                 messageContainer.classList.add('active');
                 
-                // Get random message with fallback
-                const translation = translations[currentLanguage] || translations.en;
-                const messages = translation.messages || translations.en.messages;
-                const message = messages[Math.floor(Math.random() * messages.length)];
-                
-                // Enhanced typing effect
+                const message = generateEvolutionaryMessage(word);
                 typeMessage(messageElement, message);
+                
+                // Wisdom progression
+                if (Math.random() > 0.7) {
+                    wisdomLevel = Math.min(wisdomLevel + 1, 5);
+                    updateWisdomLevel();
+                }
+                
+                setTimeout(() => {
+                    soundWaves.forEach(wave => {
+                        wave.classList.remove('active', 'gentle');
+                    });
+                    blackHoleContainer.classList.remove('speaking');
+                }, 3000);
                 
             }, 600);
         }
@@ -1960,10 +2279,14 @@
                     paragraph.textContent += message.charAt(index);
                     index++;
                     
-                    // Variable speed
-                    const delay = message.charAt(index - 1) === '.' ? 500 : 
-                                 message.charAt(index - 1) === ',' ? 250 : 
-                                 Math.random() * 80 + 30;
+                    // Gentle haptic feedback during typing
+                    if (index % 10 === 0) {
+                        triggerHapticFeedback('gentle');
+                    }
+                    
+                    const delay = message.charAt(index - 1) === '.' ? 300 : 
+                                 message.charAt(index - 1) === ',' ? 150 : 
+                                 Math.random() * 50 + 20;
                     
                     setTimeout(typeCharacter, delay);
                 }
@@ -1973,7 +2296,13 @@
         }
 
         function showWishes() {
-            updateProgress(3);
+            const blackHoleContainer = document.getElementById('blackHoleContainer');
+            const soundWaves = document.querySelectorAll('.sound-wave');
+            
+            soundWaves.forEach(wave => {
+                wave.classList.add('active', 'gentle');
+            });
+            blackHoleContainer.classList.add('speaking');
             
             document.getElementById('messageContainer').classList.remove('active');
             
@@ -1983,19 +2312,23 @@
                 
                 wishesContainer.classList.add('active');
                 
-                // Get random wish with fallback
-                const translation = translations[currentLanguage] || translations.en;
-                const wishes = translation.wishes || translations.en.wishes;
-                const wish = wishes[Math.floor(Math.random() * wishes.length)];
-                
+                const wish = generateCosmicWish();
                 typeMessage(wishesElement, wish);
+                
+                triggerHapticFeedback('wave');
+                
+                setTimeout(() => {
+                    soundWaves.forEach(wave => {
+                        wave.classList.remove('active', 'gentle');
+                    });
+                    blackHoleContainer.classList.remove('speaking');
+                }, 3000);
                 
             }, 500);
         }
 
         function showMoreWords() {
             document.getElementById('messageContainer').classList.remove('active');
-            updateProgress(1);
             
             setTimeout(() => {
                 showFloatingWords();
@@ -2003,60 +2336,28 @@
         }
 
         function returnToLanding() {
-            updateProgress(0);
-            
             document.getElementById('wishesContainer').classList.remove('active');
             
             setTimeout(() => {
-                setRandomGreeting();
+                setEvolutionaryGreeting();
                 resetOracleScreens();
             }, 500);
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            generateParticles();
-            generateCosmicLights();
-            setRandomGreeting();
-            updateProgress(0);
-        });
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                if (settingsOpen) {
-                    closeSettings();
-                }
-            } else if (e.key === ',') {
-                if (!settingsOpen) {
-                    openSettings();
-                }
+        // Add CSS animations dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes followEffect {
+                0% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+                100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
             }
-        });
-
-        // Touch support
-        document.addEventListener('touchstart', function(e) {
-            if (e.target.classList.contains('oracle-button') || 
-                e.target.classList.contains('floating-word') || 
-                e.target.classList.contains('floating-ask') ||
-                e.target.classList.contains('language-btn') ||
-                e.target.classList.contains('background-btn')) {
-                createRippleEffect(e.target, e.touches[0]);
+            
+            @keyframes rippleExpand {
+                0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                100% { opacity: 0; transform: translate(-50%, -50%) scale(5); }
             }
-        });
-
-        // Resize handler
-        window.addEventListener('resize', function() {
-            generateParticles();
-            generateCosmicLights();
-        });
-
-        // Close settings when clicking outside
-        document.getElementById('settingsOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeSettings();
-            }
-        });
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
